@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>J.A.R.V.I.S</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- HUD corner brackets -->
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-wrap">
+        <div class="logo-letter">J</div>
+        <svg class="logo-ring-svg" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="var(--cyan)" stroke-width="1" stroke-dasharray="5 4" opacity="0.4"/>
+          <circle class="ring-dot" cx="30" cy="4" r="3" fill="var(--cyan)"/>
+        </svg>
+      </div>
+      <div class="brand">
+        <div class="brand-name">J.A.R.V.I.S</div>
+        <div class="brand-sub">Just A Rather Very Intelligent System</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="online-badge">
+        <span class="online-dot"></span>
+        <span>ONLINE</span>
+      </div>
+      <div class="hud-clock">
+        <div id="clk-time">--:-- --</div>
+        <div id="clk-date">Loading...</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Chat area -->
+  <main class="chat-area" id="chat-area">
+    <!-- messages appended by JS -->
+  </main>
+
+  <!-- Input -->
+  <footer class="input-footer">
+    <div class="input-box">
+      <span class="prompt-sym">›_</span>
+      <textarea id="msg-input" placeholder="Ask J.A.R.V.I.S anything..." rows="1"></textarea>
+    </div>
+    <div class="input-btns">
+      <button id="voice-btn" class="btn-icon" title="Voice input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8"  y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+      <button id="continuous-talk-btn" class="btn-icon" title="Continuous talking mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" opacity="0.5"/>
+        </svg>
+      </button>
+      <button id="upload-file-btn" class="btn-icon" title="Upload file">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+      </button>
+      <button id="camera-talk-btn" class="btn-icon" title="Camera talking mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </button>
+      <button id="send-btn" class="btn-send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        SEND
+      </button>
+    </div>
+  </footer>
+
+  <!-- Voice listening overlay -->
+  <div id="voice-overlay" class="voice-overlay hidden">
+    <div class="pulse-rings">
+      <div class="pr pr1"></div>
+      <div class="pr pr2"></div>
+      <div class="pr pr3"></div>
+      <div class="pr-center">🎤</div>
+    </div>
+    <p class="listening-label">Listening…</p>
+    <button id="stop-voice-btn" class="stop-voice">✕ Stop</button>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
