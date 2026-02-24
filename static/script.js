@@ -261,6 +261,9 @@ if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => {};
     `• Solve problems step by step\n` +
     `• Search the web for current info\n` +
     `• Remember your name and preferences\n\n` +
+    `**Setup required:** Make sure you've set your free Groq API key:\n` +
+    `In your terminal type: **set GROQ_API_KEY=your_key_here**\n` +
+    `Get your free key at: **console.groq.com**`
   );
 
   msgInput.focus();
