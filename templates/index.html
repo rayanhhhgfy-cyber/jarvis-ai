@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>J.A.R.V.I.S</title>
-  <link rel="stylesheet" href="/static/style.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400&family=Rajdhani:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
 </head>
+
 <body>
-
-  <!-- Animated background -->
   <canvas id="bg-canvas"></canvas>
-
-  <!-- HUD corner brackets -->
   <div class="corner tl"></div>
   <div class="corner tr"></div>
   <div class="corner bl"></div>
@@ -24,119 +24,149 @@
   <header class="header">
     <div class="header-left">
       <div class="logo-wrap">
-        <div class="logo-letter">J</div>
-        <svg class="logo-ring-svg" viewBox="0 0 60 60">
-          <circle cx="30" cy="30" r="26" fill="none" stroke="var(--cyan)" stroke-width="1" stroke-dasharray="5 4" opacity="0.4"/>
-          <circle class="ring-dot" cx="30" cy="4" r="3" fill="var(--cyan)"/>
-        </svg>
+        <div class="reactor-ring"></div>
+        <div class="reactor-core"></div>
       </div>
       <div class="brand">
         <div class="brand-name">J.A.R.V.I.S</div>
-        <div class="brand-sub">Just A Rather Very Intelligent System</div>
+        <div class="brand-sub">Just A Rather Very Intelligent System · Llama 3.3 70B</div>
       </div>
     </div>
     <div class="header-right">
-      <div class="online-badge">
-        <span class="online-dot"></span>
-        <span>ONLINE</span>
+      <div class="online-badge"><span class="online-dot"></span><span>JARVIS ONLINE</span></div>
+      <div class="hud-telemetry">
+        <div class="tel-item">CORE TEMP: <span class="cyan">42°C</span></div>
+        <div class="tel-item">MEMORY: <span class="cyan">12%</span></div>
       </div>
       <div class="hud-clock">
         <div id="clk-time">--:-- --</div>
         <div id="clk-date">Loading...</div>
       </div>
-            <button id="menu-btn" class="menu-btn" title="Menu">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                  <line x1="12" y1="5" x2="12" y2="5.01"/>
-                                            <line x1="12" y1="12" x2="12" y2="12.01"/>
-                                                      <line x1="12" y1="19" x2="12" y2="19.01"/>
-                      </svg>
-                    </button>
     </div>
   </header>
 
-    <!-- Menu Overlay -->
-      <div id="menu-overlay" class="menu-overlay hidden">
-            <div class="menu-content">
-                    <div class="menu-header">
-                              <h2>J.A.R.V.I.S Dashboard</h2>
-                                      <button id="close-menu-btn" class="close-menu-btn">✕</button>
-                    </div>
-                          <div class="menu-links">
-                                    <a href="https://github.com/rayanhhigty-cyber/jarvis-ai" target="_blank" class="menu-link">
-                                                <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                                          <span>GitHub Repository</span>
-                                    </a>
-                                            <a href="https://supabase.com/dashboard" target="_blank" class="menu-link">
-                                                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M13.885 22.532c-.593.343-1.332-.09-1.364-.8l-.485-10.732h8.853c.857 0 1.38.98.897 1.688l-8.901 9.844zm-3.77-22.064c.593-.343 1.332.09 1.364.8l.485 10.732H3.111c-.857 0-1.38-.98-.897-1.688l8.901-9.844z"/></svg>
-                                                                  <span>Supabase Dashboard</span>
-                                            </a>
-                                                    <a href="https://railway.app" target="_blank" class="menu-link">
-                                                                <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3.176 8.205L8.205 3.176c.39-.39 1.024-.39 1.414 0l4.95 4.95c.39.39.39 1.024 0 1.414l-4.95 4.95c-.39.39-1.024.39-1.414 0l-4.95-4.95c-.39-.39-.39-1.024 0-1.414zm11.648 0l5.029-5.029c.39-.39 1.024-.39 1.414 0l.557.557c.39.39.39 1.024 0 1.414l-5.029 5.029c-.39.39-1.024.39-1.414 0l-.557-.557c-.39-.39-.39-1.024 0-1.414zM3.176 15.795l5.029 5.029c.39.39 1.024.39 1.414 0l4.95-4.95c.39-.39.39-1.024 0-1.414l-4.95-4.95c-.39-.39-1.024-.39-1.414 0l-4.95 4.95c-.39.39-.39 1.024 0 1.414z"/></svg>
-                                                                          <span>Railway Dashboard</span>
-                                                    </a>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                                    </a>
-                                            </a>
-                                    </a>
-                          </div>
-                    </div>
-            </div>
-      </div>-->
+  <!-- Consolidated Nav Menu -->
+  <div class="jarvis-nav-container">
+    <div id="menu-items" class="menu-items">
+      <div class="menu-section-label">SYSTEMS</div>
+      <a href="/studio" class="menu-item">
+        <span class="m-icon">🛠</span>
+        <span class="m-label">STUDIO</span>
+      </a>
+      <a href="/studio3d" class="menu-item">
+        <span class="m-icon">🎨</span>
+        <span class="m-label">3D STUDIO</span>
+      </a>
+      <a href="#" id="kb-btn" class="menu-item">
+        <span class="m-icon">🧠</span>
+        <span class="m-label">KNOWLEDGE</span>
+      </a>
+
+      <div class="menu-section-label">ATMOSPHERE</div>
+      <div class="bg-switcher">
+        <button class="bg-opt b-black" data-bg="bg-black" title="Pure Black"></button>
+        <button class="bg-opt b-grid" data-bg="bg-grid" title="Digital Grid"></button>
+        <button class="bg-opt b-nebula" data-bg="bg-nebula" title="Nebula"></button>
+        <button class="bg-opt b-matrix" data-bg="bg-matrix" title="Matrix"></button>
+        <button class="bg-opt b-cyber" data-bg="bg-cyber" title="Cyberpunk"></button>
+      </div>
+
+      <a href="#" id="interrupt-btn" class="menu-item" style="display:none">
+        <span class="m-icon">🛑</span>
+        <span class="m-label">INTERRUPT</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Camera panel (hidden by default) -->
+  <div id="camera-panel" class="camera-panel hidden">
+    <div class="camera-header">
+      <span class="cam-label">📷 LIVE CAMERA</span>
+      <div class="cam-controls">
+        <button id="cam-analyze-btn" class="cam-btn">🔍 Analyze Now</button>
+        <button id="cam-auto-btn" class="cam-btn">🔄 Auto</button>
+        <button id="cam-close-btn" class="cam-btn cam-close">✕ Close</button>
+      </div>
+    </div>
+    <div class="camera-body">
+      <video id="cam-video" autoplay playsinline muted></video>
+      <canvas id="cam-canvas" style="display:none"></canvas>
+      <div class="cam-overlay" id="cam-overlay">Click "Analyze Now" or enable Auto</div>
+    </div>
+  </div>
+
+  <!-- Upload panel (hidden by default) -->
+  <div id="upload-panel" class="upload-panel hidden">
+    <div class="upload-header">
+      <span>📎 UPLOAD FILE</span>
+      <button id="upload-close-btn" class="cam-btn cam-close">✕</button>
+    </div>
+    <div id="drop-zone" class="drop-zone">
+      <div class="drop-icon">📂</div>
+      <p>Drag & drop or click to upload</p>
+      <p class="drop-sub">Images · Videos · Documents · Code files</p>
+      <input type="file" id="file-input" accept="image/*,video/*,.pdf,.txt,.md,.py,.js,.html,.css,.json,.csv"
+        style="display:none" />
+    </div>
+    <div class="upload-question">
+      <input type="text" id="upload-question" placeholder="What do you want to know about this file?"
+        class="upload-q-input" />
+      <label class="save-label">
+        <input type="checkbox" id="save-file-cb" />
+        <span>Save this file permanently</span>
+      </label>
+    </div>
+    <div id="upload-status" class="upload-status"></div>
+  </div>
+
+  <!-- Knowledge panel (hidden by default) -->
+  <div id="kb-panel" class="kb-panel hidden">
+    <div class="kb-header">
+      <span>🧠 LEARNED KNOWLEDGE BASE</span>
+      <button id="kb-close-btn" class="cam-btn cam-close">✕</button>
+    </div>
+    <div id="kb-list" class="kb-list">Loading...</div>
+  </div>
 
   <!-- Chat area -->
-  <main class="chat-area" id="chat-area">
-    <!-- messages appended by JS -->
-  </main>
+  <main class="chat-area" id="chat-area"></main>
 
-  <!-- Input -->
+  <!-- Input footer -->
   <footer class="input-footer">
+    <div class="input-tools">
+      <!-- Menu trigger moved here -->
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <div id="lightning-trigger" style="font-size: 28px; cursor: pointer;">⚡</div>
+        <div id="menu-trigger" class="menu-trigger" title="System Menu">
+          <span class="m-plus">+</span>
+        </div>
+      </div>
+    </div>
     <div class="input-box">
       <span class="prompt-sym">›_</span>
-      <textarea id="msg-input" placeholder="Ask J.A.R.V.I.S anything..." rows="1"></textarea>
+      <textarea id="msg-input" placeholder="Ask J.A.R.V.I.S anything... or say 'learn about [topic]'"
+        rows="1"></textarea>
     </div>
     <div class="input-btns">
       <button id="voice-btn" class="btn-icon" title="Voice input">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-          <line x1="12" y1="19" x2="12" y2="23"/>
-          <line x1="8"  y1="23" x2="16" y2="23"/>
-        </svg>
-      </button>
-      <button id="continuous-talk-btn" class="btn-icon" title="Continuous talking mode">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-          <line x1="12" y1="19" x2="12" y2="23"/>
-          <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" opacity="0.5"/>
-        </svg>
-      </button>
-      <button id="upload-file-btn" class="btn-icon" title="Upload file">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-      </button>
-      <button id="camera-talk-btn" class="btn-icon" title="Camera talking mode">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-          <circle cx="12" cy="13" r="4"/>
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+          <line x1="12" y1="19" x2="12" y2="23" />
+          <line x1="8" y1="23" x2="16" y2="23" />
         </svg>
       </button>
       <button id="send-btn" class="btn-send">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          <line x1="22" y1="2" x2="11" y2="13" />
+          <polygon points="22 2 15 22 11 13 2 9 22 2" />
         </svg>
         SEND
       </button>
     </div>
   </footer>
 
-  <!-- Voice listening overlay -->
+  <!-- Voice overlay -->
   <div id="voice-overlay" class="voice-overlay hidden">
     <div class="pulse-rings">
       <div class="pr pr1"></div>
@@ -144,10 +174,12 @@
       <div class="pr pr3"></div>
       <div class="pr-center">🎤</div>
     </div>
-    <p class="listening-label">Listening…</p>
+    <p class="listening-label" id="voice-label">Listening…</p>
+    <p id="continuous-indicator" class="cont-indicator" style="display:none">🔄 Continuous Mode ON</p>
     <button id="stop-voice-btn" class="stop-voice">✕ Stop</button>
   </div>
 
   <script src="/static/script.js"></script>
 </body>
+
 </html>
