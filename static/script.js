@@ -268,3 +268,28 @@ if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = () => {};
 
   msgInput.focus();
 })();
+
+
+// =============================================================================
+// MENU FUNCTIONALITY
+// =============================================================================
+const menuBtn = document.querySelector('.menu-btn');
+const menuOverlay = document.querySelector('.menu-overlay');
+const closeMenuBtn = document.querySelector('.close-menu-btn');
+
+if (menuBtn && menuOverlay && closeMenuBtn) {
+  menuBtn.addEventListener('click', () => {
+    menuOverlay.classList.add('active');
+  });
+  
+  closeMenuBtn.addEventListener('click', () => {
+    menuOverlay.classList.remove('active');
+  });
+  
+  // Close menu when clicking outside
+  menuOverlay.addEventListener('click', (e) => {
+    if (e.target === menuOverlay) {
+      menuOverlay.classList.remove('active');
+    }
+  });
+}
