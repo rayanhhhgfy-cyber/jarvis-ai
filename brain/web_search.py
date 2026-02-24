@@ -1,84 +1,71 @@
-import os
+# =============================================================================
+# brain/web_search.py — Free web search via DuckDuckGo (no API key)
+# Strategy 1: DDG Instant Answer API (JSON)
+# Strategy 2: DDG Lite HTML scrape
+# =============================================================================
+
 import requests
 from bs4 import BeautifulSoup
-from duckduckgo_search import DDGS
-try:
-    from googlesearch import search as gsearch
-except ImportError:
-    gsearch = None
-try:
-    from tavily import TavilyClient
-except ImportError:
-    TavilyClient = None
+from config import SEARCH_MAX_RESULTS, SEARCH_TIMEOUT
 
-# Try to get API key from config
-try:
-    from config import TAVILY_API_KEY
-except ImportError:
-    TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
-def search(q):
-    q = q.strip()
-    if not q:
+def _ddg_instant(query):
+    try:
+        resp = requests.get(
+            "https://api.duckduckgo.com/",
+            params={"q": query, "format": "json", "no_redirect": 1, "no_html": 1},
+            headers=_HEADERS, timeout=SEARCH_TIMEOUT
+        )
+        data = resp.json()
+        answer = (
+            data.get("AbstractText") or
+            data.get("Answer") or
+            data.get("Definition") or ""
+        ).strip()
+        if answer:
+            source = data.get("AbstractSource") or ""
+            return answer + (f" (Source: {source})" if source else "")
+    except Exception:
+        pass
+    return None
+
+def _ddg_scrape(query):
+    try:
+        resp = requests.get(
+            "https://lite.duckduckgo.com/lite/",
+            params={"q": query},
+            headers=_HEADERS, timeout=SEARCH_TIMEOUT
+        )
+        soup = BeautifulSoup(resp.text, "html.parser")
+        snippets = []
+        for td in soup.select("td.result-snippet"):
+            text = td.get_text(separator=" ", strip=True)
+            if text:
+                snippets.append(text)
+            if len(snippets) >= SEARCH_MAX_RESULTS:
+                break
+        if snippets:
+            return " | ".join(snippets)
+    except Exception:
+        pass
+    return None
+
+def search(query):
+    query = query.strip()
+    if not query:
         return "No search query provided."
-
-    # 1. Try Tavily if API key is available
-    if TAVILY_API_KEY and TavilyClient:
-        try:
-            tavily = TavilyClient(api_key=TAVILY_API_KEY)
-            response = tavily.search(query=q, search_depth="basic")
-            results = response.get('results', [])
-            if results:
-                formatted_results = []
-                for res in results[:5]:
-                    formatted_results.append(f"Source: {res['url']}\nContent: {res['content']}\n")
-                return "\n".join(formatted_results)
-        except Exception as e:
-            print(f"Tavily Search Error: {e}")
-
-    # 2. Try duckduckgo-search with region enforcement
-    try:
-        with DDGS() as ddgs:
-            # Forcing region and moderate safesearch
-            # Appending lang:en to the query string for extra enforcement
-            en_q = f"{q} lang:en"
-            results = list(ddgs.text(en_q, region='us-en', max_results=5))
-            if results and any(res.get('body') for res in results):
-                formatted_results = []
-                for res in results:
-                    formatted_results.append(f"Title: {res['title']}\nURL: {res['href']}\nBody: {res['body']}\n")
-                return "\n".join(formatted_results)
-    except Exception as e:
-        print(f"DuckDuckGo Search Error: {e}")
-
-    # 3. Fallback to googlesearch-python if DDG fails or is irrelevant
-    if gsearch:
-        try:
-            results = list(gsearch(q, num_results=5, lang="en"))
-            if results:
-                formatted_results = []
-                for url in results:
-                    formatted_results.append(f"URL: {url}\n(Google fallback result)\n")
-                return "\n".join(formatted_results)
-        except Exception as e:
-            print(f"Google Search Error: {e}")
-
-    return f"Could not find relevant results for '{q}'."
-
-def get_url_content(url):
-    """Fetches the text content of a URL."""
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-        }
-        response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-        
-        # Remove script and style elements
-        for script_or_style in soup(["script", "style"]):
-            script_or_style.decompose()
-            
-        return soup.get_text(separator=' ', strip=True)[:2000]
-    except Exception as e:
-        return f"Error fetching {url}: {str(e)}"
+    result = _ddg_instant(query)
+    if result:
+        return result
+    result = _ddg_scrape(query)
+    if result:
+        return result
+    return f"I searched for '{query}' but couldn't retrieve results. Check your internet connection."

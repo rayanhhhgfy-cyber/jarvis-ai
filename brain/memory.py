@@ -1,73 +1,54 @@
-import sqlite3, os
-from config import DB_PATH, SUMMARY_MAX_LENGTH, SUMMARY_TRIM_LENGTH
-try:
-    from database.supabase_db import supabase_db
-    USE_SUPABASE = os.getenv('USE_SUPABASE', 'false').lower() == 'true'
-except ImportError:
-    USE_SUPABASE = False
-    supabase_db = None
-def _conn():
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    c = sqlite3.connect(DB_PATH)
-    c.row_factory = sqlite3.Row
-    return c
+# =============================================================================
+# brain/memory.py — SQLite persistent memory (key-value store)
+# =============================================================================
 
-def _table(c):
-    c.execute("""CREATE TABLE IF NOT EXISTS memory (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        key TEXT UNIQUE NOT NULL,
-        value TEXT NOT NULL)""")
-    c.commit()
+import sqlite3
+import os
+from config import DB_PATH, SUMMARY_MAX_LENGTH, SUMMARY_TRIM_LENGTH
+
+def _connect():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def _ensure_table(conn):
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS memory (
+            id    INTEGER PRIMARY KEY AUTOINCREMENT,
+            key   TEXT    UNIQUE NOT NULL,
+            value TEXT    NOT NULL
+        )
+    """)
+    conn.commit()
 
 def get(key):
-    # Try Supabase if enabled
-    if USE_SUPABASE and supabase_db:
-        try:
-            val = supabase_db.get_memory(key)
-            if val is not None: return val
-        except Exception as e:
-            print(f"Supabase get failed: {e}")
-    
-    # Fallback to SQLite
-    with _conn() as c:
-        _table(c)
-        r = c.execute("SELECT value FROM memory WHERE key=?", (key,)).fetchone()
-    return r["value"] if r else None
+    with _connect() as conn:
+        _ensure_table(conn)
+        row = conn.execute("SELECT value FROM memory WHERE key = ?", (key,)).fetchone()
+    return row["value"] if row else None
 
 def set(key, value):
-    # Try Supabase if enabled
-    if USE_SUPABASE and supabase_db:
-        try:
-            supabase_db.set_memory(key, value)
-        except Exception as e:
-            print(f"Supabase set failed: {e}")
-    
-    # Always write to SQLite as well for local persistence/fallback
-    with _conn() as c:
-        _table(c)
-        c.execute("""INSERT INTO memory(key,value) VALUES(?,?)
-            ON CONFLICT(key) DO UPDATE SET value=excluded.value""", (key, value))
-        c.commit()
+    with _connect() as conn:
+        _ensure_table(conn)
+        conn.execute("""
+            INSERT INTO memory (key, value) VALUES (?, ?)
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value
+        """, (key, value))
+        conn.commit()
 
 def delete(key):
-    # Try Supabase if enabled
-    if USE_SUPABASE and supabase_db:
-        try:
-            supabase_db.delete_memory(key)
-        except Exception as e:
-            print(f"Supabase delete failed: {e}")
-    
-    # Fallback to SQLite
-    with _conn() as c:
-        _table(c)
-        c.execute("DELETE FROM memory WHERE key=?", (key,))
-        c.commit()
+    with _connect() as conn:
+        _ensure_table(conn)
+        conn.execute("DELETE FROM memory WHERE key = ?", (key,))
+        conn.commit()
 
-def append_to_summary(s):
-    ex = get("short_conversation_summary") or ""
-    if len(ex) > SUMMARY_MAX_LENGTH:
-        ex = ex[-SUMMARY_TRIM_LENGTH:]
-    set("short_conversation_summary", (ex + " " + s).strip())
+def append_to_summary(new_sentence):
+    existing = get("short_conversation_summary") or ""
+    if len(existing) > SUMMARY_MAX_LENGTH:
+        existing = existing[-SUMMARY_TRIM_LENGTH:]
+    updated = (existing + " " + new_sentence).strip()
+    set("short_conversation_summary", updated)
 
 def get_summary():
     return get("short_conversation_summary") or ""
