@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J.A.R.V.I.S — 3D Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400&family=Rajdhani:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/static/studio3d.css" />
+</head>
+
+<body>
+
+  <!-- ═══ Header ═══ -->
+  <header class="s3d-header">
+    <div class="s3d-header-left">
+      <div class="s3d-logo-wrap">
+        <div class="s3d-logo-letter">J</div>
+        <svg class="s3d-logo-ring" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="var(--cyan)" stroke-width="1" stroke-dasharray="5 4"
+            opacity="0.4" />
+          <circle class="s3d-ring-dot" cx="30" cy="4" r="3" fill="var(--cyan)" />
+        </svg>
+      </div>
+      <div>
+        <div class="s3d-brand-name">J.A.R.V.I.S</div>
+        <div class="s3d-brand-sub">3D MODELING STUDIO · AI POWERED</div>
+      </div>
+    </div>
+    <div class="s3d-header-right">
+      <a href="/" class="s3d-nav-btn">🏠 HOME</a>
+      <a href="/studio" class="s3d-nav-btn">💻 CODE STUDIO</a>
+      <div class="s3d-online">
+        <span class="s3d-online-dot"></span>
+        <span>ONLINE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ Layout ═══ -->
+  <div class="s3d-layout">
+
+    <!-- ── Left Panel: Scene Hierarchy ── -->
+    <div class="s3d-scene-panel">
+      <div class="s3d-panel-header">
+        <span>📐 SCENE HIERARCHY</span>
+        <div class="s3d-panel-actions">
+          <button class="s3d-icon-btn" id="s3d-clear-btn" title="Clear scene">🗑️</button>
+        </div>
+      </div>
+      <div class="s3d-scene-list" id="s3d-scene-list">
+        <div class="s3d-scene-empty">
+          No objects yet.<br />Ask JARVIS to generate<br />a 3D model for you.
+        </div>
+      </div>
+
+      <div class="s3d-panel-header" style="border-top: 1px solid var(--border)">
+        <span>📂 PROJECTS</span>
+        <div class="s3d-panel-actions">
+          <button class="s3d-icon-btn" id="s3d-refresh-projects" title="Refresh projects">🔄</button>
+        </div>
+      </div>
+      <div class="s3d-scene-list" id="s3d-project-list" style="max-height: 150px;">
+        <!-- Project files (.json) will appear here -->
+      </div>
+
+      <div class="s3d-add-section">
+        <div class="s3d-add-title">ADD PRIMITIVES</div>
+        <div class="s3d-add-grid">
+          <button class="s3d-add-btn s3d-add-prim" data-type="box">📦 Box</button>
+          <button class="s3d-add-btn s3d-add-prim" data-type="sphere">🔮 Sphere</button>
+          <button class="s3d-add-btn s3d-add-prim" data-type="cylinder">🧪 Cylinder</button>
+          <button class="s3d-add-btn s3d-add-prim" data-type="cone">📐 Cone</button>
+          <button class="s3d-add-btn s3d-add-prim" data-type="torus">💍 Torus</button>
+          <button class="s3d-add-btn s3d-add-prim" data-type="plane">⬜ Plane</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Center: 3D Viewport ── -->
+    <div class="s3d-viewport-area">
+      <div class="s3d-hud-corner s3d-hud-tl"></div>
+      <div class="s3d-hud-corner s3d-hud-tr"></div>
+      <div class="s3d-hud-corner s3d-hud-bl"></div>
+      <div class="s3d-hud-corner s3d-hud-br"></div>
+      <div class="s3d-viewport-info">3D VIEWPORT</div>
+      <div class="s3d-viewport-stats" id="s3d-viewport-stats">Objects: 0 | Triangles: 0</div>
+      <div id="s3d-canvas-container"></div>
+    </div>
+
+    <!-- ── Right Panel: AI + Properties ── -->
+    <div class="s3d-right-panel">
+      <div class="s3d-ai-section">
+        <div class="s3d-panel-header">
+          <span>🤖 AI MODEL GENERATOR</span>
+          <div class="s3d-engine-toggle">
+            <input type="radio" name="s3d-engine" id="s3d-eng-schematic" value="schematic" checked>
+            <label for="s3d-eng-schematic">SCHEMATIC</label>
+            <input type="radio" name="s3d-engine" id="s3d-eng-highpoly" value="highpoly">
+            <label for="s3d-eng-highpoly">HIGH DETAIL</label>
+          </div>
+        </div>
+        <div class="s3d-ai-messages" id="s3d-ai-messages">
+          <div class="s3d-ai-welcome">
+            Describe any 3D model and<br />JARVIS will build it for you.<br /><br />
+            Try: <em>"a futuristic table"</em><br />
+            or: <em>"a robot with glowing eyes"</em>
+          </div>
+        </div>
+        <div class="s3d-ai-input-area">
+          <textarea class="s3d-ai-prompt" id="s3d-ai-prompt" rows="2"
+            placeholder="Describe a 3D model... (Ctrl+Enter to generate)"></textarea>
+          <div class="s3d-ai-btn-row">
+            <button class="s3d-btn-generate" id="s3d-btn-generate">⚡ GENERATE</button>
+            <button class="s3d-btn-modify" id="s3d-btn-modify">🔄 MODIFY</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Properties Panel -->
+      <div class="s3d-props-section" id="s3d-props">
+        <div class="s3d-no-selection">
+          Select an object to<br />edit its properties
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Bottom Toolbar ── -->
+    <div class="s3d-toolbar">
+      <button class="s3d-tool-btn s3d-transform-btn active" data-mode="translate" title="Move (W)">↔️ Move</button>
+      <button class="s3d-tool-btn s3d-transform-btn" data-mode="rotate" title="Rotate (E)">🔄 Rotate</button>
+      <button class="s3d-tool-btn s3d-transform-btn" data-mode="scale" title="Scale (R)">📐 Scale</button>
+      <div class="s3d-tool-sep"></div>
+      <button class="s3d-tool-btn danger" id="s3d-delete-btn" title="Delete selected (Del)">🗑️ Delete</button>
+      <div class="s3d-tool-sep"></div>
+      <button class="s3d-tool-btn export" id="s3d-save-project" title="Save current scene as project">💾 Save
+        Project</button>
+      <button class="s3d-tool-btn export" id="s3d-upload-json" title="Upload a project .json file">📤 Upload
+        JSON</button>
+      <input type="file" id="s3d-json-input" accept=".json" style="display:none" />
+      <div class="s3d-tool-sep"></div>
+      <button class="s3d-tool-btn export" id="s3d-export-glb" title="Download GLB file">📥 GLB</button>
+      <button class="s3d-tool-btn export" id="s3d-export-obj" title="Download OBJ file">📥 OBJ</button>
+      <button class="s3d-tool-btn export" id="s3d-export-json" title="Download Project JSON">📥 JSON</button>
+
+    </div>
+
+  </div>
+
+  <!-- ═══ Three.js + Extensions ═══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/OBJExporter.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="/static/studio3d.js"></script>
+
+</body>
+
+</html>
