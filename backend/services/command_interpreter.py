@@ -171,39 +171,39 @@ class CommandInterpreter:
             if result:
                 results.append(result)
 
-        # 3. File/folder operations
+        # 3. URL/Site operations (before file ops to catch "search X on youtube")
+        if not results:
+            result = self._check_open_url(msg, message)
+            if result:
+                results.append(result)
+
+        # 4. File/folder operations
         if not results:
             result = self._check_file_operations(msg, message)
             if result:
                 results.append(result)
 
-        # 4. System info commands
+        # 5. System info commands
         if not results:
             result = self._check_system_info(msg)
             if result:
                 results.append(result)
 
-        # 5. Process management
+        # 6. Process management
         if not results:
             result = self._check_process_management(msg, message)
             if result:
                 results.append(result)
 
-        # 6. System control (shutdown, restart, etc.)
+        # 7. System control (shutdown, restart, etc.)
         if not results:
             result = self._check_system_control(msg)
             if result:
                 results.append(result)
 
-        # 7. Network operations
+        # 8. Network operations
         if not results:
             result = self._check_network(msg)
-            if result:
-                results.append(result)
-
-        # 8. Open website/URL
-        if not results:
-            result = self._check_open_url(msg, message)
             if result:
                 results.append(result)
 
@@ -410,7 +410,59 @@ class CommandInterpreter:
         return None
 
     def _check_open_url(self, msg: str, original: str) -> Optional[Tuple[str, str]]:
-        """Detect requests to open websites."""
+        """Detect requests to open websites and search on sites like YouTube."""
+
+        # --- YouTube search ---
+        # "search for X on youtube", "youtube search X", "open youtube and search X"
+        yt_search = re.search(
+            r"(?:search|look|find)\s+(?:for\s+)?(.+?)\s+(?:on|in)\s+youtube",
+            msg, re.IGNORECASE,
+        )
+        if yt_search:
+            query = yt_search.group(1).strip().rstrip(".")
+            encoded = query.replace(" ", "+")
+            return (
+                f"Searching YouTube for '{query}'",
+                f'start "" "https://www.youtube.com/results?search_query={encoded}"',
+            )
+
+        yt_search2 = re.search(
+            r"(?:open|go to)\s+youtube\s+and\s+(?:search|look|find)\s+(?:for\s+)?(.+?)$",
+            msg, re.IGNORECASE,
+        )
+        if yt_search2:
+            query = yt_search2.group(1).strip().rstrip(".")
+            encoded = query.replace(" ", "+")
+            return (
+                f"Searching YouTube for '{query}'",
+                f'start "" "https://www.youtube.com/results?search_query={encoded}"',
+            )
+
+        yt_search3 = re.search(
+            r"youtube\s+(?:search\s+)?(.+?)$",
+            msg, re.IGNORECASE,
+        )
+        if yt_search3:
+            query = yt_search3.group(1).strip().rstrip(".")
+            encoded = query.replace(" ", "+")
+            return (
+                f"Searching YouTube for '{query}'",
+                f'start "" "https://www.youtube.com/results?search_query={encoded}"',
+            )
+
+        # --- Google search ---
+        g_search = re.search(
+            r"(?:search|look|find)\s+(?:for\s+)?(.+?)\s+(?:on|in)\s+google",
+            msg, re.IGNORECASE,
+        )
+        if g_search:
+            query = g_search.group(1).strip().rstrip(".")
+            encoded = query.replace(" ", "+")
+            return (
+                f"Searching Google for '{query}'",
+                f'start "" "https://www.google.com/search?q={encoded}"',
+            )
+
         # "open youtube" / "go to google.com"
         match = re.search(
             r"(?:open|go to|navigate to|browse|visit)\s+(?:the\s+)?(?:website\s+)?(?:of\s+)?([\w.-]+\.[\w]+)",
