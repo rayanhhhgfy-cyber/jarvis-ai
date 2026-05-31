@@ -373,7 +373,7 @@ class CommandInterpreter:
         return None
 
     def _check_system_control(self, msg: str) -> Optional[Tuple[str, str]]:
-        """Detect shutdown, restart, sleep, lock commands."""
+        """Detect shutdown, restart, sleep, lock, wallpaper commands."""
         if re.search(r"(?:shut\s*down|power\s*off|turn\s*off)\s+(?:the\s+)?(?:computer|pc|system|workstation|device)", msg):
             return ("Shutting down the workstation", "shutdown /s /t 10 /c \"JARVIS: Shutting down in 10 seconds, Sir.\"")
 
@@ -388,6 +388,29 @@ class CommandInterpreter:
 
         if re.search(r"(?:cancel|abort|stop)\s+(?:the\s+)?(?:shut\s*down|shutdown|restart|reboot)", msg):
             return ("Cancelling shutdown", "shutdown /a")
+
+        # --- Wallpaper ---
+        wl = re.search(
+            r"(?:change|set|apply)\s+(?:the\s+)?(?:wallpaper|desktop\s+background|background)",
+            msg,
+        )
+        if wl:
+            path_match = re.search(r"(?:to|as|using)\s+[\"']?(.+?)[\"']?\s*$", msg)
+            if path_match:
+                img_path = path_match.group(1).strip().rstrip(".")
+                return (
+                    f"Changing wallpaper to '{img_path}'",
+                    f'python -c "import ctypes; r=ctypes.windll.user32.SystemParametersInfoW(20,0,r\'{img_path}\',3); print(\'Wallpaper updated\' if r else \'Failed\'); exit(0 if r else 1)"',
+                )
+
+            return (
+                "Setting a random Windows wallpaper",
+                'python -c "import ctypes,random,os,pathlib; p=list(pathlib.Path(os.environ[\'WINDIR\']+\'\\\\Web\\\\Wallpaper\').rglob(\'*.jpg\'));'
+                ' i=str(random.choice(p)) if p else None;'
+                ' r=ctypes.windll.user32.SystemParametersInfoW(20,0,i,3) if i else 0;'
+                ' print(\'Wallpaper set to:\'+i if r else \'No wallpapers found\');'
+                ' exit(0 if r else 1)"',
+            )
 
         return None
 
