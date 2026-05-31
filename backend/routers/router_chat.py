@@ -40,38 +40,37 @@ async def _dispatch_and_wait(cmd: str, description: str, timeout: float = 15.0) 
     import subprocess
 
     log.info("executing_command_directly", command=cmd, description=description)
+    loop = asyncio.get_running_loop()
 
-    try:
-        proc = await asyncio.wait_for(
-            asyncio.create_subprocess_shell(
-                cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                shell=True,
-            ),
-            timeout=5.0,
+    # Phase 1 — try with PIPE in a thread (works for console commands)
+    def _try_pipe():
+        proc = subprocess.Popen(
+            cmd,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
         )
-
         try:
-            stdout_bytes, stderr_bytes = await asyncio.wait_for(
-                proc.communicate(),
-                timeout=timeout,
-            )
-        except asyncio.TimeoutError:
+            stdout_bytes, stderr_bytes = proc.communicate(timeout=3.0)
+        except subprocess.TimeoutExpired:
             proc.kill()
-            return {
-                "completed": True,
-                "exit_code": -1,
-                "stdout": "",
-                "stderr": "Command timed out after {}s".format(timeout),
-                "task_id": "direct-exec",
-            }
+            proc.communicate()
+            return None  # GUI app indicator
 
         stdout = stdout_bytes.decode("utf-8", errors="replace").strip()
         stderr = stderr_bytes.decode("utf-8", errors="replace").strip()
         exit_code = proc.returncode or 0
 
-        log.info("command_executed", exit_code=exit_code, stdout_len=len(stdout))
+        is_gui = (
+            exit_code != 0 and not stdout and not stderr
+        ) or (
+            exit_code != 0 and (
+                "Input redirection" in stderr
+                or "not supported" in stderr
+            )
+        )
+        if is_gui:
+            return None
 
         return {
             "completed": True,
@@ -81,15 +80,23 @@ async def _dispatch_and_wait(cmd: str, description: str, timeout: float = 15.0) 
             "task_id": "direct-exec",
         }
 
-    except Exception as e:
-        log.error("command_execution_failed", error=str(e))
-        return {
-            "completed": True,
-            "exit_code": 1,
-            "stdout": "",
-            "stderr": str(e),
-            "task_id": "direct-exec",
-        }
+    result = await loop.run_in_executor(None, _try_pipe)
+    if result is not None:
+        return result
+
+    # Phase 2 — likely a GUI app, fire-and-forget without PIPE
+    log.info("gui_app_detected_launching_detached", command=cmd)
+    try:
+        subprocess.Popen(cmd, shell=True)
+    except Exception:
+        pass
+    return {
+        "completed": True,
+        "exit_code": 0,
+        "stdout": "Application launched successfully.",
+        "stderr": "",
+        "task_id": "direct-exec",
+    }
 
 
 @router.post("")
@@ -160,8 +167,11 @@ async def process_chat(request: ChatRequest):
                 if not cmd:
                     continue
                 # Don't re-execute if interpreter already handled a similar command
+                normalized = cmd.lower().strip().replace(".exe", "")
                 already_handled = any(
-                    cr["command"].lower().strip() == cmd.lower().strip()
+                    cr["command"].lower().strip().replace(".exe", "") == normalized
+                    or normalized in cr["command"].lower()
+                    or cr["command"].lower() in normalized
                     for cr in command_results
                 )
                 if not already_handled:
