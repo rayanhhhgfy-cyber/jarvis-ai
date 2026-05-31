@@ -1,0 +1,11 @@
+{
+  "device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f",
+  "device_name": "Sir's Workstation",
+  "device_secret": "InH4baa-QCMJUgZvcXPyTYqN9SoMtSd03YbTDj0VUKQg0Oqp22Gmh8g_pZe8WHk1",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJleHAiOjE3ODI0MzkzNjYsInR5cGUiOiJyZWZyZXNoIn0.zM9CbpTVI2CYzhwNrdFuRAgftpEWuySM_RELzTEQJ54",
+  "paired": true,
+  "backend_url": "http://localhost:8000",
+  "ws_url": "ws://localhost:8000/ws",
+  "workspace_path": "./workspace"
+}

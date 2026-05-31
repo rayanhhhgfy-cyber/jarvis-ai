@@ -1,0 +1,74 @@
+# ====================================================================
+# JARVIS OMEGA — Python Dependencies
+# ====================================================================
+
+# --- Backend Core ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-dotenv==1.1.0
+pydantic==2.11.1
+pydantic-settings==2.9.1
+python-multipart==0.0.20
+
+# --- WebSocket ---
+websockets==14.2
+
+# --- HTTP Client ---
+httpx==0.28.1
+aiohttp==3.11.16
+
+# --- Database ---
+aiosqlite==0.21.0
+chromadb==0.6.3
+
+# --- Authentication & Security ---
+python-jose[cryptography]==3.4.0
+passlib[bcrypt]==1.7.4
+cryptography==44.0.2
+
+# --- Scheduling ---
+apscheduler==3.11.0
+
+# --- Push Notifications ---
+pywebpush==2.0.1
+
+# --- Audio ---
+sounddevice==0.5.1
+soundfile==0.13.1
+numpy==2.2.3
+webrtcvad==2.0.10
+
+# --- Vision & Video ---
+Pillow==11.1.0
+opencv-python-headless==4.11.0.86
+mss==9.0.2
+
+# --- Document Processing ---
+python-docx==1.1.2
+openpyxl==3.1.5
+PyPDF2==3.0.1
+chardet==5.2.0
+
+# --- Browser Automation ---
+playwright==1.50.0
+
+# --- System Monitoring ---
+psutil==6.1.1
+
+# --- Clipboard ---
+pyperclip==1.9.0
+
+# --- File Watching ---
+watchdog==6.0.0
+
+# --- Logging ---
+structlog==25.1.0
+
+# --- Utilities ---
+uuid6==2024.7.10
+orjson==3.10.15
+
+# --- Testing ---
+pytest==8.1.1
+pytest-asyncio==0.23.6
+
