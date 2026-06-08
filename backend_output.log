@@ -1,0 +1,472 @@
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T20:41:13.588525Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T20:41:13.597018Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T20:41:13.601635Z"}
+{"name": "memory_conversations", "count": 20, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.293849Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.304684Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.311697Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.316887Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.323651Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.328946Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.336011Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.343075Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.350616Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.355106Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.355383Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T20:41:14.366815Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T20:41:14.367231Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T20:41:14.367527Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T20:41:14.367827Z"}
+[2026-05-28 23:41:14] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T20:41:14.368091", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T20:41:14.369270Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T20:41:14.369697Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:47:56.654111Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:47:59.685939Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:03.662222Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:10.773549Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:17.782600Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:24.797752Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:31.815609Z"}
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T20:48:38.592975Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:38.836655Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:48:44.751560Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:45.851166Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:52.870157Z"}
+{"memory": 86.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:48:59.762018Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:48:59.885118Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:06.897522Z"}
+INFO:     127.0.0.1:57586 - "OPTIONS /api/chat HTTP/1.1" 200 OK
+{"message_len": 41, "event": "chat_request_received", "level": "info", "timestamp": "2026-05-28T20:49:11.128839Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:13.912398Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:49:14.771869Z"}
+{"event": "Failed to fetch IP location from ip-api.com: ", "level": "warning", "timestamp": "2026-05-28T20:49:16.468379Z"}
+{"reply_length": 82, "event": "llm_response_received", "level": "info", "timestamp": "2026-05-28T20:49:20.606952Z"}
+{"memory_id": "f25acb4b-f1f7-41c6-b649-83c9852733c0", "category": "memory_conversations", "content_length": 157, "event": "memory_stored", "level": "info", "timestamp": "2026-05-28T20:49:20.708725Z"}
+{"audio_size": 844, "event": "tts_generated_for_chat", "level": "info", "timestamp": "2026-05-28T20:49:20.709193Z"}
+INFO:     127.0.0.1:57586 - "POST /api/chat HTTP/1.1" 200 OK
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:20.932263Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:27.940406Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:49:29.782213Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:35.101668Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:42.119070Z"}
+{"memory": 88.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:49:44.796894Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:49.148857Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:49:56.161461Z"}
+{"memory": 88.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:49:59.806630Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:03.179327Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:10.200886Z"}
+{"memory": 88.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:50:14.832587Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:17.211425Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:24.228140Z"}
+{"memory": 89.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:50:29.852884Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:31.290985Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:38.306452Z"}
+{"memory": 89.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:50:44.873479Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:45.322197Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:52.330667Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:50:59.338998Z"}
+{"memory": 89.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:50:59.892737Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:06.357473Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:13.381985Z"}
+{"memory": 88.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:51:14.912613Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:20.389304Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:27.397880Z"}
+{"memory": 91.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:51:29.935022Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:34.407904Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:41.419844Z"}
+{"memory": 88.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:51:44.945977Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:48.426969Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:51:55.439868Z"}
+{"memory": 87.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:51:59.970278Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:02.446414Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:09.465334Z"}
+{"memory": 85.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:52:14.999159Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:16.480838Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:23.492691Z"}
+{"memory": 89.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:52:30.015249Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:30.502103Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:37.513825Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:44.524331Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:51.540374Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:52:58.550608Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:05.560223Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:12.581180Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:19.591984Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:26.603351Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:33.622266Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:40.641941Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:47.651132Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:54.661801Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:53:57.758485Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:54:01.673036Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T20:54:04.787826Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T20:54:31.118120Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:54:45.140198Z"}
+{"memory": 85.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:59:15.441657Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T20:59:45.566478Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:00:00.589182Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:00:15.599961Z"}
+{"memory": 90.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:00:30.615504Z"}
+{"memory": 92.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:00:45.628734Z"}
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:00:59.879811Z"}
+{"total_ui_clients": 2, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:00:59.909110Z"}
+{"total_ui_clients": 1, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:01:11.999648Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:01:12.001669Z"}
+{"event": "jarvis_omega_backend_shutting_down", "level": "info", "timestamp": "2026-05-28T21:01:12.120900Z"}
+{"event": "memory_indexer_stopped", "level": "info", "timestamp": "2026-05-28T21:01:12.125066Z"}
+{"event": "health_monitor_stopped", "level": "info", "timestamp": "2026-05-28T21:01:12.127060Z"}
+{"event": "scheduler_stopped", "level": "info", "timestamp": "2026-05-28T21:01:12.134821Z"}
+[2026-05-29 00:01:12] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:01:12.137951", "category": "system", "action": "shutdown", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend shut down gracefully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "shutdown", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:01:12.146416Z"}
+{"event": "jarvis_omega_backend_shutdown_complete", "level": "info", "timestamp": "2026-05-28T21:01:12.146647Z"}
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T21:01:16.003390Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T21:01:16.005642Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T21:01:16.005941Z"}
+{"name": "memory_conversations", "count": 23, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.358342Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.364100Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.370034Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.376796Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.381361Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.390734Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.396151Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.404725Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.411539Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.417720Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.418056Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T21:01:16.419418Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T21:01:16.419714Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T21:01:16.419953Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T21:01:16.420202Z"}
+[2026-05-29 00:01:16] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:01:16.420419", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:01:16.421026Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T21:01:16.421636Z"}
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T21:01:19.798063Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T21:01:19.801064Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T21:01:19.801424Z"}
+{"name": "memory_conversations", "count": 23, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.125851Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.134355Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.139155Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.144421Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.150386Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.154663Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.161997Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.167105Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.174198Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.180116Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.180479Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T21:01:20.181543Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T21:01:20.181914Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T21:01:20.182180Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T21:01:20.182421Z"}
+[2026-05-29 00:01:20] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:01:20.182850", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:01:20.184172Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T21:01:20.184772Z"}
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:01:20.188506Z"}
+{"total_ui_clients": 2, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:01:20.204353Z"}
+{"total_ui_clients": 1, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:02:05.353596Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:02:05.354650Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:03:50.365874Z"}
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:04:35.409252Z"}
+{"memory": 87.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:04:50.425387Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:05:05.451463Z"}
+{"memory": 87.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:05:20.475487Z"}
+{"memory": 87.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:05:35.501592Z"}
+{"memory": 87.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:05:50.516835Z"}
+{"memory": 87.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:06:05.531849Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:06:20.552415Z"}
+{"memory": 85.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:07:20.618167Z"}
+{"cpu": 80.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:07:35.661236Z"}
+{"memory": 85.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:07:35.661825Z"}
+{"cpu": 86.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:07:50.676670Z"}
+{"memory": 88.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:07:50.677099Z"}
+{"memory": 87.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:08:05.688545Z"}
+{"cpu": 86.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:08:50.807640Z"}
+{"memory": 86.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:08:50.808745Z"}
+{"cpu": 99.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:06.088059Z"}
+{"memory": 87.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:06.089606Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:21.125978Z"}
+{"memory": 91.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:21.126449Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:36.161328Z"}
+{"memory": 91.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:36.162097Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:51.198864Z"}
+{"memory": 91.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:09:51.199731Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:06.228058Z"}
+{"memory": 89.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:06.228981Z"}
+{"cpu": 99.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:21.253320Z"}
+{"memory": 86.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:21.253840Z"}
+{"cpu": 93.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:36.270872Z"}
+{"memory": 86.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:36.280572Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T21:10:45.068786Z"}
+{"cpu": 96.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:51.312403Z"}
+{"memory": 89.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:10:51.312839Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T21:10:52.095987Z"}
+{"cpu": 98.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:11:06.333702Z"}
+{"memory": 94.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:11:06.334460Z"}
+{"cpu": 97.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:11:21.351212Z"}
+{"cpu": 93.4, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:11:36.376436Z"}
+{"cpu": 91.4, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:11:51.392238Z"}
+{"cpu": 90.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:12:06.417711Z"}
+{"cpu": 91.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:12:21.433942Z"}
+{"cpu": 94.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:12:36.450316Z"}
+{"cpu": 92.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:12:51.476631Z"}
+{"cpu": 93.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:06.493888Z"}
+{"memory": 85.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:06.494865Z"}
+{"cpu": 92.9, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:21.521303Z"}
+{"memory": 86.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:21.521733Z"}
+{"cpu": 93.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:36.538687Z"}
+{"memory": 85.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:36.539209Z"}
+{"cpu": 93.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:51.556547Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:13:51.567703Z"}
+{"cpu": 93.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:06.587266Z"}
+{"memory": 85.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:06.587852Z"}
+{"cpu": 93.9, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:21.603968Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:21.613606Z"}
+{"cpu": 92.9, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:36.630154Z"}
+{"memory": 86.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:14:36.639588Z"}
+{"event": "jarvis_omega_backend_shutting_down", "level": "info", "timestamp": "2026-05-28T21:14:48.849294Z"}
+{"event": "memory_indexer_stopped", "level": "info", "timestamp": "2026-05-28T21:14:48.855562Z"}
+{"event": "health_monitor_stopped", "level": "info", "timestamp": "2026-05-28T21:14:48.857430Z"}
+{"event": "scheduler_stopped", "level": "info", "timestamp": "2026-05-28T21:14:48.862021Z"}
+[2026-05-29 00:14:48] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:14:48.865356", "category": "system", "action": "shutdown", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend shut down gracefully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "shutdown", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:14:48.875017Z"}
+{"event": "jarvis_omega_backend_shutdown_complete", "level": "info", "timestamp": "2026-05-28T21:14:48.875391Z"}
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T21:14:53.587193Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T21:14:53.590778Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T21:14:53.591184Z"}
+{"name": "memory_conversations", "count": 23, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.067095Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.075413Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.083979Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.092469Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.100494Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.108730Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.116573Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.124708Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.132800Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.140426Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.140827Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T21:14:54.142644Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T21:14:54.143040Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T21:14:54.143354Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T21:14:54.143648Z"}
+[2026-05-29 00:14:54] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:14:54.143923", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:14:54.144929Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T21:14:54.145951Z"}
+{"cpu": 93.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:15:09.162345Z"}
+{"cpu": 93.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:15:24.200981Z"}
+{"cpu": 92.8, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:15:39.237480Z"}
+{"cpu": 95.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:15:54.285256Z"}
+{"memory": 87.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:15:54.286066Z"}
+{"cpu": 98.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:09.312674Z"}
+{"memory": 86.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:09.313369Z"}
+{"cpu": 96.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:24.330098Z"}
+{"memory": 86.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:24.339558Z"}
+{"cpu": 97.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:39.378483Z"}
+{"memory": 87.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:39.378955Z"}
+{"cpu": 98.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:54.399260Z"}
+{"memory": 86.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:16:54.399914Z"}
+{"cpu": 97.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:09.428187Z"}
+{"memory": 87.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:09.428854Z"}
+{"cpu": 98.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:24.499909Z"}
+{"memory": 87.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:24.500391Z"}
+{"cpu": 96.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:39.522438Z"}
+{"memory": 88.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:39.522887Z"}
+{"cpu": 97.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:54.541024Z"}
+{"memory": 88.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:17:54.550537Z"}
+{"cpu": 95.4, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:09.569117Z"}
+{"memory": 88.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:09.569737Z"}
+{"cpu": 98.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:24.630351Z"}
+{"memory": 93.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:24.631048Z"}
+{"cpu": 98.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:39.648213Z"}
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:39.657789Z"}
+{"cpu": 93.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:54.675976Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:18:54.686438Z"}
+{"cpu": 93.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:09.707490Z"}
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:09.717095Z"}
+{"cpu": 94.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:24.753134Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:24.763764Z"}
+{"cpu": 94.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:39.780697Z"}
+{"memory": 86.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:39.781158Z"}
+{"cpu": 93.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:54.800077Z"}
+{"memory": 87.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:19:54.813094Z"}
+{"cpu": 93.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:09.829110Z"}
+{"memory": 87.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:09.838530Z"}
+{"cpu": 93.6, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:24.856070Z"}
+{"memory": 85.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:24.866099Z"}
+{"cpu": 96.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:39.886727Z"}
+{"memory": 87.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:39.887518Z"}
+{"cpu": 93.4, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:54.905704Z"}
+{"memory": 87.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:20:54.906388Z"}
+{"cpu": 94.8, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:21:09.925857Z"}
+{"memory": 86.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:21:09.935583Z"}
+{"cpu": 95.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:21:24.956502Z"}
+{"cpu": 96.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:21:39.979072Z"}
+{"cpu": 94.9, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:21:55.004093Z"}
+{"cpu": 95.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:22:10.021973Z"}
+{"cpu": 93.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:22:25.134966Z"}
+{"cpu": 92.8, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:22:40.162216Z"}
+{"cpu": 92.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:22:55.179109Z"}
+{"cpu": 92.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:23:10.221177Z"}
+{"cpu": 92.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:23:25.249425Z"}
+{"cpu": 92.9, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:23:40.288963Z"}
+{"cpu": 92.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:23:55.317676Z"}
+{"cpu": 97.2, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:10.381507Z"}
+{"memory": 87.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:10.382234Z"}
+{"cpu": 96.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:25.398127Z"}
+{"memory": 86.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:25.407567Z"}
+{"cpu": 91.1, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:40.422891Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:40.433968Z"}
+{"cpu": 91.7, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:55.470449Z"}
+{"memory": 86.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:24:55.471215Z"}
+{"cpu": 94.5, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:10.492633Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:10.501782Z"}
+{"cpu": 98.3, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:25.531818Z"}
+{"memory": 89.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:25.532713Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:40.643059Z"}
+{"memory": 92.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:40.643547Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:55.842393Z"}
+{"memory": 93.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:25:55.843280Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:26:10.888484Z"}
+{"memory": 90.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:26:10.889052Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:26:25.916616Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:26:40.960258Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:26:55.998497Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:27:11.122211Z"}
+{"memory": 85.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:27:11.128886Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:27:26.183899Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:27:45.812849Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:28:00.877799Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:28:15.916627Z"}
+{"memory": 85.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:28:15.917385Z"}
+{"event": "jarvis_omega_backend_shutting_down", "level": "info", "timestamp": "2026-05-28T21:28:22.242277Z"}
+{"event": "memory_indexer_stopped", "level": "info", "timestamp": "2026-05-28T21:28:22.247291Z"}
+{"event": "health_monitor_stopped", "level": "info", "timestamp": "2026-05-28T21:28:22.249826Z"}
+{"event": "scheduler_stopped", "level": "info", "timestamp": "2026-05-28T21:28:22.257160Z"}
+[2026-05-29 00:28:22] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:28:22.260831", "category": "system", "action": "shutdown", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend shut down gracefully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "shutdown", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:28:22.271588Z"}
+{"event": "jarvis_omega_backend_shutdown_complete", "level": "info", "timestamp": "2026-05-28T21:28:22.271956Z"}
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T21:28:32.836099Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T21:28:32.839880Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T21:28:32.840287Z"}
+{"name": "memory_conversations", "count": 26, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.569244Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.581647Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.592767Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.602094Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.613784Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.623288Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.634002Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.641986Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.652254Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.662395Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.662848Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T21:28:34.665070Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T21:28:34.665413Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T21:28:34.665944Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T21:28:34.666270Z"}
+[2026-05-29 00:28:34] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:28:34.666539", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:28:34.667256Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T21:28:34.667839Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:28:49.723196Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:04.771935Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:19.824927Z"}
+{"memory": 85.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:19.825367Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:34.885272Z"}
+{"memory": 89.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:34.885995Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:49.919286Z"}
+{"memory": 89.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:29:49.919840Z"}
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:29:59.095757Z"}
+{"total_ui_clients": 2, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:29:59.113083Z"}
+{"total_ui_clients": 3, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:29:59.129978Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T21:29:59.234136Z"}
+{"total_ui_clients": 2, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:30:02.264140Z"}
+{"total_ui_clients": 1, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:30:02.265321Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:30:02.265840Z"}
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-05-28T21:30:02.879736Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:05.005572Z"}
+{"memory": 93.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:05.006082Z"}
+{"device_id": "09c9a5cc-e400-4990-95f9-83d50bd1a79f", "event": "ws_rejected_invalid_token", "level": "warning", "timestamp": "2026-05-28T21:30:06.244027Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:20.052028Z"}
+{"memory": 90.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:20.061584Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:35.118060Z"}
+{"memory": 90.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:35.118519Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:50.154266Z"}
+{"memory": 92.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:30:50.154822Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-05-28T21:30:58.210137Z"}
+{"event": "jarvis_omega_backend_shutting_down", "level": "info", "timestamp": "2026-05-28T21:30:58.311440Z"}
+{"event": "memory_indexer_stopped", "level": "info", "timestamp": "2026-05-28T21:30:58.311982Z"}
+{"event": "health_monitor_stopped", "level": "info", "timestamp": "2026-05-28T21:30:58.312447Z"}
+{"event": "scheduler_stopped", "level": "info", "timestamp": "2026-05-28T21:30:58.312918Z"}
+[2026-05-29 00:30:58] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:30:58.313244", "category": "system", "action": "shutdown", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend shut down gracefully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "shutdown", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:30:58.314234Z"}
+{"event": "jarvis_omega_backend_shutdown_complete", "level": "info", "timestamp": "2026-05-28T21:30:58.314531Z"}
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-05-28T21:31:04.608614Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-05-28T21:31:04.612284Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-05-28T21:31:04.612759Z"}
+{"name": "memory_conversations", "count": 26, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.582990Z"}
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.592134Z"}
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.600634Z"}
+{"name": "memory_code", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.609233Z"}
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.617228Z"}
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.625285Z"}
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.633778Z"}
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.641595Z"}
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.650089Z"}
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.658404Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.658894Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-05-28T21:31:05.660446Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-05-28T21:31:05.660859Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-05-28T21:31:05.661174Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-05-28T21:31:05.661450Z"}
+[2026-05-29 00:31:05] INFO     jarvis_omega.audit — {"timestamp": "2026-05-28T21:31:05.661719", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-05-28T21:31:05.662356Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-05-28T21:31:05.662929Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:20.724737Z"}
+{"memory": 87.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:20.725392Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:35.765520Z"}
+{"memory": 86.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:35.775250Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:50.816891Z"}
+{"memory": 86.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:31:50.826335Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:05.876782Z"}
+{"memory": 89.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:05.877335Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:20.931690Z"}
+{"memory": 89.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:20.941333Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:35.996002Z"}
+{"memory": 89.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:35.996542Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:51.037389Z"}
+{"memory": 90.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:32:51.037942Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:06.065484Z"}
+{"memory": 89.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:06.075443Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:21.110561Z"}
+{"memory": 90.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:21.120421Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:36.179914Z"}
+{"memory": 91.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:36.180670Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:51.229264Z"}
+{"memory": 90.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:33:51.229782Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:06.281983Z"}
+{"memory": 90.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:06.283758Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:21.340539Z"}
+{"memory": 91.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:21.342448Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:36.383014Z"}
+{"memory": 91.8, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:36.383744Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:51.420619Z"}
+{"memory": 92.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:34:51.421283Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:06.456722Z"}
+{"memory": 92.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:06.457237Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:21.517912Z"}
+{"memory": 92.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:21.527611Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:36.576007Z"}
+{"memory": 92.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:36.576498Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:51.623119Z"}
+{"memory": 92.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:35:51.623558Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:06.747431Z"}
+{"memory": 92.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:06.747890Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:21.793382Z"}
+{"memory": 90.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:21.793930Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:36.851954Z"}
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:36.861723Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:51.900002Z"}
+{"memory": 86.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:36:51.900521Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:06.939593Z"}
+{"memory": 86.9, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:06.940448Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:21.978483Z"}
+{"memory": 86.3, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:21.987650Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:37.030332Z"}
+{"memory": 87.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-05-28T21:37:37.030907Z"}

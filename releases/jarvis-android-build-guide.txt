@@ -1,0 +1,20 @@
+Jarvis Android App — Build the APK locally
+==========================================
+
+Prerequisites:
+  - Android Studio (latest stable)
+  - JDK 17
+
+Steps:
+  1. Open Android Studio → Open → select folder: android/
+  2. Wait for Gradle sync to finish
+  3. Build → Build Bundle(s) / APK(s) → Build APK(s)
+  4. APK output: android/app/build/outputs/apk/debug/app-debug.apk
+  5. Copy to releases/jarvis-android.apk for dashboard download:
+       copy android\app\build\outputs\apk\debug\app-debug.apk releases\jarvis-android.apk
+
+  6. Install on phone (enable USB debugging or sideload the APK)
+
+Backend must run at http://YOUR_PC_IP:8000 (or use adb reverse for emulator).
+
+Pairing: open web dashboard → Pair Phone → scan QR in the Android app.

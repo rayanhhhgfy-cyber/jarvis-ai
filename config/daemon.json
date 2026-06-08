@@ -1,0 +1,52 @@
+{
+  "name": "jarvis-omega",
+  "version": "1.0.0",
+  "llm": {
+    "primary": "openrouter",
+    "fallbacks": ["openai", "anthropic", "groq", "gemini"],
+    "maxRetries": 3,
+    "timeout": 120000,
+    "temperature": 0.7,
+    "maxTokens": 8192
+  },
+  "providers": {
+    "openrouter": {
+      "apiKey": "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",
+      "model": "openai/gpt-4o-mini"
+    },
+    "openai": {
+      "apiKey": "",
+      "model": "gpt-4o-mini"
+    },
+    "anthropic": {
+      "apiKey": "",
+      "model": "claude-sonnet-4-20250514"
+    },
+    "groq": {
+      "apiKey": "",
+      "model": "llama-3.3-70b-versatile"
+    }
+  },
+  "agent": {
+    "maxIterations": 200,
+    "defaultLevel": 3,
+    "rolePath": "../roles/jarvis-assistant.json",
+    "allowSubAgents": true
+  },
+  "safety": {
+    "noLocalTools": false,
+    "defaultAuthorityLevel": 3,
+    "governedCategories": ["filesystem_delete", "system_shutdown", "network_modify"],
+    "approvalRequired": true,
+    "commandTimeout": 30000,
+    "outputTruncationSize": 10240,
+    "maxFileReadSize": 102400,
+    "emergencyPause": false
+  },
+  "websocket": {
+    "port": 3142,
+    "host": "0.0.0.0",
+    "maxConnections": 100,
+    "heartbeatInterval": 30000
+  }
+}

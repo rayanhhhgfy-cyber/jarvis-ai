@@ -1,0 +1,351 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\Lenovo\\Desktop\\jarvis full\\jarvis-omega']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [13476] using WatchFiles
+INFO:     Started server process [18496]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+INFO:     ('127.0.0.1', 54315) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 54333) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63862) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63876) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63880) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49683) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 57617) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 54349) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 54474) - "WebSocket /ws" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 62031) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 62051) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 58392) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 58394) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49909) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+INFO:     ('127.0.0.1', 58742) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 59966) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 59968) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 60970) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 58548) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 58551) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49694) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49703) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49277) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49280) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56242) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56244) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56249) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56256) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56259) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56264) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56268) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56273) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 58719) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 59732) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49287) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 60061) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 60065) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 60068) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 53708) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56129) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 51234) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 51588) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 51592) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 54303) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52409) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 64718) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 50816) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 50819) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 50238) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63356) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63375) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 63379) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 49973) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52083) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52088) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52091) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52096) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     connection closed
+WARNING:  WatchFiles detected changes in 'backend\services\llm_service.py'. Reloading...
+INFO:     ('127.0.0.1', 53192) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 59010) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [18496]
+WARNING:  WatchFiles detected changes in 'backend\main.py'. Reloading...
+INFO:     Started server process [23440]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+ERROR:    Traceback (most recent call last):
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 700, in lifespan
+    await receive()
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\Lib\asyncio\queues.py", line 186, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+INFO:     Started server process [20336]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+INFO:     ('127.0.0.1', 65241) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 61926) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56133) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56144) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+WARNING:  WatchFiles detected changes in 'backend\main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20336]
+INFO:     Started server process [9560]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend\routers\router_chat.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9560]
+INFO:     Started server process [23232]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend\services\llm_service.py'. Reloading...
+INFO:     ('127.0.0.1', 50431) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 61262) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 50080) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 50081) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('127.0.0.1', 55316) - "WebSocket /ws/ui" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 52377) - "WebSocket /ws" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     ('127.0.0.1', 52381) - "WebSocket /ws/09c9a5cc-e400-4990-95f9-83d50bd1a79f?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIwOWM5YTVjYy1lNDAwLTQ5OTAtOTVmOS04M2Q1MGJkMWE3OWYiLCJkZXZpY2VfbmFtZSI6IlNpcidzIFdvcmtzdGF0aW9uIiwiZXhwIjoxNzc5ODUwOTY2LCJ0eXBlIjoiYWNjZXNzIn0.-3J965BNGB0WVonvUuidPrNx-IJT-QalUi5FqN9LMH8" 403
+INFO:     connection rejected (403 Forbidden)
+INFO:     connection closed
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23232]
+INFO:     Started server process [14304]
+INFO:     Waiting for application startup.
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend\config.py'. Reloading...

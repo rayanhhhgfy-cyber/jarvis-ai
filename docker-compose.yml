@@ -1,0 +1,37 @@
+# ====================================================================
+# JARVIS OMEGA — Multi-Container Compose Orchestration
+# ====================================================================
+
+version: '3.8'
+
+services:
+  # ChromaDB Vector Store Server
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: jarvis_chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/data
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/data
+    restart: unless-stopped
+
+  # JARVIS OMEGA Core FastAPI Backend Server
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jarvis_backend
+    ports:
+      - "8001:8000"
+    depends_on:
+      - chromadb
+    environment:
+      - CHROMA_SERVER_HOST=chromadb
+      - CHROMA_SERVER_HTTP_PORT=8000
+    restart: unless-stopped
+
+volumes:
+  chroma_data:

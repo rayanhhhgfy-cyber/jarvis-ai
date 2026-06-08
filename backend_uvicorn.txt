@@ -1,0 +1,43 @@
+﻿{"ip": "192.168.8.174", "event": "lan_ip_detected", "level": "info", "timestamp": "2026-06-08T18:11:44.046231Z"}
+{"voices_found": 2, "event": "tts_pyttsx3_probe_ok", "level": "info", "timestamp": "2026-06-08T18:11:46.037863Z"}
+{"count": 0, "event": "skills_scanned", "level": "info", "timestamp": "2026-06-08T18:11:47.631952Z"}
+{"hint": "Set CLERK_JWKS_URL, CLERK_ISSUER, CLERK_AUDIENCE in environment/.env.", "event": "clerk_verifier_not_configured", "level": "warning", "timestamp": "2026-06-08T18:11:52.190168Z"}
+{"path": "C:\\Users\\Lenovo\\Downloads\\jarvis-ai-master (2)\\jarvis-ai-master\\backend\\..\\frontend", "event": "frontend_static_mounted", "level": "info", "timestamp": "2026-06-08T18:11:52.364444Z"}
+python : INFO:     Started server process [23272]
+    + CategoryInfo          : NotSpecified: (INFO:     Started server process [23272]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+INFO:     Waiting for application startup.
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-06-08T18:11:52.376311Z"}
+{"db_path": "storage\\jarvis_omega.db", "event": "sqlite_memory_initialize", "level": "info", "timestamp": "2026-06-08T18:11:52.388119Z"}
+{"count": 18, "event": "agent_tracker_initialized", "level": "info", "timestamp": "2026-06-08T18:11:52.415162Z"}
+{"agent_count": 18, "event": "agent_tracker_initialized", "level": "info", "timestamp": "2026-06-08T18:11:52.415292Z"}
+{"db_path": "storage\\jarvis_omega.db", "event": "sqlite_memory_initialize", "level": "info", "timestamp": "2026-06-08T18:11:52.415359Z"}
+{"event": "secure_vault_initialized", "level": "info", "timestamp": "2026-06-08T18:11:53.362987Z"}
+{"event": "task_worker_started", "level": "info", "timestamp": "2026-06-08T18:11:53.363197Z"}
+{"interval_seconds": 1800, "event": "autonomous_scraper_started", "level": "info", "timestamp": "2026-06-08T18:11:53.363290Z"}
+{"event": "cursor_overlay_ready", "level": "info", "timestamp": "2026-06-08T18:11:53.363365Z"}
+{"event": "cursor_overlay_started", "level": "info", "timestamp": "2026-06-08T18:11:53.363413Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-06-08T18:11:53.363452Z"}
+[2026-06-08 21:11:53] INFO     jarvis_omega.audit ù {"timestamp": "2026-06-08T18:11:53.363498", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-06-08T18:11:53.365557Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-06-08T18:11:53.367684Z"}
+{"job_id": "self_improvement_weekly", "func_name": "_weekly_analysis", "event": "recovery_failed_missing_function", "level": "error", "timestamp": "2026-06-08T18:11:53.369628Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-06-08T18:11:53.369762Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-06-08T18:11:53.369838Z"}
+{"job_id": "night_shift_daily", "cron": "0 6 * * *", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-08T18:11:53.389866Z"}
+{"job_id": "night_shift_hourly", "event": "job_scheduled_interval", "level": "info", "timestamp": "2026-06-08T18:11:53.406964Z"}
+{"event": "night_shift_schedules_registered", "level": "info", "timestamp": "2026-06-08T18:11:53.407087Z"}
+{"job_id": "self_improvement_weekly", "cron": "0 3 * * 0", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-08T18:11:53.424468Z"}
+{"event": "self_improvement_schedules_registered", "level": "info", "timestamp": "2026-06-08T18:11:53.424581Z"}
+{"event": "telegram_missing_token_skipping", "level": "warning", "timestamp": "2026-06-08T18:11:53.424682Z"}
+{"event": "discord_missing_token_skipping", "level": "warning", "timestamp": "2026-06-08T18:11:53.424754Z"}
+{"event": "cron_failover_watchdog_started", "level": "info", "timestamp": "2026-06-08T18:11:53.424831Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-06-08T18:11:53.424884Z"}
+{"seconds": 120, "event": "autonomous_scraper_startup_delay", "level": "info", "timestamp": "2026-06-08T18:11:53.425028Z"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-08T18:12:08.523611Z"}
+{"memory": 93.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-08T18:12:08.523798Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-08T18:12:23.669309Z"}
+{"memory": 94.0, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-08T18:12:23.669691Z"}

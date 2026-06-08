@@ -1,0 +1,5 @@
+{"ip": "192.168.8.174", "event": "lan_ip_detected", "level": "info", "timestamp": "2026-06-08T18:05:42.463275Z"}
+{"voices_found": 2, "event": "tts_pyttsx3_probe_ok", "level": "info", "timestamp": "2026-06-08T18:05:45.042313Z"}
+{"count": 0, "event": "skills_scanned", "level": "info", "timestamp": "2026-06-08T18:05:46.929524Z"}
+{"hint": "Set CLERK_JWKS_URL, CLERK_ISSUER, CLERK_AUDIENCE in environment/.env.", "event": "clerk_verifier_not_configured", "level": "warning", "timestamp": "2026-06-08T18:05:52.428253Z"}
+{"path": "C:\\Users\\Lenovo\\Downloads\\jarvis-ai-master (2)\\jarvis-ai-master\\backend\\..\\frontend", "event": "frontend_static_mounted", "level": "info", "timestamp": "2026-06-08T18:05:52.654277Z"}

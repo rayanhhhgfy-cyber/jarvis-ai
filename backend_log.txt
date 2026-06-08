@@ -1,0 +1,74 @@
+INFO:     Started server process [20768]
+INFO:     Waiting for application startup.
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-06-01T03:39:59.743356Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-06-01T03:39:59.745433Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-06-01T03:39:59.745501Z"}
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_conversations", "count": 38, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.107475Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.118596Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.126169Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_code", "count": 58867, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.140929Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.150150Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.161286Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.172371Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.180975Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.187984Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.195676Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.195744Z"}
+{"event": "secure_vault_initialized", "level": "info", "timestamp": "2026-06-01T03:40:00.625293Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-06-01T03:40:00.625410Z"}
+[2026-06-01 06:40:00] INFO     jarvis_omega.audit — {"timestamp": "2026-06-01T03:40:00.625457", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-06-01T03:40:00.626745Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-06-01T03:40:00.627118Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-06-01T03:40:00.627226Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-06-01T03:40:00.627270Z"}
+{"interval": 30, "event": "sentinel_started", "level": "info", "timestamp": "2026-06-01T03:40:00.627317Z"}
+{"path": "workspace", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:40:00.627570Z"}
+{"path": "backend", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:40:00.627678Z"}
+{"path": "local_client", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:40:00.627767Z"}
+{"path": "shared", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:40:00.627856Z"}
+{"path": "frontend", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:40:00.627940Z"}
+{"dirs": ["./workspace", "./backend", "./local_client", "./shared", "./frontend"], "event": "workspace_watcher_started", "level": "info", "timestamp": "2026-06-01T03:40:00.629939Z"}
+{"job_id": "night_shift_daily", "cron": "0 6 * * *", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-01T03:40:00.630432Z"}
+{"job_id": "night_shift_hourly", "event": "job_scheduled_interval", "level": "info", "timestamp": "2026-06-01T03:40:00.630668Z"}
+{"event": "night_shift_schedules_registered", "level": "info", "timestamp": "2026-06-01T03:40:00.630743Z"}
+{"job_id": "self_improvement_weekly", "cron": "0 3 * * 0", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-01T03:40:00.631144Z"}
+{"event": "self_improvement_schedules_registered", "level": "info", "timestamp": "2026-06-01T03:40:00.631202Z"}
+{"event": "telegram_missing_token_skipping", "level": "warning", "timestamp": "2026-06-01T03:40:00.631251Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-06-01T03:40:00.631285Z"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+INFO:     127.0.0.1:50882 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57162 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59932 - "GET /health HTTP/1.1" 200 OK
+{"memory": 86.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:41:47.536678Z"}
+INFO:     127.0.0.1:55961 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /health HTTP/1.1" 200 OK
+{"memory": 85.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:43:02.607959Z"}
+INFO:     127.0.0.1:53504 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "GET /health HTTP/1.1" 200 OK
+{"issue": "high_cpu", "message": "CPU at 99.7%", "event": "auto_fix_attempting", "level": "warning", "timestamp": "2026-06-01T03:43:43.616954Z"}
+{"issue": "high_cpu", "action": "killing_top_process", "event": "auto_fix_success", "level": "info", "timestamp": "2026-06-01T03:43:45.165409Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:43:47.891511Z"}
+{"memory": 91.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:43:47.895362Z"}
+{"cpu": 80.8, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:02.906120Z"}
+INFO:     127.0.0.1:61322 - "GET /health HTTP/1.1" 200 OK
+{"cpu": 94.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:18.064241Z"}
+{"memory": 85.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:18.064959Z"}
+{"cpu": 81.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:33.139722Z"}
+{"cpu": 100.0, "event": "cpu_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:48.878045Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-01T03:44:48.878262Z"}
+INFO:     127.0.0.1:51069 - "GET /health HTTP/1.1" 200 OK
+{"issue": "high_cpu", "message": "CPU at 100.0%", "event": "auto_fix_attempting", "level": "warning", "timestamp": "2026-06-01T03:44:49.191788Z"}

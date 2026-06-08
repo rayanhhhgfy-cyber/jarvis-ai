@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jarvis</string>
+    <string name="accessibility_service_description">Jarvis automation: taps, typing, navigation, and UI control.</string>
+    <string name="foreground_channel_name">Jarvis Connection</string>
+    <string name="foreground_channel_desc">Keeps Jarvis connected to your command center.</string>
+    <string name="foreground_notification_title">Jarvis is online</string>
+    <string name="foreground_notification_text">Cross-device automation active</string>
+</resources>

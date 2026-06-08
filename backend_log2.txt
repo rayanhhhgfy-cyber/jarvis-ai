@@ -1,0 +1,64 @@
+INFO:     Started server process [12076]
+INFO:     Waiting for application startup.
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-06-01T03:43:32.089812Z"}
+{"count": 1, "event": "devices_loaded", "level": "info", "timestamp": "2026-06-01T03:43:32.092630Z"}
+{"persist_dir": "storage\\chromadb", "event": "memory_engine_init", "level": "info", "timestamp": "2026-06-01T03:43:32.092829Z"}
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_conversations", "count": 38, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.507473Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_projects", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.520400Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_documents", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.623948Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_code", "count": 61366, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.649052Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_tasks", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.658250Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_devices", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.666155Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_deployments", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.673016Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_research", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.681271Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_debugging", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.686830Z"}
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+{"name": "memory_preferences", "count": 0, "event": "collection_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.691309Z"}
+{"collections": 10, "event": "memory_engine_ready", "level": "info", "timestamp": "2026-06-01T03:43:32.691386Z"}
+{"event": "secure_vault_initialized", "level": "info", "timestamp": "2026-06-01T03:43:33.269234Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-06-01T03:43:33.269428Z"}
+[2026-06-01 06:43:33] INFO     jarvis_omega.audit — {"timestamp": "2026-06-01T03:43:33.269501", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-06-01T03:43:33.269877Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-06-01T03:43:33.270237Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-06-01T03:43:33.270359Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-06-01T03:43:33.270412Z"}
+{"interval": 30, "event": "sentinel_started", "level": "info", "timestamp": "2026-06-01T03:43:33.270461Z"}
+{"path": "workspace", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:43:33.270825Z"}
+{"path": "backend", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:43:33.270952Z"}
+{"path": "local_client", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:43:33.271046Z"}
+{"path": "shared", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:43:33.271141Z"}
+{"path": "frontend", "event": "watching_directory", "level": "info", "timestamp": "2026-06-01T03:43:33.271253Z"}
+{"dirs": ["./workspace", "./backend", "./local_client", "./shared", "./frontend"], "event": "workspace_watcher_started", "level": "info", "timestamp": "2026-06-01T03:43:33.273167Z"}
+{"job_id": "night_shift_daily", "cron": "0 6 * * *", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-01T03:43:33.273916Z"}
+{"job_id": "night_shift_hourly", "event": "job_scheduled_interval", "level": "info", "timestamp": "2026-06-01T03:43:33.274243Z"}
+{"event": "night_shift_schedules_registered", "level": "info", "timestamp": "2026-06-01T03:43:33.274322Z"}
+{"job_id": "self_improvement_weekly", "cron": "0 3 * * 0", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-01T03:43:33.274781Z"}
+{"event": "self_improvement_schedules_registered", "level": "info", "timestamp": "2026-06-01T03:43:33.274848Z"}
+{"event": "telegram_missing_token_skipping", "level": "warning", "timestamp": "2026-06-01T03:43:33.274913Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-06-01T03:43:33.274951Z"}
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+INFO:     Waiting for application shutdown.
+{"event": "jarvis_omega_backend_shutting_down", "level": "info", "timestamp": "2026-06-01T03:43:33.276854Z"}
+{"event": "memory_indexer_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.280003Z"}
+{"event": "health_monitor_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.283064Z"}
+{"event": "sentinel_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.283508Z"}
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+{"event": "workspace_watcher_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.290993Z"}
+{"event": "telegram_bridge_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.291972Z"}
+{"event": "scheduler_stopped", "level": "info", "timestamp": "2026-06-01T03:43:33.292547Z"}
+[2026-06-01 06:43:33] INFO     jarvis_omega.audit — {"timestamp": "2026-06-01T03:43:33.292654", "category": "system", "action": "shutdown", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend shut down gracefully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "shutdown", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-06-01T03:43:33.293568Z"}
+{"event": "jarvis_omega_backend_shutdown_complete", "level": "info", "timestamp": "2026-06-01T03:43:33.293654Z"}
+INFO:     Application shutdown complete.
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
