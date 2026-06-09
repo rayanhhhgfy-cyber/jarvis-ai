@@ -39,7 +39,7 @@ numpy==2.2.3
 webrtcvad==2.0.10
 
 # --- Vision & Video ---
-Pillow==11.1.0
+Pillow>=10.0.0
 opencv-python-headless==4.11.0.86
 mss==9.0.2
 

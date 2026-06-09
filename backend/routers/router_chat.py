@@ -568,6 +568,50 @@ async def process_chat(request: ChatRequest):
                             payload={"number": number, "text": text},
                             timeout_seconds=30.0,
                         )
+                elif cmd.startswith("instagram_dm_send|"):
+                    parts = cmd.split("|", 2)
+                    ig_user = parts[1].strip() if len(parts) > 1 else ""
+                    ig_msg = parts[2].strip() if len(parts) > 2 else ""
+                    if not ig_msg:
+                        ig_msg = "مرحباً! كيف حالك؟ 😊"
+                    try:
+                        from backend.services.instagram_service import instagram_service
+                        if not ig_user:
+                            ig_result = {"success": False, "error": "No username provided for Instagram DM."}
+                        else:
+                            ig_result = instagram_service.send_dm(ig_user, ig_msg)
+                        ok = ig_result.get("success", False)
+                        result = {
+                            "completed": ok,
+                            "exit_code": 0 if ok else 1,
+                            "stdout": f"Instagram DM sent to {ig_user}: {ig_msg[:60]}" if ok else "",
+                            "stderr": "" if ok else ig_result.get("error", "Failed to send Instagram DM"),
+                            "task_id": "instagram-dm",
+                        }
+                    except Exception as ig_err:
+                        log.warning("instagram_dm_phase1_failed", error=str(ig_err))
+                        result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": f"Instagram DM failed: {ig_err}", "task_id": "instagram-dm"}
+                elif cmd == "instagram_read_inbox":
+                    try:
+                        from backend.services.instagram_service import instagram_service
+                        inbox_result = instagram_service.read_inbox(limit=10)
+                        ok = inbox_result.get("success", False)
+                        convos = inbox_result.get("conversations", [])
+                        names = []
+                        for c in convos:
+                            name = c.get("title") or (c.get("users") or [None])[0] or "Unknown"
+                            names.append(f"{name} ({c.get('thread_id', '?')[:8]}...)")
+                        stdout = f"Instagram inbox conversations: {', '.join(names)}" if names else "Instagram inbox is empty or could not be read."
+                        result = {
+                            "completed": ok,
+                            "exit_code": 0 if ok else 1,
+                            "stdout": stdout if ok else "",
+                            "stderr": "" if ok else inbox_result.get("error", "Failed to read Instagram inbox"),
+                            "task_id": "instagram-inbox",
+                        }
+                    except Exception as ig_err:
+                        log.warning("instagram_inbox_phase1_failed", error=str(ig_err))
+                        result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": f"Read inbox failed: {ig_err}", "task_id": "instagram-inbox"}
                 elif cmd.startswith("desktop_os_execute|"):
                     # Structural command: desktop_os_execute|command
                     command = cmd.split("|", 1)[1] if "|" in cmd else ""
@@ -1058,7 +1102,6 @@ async def process_chat(request: ChatRequest):
                     parts = cmd.split("|", 2)
                     ig_user = parts[1].strip() if len(parts) > 1 else ""
                     ig_msg = parts[2].strip() if len(parts) > 2 else ""
-                    # If no message provided, JARVIS autonomously picks a friendly Arabic greeting
                     if not ig_msg:
                         import random
                         greetings = [
@@ -1072,12 +1115,12 @@ async def process_chat(request: ChatRequest):
                         log.info("instagram_dm_auto_message", chosen=ig_msg[:50])
                     log.info("instagram_dm_send", username=ig_user or "first conversation", message_len=len(ig_msg))
                     try:
-                        ig_result = await browser_service.instagram_dm(ig_user, ig_msg)
+                        from backend.services.instagram_service import instagram_service
+                        ig_result = instagram_service.send_dm(ig_user, ig_msg)
                         if ig_result.get("success"):
-                            sent_to = ig_result.get("sent_to", ig_user or "first conversation")
                             result = {
                                 "completed": True, "exit_code": 0,
-                                "stdout": f"Instagram DM sent to '{sent_to}': {ig_msg}",
+                                "stdout": f"Instagram DM sent to '{ig_user}': {ig_msg}",
                                 "stderr": "", "task_id": "instagram-dm",
                             }
                         else:
@@ -1089,10 +1132,15 @@ async def process_chat(request: ChatRequest):
                 elif cmd == "instagram_read_inbox":
                     log.info("instagram_read_inbox")
                     try:
-                        inbox_result = await browser_service.instagram_read_inbox()
+                        from backend.services.instagram_service import instagram_service
+                        inbox_result = instagram_service.read_inbox(limit=10)
                         if inbox_result.get("success"):
                             convos = inbox_result.get("conversations", [])
-                            convo_list = "\n".join(f"- {c}" for c in convos[:10]) if convos else "No conversations found."
+                            convo_lines = []
+                            for c in convos:
+                                name = c.get("title") or (c.get("users") or [None])[0] or "Unknown"
+                                convo_lines.append(f"- {name} ({c.get('thread_id', '?')[:8]}...)")
+                            convo_list = "\n".join(convo_lines) if convo_lines else "No conversations found."
                             result = {
                                 "completed": True, "exit_code": 0,
                                 "stdout": f"Instagram inbox conversations:\n{convo_list}",

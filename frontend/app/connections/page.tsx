@@ -32,6 +32,7 @@ interface PlatformMeta {
   tokenLabel: string;
   helpUrl: string;
   helpText: string;
+  browserLogin?: boolean;
 }
 
 interface PlatformStatus {
@@ -83,9 +84,9 @@ const PLATFORMS: PlatformMeta[] = [
     icon: <Instagram size={20} />,
     color: "text-pink-400",
     glowColor: "shadow-[0_0_20px_rgba(236,72,153,0.08)]",
-    tokenLabel: "Session Token",
+    tokenLabel: "Username:Password",
     helpUrl: "#",
-    helpText: "JARVIS uses browser automation — provide your session cookie or password",
+    helpText: "Enter your Instagram username:password — JARVIS logs in via the private API (no browser needed).",
   },
   {
     id: "telegram",
@@ -296,6 +297,35 @@ export default function ConnectionsPage() {
                       <Unplug size={12} />
                     )}
                     Disconnect
+                  </button>
+                </div>
+              ) : plat.browserLogin ? (
+                <div className="space-y-3">
+                  <div className="text-xs text-slate-500">{plat.helpText}</div>
+                  <button
+                    onClick={async () => {
+                      try {
+                        setConnecting((p) => ({ ...p, [plat.id]: true }));
+                        const res = await fetch(`/api/connections/open-login/${plat.id}`, { method: "POST" });
+                        if (res.ok) {
+                          setSuccesses((p) => ({ ...p, [plat.id]: `${plat.name} opened in Edge browser. Log in there, then refresh here.` }));
+                        } else {
+                          setErrors((p) => ({ ...p, [plat.id]: "Failed to open browser. Is the backend running?" }));
+                        }
+                      } catch {
+                        setErrors((p) => ({ ...p, [plat.id]: "Failed to open browser." }));
+                      } finally {
+                        setConnecting((p) => ({ ...p, [plat.id]: false }));
+                      }
+                    }}
+                    disabled={isConnecting}
+                    className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold bg-jarvis-500 hover:bg-jarvis-600 text-white transition-colors disabled:opacity-50"
+                  >
+                    {isConnecting ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <span>Open in Browser</span>
+                    )}
                   </button>
                 </div>
               ) : (

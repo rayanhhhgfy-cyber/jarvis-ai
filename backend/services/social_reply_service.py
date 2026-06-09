@@ -59,7 +59,7 @@ PLATFORMS = {
     },
     "instagram": {
         "name": "Instagram",
-        "url": "https://www.instagram.com/direct/inbox/",
+        "url": "https://www.instagram.com/",
         "dm_url": "https://www.instagram.com/direct/inbox/",
         "search_selector": 'input[placeholder="Search"]',
         "message_input_selector": 'textarea[placeholder="Message..."], div[contenteditable="true"][role="textbox"]',
@@ -158,12 +158,53 @@ class SocialReplyService:
         """
         Navigate to a platform's DM inbox and detect unread messages.
 
+        For Instagram, uses the API-based instagram_service (no browser needed).
+
         Returns:
             {platform, unread_count, messages: [{name, preview}], logged_in}
         """
         pconf = PLATFORMS.get(platform)
         if not pconf:
             return {"error": f"Unknown platform: {platform}. Use: {list(PLATFORMS.keys())}"}
+
+        # Instagram uses API service, not browser
+        if platform == "instagram":
+            from backend.services.instagram_service import instagram_service
+            if not instagram_service.available:
+                return {
+                    "platform": platform,
+                    "name": pconf["name"],
+                    "logged_in": False,
+                    "error": "Instagram not connected. Connect via Connections page.",
+                }
+            inbox = instagram_service.read_inbox(limit=10)
+            if not inbox.get("success"):
+                return {
+                    "platform": platform,
+                    "name": pconf["name"],
+                    "logged_in": True,
+                    "unread_count": 0,
+                    "messages": [],
+                    "error": inbox.get("error", ""),
+                }
+            convos = inbox.get("conversations", [])
+            messages = []
+            for c in convos:
+                name = c.get("title") or (c.get("users") or [None])[0] or "Unknown"
+                messages.append({
+                    "name": name,
+                    "preview": c.get("last_message", "")[:200],
+                })
+            self._cached_unread[platform] = messages
+            self._last_scan[platform] = datetime.utcnow()
+            return {
+                "platform": platform,
+                "name": pconf["name"],
+                "logged_in": True,
+                "unread_count": len(messages),
+                "messages": messages,
+                "scanned_at": datetime.utcnow().isoformat(),
+            }
 
         log.info("checking_unread", platform=platform)
 
@@ -283,6 +324,8 @@ class SocialReplyService:
         """
         Open a contact's chat and send a message.
 
+        For Instagram, uses the API-based instagram_service (no browser).
+
         Args:
             platform: whatsapp | instagram | messenger | x
             contact_name: Name of the person to message
@@ -292,6 +335,29 @@ class SocialReplyService:
         pconf = PLATFORMS.get(platform)
         if not pconf:
             return {"error": f"Unknown platform: {platform}"}
+
+        # Instagram uses API service, not browser
+        if platform == "instagram":
+            from backend.services.instagram_service import instagram_service
+            if not instagram_service.available:
+                return {"success": False, "error": "Instagram not connected."}
+            # Polish via LLM if requested
+            final_message = message
+            if polish:
+                try:
+                    from backend.services.llm_service import llm_service
+                    refined = await llm_service.get_response(
+                        user_message=f"Polish this message to {contact_name}: {message}",
+                        system_instructions="You are JARVIS polishing a message. Make it natural. Output ONLY the polished message.",
+                        inject_memory=False,
+                    )
+                    final_message = refined.strip()
+                except Exception as e:
+                    log.warning("polish_failed_using_raw", error=str(e))
+            result = instagram_service.send_dm(contact_name, final_message)
+            result["polished"] = polish
+            result["original_message"] = message if polish else None
+            return result
 
         log.info("sending_reply", platform=platform, contact=contact_name, polish=polish)
 

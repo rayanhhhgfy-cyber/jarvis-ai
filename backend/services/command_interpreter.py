@@ -251,6 +251,7 @@ class CommandInterpreter:
             lambda m: self._check_system_control(m),
             lambda m: self._check_network(m),
             lambda m: self._check_direct_command(m, original),
+            lambda m: self._check_instagram_dm(m, context),
             lambda m: self._check_social_send(m, original, context),
             lambda m: self._check_navigate_within_site(m, context),
             lambda m: self._check_desktop_interaction(m),
@@ -719,6 +720,35 @@ class CommandInterpreter:
                 f'start "" "https://www.messenger.com"',
             )
 
+        return None
+
+    def _check_instagram_dm(self, msg: str, context: Optional[dict] = None) -> Optional[Tuple[str, str]]:
+        """Detect Instagram DM intent and return structured commands."""
+        # "send a dm to [user] on instagram"
+        m = re.search(r"(?:send|message|dm)\s+(?:a\s+)?(?:dm|message)?\s*(?:to\s+)?(\w+)\s+(?:on|via|through)\s+instagram", msg, re.IGNORECASE)
+        if m:
+            user = m.group(1)
+            return (f"Sending Instagram DM to {user}", f"instagram_dm_send|{user}|")
+        # "send someone a message on instagram" / "send a message on instagram"
+        m = re.search(r"(?:send|message|dm)\s+(?:.+?\s+)?(?:message|dm)\s+(?:on|in|via|through)\s+instagram", msg, re.IGNORECASE)
+        if m:
+            return ("Sending Instagram DM to first contact", "instagram_dm_send||")
+        # "send [message] on instagram"
+        m = re.search(r"^send\s+(.+?)\s+(?:on|in|via|through)\s+instagram$", msg, re.IGNORECASE)
+        if m:
+            return (f"Sending message on Instagram: {m.group(1)[:50]}", f"instagram_dm_send||{m.group(1)}")
+        # "send instagram message/dm" (no explicit "on")
+        m = re.search(r"(?:send|message|dm)\s+(?:a\s+)?(?:message|dm)\s+(?:on\s+)?instagram", msg, re.IGNORECASE)
+        if m:
+            return ("Sending Instagram DM to first contact", "instagram_dm_send||")
+        # "open instagram and send someone a message"
+        m = re.search(r"(?:open|launch)\s+instagram\s+and\s+(?:send|message|dm)", msg, re.IGNORECASE)
+        if m:
+            return ("Opening Instagram and sending DM to first contact", "instagram_dm_send||")
+        # "read instagram inbox" / "check instagram messages"
+        m = re.search(r"(?:read|check|open|show)\s+(?:my\s+)?instagram\s+(?:inbox|dm|direct|messages)", msg, re.IGNORECASE)
+        if m:
+            return ("Reading Instagram inbox", "instagram_read_inbox")
         return None
 
     def _check_navigate_within_site(self, msg: str, context: Optional[dict] = None) -> Optional[Tuple[str, str]]:

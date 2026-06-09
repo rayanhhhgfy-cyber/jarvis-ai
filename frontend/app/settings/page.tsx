@@ -144,12 +144,19 @@ export default function SettingsPage() {
             type="button"
             role="switch"
             aria-checked={settings.start_on_wakeup}
-            onClick={() =>
-              setSettings((prev) => ({
-                ...prev,
-                start_on_wakeup: !prev.start_on_wakeup,
-              }))
-            }
+            onClick={async () => {
+              const next = !settings.start_on_wakeup;
+              setSettings((prev) => ({ ...prev, start_on_wakeup: next }));
+              try {
+                await fetch("/api/settings/default", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ ...settings, start_on_wakeup: next }),
+                });
+              } catch (e) {
+                setSettings((prev) => ({ ...prev, start_on_wakeup: !next }));
+              }
+            }}
             className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors ${
               settings.start_on_wakeup
                 ? "bg-emerald-500"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { QrCode, Smartphone, CheckCircle, Clock } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { ChatPanel, type ChatMessage } from "./ChatPanel";
@@ -51,7 +51,23 @@ export function LocalDashboard() {
   const [wsError, setWsError] = useState<string | null>(null);
   const [desktopOnline, setDesktopOnline] = useState(false);
   const [mobileOnline, setMobileOnline] = useState(false);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => {
+    try {
+      const stored = window.localStorage.getItem("jarvis.chat.messages");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) return parsed as ChatMessage[];
+      }
+    } catch {}
+    return [];
+  });
+  const chatInitialized = useRef(false);
+  useEffect(() => {
+    if (!chatInitialized.current) { chatInitialized.current = true; return; }
+    try {
+      window.localStorage.setItem("jarvis.chat.messages", JSON.stringify(chatMessages));
+    } catch {}
+  }, [chatMessages]);
   const [pairPayload, setPairPayload] = useState<PairPayload | null>(null);
   const [pairingLoading, setPairingLoading] = useState(false);
   const [pairingError, setPairingError] = useState<string | null>(null);

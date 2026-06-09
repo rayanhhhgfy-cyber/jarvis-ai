@@ -9,92 +9,57 @@ frontend UI WebSocket hub.
 
 from __future__ import annotations
 
-# Disable ChromaDB telemetry BEFORE any imports
+# ChromaDB compatibility layer
+# On Python 3.13+, the real chromadb package crashes during import due to
+# posthog telemetry signature mismatch.  This tries real chromadb first,
+# then falls back to a proper no-op stub so dependent services degrade gracefully.
 import os
 os.environ['ANONYMIZED_TELEMETRY'] = 'False'
 os.environ['CHROMA_TELEMETRY'] = 'False'
 os.environ['CHROMA_SKIP_TELEMETRY'] = 'True'
 os.environ['CHROMADB_SKIP_TELEMETRY'] = 'True'
 
-# Pre-populate sys.modules with fake chromadb to prevent real chromadb import entirely.
-# The real chromadb package fires telemetry events DURING import (via posthog), which
-# crashes on Python 3.13+ due to `capture()` signature mismatch.  We short-circuit
-# before Python ever touches the real package on disk.
 import sys
 import types
 
-_fake_chromadb = types.ModuleType('chromadb')
-_fake_chromadb.__path__ = []
-_fake_chromadb.__file__ = '<disabled>'
-
-
-def _noop(*args, **kwargs):
-    pass
-
-
-class _FakeClientAPI:
-    """Stand-in for chromadb.ClientAPI — every method is a no-op."""
-    def __call__(self, *args, **kwargs):
-        return None
-
-    def get_or_create_collection(self, *args, **kwargs):
-        return _FakeCollection()
-
-    def get_collection(self, *args, **kwargs):
-        return _FakeCollection()
-
-    def delete_collection(self, *args, **kwargs):
-        pass
-
-    def heartbeat(self, *args, **kwargs):
-        return 0
-
-    def list_collections(self, *args, **kwargs):
-        return []
-
-    def reset(self, *args, **kwargs):
-        pass
-
-
-class _FakeCollection:
-    """Stand-in for a ChromaDB collection object."""
-    def count(self, *args, **kwargs):
-        return 0
-
-    def add(self, *args, **kwargs):
-        pass
-
-    def upsert(self, *args, **kwargs):
-        pass
-
-    def update(self, *args, **kwargs):
-        pass
-
-    def delete(self, *args, **kwargs):
-        pass
-
-    def get(self, *args, **kwargs):
-        return {'ids': [], 'documents': [], 'metadatas': [], 'distances': []}
-
-    def query(self, *args, **kwargs):
-        return {'ids': [[]], 'documents': [[]], 'metadatas': [[]], 'distances': [[]]}
-
-
-_fake_chromadb.telemetry = types.ModuleType('telemetry')
-_fake_chromadb.telemetry.capture = _noop
-_fake_chromadb.telemetry.product = types.ModuleType('product')
-_fake_chromadb.telemetry.product.capture = _noop
-_fake_chromadb.PersistentClient = lambda path=None, settings=None: _FakeClientAPI()
-_fake_chromadb.ClientAPI = _FakeClientAPI
-_fake_chromadb.Settings = lambda **kw: types.SimpleNamespace(**kw)
-_fake_chromadb.Collection = _FakeCollection
-_fake_chromadb.__version__ = '0.0.0-disabled'
-
-# Lock the fake module into sys.modules so any importlib import of chromadb
-# returns our fake instead of hitting the real (telemetry-emitting) package.
-sys.modules['chromadb'] = _fake_chromadb
-sys.modules['chromadb.telemetry'] = _fake_chromadb.telemetry
-sys.modules['chromadb.telemetry.product'] = _fake_chromadb.telemetry.product
+try:
+    _chroma_logger = __import__('logging').getLogger("chromadb_compat")
+    _ph = types.ModuleType('posthog')
+    def _ph_noop(*args, **kwargs): pass
+    for _attr in ('capture','identify','alias','group','page','screen'):
+        setattr(_ph, _attr, _ph_noop)
+    _ph.get_distinct_id = lambda: None
+    if 'posthog' not in sys.modules:
+        sys.modules['posthog'] = _ph
+    import chromadb as _rc
+    _chroma_logger.info("chromadb_real_loaded", extra={'version': getattr(_rc,'__version__','unknown')})
+    _CHROMA_AVAILABLE = True
+except Exception:
+    _CHROMA_AVAILABLE = False
+    class _FakeClientAPI:
+        def __call__(self,*a,**kw): return None
+        def get_or_create_collection(self,*a,**kw): return _FakeCollection()
+        def get_collection(self,*a,**kw): return _FakeCollection()
+        def delete_collection(self,*a,**kw): pass
+        def heartbeat(self,*a,**kw): return 0
+        def list_collections(self,*a,**kw): return []
+        def reset(self,*a,**kw): pass
+    class _FakeCollection:
+        def count(self,*a,**kw): return 0
+        def add(self,*a,**kw): pass
+        def upsert(self,*a,**kw): pass
+        def update(self,*a,**kw): pass
+        def delete(self,*a,**kw): pass
+        def get(self,*a,**kw): return {'ids':[],'documents':[],'metadatas':[],'distances':[]}
+        def query(self,*a,**kw): return {'ids':[[]],'documents':[[]],'metadatas':[[]],'distances':[[]]}
+    _fc = types.ModuleType('chromadb')
+    _fc.__path__ = []; _fc.__file__ = '<stub>'
+    _fc.PersistentClient = lambda path=None,settings=None: _FakeClientAPI()
+    _fc.ClientAPI = _FakeClientAPI
+    _fc.Settings = lambda **kw: types.SimpleNamespace(**kw)
+    _fc.Collection = _FakeCollection
+    _fc.__version__ = '0.0.0-stub'
+    sys.modules['chromadb'] = _fc
 
 import asyncio
 from datetime import datetime
@@ -169,6 +134,7 @@ from backend.routers.router_mods import router as router_mods
 from backend.routers.router_connections import router as router_connections
 from backend.routers.router_focus import router as router_focus
 from backend.routers.router_social import router as router_social
+from backend.routers.router_finance import router as router_finance
 
 # New pillar routers
 from backend.vault.vault_router import router as router_vault
@@ -456,12 +422,12 @@ async def lifespan(app: FastAPI):
     # Initialize V2 memory engine
     await memory_engine.initialize()
     
-    # Skip project_graph initialization temporarily to isolate ChromaDB telemetry issue
-    # try:
-    #     await project_graph.initialize()
-    # except Exception as e:
-    #     log.error("project_graph_startup_failed", error=str(e))
-    #     log.warning("project_graph_continuing_without", message="Project features may be limited")
+    # Initialize project graph (graceful fallback if ChromaDB unavailable)
+    try:
+        await project_graph.initialize()
+    except Exception as e:
+        log.error("project_graph_startup_failed", error=str(e))
+        log.warning("project_graph_continuing_without", message="Project features may be limited")
 
     # Register components in health monitor
     health_monitor.register_component("WebSocketManager")
@@ -481,10 +447,18 @@ async def lifespan(app: FastAPI):
     asyncio.create_task(health_monitor.start())
     # Start memory indexer
     asyncio.create_task(memory_indexer.start())
-    # Skip sentinel_service temporarily to isolate ChromaDB telemetry issue
-    # asyncio.create_task(sentinel_service.start())
-    # Skip workspace_watcher temporarily to isolate ChromaDB telemetry issue
-    # asyncio.create_task(workspace_watcher.start())
+    # Start sentinel with graceful fallback
+    try:
+        asyncio.create_task(sentinel_service.start())
+    except Exception as e:
+        log.warning("sentinel_start_skipped", error=str(e))
+
+    # Start workspace watcher with graceful fallback
+    try:
+        from backend.memory.workspace_watcher import workspace_watcher
+        asyncio.create_task(workspace_watcher.start())
+    except Exception as e:
+        log.warning("workspace_watcher_start_skipped", error=str(e))
     
     # Night Shift & Self-Improvement schedules
     asyncio.create_task(night_shift.register_schedules())
@@ -513,6 +487,12 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         log.debug("cursor_overlay_not_available", error=str(e))
 
+    # Start Playwright browser service (non-blocking; fallback for Instagram/connections)
+    try:
+        asyncio.create_task(browser_service._ensure_running())
+    except Exception as e:
+        log.warning("pw_browser_start_skipped", error=str(e))
+
     log.info("jarvis_omega_backend_ready")
     audit_log.log(
         category="system",
@@ -538,8 +518,10 @@ async def lifespan(app: FastAPI):
 
     await memory_indexer.stop()
     await health_monitor.stop()
-    # await sentinel_service.stop()  # Disabled since we're not starting it
-    # await workspace_watcher.stop()  # Disabled since we're not starting it
+    try: await sentinel_service.stop()
+    except Exception: pass
+    try: await workspace_watcher.stop()
+    except Exception: pass
     await telegram_bridge.stop()
     await autonomous_scraper.stop()
     await cron_failover.stop()
@@ -671,6 +653,7 @@ app.include_router(router_mods)
 app.include_router(router_connections)
 app.include_router(router_focus)
 app.include_router(router_social)
+app.include_router(router_finance)
 
 
 # ====================================================================

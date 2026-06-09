@@ -3,35 +3,40 @@
 Maintains a persistent Chromium browser (visible window) that JARVIS can
 navigate, click, type, press keys, and screenshot — preserving state across
 multi-step interactions like login flows.
+
+Launches Edge directly (no Playwright automation flags) and connects via CDP
+to avoid anti-bot detection.
 """
-import os, sys, json, time, base64, threading, queue, traceback
+import os, sys, json, time, base64, threading, queue, traceback, subprocess
 
 from playwright.sync_api import sync_playwright
 from flask import Flask, request, jsonify
 
 _udir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "storage", "pw-profile"))
+_EDGE_PATH = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+_port = 9223  # default Flask API port, overridden by CLI arg
+_cdp_port = 9224  # Edge remote debugging port (= _port + 1)
 
 _cmd_queue = queue.Queue()
 _result_queue = queue.Queue()
 
 # Track whether browser was initialized at least once
 _browser_inited = False
+_edge_proc = None
 
 
 def _pw_thread():
-    pw = None; pw_ctx = None; ctx = None; page = None
-    global _browser_inited
+    pw = None; browser = None; ctx = None; page = None
+    global _browser_inited, _edge_proc
 
     def _ensure():
-        """Lazy-init: launch browser once, then reuse across commands.
-        Only recreates if the page crashed or was closed externally."""
-        nonlocal pw, pw_ctx, ctx, page
+        """Lazy-init: launch Edge directly + CDP connection. Reuse across commands."""
+        nonlocal pw, browser, ctx, page
 
         # If page exists and is usable, keep it
         if page is not None:
             try:
-                # Quick health check
-                page.evaluate("1 + 1")
+                page.title(timeout=1000)
                 return
             except Exception:
                 pass
@@ -46,25 +51,108 @@ def _pw_thread():
                 try: ctx.close()
                 except: pass
                 ctx = None
-            if pw_ctx is not None:
-                try: pw_ctx.__exit__(None, None, None)
+            if browser is not None:
+                try: browser.close()
                 except: pass
-                pw_ctx = None
+                browser = None
+            if pw is not None:
+                try: pw.stop()
+                except: pass
                 pw = None
         except Exception:
             pass
 
-        # Fresh context with persistent profile
+        # Kill previous Edge process if any
+        global _edge_proc
+        if _edge_proc and _edge_proc.poll() is None:
+            try: _edge_proc.kill()
+            except: pass
+            _edge_proc = None
+
+        # Launch Edge DIRECTLY (no Playwright automation flags)
         os.makedirs(_udir, exist_ok=True)
-        pw_ctx = sync_playwright()
-        pw = pw_ctx.__enter__()
-        ctx = pw.chromium.launch_persistent_context(
-            _udir, headless=False, channel="msedge",
-            args=["--no-first-run", "--no-default-browser-check", "--disable-infobars",
-                   "--no-sandbox", "--disable-gpu", "--start-maximized",
-                   "--disable-blink-features=AutomationControlled"],
+        _edge_proc = subprocess.Popen(
+            [_EDGE_PATH,
+             f"--remote-debugging-port={_cdp_port}",
+             f"--user-data-dir={_udir}",
+             "--no-first-run",
+             "--no-default-browser-check",
+             "--start-maximized",
+             "--disable-features=msUndersuppressedNotifications",
+             "--disable-sync",
+             "--noerrdialogs",
+             "--disable-background-networking",
+             "--disable-component-update",
+             "--disable-crash-reporter",
+             "--disable-breakpad",
+             "--disable-backgrounding-occluded-windows",
+             "--disable-renderer-backgrounding",
+             "--disable-hang-monitor",
+             "about:blank"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
+
+        # Wait for Edge CDP port to be ready
+        import http.client
+        cdplive = False
+        for _ in range(30):
+            time.sleep(0.5)
+            try:
+                conn = http.client.HTTPConnection("127.0.0.1", _cdp_port, timeout=2)
+                conn.request("GET", "/json/version")
+                resp = conn.getresponse()
+                if resp.status == 200:
+                    cdplive = True
+                    break
+                conn.close()
+            except Exception:
+                pass
+        if not cdplive:
+            raise RuntimeError("Edge CDP did not start in time")
+
+        # Connect via CDP — no automation flags, looks like a real user browser
+        pw_ctx_ = sync_playwright()
+        pw = pw_ctx_.__enter__()
+        browser = pw.chromium.connect_over_cdp(f"http://127.0.0.1:{_cdp_port}")
+        ctx = browser.contexts[0]
+        for p in ctx.pages:
+            try: p.close()
+            except: pass
+
         page = ctx.new_page()
+
+        # Stealth init script (extra layer — CDP alone already avoids most detection)
+        ctx.add_init_script("""
+        Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+        Object.defineProperty(navigator, 'plugins', { get: () => [1,2,3,4,5] });
+        Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+        Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
+        if (window.chrome) {
+            Object.defineProperty(chrome, 'runtime', {
+                get: () => ({ id: undefined, connect: () => {}, sendMessage: () => {}, getManifest: () => ({}) }),
+            });
+        }
+        const _oq = window.navigator.permissions.query;
+        window.navigator.permissions.query = (p) =>
+            _oq.call(window.navigator.permissions, p).then((s) => { if (p.name === 'notifications') s.state = 'prompt'; return s; });
+        Object.defineProperty(navigator, 'connection', {
+            get: () => ({ effectiveType: '4g', rtt: 50, downlink: 10, saveData: false }),
+        });
+        Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
+        Object.defineProperty(navigator, 'deviceMemory', { get: () => 8 });
+        Object.defineProperty(screen, 'colorDepth', { get: () => 24 });
+        Object.defineProperty(screen, 'pixelDepth', { get: () => 24 });
+        const _getExt = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (...a) {
+            const c = _getExt.apply(this, a);
+            if (c && c.getParameter) { const _op = c.getParameter; c.getParameter = function (p) { if (p === 37445) return 'Intel Inc.'; if (p === 37446) return 'Intel Iris OpenGL Engine'; return _op.call(this, p); }; }
+            return c;
+        };
+        for (const k of ['__fxdriver_unwrapped', '__selenium_unwrapped', 'callPhantom', '_Selenium_IDE_Recorder', '_selenium']) {
+            if (k in window) { window[k] = undefined; }
+        }
+        """)
         _browser_inited = True
 
     def _goto(url):
@@ -209,7 +297,8 @@ def _pw_thread():
                 elif cmd == "screenshot":
                     _ensure()
                     scr = page.screenshot()
-                    result = {"success": True, "screenshot_base64": base64.b64encode(scr).decode(), "title": page.title(), "url": pa                elif cmd == "instagram_dm":
+                    result = {"success": True, "screenshot_base64": base64.b64encode(scr).decode(), "title": page.title(), "url": page.url}
+                elif cmd == "instagram_dm":
                     _ensure()
                     username = args_dict.get("username", "").strip()
                     message = args_dict.get("message", "").strip()
@@ -382,7 +471,7 @@ def _pw_thread():
                                     if cleaned:
                                         threads = cleaned
                                         break
-                                  except Exception:
+                                except Exception:
                                     pass
                             if not threads:
                                 try:
@@ -392,7 +481,7 @@ def _pw_thread():
                                     pass
                             result = {"success": True, "conversations": threads[:20]}
                     except Exception as ire:
-                        result = {"success": False, "error": str(ire)}": str(ire)}
+                        result = {"success": False, "error": str(ire)}
 
                 elif cmd == "close":
                     if page:
@@ -403,11 +492,18 @@ def _pw_thread():
                         try: ctx.close()
                         except: pass
                         ctx = None
-                    if pw_ctx:
-                        try: pw_ctx.__exit__(None, None, None)
+                    if browser:
+                        try: browser.close()
                         except: pass
-                        pw_ctx = None
-                    pw = None
+                        browser = None
+                    if pw:
+                        try: pw.stop()
+                        except: pass
+                        pw = None
+                    if _edge_proc and _edge_proc.poll() is None:
+                        try: _edge_proc.kill()
+                        except: pass
+                        _edge_proc = None
                     result = {"success": True}
                 else:
                     result = {"success": False, "error": f"Unknown command: {cmd}"}
@@ -519,6 +615,7 @@ def route_instagram_read_inbox():
 
 
 if __name__ == "__main__":
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 9223
-    print(f"pw_browser starting on port {port}", flush=True)
-    app.run(host="127.0.0.1", port=port, debug=False, use_reloader=False, threaded=True)
+    if len(sys.argv) > 1:
+        _port = int(sys.argv[1])
+    print(f"pw_browser starting on port {_port}", flush=True)
+    app.run(host="127.0.0.1", port=_port, debug=False, use_reloader=False, threaded=True)

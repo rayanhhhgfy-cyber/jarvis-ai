@@ -2,8 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { MessageSquare, Settings, Image, Layers, Ear, EarOff, Loader2, Hammer, Film, Link2, Target } from "lucide-react";
+import { MessageSquare, Settings, Image, Layers, Ear, EarOff, Loader2, Hammer, Film, Link2, Target, TrendingUp } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 import "./globals.css";
 
 function useWakeWordListener() {
@@ -226,6 +227,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Media
             </Link>
             <Link
+              href="/finance"
+              className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                pathname === "/finance"
+                  ? "bg-jarvis-500/20 text-jarvis-300"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <TrendingUp size={16} />
+              Finance
+            </Link>
+            <Link
               href="/settings"
               className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 pathname === "/settings"
@@ -238,7 +250,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
         </nav>
-        <main className="mx-auto max-w-6xl p-4 lg:p-6">{children}</main>
+        <main className="mx-auto max-w-6xl p-4 lg:p-6">
+          <ErrorBoundary>{children}</ErrorBoundary>
+        </main>
         <div className="fixed bottom-3 left-3 rounded-md bg-slate-900/80 px-2 py-1 text-[10px] text-slate-600 border border-slate-800/50 select-none">
           v1.0212
         </div>

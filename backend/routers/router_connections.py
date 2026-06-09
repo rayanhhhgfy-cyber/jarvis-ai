@@ -1,9 +1,7 @@
-# ====================================================================
-# JARVIS OMEGA — Connections Router
-# ====================================================================
-"""
-API endpoints for managing integrations with Vercel, GitHub, Gmail, and Instagram.
+"""API endpoints for managing integrations with Vercel, GitHub, Gmail, and Instagram.
 Saves credentials securely into Secure Vault and performs real verification checks.
+
+Instagram uses instagrapi (API-based, no browser needed).
 """
 
 from __future__ import annotations
@@ -83,9 +81,9 @@ async def get_connections_status() -> Dict[str, Any]:
     gmail_token = secure_vault.retrieve("GMAIL_TOKEN") or secure_vault.retrieve("GMAIL_API_KEY")
     status["gmail"] = {"connected": bool(gmail_token)}
 
-    # 4. Instagram
-    insta_token = secure_vault.retrieve("INSTAGRAM_PASSWORD")
-    status["instagram"] = {"connected": bool(insta_token)}
+    # 4. Instagram — check via instagrapi service
+    from backend.services.instagram_service import instagram_service
+    status["instagram"] = {"connected": instagram_service.available}
 
     # 5. Telegram
     telegram_token = secure_vault.retrieve("TELEGRAM_BOT_TOKEN")
@@ -162,8 +160,18 @@ async def connect_platform(req: ConnectRequest) -> Dict[str, Any]:
         return {"success": True}
 
     elif platform == "instagram":
-        secure_vault.store("INSTAGRAM_PASSWORD", token)
-        return {"success": True, "message": "Instagram token stored."}
+        # token format: "username:password" or "username:password:verification_code"
+        parts = token.split(":", 2)
+        if len(parts) < 2:
+            raise HTTPException(status_code=400, detail="Instagram format: username:password or username:password:code")
+        username, password = parts[0].strip(), parts[1].strip()
+        verification_code = parts[2].strip() if len(parts) > 2 else ""
+        from backend.services.instagram_service import instagram_service
+        result = instagram_service.login(username, password, verification_code)
+        if result.get("success"):
+            secure_vault.store("INSTAGRAM_PASSWORD", token)
+            return {"success": True, "message": "Instagram connected via API."}
+        raise HTTPException(status_code=400, detail=result.get("error", "Instagram login failed."))
 
     elif platform == "telegram":
         try:
@@ -202,6 +210,8 @@ async def disconnect_platform(platform: str) -> Dict[str, Any]:
         secure_vault.delete("GMAIL_API_KEY")
     elif platform == "instagram":
         secure_vault.delete("INSTAGRAM_PASSWORD")
+        from backend.services.instagram_service import instagram_service
+        instagram_service.logout()
     elif platform == "telegram":
         secure_vault.delete("TELEGRAM_BOT_TOKEN")
     elif platform == "whatsapp":
@@ -217,9 +227,16 @@ async def open_login_page(platform: str) -> Dict[str, Any]:
     """Direct Playwright to open the login page for a platform."""
     platform = platform.lower()
     from backend.services.social_reply_service import social_reply_service, PLATFORMS
+    from backend.services.browser_service import browser_service
     pconf = PLATFORMS.get(platform)
     if pconf:
-        await social_reply_service._pw_call("navigate", {"url": pconf["url"]})
-        return {"success": True, "message": f"{pconf['name']} page opened in Jarvis browser."}
+        try:
+            await browser_service._ensure_running()
+        except RuntimeError as e:
+            return {"success": False, "error": f"Browser engine not available: {e}"}
+        result = await social_reply_service._pw_call("navigate", {"url": pconf["url"]})
+        if result.get("success"):
+            return {"success": True, "message": f"{pconf['name']} page opened in Jarvis browser."}
+        return {"success": False, "error": result.get("error", "Browser engine failed to open page.")}
     return {"success": False, "error": f"Platform login page not found: {platform}"}
 
