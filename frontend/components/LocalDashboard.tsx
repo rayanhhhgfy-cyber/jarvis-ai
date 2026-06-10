@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { QrCode, Smartphone, CheckCircle, Clock } from "lucide-react";
+import { QrCode, Smartphone, CheckCircle, Clock, X } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { ChatPanel, type ChatMessage } from "./ChatPanel";
 import { DownloadHub } from "./DownloadHub";
@@ -10,13 +10,14 @@ import { SidebarDeviceStatus, DeviceTypePill } from "./SidebarDeviceStatus";
 import { AgentStatusGrid } from "./AgentStatusGrid";
 import { SubsystemGrid } from "./SubsystemGrid";
 import { FocusModeControl } from "./FocusModeControl";
+import { AutoResponderControl } from "./AutoResponderControl";
 import {
   ensureDesktopTrusted,
   fetchConnectedDevices,
   generatePairingQr,
 } from "../lib/api";
 import { getWebSocketBaseUrl } from "../lib/config";
-import { subscribeJarvisWs } from "../lib/jarvisWs";
+import { subscribeJarvisWs, addMessageListener } from "../lib/jarvisWs";
 
 type PairPayload = {
   user_id: string;
@@ -110,6 +111,20 @@ export function LocalDashboard() {
     });
   }, [ready, refreshDevices]);
 
+  const [urgentAlert, setUrgentAlert] = useState<{ from: string; message: string; platform: string } | null>(null);
+
+  useEffect(() => {
+    if (!ready) return;
+    return addMessageListener((msg) => {
+      if (msg.type === "urgent_message") {
+        const payload = msg.payload as { from: string; message: string; platform: string } | undefined;
+        if (payload) {
+          setUrgentAlert(payload);
+        }
+      }
+    });
+  }, [ready]);
+
   const generatePairing = async () => {
     setPairingLoading(true);
     setPairingError(null);
@@ -157,8 +172,31 @@ export function LocalDashboard() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-          <aside className="w-full lg:w-72 space-y-4">
+    <div className="flex flex-col gap-6">
+      {urgentAlert && (
+        <div className="fixed top-4 right-4 z-50 max-w-sm animate-in slide-in-from-right-4 fade-in">
+          <div className="rounded-xl border border-red-500/40 bg-red-900/40 backdrop-blur-md p-4 shadow-lg">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <div className="flex items-center gap-2 text-red-300 text-sm font-semibold mb-1">
+                  <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
+                  Urgent — {urgentAlert.platform}
+                </div>
+                <div className="text-white font-medium text-sm mb-0.5">{urgentAlert.from}</div>
+                <div className="text-slate-300 text-sm">{urgentAlert.message}</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setUrgentAlert(null)}
+                className="shrink-0 rounded-lg p-1 hover:bg-red-800/40 text-red-300"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <aside className="w-full lg:w-72 space-y-4">
             <div className="glass rounded-2xl p-4 space-y-3">
               <div className="text-lg font-semibold text-white">Devices</div>
               <SidebarDeviceStatus
@@ -267,6 +305,8 @@ export function LocalDashboard() {
             <SubsystemGrid />
 
             <FocusModeControl />
+
+            <AutoResponderControl />
 
             <div className="glass rounded-2xl p-4 md:p-6">
               <ChatPanel

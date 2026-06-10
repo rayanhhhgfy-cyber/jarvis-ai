@@ -188,6 +188,14 @@ class CommandInterpreter:
         ):
             return [msg]
 
+        # Don't split Instagram DM patterns ("open instagram and send a message")
+        if re.search(
+            r"(?:open|launch|go\s+to)\s+instagram\s+and\s+"
+            r"(?:send|message|dm)\s+(?:a\s+)?(?:message|dm|someone\s+a\s+message)",
+            msg, re.IGNORECASE,
+        ):
+            return [msg]
+
         separators = [
             r"\s+and\s+then\s+",
             r"\s+and also\s+",
@@ -241,6 +249,7 @@ class CommandInterpreter:
         results = []
 
         checkers = [
+            lambda m: self._check_instagram_dm(m, context),
             lambda m: self._check_open_social_chat(m, context),
             lambda m: self._check_open_app(m, context),
             lambda m: self._check_settings(m),
@@ -251,7 +260,6 @@ class CommandInterpreter:
             lambda m: self._check_system_control(m),
             lambda m: self._check_network(m),
             lambda m: self._check_direct_command(m, original),
-            lambda m: self._check_instagram_dm(m, context),
             lambda m: self._check_social_send(m, original, context),
             lambda m: self._check_navigate_within_site(m, context),
             lambda m: self._check_desktop_interaction(m),
@@ -729,6 +737,13 @@ class CommandInterpreter:
         if m:
             user = m.group(1)
             return (f"Sending Instagram DM to {user}", f"instagram_dm_send|{user}|")
+        # Handle split segments: "open instagram" then "send a message"
+        context = context or {"opened": ""}
+        prev = context.get("opened", "").lower()
+        if "instagram" in prev or msg == "send a message":
+            m = re.search(r"send\s+(?:a\s+)?(?:message|dm)\s*(?:on|in|via|through)?\s*instagram?", msg, re.IGNORECASE)
+            if m:
+                return ("Sending Instagram DM to first contact", "instagram_dm_send||")
         # "send someone a message on instagram" / "send a message on instagram"
         m = re.search(r"(?:send|message|dm)\s+(?:.+?\s+)?(?:message|dm)\s+(?:on|in|via|through)\s+instagram", msg, re.IGNORECASE)
         if m:

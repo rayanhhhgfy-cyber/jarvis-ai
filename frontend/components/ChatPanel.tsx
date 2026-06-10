@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, Fragment } from "react";
-import { ChevronDown, ChevronUp, Loader2, Mic, MicOff, Send, Terminal, Volume2, VolumeX, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Loader2, Mic, MicOff, Send, Terminal, Trash2, Volume2, VolumeX, X } from "lucide-react";
 import { postChat } from "../lib/api";
 
 export type ChatMessage = {
@@ -291,12 +291,25 @@ export function ChatPanel({
           <div className="text-jarvis-300 text-sm font-semibold">Jarvis Chat</div>
           <div className="text-white text-xl font-bold">Command &amp; control</div>
         </div>
-        {loading ? (
+        <div className="flex items-center gap-2">
+          {loading ? (
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <Loader2 className="animate-spin" size={16} />
             Processing…
           </div>
-        ) : null}
+          ) : null}
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onMessagesChange([])}
+              className="shrink-0 rounded-xl p-2 border border-slate-700 bg-slate-900/50 text-slate-400 hover:text-red-400 hover:border-red-500/40"
+              aria-label="Clear conversation"
+              title="Clear conversation"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="max-h-[420px] overflow-y-auto rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">

@@ -7,6 +7,7 @@ import { getWebSocketBaseUrl } from "./config";
 export type WsStatus = "disconnected" | "connecting" | "connected";
 
 type Listener = (status: WsStatus, error: string | null) => void;
+type MessageListener = (msg: Record<string, unknown>) => void;
 
 let socket: WebSocket | null = null;
 let status: WsStatus = "disconnected";
@@ -14,6 +15,7 @@ let lastError: string | null = null;
 let heartbeatTimer: ReturnType<typeof setInterval> | null = null;
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 let listeners = new Set<Listener>();
+let messageListeners = new Set<MessageListener>();
 let refCount = 0;
 let intentionalClose = false;
 
@@ -102,11 +104,14 @@ function connect() {
 
     socket.onmessage = (ev) => {
       try {
-        const msg = JSON.parse(ev.data) as { type?: string };
+        const msg = JSON.parse(ev.data) as Record<string, unknown>;
         if (msg.type === "system_status" || msg.type === "pong") {
           status = "connected";
           lastError = null;
           notify();
+        }
+        for (const fn of messageListeners) {
+          try { fn(msg); } catch { /* ignore */ }
         }
       } catch {
         // ignore
@@ -151,4 +156,9 @@ export function subscribeJarvisWs(listener: Listener): () => void {
 
 export function getJarvisWsStatus(): { status: WsStatus; error: string | null } {
   return { status, error: lastError };
+}
+
+export function addMessageListener(fn: MessageListener): () => void {
+  messageListeners.add(fn);
+  return () => { messageListeners.delete(fn); };
 }

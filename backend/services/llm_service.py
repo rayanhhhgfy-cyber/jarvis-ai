@@ -62,24 +62,18 @@ class LLMService:
         self._api_url = "https://openrouter.ai/api/v1/chat/completions"
         self._key_index = 0
         self._working_key = ""
-        # Free models sorted by speed (fastest first)
+        # Models sorted by speed (fastest first) — using paid tier via API keys
         self._fallback_models = [
-            "meta-llama/llama-3.2-3b-instruct:free",
-            "mistralai/mistral-7b-instruct:free",
-            "meta-llama/llama-3.1-8b-instruct:free",
-            "microsoft/phi-3-mini-128k-instruct:free",
-            "nousresearch/deephermes-3-llama-3-8b-preview:free",
-            "deepseek/deepseek-chat-v3-0324:free",
-            "deepseek/deepseek-r1:free",
-            "liquid/lfm-2.5-1.2b-instruct:free",
-            "nvidia/nemotron-3-super-120b-a12b:free",
+            "meta-llama/llama-3.1-8b-instruct",
+            "deepseek/deepseek-chat-v3-0324",
+            "deepseek/deepseek-r1",
+            "liquid/lfm-2.5-1.2b-instruct",
+            "nvidia/nemotron-3-super-120b-a12b",
         ]
         self._unrestricted_models = [
-            "meta-llama/llama-3.2-3b-instruct:free",
-            "meta-llama/llama-3.1-8b-instruct:free",
-            "mistralai/mistral-7b-instruct:free",
-            "deepseek/deepseek-chat-v3-0324:free",
-            "deepseek/deepseek-r1:free",
+            "meta-llama/llama-3.1-8b-instruct",
+            "deepseek/deepseek-chat-v3-0324",
+            "deepseek/deepseek-r1",
         ]
         self._max_retries_for_refusal = 2
 

@@ -577,14 +577,28 @@ async def process_chat(request: ChatRequest):
                     try:
                         from backend.services.instagram_service import instagram_service
                         if not ig_user:
-                            ig_result = {"success": False, "error": "No username provided for Instagram DM."}
-                        else:
-                            ig_result = instagram_service.send_dm(ig_user, ig_msg)
+                            # No user specified — resolve to first inbox conversation
+                            inbox_data = instagram_service.read_inbox(limit=5)
+                            if inbox_data.get("success"):
+                                convos = inbox_data.get("conversations", [])
+                                if convos:
+                                    uid = (convos[0].get("user_ids") or [None])[0]
+                                    uname = (convos[0].get("users") or [None])[0]
+                                    ig_user = uid or uname or ""
+                                else:
+                                    result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": "Instagram inbox is empty.", "task_id": "instagram-dm"}
+                                    command_results.append({"description": description, "command": cmd, **result})
+                                    continue
+                            else:
+                                result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": inbox_data.get("error", "Could not read inbox"), "task_id": "instagram-dm"}
+                                command_results.append({"description": description, "command": cmd, **result})
+                                continue
+                        ig_result = instagram_service.send_dm(ig_user, ig_msg)
                         ok = ig_result.get("success", False)
                         result = {
                             "completed": ok,
                             "exit_code": 0 if ok else 1,
-                            "stdout": f"Instagram DM sent to {ig_user}: {ig_msg[:60]}" if ok else "",
+                            "stdout": f"Instagram DM sent: {ig_msg[:60]}" if ok else "",
                             "stderr": "" if ok else ig_result.get("error", "Failed to send Instagram DM"),
                             "task_id": "instagram-dm",
                         }
@@ -599,7 +613,7 @@ async def process_chat(request: ChatRequest):
                         convos = inbox_result.get("conversations", [])
                         names = []
                         for c in convos:
-                            name = c.get("title") or (c.get("users") or [None])[0] or "Unknown"
+                            name = (c.get("users") or [None])[0] or c.get("title") or "Unknown"
                             names.append(f"{name} ({c.get('thread_id', '?')[:8]}...)")
                         stdout = f"Instagram inbox conversations: {', '.join(names)}" if names else "Instagram inbox is empty or could not be read."
                         result = {
@@ -868,14 +882,21 @@ async def process_chat(request: ChatRequest):
                 cmd = cmd_raw.strip()
                 if not cmd:
                     continue
-                # Don't re-execute if interpreter already handled a similar command
+                # Don't re-execute if interpreter already handled a similar command (only if it succeeded)
                 normalized = cmd.lower().strip().replace(".exe", "")
                 already_handled = any(
-                    cr["command"].lower().strip().replace(".exe", "") == normalized
-                    or normalized in cr["command"].lower()
-                    or cr["command"].lower() in normalized
+                    (cr["command"].lower().strip().replace(".exe", "") == normalized
+                     or normalized in cr["command"].lower()
+                     or cr["command"].lower() in normalized)
+                    and cr.get("completed", False)
                     for cr in command_results
                 )
+                # Special: if any instagram_dm_send was already handled, skip ALL instagram_dm_send variants
+                if not already_handled and cmd.startswith("instagram_dm_send"):
+                    already_handled = any(
+                        cr["command"].startswith("instagram_dm_send") and cr.get("completed", False)
+                        for cr in command_results
+                    )
                 if already_handled:
                     continue
 
@@ -1116,16 +1137,32 @@ async def process_chat(request: ChatRequest):
                     log.info("instagram_dm_send", username=ig_user or "first conversation", message_len=len(ig_msg))
                     try:
                         from backend.services.instagram_service import instagram_service
-                        ig_result = instagram_service.send_dm(ig_user, ig_msg)
-                        if ig_result.get("success"):
-                            result = {
-                                "completed": True, "exit_code": 0,
-                                "stdout": f"Instagram DM sent to '{ig_user}': {ig_msg}",
-                                "stderr": "", "task_id": "instagram-dm",
-                            }
+                        send_as = ig_user
+                        if not send_as:
+                            # Resolve to first inbox contact
+                            inbox_data = instagram_service.read_inbox(limit=5)
+                            if inbox_data.get("success"):
+                                convos = inbox_data.get("conversations", [])
+                                if convos:
+                                    uid = (convos[0].get("user_ids") or [None])[0]
+                                    uname = (convos[0].get("users") or [None])[0]
+                                    send_as = uid or uname or ""
+                            if not send_as:
+                                result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": "Instagram inbox is empty.", "task_id": "instagram-dm"}
+                            else:
+                                ig_result = instagram_service.send_dm(send_as, ig_msg)
+                                if ig_result.get("success"):
+                                    result = {"completed": True, "exit_code": 0, "stdout": f"Instagram DM sent to first contact: {ig_msg}", "stderr": "", "task_id": "instagram-dm"}
+                                else:
+                                    err = ig_result.get("error", "Instagram DM failed")
+                                    result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": err, "task_id": "instagram-dm"}
                         else:
-                            err = ig_result.get("error", "Instagram DM failed")
-                            result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": err, "task_id": "instagram-dm"}
+                            ig_result = instagram_service.send_dm(send_as, ig_msg)
+                            if ig_result.get("success"):
+                                result = {"completed": True, "exit_code": 0, "stdout": f"Instagram DM sent to '{ig_user}': {ig_msg}", "stderr": "", "task_id": "instagram-dm"}
+                            else:
+                                err = ig_result.get("error", "Instagram DM failed")
+                                result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": err, "task_id": "instagram-dm"}
                     except Exception as ige:
                         log.error("instagram_dm_send_failed", error=str(ige))
                         result = {"completed": False, "exit_code": 1, "stdout": "", "stderr": str(ige), "task_id": "instagram-dm"}
@@ -1138,7 +1175,7 @@ async def process_chat(request: ChatRequest):
                             convos = inbox_result.get("conversations", [])
                             convo_lines = []
                             for c in convos:
-                                name = c.get("title") or (c.get("users") or [None])[0] or "Unknown"
+                                name = (c.get("users") or [None])[0] or c.get("title") or "Unknown"
                                 convo_lines.append(f"- {name} ({c.get('thread_id', '?')[:8]}...)")
                             convo_list = "\n".join(convo_lines) if convo_lines else "No conversations found."
                             result = {

@@ -123,32 +123,159 @@ class InstagramService:
         log.info("instagram_logged_out")
         return {"success": True, "message": "Instagram disconnected."}
 
-    def send_dm(self, username: str, message: str) -> Dict[str, Any]:
+    def send_dm(self, username_or_id: str, message: str) -> Dict[str, Any]:
+        """Send a DM. `username_or_id` is either an IG username or numeric user ID.
+        If it looks numeric (>5 digits), it's treated as a user_id directly,
+        bypassing the username-to-ID lookup which can fail on display names.
+        """
         if not self._client:
             return {"success": False, "error": "Instagram not logged in. Connect first."}
         try:
-            user_id = self._client.user_id_from_username(username)
+            # If the value looks like a numeric user_id, use it directly
+            if username_or_id.isdigit() and len(username_or_id) > 5:
+                user_id = int(username_or_id)
+            else:
+                user_id = self._client.user_id_from_username(username_or_id)
             dm = self._client.direct_send(text=message, user_ids=[user_id])
-            return {"success": True, "thread_id": str(dm.thread_id), "message": f"DM sent to {username}."}
+            return {"success": True, "thread_id": str(dm.thread_id), "message": f"DM sent."}
         except Exception as e:
+            return {"success": False, "error": str(e)}
+
+    def send_voice_message(self, user_ids: list, text: str, lang: str = "ar") -> Dict[str, Any]:
+        """Generate a voice message via gTTS and send it to the given user_ids.
+
+        Args:
+            user_ids: List of numeric user IDs (int or str).
+            text: Text to speak in the voice message.
+            lang: Language code ('ar' or 'en').
+
+        Returns:
+            {"success": True, "message": "..."} or {"success": False, "error": "..."}
+        """
+        if not self._client:
+            return {"success": False, "error": "Instagram not logged in. Connect first."}
+        try:
+            from backend.services.voice_service import voice_service
+            audio_path = voice_service.generate_voice(text, lang=lang)
+            if not audio_path:
+                return {"success": False, "error": "Failed to generate voice audio"}
+            from pathlib import Path
+            int_ids = [int(uid) for uid in user_ids if str(uid).isdigit()]
+            if not int_ids:
+                return {"success": False, "error": "No valid numeric user_ids provided"}
+            dm = self._client.direct_send_voice(path=Path(audio_path), user_ids=int_ids)
+            log.info("voice_dm_sent", user_ids=user_ids, chars=len(text))
+            return {"success": True, "thread_id": str(getattr(dm, "thread_id", "")), "message": "Voice message sent."}
+        except Exception as e:
+            log.warning("voice_dm_send_failed", error=str(e))
+            return {"success": False, "error": str(e)}
+
+    def send_photo(self, user_ids: list, file_path: str) -> Dict[str, Any]:
+        """Send a photo file via DM. file_path must be a local path to an image."""
+        if not self._client:
+            return {"success": False, "error": "Instagram not logged in. Connect first."}
+        try:
+            from pathlib import Path
+            int_ids = [int(uid) for uid in user_ids if str(uid).isdigit()]
+            if not int_ids:
+                return {"success": False, "error": "No valid numeric user_ids provided"}
+            p = Path(file_path)
+            if not p.is_file():
+                return {"success": False, "error": f"Photo file not found: {file_path}"}
+            dm = self._client.direct_send_photo(path=p, user_ids=int_ids)
+            log.info("photo_dm_sent", user_ids=user_ids, file=file_path)
+            return {"success": True, "thread_id": str(getattr(dm, "thread_id", "")), "message": "Photo sent."}
+        except Exception as e:
+            log.warning("photo_dm_send_failed", error=str(e))
+            return {"success": False, "error": str(e)}
+
+    def send_video(self, user_ids: list, file_path: str) -> Dict[str, Any]:
+        """Send a video file via DM. file_path must be a local path to an MP4."""
+        if not self._client:
+            return {"success": False, "error": "Instagram not logged in. Connect first."}
+        try:
+            from pathlib import Path
+            int_ids = [int(uid) for uid in user_ids if str(uid).isdigit()]
+            if not int_ids:
+                return {"success": False, "error": "No valid numeric user_ids provided"}
+            p = Path(file_path)
+            if not p.is_file():
+                return {"success": False, "error": f"Video file not found: {file_path}"}
+            dm = self._client.direct_send_video(path=p, user_ids=int_ids)
+            log.info("video_dm_sent", user_ids=user_ids, file=file_path)
+            return {"success": True, "thread_id": str(getattr(dm, "thread_id", "")), "message": "Video sent."}
+        except Exception as e:
+            log.warning("video_dm_send_failed", error=str(e))
+            return {"success": False, "error": str(e)}
+
+    def read_thread(self, thread_id: str, amount: int = 20) -> Dict[str, Any]:
+        """Read full message history for a specific thread."""
+        if not self._client:
+            return {"success": False, "error": "Instagram not logged in. Connect first."}
+        my_id = str(getattr(self._client, "user_id", ""))
+        try:
+            thread = self._client.direct_thread(thread_id, amount=amount)
+            messages = []
+            for m in reversed(getattr(thread, "messages", []) or []):
+                sender_id = str(getattr(m, "user_id", ""))
+                text = ""
+                if hasattr(m, "text") and m.text:
+                    text = m.text
+                elif hasattr(m, "item_type") and m.item_type == "text":
+                    text = getattr(m, "text", "") or ""
+                messages.append({
+                    "sender_id": sender_id,
+                    "text": text,
+                    "is_from_me": bool(my_id) and sender_id == my_id,
+                    "timestamp": str(getattr(m, "timestamp", "")),
+                })
+            return {
+                "success": True,
+                "thread_id": str(getattr(thread, "id", thread_id)),
+                "messages": messages,
+            }
+        except Exception as e:
+            log.warning("read_thread_failed", error=str(e), thread_id=thread_id)
             return {"success": False, "error": str(e)}
 
     def read_inbox(self, limit: int = 20) -> Dict[str, Any]:
         if not self._client:
             return {"success": False, "error": "Instagram not logged in. Connect first."}
+        my_id = str(getattr(self._client, "user_id", ""))
         try:
-            threads = self._client.direct_threads(amount=limit, thread_message_limit=0)
+            threads = self._client.direct_threads(amount=limit, thread_message_limit=1)
             result = []
             for t in threads:
                 try:
+                    user_ids = [str(u.pk) for u in (t.users or [])]
                     users = [u.username for u in (t.users or [])]
                 except Exception:
+                    user_ids = []
                     users = []
+                last_text = ""
+                last_sender_id = ""
+                last_item_type = ""
+                try:
+                    if t.messages and len(t.messages) > 0:
+                        last_msg = t.messages[-1]
+                        last_sender_id = str(getattr(last_msg, "user_id", ""))
+                        last_item_type = str(getattr(last_msg, "item_type", "") or "")
+                        if hasattr(last_msg, "text"):
+                            last_text = (last_msg.text or "")
+                        elif hasattr(last_msg, "item_type") and last_msg.item_type == "text":
+                            last_text = (getattr(last_msg, "text", "") or "")
+                except Exception:
+                    pass
                 result.append({
                     "thread_id": str(t.id),
                     "title": t.title or "",
                     "users": users,
-                    "last_message": str(t.last_activity_at or ""),
+                    "user_ids": user_ids,
+                    "last_message": last_text,
+                    "last_sender_id": last_sender_id,
+                    "last_item_type": last_item_type,
+                    "is_from_me": bool(my_id) and last_sender_id == my_id,
+                    "is_group": getattr(t, "is_group", False) or bool(getattr(t, "thread_type", "") == "group"),
                 })
             return {"success": True, "conversations": result}
         except Exception as e:
@@ -158,12 +285,26 @@ class InstagramService:
                 threads_raw = resp.get("inbox", {}).get("threads", [])
                 result = []
                 for t in threads_raw:
+                    user_ids = [str(u.get("pk", "")) for u in (t.get("users") or [])]
                     users = [u.get("username", "") for u in (t.get("users") or [])]
+                    last_text = ""
+                    last_sender_id = ""
+                    last_item_type = ""
+                    last_permanent = t.get("last_permanent_item", {})
+                    last_item_type = str(last_permanent.get("item_type", "") or "")
+                    if last_permanent.get("item_type") == "text":
+                        last_text = last_permanent.get("text", "")
+                        last_sender_id = str(last_permanent.get("user_id", ""))
                     result.append({
                         "thread_id": str(t.get("thread_id", "")),
                         "title": t.get("thread_title", ""),
                         "users": users,
-                        "last_message": str(t.get("last_activity_at", "")),
+                        "user_ids": user_ids,
+                        "last_message": last_text,
+                        "last_sender_id": last_sender_id,
+                        "last_item_type": last_item_type,
+                        "is_from_me": bool(my_id) and last_sender_id == my_id,
+                        "is_group": bool(t.get("is_group", False)) or t.get("thread_type") == "group",
                     })
                 return {"success": True, "conversations": result}
             except Exception as e2:

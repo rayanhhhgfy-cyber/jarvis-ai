@@ -22,6 +22,7 @@ router = APIRouter(prefix="/api/focus", tags=["Focus Mode"])
 class FocusActivateRequest(BaseModel):
     note: str
     duration_minutes: Optional[int] = None
+    language: str = "arabic"  # "arabic" or "english"
 
 
 @router.get("/status")
@@ -32,8 +33,12 @@ async def get_focus_status() -> Dict[str, Any]:
 
 @router.post("/activate")
 async def activate_focus(req: FocusActivateRequest) -> Dict[str, Any]:
-    """Activate Focus Mode with a note and optional duration."""
-    focus_mode_service.activate(req.note, duration_minutes=req.duration_minutes)
+    """Activate Focus Mode with a note, optional duration, and language (arabic/english).
+
+    When active, Jarvis polls Instagram DMs every 30 seconds and auto-replies
+    in the configured language explaining Sir is busy.
+    """
+    focus_mode_service.activate(req.note, duration_minutes=req.duration_minutes, language=req.language or "arabic")
     return focus_mode_service.get_status()
 
 

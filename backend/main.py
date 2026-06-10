@@ -134,6 +134,7 @@ from backend.routers.router_mods import router as router_mods
 from backend.routers.router_connections import router as router_connections
 from backend.routers.router_focus import router as router_focus
 from backend.routers.router_social import router as router_social
+from backend.routers.router_auto_responder import router as router_auto_responder
 from backend.routers.router_finance import router as router_finance
 
 # New pillar routers
@@ -653,6 +654,7 @@ app.include_router(router_mods)
 app.include_router(router_connections)
 app.include_router(router_focus)
 app.include_router(router_social)
+app.include_router(router_auto_responder)
 app.include_router(router_finance)
 
 

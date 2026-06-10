@@ -1,0 +1,965 @@
+{"ip": "192.168.8.174", "event": "lan_ip_detected", "level": "info", "timestamp": "2026-06-09T08:01:47.248429Z"}
+{"voices_found": 2, "event": "tts_pyttsx3_probe_ok", "level": "info", "timestamp": "2026-06-09T08:01:48.000327Z"}
+{"count": 0, "event": "skills_scanned", "level": "info", "timestamp": "2026-06-09T08:01:48.745849Z"}
+{"hint": "Set CLERK_JWKS_URL, CLERK_ISSUER, CLERK_AUDIENCE in environment/.env.", "event": "clerk_verifier_not_configured", "level": "warning", "timestamp": "2026-06-09T08:01:50.776606Z"}
+{"path": "C:\\Users\\Lenovo\\Downloads\\jarvis-ai-master (2)\\jarvis-ai-master\\backend\\..\\frontend", "event": "frontend_static_mounted", "level": "info", "timestamp": "2026-06-09T08:01:50.867878Z"}
+INFO:     Started server process [13732]
+INFO:     Waiting for application startup.
+{"event": "jarvis_omega_backend_starting", "level": "info", "timestamp": "2026-06-09T08:01:50.879053Z"}
+{"db_path": "storage\\jarvis_omega.db", "event": "sqlite_memory_initialize", "level": "info", "timestamp": "2026-06-09T08:01:50.881011Z"}
+{"count": 18, "event": "agent_tracker_initialized", "level": "info", "timestamp": "2026-06-09T08:01:50.884237Z"}
+{"agent_count": 18, "event": "agent_tracker_initialized", "level": "info", "timestamp": "2026-06-09T08:01:50.884350Z"}
+{"db_path": "storage\\jarvis_omega.db", "event": "sqlite_memory_initialize", "level": "info", "timestamp": "2026-06-09T08:01:50.884452Z"}
+{"event": "secure_vault_initialized", "level": "info", "timestamp": "2026-06-09T08:01:51.326180Z"}
+{"error": "No module named 'backend.memory.workspace_watcher'", "event": "workspace_watcher_start_skipped", "level": "warning", "timestamp": "2026-06-09T08:01:51.326410Z"}
+{"event": "task_worker_started", "level": "info", "timestamp": "2026-06-09T08:01:51.326494Z"}
+{"interval_seconds": 1800, "event": "autonomous_scraper_started", "level": "info", "timestamp": "2026-06-09T08:01:51.326540Z"}
+{"event": "cursor_overlay_ready", "level": "info", "timestamp": "2026-06-09T08:01:51.326577Z"}
+{"event": "cursor_overlay_started", "level": "info", "timestamp": "2026-06-09T08:01:51.326602Z"}
+{"event": "jarvis_omega_backend_ready", "level": "info", "timestamp": "2026-06-09T08:01:51.326630Z"}
+[2026-06-09 11:01:51] INFO     jarvis_omega.audit — {"timestamp": "2026-06-09T08:01:51.326662", "category": "system", "action": "startup", "status": "success", "device_id": "", "user": "Sir", "agent": "", "details": {"message": "JARVIS OMEGA Backend started successfully"}, "execution_duration_ms": 0.0}
+{"category": "system", "action": "startup", "status": "success", "agent": "", "event": "audit_event", "level": "info", "timestamp": "2026-06-09T08:01:51.327467Z"}
+{"event": "scheduler_started", "level": "info", "timestamp": "2026-06-09T08:01:51.329493Z"}
+{"job_id": "self_improvement_weekly", "func_name": "_weekly_analysis", "event": "recovery_failed_missing_function", "level": "error", "timestamp": "2026-06-09T08:01:51.330623Z"}
+{"event": "health_monitor_started", "level": "info", "timestamp": "2026-06-09T08:01:51.330755Z"}
+{"event": "memory_indexer_started", "level": "info", "timestamp": "2026-06-09T08:01:51.330806Z"}
+{"interval": 30, "event": "sentinel_started", "level": "info", "timestamp": "2026-06-09T08:01:51.330855Z"}
+{"job_id": "night_shift_daily", "cron": "0 6 * * *", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-09T08:01:51.347620Z"}
+{"job_id": "night_shift_hourly", "event": "job_scheduled_interval", "level": "info", "timestamp": "2026-06-09T08:01:51.368678Z"}
+{"event": "night_shift_schedules_registered", "level": "info", "timestamp": "2026-06-09T08:01:51.368865Z"}
+{"job_id": "self_improvement_weekly", "cron": "0 3 * * 0", "event": "job_scheduled_cron", "level": "info", "timestamp": "2026-06-09T08:01:51.387442Z"}
+{"event": "self_improvement_schedules_registered", "level": "info", "timestamp": "2026-06-09T08:01:51.387518Z"}
+{"event": "telegram_missing_token_skipping", "level": "warning", "timestamp": "2026-06-09T08:01:51.387571Z"}
+{"event": "discord_missing_token_skipping", "level": "warning", "timestamp": "2026-06-09T08:01:51.387613Z"}
+{"event": "cron_failover_watchdog_started", "level": "info", "timestamp": "2026-06-09T08:01:51.387714Z"}
+{"event": "websocket_heartbeat_loop_started", "level": "info", "timestamp": "2026-06-09T08:01:51.387750Z"}
+{"seconds": 120, "event": "autonomous_scraper_startup_delay", "level": "info", "timestamp": "2026-06-09T08:01:51.387838Z"}
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+{"event": "pw_browser_already_running", "level": "info", "timestamp": "2026-06-09T08:01:51.390578Z"}
+INFO:     127.0.0.1:53138 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61507 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56684 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63494 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52258 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63633 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63635 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50447 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56504 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54205 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51047 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51052 - "GET /health HTTP/1.1" 200 OK
+{"event": "starting_autonomous_scrape_round", "level": "info", "timestamp": "2026-06-09T08:03:52.389648Z"}
+{"count": 3, "queries": ["latest artificial intelligence agent breakthroughs", "cutting edge tech news this week", "modern marketing agency digital automation tools"], "event": "autonomous_queries_derived", "level": "info", "timestamp": "2026-06-09T08:03:52.390275Z"}
+{"query": "latest artificial intelligence agent breakthroughs", "event": "scraping_query", "level": "info", "timestamp": "2026-06-09T08:03:53.391213Z"}
+{"query": "latest artificial intelligence agent breakthroughs", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:03:55.035368Z"}
+{"query": "latest artificial intelligence agent breakthroughs", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:03:55.035460Z"}
+INFO:     127.0.0.1:51056 - "GET /health HTTP/1.1" 200 OK
+{"query": "cutting edge tech news this week", "event": "scraping_query", "level": "info", "timestamp": "2026-06-09T08:04:04.037660Z"}
+{"query": "cutting edge tech news this week", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:04:05.650882Z"}
+{"query": "cutting edge tech news this week", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:04:05.651035Z"}
+INFO:     127.0.0.1:50062 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62113 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50332 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50336 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50337 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50339 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50341 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50342 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49795 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54414 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54416 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55604 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55605 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58082 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58084 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57383 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57385 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59202 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59204 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63238 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63240 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49627 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64279 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53200 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52962 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55139 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55139 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     ('127.0.0.1', 50285) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:04:13.046527Z"}
+INFO:     connection open
+INFO:     127.0.0.1:64878 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64880 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"query": "modern marketing agency digital automation tools", "event": "scraping_query", "level": "info", "timestamp": "2026-06-09T08:04:14.652363Z"}
+{"query": "modern marketing agency digital automation tools", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:04:16.192997Z"}
+{"query": "modern marketing agency digital automation tools", "results": 3, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:04:16.193279Z"}
+INFO:     127.0.0.1:60627 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59685 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59007 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49610 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49612 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:04:23.757049Z"}
+{"event": "finished_autonomous_scrape_round", "level": "info", "timestamp": "2026-06-09T08:04:24.195299Z"}
+INFO:     127.0.0.1:61702 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50868 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50871 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50872 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50534 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54946 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49828 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58642 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57259 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56196 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55347 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60520 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60522 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62774 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60769 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60771 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54649 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51415 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50247 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"memory": 85.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:04:38.769125Z"}
+INFO:     127.0.0.1:49338 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63633 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63637 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63638 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50540 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58359 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59167 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59690 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61532 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54110 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56494 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58609 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58058 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49973 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52936 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54636 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60234 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60237 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60238 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62156 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55102 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57702 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65255 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52100 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64910 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51216 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53031 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60000 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52429 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58073 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58075 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49571 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56354 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63987 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58553 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59235 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59239 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59240 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59241 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56561 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63061 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62831 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64934 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52776 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51778 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50884 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52204 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54306 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51721 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51723 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53310 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63342 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63345 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63346 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63121 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59417 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64949 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61240 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60906 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51108 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64569 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52552 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50520 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50522 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57976 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52973 - "GET /api/agents HTTP/1.1" 200 OK
+{"message_len": 116, "device_id": "desktop-c09f21c7e3b4-1780326218348", "event": "chat_request_received", "level": "info", "timestamp": "2026-06-09T08:05:41.291505Z"}
+{"device_id": "desktop-c09f21c7e3b4-1780326218348", "device_type": "unknown", "event": "source_device", "level": "info", "timestamp": "2026-06-09T08:05:41.291591Z"}
+{"segments": 2, "event": "multi_command_detected", "level": "info", "timestamp": "2026-06-09T08:05:41.292251Z"}
+{"count": 1, "descriptions": ["Pressing to"], "event": "commands_interpreted", "level": "info", "timestamp": "2026-06-09T08:05:41.305602Z"}
+{"count": 1, "event": "commands_detected_by_interpreter", "level": "info", "timestamp": "2026-06-09T08:05:41.305689Z"}
+{"description": "Pressing to", "command": "desktop_hotkey|to", "event": "dispatching_command", "level": "info", "timestamp": "2026-06-09T08:05:41.305723Z"}
+{"command": "desktop_hotkey|to", "event": "desktop_command", "level": "info", "timestamp": "2026-06-09T08:05:41.305754Z"}
+INFO:     127.0.0.1:60582 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"query": "open instgram and open the inbox and then goahead and send to the first group chat you see  a messege of your liking\n\n[SOURCE DEVICE] You are talking to Sir through device '' (unknown, id=desktop-c09f21c7e3b4-1780326218348). When Sir says 'on my PC' or 'on the computer', route commands to a desktop/laptop device. When Sir says 'on my phone' or 'on mobile', route commands to a mobile device. When no target device is specified, execute commands on the device Sir is currently using.\n\n[SYSTEM CONTEXT \u2014 Commands executed]\n\u2022 Pressing to: SUCCESS \u2014 Pressed to\n\nRespond naturally about these results in your JARVIS persona. Do NOT say you cannot control the device \u2014 the commands have already been executed.\nDo NOT generate <run_os_command> tags for commands that already executed.\n", "event": "web_search_triggered", "level": "info", "timestamp": "2026-06-09T08:05:42.198154Z"}
+INFO:     127.0.0.1:60090 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60093 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60095 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60096 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56969 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65448 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54039 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63058 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63393 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49930 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52976 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51865 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"query": "open instgram and open the inbox and then goahead and send t", "results": 0, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:05:43.280387Z"}
+{"context_len": 0, "event": "web_context_injected", "level": "info", "timestamp": "2026-06-09T08:05:43.280577Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:05:44.199121Z"}
+INFO:     127.0.0.1:65105 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59909 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63393 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51985 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51988 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51989 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"memory": 85.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:05:53.834306Z"}
+INFO:     127.0.0.1:57591 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57411 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57414 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57415 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49608 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58965 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52843 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51382 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56383 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52445 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53631 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55097 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56719 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64641 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64643 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64645 - "GET /health HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:06:04.687384Z"}
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "wait": 15, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:06:05.795361Z"}
+INFO:     127.0.0.1:62105 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65140 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 85.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:06:08.844866Z"}
+INFO:     127.0.0.1:65142 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55749 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58333 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58336 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58337 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61660 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59876 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53989 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51380 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51229 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65134 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60786 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51506 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50496 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54377 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55043 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:06:21.565482Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for mistralai/mistral-7b-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "mistralai/mistral-7b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:22.029721Z"}
+INFO:     127.0.0.1:55237 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.1-8b-instruct\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMs", "model": "meta-llama/llama-3.1-8b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:22.489422Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for microsoft/phi-3-mini-128k-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "microsoft/phi-3-mini-128k-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:22.951716Z"}
+INFO:     127.0.0.1:57719 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57721 - "GET /api/agents HTTP/1.1" 200 OK
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for nousresearch/deephermes-3-llama-3-8b-preview:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "nousresearch/deephermes-3-llama-3-8b-preview:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:23.463424Z"}
+{"memory": 86.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:06:23.852808Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszy", "model": "deepseek/deepseek-chat-v3-0324:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:23.921191Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "deepseek/deepseek-r1:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:06:24.391298Z"}
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:06:25.101854Z"}
+INFO:     127.0.0.1:63676 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60364 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60367 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60368 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64325 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62971 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58780 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56561 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49253 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55461 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62716 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49834 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52316 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51631 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51633 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53705 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61142 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62745 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 85.4, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:06:38.875454Z"}
+INFO:     127.0.0.1:59969 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55722 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55725 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55726 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55728 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61575 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49159 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59557 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60726 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58129 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59145 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50639 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64546 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:06:45.696915Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:06:46.296266Z"}
+INFO:     127.0.0.1:52996 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49323 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56588 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57100 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57102 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58519 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50764 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50765 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50767 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56155 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49650 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57574 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51900 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53276 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51219 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58344 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63434 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50590 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58062 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58064 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55802 - "GET /health HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:07:06.980526Z"}
+{"all_401": false, "all_402": false, "event": "openrouter_all_keys_failed", "level": "error", "timestamp": "2026-06-09T08:07:06.980817Z"}
+{"id": "mem_4b167ee4a87b", "category": "memory_conversations", "event": "memory_added", "level": "info", "timestamp": "2026-06-09T08:07:07.009486Z"}
+INFO:     127.0.0.1:60490 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63224 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63226 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59341 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"chars": 66, "event": "tts_spoken", "level": "info", "timestamp": "2026-06-09T08:07:12.360526Z"}
+{"audio_size": 844, "event": "tts_generated_for_chat", "level": "info", "timestamp": "2026-06-09T08:07:12.360664Z"}
+INFO:     127.0.0.1:51202 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51205 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51207 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51208 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58744 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53887 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64106 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59879 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49618 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54352 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62022 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54662 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55210 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59085 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60718 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63832 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63834 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49781 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59622 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59626 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51807 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61111 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63730 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59387 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57772 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51115 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51166 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59489 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63739 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63742 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63743 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57332 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57389 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57390 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60292 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61783 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61786 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61788 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61789 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53296 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64613 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65243 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56596 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62122 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51635 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58621 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51924 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55295 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56059 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56612 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55391 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55393 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55451 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57552 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57555 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57556 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57558 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50808 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64601 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52455 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59049 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52523 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65221 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57755 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57971 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63157 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58287 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58288 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63346 - "GET /api/settings/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64321 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50740 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54835 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50236 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59300 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59303 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59304 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59306 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55297 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50805 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62465 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60988 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62762 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65181 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58655 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63421 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49369 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63797 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 86.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:08:24.660012Z"}
+INFO:     127.0.0.1:58057 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58060 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58063 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58064 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58762 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58765 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58766 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61973 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63020 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55222 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62228 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52650 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60037 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55997 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53946 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:08:29.916091Z"}
+INFO:     connection closed
+INFO:     ('127.0.0.1', 53849) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:08:30.342217Z"}
+INFO:     connection open
+INFO:     127.0.0.1:53850 - "GET /api/listening/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53851 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53853 - "GET /api/listening/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53854 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55115 - "GET /api/agents HTTP/1.1" 200 OK
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:08:30.357965Z"}
+INFO:     connection closed
+INFO:     127.0.0.1:62753 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63983 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63986 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63987 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49895 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49897 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49898 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     ('127.0.0.1', 49900) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:08:30.401744Z"}
+INFO:     connection open
+INFO:     127.0.0.1:63778 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58302 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61763 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61173 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60257 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52957 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56173 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53863 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53865 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62569 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62571 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49562 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54384 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57984 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59019 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57499 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57499 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     ('127.0.0.1', 56223) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 2, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:08:30.650743Z"}
+INFO:     connection open
+INFO:     127.0.0.1:50704 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50706 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58372 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59308 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63791 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 85.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:08:39.672238Z"}
+INFO:     127.0.0.1:53123 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54838 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54840 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54843 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56888 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61214 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61215 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57771 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62343 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64465 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55335 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52085 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51713 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54395 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61121 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"message_len": 116, "device_id": "desktop-c09f21c7e3b4-1780326218348", "event": "chat_request_received", "level": "info", "timestamp": "2026-06-09T08:08:46.667070Z"}
+{"device_id": "desktop-c09f21c7e3b4-1780326218348", "device_type": "unknown", "event": "source_device", "level": "info", "timestamp": "2026-06-09T08:08:46.667155Z"}
+{"segments": 2, "event": "multi_command_detected", "level": "info", "timestamp": "2026-06-09T08:08:46.667227Z"}
+{"count": 1, "descriptions": ["Pressing to"], "event": "commands_interpreted", "level": "info", "timestamp": "2026-06-09T08:08:46.667618Z"}
+{"count": 1, "event": "commands_detected_by_interpreter", "level": "info", "timestamp": "2026-06-09T08:08:46.667662Z"}
+{"description": "Pressing to", "command": "desktop_hotkey|to", "event": "dispatching_command", "level": "info", "timestamp": "2026-06-09T08:08:46.667713Z"}
+{"command": "desktop_hotkey|to", "event": "desktop_command", "level": "info", "timestamp": "2026-06-09T08:08:46.667747Z"}
+{"query": "open instgram and open the inbox and then goahead and send to the first group chat you see  a messege of your liking\n\n[SOURCE DEVICE] You are talking to Sir through device '' (unknown, id=desktop-c09f21c7e3b4-1780326218348). When Sir says 'on my PC' or 'on the computer', route commands to a desktop/laptop device. When Sir says 'on my phone' or 'on mobile', route commands to a mobile device. When no target device is specified, execute commands on the device Sir is currently using.\n\n[SYSTEM CONTEXT \u2014 Commands executed]\n\u2022 Pressing to: SUCCESS \u2014 Pressed to\n\nRespond naturally about these results in your JARVIS persona. Do NOT say you cannot control the device \u2014 the commands have already been executed.\nDo NOT generate <run_os_command> tags for commands that already executed.\n", "event": "web_search_triggered", "level": "info", "timestamp": "2026-06-09T08:08:47.589518Z"}
+{"query": "open instgram and open the inbox and then goahead and send t", "results": 0, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:08:48.845029Z"}
+{"context_len": 0, "event": "web_context_injected", "level": "info", "timestamp": "2026-06-09T08:08:48.845125Z"}
+INFO:     127.0.0.1:54495 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50844 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50846 - "GET /api/agents HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:08:51.995572Z"}
+INFO:     127.0.0.1:55954 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58367 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64270 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56823 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63823 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64267 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64270 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64271 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58262 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51097 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53532 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57265 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54478 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50264 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62147 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52625 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56211 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57126 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51625 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55085 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55087 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58365 - "GET /health HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:09:13.082180Z"}
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "wait": 6, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:09:14.114670Z"}
+INFO:     127.0.0.1:62782 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53126 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53130 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53133 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51680 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64832 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65107 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59807 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56109 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49434 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65169 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63020 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62669 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51340 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51342 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62454 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:09:21.019882Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for mistralai/mistral-7b-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "mistralai/mistral-7b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:21.478339Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.1-8b-instruct\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMs", "model": "meta-llama/llama-3.1-8b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:21.943198Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for microsoft/phi-3-mini-128k-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "microsoft/phi-3-mini-128k-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:22.414536Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for nousresearch/deephermes-3-llama-3-8b-preview:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "nousresearch/deephermes-3-llama-3-8b-preview:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:22.915429Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszy", "model": "deepseek/deepseek-chat-v3-0324:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:23.376442Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "deepseek/deepseek-r1:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:09:23.786282Z"}
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:09:24.603431Z"}
+INFO:     127.0.0.1:56371 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50190 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63318 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58469 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58470 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58473 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58474 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63919 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54685 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65388 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63948 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50357 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61497 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58035 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52611 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61320 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61322 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 85.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:09:39.731683Z"}
+INFO:     127.0.0.1:57137 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57140 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57141 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63487 - "GET /health HTTP/1.1" 200 OK
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:09:45.004912Z"}
+{"message_len": 4, "device_id": "", "event": "chat_request_received", "level": "info", "timestamp": "2026-06-09T08:09:45.384458Z"}
+{"device_id": "", "device_type": "unknown", "event": "source_device", "level": "info", "timestamp": "2026-06-09T08:09:45.384544Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:09:45.957566Z"}
+INFO:     127.0.0.1:61511 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53334 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53337 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53338 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53340 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59574 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49618 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56115 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64671 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57185 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60129 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62225 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64309 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:09:47.028950Z"}
+INFO:     127.0.0.1:64186 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64190 - "GET /api/agents HTTP/1.1" 200 OK
+{"memory": 85.1, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:09:54.743781Z"}
+INFO:     127.0.0.1:59652 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59654 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61723 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52093 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52094 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52097 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52098 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53469 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53599 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56709 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49989 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56303 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64479 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56623 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54730 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49807 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58476 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58478 - "GET /api/agents HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:10:06.794005Z"}
+{"all_401": false, "all_402": false, "event": "openrouter_all_keys_failed", "level": "error", "timestamp": "2026-06-09T08:10:06.794353Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:10:07.466471Z"}
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "wait": 12, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:10:08.532537Z"}
+INFO:     127.0.0.1:65089 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65092 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65093 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65095 - "GET /api/droid/devices HTTP/1.1" 200 OK
+{"chars": 66, "event": "tts_spoken", "level": "info", "timestamp": "2026-06-09T08:10:11.934328Z"}
+{"audio_size": 844, "event": "tts_generated_for_chat", "level": "info", "timestamp": "2026-06-09T08:10:11.934469Z"}
+INFO:     127.0.0.1:65096 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59160 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59163 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59164 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59166 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58053 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51005 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51006 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56367 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56725 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50872 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52544 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64027 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50201 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55127 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53865 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53867 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53869 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:10:21.443649Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for mistralai/mistral-7b-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "mistralai/mistral-7b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:21.880026Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.1-8b-instruct\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMs", "model": "meta-llama/llama-3.1-8b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:22.355965Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for microsoft/phi-3-mini-128k-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "microsoft/phi-3-mini-128k-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:22.826383Z"}
+INFO:     127.0.0.1:52039 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for nousresearch/deephermes-3-llama-3-8b-preview:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "nousresearch/deephermes-3-llama-3-8b-preview:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:23.279562Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszy", "model": "deepseek/deepseek-chat-v3-0324:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:23.789256Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "deepseek/deepseek-r1:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:10:24.204650Z"}
+{"memory": 85.6, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:10:24.766718Z"}
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:10:24.831048Z"}
+INFO:     127.0.0.1:63934 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50535 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62012 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61431 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49622 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49627 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54977 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54913 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54917 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54918 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54919 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49468 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57030 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58093 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53518 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63598 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53794 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55676 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57976 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57930 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49575 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60731 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60734 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60735 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60736 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53830 - "GET /api/settings/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57246 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57249 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57250 - "GET /api/agents HTTP/1.1" 200 OK
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:10:45.394724Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:10:47.179319Z"}
+INFO:     127.0.0.1:56589 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56591 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56594 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56595 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53629 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64518 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53617 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51834 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58419 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62897 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55525 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62504 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62505 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63082 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63085 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63086 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54289 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54291 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51202 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52171 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52172 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52175 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52177 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52207 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54694 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55552 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53027 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62565 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64386 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63987 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55646 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58379 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61736 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63620 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63622 - "GET /api/agents HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:11:07.617128Z"}
+{"all_401": false, "all_402": false, "event": "openrouter_all_keys_failed", "level": "error", "timestamp": "2026-06-09T08:11:07.617436Z"}
+{"id": "mem_fed9271b5d2d", "category": "memory_conversations", "event": "memory_added", "level": "info", "timestamp": "2026-06-09T08:11:07.637331Z"}
+INFO:     127.0.0.1:64411 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64414 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64415 - "GET /api/agents HTTP/1.1" 200 OK
+{"chars": 66, "event": "tts_spoken", "level": "info", "timestamp": "2026-06-09T08:11:12.763029Z"}
+{"audio_size": 844, "event": "tts_generated_for_chat", "level": "info", "timestamp": "2026-06-09T08:11:12.763193Z"}
+INFO:     127.0.0.1:64486 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64487 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64490 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64491 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50157 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65067 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62813 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64151 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50534 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59984 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62430 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64883 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63190 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62411 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62412 - "GET /api/agents HTTP/1.1" 200 OK
+{"total_ui_clients": 1, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:11:23.315113Z"}
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:11:23.315864Z"}
+INFO:     connection closed
+INFO:     connection closed
+INFO:     ('127.0.0.1', 54711) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:11:23.750969Z"}
+INFO:     connection open
+INFO:     127.0.0.1:54713 - "GET /api/listening/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54714 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54716 - "GET /api/listening/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54717 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"total_ui_clients": 0, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:11:23.770207Z"}
+INFO:     connection closed
+INFO:     127.0.0.1:65508 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55940 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53241 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53242 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53245 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53246 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53249 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     ('127.0.0.1', 53251) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 1, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:11:23.816094Z"}
+INFO:     connection open
+INFO:     127.0.0.1:53252 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54044 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52428 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52430 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63030 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63032 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50702 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50704 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53429 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53431 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53503 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53504 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54788 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54790 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62443 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62444 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63537 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63537 - "GET /api/downloads HTTP/1.1" 200 OK
+INFO:     ('127.0.0.1', 64771) - "WebSocket /ws/ui" [accepted]
+{"total_ui_clients": 2, "event": "ui_client_connected", "level": "info", "timestamp": "2026-06-09T08:11:24.056958Z"}
+INFO:     connection open
+INFO:     127.0.0.1:54277 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60347 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60349 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58917 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56163 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58648 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60739 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60741 - "GET /api/agents HTTP/1.1" 200 OK
+{"message_len": 116, "device_id": "desktop-c09f21c7e3b4-1780326218348", "event": "chat_request_received", "level": "info", "timestamp": "2026-06-09T08:11:34.124498Z"}
+{"device_id": "desktop-c09f21c7e3b4-1780326218348", "device_type": "unknown", "event": "source_device", "level": "info", "timestamp": "2026-06-09T08:11:34.124581Z"}
+{"segments": 2, "event": "multi_command_detected", "level": "info", "timestamp": "2026-06-09T08:11:34.124645Z"}
+{"count": 1, "descriptions": ["Pressing to"], "event": "commands_interpreted", "level": "info", "timestamp": "2026-06-09T08:11:34.125064Z"}
+{"count": 1, "event": "commands_detected_by_interpreter", "level": "info", "timestamp": "2026-06-09T08:11:34.125108Z"}
+{"description": "Pressing to", "command": "desktop_hotkey|to", "event": "dispatching_command", "level": "info", "timestamp": "2026-06-09T08:11:34.125139Z"}
+{"command": "desktop_hotkey|to", "event": "desktop_command", "level": "info", "timestamp": "2026-06-09T08:11:34.125171Z"}
+{"query": "open instgram and open the inbox and then goahead and send to the first group chat you see  a messege of your liking\n\n[SOURCE DEVICE] You are talking to Sir through device '' (unknown, id=desktop-c09f21c7e3b4-1780326218348). When Sir says 'on my PC' or 'on the computer', route commands to a desktop/laptop device. When Sir says 'on my phone' or 'on mobile', route commands to a mobile device. When no target device is specified, execute commands on the device Sir is currently using.\n\n[SYSTEM CONTEXT \u2014 Commands executed]\n\u2022 Pressing to: SUCCESS \u2014 Pressed to\n\nRespond naturally about these results in your JARVIS persona. Do NOT say you cannot control the device \u2014 the commands have already been executed.\nDo NOT generate <run_os_command> tags for commands that already executed.\n", "event": "web_search_triggered", "level": "info", "timestamp": "2026-06-09T08:11:35.029974Z"}
+{"query": "open instgram and open the inbox and then goahead and send t", "results": 0, "event": "web_search_completed", "level": "info", "timestamp": "2026-06-09T08:11:36.241281Z"}
+{"context_len": 0, "event": "web_context_injected", "level": "info", "timestamp": "2026-06-09T08:11:36.241441Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:11:37.270713Z"}
+INFO:     127.0.0.1:51174 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51518 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51521 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51522 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63899 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57401 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50735 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52245 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62096 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61993 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64993 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"memory": 87.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:11:39.849933Z"}
+INFO:     127.0.0.1:63080 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64052 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64054 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52420 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50656 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60627 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60628 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54348 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63205 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63208 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63210 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63211 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54796 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53384 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60733 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60618 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61065 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65419 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63342 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55692 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"memory": 85.7, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:11:54.869236Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:11:57.944640Z"}
+INFO:     127.0.0.1:53367 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56416 - "GET /api/agents HTTP/1.1" 200 OK
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "wait": 22, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:11:59.239247Z"}
+INFO:     127.0.0.1:62732 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62735 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62736 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60949 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60953 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60954 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60955 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51133 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57835 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58611 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61371 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58537 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49706 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55620 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57045 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57048 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57050 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57051 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56012 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56014 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56017 - "GET /health HTTP/1.1" 200 OK
+{"model": "meta-llama/llama-3.2-3b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:12:22.289868Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for mistralai/mistral-7b-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "mistralai/mistral-7b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:22.704304Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.1-8b-instruct\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMs", "model": "meta-llama/llama-3.1-8b-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:23.134446Z"}
+INFO:     127.0.0.1:59457 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59460 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59464 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59463 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59465 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63796 - "GET /api/vision/sampler-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61880 - "GET /api/sentinel/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59707 - "GET /api/vault/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54362 - "GET /api/telegram/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52480 - "GET /api/memory/workspace-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60164 - "GET /api/research/briefing HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51160 - "GET /api/social/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61301 - "GET /api/improvement/lessons HTTP/1.1" 200 OK
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for microsoft/phi-3-mini-128k-instruct:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "microsoft/phi-3-mini-128k-instruct:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:24.289196Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"No endpoints found for nousresearch/deephermes-3-llama-3-8b-preview:free.\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "nousresearch/deephermes-3-llama-3-8b-preview:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:24.759383Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-chat-v3-0324\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszy", "model": "deepseek/deepseek-chat-v3-0324:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:25.354477Z"}
+{"status_code": 404, "body": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: deepseek/deepseek-r1\",\"code\":404},\"user_id\":\"user_3B3QX1Y2zabNfNqqYTIVMszyBTl\"}", "model": "deepseek/deepseek-r1:free", "event": "openrouter_llm_error", "level": "error", "timestamp": "2026-06-09T08:12:25.910825Z"}
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:12:26.768690Z"}
+INFO:     127.0.0.1:63403 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63405 - "GET /api/agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50932 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51524 - "GET /api/droid/devices HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51526 - "GET /api/agents HTTP/1.1" 200 OK
+{"total_ui_clients": 1, "event": "ui_client_disconnected", "level": "info", "timestamp": "2026-06-09T08:12:35.490188Z"}
+INFO:     connection closed
+INFO:     127.0.0.1:53415 - "GET /api/settings/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58557 - "GET /api/settings/default HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58547 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64445 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"model": "liquid/lfm-2.5-1.2b-instruct:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:12:47.402134Z"}
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "wait": 20, "event": "openrouter_429_retrying", "level": "warning", "timestamp": "2026-06-09T08:12:48.177363Z"}
+INFO:     127.0.0.1:51307 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51309 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55132 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49184 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60961 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"model": "nvidia/nemotron-3-super-120b-a12b:free", "status": 429, "event": "openrouter_429_retry_failed", "level": "error", "timestamp": "2026-06-09T08:13:08.600688Z"}
+{"all_401": false, "all_402": false, "event": "openrouter_all_keys_failed", "level": "error", "timestamp": "2026-06-09T08:13:08.601500Z"}
+INFO:     127.0.0.1:55757 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"chars": 66, "event": "tts_spoken", "level": "info", "timestamp": "2026-06-09T08:13:13.737264Z"}
+{"audio_size": 844, "event": "tts_generated_for_chat", "level": "info", "timestamp": "2026-06-09T08:13:13.737442Z"}
+INFO:     127.0.0.1:55884 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56474 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52543 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52545 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59005 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56733 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62349 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"memory": 85.2, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:13:40.077499Z"}
+INFO:     127.0.0.1:64465 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53575 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60455 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60458 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65149 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64917 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55318 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63156 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64533 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63550 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63552 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56239 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57276 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62357 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65444 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65446 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56749 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56752 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56756 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61157 - "GET /api/focus/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61314 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55129 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50162 - "GET /api/focus/status HTTP/1.1" 200 OK
+{"memory": 85.5, "event": "memory_threshold_exceeded", "level": "warning", "timestamp": "2026-06-09T08:17:11.489581Z"}
