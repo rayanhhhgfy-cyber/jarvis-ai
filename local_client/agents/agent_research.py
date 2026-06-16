@@ -21,7 +21,7 @@ log = get_logger("agent_research")
 
 class AgentResearch:
     """
-    Deep research agent. Synthesizes complex information from multiple sources.
+    Deep research agent. Synthesizes complex information from multiple sources using LLM.
     """
 
     def __init__(self) -> None:
@@ -35,7 +35,7 @@ class AgentResearch:
         try:
             action = task.payload.get("action", "deep_research")
 
-            if action == "deep_research":
+            if action == "deep_research" or action == "compile" or action == "study":
                 result_data = await self._perform_deep_research(task)
             elif action == "trend_analysis":
                 result_data = await self._analyze_trends(task)
@@ -66,28 +66,57 @@ class AgentResearch:
             )
 
     async def _perform_deep_research(self, task: TaskDefinition) -> Dict[str, Any]:
-        topic = task.payload.get("topic")
+        topic = task.payload.get("topic") or task.payload.get("query")
+        if not topic:
+            raise ValueError("topic is required for research")
+
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
+
+        system_instructions = (
+            "You are the JARVIS Research Subsystem. "
+            "Generate a highly structured, detailed technical research brief on the given topic. "
+            "Use markdown. Include Executive Summary, Findings, and Technical Analysis."
+        )
+
+        brief = await llm.get_response(
+            user_message=f"Deep research on: {topic}",
+            system_instructions=system_instructions
+        )
+
         return {
             "topic": topic,
-            "briefing": "Comprehensive analysis of current state of art in...",
-            "sources": ["Scientific American", "ArXiv", "TechCrunch", "MIT Review"],
-            "conclusion": "The technology is maturing but requires better energy efficiency."
+            "briefing": brief,
+            "status": "completed",
+            "timestamp": datetime.utcnow().isoformat()
         }
 
     async def _analyze_trends(self, task: TaskDefinition) -> Dict[str, Any]:
-        industry = task.payload.get("industry", "Energy")
+        industry = task.payload.get("industry", "Technology")
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
+
+        brief = await llm.get_response(
+            user_message=f"Analyze current and emerging trends in the {industry} industry.",
+            system_instructions="You are a strategic trend analyst. Provide data-backed forecasts."
+        )
         return {
             "industry": industry,
-            "emerging_trends": ["Solid-state batteries", "Green hydrogen", "Small modular reactors"],
-            "market_disruptors": ["NextEra Energy", "Tesla Energy"],
-            "forecast": "Growth of 15% CAGR over next 5 years"
+            "analysis": brief,
+            "timestamp": datetime.utcnow().isoformat()
         }
 
     async def _verify_facts(self, task: TaskDefinition) -> Dict[str, Any]:
         statement = task.payload.get("statement")
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
+
+        brief = await llm.get_response(
+            user_message=f"Verify the following statement and provide evidence: {statement}",
+            system_instructions="You are a fact-checker. Be objective and cite sources if possible."
+        )
         return {
             "statement": statement,
-            "verdict": "Verified",
-            "evidence": ["Data from World Bank 2024 Report", "IMF Economic Outlook"],
-            "confidence": "High"
+            "verification": brief,
+            "timestamp": datetime.utcnow().isoformat()
         }

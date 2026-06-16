@@ -8,12 +8,9 @@ analyzing crypto trends, and personal budget management.
 
 from __future__ import annotations
 
-import os
 import time
-import json
-import aiohttp
 import traceback
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 
 from shared.models import TaskDefinition, TaskResult
@@ -24,35 +21,29 @@ log = get_logger("agent_finance")
 
 class AgentFinance:
     """
-    Financial intelligence agent. Tracks stocks, crypto, and manages budgets.
+    Financial intelligence agent. Tracks stocks, crypto, and manages budgets using LLM and tools.
     """
 
     def __init__(self) -> None:
         self.agent_id = "agent_finance"
-        self.agent_type = AgentType.WORKER # Using WORKER as placeholder if FINANCE not in Enum
-        # Check if FINANCE is in AgentType, otherwise use WORKER
-        try:
-            self.agent_type = AgentType.FINANCE
-        except AttributeError:
-            pass
+        self.agent_type = AgentType.FINANCE
 
     async def execute_task(self, task: TaskDefinition) -> TaskResult:
         log.info("finance_agent_executing", task_id=task.task_id, title=task.title)
         start_time = time.time()
 
         try:
-            action = task.payload.get("action", "market_summary")
+            action = task.payload.get("action", "market_analysis")
 
-            if action == "market_summary":
-                result_data = await self._get_market_summary(task)
+            if action == "market_analysis":
+                result_data = await self._analyze_market(task)
             elif action == "track_portfolio":
                 result_data = await self._track_portfolio(task)
-            elif action == "analyze_crypto":
-                result_data = await self._analyze_crypto(task)
             elif action == "budget_report":
                 result_data = await self._generate_budget_report(task)
             else:
-                raise ValueError(f"Unknown Finance action: {action}")
+                # Fallback to general financial analysis
+                result_data = await self._analyze_market(task)
 
             elapsed = (time.time() - start_time) * 1000
             return TaskResult(
@@ -75,50 +66,45 @@ class AgentFinance:
                 execution_time=elapsed,
             )
 
-    async def _get_market_summary(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Fetches a summary of global stock markets."""
-        # Real implementation would use an API like Alpha Vantage or Yahoo Finance
-        return {
-            "indices": {
-                "S&P 500": "5,123.44 (+1.2%)",
-                "NASDAQ": "16,274.95 (+1.5%)",
-                "DOW": "38,905.66 (+0.8%)"
-            },
-            "timestamp": datetime.utcnow().isoformat(),
-            "sentiment": "Bullish"
-        }
+    async def _analyze_market(self, task: TaskDefinition) -> Dict[str, Any]:
+        query = task.payload.get("query") or "Global market summary"
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
 
-    async def _track_portfolio(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Tracks performance of a list of tickers."""
-        tickers = task.payload.get("tickers", ["AAPL", "TSLA", "MSFT"])
-        # Simulation of fetching prices
-        portfolio = {}
-        for ticker in tickers:
-            portfolio[ticker] = {"price": "N/A", "change": "N/A"}
-
+        analysis = await llm.get_response(
+            user_message=f"Provide a detailed financial market analysis for: {query}",
+            system_instructions="You are a senior financial analyst. Use real-time data if available via web search triggers."
+        )
         return {
-            "portfolio": portfolio,
-            "total_value": "Calculated upon API integration",
+            "query": query,
+            "analysis": analysis,
             "timestamp": datetime.utcnow().isoformat()
         }
 
-    async def _analyze_crypto(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Analyzes crypto market trends and top coins."""
+    async def _track_portfolio(self, task: TaskDefinition) -> Dict[str, Any]:
+        portfolio = task.payload.get("portfolio", [])
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
+
+        analysis = await llm.get_response(
+            user_message=f"Analyze the performance and risk of this portfolio: {portfolio}",
+            system_instructions="You are a portfolio manager. Provide actionable insights."
+        )
         return {
-            "top_coins": {
-                "BTC": "$65,432.10 (-0.5%)",
-                "ETH": "$3,567.89 (+2.1%)",
-                "SOL": "$145.67 (+5.4%)"
-            },
-            "market_cap": "$2.5T",
-            "dominance": {"BTC": "52%", "ETH": "17%"}
+            "portfolio": portfolio,
+            "analysis": analysis,
+            "timestamp": datetime.utcnow().isoformat()
         }
 
     async def _generate_budget_report(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Generates a personal budget report from transaction history."""
+        from backend.services.llm_service import LLMService
+        llm = LLMService()
+
+        report = await llm.get_response(
+            user_message="Generate a comprehensive personal budget report and optimization plan.",
+            system_instructions="You are a personal finance advisor. Focus on saving and smart investing."
+        )
         return {
-            "monthly_income": "$10,000",
-            "monthly_expenses": "$4,500",
-            "savings_rate": "55%",
-            "top_categories": ["Housing", "Investment", "Travel"]
+            "report": report,
+            "timestamp": datetime.utcnow().isoformat()
         }

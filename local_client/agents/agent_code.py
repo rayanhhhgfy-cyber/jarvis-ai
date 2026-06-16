@@ -11,13 +11,13 @@ from __future__ import annotations
 import os
 import sys
 import time
-import subprocess
 import traceback
 from typing import Dict, Any, List
 from datetime import datetime
 
 from shared.models import TaskDefinition, TaskResult
 from shared.constants import AgentType, TaskStatus
+from local_client.process_manager import local_process_manager
 from shared.logger import get_logger
 
 log = get_logger("agent_code")
@@ -115,7 +115,7 @@ class AgentCode:
         }
 
     async def _lint_code(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Runs syntax verification (py_compile for Python, custom checks for others)."""
+        """Runs syntax verification using LocalProcessManager."""
         path = task.payload.get("file_path")
         if not path:
             raise ValueError("file_path is required for lint action")
@@ -124,21 +124,23 @@ class AgentCode:
             raise FileNotFoundError(f"File not found: {path}")
 
         if path.endswith(".py"):
-            # Simple python syntax check
             cmd = [sys.executable, "-m", "py_compile", path]
-            proc = subprocess.run(cmd, capture_output=True, text=True)
-            if proc.returncode != 0:
+            proc_id = f"lint_{task.task_id}"
+            await local_process_manager.spawn_process(proc_id, cmd)
+            exit_code, stdout, stderr = await local_process_manager.wait_process(proc_id)
+
+            if exit_code != 0:
                 return {
                     "valid": False,
-                    "error": proc.stderr,
-                    "exit_code": proc.returncode
+                    "error": stderr,
+                    "exit_code": exit_code
                 }
             return {"valid": True, "details": "Python compilation check passed"}
 
         return {"valid": True, "details": "Linting not implemented for this file type"}
 
     async def _run_code(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Executes a code block or script and captures output."""
+        """Executes a code block or script asynchronously."""
         code = task.payload.get("code")
         file_path = task.payload.get("file_path")
 
@@ -155,18 +157,14 @@ class AgentCode:
 
         try:
             cmd = [sys.executable, file_path]
-            # Execute subprocess with timeout
-            proc = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=task.timeout
-            )
+            proc_id = f"run_{task.task_id}"
+            await local_process_manager.spawn_process(proc_id, cmd)
+            exit_code, stdout, stderr = await local_process_manager.wait_process(proc_id)
             
             return {
-                "exit_code": proc.returncode,
-                "stdout": proc.stdout,
-                "stderr": proc.stderr,
+                "exit_code": exit_code,
+                "stdout": stdout,
+                "stderr": stderr,
                 "completed": True
             }
         finally:
