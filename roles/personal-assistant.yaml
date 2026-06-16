@@ -68,12 +68,27 @@ tools:
   - background_check
   - web_fetch
   - analyze_data
+  - android_click
+  - android_type
+  - android_swipe
+  - android_screenshot
+  - join_meeting
+  - listen_meeting
+  - speak_meeting
+  - summarize_meeting
+  - run_marketing_campaign
+  - upload_reel
+  - seo_optimize
 subAgents:
   - code
   - research
   - browser
   - os
   - planner
+  - android
+  - meeting
+  - marketing
+  - startup
 allowedLevel: 3
 safety:
   requireApproval:

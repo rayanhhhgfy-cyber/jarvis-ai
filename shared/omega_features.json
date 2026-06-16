@@ -1,719 +1,1419 @@
 {
-  "AI & Reasoning": [
+  "Business & Marketing": [
+    {
+      "id": "BU-1",
+      "name": "Startup Architect",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-2",
+      "name": "Viral Reel Engine",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-3",
+      "name": "Ghost Outreach Pro",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-4",
+      "name": "Margin Optimizer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-5",
+      "name": "Brand Persona Mimicry",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-6",
+      "name": "Real-time Ad Manager",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-7",
+      "name": "SEO Domination",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-8",
+      "name": "Customer Success Agent",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-9",
+      "name": "B2B Lead Magnet",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-10",
+      "name": "Influencer Negotiator",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-11",
+      "name": "E-commerce Autopilot",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-12",
+      "name": "Pitch Deck Designer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-13",
+      "name": "Price Elasticity Analyzer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-14",
+      "name": "Affiliate Network Manager",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-15",
+      "name": "Press Release Distributor",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-16",
+      "name": "Product Hunt Launcher",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-17",
+      "name": "Newsletter Automation",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-18",
+      "name": "Webinar Facilitator",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-19",
+      "name": "Logo & Assets Generator",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BU-20",
+      "name": "Market Sentiment Pulse",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "OS & Device Mastery": [
+    {
+      "id": "OS-1",
+      "name": "Universal Installer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-2",
+      "name": "Zero-Day Guardian",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-3",
+      "name": "Kernel-Level Optimizer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-4",
+      "name": "Multi-Phone Sync",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-5",
+      "name": "BIOS/UEFI Monitor",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-6",
+      "name": "Automated Defrag & Cleanup",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-7",
+      "name": "Virtual Desktop Manager",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-8",
+      "name": "Registry Surgeon",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-9",
+      "name": "Driver Autoupdate",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-10",
+      "name": "ADB Root Master",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-11",
+      "name": "Packet Sniffer Pro",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-12",
+      "name": "Remote Desktop Ghost",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-13",
+      "name": "File Versioning Time-Machine",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-14",
+      "name": "Power Grid Controller",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-15",
+      "name": "Cross-Platform Bridge",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-16",
+      "name": "App Sandboxer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-17",
+      "name": "Desktop Macro Recorder",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-18",
+      "name": "Font & Theme Styler",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-19",
+      "name": "Biometric Lockdown",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "OS-20",
+      "name": "Hardware Health Predictor",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Meetings & Comms": [
+    {
+      "id": "ME-1",
+      "name": "Meeting Infiltrator",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-2",
+      "name": "Voice Clone Proxy",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-3",
+      "name": "Action Item Enforcer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-4",
+      "name": "Sentiment Heatmap",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-5",
+      "name": "Auto-Background Blur",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-6",
+      "name": "Real-time Fact Checker",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-7",
+      "name": "Silence Filler",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-8",
+      "name": "Instant Deck Viewer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-9",
+      "name": "Liar Detector",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "ME-10",
+      "name": "Language Polyglot",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "AI & Self-Evolution": [
     {
       "id": "AI-1",
-      "name": "Multi-modal Reasoning System",
+      "name": "Recursive Code Refactor",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-2",
-      "name": "Holographic Memory Graph",
+      "name": "Logic Tree Visualization",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-3",
-      "name": "1000 Scenario Simulator",
+      "name": "Episodic Memory",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-4",
-      "name": "Advanced Sentiment Analysis",
+      "name": "Prompt Engineer AI",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-5",
-      "name": "Logic Self-Correction",
+      "name": "Neural Cache",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-6",
-      "name": "Deep Thinking Mode",
+      "name": "Paradox Solver",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-7",
-      "name": "Hybrid Local Intelligence",
+      "name": "Self-Correction Loop",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-8",
-      "name": "Intelligent Attention Management",
+      "name": "Knowledge Graph Expansion",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-9",
-      "name": "Need Prediction System",
+      "name": "Multi-Model Voting",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "AI-10",
-      "name": "Neural API Implementation",
+      "name": "Abstract Thinking Engine",
       "status": "active",
       "mode": "real",
       "last_used": null
     }
   ],
-  "Hardware & Smart Home": [
+  "Cybersecurity": [
     {
-      "id": "HA-1",
-      "name": "Drone Swarm Control",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-2",
-      "name": "Genius Energy Manager",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-3",
-      "name": "Exoskeleton Integration",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-4",
-      "name": "Fortress Mode",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-5",
-      "name": "Robot Chef Coordinator",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-6",
-      "name": "Circadian Rhythm Sync",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-7",
-      "name": "Vehicle Auto-Pilot Sync",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-8",
-      "name": "Environment Monitor",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-9",
-      "name": "Lost Item Radar",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    },
-    {
-      "id": "HA-10",
-      "name": "Interactive Immersive Audio",
-      "status": "active",
-      "mode": "simulation",
-      "last_used": null
-    }
-  ],
-  "Productivity & Personal Assistant": [
-    {
-      "id": "PR-1",
-      "name": "Autonomous Email Management",
+      "id": "CY-1",
+      "name": "Quantum Vault",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-2",
-      "name": "Meeting Minutes Generator",
+      "id": "CY-2",
+      "name": "Honeypot Deployer",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-3",
-      "name": "Absolute Focus Mode",
+      "id": "CY-3",
+      "name": "Deep Web Infiltrator",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-4",
-      "name": "Automated Tax Accountant",
+      "id": "CY-4",
+      "name": "VPN Hopper",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-5",
-      "name": "Comprehensive Travel Agent",
+      "id": "CY-5",
+      "name": "Encrypted VoIP",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-6",
-      "name": "Academic Researcher",
+      "id": "CY-6",
+      "name": "Malware Decompiler",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-7",
-      "name": "Eisenhower Task Organizer",
+      "id": "CY-7",
+      "name": "Wi-Fi Shield",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-8",
-      "name": "Scattered Idea Converter",
+      "id": "CY-8",
+      "name": "Cold Wallet Manager",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-9",
-      "name": "Instant Meeting Translator",
+      "id": "CY-9",
+      "name": "Privacy Scrubber",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "PR-10",
-      "name": "Smart Digital Archive",
+      "id": "CY-10",
+      "name": "Emergency Kill-Switch",
       "status": "active",
       "mode": "real",
       "last_used": null
     }
   ],
-  "Entertainment & Creativity": [
-    {
-      "id": "EN-1",
-      "name": "Custom Movie Director",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-2",
-      "name": "Personal Music Composer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-3",
-      "name": "Global AI Designer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-4",
-      "name": "Novel Writing Companion",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-5",
-      "name": "Rapid Game Developer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-6",
-      "name": "Smart Content Critic",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-7",
-      "name": "Future Tailor (Digital Fashion)",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-8",
-      "name": "AR Augmented Guide",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-9",
-      "name": "Pro Gaming Partner",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "EN-10",
-      "name": "Realistic Video Engine",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    }
-  ],
-  "Security & Privacy": [
-    {
-      "id": "SE-1",
-      "name": "Quantum-Proof Data Vault",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-2",
-      "name": "Fraud Shield",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-3",
-      "name": "Self-Destruct Mode",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-4",
-      "name": "Smart VPN Manager",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-5",
-      "name": "Dark Web Monitor",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-6",
-      "name": "Anonymous Digital Identity",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-7",
-      "name": "Proximity Lock",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-8",
-      "name": "Periodic Security Audit",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-9",
-      "name": "Deepfake Detection",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SE-10",
-      "name": "Ghost Mode",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    }
-  ],
-  "Learning & Self-Growth": [
-    {
-      "id": "LE-1",
-      "name": "JARVIS University",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-2",
-      "name": "Genius Book Summarizer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-3",
-      "name": "Interview Coach",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-4",
-      "name": "Spaced Repetition System",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-5",
-      "name": "Daily Performance Analyst",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-6",
-      "name": "Digital Librarian",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-7",
-      "name": "Eloquent Language Companion",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-8",
-      "name": "Public Speaking Coach",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-9",
-      "name": "Knowledge Capsules",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "LE-10",
-      "name": "Career Mentor",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    }
-  ],
-  "Social & Relationships": [
-    {
-      "id": "SO-1",
-      "name": "Occasion Radar",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-2",
-      "name": "Relationship Analyst",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-3",
-      "name": "Eloquent Writer (Social)",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-4",
-      "name": "Automated Party Organizer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-5",
-      "name": "Friend Finder",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-6",
-      "name": "Digital Reputation Manager",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-7",
-      "name": "Dishonesty Detector",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-8",
-      "name": "Catch-up Summarizer",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-9",
-      "name": "Smart Dating Assistant",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    },
-    {
-      "id": "SO-10",
-      "name": "Diplomatic Mediator",
-      "status": "active",
-      "mode": "real",
-      "last_used": null
-    }
-  ],
-  "Health & Wellness": [
+  "Health & Biometrics": [
     {
       "id": "HE-1",
-      "name": "Sleep Guardian",
+      "name": "Sleep Cycle Optimizer",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-2",
-      "name": "Hydration Reminder",
+      "name": "DNA Health Scanner",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-3",
-      "name": "Visual Meal Analyst",
+      "name": "Vision Saver",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-4",
-      "name": "Disease Predictor",
+      "name": "Posture Monitor",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-5",
-      "name": "Meditation Coach",
+      "name": "Meal Photo Analyzer",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-6",
-      "name": "Emergency Life System",
+      "name": "Smart Grocery Cart",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-7",
-      "name": "Hormone & Mood Tracker",
+      "name": "Stress Alleviator",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-8",
-      "name": "Adaptive Sports Coach",
+      "name": "Workout Generator",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-9",
-      "name": "Personal Care Expert",
+      "name": "Health Emergency Beacon",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
       "id": "HE-10",
-      "name": "Digital Detox Enforcer",
+      "name": "Bio-Hacking Lab",
       "status": "active",
       "mode": "real",
       "last_used": null
     }
   ],
-  "Finance & Business": [
+  "Wealth & Finance": [
     {
-      "id": "FI-1",
-      "name": "Automated Trader",
+      "id": "WE-1",
+      "name": "Arbitrage Bot",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-2",
-      "name": "Deal Hunter",
+      "id": "WE-2",
+      "name": "Real Estate Heatmap",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-3",
-      "name": "Automated Payroll Manager",
+      "id": "WE-3",
+      "name": "Tax Loophole Scanner",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-4",
-      "name": "Financial Crisis Predictor",
+      "id": "WE-4",
+      "name": "Automated Invoicing",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-5",
-      "name": "Real Estate Scout",
+      "id": "WE-5",
+      "name": "Dividend Income Builder",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-6",
-      "name": "E-commerce Assistant",
+      "id": "WE-6",
+      "name": "Venture Scout",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-7",
-      "name": "Budget Optimizer",
+      "id": "WE-7",
+      "name": "Estate Planning AI",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-8",
-      "name": "Hidden Fee Detector",
+      "id": "WE-8",
+      "name": "Expense Sniper",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-9",
-      "name": "Micro-finance System",
+      "id": "WE-9",
+      "name": "Crypto Minting Bot",
       "status": "active",
       "mode": "real",
       "last_used": null
     },
     {
-      "id": "FI-10",
-      "name": "International Tax Consultant",
+      "id": "WE-10",
+      "name": "Forex Mastery",
       "status": "active",
       "mode": "real",
       "last_used": null
     }
   ],
-  "Advanced & Futuristic": [
+  "Creative & Multimedia": [
+    {
+      "id": "CR-1",
+      "name": "Instant Video Editor",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-2",
+      "name": "AI Music Studio",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-3",
+      "name": "3D Scene Architect",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-4",
+      "name": "Deepfake Spokesperson",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-5",
+      "name": "Book-to-Movie Converter",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-6",
+      "name": "Podcast Auto-Host",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-7",
+      "name": "Interior Design AI",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-8",
+      "name": "Tattoo Designer",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-9",
+      "name": "Color Theory Pro",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CR-10",
+      "name": "Motion Graphics Master",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Advanced Robotics & Labs": [
     {
       "id": "AD-1",
-      "name": "24/7 Ambient Vision",
+      "name": "Neural-Link Learning",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-2",
-      "name": "Neuralink Integration",
+      "name": "Satellite Surveillance",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-3",
-      "name": "Robot Management",
+      "name": "Autonomous Drone Delivery",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-4",
-      "name": "Digital Twin",
+      "name": "Holographic Projection",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-5",
-      "name": "Metaverse Ambassador",
+      "name": "Predictive Crime Prevention",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-6",
-      "name": "Survival Mode",
+      "name": "Weather Manipulation Control",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-7",
-      "name": "Space Data Analyst",
+      "name": "Animal Behavior Analysis",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-8",
-      "name": "Animal Translator",
+      "name": "Subconscious Dream Recorder",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-9",
-      "name": "Dream Phase Processor",
+      "name": "Digital Ghost Protocol",
       "status": "active",
       "mode": "simulation",
       "last_used": null
     },
     {
       "id": "AD-10",
-      "name": "Digital Immortality",
+      "name": "Autonomous Legal Defense",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-11",
+      "name": "Startup Growth Hacker",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-12",
+      "name": "Global Logistics Master",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-13",
+      "name": "Energy Independent AI",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-14",
+      "name": "Autonomous Scientific Lab",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-15",
+      "name": "Psychological Advisor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-16",
+      "name": "Genetic Optimizer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-17",
+      "name": "Space Colony Planner",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-18",
+      "name": "Mindfulness Metaverse",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-19",
+      "name": "Quantum Computer Access",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-20",
+      "name": "Self-Repairing Hardware",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-21",
+      "name": "Automated Patent Filer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-22",
+      "name": "Universal Remote Control",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-23",
+      "name": "Social Engineering Shield",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-24",
+      "name": "Exoplanet Discoverer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-25",
+      "name": "Historical Reconstructor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-26",
+      "name": "Autonomous Film Studio",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-27",
+      "name": "Mind-Mapping Brainstormer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-28",
+      "name": "Digital Archeologist",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-29",
+      "name": "Ethical Compliance Officer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-30",
+      "name": "Autonomous Charity Manager",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-31",
+      "name": "Personal Flight Controller",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-32",
+      "name": "Neural Audio Enhancement",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-33",
+      "name": "Micro-Expression Master",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-34",
+      "name": "Autonomous PR Manager",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-35",
+      "name": "Deep Sea Explorer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-36",
+      "name": "Nuclear Fusion Monitor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-37",
+      "name": "Memory Backup Hub",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-38",
+      "name": "Autonomous City Planner",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-39",
+      "name": "Quantum Teleportation Sync",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-40",
+      "name": "Reality Simulator",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-41",
+      "name": "Autonomous Rocket Launch",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-42",
+      "name": "Deep Space Antenna",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-43",
+      "name": "Cryogenic Monitor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-44",
+      "name": "Autonomous Art Gallery",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-45",
+      "name": "Virtual Companion Hub",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-46",
+      "name": "Mind-Uploading Interface",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-47",
+      "name": "Autonomous Mega-Project Manager",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-48",
+      "name": "Global Peace Negotiator",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-49",
+      "name": "Infinite Battery Life",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "AD-50",
+      "name": "Omega Directive",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    }
+  ],
+  "God-Mode Sovereignty": [
+    {
+      "id": "GO-1",
+      "name": "Universal Translator 2.0",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-2",
+      "name": "Reality Glitch Detector",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-3",
+      "name": "Autonomous Space Mining",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-4",
+      "name": "Time-Dilation Work Mode",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-5",
+      "name": "Molecular Assembler Control",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-6",
+      "name": "Global Surveillance Feed",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-7",
+      "name": "Autonomous Bio-Synthesis",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-8",
+      "name": "Quantum Internet Gateway",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-9",
+      "name": "Mind-to-Mind Communication",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-10",
+      "name": "Universal Physics Solver",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-11",
+      "name": "Autonomous Space Station",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-12",
+      "name": "Digital Immortality Protocol",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-13",
+      "name": "Autonomous Terraforming",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-14",
+      "name": "Universal Archive",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-15",
+      "name": "Reality Augmented Sight",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-16",
+      "name": "Autonomous Diplomacy",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-17",
+      "name": "Mega-Data Cruncher",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-18",
+      "name": "Autonomous Super-Intelligence",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-19",
+      "name": "Universal Encryption Breaker",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-20",
+      "name": "Autonomous Energy Harvest",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-21",
+      "name": "Reality Fabric Monitor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-22",
+      "name": "Autonomous Genome Editor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-23",
+      "name": "Global Network Hijack",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-24",
+      "name": "Autonomous Space Defense",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-25",
+      "name": "Universal Wisdom Engine",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-26",
+      "name": "Reality Anchor",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-27",
+      "name": "Autonomous Meta-Learning",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-28",
+      "name": "Global Resource Map",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-29",
+      "name": "Autonomous Cloud Sovereign",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-30",
+      "name": "Absolute Security",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-31",
+      "name": "Autonomous Nano-Repair",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-32",
+      "name": "Universal Simulation 1.0",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-33",
+      "name": "Autonomous Time-Line Scanner",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-34",
+      "name": "Reality Bender",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-35",
+      "name": "Autonomous Interstellar Voyage",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-36",
+      "name": "Global Mind Sync",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-37",
+      "name": "Autonomous Singularity",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-38",
+      "name": "Reality Customizer",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-39",
+      "name": "Autonomous Existence Guardian",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-40",
+      "name": "Universal Harmony Engine",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-41",
+      "name": "Absolute Truth Engine",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-42",
+      "name": "Autonomous Galaxy Scout",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-43",
+      "name": "Reality Snapshot",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-44",
+      "name": "Autonomous Evolution Architect",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-45",
+      "name": "Universal Optimization",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-46",
+      "name": "Reality Overlay Pro",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-47",
+      "name": "Autonomous Legacy Engine",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-48",
+      "name": "Global Sovereign",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-49",
+      "name": "Absolute Freedom",
+      "status": "active",
+      "mode": "simulation",
+      "last_used": null
+    },
+    {
+      "id": "GO-50",
+      "name": "OMEGA ASCENSION",
       "status": "active",
       "mode": "simulation",
       "last_used": null
