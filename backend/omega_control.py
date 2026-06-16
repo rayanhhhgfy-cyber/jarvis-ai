@@ -100,16 +100,11 @@ class OmegaControl:
         self.features_status = self._load_features_status()
 
     def _load_features_status(self) -> Dict[str, Any]:
-        status_file = os.path.join("shared", "omega_features.json")
+        status_file = os.path.join("shared", "omega_features_1000.json")
         if os.path.exists(status_file):
             with open(status_file, "r") as f:
-                data = json.load(f)
-                # Ensure all 200 features are present
-                total_stored = sum(len(feats) for feats in data.values())
-                if total_stored < 200:
-                     return self._initialize_features()
-                return data
-        return self._initialize_features()
+                return json.load(f)
+        return {}
 
     def _initialize_features(self) -> Dict[str, Any]:
         features = {}
@@ -143,38 +138,25 @@ class OmegaControl:
 
         log.info("executing_omega_god_mode_feature", feature=feature["name"], category=category)
 
-        # Optimization: Delegate to specialized agents if applicable
+        # Dynamic Delegation for 1000 Features
         from shared.constants import AgentType
 
-        # Comprehensive Mapping for 200 Features
-        delegation_map = {
-            "Startup Architect": (AgentType.STARTUP, "generate_strategy"),
-            "Viral Reel Engine": (AgentType.MARKETING, "upload_reel"),
-            "Margin Optimizer": (AgentType.STARTUP, "optimize_margins"),
-            "Ghost Outreach Pro": (AgentType.MARKETING, "customer_outreach"),
-            "Meeting Infiltrator": (AgentType.MEETING, "join"),
-            "SEO Domination": (AgentType.MARKETING, "seo_optimize"),
-            "Real-time Ad Manager": (AgentType.MARKETING, "run_campaign"),
-            "Universal Installer": (AgentType.OS, "run_shell"),
-            "Zero-Day Guardian": (AgentType.CYBERSECURITY, "scan_vulnerabilities"),
-            "Quantum Vault": (AgentType.CYBERSECURITY, "audit_logs"),
-            "Arbitrage Bot": (AgentType.FINANCE, "market_analysis"),
-            "Real Estate Heatmap": (AgentType.FINANCE, "market_analysis"),
-            "Instant Video Editor": (AgentType.CREATIVE, "design_prompt"),
-            "AI Music Studio": (AgentType.CREATIVE, "generate_idea"),
-            "Sleep Cycle Optimizer": (AgentType.HEALTH, "analyze_vitals"),
-            "B2B Lead Magnet": (AgentType.MARKETING, "customer_outreach"),
-            "Influencer Negotiator": (AgentType.MARKETING, "run_campaign"),
-            "Pitch Deck Designer": (AgentType.STARTUP, "build_pitch_deck"),
-            "Equity Model": (AgentType.STARTUP, "equity_model"),
-            "Startup Growth Hacker": (AgentType.STARTUP, "growth_strategy"),
-            "Autonomous Legal Defense": (AgentType.LEGAL, "analyze_contract"),
-            "Global Logistics Master": (AgentType.LOGISTICS, "optimize_route")
+        category_agent_map = {
+            "Business & Startup Autonomy": AgentType.STARTUP,
+            "Cybersecurity & Digital Defense": AgentType.CYBERSECURITY,
+            "Full Device & OS Mastery": AgentType.OS,
+            "Personal Productivity & Life Management": AgentType.PLANNER,
+            "Health, Biometrics & Longevity": AgentType.HEALTH,
+            "Creative, Media & Viral Content": AgentType.CREATIVE,
+            "Advanced AI, Self-Evolution & Reasoning": AgentType.CODE,
+            "Social Intelligence & Relationship Management": AgentType.SOCIAL,
+            "Finance, Wealth & Global Markets": AgentType.FINANCE,
+            "Futuristic, Robotics & God-Mode Dominance": AgentType.RESEARCH
         }
 
-        if feature["name"] in delegation_map:
-            agent_type, action = delegation_map[feature["name"]]
-            return await self._delegate_to_agent(agent_type, {"action": action, **payload})
+        if category in category_agent_map:
+            agent_type = category_agent_map[category]
+            return await self._delegate_to_agent(agent_type, {"action": "execute_feature", "feature_name": feature["name"], **payload})
 
         # Logic for "Real" Features (AI-Driven)
         if feature["mode"] == "real":

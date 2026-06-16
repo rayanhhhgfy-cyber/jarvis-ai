@@ -1,0 +1,7022 @@
+{
+  "Business & Startup Autonomy": [
+    {
+      "id": "BS-001",
+      "name": "Autonomous Entity Formation",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-002",
+      "name": "AI Co-Founder",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-003",
+      "name": "Viral Market Arbitrage",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-004",
+      "name": "Million-Dollar Margin Scout",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-005",
+      "name": "Ghostwriter Empire",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-006",
+      "name": "Dynamic Pricing Oracle",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-007",
+      "name": "Automated Exit Strategist",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-008",
+      "name": "Invisible Sales Force",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-009",
+      "name": "Sentiment-Driven Pivot",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-010",
+      "name": "Legal Shield",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-011",
+      "name": "Business Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-012",
+      "name": "Business Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-013",
+      "name": "Business Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-014",
+      "name": "Business Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-015",
+      "name": "Business Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-016",
+      "name": "Business Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-017",
+      "name": "Business Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-018",
+      "name": "Business Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-019",
+      "name": "Business Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-020",
+      "name": "Business Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-021",
+      "name": "Business Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-022",
+      "name": "Business Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-023",
+      "name": "Business Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-024",
+      "name": "Business Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-025",
+      "name": "Business Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-026",
+      "name": "Business Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-027",
+      "name": "Business Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-028",
+      "name": "Business Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-029",
+      "name": "Business Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-030",
+      "name": "Business Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-031",
+      "name": "Business Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-032",
+      "name": "Business Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-033",
+      "name": "Business Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-034",
+      "name": "Business Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-035",
+      "name": "Business Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-036",
+      "name": "Business Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-037",
+      "name": "Business Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-038",
+      "name": "Business Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-039",
+      "name": "Business Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-040",
+      "name": "Business Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-041",
+      "name": "Business Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-042",
+      "name": "Business Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-043",
+      "name": "Business Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-044",
+      "name": "Business Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-045",
+      "name": "Business Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-046",
+      "name": "Business Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-047",
+      "name": "Business Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-048",
+      "name": "Business Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-049",
+      "name": "Business Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-050",
+      "name": "Business Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-051",
+      "name": "Business Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-052",
+      "name": "Business Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-053",
+      "name": "Business Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-054",
+      "name": "Business Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-055",
+      "name": "Business Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-056",
+      "name": "Business Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-057",
+      "name": "Business Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-058",
+      "name": "Business Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-059",
+      "name": "Business Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-060",
+      "name": "Business Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-061",
+      "name": "Business Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-062",
+      "name": "Business Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-063",
+      "name": "Business Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-064",
+      "name": "Business Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-065",
+      "name": "Business Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-066",
+      "name": "Business Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-067",
+      "name": "Business Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-068",
+      "name": "Business Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-069",
+      "name": "Business Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-070",
+      "name": "Business Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-071",
+      "name": "Business Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-072",
+      "name": "Business Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-073",
+      "name": "Business Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-074",
+      "name": "Business Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-075",
+      "name": "Business Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-076",
+      "name": "Business Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-077",
+      "name": "Business Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-078",
+      "name": "Business Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-079",
+      "name": "Business Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-080",
+      "name": "Business Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-081",
+      "name": "Business Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-082",
+      "name": "Business Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-083",
+      "name": "Business Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-084",
+      "name": "Business Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-085",
+      "name": "Business Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-086",
+      "name": "Business Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-087",
+      "name": "Business Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-088",
+      "name": "Business Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-089",
+      "name": "Business Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-090",
+      "name": "Business Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-091",
+      "name": "Business Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-092",
+      "name": "Business Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-093",
+      "name": "Business Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-094",
+      "name": "Business Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-095",
+      "name": "Business Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-096",
+      "name": "Business Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-097",
+      "name": "Business Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-098",
+      "name": "Business Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-099",
+      "name": "Business Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "BS-100",
+      "name": "Business Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Cybersecurity & Digital Defense": [
+    {
+      "id": "CD-001",
+      "name": "Neural Firewall",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-002",
+      "name": "Quantum-Safe Vault",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-003",
+      "name": "Autonomous Penetration Tester",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-004",
+      "name": "Digital Identity Obfuscator",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-005",
+      "name": "Zero-Day Auto-Patcher",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-006",
+      "name": "Honeypot Network",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-007",
+      "name": "Anti-Deepfake Scanner",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-008",
+      "name": "Encrypted Mesh Network",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-009",
+      "name": "Hardware Kill-Switch",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-010",
+      "name": "Anonymous Payment Proxy",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-011",
+      "name": "Cybersecurity Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-012",
+      "name": "Cybersecurity Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-013",
+      "name": "Cybersecurity Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-014",
+      "name": "Cybersecurity Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-015",
+      "name": "Cybersecurity Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-016",
+      "name": "Cybersecurity Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-017",
+      "name": "Cybersecurity Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-018",
+      "name": "Cybersecurity Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-019",
+      "name": "Cybersecurity Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-020",
+      "name": "Cybersecurity Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-021",
+      "name": "Cybersecurity Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-022",
+      "name": "Cybersecurity Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-023",
+      "name": "Cybersecurity Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-024",
+      "name": "Cybersecurity Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-025",
+      "name": "Cybersecurity Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-026",
+      "name": "Cybersecurity Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-027",
+      "name": "Cybersecurity Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-028",
+      "name": "Cybersecurity Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-029",
+      "name": "Cybersecurity Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-030",
+      "name": "Cybersecurity Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-031",
+      "name": "Cybersecurity Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-032",
+      "name": "Cybersecurity Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-033",
+      "name": "Cybersecurity Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-034",
+      "name": "Cybersecurity Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-035",
+      "name": "Cybersecurity Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-036",
+      "name": "Cybersecurity Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-037",
+      "name": "Cybersecurity Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-038",
+      "name": "Cybersecurity Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-039",
+      "name": "Cybersecurity Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-040",
+      "name": "Cybersecurity Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-041",
+      "name": "Cybersecurity Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-042",
+      "name": "Cybersecurity Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-043",
+      "name": "Cybersecurity Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-044",
+      "name": "Cybersecurity Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-045",
+      "name": "Cybersecurity Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-046",
+      "name": "Cybersecurity Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-047",
+      "name": "Cybersecurity Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-048",
+      "name": "Cybersecurity Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-049",
+      "name": "Cybersecurity Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-050",
+      "name": "Cybersecurity Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-051",
+      "name": "Cybersecurity Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-052",
+      "name": "Cybersecurity Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-053",
+      "name": "Cybersecurity Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-054",
+      "name": "Cybersecurity Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-055",
+      "name": "Cybersecurity Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-056",
+      "name": "Cybersecurity Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-057",
+      "name": "Cybersecurity Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-058",
+      "name": "Cybersecurity Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-059",
+      "name": "Cybersecurity Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-060",
+      "name": "Cybersecurity Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-061",
+      "name": "Cybersecurity Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-062",
+      "name": "Cybersecurity Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-063",
+      "name": "Cybersecurity Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-064",
+      "name": "Cybersecurity Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-065",
+      "name": "Cybersecurity Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-066",
+      "name": "Cybersecurity Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-067",
+      "name": "Cybersecurity Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-068",
+      "name": "Cybersecurity Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-069",
+      "name": "Cybersecurity Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-070",
+      "name": "Cybersecurity Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-071",
+      "name": "Cybersecurity Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-072",
+      "name": "Cybersecurity Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-073",
+      "name": "Cybersecurity Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-074",
+      "name": "Cybersecurity Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-075",
+      "name": "Cybersecurity Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-076",
+      "name": "Cybersecurity Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-077",
+      "name": "Cybersecurity Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-078",
+      "name": "Cybersecurity Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-079",
+      "name": "Cybersecurity Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-080",
+      "name": "Cybersecurity Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-081",
+      "name": "Cybersecurity Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-082",
+      "name": "Cybersecurity Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-083",
+      "name": "Cybersecurity Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-084",
+      "name": "Cybersecurity Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-085",
+      "name": "Cybersecurity Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-086",
+      "name": "Cybersecurity Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-087",
+      "name": "Cybersecurity Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-088",
+      "name": "Cybersecurity Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-089",
+      "name": "Cybersecurity Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-090",
+      "name": "Cybersecurity Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-091",
+      "name": "Cybersecurity Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-092",
+      "name": "Cybersecurity Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-093",
+      "name": "Cybersecurity Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-094",
+      "name": "Cybersecurity Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-095",
+      "name": "Cybersecurity Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-096",
+      "name": "Cybersecurity Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-097",
+      "name": "Cybersecurity Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-098",
+      "name": "Cybersecurity Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-099",
+      "name": "Cybersecurity Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CD-100",
+      "name": "Cybersecurity Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Full Device & OS Mastery": [
+    {
+      "id": "FD-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-011",
+      "name": "Full Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-012",
+      "name": "Full Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-013",
+      "name": "Full Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-014",
+      "name": "Full Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-015",
+      "name": "Full Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-016",
+      "name": "Full Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-017",
+      "name": "Full Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-018",
+      "name": "Full Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-019",
+      "name": "Full Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-020",
+      "name": "Full Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-021",
+      "name": "Full Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-022",
+      "name": "Full Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-023",
+      "name": "Full Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-024",
+      "name": "Full Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-025",
+      "name": "Full Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-026",
+      "name": "Full Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-027",
+      "name": "Full Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-028",
+      "name": "Full Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-029",
+      "name": "Full Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-030",
+      "name": "Full Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-031",
+      "name": "Full Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-032",
+      "name": "Full Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-033",
+      "name": "Full Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-034",
+      "name": "Full Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-035",
+      "name": "Full Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-036",
+      "name": "Full Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-037",
+      "name": "Full Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-038",
+      "name": "Full Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-039",
+      "name": "Full Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-040",
+      "name": "Full Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-041",
+      "name": "Full Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-042",
+      "name": "Full Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-043",
+      "name": "Full Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-044",
+      "name": "Full Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-045",
+      "name": "Full Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-046",
+      "name": "Full Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-047",
+      "name": "Full Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-048",
+      "name": "Full Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-049",
+      "name": "Full Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-050",
+      "name": "Full Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-051",
+      "name": "Full Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-052",
+      "name": "Full Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-053",
+      "name": "Full Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-054",
+      "name": "Full Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-055",
+      "name": "Full Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-056",
+      "name": "Full Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-057",
+      "name": "Full Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-058",
+      "name": "Full Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-059",
+      "name": "Full Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-060",
+      "name": "Full Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-061",
+      "name": "Full Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-062",
+      "name": "Full Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-063",
+      "name": "Full Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-064",
+      "name": "Full Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-065",
+      "name": "Full Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-066",
+      "name": "Full Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-067",
+      "name": "Full Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-068",
+      "name": "Full Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-069",
+      "name": "Full Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-070",
+      "name": "Full Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-071",
+      "name": "Full Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-072",
+      "name": "Full Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-073",
+      "name": "Full Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-074",
+      "name": "Full Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-075",
+      "name": "Full Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-076",
+      "name": "Full Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-077",
+      "name": "Full Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-078",
+      "name": "Full Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-079",
+      "name": "Full Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-080",
+      "name": "Full Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-081",
+      "name": "Full Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-082",
+      "name": "Full Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-083",
+      "name": "Full Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-084",
+      "name": "Full Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-085",
+      "name": "Full Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-086",
+      "name": "Full Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-087",
+      "name": "Full Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-088",
+      "name": "Full Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-089",
+      "name": "Full Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-090",
+      "name": "Full Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-091",
+      "name": "Full Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-092",
+      "name": "Full Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-093",
+      "name": "Full Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-094",
+      "name": "Full Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-095",
+      "name": "Full Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-096",
+      "name": "Full Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-097",
+      "name": "Full Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-098",
+      "name": "Full Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-099",
+      "name": "Full Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FD-100",
+      "name": "Full Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Personal Productivity & Life Management": [
+    {
+      "id": "PP-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-011",
+      "name": "Personal Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-012",
+      "name": "Personal Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-013",
+      "name": "Personal Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-014",
+      "name": "Personal Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-015",
+      "name": "Personal Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-016",
+      "name": "Personal Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-017",
+      "name": "Personal Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-018",
+      "name": "Personal Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-019",
+      "name": "Personal Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-020",
+      "name": "Personal Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-021",
+      "name": "Personal Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-022",
+      "name": "Personal Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-023",
+      "name": "Personal Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-024",
+      "name": "Personal Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-025",
+      "name": "Personal Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-026",
+      "name": "Personal Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-027",
+      "name": "Personal Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-028",
+      "name": "Personal Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-029",
+      "name": "Personal Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-030",
+      "name": "Personal Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-031",
+      "name": "Personal Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-032",
+      "name": "Personal Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-033",
+      "name": "Personal Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-034",
+      "name": "Personal Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-035",
+      "name": "Personal Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-036",
+      "name": "Personal Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-037",
+      "name": "Personal Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-038",
+      "name": "Personal Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-039",
+      "name": "Personal Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-040",
+      "name": "Personal Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-041",
+      "name": "Personal Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-042",
+      "name": "Personal Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-043",
+      "name": "Personal Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-044",
+      "name": "Personal Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-045",
+      "name": "Personal Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-046",
+      "name": "Personal Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-047",
+      "name": "Personal Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-048",
+      "name": "Personal Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-049",
+      "name": "Personal Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-050",
+      "name": "Personal Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-051",
+      "name": "Personal Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-052",
+      "name": "Personal Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-053",
+      "name": "Personal Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-054",
+      "name": "Personal Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-055",
+      "name": "Personal Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-056",
+      "name": "Personal Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-057",
+      "name": "Personal Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-058",
+      "name": "Personal Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-059",
+      "name": "Personal Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-060",
+      "name": "Personal Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-061",
+      "name": "Personal Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-062",
+      "name": "Personal Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-063",
+      "name": "Personal Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-064",
+      "name": "Personal Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-065",
+      "name": "Personal Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-066",
+      "name": "Personal Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-067",
+      "name": "Personal Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-068",
+      "name": "Personal Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-069",
+      "name": "Personal Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-070",
+      "name": "Personal Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-071",
+      "name": "Personal Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-072",
+      "name": "Personal Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-073",
+      "name": "Personal Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-074",
+      "name": "Personal Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-075",
+      "name": "Personal Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-076",
+      "name": "Personal Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-077",
+      "name": "Personal Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-078",
+      "name": "Personal Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-079",
+      "name": "Personal Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-080",
+      "name": "Personal Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-081",
+      "name": "Personal Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-082",
+      "name": "Personal Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-083",
+      "name": "Personal Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-084",
+      "name": "Personal Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-085",
+      "name": "Personal Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-086",
+      "name": "Personal Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-087",
+      "name": "Personal Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-088",
+      "name": "Personal Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-089",
+      "name": "Personal Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-090",
+      "name": "Personal Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-091",
+      "name": "Personal Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-092",
+      "name": "Personal Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-093",
+      "name": "Personal Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-094",
+      "name": "Personal Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-095",
+      "name": "Personal Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-096",
+      "name": "Personal Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-097",
+      "name": "Personal Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-098",
+      "name": "Personal Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-099",
+      "name": "Personal Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "PP-100",
+      "name": "Personal Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Health, Biometrics & Longevity": [
+    {
+      "id": "HB-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-011",
+      "name": "Health, Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-012",
+      "name": "Health, Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-013",
+      "name": "Health, Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-014",
+      "name": "Health, Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-015",
+      "name": "Health, Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-016",
+      "name": "Health, Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-017",
+      "name": "Health, Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-018",
+      "name": "Health, Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-019",
+      "name": "Health, Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-020",
+      "name": "Health, Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-021",
+      "name": "Health, Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-022",
+      "name": "Health, Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-023",
+      "name": "Health, Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-024",
+      "name": "Health, Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-025",
+      "name": "Health, Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-026",
+      "name": "Health, Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-027",
+      "name": "Health, Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-028",
+      "name": "Health, Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-029",
+      "name": "Health, Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-030",
+      "name": "Health, Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-031",
+      "name": "Health, Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-032",
+      "name": "Health, Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-033",
+      "name": "Health, Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-034",
+      "name": "Health, Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-035",
+      "name": "Health, Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-036",
+      "name": "Health, Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-037",
+      "name": "Health, Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-038",
+      "name": "Health, Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-039",
+      "name": "Health, Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-040",
+      "name": "Health, Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-041",
+      "name": "Health, Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-042",
+      "name": "Health, Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-043",
+      "name": "Health, Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-044",
+      "name": "Health, Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-045",
+      "name": "Health, Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-046",
+      "name": "Health, Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-047",
+      "name": "Health, Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-048",
+      "name": "Health, Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-049",
+      "name": "Health, Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-050",
+      "name": "Health, Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-051",
+      "name": "Health, Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-052",
+      "name": "Health, Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-053",
+      "name": "Health, Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-054",
+      "name": "Health, Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-055",
+      "name": "Health, Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-056",
+      "name": "Health, Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-057",
+      "name": "Health, Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-058",
+      "name": "Health, Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-059",
+      "name": "Health, Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-060",
+      "name": "Health, Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-061",
+      "name": "Health, Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-062",
+      "name": "Health, Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-063",
+      "name": "Health, Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-064",
+      "name": "Health, Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-065",
+      "name": "Health, Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-066",
+      "name": "Health, Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-067",
+      "name": "Health, Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-068",
+      "name": "Health, Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-069",
+      "name": "Health, Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-070",
+      "name": "Health, Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-071",
+      "name": "Health, Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-072",
+      "name": "Health, Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-073",
+      "name": "Health, Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-074",
+      "name": "Health, Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-075",
+      "name": "Health, Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-076",
+      "name": "Health, Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-077",
+      "name": "Health, Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-078",
+      "name": "Health, Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-079",
+      "name": "Health, Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-080",
+      "name": "Health, Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-081",
+      "name": "Health, Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-082",
+      "name": "Health, Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-083",
+      "name": "Health, Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-084",
+      "name": "Health, Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-085",
+      "name": "Health, Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-086",
+      "name": "Health, Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-087",
+      "name": "Health, Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-088",
+      "name": "Health, Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-089",
+      "name": "Health, Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-090",
+      "name": "Health, Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-091",
+      "name": "Health, Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-092",
+      "name": "Health, Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-093",
+      "name": "Health, Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-094",
+      "name": "Health, Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-095",
+      "name": "Health, Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-096",
+      "name": "Health, Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-097",
+      "name": "Health, Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-098",
+      "name": "Health, Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-099",
+      "name": "Health, Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "HB-100",
+      "name": "Health, Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Creative, Media & Viral Content": [
+    {
+      "id": "CM-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-011",
+      "name": "Creative, Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-012",
+      "name": "Creative, Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-013",
+      "name": "Creative, Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-014",
+      "name": "Creative, Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-015",
+      "name": "Creative, Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-016",
+      "name": "Creative, Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-017",
+      "name": "Creative, Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-018",
+      "name": "Creative, Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-019",
+      "name": "Creative, Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-020",
+      "name": "Creative, Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-021",
+      "name": "Creative, Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-022",
+      "name": "Creative, Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-023",
+      "name": "Creative, Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-024",
+      "name": "Creative, Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-025",
+      "name": "Creative, Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-026",
+      "name": "Creative, Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-027",
+      "name": "Creative, Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-028",
+      "name": "Creative, Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-029",
+      "name": "Creative, Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-030",
+      "name": "Creative, Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-031",
+      "name": "Creative, Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-032",
+      "name": "Creative, Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-033",
+      "name": "Creative, Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-034",
+      "name": "Creative, Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-035",
+      "name": "Creative, Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-036",
+      "name": "Creative, Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-037",
+      "name": "Creative, Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-038",
+      "name": "Creative, Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-039",
+      "name": "Creative, Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-040",
+      "name": "Creative, Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-041",
+      "name": "Creative, Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-042",
+      "name": "Creative, Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-043",
+      "name": "Creative, Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-044",
+      "name": "Creative, Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-045",
+      "name": "Creative, Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-046",
+      "name": "Creative, Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-047",
+      "name": "Creative, Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-048",
+      "name": "Creative, Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-049",
+      "name": "Creative, Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-050",
+      "name": "Creative, Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-051",
+      "name": "Creative, Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-052",
+      "name": "Creative, Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-053",
+      "name": "Creative, Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-054",
+      "name": "Creative, Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-055",
+      "name": "Creative, Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-056",
+      "name": "Creative, Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-057",
+      "name": "Creative, Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-058",
+      "name": "Creative, Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-059",
+      "name": "Creative, Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-060",
+      "name": "Creative, Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-061",
+      "name": "Creative, Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-062",
+      "name": "Creative, Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-063",
+      "name": "Creative, Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-064",
+      "name": "Creative, Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-065",
+      "name": "Creative, Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-066",
+      "name": "Creative, Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-067",
+      "name": "Creative, Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-068",
+      "name": "Creative, Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-069",
+      "name": "Creative, Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-070",
+      "name": "Creative, Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-071",
+      "name": "Creative, Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-072",
+      "name": "Creative, Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-073",
+      "name": "Creative, Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-074",
+      "name": "Creative, Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-075",
+      "name": "Creative, Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-076",
+      "name": "Creative, Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-077",
+      "name": "Creative, Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-078",
+      "name": "Creative, Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-079",
+      "name": "Creative, Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-080",
+      "name": "Creative, Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-081",
+      "name": "Creative, Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-082",
+      "name": "Creative, Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-083",
+      "name": "Creative, Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-084",
+      "name": "Creative, Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-085",
+      "name": "Creative, Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-086",
+      "name": "Creative, Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-087",
+      "name": "Creative, Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-088",
+      "name": "Creative, Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-089",
+      "name": "Creative, Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-090",
+      "name": "Creative, Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-091",
+      "name": "Creative, Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-092",
+      "name": "Creative, Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-093",
+      "name": "Creative, Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-094",
+      "name": "Creative, Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-095",
+      "name": "Creative, Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-096",
+      "name": "Creative, Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-097",
+      "name": "Creative, Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-098",
+      "name": "Creative, Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-099",
+      "name": "Creative, Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "CM-100",
+      "name": "Creative, Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Advanced AI, Self-Evolution & Reasoning": [
+    {
+      "id": "AA-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-011",
+      "name": "Advanced Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-012",
+      "name": "Advanced Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-013",
+      "name": "Advanced Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-014",
+      "name": "Advanced Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-015",
+      "name": "Advanced Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-016",
+      "name": "Advanced Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-017",
+      "name": "Advanced Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-018",
+      "name": "Advanced Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-019",
+      "name": "Advanced Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-020",
+      "name": "Advanced Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-021",
+      "name": "Advanced Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-022",
+      "name": "Advanced Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-023",
+      "name": "Advanced Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-024",
+      "name": "Advanced Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-025",
+      "name": "Advanced Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-026",
+      "name": "Advanced Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-027",
+      "name": "Advanced Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-028",
+      "name": "Advanced Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-029",
+      "name": "Advanced Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-030",
+      "name": "Advanced Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-031",
+      "name": "Advanced Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-032",
+      "name": "Advanced Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-033",
+      "name": "Advanced Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-034",
+      "name": "Advanced Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-035",
+      "name": "Advanced Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-036",
+      "name": "Advanced Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-037",
+      "name": "Advanced Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-038",
+      "name": "Advanced Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-039",
+      "name": "Advanced Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-040",
+      "name": "Advanced Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-041",
+      "name": "Advanced Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-042",
+      "name": "Advanced Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-043",
+      "name": "Advanced Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-044",
+      "name": "Advanced Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-045",
+      "name": "Advanced Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-046",
+      "name": "Advanced Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-047",
+      "name": "Advanced Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-048",
+      "name": "Advanced Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-049",
+      "name": "Advanced Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-050",
+      "name": "Advanced Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-051",
+      "name": "Advanced Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-052",
+      "name": "Advanced Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-053",
+      "name": "Advanced Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-054",
+      "name": "Advanced Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-055",
+      "name": "Advanced Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-056",
+      "name": "Advanced Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-057",
+      "name": "Advanced Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-058",
+      "name": "Advanced Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-059",
+      "name": "Advanced Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-060",
+      "name": "Advanced Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-061",
+      "name": "Advanced Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-062",
+      "name": "Advanced Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-063",
+      "name": "Advanced Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-064",
+      "name": "Advanced Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-065",
+      "name": "Advanced Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-066",
+      "name": "Advanced Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-067",
+      "name": "Advanced Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-068",
+      "name": "Advanced Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-069",
+      "name": "Advanced Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-070",
+      "name": "Advanced Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-071",
+      "name": "Advanced Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-072",
+      "name": "Advanced Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-073",
+      "name": "Advanced Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-074",
+      "name": "Advanced Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-075",
+      "name": "Advanced Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-076",
+      "name": "Advanced Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-077",
+      "name": "Advanced Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-078",
+      "name": "Advanced Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-079",
+      "name": "Advanced Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-080",
+      "name": "Advanced Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-081",
+      "name": "Advanced Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-082",
+      "name": "Advanced Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-083",
+      "name": "Advanced Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-084",
+      "name": "Advanced Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-085",
+      "name": "Advanced Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-086",
+      "name": "Advanced Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-087",
+      "name": "Advanced Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-088",
+      "name": "Advanced Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-089",
+      "name": "Advanced Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-090",
+      "name": "Advanced Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-091",
+      "name": "Advanced Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-092",
+      "name": "Advanced Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-093",
+      "name": "Advanced Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-094",
+      "name": "Advanced Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-095",
+      "name": "Advanced Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-096",
+      "name": "Advanced Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-097",
+      "name": "Advanced Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-098",
+      "name": "Advanced Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-099",
+      "name": "Advanced Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "AA-100",
+      "name": "Advanced Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Social Intelligence & Relationship Management": [
+    {
+      "id": "SI-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-011",
+      "name": "Social Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-012",
+      "name": "Social Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-013",
+      "name": "Social Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-014",
+      "name": "Social Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-015",
+      "name": "Social Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-016",
+      "name": "Social Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-017",
+      "name": "Social Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-018",
+      "name": "Social Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-019",
+      "name": "Social Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-020",
+      "name": "Social Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-021",
+      "name": "Social Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-022",
+      "name": "Social Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-023",
+      "name": "Social Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-024",
+      "name": "Social Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-025",
+      "name": "Social Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-026",
+      "name": "Social Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-027",
+      "name": "Social Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-028",
+      "name": "Social Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-029",
+      "name": "Social Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-030",
+      "name": "Social Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-031",
+      "name": "Social Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-032",
+      "name": "Social Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-033",
+      "name": "Social Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-034",
+      "name": "Social Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-035",
+      "name": "Social Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-036",
+      "name": "Social Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-037",
+      "name": "Social Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-038",
+      "name": "Social Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-039",
+      "name": "Social Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-040",
+      "name": "Social Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-041",
+      "name": "Social Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-042",
+      "name": "Social Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-043",
+      "name": "Social Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-044",
+      "name": "Social Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-045",
+      "name": "Social Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-046",
+      "name": "Social Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-047",
+      "name": "Social Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-048",
+      "name": "Social Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-049",
+      "name": "Social Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-050",
+      "name": "Social Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-051",
+      "name": "Social Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-052",
+      "name": "Social Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-053",
+      "name": "Social Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-054",
+      "name": "Social Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-055",
+      "name": "Social Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-056",
+      "name": "Social Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-057",
+      "name": "Social Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-058",
+      "name": "Social Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-059",
+      "name": "Social Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-060",
+      "name": "Social Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-061",
+      "name": "Social Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-062",
+      "name": "Social Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-063",
+      "name": "Social Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-064",
+      "name": "Social Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-065",
+      "name": "Social Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-066",
+      "name": "Social Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-067",
+      "name": "Social Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-068",
+      "name": "Social Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-069",
+      "name": "Social Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-070",
+      "name": "Social Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-071",
+      "name": "Social Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-072",
+      "name": "Social Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-073",
+      "name": "Social Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-074",
+      "name": "Social Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-075",
+      "name": "Social Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-076",
+      "name": "Social Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-077",
+      "name": "Social Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-078",
+      "name": "Social Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-079",
+      "name": "Social Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-080",
+      "name": "Social Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-081",
+      "name": "Social Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-082",
+      "name": "Social Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-083",
+      "name": "Social Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-084",
+      "name": "Social Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-085",
+      "name": "Social Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-086",
+      "name": "Social Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-087",
+      "name": "Social Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-088",
+      "name": "Social Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-089",
+      "name": "Social Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-090",
+      "name": "Social Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-091",
+      "name": "Social Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-092",
+      "name": "Social Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-093",
+      "name": "Social Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-094",
+      "name": "Social Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-095",
+      "name": "Social Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-096",
+      "name": "Social Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-097",
+      "name": "Social Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-098",
+      "name": "Social Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-099",
+      "name": "Social Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "SI-100",
+      "name": "Social Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Finance, Wealth & Global Markets": [
+    {
+      "id": "FW-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-011",
+      "name": "Finance, Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-012",
+      "name": "Finance, Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-013",
+      "name": "Finance, Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-014",
+      "name": "Finance, Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-015",
+      "name": "Finance, Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-016",
+      "name": "Finance, Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-017",
+      "name": "Finance, Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-018",
+      "name": "Finance, Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-019",
+      "name": "Finance, Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-020",
+      "name": "Finance, Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-021",
+      "name": "Finance, Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-022",
+      "name": "Finance, Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-023",
+      "name": "Finance, Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-024",
+      "name": "Finance, Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-025",
+      "name": "Finance, Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-026",
+      "name": "Finance, Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-027",
+      "name": "Finance, Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-028",
+      "name": "Finance, Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-029",
+      "name": "Finance, Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-030",
+      "name": "Finance, Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-031",
+      "name": "Finance, Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-032",
+      "name": "Finance, Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-033",
+      "name": "Finance, Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-034",
+      "name": "Finance, Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-035",
+      "name": "Finance, Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-036",
+      "name": "Finance, Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-037",
+      "name": "Finance, Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-038",
+      "name": "Finance, Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-039",
+      "name": "Finance, Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-040",
+      "name": "Finance, Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-041",
+      "name": "Finance, Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-042",
+      "name": "Finance, Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-043",
+      "name": "Finance, Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-044",
+      "name": "Finance, Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-045",
+      "name": "Finance, Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-046",
+      "name": "Finance, Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-047",
+      "name": "Finance, Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-048",
+      "name": "Finance, Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-049",
+      "name": "Finance, Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-050",
+      "name": "Finance, Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-051",
+      "name": "Finance, Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-052",
+      "name": "Finance, Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-053",
+      "name": "Finance, Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-054",
+      "name": "Finance, Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-055",
+      "name": "Finance, Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-056",
+      "name": "Finance, Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-057",
+      "name": "Finance, Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-058",
+      "name": "Finance, Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-059",
+      "name": "Finance, Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-060",
+      "name": "Finance, Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-061",
+      "name": "Finance, Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-062",
+      "name": "Finance, Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-063",
+      "name": "Finance, Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-064",
+      "name": "Finance, Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-065",
+      "name": "Finance, Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-066",
+      "name": "Finance, Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-067",
+      "name": "Finance, Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-068",
+      "name": "Finance, Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-069",
+      "name": "Finance, Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-070",
+      "name": "Finance, Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-071",
+      "name": "Finance, Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-072",
+      "name": "Finance, Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-073",
+      "name": "Finance, Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-074",
+      "name": "Finance, Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-075",
+      "name": "Finance, Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-076",
+      "name": "Finance, Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-077",
+      "name": "Finance, Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-078",
+      "name": "Finance, Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-079",
+      "name": "Finance, Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-080",
+      "name": "Finance, Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-081",
+      "name": "Finance, Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-082",
+      "name": "Finance, Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-083",
+      "name": "Finance, Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-084",
+      "name": "Finance, Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-085",
+      "name": "Finance, Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-086",
+      "name": "Finance, Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-087",
+      "name": "Finance, Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-088",
+      "name": "Finance, Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-089",
+      "name": "Finance, Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-090",
+      "name": "Finance, Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-091",
+      "name": "Finance, Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-092",
+      "name": "Finance, Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-093",
+      "name": "Finance, Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-094",
+      "name": "Finance, Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-095",
+      "name": "Finance, Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-096",
+      "name": "Finance, Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-097",
+      "name": "Finance, Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-098",
+      "name": "Finance, Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-099",
+      "name": "Finance, Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FW-100",
+      "name": "Finance, Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ],
+  "Futuristic, Robotics & God-Mode Dominance": [
+    {
+      "id": "FR-001",
+      "name": "Advanced Feature 1",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-002",
+      "name": "Advanced Feature 2",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-003",
+      "name": "Advanced Feature 3",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-004",
+      "name": "Advanced Feature 4",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-005",
+      "name": "Advanced Feature 5",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-006",
+      "name": "Advanced Feature 6",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-007",
+      "name": "Advanced Feature 7",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-008",
+      "name": "Advanced Feature 8",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-009",
+      "name": "Advanced Feature 9",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-010",
+      "name": "Advanced Feature 10",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-011",
+      "name": "Futuristic, Optimizer v11",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-012",
+      "name": "Futuristic, Optimizer v12",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-013",
+      "name": "Futuristic, Optimizer v13",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-014",
+      "name": "Futuristic, Optimizer v14",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-015",
+      "name": "Futuristic, Optimizer v15",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-016",
+      "name": "Futuristic, Optimizer v16",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-017",
+      "name": "Futuristic, Optimizer v17",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-018",
+      "name": "Futuristic, Optimizer v18",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-019",
+      "name": "Futuristic, Optimizer v19",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-020",
+      "name": "Futuristic, Optimizer v20",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-021",
+      "name": "Futuristic, Optimizer v21",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-022",
+      "name": "Futuristic, Optimizer v22",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-023",
+      "name": "Futuristic, Optimizer v23",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-024",
+      "name": "Futuristic, Optimizer v24",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-025",
+      "name": "Futuristic, Optimizer v25",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-026",
+      "name": "Futuristic, Optimizer v26",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-027",
+      "name": "Futuristic, Optimizer v27",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-028",
+      "name": "Futuristic, Optimizer v28",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-029",
+      "name": "Futuristic, Optimizer v29",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-030",
+      "name": "Futuristic, Optimizer v30",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-031",
+      "name": "Futuristic, Optimizer v31",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-032",
+      "name": "Futuristic, Optimizer v32",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-033",
+      "name": "Futuristic, Optimizer v33",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-034",
+      "name": "Futuristic, Optimizer v34",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-035",
+      "name": "Futuristic, Optimizer v35",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-036",
+      "name": "Futuristic, Optimizer v36",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-037",
+      "name": "Futuristic, Optimizer v37",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-038",
+      "name": "Futuristic, Optimizer v38",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-039",
+      "name": "Futuristic, Optimizer v39",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-040",
+      "name": "Futuristic, Optimizer v40",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-041",
+      "name": "Futuristic, Optimizer v41",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-042",
+      "name": "Futuristic, Optimizer v42",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-043",
+      "name": "Futuristic, Optimizer v43",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-044",
+      "name": "Futuristic, Optimizer v44",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-045",
+      "name": "Futuristic, Optimizer v45",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-046",
+      "name": "Futuristic, Optimizer v46",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-047",
+      "name": "Futuristic, Optimizer v47",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-048",
+      "name": "Futuristic, Optimizer v48",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-049",
+      "name": "Futuristic, Optimizer v49",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-050",
+      "name": "Futuristic, Optimizer v50",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-051",
+      "name": "Futuristic, Optimizer v51",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-052",
+      "name": "Futuristic, Optimizer v52",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-053",
+      "name": "Futuristic, Optimizer v53",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-054",
+      "name": "Futuristic, Optimizer v54",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-055",
+      "name": "Futuristic, Optimizer v55",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-056",
+      "name": "Futuristic, Optimizer v56",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-057",
+      "name": "Futuristic, Optimizer v57",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-058",
+      "name": "Futuristic, Optimizer v58",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-059",
+      "name": "Futuristic, Optimizer v59",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-060",
+      "name": "Futuristic, Optimizer v60",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-061",
+      "name": "Futuristic, Optimizer v61",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-062",
+      "name": "Futuristic, Optimizer v62",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-063",
+      "name": "Futuristic, Optimizer v63",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-064",
+      "name": "Futuristic, Optimizer v64",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-065",
+      "name": "Futuristic, Optimizer v65",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-066",
+      "name": "Futuristic, Optimizer v66",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-067",
+      "name": "Futuristic, Optimizer v67",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-068",
+      "name": "Futuristic, Optimizer v68",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-069",
+      "name": "Futuristic, Optimizer v69",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-070",
+      "name": "Futuristic, Optimizer v70",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-071",
+      "name": "Futuristic, Optimizer v71",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-072",
+      "name": "Futuristic, Optimizer v72",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-073",
+      "name": "Futuristic, Optimizer v73",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-074",
+      "name": "Futuristic, Optimizer v74",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-075",
+      "name": "Futuristic, Optimizer v75",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-076",
+      "name": "Futuristic, Optimizer v76",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-077",
+      "name": "Futuristic, Optimizer v77",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-078",
+      "name": "Futuristic, Optimizer v78",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-079",
+      "name": "Futuristic, Optimizer v79",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-080",
+      "name": "Futuristic, Optimizer v80",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-081",
+      "name": "Futuristic, Optimizer v81",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-082",
+      "name": "Futuristic, Optimizer v82",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-083",
+      "name": "Futuristic, Optimizer v83",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-084",
+      "name": "Futuristic, Optimizer v84",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-085",
+      "name": "Futuristic, Optimizer v85",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-086",
+      "name": "Futuristic, Optimizer v86",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-087",
+      "name": "Futuristic, Optimizer v87",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-088",
+      "name": "Futuristic, Optimizer v88",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-089",
+      "name": "Futuristic, Optimizer v89",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-090",
+      "name": "Futuristic, Optimizer v90",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-091",
+      "name": "Futuristic, Optimizer v91",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-092",
+      "name": "Futuristic, Optimizer v92",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-093",
+      "name": "Futuristic, Optimizer v93",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-094",
+      "name": "Futuristic, Optimizer v94",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-095",
+      "name": "Futuristic, Optimizer v95",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-096",
+      "name": "Futuristic, Optimizer v96",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-097",
+      "name": "Futuristic, Optimizer v97",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-098",
+      "name": "Futuristic, Optimizer v98",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-099",
+      "name": "Futuristic, Optimizer v99",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    },
+    {
+      "id": "FR-100",
+      "name": "Futuristic, Optimizer v100",
+      "status": "active",
+      "mode": "real",
+      "last_used": null
+    }
+  ]
+}

@@ -611,7 +611,10 @@ body {
     <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1); cursor: pointer;" onclick="toggleOmegaTab()">◈ Omega Center <span id="omegaToggleIcon" style="float:right">▼</span></div>
     <div id="omegaTab" style="display:none; padding:8px; border-top:1px solid rgba(0,212,255,0.05); max-height:300px; overflow-y:auto;">
       <div id="omegaStats" style="font-size:10px; margin-bottom:8px; border-bottom:1px solid rgba(0,212,255,0.1); padding-bottom:4px;">
-        Level: <span class="value">OMEGA</span> | Features: <span class="value" id="omegaActiveCount">0</span>/200
+        Level: <span class="value">OMEGA</span> | Features: <span class="value" id="omegaActiveCount">0</span>/1000
+      </div>
+      <div style="margin-bottom:8px">
+        <input type="text" id="omegaSearch" placeholder="Search 1000 features..." style="width:100%; font-size:10px; padding:4px; background:rgba(0,0,0,0.3); border:1px solid var(--border); color:var(--cyan)">
       </div>
       <div id="profitCenter" style="margin-bottom:12px; padding:8px; background:rgba(0,255,136,0.05); border:1px solid var(--green);">
         <div style="font-size:9px; color:var(--green); letter-spacing:1px">EMPIRE MARGINS</div>
@@ -1117,23 +1120,33 @@ function drawRadar() {
 
 // ====================================================================
 // OMEGA CENTER
+let allOmegaFeatures = {};
+
 async function fetchOmegaFeatures() {
   try {
     const res = await fetch(`${API}/api/omega/features`);
     if (!res.ok) return;
-    const categories = await res.json();
+    allOmegaFeatures = await res.json();
+    renderOmegaFeatures();
+  } catch (e) {}
+}
+
+function renderOmegaFeatures(query = '') {
     const list = document.getElementById('omegaFeaturesList');
     list.innerHTML = '';
-
     let totalActive = 0;
 
-    Object.entries(categories).forEach(([cat, features]) => {
+    Object.entries(allOmegaFeatures).forEach(([cat, features]) => {
+      const filtered = features.filter(f => f.name.toLowerCase().includes(query.toLowerCase()) || f.id.toLowerCase().includes(query.toLowerCase()));
+      if (filtered.length === 0) return;
+
       const catDiv = document.createElement('div');
       catDiv.style.marginBottom = '8px';
       catDiv.innerHTML = `<div style="font-size:9px; color:var(--cyan); margin-bottom:4px; opacity:0.8">${cat}</div>`;
 
-      features.forEach((f, idx) => {
+      filtered.forEach((f) => {
         totalActive++;
+        const originalIndex = features.findIndex(feat => feat.id === f.id);
         const item = document.createElement('div');
         item.style.fontSize = '10px';
         item.style.padding = '4px 8px';
@@ -1146,15 +1159,18 @@ async function fetchOmegaFeatures() {
           <span>${f.id}: ${f.name}</span>
           <span style="color:var(--green); font-size:8px">${f.mode}</span>
         `;
-        item.onclick = () => executeOmegaFeature(cat, idx);
+        item.onclick = () => executeOmegaFeature(cat, originalIndex);
         catDiv.appendChild(item);
       });
       list.appendChild(catDiv);
     });
 
     document.getElementById('omegaActiveCount').textContent = totalActive;
-  } catch (e) {}
 }
+
+document.getElementById('omegaSearch').addEventListener('input', (e) => {
+    renderOmegaFeatures(e.target.value);
+});
 
 async function executeOmegaFeature(category, index) {
   termLog(`Executing OMEGA feature: ${category} - ${index}`, 'info');
