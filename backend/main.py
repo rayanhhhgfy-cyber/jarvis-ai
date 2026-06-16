@@ -59,7 +59,7 @@ from shared.models import (
     ComponentHealth,
     ProjectInfo,
 )
-from shared.constants import WSMessageType, HealthState, RiskLevel, TaskStatus, EventType
+from shared.constants import WSMessageType, HealthState, RiskLevel, TaskStatus, EventType, AgentType
 
 # Configure structured logging
 setup_logging(

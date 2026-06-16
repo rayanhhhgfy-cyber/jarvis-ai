@@ -11,6 +11,7 @@ Now includes web search tool integration for real-time data access.
 
 from __future__ import annotations
 
+import asyncio
 import re
 from typing import List, Dict, Any, Optional
 
@@ -53,6 +54,10 @@ class LLMService:
     model, packaging queries with structured historical context and vector memory.
     Now with integrated web search for real-time data.
     """
+
+    # Transient HTTP statuses worth retrying (rate limits + upstream errors)
+    _RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+    _MAX_ATTEMPTS = 3
 
     def __init__(self) -> None:
         self._api_url = "https://openrouter.ai/api/v1/chat/completions"
@@ -150,30 +155,50 @@ class LLMService:
             "max_tokens": 1500,
         }
 
+        return await self._post_with_retries(headers, payload)
+
+    async def _post_with_retries(self, headers: Dict[str, str], payload: Dict[str, Any]) -> str:
+        """
+        POST to OpenRouter with bounded exponential backoff on transient
+        failures (timeouts, connection errors, rate limits, 5xx). Always
+        returns a graceful in-character message rather than raising.
+        """
+        last_error = "unknown error"
+
         async with httpx.AsyncClient(timeout=90.0) as client:
-            try:
-                response = await client.post(
-                    self._api_url,
-                    headers=headers,
-                    json=payload,
-                )
+            for attempt in range(1, self._MAX_ATTEMPTS + 1):
+                try:
+                    response = await client.post(self._api_url, headers=headers, json=payload)
 
-                if response.status_code != 200:
-                    log.error("openrouter_llm_error", status_code=response.status_code, body=response.text)
-                    return "Sir, I encountered an error communicating with my reasoning cores."
+                    if response.status_code == 200:
+                        result_json = response.json()
+                        choices = result_json.get("choices", [])
+                        if not choices:
+                            return "Sir, my reasoning nodes returned an empty response."
+                        reply = choices[0].get("message", {}).get("content", "").strip()
+                        log.info("llm_response_received", reply_length=len(reply), attempt=attempt)
+                        return reply
 
-                result_json = response.json()
-                choices = result_json.get("choices", [])
-                if not choices:
-                    return "Sir, my reasoning nodes returned an empty response."
+                    last_error = f"HTTP {response.status_code}"
+                    if response.status_code in self._RETRYABLE_STATUS and attempt < self._MAX_ATTEMPTS:
+                        log.warning("openrouter_llm_retryable_error", status_code=response.status_code, attempt=attempt)
+                    else:
+                        log.error("openrouter_llm_error", status_code=response.status_code, body=response.text)
+                        return "Sir, I encountered an error communicating with my reasoning cores."
 
-                reply = choices[0].get("message", {}).get("content", "").strip()
-                log.info("llm_response_received", reply_length=len(reply))
-                return reply
+                except (httpx.TimeoutException, httpx.TransportError) as he:
+                    last_error = str(he)
+                    log.warning("openrouter_llm_transient_failure", error=str(he), attempt=attempt)
+                except httpx.HTTPError as he:
+                    log.error("openrouter_llm_http_failed", error=str(he))
+                    return "Sir, my communication gateway encountered an error."
 
-            except httpx.HTTPError as he:
-                log.error("openrouter_llm_http_failed", error=str(he))
-                return "Sir, my communication gateway timed out."
+                # Backoff before the next attempt (0.5s, 1s, ...)
+                if attempt < self._MAX_ATTEMPTS:
+                    await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
+
+        log.error("openrouter_llm_exhausted_retries", error=last_error)
+        return "Sir, my communication gateway timed out after several attempts."
 
     def _build_default_system_prompt(self) -> str:
         """Construct the default system identity instructions."""

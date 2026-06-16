@@ -10,7 +10,7 @@ falling back to pure offline VAD detection.
 from __future__ import annotations
 
 import asyncio
-from typing import Optional, Callable
+from typing import Any, Optional, Callable
 
 from backend.config import settings
 from shared.logger import get_logger

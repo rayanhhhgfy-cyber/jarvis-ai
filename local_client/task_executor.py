@@ -8,9 +8,9 @@ to specific local agents (OS, Code, Document, etc.) and gathers results.
 
 from __future__ import annotations
 
+import os
 import time
 import traceback
-from datetime import datetime
 from typing import Dict, Any, Optional
 
 from shared.models import TaskDefinition, TaskResult
@@ -36,13 +36,14 @@ class LocalTaskExecutor:
         start_time = time.time()
 
         try:
-            # Route based on AgentType
+            # Route based on AgentType. OS and CODE have fast local paths;
+            # everything else is delegated to the orchestrator, which spawns
+            # and supervises the matching specialized sub-agent.
             if task.agent_type == AgentType.OS:
                 result_data = await self._execute_os_command(task)
             elif task.agent_type == AgentType.CODE:
                 result_data = await self._execute_code_task(task)
             else:
-                # General routing fallback for other specialized agents
                 result_data = await self._execute_generic_agent_task(task)
 
             elapsed = (time.time() - start_time) * 1000  # ms
@@ -116,32 +117,26 @@ class LocalTaskExecutor:
                 code, stdout, stderr = await local_process_manager.wait_process(proc_id)
                 return {"stdout": stdout, "stderr": stderr, "exit_code": code}
             finally:
-                os.remove(tf_path)
+                try:
+                    os.remove(tf_path)
+                except OSError as cleanup_err:
+                    log.warning("temp_code_file_cleanup_failed", path=tf_path, error=str(cleanup_err))
 
         return {"status": "unsupported_code_format", "payload": payload}
 
     async def _execute_generic_agent_task(self, task: TaskDefinition) -> Dict[str, Any]:
-        """Handles tasks routed to specialized agents (planning, browser, memory, research)."""
-        # If it's a Research Task, use the real LLM-powered Research Agent
-        if task.agent_type == AgentType.RESEARCH:
-            from local_client.agents.agent_research import AgentResearch
-            agent = AgentResearch()
-            result = await agent.execute_task(task)
-            # execute_task returns a TaskResult, but this method expects the payload dict
-            # We'll just return the dict, since the caller wraps it in another TaskResult.
-            # Wait, execute_task actually handles the try/except and returns TaskResult. 
-            # To fit with the caller's pattern which wraps this, we can just return the inner result.
-            if result.status == TaskStatus.FAILED:
-                raise RuntimeError(result.error)
-            return result.result or {}
+        """
+        Delegates a task to the supervisor orchestrator, which spawns and runs
+        the matching specialized sub-agent (planner, browser, vision, research,
+        security, deployment, ...). ORCHESTRATOR tasks are decomposed into a
+        plan and fanned out across multiple sub-agents.
+        """
+        from local_client.agents.agent_orchestrator import orchestrator
 
-        # For any other agent type that hasn't been built yet, let JARVIS know it's a stub
-        return {
-            "agent_type": task.agent_type.value,
-            "status": "not_implemented_yet",
-            "message": "This subagent has not been built yet. I am currently unable to perform this action.",
-            "timestamp": datetime.utcnow().isoformat(),
-        }
+        result = await orchestrator.execute_task(task)
+        if result.status == TaskStatus.FAILED:
+            raise RuntimeError(result.error or "Sub-agent execution failed")
+        return result.result or {}
 
 
 # Global task executor instance

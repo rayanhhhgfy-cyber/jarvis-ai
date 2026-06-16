@@ -43,7 +43,7 @@ class ResourceManager:
 
         if throttling_required:
             log.warning("resource_budget_exceeded_throttling", system_cpu=cpu, system_memory=mem.percent)
-            alerts.append(f"System CPU/RAM threshold reached. Initialized active agent throttling.")
+            alerts.append("System CPU/RAM threshold reached. Initialized active agent throttling.")
 
         # Update budgets on agents
         for agent in active_agents:
