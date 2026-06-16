@@ -46,6 +46,8 @@ class AgentType(str, Enum):
     LOGISTICS = "logistics"
     ANDROID = "android"
     MEETING = "meeting"
+    MARKETING = "marketing"
+    STARTUP = "startup"
 
 # ---- Agent Status ----
 class AgentStatus(str, Enum):

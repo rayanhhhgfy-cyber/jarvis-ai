@@ -48,6 +48,10 @@ class AgentOs:
                 result_data = await self._run_shell_command(task)
             elif action == "file_operation":
                 result_data = await self._perform_file_operation(task)
+            elif action == "scan_hardware":
+                result_data = await self._scan_hardware(task)
+            elif action == "setup_local_llm":
+                result_data = await self._setup_local_llm(task)
             else:
                 raise ValueError(f"Unknown OS action: {action}")
 
@@ -129,6 +133,31 @@ class AgentOs:
     async def _execute_command(self, task: TaskDefinition) -> Dict[str, Any]:
         """Backward compatibility alias for _run_shell_command."""
         return await self._run_shell_command(task)
+
+    async def _scan_hardware(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Scans hardware and recommends a local LLM."""
+        from local_client.hardware_scanner import scanner
+        specs = scanner.get_specs()
+        recommendation = scanner.recommend_model(specs)
+        return {
+            "specs": specs,
+            "recommended_model": recommendation,
+            "message": f"Based on your {specs['ram']}GB RAM, I recommend {recommendation['name']} ({recommendation['reason']})."
+        }
+
+    async def _setup_local_llm(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Downloads and configures the local LLM."""
+        model_name = task.payload.get("model_name")
+        if not model_name:
+            raise ValueError("model_name is required for local LLM setup")
+
+        from local_client.hardware_scanner import scanner
+        success = await scanner.download_model(model_name)
+        return {
+            "status": "success" if success else "failed",
+            "model": model_name,
+            "message": f"Local model {model_name} has been configured and is ready to use, Sir."
+        }
 
     async def _perform_file_operation(self, task: TaskDefinition) -> Dict[str, Any]:
         """Performs administrative file operations (copy, move, delete, create directory)."""
