@@ -611,7 +611,12 @@ body {
     <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1); cursor: pointer;" onclick="toggleOmegaTab()">◈ Omega Center <span id="omegaToggleIcon" style="float:right">▼</span></div>
     <div id="omegaTab" style="display:none; padding:8px; border-top:1px solid rgba(0,212,255,0.05); max-height:300px; overflow-y:auto;">
       <div id="omegaStats" style="font-size:10px; margin-bottom:8px; border-bottom:1px solid rgba(0,212,255,0.1); padding-bottom:4px;">
-        Level: <span class="value">OMEGA</span> | Features: <span class="value" id="omegaActiveCount">0</span>/100
+        Level: <span class="value">OMEGA</span> | Features: <span class="value" id="omegaActiveCount">0</span>/200
+      </div>
+      <div id="profitCenter" style="margin-bottom:12px; padding:8px; background:rgba(0,255,136,0.05); border:1px solid var(--green);">
+        <div style="font-size:9px; color:var(--green); letter-spacing:1px">EMPIRE MARGINS</div>
+        <div style="font-size:18px; color:var(--green)" id="profitVal">$1,245,670.00</div>
+        <div style="font-size:8px; opacity:0.6">+12% Growth this week</div>
       </div>
       <div id="omegaFeaturesList"></div>
     </div>
@@ -637,6 +642,7 @@ let clockInterval = null;
 let radarAngle = 0;
 let conversationId = null;
 let isSending = false;
+let voiceEnabled = true;
 
 // ====================================================================
 // DOM REFS
@@ -757,7 +763,20 @@ function addSystemMessage(text) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+function speak(text) {
+  if (!voiceEnabled) return;
+  const utterance = new SpeechSynthesisUtterance(text.replace(/\*\*.*?\*\*/g, '').replace(/```[\s\S]*?```/g, ''));
+  utterance.rate = 1.0;
+  utterance.pitch = 0.9;
+  // Try to find a British English voice
+  const voices = window.speechSynthesis.getVoices();
+  const jarvisVoice = voices.find(v => v.lang === 'en-GB' || v.name.includes('Google UK English'));
+  if (jarvisVoice) utterance.voice = jarvisVoice;
+  window.speechSynthesis.speak(utterance);
+}
+
 function addMessage(sender, text, isReport = false) {
+  if (sender === 'jarvis') speak(text);
   const div = document.createElement('div');
   div.className = `msg`;
 

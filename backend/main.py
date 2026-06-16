@@ -30,6 +30,7 @@ from backend.health_monitor import health_monitor
 from backend.memory_indexer import memory_indexer
 from backend.project_graph import project_graph
 from backend.project_scanner import project_scanner
+from backend.proactive_watcher import proactive_watcher
 
 # Import routers package
 from backend.routers import (
@@ -74,22 +75,11 @@ audit_log = AuditLogger(log_dir=settings.logs_dir)
 # Keep track of heartbeat task
 _heartbeat_task: asyncio.Task | None = None
 
-# ====================================================================
-# UI WEBSOCKET HUB — Frontend dashboard connections
-# ====================================================================
-_ui_clients: set[WebSocket] = set()
-
+from backend.ui_manager import ui_manager
 
 async def broadcast_to_ui(message: dict) -> None:
-    """Push a message to ALL connected frontend dashboard clients."""
-    dead = []
-    for ws in _ui_clients:
-        try:
-            await ws.send_json(message)
-        except Exception:
-            dead.append(ws)
-    for ws in dead:
-        _ui_clients.discard(ws)
+    """Compatibility wrapper for ui_manager.broadcast."""
+    await ui_manager.broadcast(message)
 
 
 async def start_heartbeat_loop() -> None:
@@ -288,6 +278,7 @@ async def lifespan(app: FastAPI):
     await scheduler.start()
     await health_monitor.start()
     await memory_indexer.start()
+    await proactive_watcher.start()
     _heartbeat_task = asyncio.create_task(start_heartbeat_loop())
 
     log.info("jarvis_omega_backend_ready")
@@ -310,6 +301,7 @@ async def lifespan(app: FastAPI):
         except asyncio.CancelledError:
             pass
 
+    await proactive_watcher.stop()
     await memory_indexer.stop()
     await health_monitor.stop()
     await scheduler.stop()
@@ -491,8 +483,8 @@ async def ui_websocket_endpoint(websocket: WebSocket):
     No authentication required for local development.
     """
     await websocket.accept()
-    _ui_clients.add(websocket)
-    log.info("ui_client_connected", total_ui_clients=len(_ui_clients))
+    ui_manager.add_client(websocket)
+    log.info("ui_client_connected", total_ui_clients=ui_manager.client_count)
 
     try:
         # Send a welcome message
@@ -537,10 +529,10 @@ async def ui_websocket_endpoint(websocket: WebSocket):
                 log.error("ui_ws_parse_error", error=str(parse_err))
 
     except WebSocketDisconnect:
-        _ui_clients.discard(websocket)
-        log.info("ui_client_disconnected", total_ui_clients=len(_ui_clients))
+        ui_manager.remove_client(websocket)
+        log.info("ui_client_disconnected", total_ui_clients=ui_manager.client_count)
     except Exception as e:
-        _ui_clients.discard(websocket)
+        ui_manager.remove_client(websocket)
         log.error("ui_ws_error", error=str(e))
 
 

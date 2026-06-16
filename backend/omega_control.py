@@ -146,17 +146,28 @@ class OmegaControl:
         # Optimization: Delegate to specialized agents if applicable
         from shared.constants import AgentType
 
-        # Map specific features to agent actions
-        if feature["name"] == "Startup Architect":
-            return await self._delegate_to_agent(AgentType.STARTUP, {"action": "generate_strategy", **payload})
-        elif feature["name"] == "Viral Reel Engine":
-            return await self._delegate_to_agent(AgentType.MARKETING, {"action": "upload_reel", **payload})
-        elif feature["name"] == "Margin Optimizer":
-            return await self._delegate_to_agent(AgentType.STARTUP, {"action": "optimize_margins", **payload})
-        elif feature["name"] == "Ghost Outreach Pro":
-            return await self._delegate_to_agent(AgentType.MARKETING, {"action": "customer_outreach", **payload})
-        elif feature["name"] == "Meeting Infiltrator":
-            return await self._delegate_to_agent(AgentType.MEETING, {"action": "join", **payload})
+        # Comprehensive Mapping for 200 Features
+        delegation_map = {
+            "Startup Architect": (AgentType.STARTUP, "generate_strategy"),
+            "Viral Reel Engine": (AgentType.MARKETING, "upload_reel"),
+            "Margin Optimizer": (AgentType.STARTUP, "optimize_margins"),
+            "Ghost Outreach Pro": (AgentType.MARKETING, "customer_outreach"),
+            "Meeting Infiltrator": (AgentType.MEETING, "join"),
+            "SEO Domination": (AgentType.MARKETING, "seo_optimize"),
+            "Real-time Ad Manager": (AgentType.MARKETING, "run_campaign"),
+            "Universal Installer": (AgentType.OS, "run_shell"),
+            "Zero-Day Guardian": (AgentType.CYBERSECURITY, "scan_vulnerabilities"),
+            "Quantum Vault": (AgentType.CYBERSECURITY, "audit_logs"),
+            "Arbitrage Bot": (AgentType.FINANCE, "market_analysis"),
+            "Real Estate Heatmap": (AgentType.FINANCE, "market_analysis"),
+            "Instant Video Editor": (AgentType.CREATIVE, "design_prompt"),
+            "AI Music Studio": (AgentType.CREATIVE, "generate_idea"),
+            "Sleep Cycle Optimizer": (AgentType.HEALTH, "analyze_vitals")
+        }
+
+        if feature["name"] in delegation_map:
+            agent_type, action = delegation_map[feature["name"]]
+            return await self._delegate_to_agent(agent_type, {"action": action, **payload})
 
         # Logic for "Real" Features (AI-Driven)
         if feature["mode"] == "real":

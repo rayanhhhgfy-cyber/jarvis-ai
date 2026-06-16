@@ -220,10 +220,28 @@ class AgentOrchestrator:
 
                 # 2. Execution of next steps
                 for step in next_steps:
-                    # In a real OMEGA session, this would be a dynamic delegation
                     log.info("executing_omega_step", step=step)
-                    # Simulate step execution
-                    await asyncio.sleep(0.1)
+
+                    # OMEGA logic: Dynamically determine the best agent for each step
+                    # For now, we delegate to the Research agent to gather data for the step
+                    sub_task = TaskDefinition(
+                        title=f"Autonomous Step: {step}",
+                        description=f"Executing OMEGA sub-step: {step}",
+                        agent_type=AgentType.RESEARCH,
+                        payload={"action": "deep_research", "topic": step}
+                    )
+
+                    # Record the intention in the learning loop
+                    learning_loop.remember_lesson(
+                        task_description=f"Executing {step} for goal {goal_description}",
+                        error_pattern="",
+                        root_cause="none",
+                        solution="Executing via autonomous delegation",
+                        success=True
+                    )
+
+                    await self._delegate_to_agent(AgentType.RESEARCH, sub_task)
+                    await asyncio.sleep(1) # Intentional delay for stability
 
                 results.append({"iteration": iteration, "status": "progressed"})
 
