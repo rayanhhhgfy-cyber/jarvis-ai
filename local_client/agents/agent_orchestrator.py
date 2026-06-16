@@ -17,6 +17,7 @@ from datetime import datetime
 from shared.models import TaskDefinition, TaskResult, AgentInfo
 from shared.constants import AgentType, AgentStatus, TaskStatus
 from shared.logger import get_logger
+from shared.learning_loop import learning_loop
 
 log = get_logger("agent_orchestrator")
 
@@ -43,15 +44,12 @@ class AgentOrchestrator:
 
         try:
             # 1. Parse or plan execution steps
-            # In Phase 5, the orchestrator routes tasks directly or decomposes complex ones
             target_agent = task.agent_type
             
             if target_agent == AgentType.ORCHESTRATOR:
-                # Self-orchestration (decomposition into subtasks)
                 result_data = await self._decompose_and_run(task)
             else:
-                # Delegate to specific specialized agent
-                result_data = await self._delegate_to_agent(target_agent, task)
+                result_data = await self._run_subagent(target_agent, task)
 
             elapsed = (time.time() - start_time) * 1000
             self.status = AgentStatus.IDLE
@@ -77,6 +75,16 @@ class AgentOrchestrator:
                 error=err_msg,
                 execution_time=elapsed,
             )
+
+    async def _run_subagent(self, agent_type: AgentType, task: TaskDefinition) -> Dict[str, Any]:
+        """Wrapper around delegation to sub-agents with learning loop integration."""
+        # Query lessons before acting
+        lessons = learning_loop.query_lessons(task.description or task.title)
+        if lessons:
+            log.info("injecting_lesson_hint", task_id=task.task_id)
+            task.payload["past_lesson_hint"] = lessons[0].get("solution")
+
+        return await self._delegate_to_agent(agent_type, task)
 
     async def _delegate_to_agent(self, agent_type: AgentType, task: TaskDefinition) -> Dict[str, Any]:
         """Dynamically loads and delegates a task to a specialized agent."""
@@ -110,7 +118,21 @@ class AgentOrchestrator:
             agent_info.updated_at = datetime.utcnow()
             
             if result.status == TaskStatus.FAILED:
+                # Check for capability gap
+                if any(gap in (result.error or "").lower() for gap in ["unknown action", "not implemented", "missing tool"]):
+                    log.warning("capability_gap_detected", error=result.error)
+                    # Suggest self-modification
+
                 raise RuntimeError(f"Sub-agent execution failed: {result.error}")
+
+            # Record success lesson
+            learning_loop.remember_lesson(
+                task_description=task.description or task.title,
+                error_pattern="",
+                root_cause="none",
+                solution=str(result.result)[:500],
+                success=True
+            )
 
             return result.result or {}
             
@@ -118,6 +140,16 @@ class AgentOrchestrator:
             agent_info.status = AgentStatus.FAILED
             agent_info.error = str(e)
             agent_info.updated_at = datetime.utcnow()
+
+            # Record exception as failure lesson
+            learning_loop.remember_lesson(
+                task_description=task.description or task.title,
+                error_pattern=str(e),
+                root_cause="orchestrator_exception",
+                solution="Investigate orchestrator logs and sub-agent stability.",
+                success=False
+            )
+
             raise
 
     async def _decompose_and_run(self, task: TaskDefinition) -> Dict[str, Any]:

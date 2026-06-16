@@ -31,6 +31,19 @@ class AgentType(str, Enum):
     RESEARCH = "research"
     PLANNER = "planner"
     WORKER = "worker"
+    FINANCE = "finance"
+    HEALTH = "health"
+    SMARTHOME = "smarthome"
+    SOCIAL = "social"
+    TRAVEL = "travel"
+    ENTERTAINMENT = "entertainment"
+    LEGAL = "legal"
+    SHOPPING = "shopping"
+    KNOWLEDGE = "knowledge"
+    CREATIVE = "creative"
+    CYBERSECURITY = "cybersecurity"
+    EDUCATION = "education"
+    LOGISTICS = "logistics"
 
 # ---- Agent Status ----
 class AgentStatus(str, Enum):

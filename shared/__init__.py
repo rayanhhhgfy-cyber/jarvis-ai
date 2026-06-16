@@ -8,3 +8,5 @@ the backend server, local client daemon, and agent system.
 
 __version__ = "1.0.0"
 __codename__ = "OMEGA"
+
+from shared.learning_loop import learning_loop

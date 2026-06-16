@@ -28,6 +28,9 @@ try:
 except ImportError:
     log.warning("playwright_not_installed_using_stub_fallback")
 
+import os
+import time
+
 class AgentBrowser:
     """
     Automated browser agent. Interfaces with Playwright to browse pages,
@@ -50,6 +53,12 @@ class AgentBrowser:
                 result_data = await self._perform_web_search(task)
             elif action == "scrape":
                 result_data = await self._scrape_page(task)
+            elif action == "screenshot":
+                result_data = await self._capture_screenshot(task)
+            elif action == "evaluate_js":
+                result_data = await self._evaluate_javascript(task)
+            elif action == "fill_form":
+                result_data = await self._fill_form(task)
             else:
                 raise ValueError(f"Unknown Browser action: {action}")
 
@@ -110,6 +119,56 @@ class AgentBrowser:
             ],
             "source": "Static Search Engine Stub"
         }
+
+    async def _capture_screenshot(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Captures a screenshot of a specific URL."""
+        url = task.payload.get("url")
+        if not url:
+            raise ValueError("url is required for screenshot action")
+
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                shot_path = f"shared/screenshots/shot_{int(time.time())}.png"
+                os.makedirs("shared/screenshots", exist_ok=True)
+                await page.screenshot(path=shot_path)
+                await browser.close()
+                return {"screenshot_path": shot_path, "url": url}
+        return {"error": "Playwright unavailable"}
+
+    async def _evaluate_javascript(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Evaluates custom JS on a page."""
+        url = task.payload.get("url")
+        script = task.payload.get("script")
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                res = await page.evaluate(script)
+                await browser.close()
+                return {"result": res}
+        return {"error": "Playwright unavailable"}
+
+    async def _fill_form(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Fills a form and submits it."""
+        url = task.payload.get("url")
+        fields = task.payload.get("fields", {}) # {selector: value}
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                for selector, value in fields.items():
+                    await page.fill(selector, value)
+                await page.keyboard.press("Enter")
+                await page.wait_for_load_state("networkidle")
+                res_url = page.url
+                await browser.close()
+                return {"final_url": res_url, "status": "form_submitted"}
+        return {"error": "Playwright unavailable"}
 
     async def _scrape_page(self, task: TaskDefinition) -> Dict[str, Any]:
         """Loads a specific URL page and returns full parsed text."""

@@ -9,14 +9,16 @@ root causes of system failures, generating source file patches, and retesting.
 from __future__ import annotations
 
 import os
+import json
 import time
 import traceback
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 from shared.models import TaskDefinition, TaskResult
 from shared.constants import AgentType, TaskStatus
 from shared.logger import get_logger
+from shared.learning_loop import learning_loop
 
 log = get_logger("agent_repair")
 
@@ -24,6 +26,7 @@ class AgentRepair:
     """
     Automated software repair and recovery agent. Analyzes error logs, proposes code
     patches, applies edits, and interfaces with the testing agent for validation.
+    Records lessons learned from failures to prevent recurrence.
     """
 
     def __init__(self) -> None:
@@ -89,12 +92,34 @@ class AgentRepair:
                 except Exception:
                     continue
 
+        root_cause = "Exception thrown from trace file."
+        proposed_fix = "Examine variables and check bound conditions."
+
+        self._log_learned_lesson(
+            error_pattern=traceback_str.split('\n')[-2] if len(traceback_str.split('\n')) > 1 else traceback_str,
+            root_cause=root_cause,
+            solution=proposed_fix,
+            file_path=target_file
+        )
+
         return {
-            "root_cause_analysis": "Exception thrown from trace file.",
+            "root_cause_analysis": root_cause,
             "isolated_file": target_file,
             "isolated_line": line_number,
-            "proposed_fix": "Examine variables and check bound conditions."
+            "proposed_fix": proposed_fix
         }
+
+    def _log_learned_lesson(self, error_pattern: str, root_cause: str, solution: str, file_path: Optional[str]):
+        """Records a lesson learned from a failure into the shared lessons database."""
+        learning_loop.remember_lesson(
+            task_description=f"Repair analysis for {file_path}",
+            error_pattern=error_pattern,
+            root_cause=root_cause,
+            solution=solution,
+            file_path=file_path,
+            success=False
+        )
+        log.info("failure_lesson_logged", error_pattern=error_pattern)
 
     async def _apply_patch(self, task: TaskDefinition) -> Dict[str, Any]:
         """Applies a specific code replacement patch to the isolated file path."""

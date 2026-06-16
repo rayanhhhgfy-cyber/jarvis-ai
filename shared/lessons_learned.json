@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2026-06-16T16:44:05.218384",
+    "task_description": "A simple test task",
+    "error_pattern": "",
+    "root_cause": "none",
+    "solution": "{'os': 'Linux', 'os_release': '6.8.0', 'cpu_count': 4, 'cpu_usage_percent': 26.8, 'memory_total_gb': 7.77, 'memory_available_gb': 7.38, 'disk_usage_percent': 0.1, 'boot_time': '2026-06-16T16:23:20'}",
+    "file_path": null,
+    "success": true,
+    "applied_count": 0
+  },
+  {
+    "timestamp": "2026-06-16T16:46:32.397614",
+    "task_description": "A task that should succeed",
+    "error_pattern": "",
+    "root_cause": "none",
+    "solution": "{'os': 'Linux', 'os_release': '6.8.0', 'cpu_count': 4, 'cpu_usage_percent': 3.8, 'memory_total_gb': 7.77, 'memory_available_gb': 7.4, 'disk_usage_percent': 0.1, 'boot_time': '2026-06-16T16:23:20'}",
+    "file_path": null,
+    "success": true,
+    "applied_count": 0
+  },
+  {
+    "timestamp": "2026-06-16T16:46:32.423557",
+    "task_description": "A task that should fail",
+    "error_pattern": "",
+    "root_cause": "none",
+    "solution": "{'stdout': '', 'stderr': '/bin/sh: 1: non_existent_command_123: not found\\n', 'return_code': 127, 'output': ''}",
+    "file_path": null,
+    "success": true,
+    "applied_count": 0
+  },
+  {
+    "timestamp": "2026-06-16T16:46:58.703208",
+    "task_description": "A task that should raise an exception",
+    "error_pattern": "",
+    "root_cause": "none",
+    "solution": "{'status': 'unsupported_sub_action'}",
+    "file_path": null,
+    "success": true,
+    "applied_count": 0
+  },
+  {
+    "timestamp": "2026-06-16T16:47:44.909159",
+    "task_description": "A task that fails in the agent",
+    "error_pattern": "",
+    "root_cause": "none",
+    "solution": "{'stdout': '', 'stderr': '', 'return_code': 1, 'output': ''}",
+    "file_path": null,
+    "success": true,
+    "applied_count": 0
+  },
+  {
+    "timestamp": "2026-06-16T16:48:10.089418",
+    "task_description": "Fixing bug X",
+    "error_pattern": "NullPointer",
+    "root_cause": "Missing null check",
+    "solution": "Add if object is not None",
+    "file_path": null,
+    "success": false,
+    "applied_count": 0
+  }
+]
