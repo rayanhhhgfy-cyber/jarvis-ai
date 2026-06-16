@@ -42,6 +42,7 @@ from backend.routers import (
     router_memory,
     router_agents,
     router_projects,
+    router_omega,
 )
 
 from shared.logger import setup_logging, get_logger, AuditLogger
@@ -349,6 +350,7 @@ app.include_router(router_shortcuts)
 app.include_router(router_memory)
 app.include_router(router_agents)
 app.include_router(router_projects)
+app.include_router(router_omega)
 
 
 # ====================================================================

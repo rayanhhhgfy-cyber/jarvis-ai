@@ -607,6 +607,14 @@ body {
     <div class="devices-area" id="deviceArea">
       <div style="opacity:0.4;font-size:11px;padding:8px">No devices connected</div>
     </div>
+
+    <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1); cursor: pointer;" onclick="toggleOmegaTab()">◈ Omega Center <span id="omegaToggleIcon" style="float:right">▼</span></div>
+    <div id="omegaTab" style="display:none; padding:8px; border-top:1px solid rgba(0,212,255,0.05); max-height:300px; overflow-y:auto;">
+      <div id="omegaStats" style="font-size:10px; margin-bottom:8px; border-bottom:1px solid rgba(0,212,255,0.1); padding-bottom:4px;">
+        Level: <span class="value">OMEGA</span> | Features: <span class="value" id="omegaActiveCount">0</span>/100
+      </div>
+      <div id="omegaFeaturesList"></div>
+    </div>
   </div>
 
   <!-- BOTTOM PANEL - TERMINAL -->
@@ -1086,6 +1094,77 @@ function drawRadar() {
   ctx.fill();
 
   requestAnimationFrame(drawRadar);
+}
+
+// ====================================================================
+// OMEGA CENTER
+async function fetchOmegaFeatures() {
+  try {
+    const res = await fetch(`${API}/api/omega/features`);
+    if (!res.ok) return;
+    const categories = await res.json();
+    const list = document.getElementById('omegaFeaturesList');
+    list.innerHTML = '';
+
+    let totalActive = 0;
+
+    Object.entries(categories).forEach(([cat, features]) => {
+      const catDiv = document.createElement('div');
+      catDiv.style.marginBottom = '8px';
+      catDiv.innerHTML = `<div style="font-size:9px; color:var(--cyan); margin-bottom:4px; opacity:0.8">${cat}</div>`;
+
+      features.forEach((f, idx) => {
+        totalActive++;
+        const item = document.createElement('div');
+        item.style.fontSize = '10px';
+        item.style.padding = '4px 8px';
+        item.style.marginBottom = '2px';
+        item.style.background = 'rgba(0,212,255,0.05)';
+        item.style.cursor = 'pointer';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.innerHTML = `
+          <span>${f.id}: ${f.name}</span>
+          <span style="color:var(--green); font-size:8px">${f.mode}</span>
+        `;
+        item.onclick = () => executeOmegaFeature(cat, idx);
+        catDiv.appendChild(item);
+      });
+      list.appendChild(catDiv);
+    });
+
+    document.getElementById('omegaActiveCount').textContent = totalActive;
+  } catch (e) {}
+}
+
+async function executeOmegaFeature(category, index) {
+  termLog(`Executing OMEGA feature: ${category} - ${index}`, 'info');
+  try {
+    const res = await fetch(`${API}/api/omega/execute?category=${encodeURIComponent(category)}&index=${index}`, {
+      method: 'POST'
+    });
+    const data = await res.json();
+    if (data.result) {
+      addMessage('jarvis', `**OMEGA Feature Executed**\n\n${data.result}`);
+    } else if (data.output) {
+      addMessage('jarvis', `**OMEGA Simulation**\n\n${data.output}`);
+    }
+  } catch (e) {
+    termLog(`Feature execution failed: ${e.message}`, 'error');
+  }
+}
+
+function toggleOmegaTab() {
+  const tab = document.getElementById('omegaTab');
+  const icon = document.getElementById('omegaToggleIcon');
+  if (tab.style.display === 'none') {
+    tab.style.display = 'block';
+    icon.textContent = '▲';
+    fetchOmegaFeatures();
+  } else {
+    tab.style.display = 'none';
+    icon.textContent = '▼';
+  }
 }
 
 // ====================================================================
