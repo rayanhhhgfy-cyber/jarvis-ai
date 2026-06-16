@@ -37,6 +37,47 @@ class _FakeAgent:
         )
 
 
+class _FlakyAgent:
+    """Fails the first ``fail_times`` calls (shared across instances), then succeeds."""
+
+    fail_times = 0
+    calls = 0
+
+    def __init__(self) -> None:
+        self.agent_id = "flaky_agent"
+
+    async def execute_task(self, task: TaskDefinition) -> TaskResult:
+        type(self).calls += 1
+        if type(self).calls <= type(self).fail_times:
+            return TaskResult(
+                task_id=task.task_id,
+                agent_id=self.agent_id,
+                status=TaskStatus.FAILED,
+                error="transient failure",
+            )
+        return TaskResult(
+            task_id=task.task_id,
+            agent_id=self.agent_id,
+            status=TaskStatus.COMPLETED,
+            result={"echo": task.title, "attempt": type(self).calls},
+        )
+
+
+class _RepairAgent:
+    """Returns a diagnosis so we can assert repair runs on permanent failure."""
+
+    def __init__(self) -> None:
+        self.agent_id = "agent_repair"
+
+    async def execute_task(self, task: TaskDefinition) -> TaskResult:
+        return TaskResult(
+            task_id=task.task_id,
+            agent_id=self.agent_id,
+            status=TaskStatus.COMPLETED,
+            result={"root_cause_analysis": "diagnosed", "traceback_seen": task.payload.get("traceback")},
+        )
+
+
 def _all_fake(monkeypatch, orch: AgentOrchestrator) -> None:
     monkeypatch.setattr(orch, "_resolve_agent_class", lambda agent_type: _FakeAgent)
 
@@ -160,6 +201,70 @@ async def test_task_executor_deploys_subagent_via_orchestrator(monkeypatch):
     result = await executor.execute(task)
     assert result.status == TaskStatus.COMPLETED
     assert result.result == {"echo": "Research task"}
+
+
+async def test_subagent_retries_until_success(monkeypatch):
+    """A flaky sub-agent should be retried up to max_retries before giving up."""
+    orch = AgentOrchestrator()
+    _FlakyAgent.fail_times = 2
+    _FlakyAgent.calls = 0
+    monkeypatch.setattr(orch, "_resolve_agent_class", lambda agent_type: _FlakyAgent)
+
+    task = TaskDefinition(
+        title="Flaky",
+        description="",
+        agent_type=AgentType.OS,
+        payload={},
+        max_retries=3,
+    )
+
+    outcome = await orch._run_subagent(AgentType.OS, task)
+    assert outcome["status"] == TaskStatus.COMPLETED.value
+    assert outcome["attempts"] == 3
+
+
+async def test_subagent_failure_triggers_repair_diagnosis(monkeypatch):
+    """When all attempts fail, the Repair agent produces a diagnosis."""
+    orch = AgentOrchestrator()
+
+    def _resolve(agent_type):
+        if agent_type == AgentType.REPAIR:
+            return _RepairAgent
+        return _FakeAgent
+
+    monkeypatch.setattr(orch, "_resolve_agent_class", _resolve)
+
+    task = TaskDefinition(
+        title="Will fail",
+        description="",
+        agent_type=AgentType.CODE,
+        payload={"should_fail": True},
+        max_retries=1,
+    )
+
+    outcome = await orch._run_subagent(AgentType.CODE, task)
+    assert outcome["status"] == TaskStatus.FAILED.value
+    assert outcome["attempts"] == 1
+    assert "repair_analysis" in outcome
+    assert outcome["repair_analysis"]["root_cause_analysis"] == "diagnosed"
+
+
+async def test_subagent_auto_repair_can_be_disabled(monkeypatch):
+    """payload.auto_repair=False skips the Repair diagnosis step."""
+    orch = AgentOrchestrator()
+    monkeypatch.setattr(orch, "_resolve_agent_class", lambda agent_type: _FakeAgent)
+
+    task = TaskDefinition(
+        title="Will fail",
+        description="",
+        agent_type=AgentType.CODE,
+        payload={"should_fail": True, "auto_repair": False},
+        max_retries=1,
+    )
+
+    outcome = await orch._run_subagent(AgentType.CODE, task)
+    assert outcome["status"] == TaskStatus.FAILED.value
+    assert "repair_analysis" not in outcome
 
 
 def _async_value(value):

@@ -50,8 +50,11 @@ class AgentOrchestrator:
                 # Self-orchestration (decomposition into subtasks)
                 result_data = await self._decompose_and_run(task)
             else:
-                # Delegate to specific specialized agent
-                result_data = await self._delegate_to_agent(target_agent, task)
+                # Delegate to specific specialized agent (with retry + repair)
+                outcome = await self._run_subagent(target_agent, task)
+                if outcome["status"] == TaskStatus.FAILED.value:
+                    raise RuntimeError(outcome.get("error") or "Sub-agent execution failed")
+                result_data = outcome.get("result") or {}
 
             elapsed = (time.time() - start_time) * 1000
             self.status = AgentStatus.IDLE
@@ -138,6 +141,74 @@ class AgentOrchestrator:
             log.error("subagent_failed", agent_type=agent_type.value, task_id=task.task_id, error=str(e))
             raise
 
+    async def _run_subagent(self, agent_type: AgentType, task: TaskDefinition) -> Dict[str, Any]:
+        """
+        Run a sub-agent with bounded retries and automatic failure diagnosis.
+
+        Retries up to ``task.max_retries`` times on failure (transient errors are
+        common for browser/network/LLM agents). When all attempts are exhausted,
+        the Repair agent produces a best-effort root-cause analysis that is
+        attached to the outcome. Never raises for agent-level failures — always
+        returns a structured outcome dict so callers can aggregate partial work.
+        """
+        max_attempts = max(1, task.max_retries or 1)
+        auto_repair = task.payload.get("auto_repair", True)
+        last_error: Optional[str] = None
+
+        for attempt in range(1, max_attempts + 1):
+            task.retry_count = attempt - 1
+            try:
+                result = await self._delegate_to_agent(agent_type, task)
+                return {
+                    "subtask_id": task.task_id,
+                    "agent_type": agent_type.value,
+                    "status": TaskStatus.COMPLETED.value,
+                    "result": result,
+                    "attempts": attempt,
+                }
+            except Exception as e:
+                last_error = str(e)
+                log.warning(
+                    "subagent_attempt_failed",
+                    agent_type=agent_type.value,
+                    task_id=task.task_id,
+                    attempt=attempt,
+                    max_attempts=max_attempts,
+                    error=last_error,
+                )
+                if attempt < max_attempts:
+                    await asyncio.sleep(min(2.0, 0.25 * attempt))
+
+        outcome: Dict[str, Any] = {
+            "subtask_id": task.task_id,
+            "agent_type": agent_type.value,
+            "status": TaskStatus.FAILED.value,
+            "error": last_error,
+            "attempts": max_attempts,
+        }
+        if auto_repair and agent_type != AgentType.REPAIR:
+            diagnosis = await self._attempt_repair_diagnosis(task, last_error)
+            if diagnosis is not None:
+                outcome["repair_analysis"] = diagnosis
+        return outcome
+
+    async def _attempt_repair_diagnosis(
+        self, failed_task: TaskDefinition, error: Optional[str]
+    ) -> Optional[Dict[str, Any]]:
+        """Best-effort root-cause analysis of a failed sub-agent via the Repair agent."""
+        try:
+            repair_task = TaskDefinition(
+                title=f"Diagnose failure: {failed_task.title}",
+                description="Automated root-cause analysis of a failed sub-agent task.",
+                agent_type=AgentType.REPAIR,
+                parent_task_id=failed_task.task_id,
+                payload={"action": "analyze", "traceback": error or ""},
+            )
+            return await self._delegate_to_agent(AgentType.REPAIR, repair_task)
+        except Exception as repair_err:
+            log.warning("repair_diagnosis_failed", task_id=failed_task.task_id, error=str(repair_err))
+            return None
+
     async def _plan_subtasks(self, task: TaskDefinition) -> List[Dict[str, Any]]:
         """
         Produce a list of subtask payloads for a high-level goal by invoking the
@@ -207,24 +278,13 @@ class AgentOrchestrator:
             task.subtasks.append(sub_task.task_id)
             log.info("running_orchestrated_subtask", parent_id=task.task_id, subtask_id=sub_task.task_id)
 
-            try:
-                sub_result = await self._delegate_to_agent(sub_agent_type, sub_task)
+            outcome = await self._run_subagent(sub_agent_type, sub_task)
+            results.append(outcome)
+            if outcome["status"] == TaskStatus.COMPLETED.value:
                 succeeded += 1
-                results.append({
-                    "subtask_id": sub_task.task_id,
-                    "agent_type": sub_agent_type.value,
-                    "status": TaskStatus.COMPLETED.value,
-                    "result": sub_result,
-                })
-            except Exception as e:
+            else:
                 failed += 1
-                log.error("orchestrated_subtask_failed", subtask_id=sub_task.task_id, error=str(e))
-                results.append({
-                    "subtask_id": sub_task.task_id,
-                    "agent_type": sub_agent_type.value,
-                    "status": TaskStatus.FAILED.value,
-                    "error": str(e),
-                })
+                log.error("orchestrated_subtask_failed", subtask_id=sub_task.task_id, error=outcome.get("error"))
                 if not continue_on_error:
                     break
 

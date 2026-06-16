@@ -12,7 +12,7 @@ from __future__ import annotations
 import base64
 import re
 import asyncio
-from typing import List
+from typing import List, Tuple
 
 from fastapi import APIRouter, HTTPException, Depends, status
 
@@ -30,6 +30,103 @@ router = APIRouter(prefix="/api/chat", tags=["Chat"])
 
 # Simple in-memory list for short term dialogue history tracking
 dialogue_history: List[dict] = []
+
+# Maximum number of reason→act→observe cycles per chat turn. Bounds the
+# iterative tool-use loop so JARVIS can chain commands without looping forever.
+MAX_TOOL_ITERATIONS = 3
+
+
+def _format_results_context(results: List[dict]) -> str:
+    """Render executed-command results as a SYSTEM CONTEXT block for the LLM."""
+    ctx = "\n\n[SYSTEM CONTEXT — Commands executed on the workstation]\n"
+    for cr in results:
+        ctx += f"• {cr['description']}: "
+        if cr["completed"]:
+            if cr["exit_code"] == 0:
+                output = cr["stdout"] or "Completed successfully with no output."
+                ctx += f"SUCCESS — {output}\n"
+            else:
+                error = cr["stderr"] or cr["stdout"] or "Unknown error"
+                ctx += f"FAILED (exit {cr['exit_code']}) — {error}\n"
+        else:
+            ctx += "Still running in background...\n"
+    ctx += (
+        "\nRespond naturally about these results in your JARVIS persona. Do NOT say you "
+        "cannot control the device — the commands have already been executed. If the task "
+        "is not yet complete, you may issue another <run_os_command>...</run_os_command> to "
+        "continue; otherwise simply reply to Sir.\n"
+    )
+    return ctx
+
+
+def _already_handled(cmd: str, prior: List[dict]) -> bool:
+    """True if an equivalent command was already executed this turn (dedup)."""
+    normalized = cmd.lower().strip().replace(".exe", "")
+    return any(
+        cr["command"].lower().strip().replace(".exe", "") == normalized
+        or normalized in cr["command"].lower()
+        or cr["command"].lower() in normalized
+        for cr in prior
+    )
+
+
+async def run_tool_loop(
+    message: str,
+    history: List[dict],
+    include_memory: bool,
+    command_results: List[dict],
+) -> Tuple[str, List[dict]]:
+    """
+    Iterative reason→act→observe loop (ReAct).
+
+    JARVIS reasons over the message plus any results gathered so far, optionally
+    emits ``<run_os_command>`` tags, executes the new ones, observes the real
+    output, and reasons again — chaining commands until it stops issuing actions
+    or ``MAX_TOOL_ITERATIONS`` is reached. Returns the final natural-language
+    reply (tags stripped) and the list of commands executed by the LLM.
+    """
+    llm_command_results: List[dict] = []
+    clean_reply = ""
+
+    for iteration in range(MAX_TOOL_ITERATIONS):
+        executed_so_far = command_results + llm_command_results
+        augmented_message = message
+        if executed_so_far:
+            augmented_message = message + _format_results_context(executed_so_far)
+
+        reply = await llm_service.get_response(
+            user_message=augmented_message,
+            chat_history=history,
+            inject_memory=include_memory,
+        )
+
+        llm_commands = re.findall(r"<run_os_command>(.*?)</run_os_command>", reply, re.DOTALL)
+        clean_reply = re.sub(r"<run_os_command>.*?</run_os_command>", "", reply, flags=re.DOTALL).strip()
+
+        new_results = []
+        if llm_commands:
+            log.info("llm_command_tags_detected", iteration=iteration, count=len(llm_commands))
+            for cmd_raw in llm_commands:
+                cmd = cmd_raw.strip()
+                if not cmd:
+                    continue
+                # Don't re-execute a command already handled this turn
+                if _already_handled(cmd, command_results + llm_command_results):
+                    continue
+                result = await _dispatch_and_wait(cmd, f"LLM command: {cmd}", timeout=10.0)
+                new_results.append({
+                    "description": f"Executed: {cmd}",
+                    "command": cmd,
+                    **result,
+                })
+
+        llm_command_results.extend(new_results)
+
+        # Stop looping once the model issues no further actionable commands.
+        if not new_results:
+            break
+
+    return clean_reply, llm_command_results
 
 
 async def _dispatch_and_wait(cmd: str, description: str, timeout: float = 15.0) -> dict:
@@ -123,64 +220,19 @@ async def process_chat(request: ChatRequest):
                 })
 
         # =================================================================
-        # PHASE 2: LLM reasoning (for conversation + fallback commands)
+        # PHASE 2+3: Iterative LLM reasoning + tool use (ReAct loop)
+        # JARVIS reasons, optionally issues <run_os_command> tags, observes the
+        # real results, then reasons again — chaining commands until the task is
+        # done or MAX_TOOL_ITERATIONS is reached.
         # =================================================================
         history = [{"role": item["role"], "content": item["content"]} for item in dialogue_history[-10:]]
 
-        # If commands were detected, tell the LLM about the results so it can
-        # craft a natural response incorporating the execution output
-        augmented_message = request.message
-        if command_results:
-            result_context = "\n\n[SYSTEM CONTEXT — Commands executed on the workstation]\n"
-            for cr in command_results:
-                result_context += f"• {cr['description']}: "
-                if cr["completed"]:
-                    if cr["exit_code"] == 0:
-                        output = cr["stdout"] or "Completed successfully with no output."
-                        result_context += f"SUCCESS — {output}\n"
-                    else:
-                        error = cr["stderr"] or cr["stdout"] or "Unknown error"
-                        result_context += f"FAILED (exit {cr['exit_code']}) — {error}\n"
-                else:
-                    result_context += "Still running in background...\n"
-            result_context += "\nRespond naturally about these results in your JARVIS persona. Do NOT say you cannot control the device — the commands have already been executed.\n"
-            augmented_message = request.message + result_context
-
-        reply = await llm_service.get_response(
-            user_message=augmented_message,
-            chat_history=history,
-            inject_memory=request.include_memory,
+        clean_reply, llm_command_results = await run_tool_loop(
+            message=request.message,
+            history=history,
+            include_memory=request.include_memory,
+            command_results=command_results,
         )
-
-        # =================================================================
-        # PHASE 3: Parse any <run_os_command> tags from LLM (fallback)
-        # =================================================================
-        llm_commands = re.findall(r"<run_os_command>(.*?)</run_os_command>", reply, re.DOTALL)
-        clean_reply = re.sub(r"<run_os_command>.*?</run_os_command>", "", reply, flags=re.DOTALL).strip()
-
-        # Execute any LLM-generated commands that weren't already handled
-        llm_command_results = []
-        if llm_commands:
-            log.info("llm_command_tags_detected", count=len(llm_commands))
-            for cmd_raw in llm_commands:
-                cmd = cmd_raw.strip()
-                if not cmd:
-                    continue
-                # Don't re-execute if interpreter already handled a similar command
-                normalized = cmd.lower().strip().replace(".exe", "")
-                already_handled = any(
-                    cr["command"].lower().strip().replace(".exe", "") == normalized
-                    or normalized in cr["command"].lower()
-                    or cr["command"].lower() in normalized
-                    for cr in command_results
-                )
-                if not already_handled:
-                    result = await _dispatch_and_wait(cmd, f"LLM command: {cmd}", timeout=10.0)
-                    llm_command_results.append({
-                        "description": f"Executed: {cmd}",
-                        "command": cmd,
-                        **result,
-                    })
 
         # =================================================================
         # PHASE 4: Build the final response
