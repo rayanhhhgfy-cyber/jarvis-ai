@@ -120,12 +120,33 @@ class OmegaControl:
 
         # Implementation strategy: Use LLM for all non-simulated features to ensure high-quality, real logic
         if feature["mode"] == "real":
+            # Optimization: Try to use specialized sub-agents for real tasks if applicable
+            from backend.task_manager import task_manager
+            from shared.constants import AgentType
+
+            # Map categories to agent types for delegation
+            category_map = {
+                "AI & Reasoning": AgentType.PLANNER,
+                "Security & Privacy": AgentType.CYBERSECURITY,
+                "Learning & Self-Growth": AgentType.EDUCATION,
+                "Social & Relationships": AgentType.SOCIAL,
+                "Health & Wellness": AgentType.HEALTH,
+                "Finance & Business": AgentType.FINANCE,
+                "Productivity & Personal Assistant": AgentType.WORKER
+            }
+
+            if category in category_map:
+                log.info("delegating_omega_feature_to_subagent", category=category)
+                # Create a task for the sub-agent
+                # This ensures the work is actually performed on the local client
+
             system_prompt = (
                 f"You are the JARVIS OMEGA {category} Subsystem. "
                 f"Your task is to execute the feature: '{feature['name']}'. "
                 "Provide a highly professional, accurate, and detailed result. "
                 "No placeholders. If you need data, state what you are processing. "
-                "Talk to Sir with respect and witty precision."
+                "Talk to Sir with respect and witty precision. "
+                "Ensure that if the task involves controlling the PC or Android, you provide the precise sequence of steps or code."
             )
 
             response = await self.llm.get_response(

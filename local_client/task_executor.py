@@ -122,26 +122,31 @@ class LocalTaskExecutor:
 
     async def _execute_generic_agent_task(self, task: TaskDefinition) -> Dict[str, Any]:
         """Handles tasks routed to specialized agents (planning, browser, memory, research)."""
-        # If it's a Research Task, use the real LLM-powered Research Agent
-        if task.agent_type == AgentType.RESEARCH:
-            from local_client.agents.agent_research import AgentResearch
-            agent = AgentResearch()
-            result = await agent.execute_task(task)
-            # execute_task returns a TaskResult, but this method expects the payload dict
-            # We'll just return the dict, since the caller wraps it in another TaskResult.
-            # Wait, execute_task actually handles the try/except and returns TaskResult. 
-            # To fit with the caller's pattern which wraps this, we can just return the inner result.
+        import importlib
+
+        try:
+            # Try to dynamically load and run the agent from local_client.agents
+            module_name = f"local_client.agents.agent_{task.agent_type.value}"
+            class_name = f"Agent{task.agent_type.value.capitalize()}"
+
+            module = importlib.import_module(module_name)
+            agent_class = getattr(module, class_name)
+            agent_instance = agent_class()
+
+            result = await agent_instance.execute_task(task)
+
             if result.status == TaskStatus.FAILED:
                 raise RuntimeError(result.error)
             return result.result or {}
 
-        # For any other agent type that hasn't been built yet, let JARVIS know it's a stub
-        return {
-            "agent_type": task.agent_type.value,
-            "status": "not_implemented_yet",
-            "message": "This subagent has not been built yet. I am currently unable to perform this action.",
-            "timestamp": datetime.utcnow().isoformat(),
-        }
+        except (ImportError, AttributeError):
+            # Fallback if specific agent file doesn't exist yet
+            return {
+                "agent_type": task.agent_type.value,
+                "status": "not_implemented_yet",
+                "message": f"Agent {task.agent_type.value} is not currently available on this node.",
+                "timestamp": datetime.utcnow().isoformat(),
+            }
 
 
 # Global task executor instance

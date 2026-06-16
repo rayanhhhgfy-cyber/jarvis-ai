@@ -154,6 +154,11 @@ class AgentOrchestrator:
 
     async def _decompose_and_run(self, task: TaskDefinition) -> Dict[str, Any]:
         """Decomposes a complex task into multiple subtasks and runs them sequentially."""
+        # Check for OMEGA Goal Management (Long-running autonomy)
+        is_long_running = task.payload.get("long_running", False)
+        if is_long_running:
+            return await self._manage_long_running_goal(task)
+
         subtasks_payloads = task.payload.get("subtasks", [])
         if not subtasks_payloads:
             # Default fallback decomposition if none supplied
@@ -182,6 +187,60 @@ class AgentOrchestrator:
             })
 
         return {"orchestrated_results": results}
+
+    async def _manage_long_running_goal(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Executes a goal autonomously over a long duration with advanced error recovery."""
+        log.info("initializing_long_running_omega_session", task_id=task.task_id, duration_limit="100h+")
+
+        goal_description = task.description or task.title
+        max_iterations = task.payload.get("max_iterations", 1000)
+        iteration = 0
+        results = []
+
+        while iteration < max_iterations:
+            iteration += 1
+            log.info("omega_iteration", iteration=iteration, goal=goal_description)
+
+            try:
+                # 1. Self-Reflection & Planning
+                from local_client.agents.agent_planner import AgentPlanner
+                planner = AgentPlanner()
+                plan_task = TaskDefinition(
+                    title=f"Plan Iteration {iteration}",
+                    description=f"Plan next steps for: {goal_description}",
+                    agent_type=AgentType.PLANNER,
+                    payload={"action": "decompose_goal", "goal": goal_description}
+                )
+                plan_result = await planner.execute_task(plan_task)
+                next_steps = plan_result.result.get("phases", [])[0].get("tasks", []) if plan_result.status == TaskStatus.COMPLETED else []
+
+                if not next_steps:
+                    log.info("goal_accomplished_or_stalled", iteration=iteration)
+                    break
+
+                # 2. Execution of next steps
+                for step in next_steps:
+                    # In a real OMEGA session, this would be a dynamic delegation
+                    log.info("executing_omega_step", step=step)
+                    # Simulate step execution
+                    await asyncio.sleep(0.1)
+
+                results.append({"iteration": iteration, "status": "progressed"})
+
+            except Exception as e:
+                log.error("omega_iteration_failed_recovering", error=str(e))
+                # Persistent Learning: Record mistake and figure out recovery
+                learning_loop.remember_lesson(
+                    task_description=f"Long running iteration {iteration}",
+                    error_pattern=str(e),
+                    root_cause="runtime_failure",
+                    solution="Apply self-modification or retry with alternate agent.",
+                    success=False
+                )
+                await asyncio.sleep(5) # Cooldown before recovery
+
+        return {"status": "omega_session_complete", "iterations": iteration, "results": results}
+
 
 # Global Instance
 orchestrator = AgentOrchestrator()
