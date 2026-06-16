@@ -81,21 +81,26 @@ class AgentMeeting:
             raise ValueError("Meeting URL is required")
 
         log.info("joining_meeting", url=url)
-        browser = AgentBrowser()
 
-        # Use playwright to open meeting URL in stealth mode
-        # This requires playwright to be correctly configured for audio capture
-        await browser.execute_task(TaskDefinition(
-            title="Open Meeting",
-            description="Opening meeting URL",
-            agent_type=AgentType.BROWSER,
-            payload={
-                "action": "scrape", # Using scrape as proxy for opening
-                "url": url
-            }
-        ))
+        # Real Playwright Automation for Meetings
+        from playwright.async_api import async_playwright
+
+        pw = await async_playwright().start()
+        browser = await pw.chromium.launch(headless=False, args=["--use-fake-ui-for-media-stream"])
+        context = await browser.new_context(permissions=["microphone", "camera"])
+        page = await context.new_page()
+
+        await page.goto(url)
+
+        # Handle "Join" buttons for different platforms (Adaptive Logic)
+        if "google.com/meet" in url:
+            await page.click("span:has-text('Join now')")
+        elif "zoom.us" in url:
+            await page.click("button:has-text('Join')")
 
         self.is_active = True
+        self.page = page # Store page reference
+
         return {
             "status": "joined",
             "url": url,

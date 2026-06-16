@@ -1,5 +1,5 @@
 # ====================================================================
-# JARVIS OMEGA — Python Dependencies
+# JARVIS OMEGA — Python Dependencies (God Mode Edition)
 # ====================================================================
 
 # --- Backend Core ---
@@ -16,8 +16,9 @@ websockets==14.2
 # --- HTTP Client ---
 httpx==0.28.1
 aiohttp==3.11.16
+async-timeout==5.0.1
 
-# --- Database ---
+# --- Database & Memory ---
 aiosqlite==0.21.0
 chromadb==0.6.3
 
@@ -26,13 +27,13 @@ python-jose[cryptography]==3.4.0
 passlib[bcrypt]==1.7.4
 cryptography==44.0.2
 
-# --- Scheduling ---
+# --- Scheduling & Proactivity ---
 apscheduler==3.11.0
 
 # --- Push Notifications ---
 pywebpush==2.0.1
 
-# --- Audio ---
+# --- Audio & Speech ---
 sounddevice==0.5.1
 soundfile==0.13.1
 numpy==2.2.3
@@ -52,10 +53,8 @@ chardet==5.2.0
 # --- Browser Automation ---
 playwright==1.50.0
 
-# --- System Monitoring ---
+# --- System Monitoring & Hardware ---
 psutil==6.1.1
-
-# --- Clipboard ---
 pyperclip==1.9.0
 
 # --- File Watching ---
@@ -71,4 +70,3 @@ orjson==3.10.15
 # --- Testing ---
 pytest==8.1.1
 pytest-asyncio==0.23.6
-

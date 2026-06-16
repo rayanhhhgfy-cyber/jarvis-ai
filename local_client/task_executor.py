@@ -126,8 +126,15 @@ class LocalTaskExecutor:
 
         try:
             # Try to dynamically load and run the agent from local_client.agents
-            module_name = f"local_client.agents.agent_{task.agent_type.value}"
-            class_name = f"Agent{task.agent_type.value.capitalize()}"
+            agent_slug = task.agent_type.value
+            module_name = f"local_client.agents.agent_{agent_slug}"
+
+            # Map slugs to correct ClassNames (handling edge cases like supreme_tester)
+            mapping = {
+                "testing": "AgentSupremeTester",
+                "cybersecurity": "AgentCybersecurity"
+            }
+            class_name = mapping.get(agent_slug, f"Agent{agent_slug.capitalize()}")
 
             module = importlib.import_module(module_name)
             agent_class = getattr(module, class_name)

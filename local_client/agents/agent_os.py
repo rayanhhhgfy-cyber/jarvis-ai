@@ -136,9 +136,9 @@ class AgentOs:
 
     async def _scan_hardware(self, task: TaskDefinition) -> Dict[str, Any]:
         """Scans hardware and recommends a local LLM."""
-        from local_client.hardware_scanner import scanner
-        specs = scanner.get_specs()
-        recommendation = scanner.recommend_model(specs)
+        from local_client.hardware_scanner import hardware_scanner
+        specs = hardware_scanner.get_specs()
+        recommendation = hardware_scanner.recommend_model(specs)
         return {
             "specs": specs,
             "recommended_model": recommendation,
@@ -151,8 +151,8 @@ class AgentOs:
         if not model_name:
             raise ValueError("model_name is required for local LLM setup")
 
-        from local_client.hardware_scanner import scanner
-        success = await scanner.download_model(model_name)
+        from local_client.hardware_scanner import hardware_scanner
+        success = await hardware_scanner.download_model(model_name)
         return {
             "status": "success" if success else "failed",
             "model": model_name,

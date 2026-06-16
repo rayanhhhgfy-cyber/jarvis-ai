@@ -11,3 +11,4 @@ from backend.routers.router_shortcuts import router as router_shortcuts
 from backend.routers.router_memory import router as router_memory
 from backend.routers.router_agents import router as router_agents
 from backend.routers.router_projects import router as router_projects
+from backend.routers.router_omega import router as router_omega

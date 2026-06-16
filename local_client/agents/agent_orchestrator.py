@@ -18,6 +18,7 @@ from shared.models import TaskDefinition, TaskResult, AgentInfo
 from shared.constants import AgentType, AgentStatus, TaskStatus
 from shared.logger import get_logger
 from shared.learning_loop import learning_loop
+from local_client.hardware_scanner import hardware_scanner
 
 log = get_logger("agent_orchestrator")
 
@@ -32,6 +33,7 @@ class AgentOrchestrator:
         self.status = AgentStatus.IDLE
         self.sub_agents: Dict[str, AgentInfo] = {}
         self.active_tasks: Dict[str, TaskDefinition] = {}
+        self.hardware_specs = hardware_scanner.scan()
 
     async def execute_task(self, task: TaskDefinition) -> TaskResult:
         """

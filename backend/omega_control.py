@@ -162,7 +162,14 @@ class OmegaControl:
             "Real Estate Heatmap": (AgentType.FINANCE, "market_analysis"),
             "Instant Video Editor": (AgentType.CREATIVE, "design_prompt"),
             "AI Music Studio": (AgentType.CREATIVE, "generate_idea"),
-            "Sleep Cycle Optimizer": (AgentType.HEALTH, "analyze_vitals")
+            "Sleep Cycle Optimizer": (AgentType.HEALTH, "analyze_vitals"),
+            "B2B Lead Magnet": (AgentType.MARKETING, "customer_outreach"),
+            "Influencer Negotiator": (AgentType.MARKETING, "run_campaign"),
+            "Pitch Deck Designer": (AgentType.STARTUP, "build_pitch_deck"),
+            "Equity Model": (AgentType.STARTUP, "equity_model"),
+            "Startup Growth Hacker": (AgentType.STARTUP, "growth_strategy"),
+            "Autonomous Legal Defense": (AgentType.LEGAL, "analyze_contract"),
+            "Global Logistics Master": (AgentType.LOGISTICS, "optimize_route")
         }
 
         if feature["name"] in delegation_map:

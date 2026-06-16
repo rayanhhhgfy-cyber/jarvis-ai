@@ -7,7 +7,7 @@ All agents consult this before acting and write to it after acting.
 import json
 import os
 from typing import Dict, Any, List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from shared.logger import get_logger
 
 log = get_logger("learning_loop")
@@ -53,7 +53,7 @@ class LearningLoop:
                         success: bool = False):
         """Store a lesson learned from success or failure."""
         lesson = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "task_description": task_description,
             "error_pattern": error_pattern,
             "root_cause": root_cause,
@@ -83,7 +83,7 @@ class LearningLoop:
     def record_self_modification(self, file_path: str, description: str, tool_name: Optional[str] = None, action_name: Optional[str] = None):
         """Record that the agent modified its own code to add a capability."""
         entry = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "file_path": file_path,
             "description": description,
             "tool_name": tool_name,

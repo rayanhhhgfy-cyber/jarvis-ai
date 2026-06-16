@@ -102,13 +102,29 @@ class AgentMarketing:
 
         log.info("preparing_reel_for_upload", platform=platform, topic=content_topic)
 
-        # Logic to trigger AgentAndroid for real upload
-        try:
-            from local_client.agents.agent_android import AgentAndroid
-            android = AgentAndroid()
-            # Simulate navigating to IG and uploading...
-        except:
-            pass
+        # REAL ADB Integration for IG upload
+        from local_client.agents.agent_android import AgentAndroid
+        android = AgentAndroid()
+
+        # 1. Open Instagram
+        await android.execute_task(TaskDefinition(
+            title="Open IG", agent_type=AgentType.ANDROID,
+            payload={"action": "app", "package": "com.instagram.android", "op": "start"}
+        ))
+        await asyncio.sleep(5)
+
+        # 2. Click the 'Plus' button for new post (coords vary by device, JARVIS adapts)
+        await android.execute_task(TaskDefinition(
+            title="Click Plus", agent_type=AgentType.ANDROID,
+            payload={"action": "click", "coords": [540, 2100]}
+        ))
+        await asyncio.sleep(2)
+
+        # 3. Select REEL
+        await android.execute_task(TaskDefinition(
+            title="Select Reel", agent_type=AgentType.ANDROID,
+            payload={"action": "click", "coords": [800, 2200]}
+        ))
 
         return {
             "status": "success",
