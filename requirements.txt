@@ -6,12 +6,18 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 python-dotenv==1.1.0
-pydantic==2.11.1
+pydantic==2.13.0
 pydantic-settings==2.9.1
 python-multipart==0.0.20
 
 # --- WebSocket ---
 websockets==14.2
+
+# --- Media & Social (Supreme Features) ---
+instagrapi==2.8.17
+moviepy==1.0.3
+rembg==2.0.61
+imageio[ffmpeg]
 
 # --- HTTP Client ---
 httpx==0.28.1
@@ -40,7 +46,8 @@ numpy==2.2.3
 webrtcvad==2.0.10
 
 # --- Vision & Video ---
-Pillow==11.1.0
+Pillow==12.2.0
+numpy==2.3.0
 opencv-python-headless==4.11.0.86
 mss==9.0.2
 

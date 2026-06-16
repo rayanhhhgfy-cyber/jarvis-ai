@@ -27,9 +27,17 @@ Create a `.env` file in the root directory:
 OPENAI_API_KEY=your_key_here
 ANTHROPIC_API_KEY=your_key_here
 OPENROUTER_API_KEY=your_key_here
-BACKEND_SECRET_KEY=generate_a_random_string
-ENCRYPTION_KEY=generate_a_random_32_char_string
+# Generate these using the security script (see below)
+BACKEND_SECRET_KEY=
+ENCRYPTION_KEY=
 ```
+
+#### Generating Security Keys
+Run the provided security utility to generate production-grade keys for your environment:
+```bash
+python backend/scripts/generate_keys.py
+```
+Copy the output values into your `.env` file.
 
 ### 4. Running the Backend
 ```bash
