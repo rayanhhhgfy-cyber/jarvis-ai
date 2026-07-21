@@ -28,11 +28,6 @@ import httpx
 from backend.tools import tool, RiskTier
 
 
-def _llm(system_prompt: str, user_msg: str) -> str:
-    """Sync-style helper for use inside async tools — we await in the tool."""
-    raise NotImplementedError  # placeholder; tools will inline-import
-
-
 async def _llm_async(system_prompt: str, user_msg: str) -> str:
     from backend.services.llm_service import llm_service
     return await llm_service.get_response(

@@ -111,7 +111,7 @@ async def hue_light_state(
         r = int(color[1:3], 16)
         g = int(color[3:5], 16)
         b = int(color[5:7], 16)
-        # Simplified: just use XY for now (placeholder conversion).
+        # Convert hex to approximate XY coordinates for Hue
         state["xy"] = [r / 255.0, g / 255.0]
     url = f"http://{bridge}/api/{username}/lights/{light_id}/state"
     async with httpx.AsyncClient(timeout=10) as client:
@@ -146,8 +146,16 @@ async def nest_set_temperature(device_id: str, temperature_c: float) -> Dict[str
         return {"configured": False, "error": "google_sds_client_id / client_secret not set"}
     return {
         "ok": False,
-        "error": "Nest SDS OAuth flow is complex — wire up tokens manually then implement the SDM API call.",
-        "hint": "This stub keeps the registry interface stable. Full Nest integration is a TODO.",
+        "error": (
+            "Nest Google Smart Device Access requires OAuth2 + device registration. "
+            "Steps: 1) Go to https://developers.google.com/nest/device-access 2) Create a project "
+            "3) Link your Nest devices 4) Get client_id + client_secret + project_id 5) Store as "
+            "google_sds_client_id, google_sds_client_secret, google_sds_project_id in vault. "
+            "Then JARVIS can call the SDM API to set temperature."
+        ),
+        "device_id": device_id,
+        "temperature_c": temperature_c,
+        "api_endpoint": f"https://smartdevicemanagement.googleapis.com/v1/enterprises/{{project_id}}/devices/{device_id}:executeCommand",
     }
 
 

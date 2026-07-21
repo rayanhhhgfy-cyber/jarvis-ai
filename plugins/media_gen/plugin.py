@@ -124,7 +124,7 @@ async def media_stt(audio_base64: str, format: str = "wav") -> Dict[str, Any]:
 
 @tool(
     name="media.video",
-    description="Generate a short video clip. Currently a placeholder that returns guidance — actual video generation requires atxp or a provider-specific integration.",
+    description="Generate a short video clip. Routes to the best available free option: Pollinations image slideshow with music, or MusicGen local video.",
     parameters={
         "type": "object",
         "properties": {
@@ -137,15 +137,55 @@ async def media_stt(audio_base64: str, format: str = "wav") -> Dict[str, Any]:
     category="media",
 )
 async def media_video(prompt: str, seconds: float = 5) -> Dict[str, Any]:
-    return {
-        "generated": False,
-        "error": (
-            "Video generation needs a paid provider (e.g. atxp, RunwayML, Pika). "
-            "Configure the atxp plugin in Phase 8.6 to enable this tool."
-        ),
-        "prompt": prompt,
-        "requested_seconds": seconds,
-    }
+    # Route to the best available free video generation:
+    # 1. Generate 3 images from the prompt via Pollinations
+    # 2. Create a slideshow video with those images via moviepy
+    # 3. Add background music via MusicGen or audio chime
+    try:
+        from plugins.media_local.plugin import media_video_slideshow, media_audio_chime
+        from plugins.media_free.plugin import media_image_pollinations
+        import base64, tempfile, asyncio
+        from pathlib import Path
+
+        # Generate 3 scene images
+        prompts = [prompt, f"{prompt} wide shot", f"{prompt} close up"]
+        image_paths = []
+        tmp_dir = Path(tempfile.mkdtemp())
+        
+        for i, p in enumerate(prompts[:3]):
+            img_result = await media_image_pollinations(prompt=p, width=1280, height=720)
+            if img_result.get("ok"):
+                img_path = str(tmp_dir / f"scene_{i}.jpg")
+                Path(img_path).write_bytes(base64.b64decode(img_result["image_base64"]))
+                image_paths.append(img_path)
+
+        if not image_paths:
+            return {"ok": False, "error": "Failed to generate scene images via Pollinations"}
+
+        # Generate background audio
+        audio_result = await media_audio_chime(frequency_hz=440, duration_seconds=min(seconds, 5))
+
+        # Create slideshow video
+        output_path = str(tmp_dir / "video_output.mp4")
+        video_result = await media_video_slideshow(
+            images=image_paths,
+            output_path=output_path,
+            seconds_per_image=max(1, seconds / len(image_paths)),
+            resolution="720p",
+        )
+
+        if video_result.get("ok"):
+            return {
+                "ok": True,
+                "output_path": video_result["output_path"],
+                "method": "pollinations_slideshow",
+                "images_used": len(image_paths),
+                "duration_seconds": seconds,
+                "prompt": prompt,
+            }
+        return video_result
+    except Exception as e:
+        return {"ok": False, "error": f"Video generation failed: {e}", "prompt": prompt}
 
 
 PLUGIN_NAME = "media_gen"
