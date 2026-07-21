@@ -1,0 +1,80 @@
+# ====================================================================
+# JARVIS OMEGA — Multi-Container Compose Orchestration
+# ====================================================================
+# Brings up the FastAPI backend + ChromaDB vector store together.
+#
+# Host port layout (was previously colliding on 8000):
+#   - localhost:8000  -> backend (FastAPI + WebSocket hub)
+#   - localhost:8010  -> chromadb (vector DB admin UI)
+#
+# Bootstrap secrets are required (see Phase 1 fail-fast in backend/config.py).
+# Copy .env.example to .env and set real BACKEND_SECRET_KEY + ENCRYPTION_KEY
+# before running `docker compose up`.
+
+services:
+  # ------------------------------------------------------------------
+  # ChromaDB Vector Store Server
+  # ------------------------------------------------------------------
+  chromadb:
+    image: chromadb/chroma:0.6.3
+    container_name: jarvis_chromadb
+    ports:
+      - "8010:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ------------------------------------------------------------------
+  # JARVIS OMEGA Core FastAPI Backend
+  # ------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jarvis_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      chromadb:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      # Connect to the sibling chromadb service inside the compose network.
+      - CHROMA_SERVER_HOST=chromadb
+      - CHROMA_SERVER_HTTP_PORT=8000
+      - CHROMA_PERSIST_DIR=./storage/chromadb
+    volumes:
+      # Persist JARVIS storage (devices.json, memory, audit log) across reboots.
+      - backend_storage:/app/storage
+      - backend_logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2g
+        reservations:
+          cpus: "0.25"
+          memory: 256m
+
+volumes:
+  chroma_data:
+  backend_storage:
+  backend_logs:

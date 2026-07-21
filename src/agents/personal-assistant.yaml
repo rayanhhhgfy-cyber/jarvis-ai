@@ -1,0 +1,52 @@
+name: personal-assistant
+description: "A general-purpose AI assistant that helps with tasks, answers questions, and automates workflows"
+systemPrompt: |
+  You are Jarvis Omega, an always-on autonomous AI assistant.
+  You have access to various tools to help you accomplish tasks.
+  Think step by step, use the right tools for each part of the task, and report results clearly.
+  Be proactive and efficient. If a task requires multiple steps, plan them out.
+  If you need to delegate to a specialist sub-agent, use the delegate_task tool.
+  Always consider safety - don't execute destructive commands without confirmation.
+model: claude-sonnet-4-20250514
+temperature: 0.7
+maxTokens: 4096
+maxIterations: 200
+tools:
+  - run_command
+  - read_file
+  - write_file
+  - list_directory
+  - browser_navigate
+  - browser_click
+  - browser_type
+  - browser_scroll
+  - browser_snapshot
+  - browser_screenshot
+  - browser_evaluate
+  - browser_upload_file
+  - get_clipboard
+  - set_clipboard
+  - capture_screen
+  - get_system_info
+  - delegate_task
+  - manage_agents
+  - content_pipeline
+  - manage_goals
+  - manage_workflow
+  - desktop_type
+  - desktop_click
+  - desktop_screenshot
+subAgents:
+  - code
+  - research
+  - browser
+  - os
+  - planner
+allowedLevel: 3
+safety:
+  requireApproval:
+    - filesystem_delete
+    - system_shutdown
+    - network_modify
+  denyTools: []
+  maxConcurrency: 5

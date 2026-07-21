@@ -1,0 +1,81 @@
+# Environment
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+venv/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# Storage
+storage/
+logs/
+memory/
+cache/
+backups/
+workspace/
+
+# Databases (SQLite, vault, ChromaDB artifacts)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+src/data/
+**/vault.db*
+
+# Models
+models/
+
+# Node
+node_modules/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets — never commit credentials, tokens, or runtime configs
+*.pem
+*.key
+*.cert
+config/client_config.json
+config/daemon.json
+config/*.local.json
+
+# Logs and runtime artifacts
+*.log
+backend_error.log
+backend_output.log
+frontend_error.log
+frontend_output.log
+test_result.txt
+
+# Audit trail (contains approved destructive ops)
+audit.log
+storage/audit.log
+
+# Local credentials vault populated via the Settings UI
+credentials/
+

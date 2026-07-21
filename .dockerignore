@@ -1,0 +1,79 @@
+# ====================================================================
+# JARVIS OMEGA — Docker build context ignore list
+# ====================================================================
+# Speeds up builds + avoids accidentally bundling secrets / runtime state
+# into image layers.
+
+# VCS
+.git
+.gitignore
+.github
+
+# Python caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+htmlcov/
+coverage.xml
+
+# Virtual envs
+venv/
+.venv/
+env/
+
+# Local storage / runtime artefacts (these MUST NOT end up in the image)
+storage/
+logs/
+memory/
+cache/
+backups/
+workspace/
+credentials/
+*.log
+*.db
+*.db-shm
+*.db-wal
+audit.log
+backend_error.log
+backend_output.log
+frontend_error.log
+frontend_output.log
+test_result.txt
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*.cert
+config/client_config.json
+config/daemon.json
+config/*.local.json
+
+# Local client (not needed inside backend container)
+local_client/
+
+# Frontend (served separately if at all — backend image does not need it)
+frontend/
+src/
+
+# Docs / IDE / OS noise
+README.md
+ARCHITECTURE.md
+SECURITY.md
+CONTRIBUTING.md
+AGENTS.md
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docker metadata
+Dockerfile
+.dockerignore
+docker-compose.yml

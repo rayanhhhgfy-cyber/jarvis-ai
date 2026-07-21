@@ -1,0 +1,23 @@
+{
+  "name": "jarvis-omega-daemon",
+  "version": "1.0.0",
+  "description": "Always-on autonomous AI daemon",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "start": "bun run index.ts",
+    "build": "bun build index.ts --outdir dist",
+    "lint": "bun x biome check src/"
+  },
+  "dependencies": {
+    "winston": "^3.17.0",
+    "ws": "^8.18.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "@types/ws": "^8.5.14",
+    "typescript": "^5.7.0"
+  }
+}

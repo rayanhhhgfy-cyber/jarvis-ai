@@ -1,0 +1,101 @@
+# ====================================================================
+# JARVIS OMEGA — Python Dependencies
+# ====================================================================
+
+# --- Backend Core ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-dotenv==1.1.0
+pydantic==2.11.1
+pydantic-settings==2.9.1
+python-multipart==0.0.20
+
+# --- WebSocket ---
+websockets==14.2
+
+# --- HTTP Client ---
+httpx==0.28.1
+aiohttp==3.11.16
+
+# --- Database ---
+aiosqlite==0.21.0
+chromadb==0.6.3
+
+# --- Authentication & Security ---
+# PyJWT replaces python-jose (CVE-2024-33664 algorithm confusion,
+# CVE-2024-33663 DoS). bcrypt is explicit because passlib was removed (dead
+# dep — code already used bcrypt directly).
+PyJWT==2.10.1
+bcrypt==4.3.0
+cryptography==44.0.2
+
+# --- Scheduling ---
+apscheduler==3.11.0
+
+# --- Push Notifications ---
+pywebpush==2.0.1
+
+# --- Audio ---
+sounddevice==0.5.1
+soundfile==0.13.1
+numpy==2.2.3
+webrtcvad==2.0.10
+
+# --- Vision & Video ---
+Pillow==11.1.0
+opencv-python-headless==4.11.0.86
+mss==9.0.2
+
+# --- Document Processing ---
+python-docx==1.1.2
+openpyxl==3.1.5
+# PyPDF2 is deprecated by its maintainer; pypdf is the recommended successor.
+# (No call sites in this codebase — included for the documents plugin in Phase 8.)
+pypdf==5.4.0
+chardet==5.2.0
+
+# --- Browser Automation ---
+playwright==1.50.0
+
+# --- System Monitoring ---
+psutil==6.1.1
+
+# --- Clipboard ---
+pyperclip==1.9.0
+
+# --- File Watching ---
+watchdog==6.0.0
+
+# --- Logging ---
+structlog==25.1.0
+
+# --- Utilities ---
+uuid6==2024.7.10
+orjson==3.10.15
+
+# --- Testing ---
+pytest==8.1.1
+pytest-asyncio==0.23.6
+
+# --- Phase 10: Free-tier plugins ---
+# Each is optional at import time (plugins degrade gracefully if missing)
+# but listed here so a fresh install gets full functionality.
+edge-tts==7.0.2               # voice_local: free neural TTS (Microsoft Edge)
+faster-whisper==1.1.1         # voice_local: free local STT (Whisper, CPU)
+trafilatura==2.1.0            # web: article extraction
+feedparser==6.0.12            # web/podcast: RSS + Atom parsing
+icalendar==7.2.2              # calendar_local: ICS read/write
+qrcode==8.2                   # media_free: QR code generation
+pyzbar==0.1.9                 # media_free: QR code reading (requires zbar system library)
+moviepy==2.1.2                # media_local + youtube: slideshow + video assembly
+
+# --- Phase 13: Agency scale + Arabic + Trading + YouTube ---
+ccxt==4.4.18                  # trading: crypto exchange API
+pandas==2.2.3                 # trading: data
+pandas-ta==0.3.14b1           # trading: technical indicators
+beautifulsoup4==4.12.3        # seo/realestate_jo: HTML parsing
+google-api-python-client==2.158.0   # youtube: Data API v3
+google-auth-oauthlib==1.2.1         # youtube: OAuth
+google-auth-httplib2==0.2.0         # youtube: auth helper
+pywhatkit==5.4                # whatsapp: unofficial automation
+
