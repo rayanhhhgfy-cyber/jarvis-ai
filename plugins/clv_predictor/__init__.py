@@ -1,0 +1,1 @@
+"""clv_predictor plugin."""

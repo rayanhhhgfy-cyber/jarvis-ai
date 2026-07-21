@@ -1,0 +1,1 @@
+"""digital_products plugin."""

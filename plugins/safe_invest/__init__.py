@@ -1,0 +1,1 @@
+"""safe_invest plugin."""

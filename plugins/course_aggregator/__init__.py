@@ -1,0 +1,1 @@
+"""course_aggregator plugin."""

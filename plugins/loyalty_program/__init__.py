@@ -1,0 +1,1 @@
+"""loyalty_program plugin."""

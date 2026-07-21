@@ -1,0 +1,1 @@
+"""business_intelligence plugin."""
