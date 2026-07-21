@@ -1,1141 +1,505 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J.A.R.V.I.S. OMEGA</title>
+<title>J.A.R.V.I.S. OMEGA — لوحة التحكم</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@400;700;900&display=swap">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-
-:root {
-  --cyan: #00d4ff;
-  --cyan-dim: rgba(0, 212, 255, 0.15);
-  --blue: #0088ff;
-  --green: #00ff88;
-  --orange: #ff6600;
-  --red: #ff0044;
-  --bg: #06060f;
-  --panel: rgba(0, 20, 40, 0.4);
-  --border: rgba(0, 212, 255, 0.3);
-  --glow: 0 0 20px rgba(0, 212, 255, 0.3);
-  --text: rgba(0, 212, 255, 0.9);
-  --font: 'Share Tech Mono', monospace;
-  --font-display: 'Orbitron', sans-serif;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-}
-
-.scanlines {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
-  pointer-events: none;
-  z-index: 9999;
-}
-
-.vignette {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%);
-  pointer-events: none;
-  z-index: 9998;
-}
-
-/* TOP BAR */
-.topbar {
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(0, 10, 20, 0.8);
-  position: relative;
-  z-index: 10;
-}
-.topbar::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-  animation: scanX 3s ease-in-out infinite;
-}
-@keyframes scanX {
-  0%, 100% { transform: scaleX(0.3); opacity: 0.3; }
-  50% { transform: scaleX(1); opacity: 1; }
-}
-.topbar .logo {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 6px;
-  color: var(--cyan);
-  text-shadow: 0 0 20px rgba(0,212,255,0.5);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.topbar .logo .dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 10px var(--green);
-  animation: pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-.topbar .status-items {
-  display: flex;
-  gap: 24px;
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-.topbar .status-items span {
-  opacity: 0.7;
-}
-.topbar .status-items .value {
-  color: var(--cyan);
-  opacity: 1;
-}
-
-/* MAIN LAYOUT */
-.main {
-  display: grid;
-  grid-template-columns: 260px 1fr 280px;
-  grid-template-rows: 1fr 160px;
-  height: calc(100vh - 48px);
-  gap: 0;
-}
-
-/* PANEL STYLES */
-.panel {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  position: relative;
-  overflow: hidden;
-}
-.panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-  opacity: 0.5;
-}
-.panel-title {
-  font-family: var(--font-display);
-  font-size: 10px;
-  letter-spacing: 3px;
-  padding: 12px 16px 8px;
-  border-bottom: 1px solid rgba(0,212,255,0.1);
-  color: var(--cyan);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.panel-title::before {
-  content: '◆';
-  font-size: 8px;
-  color: var(--cyan);
-}
-
-/* LEFT PANEL - VITALS */
-.left-panel {
-  grid-row: 1 / 2;
-  grid-column: 1 / 2;
-  border-left: none;
-  border-top: none;
-}
-
-.vital-group {
-  padding: 12px 16px;
-  border-bottom: 1px solid rgba(0,212,255,0.06);
-}
-.vital-label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  opacity: 0.6;
-  margin-bottom: 4px;
-  display: flex;
-  justify-content: space-between;
-}
-.vital-value {
-  color: var(--cyan);
-  font-size: 14px;
-}
-.vital-bar {
-  height: 4px;
-  background: rgba(0,212,255,0.1);
-  border-radius: 2px;
-  margin-top: 6px;
-  overflow: hidden;
-}
-.vital-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--blue));
-  transition: width 0.5s ease;
-  box-shadow: 0 0 8px rgba(0,212,255,0.4);
-}
-.vital-bar-fill.warn { background: linear-gradient(90deg, var(--orange), #ff8800); }
-.vital-bar-fill.crit { background: linear-gradient(90deg, var(--red), #ff0044); }
-
-.agent-list {
-  padding: 8px 16px;
-}
-.agent-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  font-size: 11px;
-  border-bottom: 1px solid rgba(0,212,255,0.04);
-}
-.agent-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.agent-dot.active { background: var(--green); box-shadow: 0 0 6px var(--green); }
-.agent-dot.idle { background: var(--cyan); opacity: 0.4; }
-.agent-dot.busy { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
-
-/* CENTER PANEL - CHAT */
-.center-panel {
-  grid-row: 1 / 2;
-  grid-column: 2 / 3;
-  border-top: none;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  scroll-behavior: smooth;
-}
-.chat-messages::-webkit-scrollbar { width: 4px; }
-.chat-messages::-webkit-scrollbar-track { background: transparent; }
-.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-.msg {
-  margin-bottom: 12px;
-  animation: fadeIn 0.3s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.msg .sender {
-  font-size: 10px;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.msg .sender.user { color: var(--cyan); }
-.msg .sender.jarvis { color: var(--green); }
-.msg .sender::before {
-  content: '>';
-  font-weight: bold;
-}
-.msg .bubble {
-  padding: 8px 12px;
-  border: 1px solid rgba(0,212,255,0.15);
-  border-radius: 4px;
-  font-size: 13px;
-  line-height: 1.5;
-  max-width: 85%;
-  background: rgba(0,212,255,0.04);
-}
-.msg .bubble.user {
-  border-color: rgba(0,136,255,0.3);
-  margin-left: auto;
-  background: rgba(0,136,255,0.06);
-}
-.msg .bubble.jarvis {
-  border-color: rgba(0,255,136,0.2);
-  background: rgba(0,255,136,0.04);
-}
-.msg .bubble .timestamp {
-  font-size: 9px;
-  opacity: 0.4;
-  margin-top: 4px;
-  text-align: right;
-}
-.msg .bubble pre {
-  background: rgba(0,0,0,0.4);
-  padding: 8px;
-  border-radius: 3px;
-  font-size: 11px;
-  margin: 6px 0;
-  overflow-x: auto;
-  border-left: 2px solid var(--cyan);
-}
-
-.chat-input-area {
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px;
-  border-top: 1px solid rgba(0,212,255,0.1);
-  background: rgba(0,10,20,0.6);
-}
-.chat-input-area input {
-  flex: 1;
-  background: rgba(0,212,255,0.05);
-  border: 1px solid var(--border);
-  padding: 10px 14px;
-  color: var(--cyan);
-  font-family: var(--font);
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-.chat-input-area input:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 12px rgba(0,212,255,0.2);
-}
-.chat-input-area input::placeholder {
-  color: rgba(0,212,255,0.3);
-}
-.chat-input-area button {
-  background: transparent;
-  border: 1px solid var(--cyan);
-  color: var(--cyan);
-  padding: 10px 20px;
-  font-family: var(--font-display);
-  font-size: 11px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.chat-input-area button:hover {
-  background: var(--cyan);
-  color: #000;
-  box-shadow: 0 0 20px rgba(0,212,255,0.4);
-}
-.chat-input-area button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-/* RIGHT PANEL - TASKS / MEMORY */
-.right-panel {
-  grid-row: 1 / 2;
-  grid-column: 3 / 4;
-  border-right: none;
-  border-top: none;
-}
-
-.task-list {
-  padding: 8px 12px;
-  max-height: 40%;
-  overflow-y: auto;
-}
-.task-list::-webkit-scrollbar { width: 3px; }
-.task-list::-webkit-scrollbar-thumb { background: var(--border); }
-
-.task-item {
-  padding: 6px 8px;
-  border-bottom: 1px solid rgba(0,212,255,0.05);
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.task-status {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.task-status.queued { background: var(--cyan); opacity: 0.4; }
-.task-status.running { background: var(--orange); animation: pulse 0.8s ease-in-out infinite; }
-.task-status.completed { background: var(--green); }
-.task-status.failed { background: var(--red); }
-.task-title {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.task-time {
-  font-size: 9px;
-  opacity: 0.4;
-}
-
-.memory-area {
-  padding: 8px 12px;
-  border-top: 1px solid rgba(0,212,255,0.1);
-  max-height: 40%;
-  overflow-y: auto;
-}
-.memory-area::-webkit-scrollbar { width: 3px; }
-.memory-area::-webkit-scrollbar-thumb { background: var(--border); }
-
-.memory-item {
-  padding: 6px 8px;
-  border-bottom: 1px solid rgba(0,212,255,0.03);
-  font-size: 10px;
-  opacity: 0.7;
-  line-height: 1.4;
-}
-.memory-item .cat {
-  color: var(--cyan);
-  font-size: 9px;
-  letter-spacing: 1px;
-}
-
-.devices-area {
-  padding: 8px 12px;
-  border-top: 1px solid rgba(0,212,255,0.1);
-}
-.device-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  font-size: 11px;
-}
-
-/* BOTTOM PANEL - TERMINAL */
-.bottom-panel {
-  grid-row: 2 / 3;
-  grid-column: 1 / 4;
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-}
-.terminal-output {
-  height: calc(100% - 32px);
-  overflow-y: auto;
-  padding: 8px 16px;
-  font-size: 12px;
-  line-height: 1.6;
-}
-.terminal-output::-webkit-scrollbar { width: 4px; }
-.terminal-output::-webkit-scrollbar-track { background: transparent; }
-.terminal-output::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-.term-line {
-  opacity: 0.7;
-  animation: typeIn 0.1s ease;
-}
-.term-line .time {
-  color: rgba(0,212,255,0.4);
-  margin-right: 12px;
-}
-.term-line.info { color: var(--cyan); }
-.term-line.warn { color: var(--orange); }
-.term-line.error { color: var(--red); }
-.term-line.success { color: var(--green); }
-.term-line.system { color: rgba(0,212,255,0.5); }
-
-/* RADAR */
-.radar-container {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  width: 100px; height: 100px;
-  opacity: 0.5;
-}
-#radarCanvas {
-  width: 100px; height: 100px;
-}
-
-/* ORBITING RINGS DECORATION */
-.orbit-ring {
-  position: absolute;
-  border: 1px solid rgba(0,212,255,0.06);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.orbit-ring.r1 { width: 200px; height: 200px; top: -50px; right: -50px; animation: spin 20s linear infinite; }
-.orbit-ring.r2 { width: 160px; height: 160px; top: -30px; right: -30px; animation: spin 15s linear infinite reverse; }
-.orbit-ring.r3 { width: 120px; height: 120px; top: -10px; right: -10px; animation: spin 10s linear infinite; }
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* TYPING INDICATOR */
-.typing {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 12px;
-  border: 1px solid rgba(0,255,136,0.15);
-  border-radius: 4px;
-  background: rgba(0,255,136,0.04);
-  margin-bottom: 12px;
-}
-.typing span {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: typingDot 1.2s ease-in-out infinite;
-}
-.typing span:nth-child(2) { animation-delay: 0.2s; }
-.typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingDot {
-  0%, 60%, 100% { opacity: 0.2; transform: scale(0.8); }
-  30% { opacity: 1; transform: scale(1.2); }
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .main {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto auto;
-  }
-  .left-panel { grid-row: 1; grid-column: 1; max-height: 200px; }
-  .center-panel { grid-row: 2; grid-column: 1; }
-  .right-panel { grid-row: 3; grid-column: 1; max-height: 200px; }
-  .bottom-panel { grid-row: 4; grid-column: 1; }
-  .radar-container { display: none; }
-}
-
-/* GLITCH TEXT */
-.glitch {
-  animation: glitch 3s ease-in-out infinite;
-}
-@keyframes glitch {
-  0%, 90%, 100% { text-shadow: 0 0 20px rgba(0,212,255,0.5); }
-  92% { text-shadow: 2px 0 var(--red), -2px 0 var(--cyan); }
-  94% { text-shadow: -2px 0 var(--red), 2px 0 var(--cyan); }
-  96% { text-shadow: 1px 0 var(--blue), -1px 0 var(--green); }
-}
-
-/* SYSTEM MSG ANIMATION */
-.system-msg {
-  text-align: center;
-  padding: 16px;
-  color: rgba(0,212,255,0.3);
-  font-size: 11px;
-  letter-spacing: 3px;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a1a;--panel:rgba(15,15,35,0.9);--border:rgba(0,212,255,0.2);
+--cyan:#00d4ff;--green:#00ff88;--orange:#ff8800;--red:#ff4466;--purple:#aa44ff;
+--text:#e0e8ff;--text-dim:#6677aa;--font:'Tajawal',sans-serif;
+--font-display:'Orbitron',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden}
+canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;opacity:0.3}
+.app{max-width:1600px;margin:0 auto;padding:16px}
+/* Header */
+.header{text-align:center;padding:24px 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.header h1{font-family:var(--font-display);font-size:2.5rem;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.header p{color:var(--text-dim);font-size:1.1rem}
+.header .stats{display:flex;justify-content:center;gap:32px;margin-top:16px;flex-wrap:wrap}
+.header .stat{text-align:center}
+.header .stat .num{font-size:2rem;font-weight:900;color:var(--cyan)}
+.header .stat .label{font-size:0.8rem;color:var(--text-dim)}
+/* Chat */
+.chat-box{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+.chat-box h2{font-size:1.2rem;margin-bottom:12px;color:var(--cyan)}
+.chat-messages{max-height:300px;overflow-y:auto;margin-bottom:12px}
+.chat-msg{padding:8px 12px;margin:4px 0;border-radius:8px;font-size:0.95rem}
+.chat-msg.user{background:rgba(0,212,255,0.1);border-right:3px solid var(--cyan)}
+.chat-msg.bot{background:rgba(170,68,255,0.08);border-right:3px solid var(--purple)}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;padding:12px 16px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:1rem}
+.chat-input button{padding:12px 24px;background:linear-gradient(90deg,var(--cyan),var(--purple));border:none;border-radius:8px;color:white;font-weight:700;cursor:pointer;font-family:var(--font);transition:0.3s}
+.chat-input button:hover{opacity:0.85;transform:translateY(-1px)}
+/* Search */
+.search-bar{width:100%;padding:14px 20px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:1rem;margin-bottom:16px}
+.search-bar:focus{outline:none;border-color:var(--cyan)}
+/* Grid */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:16px}
+.category-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;transition:0.3s}
+.category-card:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,212,255,0.1)}
+.category-card h3{font-size:1.1rem;color:var(--cyan);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.category-card .cat-count{background:rgba(0,212,255,0.15);padding:2px 10px;border-radius:12px;font-size:0.8rem;color:var(--cyan)}
+.tool-list{list-style:none}
+.tool-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;cursor:pointer;transition:0.2s;display:flex;align-items:flex-start;gap:6px}
+.tool-item:hover{color:var(--cyan);padding-right:4px}
+.tool-item .tier-badge{font-size:0.65rem;padding:1px 6px;border-radius:6px;white-space:nowrap}
+.tier-0{background:rgba(0,255,136,0.15);color:var(--green)}
+.tier-1{background:rgba(0,212,255,0.15);color:var(--cyan)}
+.tier-2{background:rgba(255,136,0,0.15);color:var(--orange)}
+.tier-3{background:rgba(255,68,102,0.15);color:var(--red)}
+.tier-4{background:rgba(255,68,102,0.25);color:var(--red)}
+.tool-desc{color:var(--text-dim);font-size:0.78rem;margin-top:2px}
+/* Vitals */
+.vitals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.vital-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.vital-card .val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
+.vital-card .lbl{font-size:0.8rem;color:var(--text-dim);margin-top:4px}
+/* Autopilot button */
+.autopilot-btn{position:fixed;bottom:24px;left:24px;padding:16px 32px;background:linear-gradient(135deg,var(--green),var(--cyan));border:none;border-radius:50px;color:#000;font-weight:900;font-size:1.1rem;cursor:pointer;font-family:var(--font);box-shadow:0 4px 30px rgba(0,255,136,0.3);z-index:100;transition:0.3s}
+.autopilot-btn:hover{transform:scale(1.05)}
+.autopilot-btn.paused{background:linear-gradient(135deg,var(--orange),var(--red))}
+/* Modal */
+.modal-overlay{display:none;position:fixed;top:0;right:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;justify-content:center;align-items:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto}
+.modal h2{color:var(--cyan);margin-bottom:12px}
+.modal pre{background:rgba(0,0,0,0.4);padding:12px;border-radius:8px;font-size:0.85rem;overflow-x:auto;color:var(--green)}
+.modal .close{float:right;cursor:pointer;font-size:1.5rem;color:var(--text-dim)}
+.modal .close:hover{color:var(--red)}
+/* Responsive */
+@media(max-width:768px){.header h1{font-size:1.8rem}.header .stats{gap:16px}.tools-grid{grid-template-columns:1fr}.autopilot-btn{font-size:0.9rem;padding:12px 24px}}
+/* Loader */
+.loader{text-align:center;padding:40px;color:var(--text-dim)}
+.spinner{display:inline-block;width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:10px 20px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:var(--font);color:var(--text-dim);transition:0.3s;font-size:0.9rem}
+.tab.active{background:rgba(0,212,255,0.15);color:var(--cyan);border-color:var(--cyan)}
+.tab:hover{color:var(--cyan)}
 </style>
 </head>
 <body>
-<div class="scanlines"></div>
-<div class="vignette"></div>
-
-<div class="topbar">
-  <div class="logo">
-    <span>◈</span>
-    <span class="glitch">J.A.R.V.I.S.</span>
-    <span style="font-weight:400;font-size:12px;opacity:0.5">OMEGA</span>
-    <span class="dot"></span>
+<canvas id="bgCanvas"></canvas>
+<div class="app">
+  <!-- Header -->
+  <div class="header">
+    <h1>J.A.R.V.I.S. OMEGA</h1>
+    <p>المنفيذ الرقمي الدائم — Permanent Digital Executive Assistant</p>
+    <div class="stats">
+      <div class="stat"><div class="num" id="toolCount">—</div><div class="label">أداة (Tools)</div></div>
+      <div class="stat"><div class="num" id="catCount">—</div><div class="label">فئة (Categories)</div></div>
+      <div class="stat"><div class="num" id="connCount">0</div><div class="label">اتصالات (Connections)</div></div>
+      <div class="stat"><div class="num" id="taskCount">0</div><div class="label">مهام (Tasks)</div></div>
+    </div>
   </div>
-  <div class="status-items">
-    <span>STATUS: <span class="value" id="statusText">ONLINE</span></span>
-    <span>CLOCK: <span class="value" id="clockText">--:--:--</span></span>
-    <span>DEVICES: <span class="value" id="deviceCount">0</span></span>
-    <span>TASKS: <span class="value" id="taskCount">0</span></span>
+
+  <!-- Vitals -->
+  <div class="vitals" id="vitals">
+    <div class="vital-card"><div class="val" id="cpuVal">—</div><div class="lbl">المعالج CPU</div></div>
+    <div class="vital-card"><div class="val" id="memVal">—</div><div class="lbl">الذاكرة RAM</div></div>
+    <div class="vital-card"><div class="val" id="diskVal">—</div><div class="lbl">القرص Disk</div></div>
+    <div class="vital-card"><div class="val" id="healthVal">—</div><div class="lbl">الحالة Health</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('tools')">🛠️ الأدوات (Tools)</div>
+    <div class="tab" onclick="switchTab('chat')">💬 المحادثة (Chat)</div>
+    <div class="tab" onclick="switchTab('business')">📊 الأعمال (Business)</div>
+    <div class="tab" onclick="switchTab('sales')">💰 المبيعات (Sales)</div>
+  </div>
+
+  <!-- Tools Tab -->
+  <div id="tab-tools">
+    <input type="text" class="search-bar" id="searchTools" placeholder="ابحث في 555 أداة... (Search 555 tools...)" oninput="filterTools()">
+    <div class="tools-grid" id="toolsGrid">
+      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الأدوات...</p></div>
+    </div>
+  </div>
+
+  <!-- Chat Tab -->
+  <div id="tab-chat" style="display:none">
+    <div class="chat-box">
+      <h2>💬 محادثة مع JARVIS</h2>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg bot">مرحباً سيدي! أنا JARVIS، جاهز لخدمتك. كيف يمكنني مساعدتك؟</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="اكتب رسالتك... (Type your message...)" onkeypress="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()">إرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Business Tab -->
+  <div id="tab-business" style="display:none">
+    <div class="vitals">
+      <div class="vital-card"><div class="val" id="bizCount">0</div><div class="lbl">أعمال نشطة</div></div>
+      <div class="vital-card"><div class="val" id="revenueVal">0 د.أ</div><div class="lbl">الإيرادات</div></div>
+      <div class="vital-card"><div class="val" id="dealsCount">0</div><div class="lbl">صفقات مغلقة</div></div>
+      <div class="vital-card"><div class="val" id="postsCount">0</div><div class="lbl">منشورات</div></div>
+    </div>
+    <div class="tools-grid">
+      <div class="category-card">
+        <h3>🚀 إجراءات سريعة</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('bi.dashboard')">📊 لوحة معلومات الأعمال</div>
+          <div class="tool-item" onclick="invokeTool('portfolio.dashboard')">🏢 محفظة الأعمال</div>
+          <div class="tool-item" onclick="invokeTool('payouts.where_is_my_money')">💰 أين أموالي؟</div>
+          <div class="tool-item" onclick="invokeTool('budget.get')">💳 حد الميزانية</div>
+          <div class="tool-item" onclick="invokeTool('diagnostics.full')">🔍 تشخيص النظام</div>
+        </div>
+      </div>
+      <div class="category-card">
+        <h3>🏪 بناء الأعمال</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('agency.build_multi_product',{'niche':'test'})">🏗️ بناء 7 منتجات</div>
+          <div class="tool-item" onclick="invokeTool('agency.mass_lead_gen',{'niche':'restaurants'})')">🎯 50 عميل محتمل</div>
+          <div class="tool-item" onclick="invokeTool('agency.run_continuous',{'activate':true})">♾️ الوضع المستمر</div>
+          <div class="tool-item" onclick="invokeTool('agency.weekly_report')">📋 التقرير الأسبوعي</div>
+        </div>
+      </div>
+      <div class="category-card">
+        <h3>📡 التسويق</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('marketing.create_content',{'topic':'النجاح'})">✍️ إنشاء محتوى</div>
+          <div class="tool-item" onclick="invokeTool('marketing.list_posts')">📋 المنشورات</div>
+          <div class="tool-item" onclick="invokeTool('repurpose.from_text',{'source_content':'الذكاء الاصطناعي'})">♻️ إعادة تدوير المحتوى</div>
+          <div class="tool-item" onclick="invokeTool('linkedin.post_write',{'topic':'الريادة'})">💼 منشور لينكدإن</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales Tab -->
+  <div id="tab-sales" style="display:none">
+    <div class="tools-grid">
+      <div class="category-card">
+        <h3>🤖 المبيعات الذاتية</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('sales.dashboard')">📊 لوحة المبيعات</div>
+          <div class="tool-item" onclick="invokeTool('sales.list_conversations')">💬 المحادثات</div>
+          <div class="tool-item" onclick="invokeTool('sales.run_loop')">🔄 دورة بيع جديدة</div>
+          <div class="tool-item" onclick="invokeTool('sales.pause')">⏸️ إيقاف المبيعات</div>
+          <div class="tool-item" onclick="invokeTool('sales.resume')">▶️ استئناف المبيعات</div>
+        </div>
+      </div>
+      <div class="category-card">
+        <h3>💎 الدفع</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('local_payment.zain_cash_qr',{'amount_jod':50})">📱 QR زين كاش</div>
+          <div class="tool-item" onclick="invokeTool('payouts.track_all')">📊 تتبع المدفوعات</div>
+          <div class="tool-item" onclick="invokeTool('payouts.revenue_history')">📈 تاريخ الإيرادات</div>
+          <div class="tool-item" onclick="invokeTool('lemonsqueezy.list_sales')">🍋 مبيعات Lemon Squeezy</div>
+        </div>
+      </div>
+      <div class="category-card">
+        <h3>🕌 أدوات إسلامية</h3>
+        <div class="tool-list">
+          <div class="tool-item" onclick="invokeTool('islamic.prayer_times')">⏰ أوقات الصلاة</div>
+          <div class="tool-item" onclick="invokeTool('islamic.hijri_date')">📅 التاريخ الهجري</div>
+          <div class="tool-item" onclick="invokeTool('islamic.zakat_calculator',{'cash_jod':5000})">🤲 حاسبة الزكاة</div>
+          <div class="tool-item" onclick="invokeTool('islamic.qibla',{'latitude':31.95,'longitude':35.91})">🧭 اتجاه القبلة</div>
+          <div class="tool-item" onclick="invokeTool('islamic.events_calendar')">📅 المناسبات</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="main">
-  <!-- LEFT PANEL -->
-  <div class="panel left-panel">
-    <div class="panel-title">System Vitals</div>
-    <div class="vital-group">
-      <div class="vital-label"><span>CPU</span><span class="vital-value" id="cpuVal">0%</span></div>
-      <div class="vital-bar"><div class="vital-bar-fill" id="cpuBar" style="width:0%"></div></div>
-    </div>
-    <div class="vital-group">
-      <div class="vital-label"><span>MEMORY</span><span class="vital-value" id="memVal">0%</span></div>
-      <div class="vital-bar"><div class="vital-bar-fill" id="memBar" style="width:0%"></div></div>
-    </div>
-    <div class="vital-group">
-      <div class="vital-label"><span>DISK</span><span class="vital-value" id="diskVal">0%</span></div>
-      <div class="vital-bar"><div class="vital-bar-fill" id="diskBar" style="width:0%"></div></div>
-    </div>
-    <div class="vital-group">
-      <div class="vital-label"><span>GPU</span><span class="vital-value" id="gpuVal">N/A</span></div>
-      <div class="vital-bar"><div class="vital-bar-fill" id="gpuBar" style="width:0%"></div></div>
-    </div>
-    <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1)">Active Agents</div>
-    <div class="agent-list" id="agentList">
-      <div class="agent-item" style="opacity:0.4;font-size:11px">Awaiting data...</div>
-    </div>
-    <div class="radar-container">
-      <canvas id="radarCanvas" width="200" height="200"></canvas>
-    </div>
-    <div class="orbit-ring r1"></div>
-    <div class="orbit-ring r2"></div>
-  </div>
+<!-- Autopilot Button -->
+<button class="autopilot-btn" id="autopilotBtn" onclick="toggleAutopilot()">🚀 ابدأ كل شيء</button>
 
-  <!-- CENTER PANEL - CHAT -->
-  <div class="panel center-panel">
-    <div class="panel-title">Command Interface</div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="system-msg">◈ J.A.R.V.I.S. OMEGA initializing...</div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="Enter command or message, Sir..." autofocus>
-      <button id="sendBtn">► TRANSMIT</button>
-    </div>
-  </div>
-
-  <!-- RIGHT PANEL -->
-  <div class="panel right-panel">
-    <div class="panel-title">Active Tasks</div>
-    <div class="task-list" id="taskList">
-      <div style="opacity:0.4;font-size:11px;padding:8px">No active tasks</div>
-    </div>
-
-    <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1)">Memory Banks</div>
-    <div class="memory-area" id="memoryArea">
-      <div style="opacity:0.4;font-size:11px;padding:8px">Querying memory...</div>
-    </div>
-
-    <div class="panel-title" style="border-top:1px solid rgba(0,212,255,0.1)">Connected Devices</div>
-    <div class="devices-area" id="deviceArea">
-      <div style="opacity:0.4;font-size:11px;padding:8px">No devices connected</div>
-    </div>
-  </div>
-
-  <!-- BOTTOM PANEL - TERMINAL -->
-  <div class="panel bottom-panel">
-    <div class="panel-title">Event Log</div>
-    <div class="terminal-output" id="terminalLog"></div>
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <pre id="modalContent">جاري التحميل...</pre>
   </div>
 </div>
 
 <script>
-// ====================================================================
 const API = 'http://localhost:8000';
-const WS = `ws://localhost:8000/ws/ui`;
-
+const WS_URL = 'ws://localhost:8000/ws/ui';
+let allTools = [];
 let ws = null;
-let wsReconnectTimer = null;
-let vitalsInterval = null;
-let tasksInterval = null;
-let clockInterval = null;
-let radarAngle = 0;
-let conversationId = null;
-let isSending = false;
 
-// ====================================================================
-// DOM REFS
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const sendBtn = document.getElementById('sendBtn');
-const terminalLog = document.getElementById('terminalLog');
-
-// ====================================================================
-// CLOCK
-function startClock() {
-  document.getElementById('clockText').textContent = new Date().toLocaleTimeString();
-  clockInterval = setInterval(() => {
-    document.getElementById('clockText').textContent = new Date().toLocaleTimeString();
-  }, 1000);
-}
-
-// ====================================================================
-// TERMINAL LOG
-function termLog(message, level = 'info') {
-  const d = new Date();
-  const time = d.toLocaleTimeString();
-  const line = document.createElement('div');
-  line.className = `term-line ${level}`;
-  line.innerHTML = `<span class="time">[${time}]</span> ${message}`;
-  terminalLog.appendChild(line);
-  terminalLog.scrollTop = terminalLog.scrollHeight;
-  if (terminalLog.children.length > 500) {
-    terminalLog.removeChild(terminalLog.children[0]);
-  }
-}
-
-// ====================================================================
-// WEBSOCKET
-function connectWebSocket() {
-  if (ws && ws.readyState === WebSocket.OPEN) return;
-  try {
-    ws = new WebSocket(WS);
-  } catch (e) {
-    termLog('WebSocket connection failed, retrying...', 'warn');
-    scheduleReconnect();
-    return;
-  }
-
-  ws.onopen = () => {
-    termLog('WebSocket connected to J.A.R.V.I.S. hub', 'success');
-    document.getElementById('statusText').textContent = 'ONLINE';
-    document.getElementById('statusText').style.color = 'var(--green)';
-    if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
-  };
-
-  ws.onmessage = (ev) => {
-    try {
-      const msg = JSON.parse(ev.data);
-      handleWSMessage(msg);
-    } catch (e) {
-      termLog(`WS parse error: ${e.message}`, 'error');
-    }
-  };
-
-  ws.onclose = () => {
-    termLog('WebSocket disconnected', 'warn');
-    document.getElementById('statusText').textContent = 'OFFLINE';
-    document.getElementById('statusText').style.color = 'var(--red)';
-    scheduleReconnect();
-  };
-
-  ws.onerror = (e) => {
-    termLog('WebSocket error', 'error');
-  };
-}
-
-function scheduleReconnect() {
-  if (wsReconnectTimer) return;
-  wsReconnectTimer = setTimeout(() => {
-    wsReconnectTimer = null;
-    connectWebSocket();
-  }, 3000);
-}
-
-function handleWSMessage(msg) {
-  const type = msg.type || '';
-  const payload = msg.payload || {};
-
-  switch (type) {
-    case 'system_status':
-      termLog(`System: ${payload.message || 'Connected'}`, 'success');
-      addSystemMessage(payload.message || 'Systems online, Sir.');
-      if (payload.connected_devices !== undefined) {
-        document.getElementById('deviceCount').textContent = payload.connected_devices;
-      }
-      break;
-
-    case 'proactive_report':
-      termLog(`Report: ${payload.report || payload.title}`, 'info');
-      addMessage('jarvis', `**${payload.title}** — ${payload.report || 'Task completed.'}`, true);
-      break;
-
-    case 'pong':
-      break;
-
-    case 'command_accepted':
-      termLog(`Command accepted: ${payload.command}`, 'info');
-      break;
-
-    default:
-      if (type) termLog(`WS: ${type}`, 'system');
-  }
-}
-
-// ====================================================================
-// CHAT
-function addSystemMessage(text) {
-  const div = document.createElement('div');
-  div.className = 'system-msg';
-  div.textContent = `◈ ${text}`;
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function addMessage(sender, text, isReport = false) {
-  const div = document.createElement('div');
-  div.className = `msg`;
-
-  const senderDiv = document.createElement('div');
-  senderDiv.className = `sender ${sender}`;
-  senderDiv.textContent = sender === 'jarvis' ? 'J.A.R.V.I.S.' : 'SIR';
-  div.appendChild(senderDiv);
-
-  const bubble = document.createElement('div');
-  bubble.className = `bubble ${sender}`;
-
-  if (text.includes('**') || text.includes('```')) {
-    bubble.innerHTML = formatText(text);
-  } else {
-    bubble.textContent = text;
-  }
-
-  const ts = document.createElement('div');
-  ts.className = 'timestamp';
-  ts.textContent = new Date().toLocaleTimeString();
-  bubble.appendChild(ts);
-
-  div.appendChild(bubble);
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function formatText(text) {
-  let html = text
-    .replace(/```(\w*)\n?([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--cyan)">$1</strong>')
-    .replace(/\n/g, '<br>');
-  return html;
-}
-
-function showTyping() {
-  const div = document.createElement('div');
-  div.className = 'typing';
-  div.id = 'typingIndicator';
-  div.innerHTML = '<span></span><span></span><span></span>';
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function hideTyping() {
-  const el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
-
-async function sendMessage() {
-  const text = chatInput.value.trim();
-  if (!text || isSending) return;
-
-  chatInput.value = '';
-  isSending = true;
-  sendBtn.disabled = true;
-
-  addMessage('user', text);
-  termLog(`Command: ${text}`, 'info');
-  showTyping();
-
-  try {
-    const res = await fetch(`${API}/api/chat`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: text,
-        conversation_id: conversationId,
-        include_memory: true,
-        stream: false
-      })
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    conversationId = data.conversation_id || conversationId;
-    hideTyping();
-
-    const content = data.content || 'No response generated.';
-    addMessage('jarvis', content);
-
-    if (data.tasks_created && data.tasks_created.length > 0) {
-      termLog(`Tasks created: ${data.tasks_created.join(', ')}`, 'success');
-    }
-
-    if (data.audio_base64) {
-      // silently ignore audio for now
-    }
-
-    // Refresh tasks
-    fetchTasks();
-    fetchMemoryStats();
-
-  } catch (err) {
-    hideTyping();
-    termLog(`Chat error: ${err.message}`, 'error');
-    addMessage('jarvis', `Error: ${err.message}`);
-  } finally {
-    isSending = false;
-    sendBtn.disabled = false;
-    chatInput.focus();
-  }
-}
-
-chatInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') sendMessage();
-});
-sendBtn.addEventListener('click', sendMessage);
-chatInput.focus();
-
-// ====================================================================
-// VITALS
-async function fetchVitals() {
-  try {
-    const res = await fetch(`${API}/api/system/vitals`);
-    if (!res.ok) return;
-    const v = await res.json();
-
-    document.getElementById('cpuVal').textContent = `${Math.round(v.cpu_percent || 0)}%`;
-    const cpuBar = document.getElementById('cpuBar');
-    cpuBar.style.width = `${v.cpu_percent || 0}%`;
-    cpuBar.className = 'vital-bar-fill' + (v.cpu_percent > 80 ? ' crit' : v.cpu_percent > 60 ? ' warn' : '');
-
-    document.getElementById('memVal').textContent = `${Math.round(v.memory_percent || 0)}%`;
-    const memBar = document.getElementById('memBar');
-    memBar.style.width = `${v.memory_percent || 0}%`;
-    memBar.className = 'vital-bar-fill' + (v.memory_percent > 80 ? ' crit' : v.memory_percent > 60 ? ' warn' : '');
-
-    document.getElementById('diskVal').textContent = `${Math.round(v.disk_percent || 0)}%`;
-    const diskBar = document.getElementById('diskBar');
-    diskBar.style.width = `${v.disk_percent || 0}%`;
-    diskBar.className = 'vital-bar-fill' + (v.disk_percent > 85 ? ' crit' : v.disk_percent > 70 ? ' warn' : '');
-
-    if (v.gpu_percent !== null && v.gpu_percent !== undefined) {
-      document.getElementById('gpuVal').textContent = `${Math.round(v.gpu_percent)}%`;
-      const gpuBar = document.getElementById('gpuBar');
-      gpuBar.style.width = `${v.gpu_percent}%`;
-      gpuBar.className = 'vital-bar-fill' + (v.gpu_percent > 80 ? ' crit' : v.gpu_percent > 60 ? ' warn' : '');
-    }
-
-    document.getElementById('taskCount').textContent = v.queued_tasks || 0;
-
-  } catch (e) {
-    // silently ignore
-  }
-}
-
-// ====================================================================
-// TASKS
-async function fetchTasks() {
-  try {
-    const res = await fetch(`${API}/api/tasks?limit=10`);
-    if (!res.ok) return;
-    const tasks = await res.json();
-    const list = document.getElementById('taskList');
-    if (tasks.length === 0) {
-      list.innerHTML = '<div style="opacity:0.4;font-size:11px;padding:8px">No active tasks</div>';
-      return;
-    }
-    list.innerHTML = '';
-    tasks.forEach(t => {
-      const div = document.createElement('div');
-      div.className = 'task-item';
-      const status = (t.status || 'queued').toLowerCase();
-      div.innerHTML = `
-        <span class="task-status ${status}"></span>
-        <span class="task-title">${t.title || 'Untitled'}</span>
-        <span class="task-time">${t.created_at ? new Date(t.created_at).toLocaleTimeString() : ''}</span>
-      `;
-      list.appendChild(div);
-    });
-  } catch (e) {}
-}
-
-// ====================================================================
-// MEMORY
-async function fetchMemoryStats() {
-  try {
-    const res = await fetch(`${API}/api/memory/stats`);
-    if (!res.ok) return;
-    const stats = await res.json();
-    const area = document.getElementById('memoryArea');
-    area.innerHTML = '';
-    const entries = Object.entries(stats);
-    if (entries.length === 0) {
-      area.innerHTML = '<div style="opacity:0.4;font-size:11px;padding:8px">Empty</div>';
-      return;
-    }
-    entries.slice(0, 8).forEach(([cat, count]) => {
-      const div = document.createElement('div');
-      div.className = 'memory-item';
-      const label = cat.replace('memory_', '').replace(/_/g, ' ');
-      div.innerHTML = `<span class="cat">${label}</span> — ${count} entries`;
-      area.appendChild(div);
-    });
-  } catch (e) {}
-}
-
-// ====================================================================
-// AGENTS
-async function fetchAgents() {
-  try {
-    const res = await fetch(`${API}/api/agents`);
-    if (!res.ok) return;
-    const agents = await res.json();
-    const list = document.getElementById('agentList');
-    if (!agents || agents.length === 0) {
-      list.innerHTML = '<div class="agent-item" style="opacity:0.4">No agents active</div>';
-      return;
-    }
-    list.innerHTML = '';
-    agents.forEach(a => {
-      const div = document.createElement('div');
-      div.className = 'agent-item';
-      const status = (a.status || 'idle').toLowerCase();
-      div.innerHTML = `
-        <span class="agent-dot ${status}"></span>
-        <span style="flex:1">${a.agent_type || a.name || 'Agent'}</span>
-        <span style="opacity:0.4;font-size:10px">${a.status || 'idle'}</span>
-      `;
-      list.appendChild(div);
-    });
-  } catch (e) {
-    document.getElementById('agentList').innerHTML = '<div class="agent-item" style="opacity:0.4">Not available</div>';
-  }
-}
-
-// ====================================================================
-// DEVICES
-async function fetchDevices() {
-  try {
-    const res = await fetch(`${API}/api/system/components`);
-    if (!res.ok) return;
-    const components = await res.json();
-    // We don't have a direct device list API, use health info
-    const area = document.getElementById('deviceArea');
-    area.innerHTML = '';
-    if (!components || components.length === 0) {
-      area.innerHTML = '<div style="opacity:0.4;font-size:11px;padding:8px">No components</div>';
-      return;
-    }
-    components.slice(0, 5).forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'device-item';
-      const state = (c.state || 'healthy').toLowerCase();
-      const dotColor = state === 'healthy' ? 'var(--green)' : state === 'degraded' ? 'var(--orange)' : 'var(--red)';
-      div.innerHTML = `
-        <span style="width:6px;height:6px;border-radius:50%;background:${dotColor};box-shadow:0 0 6px ${dotColor};flex-shrink:0"></span>
-        <span style="flex:1">${c.name}</span>
-        <span style="opacity:0.4;font-size:10px">${state}</span>
-      `;
-      area.appendChild(div);
-    });
-  } catch (e) {}
-}
-
-// ====================================================================
-// RADAR CANVAS
-function drawRadar() {
-  const canvas = document.getElementById('radarCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const cx = 100, cy = 100, r = 85;
-
-  ctx.clearRect(0, 0, 200, 200);
-
-  // Outer rings
-  for (let i = 1; i <= 3; i++) {
-    ctx.beginPath();
-    ctx.arc(cx, cy, r * (i / 3), 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 + i * 0.04})`;
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
-  }
-
-  // Crosshairs
-  ctx.beginPath();
-  ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy);
-  ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r);
-  ctx.strokeStyle = 'rgba(0, 212, 255, 0.08)';
-  ctx.lineWidth = 0.5;
-  ctx.stroke();
-
-  // Sweep
-  radarAngle += 0.02;
-  if (radarAngle > Math.PI * 2) radarAngle -= Math.PI * 2;
-
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.arc(cx, cy, r, radarAngle - 0.5, radarAngle);
-  ctx.closePath();
-  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-  grad.addColorStop(0, 'rgba(0, 212, 255, 0.15)');
-  grad.addColorStop(1, 'rgba(0, 212, 255, 0)');
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Sweep line
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(cx + Math.cos(radarAngle) * r, cy + Math.sin(radarAngle) * r);
-  ctx.strokeStyle = 'rgba(0, 212, 255, 0.4)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  // Blips
-  const blips = [
-    { angle: 0.8, dist: 0.5, size: 2 },
-    { angle: 2.2, dist: 0.7, size: 1.5 },
-    { angle: 4.1, dist: 0.3, size: 2.5 },
-    { angle: 5.3, dist: 0.6, size: 1.8 },
-  ];
-  blips.forEach(b => {
-    const bx = cx + Math.cos(b.angle) * r * b.dist;
-    const by = cy + Math.sin(b.angle) * r * b.dist;
-    ctx.beginPath();
-    ctx.arc(bx, by, b.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(0, 255, 136, ${0.4 + Math.sin(Date.now() / 1000 + b.angle) * 0.3})`;
-    ctx.fill();
-    ctx.shadowColor = 'rgba(0, 255, 136, 0.3)';
-    ctx.shadowBlur = 6;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  });
-
-  // Center dot
-  ctx.beginPath();
-  ctx.arc(cx, cy, 2, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
-  ctx.fill();
-
-  requestAnimationFrame(drawRadar);
-}
-
-// ====================================================================
-// INIT
+// === Initialize ===
 async function init() {
-  startClock();
-  connectWebSocket();
-  drawRadar();
-
-  termLog('J.A.R.V.I.S. OMEGA frontend initialized', 'system');
-  termLog('Connecting to backend...', 'system');
-
-  // Initial data load
-  await fetchVitals();
-  await fetchTasks();
-  await fetchMemoryStats();
-  await fetchAgents();
-  await fetchDevices();
-
-  // Polling
-  vitalsInterval = setInterval(fetchVitals, 2000);
-  tasksInterval = setInterval(fetchTasks, 5000);
-  setInterval(fetchAgents, 10000);
-  setInterval(fetchDevices, 15000);
-
-  // Periodic health check
-  setInterval(async () => {
-    try {
-      const res = await fetch(`${API}/health`);
-      if (res.ok) {
-        const h = await res.json();
-        document.getElementById('statusText').textContent = 'ONLINE';
-        document.getElementById('statusText').style.color = 'var(--green)';
-        if (h.active_connections !== undefined) {
-          document.getElementById('deviceCount').textContent = h.active_connections;
-        }
-      }
-    } catch (e) {
-      document.getElementById('statusText').textContent = 'OFFLINE';
-      document.getElementById('statusText').style.color = 'var(--red)';
-    }
-  }, 5000);
-
-  // Welcome messages
-  addSystemMessage('J.A.R.V.I.S. OMEGA systems online.');
-  addSystemMessage('All subsystems nominal. Awaiting your command, Sir.');
-  termLog('Ready to accept commands', 'success');
+  await loadTools();
+  await loadVitals();
+  connectWS();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// === Load tools from API ===
+async function loadTools() {
+  try {
+    const resp = await fetch(API + '/api/settings/tools');
+    allTools = await resp.json();
+    document.getElementById('toolCount').textContent = allTools.length;
+    
+    // Group by category
+    const categories = {};
+    allTools.forEach(t => {
+      if (!categories[t.category]) categories[t.category] = [];
+      categories[t.category].push(t);
+    });
+    document.getElementById('catCount').textContent = Object.keys(categories).length;
+    
+    renderTools(categories);
+  } catch (e) {
+    document.getElementById('toolsGrid').innerHTML = '<div class="loader"><p>تعذر الاتصال بالخادم. تأكد أن الباكند يعمل.</p></div>';
+  }
+}
+
+// === Render tools grouped by category ===
+function renderTools(categories) {
+  const grid = document.getElementById('toolsGrid');
+  grid.innerHTML = '';
+  
+  // Sort categories by tool count (most tools first)
+  const sortedCats = Object.entries(categories).sort((a,b) => b[1].length - a[1].length);
+  
+  sortedCats.forEach(([cat, tools]) => {
+    const card = document.createElement('div');
+    card.className = 'category-card';
+    card.dataset.category = cat;
+    
+    const tierEmoji = {tier_0_observe:'👁️',tier_1_reversible:'✏️',tier_2_system:'⚙️',tier_3_destructive:'⚠️',tier_4_external:'🌐'};
+    
+    let toolsHtml = '';
+    tools.forEach(t => {
+      const tierClass = 'tier-' + (t.risk_tier || '').split('_')[1];
+      const tierNum = (t.risk_tier || '').replace('tier_','').replace('_',' ');
+      toolsHtml += `<div class="tool-item" onclick="invokeTool('${t.name}')">
+        <span class="tier-badge ${tierClass}">T${(t.risk_tier||'').split('_')[1]}</span>
+        <div><div>${t.name}</div><div class="tool-desc">${(t.description||'').substring(0,80)}</div></div>
+      </div>`;
+    });
+    
+    card.innerHTML = `<h3>${cat} <span class="cat-count">${tools.length}</span></h3><div class="tool-list">${toolsHtml}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+// === Search/filter tools ===
+function filterTools() {
+  const q = document.getElementById('searchTools').value.toLowerCase();
+  const cards = document.querySelectorAll('.category-card');
+  cards.forEach(card => {
+    const cat = card.dataset.category.toLowerCase();
+    const tools = card.querySelectorAll('.tool-item');
+    let visible = 0;
+    tools.forEach(t => {
+      const text = t.textContent.toLowerCase();
+      if (text.includes(q) || cat.includes(q)) { t.style.display=''; visible++; }
+      else { t.style.display='none'; }
+    });
+    card.style.display = visible > 0 ? '' : 'none';
+  });
+}
+
+// === Invoke a tool ===
+async function invokeTool(name, args = {}) {
+  document.getElementById('modalTitle').textContent = '⚙️ ' + name;
+  document.getElementById('modalContent').textContent = 'جاري التنفيذ...';
+  document.getElementById('modalOverlay').classList.add('active');
+  
+  try {
+    const resp = await fetch(API + '/api/settings/tools/invoke', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: name, arguments: args})
+    });
+    const data = await resp.json();
+    document.getElementById('modalContent').textContent = JSON.stringify(data.result || data, null, 2);
+  } catch (e) {
+    document.getElementById('modalContent').textContent = 'خطأ: ' + e.message;
+  }
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+
+// === Tabs ===
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display = 'none');
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tab).style.display = '';
+  if (tab === 'business') loadBusinessStats();
+}
+
+// === Vitals ===
+async function loadVitals() {
+  try {
+    const resp = await fetch(API + '/api/system/vitals');
+    const v = await resp.json();
+    document.getElementById('cpuVal').textContent = Math.round(v.cpu_percent) + '%';
+    document.getElementById('memVal').textContent = Math.round(v.memory_percent) + '%';
+    document.getElementById('diskVal').textContent = Math.round(v.disk_percent) + '%';
+    document.getElementById('healthVal').textContent = v.health_state;
+  } catch {}
+  
+  try {
+    const resp = await fetch(API + '/health');
+    const h = await resp.json();
+    document.getElementById('connCount').textContent = h.active_connections || 0;
+    document.getElementById('taskCount').textContent = h.tasks_in_queue || 0;
+  } catch {}
+}
+
+// === Business Stats ===
+async function loadBusinessStats() {
+  try {
+    const resp = await fetch(API + '/api/settings/tools/invoke', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name:'bi.dashboard', arguments:{}})
+    });
+    const data = await resp.json();
+    const m = data.result?.metrics || {};
+    document.getElementById('bizCount').textContent = m.businesses_total || 0;
+    document.getElementById('revenueVal').textContent = Math.round(m.revenue_jod || 0) + ' د.أ';
+    document.getElementById('dealsCount').textContent = m.deals_closed || 0;
+    document.getElementById('postsCount').textContent = m.posts_published || 0;
+  } catch {}
+}
+
+// === Chat ===
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  
+  try {
+    const resp = await fetch(API + '/api/chat', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({message: msg, include_memory: false, stream: false})
+    });
+    const data = await resp.json();
+    const reply = data.content || 'عذراً سيدي، حدث خطأ.';
+    // Strip command output formatting for cleaner display
+    const cleanReply = reply.replace(/<run_os_command>.*?<\/run_os_command>/gs, '').trim();
+    msgs.innerHTML += `<div class="chat-msg bot">${cleanReply || reply}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  } catch (e) {
+    msgs.innerHTML += `<div class="chat-msg bot">خطأ في الاتصال: ${e.message}</div>`;
+  }
+}
+
+// === Autopilot ===
+async function toggleAutopilot() {
+  const btn = document.getElementById('autopilotBtn');
+  if (btn.classList.contains('paused')) {
+    await invokeTool('autopilot.activate', {confirm: true});
+    btn.classList.remove('paused');
+    btn.textContent = '⏸️ إيقاف مؤقت';
+  } else {
+    await invokeTool('autopilot.pause', {});
+    btn.classList.add('paused');
+    btn.textContent = '🚀 ابدأ كل شيء';
+  }
+}
+
+// === WebSocket ===
+function connectWS() {
+  try {
+    ws = new WebSocket(WS_URL);
+    ws.onopen = () => console.log('WS connected');
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'approval_request') {
+          showApproval(msg.payload);
+        } else if (msg.type === 'system_status') {
+          // Update connection count
+        }
+      } catch {}
+    };
+    ws.onclose = () => setTimeout(connectWS, 5000);
+  } catch {}
+}
+
+function showApproval(payload) {
+  if (confirm(`طلب موافقة: ${payload.action}\nالسبب: ${payload.reason}\n\nوافق؟`)) {
+    fetch(API + '/api/approvals/' + payload.approval_id + '/approve', {method:'POST'});
+  } else {
+    fetch(API + '/api/approvals/' + payload.approval_id + '/reject', {method:'POST'});
+  }
+}
+
+// === Background Canvas Animation ===
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.size = Math.random() * 2 + 0.5;
+    this.opacity = Math.random() * 0.5 + 0.2;
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(0, 212, 255, ${0.1 * (1 - dist/120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+// === Auto-refresh vitals ===
+setInterval(loadVitals, 30000);
+
+// === Start ===
+init();
 </script>
 </body>
 </html>
