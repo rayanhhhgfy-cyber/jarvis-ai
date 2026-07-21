@@ -1,0 +1,1 @@
+"""delivery_jo plugin."""

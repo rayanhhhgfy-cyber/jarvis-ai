@@ -465,13 +465,148 @@ CREATE TABLE IF NOT EXISTS family_assets (
 CREATE TABLE IF NOT EXISTS media_empire_publications (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     idea TEXT,
-    platforms TEXT,                       -- JSON list
+    platforms TEXT,
     twin_video_path TEXT,
     shorts_paths TEXT,
     newsletter_url TEXT,
     music_path TEXT,
     status TEXT DEFAULT 'planned',
     published_at TEXT,
+    created_at TEXT NOT NULL
+);
+
+-- Phase 16+17 tables
+CREATE TABLE IF NOT EXISTS sales_conversations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prospect_name TEXT,
+    prospect_phone TEXT,
+    prospect_instagram TEXT,
+    prospect_business TEXT,
+    channel TEXT,
+    status TEXT DEFAULT 'pitching',
+    conversation_json TEXT,
+    deal_value_jod REAL DEFAULT 0,
+    business_id INTEGER,
+    created_at TEXT NOT NULL,
+    updated_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS email_sequences (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    trigger_event TEXT,
+    steps_json TEXT,
+    active INTEGER DEFAULT 1,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS email_sequence_enrollments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sequence_id INTEGER REFERENCES email_sequences(id),
+    contact_email TEXT,
+    current_step INTEGER DEFAULT 0,
+    enrolled_at TEXT NOT NULL,
+    next_send_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS subscription_boxes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    niche TEXT,
+    monthly_price_jod REAL,
+    subscriber_count INTEGER DEFAULT 0,
+    items_json TEXT,
+    status TEXT DEFAULT 'planned',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS subscription_subscribers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    box_id INTEGER REFERENCES subscription_boxes(id),
+    customer_name TEXT,
+    customer_phone TEXT,
+    customer_address TEXT,
+    status TEXT DEFAULT 'active',
+    started_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS delivery_routes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    driver_name TEXT,
+    date TEXT,
+    stops_json TEXT,
+    status TEXT DEFAULT 'planned',
+    optimized INTEGER DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS crm_leads (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    phone TEXT,
+    email TEXT,
+    instagram TEXT,
+    source TEXT,
+    business_id INTEGER,
+    score INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'new',
+    notes TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS price_monitored_products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    our_product_name TEXT,
+    competitor_url TEXT,
+    competitor_name TEXT,
+    last_price_jod REAL,
+    our_price_jod REAL,
+    last_checked TEXT,
+    UNIQUE(competitor_url)
+);
+
+CREATE TABLE IF NOT EXISTS linkedin_posts_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT,
+    topic TEXT,
+    posted_at TEXT,
+    likes INTEGER DEFAULT 0,
+    comments INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'draft',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS grant_applications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    grant_name TEXT,
+    organization TEXT,
+    amount_usd REAL,
+    deadline TEXT,
+    status TEXT DEFAULT 'found',
+    proposal_path TEXT,
+    submitted_at TEXT,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS restaurant_menus (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    restaurant_name TEXT,
+    phone TEXT,
+    menu_json TEXT,
+    qr_path TEXT,
+    monthly_fee_jod REAL DEFAULT 20,
+    status TEXT DEFAULT 'lead',
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS influencer_outreach_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    influencer_handle TEXT,
+    platform TEXT,
+    followers INTEGER,
+    status TEXT DEFAULT 'identified',
+    deal_type TEXT,
+    response TEXT,
     created_at TEXT NOT NULL
 );
 

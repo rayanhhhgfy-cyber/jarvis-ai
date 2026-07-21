@@ -395,6 +395,24 @@ async def lifespan(app: FastAPI):
             "plugins.payouts.plugin",
             "plugins.lemonsqueezy.plugin",
             "plugins.budget.plugin",
+            # Phase 16+17 — Jordan commerce loop + revenue multipliers + autonomous sales
+            "plugins.local_payment_jo.plugin",
+            "plugins.whatsapp_commerce.plugin",
+            "plugins.social_dms.plugin",
+            "plugins.phone_agent.plugin",
+            "plugins.brand_kit.plugin",
+            "plugins.email_marketing.plugin",
+            "plugins.unified_crm.plugin",
+            "plugins.price_monitor.plugin",
+            "plugins.content_repurposing.plugin",
+            "plugins.subscription_box.plugin",
+            "plugins.linkedin_factory.plugin",
+            "plugins.delivery_jo.plugin",
+            "plugins.grant_finder.plugin",
+            "plugins.qr_menu.plugin",
+            "plugins.legal_review.plugin",
+            "plugins.influencer_outreach.plugin",
+            "plugins.autonomous_sales.plugin",
         ])
         log.info("tool_registry_loaded", total_tools=len(get_registry().all_tools()), new_from_plugins=loaded)
     except Exception as tr_err:
@@ -566,6 +584,38 @@ async def lifespan(app: FastAPI):
         )
 
         log.info("phase13_background_jobs_registered")
+
+        # Phase 16+17 — autonomous sales loop (every 30 min) + email sequence processor (every 15 min).
+        async def _sales_loop_job():
+            try:
+                from pathlib import Path as _P
+                if _P("./storage/sales_paused.flag").exists():
+                    return
+                from plugins.autonomous_sales.plugin import run_loop
+                await run_loop(find_new=True, new_prospect_count=3)
+            except Exception as e:
+                log.warning("sales_loop_job_failed", error=str(e))
+
+        async def _email_sequence_job():
+            try:
+                from plugins.email_marketing.plugin import sequence_process
+                await sequence_process()
+            except Exception as e:
+                log.warning("email_sequence_job_failed", error=str(e))
+
+        scheduler.schedule_interval(
+            job_id="autonomous_sales_loop",
+            func=_sales_loop_job,
+            minutes=30,
+            description="Autonomous sales: follow up + find new prospects every 30 min",
+        )
+        scheduler.schedule_interval(
+            job_id="email_sequence_processor",
+            func=_email_sequence_job,
+            minutes=15,
+            description="Send pending email sequence steps every 15 min",
+        )
+        log.info("phase16_17_jobs_registered")
         log.info("phase11_agency_jobs_registered")
     except Exception as sched_err:
         log.warning("phase11_job_registration_failed", error=str(sched_err))
