@@ -1,0 +1,1 @@
+"""partnership_finder plugin."""

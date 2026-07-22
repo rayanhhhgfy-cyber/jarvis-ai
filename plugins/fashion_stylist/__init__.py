@@ -1,0 +1,1 @@
+"""fashion_stylist plugin."""

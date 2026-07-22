@@ -1,0 +1,1 @@
+"""ad_copy plugin."""

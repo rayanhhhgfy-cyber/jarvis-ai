@@ -1,0 +1,1 @@
+"""kids_stories plugin."""
