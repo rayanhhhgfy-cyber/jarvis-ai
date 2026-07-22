@@ -36,12 +36,23 @@ def setup_logging(
     if _initialized:
         return
 
+    import os
+    if os.environ.get("VERCEL") == "1":
+        if log_dir.startswith("./"):
+            log_dir = "/tmp/" + log_dir.lstrip("./")
+
     _log_dir = Path(log_dir)
-    _log_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        _log_dir.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        print(f"Warning: failed to create log_dir {_log_dir}: {e}")
 
     # Sub-directories for categorized logs
     for subdir in ["agents", "tasks", "security", "audit", "system", "errors"]:
-        (_log_dir / subdir).mkdir(exist_ok=True)
+        try:
+            (_log_dir / subdir).mkdir(exist_ok=True)
+        except Exception as e:
+            print(f"Warning: failed to create subdir {subdir}: {e}")
 
     level = getattr(logging, log_level.upper(), logging.INFO)
 
@@ -82,26 +93,32 @@ def setup_logging(
     root_logger.addHandler(console_handler)
 
     # Main file handler with rotation
-    main_handler = RotatingFileHandler(
-        _log_dir / "jarvis_omega.log",
-        maxBytes=max_bytes,
-        backupCount=backup_count,
-        encoding="utf-8",
-    )
-    main_handler.setLevel(level)
-    main_handler.setFormatter(console_fmt)
-    root_logger.addHandler(main_handler)
+    try:
+        main_handler = RotatingFileHandler(
+            _log_dir / "jarvis_omega.log",
+            maxBytes=max_bytes,
+            backupCount=backup_count,
+            encoding="utf-8",
+        )
+        main_handler.setLevel(level)
+        main_handler.setFormatter(console_fmt)
+        root_logger.addHandler(main_handler)
+    except Exception as e:
+        print(f"Warning: failed to initialize main file handler: {e}")
 
     # Error file handler
-    error_handler = RotatingFileHandler(
-        _log_dir / "errors" / "errors.log",
-        maxBytes=max_bytes,
-        backupCount=backup_count,
-        encoding="utf-8",
-    )
-    error_handler.setLevel(logging.ERROR)
-    error_handler.setFormatter(console_fmt)
-    root_logger.addHandler(error_handler)
+    try:
+        error_handler = RotatingFileHandler(
+            _log_dir / "errors" / "errors.log",
+            maxBytes=max_bytes,
+            backupCount=backup_count,
+            encoding="utf-8",
+        )
+        error_handler.setLevel(logging.ERROR)
+        error_handler.setFormatter(console_fmt)
+        root_logger.addHandler(error_handler)
+    except Exception as e:
+        print(f"Warning: failed to initialize error file handler: {e}")
 
     _initialized = True
 
@@ -131,22 +148,33 @@ class AuditLogger:
     """
 
     def __init__(self, log_dir: str = "./logs"):
+        import os
+        if os.environ.get("VERCEL") == "1":
+            if log_dir.startswith("./"):
+                log_dir = "/tmp/" + log_dir.lstrip("./")
+
         self._log_dir = Path(log_dir) / "audit"
-        self._log_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self._log_dir.mkdir(parents=True, exist_ok=True)
+        except Exception as e:
+            print(f"Warning: failed to create audit log dir {self._log_dir}: {e}")
 
         self._logger = logging.getLogger("jarvis_omega.audit")
         self._logger.setLevel(logging.INFO)
 
         if not self._logger.handlers:
-            handler = RotatingFileHandler(
-                self._log_dir / "audit.log",
-                maxBytes=50 * 1024 * 1024,  # 50MB
-                backupCount=10,
-                encoding="utf-8",
-            )
-            fmt = logging.Formatter("%(message)s")
-            handler.setFormatter(fmt)
-            self._logger.addHandler(handler)
+            try:
+                handler = RotatingFileHandler(
+                    self._log_dir / "audit.log",
+                    maxBytes=50 * 1024 * 1024,  # 50MB
+                    backupCount=10,
+                    encoding="utf-8",
+                )
+                fmt = logging.Formatter("%(message)s")
+                handler.setFormatter(fmt)
+                self._logger.addHandler(handler)
+            except Exception as e:
+                print(f"Warning: failed to initialize audit log file handler: {e}")
 
         self._struct_log = get_logger("audit")
 

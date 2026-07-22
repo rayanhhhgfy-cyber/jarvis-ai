@@ -30,7 +30,11 @@ from shared.logger import get_logger
 
 log = get_logger("business_db")
 
+import os
+
 _DB_PATH = Path("./storage/business.db")
+if os.environ.get("VERCEL") == "1":
+    _DB_PATH = Path("/tmp/storage/business.db")
 
 
 def db_path() -> Path:
