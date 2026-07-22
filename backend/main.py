@@ -16,7 +16,7 @@ from typing import Dict, Any, List
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Depends, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 
 from backend.config import settings
 from backend.event_bus import event_bus
@@ -755,6 +755,16 @@ app.include_router(router_settings)
 # ====================================================================
 # REST API ENDPOINTS
 # ====================================================================
+
+@app.get("/", response_class=HTMLResponse, tags=["Dashboard"])
+async def serve_dashboard():
+    """Serves the frontend dashboard single-page HTML application."""
+    from pathlib import Path
+    index_path = Path(__file__).parent.parent / "frontend" / "index.html"
+    if index_path.exists():
+        return HTMLResponse(content=index_path.read_text(encoding="utf-8"))
+    raise HTTPException(status_code=404, detail="index.html not found")
+
 
 @app.get("/health", response_model=HealthSnapshot, tags=["System"])
 async def get_health() -> HealthSnapshot:
