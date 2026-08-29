@@ -40,6 +40,11 @@ execution. The validator returns one of three verdicts:
 The full pattern table lives in `shared/constants.py:DANGEROUS_COMMAND_PATTERNS`
 and `BLOCKED_COMMAND_PATTERNS`.
 
+### Financial Ledger & Decision Governance
+
+- **Financial Ledger**: Canonical single source of truth for all credits and debits recorded in SQLite (`ledger_entries`).
+- **Decision Governance Layer**: Pluggable 4-reviewer gate (Red-Team, Compliance, Financial, Risk/Brand) inspecting major decisions and dangerous commands before execution.
+
 ### Layer 2 — Human Approval Gateway
 
 Anything classified as `NEEDS_APPROVAL` blocks on

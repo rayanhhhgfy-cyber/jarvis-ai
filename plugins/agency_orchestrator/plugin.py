@@ -827,6 +827,22 @@ async def _continuous_build_step(products_per_business: int, deploy_target: str)
         log.warning("continuous_add_business_failed", error=add.get("error"))
         return
 
+    # Governance pre-check before building new business
+    try:
+        from backend.governance import governance_layer, GovernanceReviewRequest
+        gov_req = GovernanceReviewRequest(
+            decision_type="new_business",
+            action=f"Launch new business: {biz_name}",
+            target_market=niche,
+            details={"rule_override": "consensus"},
+        )
+        gov_eval = await governance_layer.evaluate_decision(gov_req)
+        if not gov_eval.get("approved"):
+            log.warning("continuous_build_vetoed_by_governance", niche=niche, veto=gov_eval.get("veto"))
+            return
+    except Exception as gov_err:
+        log.warning("governance_check_failed_in_continuous_build", error=str(gov_err))
+
     # Build products.
     build = await agency_build_multi_product(
         niche=niche, product_count=products_per_business,

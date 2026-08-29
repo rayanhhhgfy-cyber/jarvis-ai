@@ -205,6 +205,20 @@ CREATE TABLE IF NOT EXISTS audit_log (
     timestamp TEXT NOT NULL
 );
 
+-- Financial Ledger (double-entry single source of truth for money)
+CREATE TABLE IF NOT EXISTS ledger_entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entry_type TEXT NOT NULL,             -- 'credit' (income) | 'debit' (expense)
+    amount REAL NOT NULL,
+    currency TEXT DEFAULT 'USD',
+    business_id INTEGER,                 -- optional foreign key/reference to businesses(id)
+    category TEXT NOT NULL,              -- 'stripe_payment' | 'ad_spend' | 'subscription' | 'api_fee' | 'other'
+    source_event TEXT,                   -- 'stripe_charge' | 'ad_campaign' | 'audit_log_reconcile' | etc.
+    reference_id TEXT,                   -- transaction id, order id, campaign id, etc.
+    details JSON,
+    timestamp TEXT NOT NULL
+);
+
 -- Phase 12: portfolio (up to 50 businesses under one Sir)
 CREATE TABLE IF NOT EXISTS businesses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

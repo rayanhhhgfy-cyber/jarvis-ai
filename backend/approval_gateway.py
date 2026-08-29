@@ -51,6 +51,35 @@ class ApprovalGateway:
         self._pending[request.approval_id] = request
         self._waiters[request.approval_id] = asyncio.Event()
 
+        # Route high-risk decisions through Governance Layer pre-check
+        if request.risk_level in (RiskLevel.HIGH, RiskLevel.CRITICAL):
+            try:
+                from backend.governance import governance_layer, GovernanceReviewRequest
+                gov_req = GovernanceReviewRequest(
+                    decision_type="dangerous_command",
+                    action=request.action,
+                    details={"reason": request.reason, "resources": request.affected_resources},
+                )
+                eval_res = await governance_layer.evaluate_decision(gov_req)
+                if not eval_res.get("approved"):
+                    log.warning(
+                        "approval_request_vetoed_by_governance",
+                        approval_id=request.approval_id,
+                        veto=eval_res.get("veto"),
+                    )
+                    request.approved = False
+                    request.approved_at = datetime.utcnow()
+                    request.approved_by = "GovernanceLayer"
+                    # Auto-reject in gateway if vetoed by governance
+                    waiter = self._waiters.get(request.approval_id)
+                    if waiter:
+                        waiter.set()
+                    self._history.append(request)
+                    self._pending.pop(request.approval_id, None)
+                    return request.approval_id
+            except Exception as gov_err:
+                log.warning("governance_pre_check_failed", error=str(gov_err))
+
         log.warning(
             "approval_requested",
             approval_id=request.approval_id,

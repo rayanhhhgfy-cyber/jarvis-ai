@@ -163,6 +163,24 @@ Three independent safety layers stack:
 2. Validator in `backend/services/command_safety.py`.
 3. Human approval in `backend/approval_gateway.py`.
 
+## Financial Ledger System (Phase 1)
+
+The system maintains a double-entry style canonical financial ledger in `ledger_entries` within `storage/business.db`.
+- **Data Model**: Records `entry_type` (`credit`/`debit`), `amount`, `currency`, `business_id`, `category`, `source_event`, `reference_id`, `details`, and `timestamp`.
+- **Reconciliation**: Automatically reconciles historical revenue from `orders` and `invoices` alongside `audit_log` entries on first run.
+
+## Decision Governance Layer (Phase 2)
+
+A unified decision governance gateway in `backend/governance.py` evaluates major autonomous decisions before execution using four reviewer roles:
+1. **Red-Team Reviewer**: Validates logical assumptions and overconfidence claims.
+2. **Compliance Reviewer**: Enforces regulatory limits (WhatsApp rate limits, CAN-SPAM opt-outs, FTC disclosures, CBJ advisories).
+3. **Financial Reviewer**: Validates expenditure against portfolio balance and daily/per-action budget caps.
+4. **Risk/Brand Reviewer**: Blocks reputational threats and toxic brand keywords.
+
+Evaluation Rules:
+- **Consensus Rule**: Requires unanimous (4/4) approval for new business launches, ad spend, and dangerous shell actions.
+- **Majority Rule**: Requires 3/4 approval for lower-stakes strategy changes.
+
 ## Memory Engine
 
 ChromaDB-backed vector store. Every `MemoryCategory` is a separate

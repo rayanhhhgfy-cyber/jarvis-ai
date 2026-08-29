@@ -227,6 +227,23 @@ async def payments_mark_paid(invoice_id: int, stripe_link: str = "") -> Dict[str
             (datetime.utcnow().isoformat(), invoice_id),
         )
     business_db.audit("mark_paid", "payments", target=str(invoice_id))
+    inv = business_db.query_one("SELECT * FROM invoices WHERE id = ?", (invoice_id,))
+    if inv:
+        try:
+            from backend.ledger import ledger
+            ledger.record_entry(
+                entry_type="credit",
+                amount=float(inv["amount"]),
+                currency=inv["currency"] or "USD",
+                business_id=inv["client_id"],
+                category="invoice_payment",
+                source_event="invoice_marked_paid",
+                reference_id=str(invoice_id),
+                details={"stripe_link": stripe_link},
+            )
+        except Exception as l_err:
+            log.warning("failed_to_record_invoice_payment_in_ledger", error=str(l_err))
+
     return {"ok": True, "invoice_id": invoice_id}
 
 

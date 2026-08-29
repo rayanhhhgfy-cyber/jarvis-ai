@@ -377,7 +377,22 @@ async def marketing_post(
         result = await _linkedin_share(url=url, title=title, summary=content)
     elif platform == "discord":
         result = await _discord_post(webhook_name, content)
-    elif platform == "telegram":
+    # Decision Governance Pre-Check
+    try:
+        from backend.governance import governance_layer, GovernanceReviewRequest
+        gov_req = GovernanceReviewRequest(
+            decision_type="marketing",
+            action=f"Marketing post on {platform}",
+            channel=platform,
+            details={"content": content[:200]},
+        )
+        gov_eval = await governance_layer.evaluate_decision(gov_req)
+        if not gov_eval.get("approved"):
+            return {"ok": False, "error": "Vetoed by Decision Governance Layer", "veto": gov_eval.get("veto")}
+    except Exception as gov_err:
+        log.warning("governance_check_failed_for_marketing_post", error=str(gov_err))
+
+    if platform == "telegram":
         if not chat_id:
             return {"ok": False, "error": "telegram posts require 'chat_id'"}
         result = await _telegram_post(chat_id, content)
