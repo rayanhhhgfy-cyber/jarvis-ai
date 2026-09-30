@@ -1,1 +1,123 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBPcHRpb25hbAoKZnJvbSBmYXN0YXBpIGltcG9ydCBBUElSb3V0ZXIsIEhUVFBFeGNlcHRpb24KZnJvbSBmYXN0YXBpLnJlc3BvbnNlcyBpbXBvcnQgRmlsZVJlc3BvbnNlCgpmcm9tIGJhY2tlbmQuY29uZmlnIGltcG9ydCBzZXR0aW5ncwpmcm9tIGJhY2tlbmQuc2VydmljZXMubWVkaWFfZ2VuZXJhdGlvbl9zZXJ2aWNlIGltcG9ydCAoCiAgICBnZW5lcmF0ZV9pbWFnZSwKICAgIGdlbmVyYXRlX3ZpZGVvLAogICAgbGlzdF9nZW5lcmF0ZWQsCikKZnJvbSBweWRhbnRpYyBpbXBvcnQgQmFzZU1vZGVsCmZyb20gc2hhcmVkLmxvZ2dlciBpbXBvcnQgZ2V0X2xvZ2dlcgoKbG9nID0gZ2V0X2xvZ2dlcigicm91dGVyX21lZGlhX2dlbmVyYXRpb24iKQpyb3V0ZXIgPSBBUElSb3V0ZXIocHJlZml4PSIvYXBpL21lZGlhIiwgdGFncz1bIk1lZGlhIEdlbmVyYXRpb24iXSkKCkdFTkVSQVRFRF9ESVIgPSBQYXRoKHNldHRpbmdzLnN0b3JhZ2VfZGlyKSAvICJtZWRpYSIgLyAiZ2VuZXJhdGVkIgoKCmNsYXNzIEdlbmVyYXRlSW1hZ2VSZXF1ZXN0KEJhc2VNb2RlbCk6CiAgICBwcm9tcHQ6IHN0cgogICAgbW9kZWw6IE9wdGlvbmFsW3N0cl0gPSBOb25lCiAgICBzaXplOiBPcHRpb25hbFtzdHJdID0gTm9uZQoKCmNsYXNzIEdlbmVyYXRlVmlkZW9SZXF1ZXN0KEJhc2VNb2RlbCk6CiAgICBwcm9tcHQ6IHN0cgogICAgbW9kZWw6IE9wdGlvbmFsW3N0cl0gPSBOb25lCiAgICBkdXJhdGlvbjogT3B0aW9uYWxbaW50XSA9IE5vbmUKCgpAcm91dGVyLnBvc3QoIi9nZW5lcmF0ZS9pbWFnZSIpCmFzeW5jIGRlZiBhcGlfZ2VuZXJhdGVfaW1hZ2UocmVxOiBHZW5lcmF0ZUltYWdlUmVxdWVzdCk6CiAgICBpZiBub3QgcmVxLnByb21wdCBvciBub3QgcmVxLnByb21wdC5zdHJpcCgpOgogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDAwLCBkZXRhaWw9IlByb21wdCBpcyByZXF1aXJlZCIpCiAgICByZXN1bHQgPSBhd2FpdCBnZW5lcmF0ZV9pbWFnZSgKICAgICAgICBwcm9tcHQ9cmVxLnByb21wdC5zdHJpcCgpLAogICAgICAgIG1vZGVsPXJlcS5tb2RlbCwKICAgICAgICBzaXplPXJlcS5zaXplLAogICAgKQogICAgaWYgbm90IHJlc3VsdC5nZXQoInN1Y2Nlc3MiKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTUwMCwgZGV0YWlsPXJlc3VsdC5nZXQoImVycm9yIiwgIkltYWdlIGdlbmVyYXRpb24gZmFpbGVkIikpCiAgICByZXR1cm4gcmVzdWx0CgoKQHJvdXRlci5wb3N0KCIvZ2VuZXJhdGUvdmlkZW8iKQphc3luYyBkZWYgYXBpX2dlbmVyYXRlX3ZpZGVvKHJlcTogR2VuZXJhdGVWaWRlb1JlcXVlc3QpOgogICAgaWYgbm90IHJlcS5wcm9tcHQgb3Igbm90IHJlcS5wcm9tcHQuc3RyaXAoKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwMCwgZGV0YWlsPSJQcm9tcHQgaXMgcmVxdWlyZWQiKQogICAgcmVzdWx0ID0gYXdhaXQgZ2VuZXJhdGVfdmlkZW8oCiAgICAgICAgcHJvbXB0PXJlcS5wcm9tcHQuc3RyaXAoKSwKICAgICAgICBtb2RlbD1yZXEubW9kZWwsCiAgICAgICAgZHVyYXRpb249cmVxLmR1cmF0aW9uLAogICAgKQogICAgaWYgbm90IHJlc3VsdC5nZXQoInN1Y2Nlc3MiKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTUwMCwgZGV0YWlsPXJlc3VsdC5nZXQoImVycm9yIiwgIlZpZGVvIGdlbmVyYXRpb24gZmFpbGVkIikpCiAgICByZXR1cm4gcmVzdWx0CgoKQHJvdXRlci5nZXQoIi9nZW5lcmF0ZWQiKQphc3luYyBkZWYgYXBpX2xpc3RfZ2VuZXJhdGVkKCk6CiAgICBmaWxlcyA9IGF3YWl0IGxpc3RfZ2VuZXJhdGVkKCkKICAgIHJldHVybiB7ImZpbGVzIjogZmlsZXMsICJjb3VudCI6IGxlbihmaWxlcyl9CgoKZGVmIF9zYWZlX2dlbmVyYXRlZF9wYXRoKGZpbGVuYW1lOiBzdHIpIC0+IFBhdGg6CiAgICAiIiJSZXNvbHZlIGEgZ2VuZXJhdGVkLW1lZGlhIGZpbGVuYW1lLCBibG9ja2luZyBwYXRoIHRyYXZlcnNhbC4KCiAgICBGYXN0QVBJIHBhdGggcGFyYW1zIGRvbid0IG1hdGNoICcvJywgYnV0IHBlcmNlbnQtZW5jb2RlZCBkb3Qgc2VnbWVudHMKICAgIChlLmcuICUyZSUyZSkgYXJlIGRlY29kZWQgYmVmb3JlIHJvdXRpbmcsIHNvIGEgcmF3IGpvaW4gd291bGQgYWxsb3cKICAgICcuLi8nIGVzY2FwZXMuIGJhc2VuYW1lICsgcmVzb2x2ZSBjb250YWlubWVudCBjaGVjayBjbG9zZXMgaXQuCiAgICAiIiIKICAgIHNhZmVfbmFtZSA9IFBhdGgoZmlsZW5hbWUpLm5hbWUKICAgIGNhbmRpZGF0ZSA9IChHRU5FUkFURURfRElSIC8gc2FmZV9uYW1lKS5yZXNvbHZlKCkKICAgIGlmIEdFTkVSQVRFRF9ESVIucmVzb2x2ZSgpIG5vdCBpbiBjYW5kaWRhdGUucGFyZW50cyBhbmQgY2FuZGlkYXRlICE9IEdFTkVSQVRFRF9ESVIucmVzb2x2ZSgpOgogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDAwLCBkZXRhaWw9IkludmFsaWQgZmlsZW5hbWUiKQogICAgcmV0dXJuIGNhbmRpZGF0ZQoKCkByb3V0ZXIuZ2V0KCIvZ2VuZXJhdGVkL3tmaWxlbmFtZX0iKQphc3luYyBkZWYgYXBpX3NlcnZlX2dlbmVyYXRlZChmaWxlbmFtZTogc3RyKToKICAgIHNhZmVfcGF0aCA9IF9zYWZlX2dlbmVyYXRlZF9wYXRoKGZpbGVuYW1lKQogICAgaWYgbm90IHNhZmVfcGF0aC5leGlzdHMoKSBvciBub3Qgc2FmZV9wYXRoLmlzX2ZpbGUoKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwNCwgZGV0YWlsPSJGaWxlIG5vdCBmb3VuZCIpCiAgICBpZiBzYWZlX3BhdGguc3VmZml4Lmxvd2VyKCkgaW4geyIucG5nIiwgIi5qcGciLCAiLmpwZWciLCAiLmdpZiIsICIud2VicCIsICIubXA0IiwgIi53ZWJtIiwgIi5tb3YifToKICAgICAgICBtZWRpYV90eXBlID0gewogICAgICAgICAgICAiLnBuZyI6ICJpbWFnZS9wbmciLAogICAgICAgICAgICAiLmpwZyI6ICJpbWFnZS9qcGVnIiwKICAgICAgICAgICAgIi5qcGVnIjogImltYWdlL2pwZWciLAogICAgICAgICAgICAiLmdpZiI6ICJpbWFnZS9naWYiLAogICAgICAgICAgICAiLndlYnAiOiAiaW1hZ2Uvd2VicCIsCiAgICAgICAgICAgICIubXA0IjogInZpZGVvL21wNCIsCiAgICAgICAgICAgICIud2VibSI6ICJ2aWRlby93ZWJtIiwKICAgICAgICAgICAgIi5tb3YiOiAidmlkZW8vcXVpY2t0aW1lIiwKICAgICAgICB9LmdldChzYWZlX3BhdGguc3VmZml4Lmxvd2VyKCksICJhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0iKQogICAgICAgIHJldHVybiBGaWxlUmVzcG9uc2Uoc3RyKHNhZmVfcGF0aCksIG1lZGlhX3R5cGU9bWVkaWFfdHlwZSkKICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDAwLCBkZXRhaWw9IlVuc3VwcG9ydGVkIGZpbGUgdHlwZSIpCgoKQHJvdXRlci5nZXQoIi9tb2RlbHMiKQphc3luYyBkZWYgYXBpX2xpc3RfbW9kZWxzKCk6CiAgICBmcm9tIGJhY2tlbmQuc2VydmljZXMubWVkaWFfZ2VuZXJhdGlvbl9zZXJ2aWNlIGltcG9ydCBJTUFHRV9NT0RFTFMsIFZJREVPX01PREVMUwogICAgcmV0dXJuIHsKICAgICAgICAiaW1hZ2VfbW9kZWxzIjogSU1BR0VfTU9ERUxTLAogICAgICAgICJ2aWRlb19tb2RlbHMiOiBWSURFT19NT0RFTFMsCiAgICB9CgoKQHJvdXRlci5kZWxldGUoIi9nZW5lcmF0ZWQve2ZpbGVuYW1lfSIpCmFzeW5jIGRlZiBhcGlfZGVsZXRlX2dlbmVyYXRlZChmaWxlbmFtZTogc3RyKToKICAgIHNhZmVfcGF0aCA9IF9zYWZlX2dlbmVyYXRlZF9wYXRoKGZpbGVuYW1lKQogICAgaWYgbm90IHNhZmVfcGF0aC5leGlzdHMoKSBvciBub3Qgc2FmZV9wYXRoLmlzX2ZpbGUoKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwNCwgZGV0YWlsPSJGaWxlIG5vdCBmb3VuZCIpCiAgICB0cnk6CiAgICAgICAgc2FmZV9wYXRoLnVubGluaygpCiAgICAgICAgbG9nLmluZm8oIm1lZGlhX2RlbGV0ZWQiLCBmaWxlbmFtZT1maWxlbmFtZSkKICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogVHJ1ZSwgImZpbGVuYW1lIjogZmlsZW5hbWV9CiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT01MDAsIGRldGFpbD1mIkZhaWxlZCB0byBkZWxldGU6IHtzdHIoZSl9IikK
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+
+from backend.config import settings
+from backend.services.media_generation_service import (
+    generate_image,
+    generate_video,
+    list_generated,
+)
+from pydantic import BaseModel
+from shared.logger import get_logger
+
+log = get_logger("router_media_generation")
+router = APIRouter(prefix="/api/media", tags=["Media Generation"])
+
+GENERATED_DIR = Path(settings.storage_dir) / "media" / "generated"
+
+
+class GenerateImageRequest(BaseModel):
+    prompt: str
+    model: Optional[str] = None
+    size: Optional[str] = None
+
+
+class GenerateVideoRequest(BaseModel):
+    prompt: str
+    model: Optional[str] = None
+    duration: Optional[int] = None
+
+
+@router.post("/generate/image")
+async def api_generate_image(req: GenerateImageRequest):
+    if not req.prompt or not req.prompt.strip():
+        raise HTTPException(status_code=400, detail="Prompt is required")
+    result = await generate_image(
+        prompt=req.prompt.strip(),
+        model=req.model,
+        size=req.size,
+    )
+    if not result.get("success"):
+        raise HTTPException(status_code=500, detail=result.get("error", "Image generation failed"))
+    return result
+
+
+@router.post("/generate/video")
+async def api_generate_video(req: GenerateVideoRequest):
+    if not req.prompt or not req.prompt.strip():
+        raise HTTPException(status_code=400, detail="Prompt is required")
+    result = await generate_video(
+        prompt=req.prompt.strip(),
+        model=req.model,
+        duration=req.duration,
+    )
+    if not result.get("success"):
+        raise HTTPException(status_code=500, detail=result.get("error", "Video generation failed"))
+    return result
+
+
+@router.get("/generated")
+async def api_list_generated():
+    files = await list_generated()
+    return {"files": files, "count": len(files)}
+
+
+def _safe_generated_path(filename: str) -> Path:
+    """Resolve a generated-media filename, blocking path traversal.
+
+    FastAPI path params don't match '/', but percent-encoded dot segments
+    (e.g. %2e%2e) are decoded before routing, so a raw join would allow
+    '../' escapes. basename + resolve containment check closes it.
+    """
+    safe_name = Path(filename).name
+    candidate = (GENERATED_DIR / safe_name).resolve()
+    if GENERATED_DIR.resolve() not in candidate.parents and candidate != GENERATED_DIR.resolve():
+        raise HTTPException(status_code=400, detail="Invalid filename")
+    return candidate
+
+
+@router.get("/generated/{filename}")
+async def api_serve_generated(filename: str):
+    safe_path = _safe_generated_path(filename)
+    if not safe_path.exists() or not safe_path.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+    if safe_path.suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".webp", ".mp4", ".webm", ".mov"}:
+        media_type = {
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".gif": "image/gif",
+            ".webp": "image/webp",
+            ".mp4": "video/mp4",
+            ".webm": "video/webm",
+            ".mov": "video/quicktime",
+        }.get(safe_path.suffix.lower(), "application/octet-stream")
+        return FileResponse(str(safe_path), media_type=media_type)
+    raise HTTPException(status_code=400, detail="Unsupported file type")
+
+
+@router.get("/models")
+async def api_list_models():
+    from backend.services.media_generation_service import IMAGE_MODELS, VIDEO_MODELS
+    return {
+        "image_models": IMAGE_MODELS,
+        "video_models": VIDEO_MODELS,
+    }
+
+
+@router.delete("/generated/{filename}")
+async def api_delete_generated(filename: str):
+    safe_path = _safe_generated_path(filename)
+    if not safe_path.exists() or not safe_path.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+    try:
+        safe_path.unlink()
+        log.info("media_deleted", filename=filename)
+        return {"success": True, "filename": filename}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete: {str(e)}")

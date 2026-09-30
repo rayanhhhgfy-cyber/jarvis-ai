@@ -1,1 +1,190 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgU2FhUyBCb2lsZXJwbGF0ZSBHZW5lcmF0b3IgUm91dGVyCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiCkJvaWxlcnBsYXRlIEdlbmVyYXRvciBSRVNUIEFQSSBhbmQgV2ViU29ja2V0IGVuZHBvaW50cy4KUHJvdmlkZXMgZW5kcG9pbnRzIGZvciBnZW5lcmF0aW9uLCBsaXZlIGRldi1zZXJ2ZXJzLCBHaXRIdWIgc3luYywgVmVyY2VsIGRlcGxveXMsCmFuZCByZWFsLXRpbWUgZGV2IGxvZyBzdHJlYW1pbmcuCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KZnJvbSB0eXBpbmcgaW1wb3J0IEFueSwgRGljdCwgTGlzdCwgT3B0aW9uYWwKZnJvbSBweWRhbnRpYyBpbXBvcnQgQmFzZU1vZGVsCgpmcm9tIGZhc3RhcGkgaW1wb3J0IEFQSVJvdXRlciwgSFRUUEV4Y2VwdGlvbiwgV2ViU29ja2V0LCBXZWJTb2NrZXREaXNjb25uZWN0LCBzdGF0dXMKCmltcG9ydCBvcwppbXBvcnQganNvbgppbXBvcnQgemlwZmlsZQppbXBvcnQgdGVtcGZpbGUKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gZmFzdGFwaS5yZXNwb25zZXMgaW1wb3J0IEZpbGVSZXNwb25zZQpmcm9tIGJhY2tlbmQuY29uZmlnIGltcG9ydCBzZXR0aW5ncwoKZnJvbSBiYWNrZW5kLnNlcnZpY2VzLmJvaWxlcnBsYXRlX3NlcnZpY2UgaW1wb3J0IGJvaWxlcnBsYXRlX3NlcnZpY2UKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJyb3V0ZXJfYnVpbGQiKQpyb3V0ZXIgPSBBUElSb3V0ZXIocHJlZml4PSIvYXBpL2J1aWxkIiwgdGFncz1bIlNhYVMgQm9pbGVycGxhdGUgU3R1ZGlvIl0pCgoKY2xhc3MgR2VuZXJhdGVSZXF1ZXN0KEJhc2VNb2RlbCk6CiAgICBwcm9tcHQ6IHN0cgoKCmNsYXNzIERlcGxveVJlcXVlc3QoQmFzZU1vZGVsKToKICAgIHJlcG9fbmFtZTogc3RyCgoKY2xhc3MgU2F2ZUZpbGVSZXF1ZXN0KEJhc2VNb2RlbCk6CiAgICBmaWxlcGF0aDogc3RyCiAgICBjb250ZW50OiBzdHIKCgpjbGFzcyBQYXRjaFJlcXVlc3QoQmFzZU1vZGVsKToKICAgIGVycm9yX2xvZzogc3RyCgoKQHJvdXRlci5wb3N0KCIvZ2VuZXJhdGUiLCByZXNwb25zZV9tb2RlbD1EaWN0W3N0ciwgQW55XSkKYXN5bmMgZGVmIGdlbmVyYXRlX3Byb2plY3QocmVxOiBHZW5lcmF0ZVJlcXVlc3QpOgogICAgIiIiR2VuZXJhdGUgYSBuZXcgcHJvamVjdCBib2lsZXJwbGF0ZSBmcm9tIHByb21wdC4iIiIKICAgIHRyeToKICAgICAgICBtZXRhID0gYXdhaXQgYm9pbGVycGxhdGVfc2VydmljZS5nZW5lcmF0ZV9wcm9qZWN0KHJlcS5wcm9tcHQpCiAgICAgICAgcmV0dXJuIG1ldGEKICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICBsb2cuZXJyb3IoImJvaWxlcnBsYXRlX2dlbmVyYXRpb25fZW5kcG9pbnRfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oCiAgICAgICAgICAgIHN0YXR1c19jb2RlPXN0YXR1cy5IVFRQXzUwMF9JTlRFUk5BTF9TRVJWRVJfRVJST1IsCiAgICAgICAgICAgIGRldGFpbD1mIlByb2plY3QgZ2VuZXJhdGlvbiBmYWlsZWQ6IHtzdHIoZSl9IgogICAgICAgICkKCgpAcm91dGVyLmdldCgiL3twcm9qZWN0X2lkfS9maWxlcyIsIHJlc3BvbnNlX21vZGVsPURpY3Rbc3RyLCBBbnldKQphc3luYyBkZWYgZ2V0X3Byb2plY3RfZmlsZXMocHJvamVjdF9pZDogc3RyKToKICAgICIiIlJldHJpZXZlIGZpbGUgc3RydWN0dXJlIGFuZCBjb250ZW50IG9mIGEgZ2VuZXJhdGVkIHByb2plY3QuIiIiCiAgICB0cnk6CiAgICAgICAgZmlsZXNfZGF0YSA9IGF3YWl0IGJvaWxlcnBsYXRlX3NlcnZpY2UuZ2V0X3Byb2plY3RfZmlsZXMocHJvamVjdF9pZCkKICAgICAgICByZXR1cm4gZmlsZXNfZGF0YQogICAgZXhjZXB0IEZpbGVOb3RGb3VuZEVycm9yOgogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDA0LCBkZXRhaWw9IlByb2plY3Qgbm90IGZvdW5kIikKICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICBsb2cuZXJyb3IoImdldF9wcm9qZWN0X2ZpbGVzX2ZhaWxlZCIsIHByb2plY3RfaWQ9cHJvamVjdF9pZCwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NTAwLCBkZXRhaWw9c3RyKGUpKQoKCkByb3V0ZXIucHV0KCIve3Byb2plY3RfaWR9L2ZpbGUiLCByZXNwb25zZV9tb2RlbD1EaWN0W3N0ciwgQW55XSkKYXN5bmMgZGVmIHNhdmVfcHJvamVjdF9maWxlKHByb2plY3RfaWQ6IHN0ciwgcmVxOiBTYXZlRmlsZVJlcXVlc3QpOgogICAgIiIiU2F2ZSBjb2RlIGNoYW5nZXMgZnJvbSBNb25hY28gZWRpdG9yIHRvIGRpc2suIiIiCiAgICBzdWNjZXNzID0gYXdhaXQgYm9pbGVycGxhdGVfc2VydmljZS5zYXZlX3Byb2plY3RfZmlsZShwcm9qZWN0X2lkLCByZXEuZmlsZXBhdGgsIHJlcS5jb250ZW50KQogICAgaWYgbm90IHN1Y2Nlc3M6CiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT00MDAsIGRldGFpbD0iRmFpbGVkIHRvIHNhdmUgZmlsZS4gQ2hlY2sgZGlyZWN0b3J5IHBhdGguIikKICAgIHJldHVybiB7InN0YXR1cyI6ICJzdWNjZXNzIiwgImZpbGUiOiByZXEuZmlsZXBhdGh9CgoKQHJvdXRlci5wb3N0KCIve3Byb2plY3RfaWR9L3J1biIsIHJlc3BvbnNlX21vZGVsPURpY3Rbc3RyLCBBbnldKQphc3luYyBkZWYgcnVuX2xvY2FsX2Rldihwcm9qZWN0X2lkOiBzdHIpOgogICAgIiIiTGF1bmNoIHRoZSBsb2NhbCBkZXZlbG9wbWVudCBzZXJ2ZXIgZm9yIHRoZSBnZW5lcmF0ZWQgcHJvamVjdC4iIiIKICAgIHJlc3VsdCA9IGF3YWl0IGJvaWxlcnBsYXRlX3NlcnZpY2UucnVuX2xvY2FsX2Rldihwcm9qZWN0X2lkKQogICAgaWYgbm90IHJlc3VsdC5nZXQoInN1Y2Nlc3MiKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTUwMCwgZGV0YWlsPXJlc3VsdC5nZXQoIm1lc3NhZ2UiLCAiRGV2IHNlcnZlciBmYWlsZWQgdG8gc3RhcnQiKSkKICAgIHJldHVybiByZXN1bHQKCgpAcm91dGVyLnBvc3QoIi97cHJvamVjdF9pZH0vZGVwbG95IiwgcmVzcG9uc2VfbW9kZWw9RGljdFtzdHIsIEFueV0pCmFzeW5jIGRlZiBkZXBsb3lfcHJvamVjdChwcm9qZWN0X2lkOiBzdHIsIHJlcTogRGVwbG95UmVxdWVzdCk6CiAgICAiIiJQdXNoIGNvZGUgdG8gR2l0SHViIGFuZCB0cmlnZ2VyIFZlcmNlbCBkZXBsb3ltZW50LiIiIgogICAgdHJ5OgogICAgICAgICMgMS4gUHVzaCB0byBHaXRIdWIKICAgICAgICBnaXRodWJfdXJsID0gYXdhaXQgYm9pbGVycGxhdGVfc2VydmljZS5wdXNoX3RvX2dpdGh1Yihwcm9qZWN0X2lkLCByZXEucmVwb19uYW1lKQogICAgICAgIAogICAgICAgICMgMi4gRGVwbG95IHRvIFZlcmNlbAogICAgICAgIHZlcmNlbF91cmwgPSBhd2FpdCBib2lsZXJwbGF0ZV9zZXJ2aWNlLmRlcGxveV90b192ZXJjZWwocHJvamVjdF9pZCwgZ2l0aHViX3VybCkKICAgICAgICAKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAic3RhdHVzIjogImRlcGxveWVkIiwKICAgICAgICAgICAgImdpdGh1Yl91cmwiOiBnaXRodWJfdXJsLAogICAgICAgICAgICAidmVyY2VsX3VybCI6IHZlcmNlbF91cmwKICAgICAgICB9CiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgbG9nLmVycm9yKCJib2lsZXJwbGF0ZV9kZXBsb3lfZmFpbGVkIiwgcHJvamVjdF9pZD1wcm9qZWN0X2lkLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT01MDAsIGRldGFpbD1zdHIoZSkpCgoKQHJvdXRlci5wb3N0KCIve3Byb2plY3RfaWR9L3BhdGNoIiwgcmVzcG9uc2VfbW9kZWw9RGljdFtzdHIsIEFueV0pCmFzeW5jIGRlZiBwYXRjaF9wcm9qZWN0KHByb2plY3RfaWQ6IHN0ciwgcmVxOiBQYXRjaFJlcXVlc3QpOgogICAgIiIiQXR0ZW1wdCBMTE0gYXV0by1wYXRjaGluZyBvZiBidWlsZCBlcnJvcnMuIiIiCiAgICByYWlzZSBIVFRQRXhjZXB0aW9uKAogICAgICAgIHN0YXR1c19jb2RlPTUwMSwKICAgICAgICBkZXRhaWw9KAogICAgICAgICAgICAiQXV0b21hdGljIGJ1aWxkLWVycm9yIHJlcGFpciBpcyBub3QgYXZhaWxhYmxlIGluIHRoaXMgYnVpbGQ6ICIKICAgICAgICAgICAgInRoZSBzZWxmLWhlYWxpbmcgc2VydmljZSBpdCBkZXBlbmRzIG9uIHdhcyBub3QgY2FycmllZCBvdmVyLiAiCiAgICAgICAgICAgICJGaXggdGhlIGVycm9ycyBmcm9tIHRoZSBsb2cgbWFudWFsbHkgYW5kIHJlZGVwbG95LiIKICAgICAgICApLAogICAgKQoKCkByb3V0ZXIud2Vic29ja2V0KCIvd3MvbG9ncy97cHJvamVjdF9pZH0iKQphc3luYyBkZWYgd2Vic29ja2V0X2xvZ3Mod2Vic29ja2V0OiBXZWJTb2NrZXQsIHByb2plY3RfaWQ6IHN0cik6CiAgICAiIiJXZWJTb2NrZXQgZW5kcG9pbnQgZm9yIHJlYWwtdGltZSBsb2NhbCBzZXJ2ZXIgbG9ncyBzdHJlYW1pbmcuIiIiCiAgICBhd2FpdCB3ZWJzb2NrZXQuYWNjZXB0KCkKICAgIGxhc3RfaW5kZXggPSAwCiAgICB0cnk6CiAgICAgICAgd2hpbGUgVHJ1ZToKICAgICAgICAgICAgbG9ncyA9IGJvaWxlcnBsYXRlX3NlcnZpY2UuZ2V0X3NlcnZlcl9sb2dzKHByb2plY3RfaWQpCiAgICAgICAgICAgIGlmIGxlbihsb2dzKSA+IGxhc3RfaW5kZXg6CiAgICAgICAgICAgICAgICBmb3IgbGluZSBpbiBsb2dzW2xhc3RfaW5kZXg6XToKICAgICAgICAgICAgICAgICAgICBhd2FpdCB3ZWJzb2NrZXQuc2VuZF90ZXh0KGxpbmUpCiAgICAgICAgICAgICAgICBsYXN0X2luZGV4ID0gbGVuKGxvZ3MpCiAgICAgICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMC41KQogICAgZXhjZXB0IFdlYlNvY2tldERpc2Nvbm5lY3Q6CiAgICAgICAgcGFzcwogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIGxvZy5lcnJvcigid2Vic29ja2V0X2xvZ3NfZXJyb3IiLCBwcm9qZWN0X2lkPXByb2plY3RfaWQsIGVycm9yPXN0cihlKSkKCgpAcm91dGVyLmdldCgiL3twcm9qZWN0X2lkfS9kb3dubG9hZCIpCmFzeW5jIGRlZiBkb3dubG9hZF9wcm9qZWN0KHByb2plY3RfaWQ6IHN0cik6CiAgICAiIiJaaXBzIHRoZSBnZW5lcmF0ZWQgcHJvamVjdCBmb2xkZXIgYW5kIHJldHVybnMgaXQgYXMgYSBkb3dubG9hZCBmaWxlLiIiIgogICAgYnVpbGRfZGlyID0gUGF0aChzZXR0aW5ncy53b3Jrc3BhY2VfZGlyKSAvICJidWlsZHMiIC8gcHJvamVjdF9pZAogICAgaWYgbm90IGJ1aWxkX2Rpci5leGlzdHMoKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwNCwgZGV0YWlsPSJQcm9qZWN0IG5vdCBmb3VuZCIpCgogICAgIyBEZXRlcm1pbmUgcHJvamVjdCBuYW1lCiAgICBtZXRhX2ZpbGUgPSBidWlsZF9kaXIgLyAiLmphcnZpc19tZXRhLmpzb24iCiAgICBwcm9qZWN0X25hbWUgPSBwcm9qZWN0X2lkCiAgICBpZiBtZXRhX2ZpbGUuZXhpc3RzKCk6CiAgICAgICAgdHJ5OgogICAgICAgICAgICBtZXRhID0ganNvbi5sb2FkcyhtZXRhX2ZpbGUucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpKQogICAgICAgICAgICBwcm9qZWN0X25hbWUgPSBtZXRhLmdldCgicHJvbXB0IiwgcHJvamVjdF9pZClbOjMwXQogICAgICAgICAgICBwcm9qZWN0X25hbWUgPSAiIi5qb2luKGMgZm9yIGMgaW4gcHJvamVjdF9uYW1lIGlmIGMuaXNhbG51bSgpIG9yIGMgaW4gKCItIiwgIl8iKSkuc3RyaXAoKSBvciBwcm9qZWN0X2lkCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgcGFzcwoKICAgICMgQ3JlYXRlIHRlbXBvcmFyeSB6aXAgZmlsZQogICAgdGVtcF96aXAgPSBQYXRoKHRlbXBmaWxlLmdldHRlbXBkaXIoKSkgLyBmIntwcm9qZWN0X25hbWV9X3twcm9qZWN0X2lkfS56aXAiCiAgICAKICAgIHRyeToKICAgICAgICAjIFppcCB0aGUgZGlyZWN0b3J5IGV4Y2x1ZGluZyBub2RlX21vZHVsZXMsIC5naXQsIC5uZXh0LCBkaXN0LCBidWlsZAogICAgICAgIHdpdGggemlwZmlsZS5aaXBGaWxlKHRlbXBfemlwLCAndycsIHppcGZpbGUuWklQX0RFRkxBVEVEKSBhcyB6aXBmOgogICAgICAgICAgICBmb3Igcm9vdCwgZGlycywgZmlsZXMgaW4gb3Mud2FsayhidWlsZF9kaXIpOgogICAgICAgICAgICAgICAgIyBNb2RpZnkgZGlycyBpbi1wbGFjZSB0byBleGNsdWRlIGRpcmVjdG9yaWVzCiAgICAgICAgICAgICAgICBkaXJzWzpdID0gW2QgZm9yIGQgaW4gZGlycyBpZiBkIG5vdCBpbiAoIm5vZGVfbW9kdWxlcyIsICIuZ2l0IiwgIi5uZXh0IiwgImRpc3QiLCAiYnVpbGQiKV0KICAgICAgICAgICAgICAgIGZvciBmaWxlIGluIGZpbGVzOgogICAgICAgICAgICAgICAgICAgICMgRG9uJ3QgaW5jbHVkZSB0aGUgbWV0YWRhdGEgb3IgdGVtcCBmaWxlcyBpbiB1c2VyIGRvd25sb2FkIGlmIHRoZXkgYXJlIHByaXZhdGUKICAgICAgICAgICAgICAgICAgICBpZiBmaWxlID09ICIuamFydmlzX21ldGEuanNvbiI6CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgICAgICAgICAgZmlsZV9wYXRoID0gUGF0aChyb290KSAvIGZpbGUKICAgICAgICAgICAgICAgICAgICByZWxfcGF0aCA9IGZpbGVfcGF0aC5yZWxhdGl2ZV90byhidWlsZF9kaXIpCiAgICAgICAgICAgICAgICAgICAgemlwZi53cml0ZShmaWxlX3BhdGgsIHJlbF9wYXRoKQoKICAgICAgICByZXR1cm4gRmlsZVJlc3BvbnNlKAogICAgICAgICAgICBwYXRoPXN0cih0ZW1wX3ppcCksCiAgICAgICAgICAgIG1lZGlhX3R5cGU9ImFwcGxpY2F0aW9uL3gtemlwLWNvbXByZXNzZWQiLAogICAgICAgICAgICBmaWxlbmFtZT1mIntwcm9qZWN0X25hbWV9LnppcCIKICAgICAgICApCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgbG9nLmVycm9yKCJ6aXBfcHJvamVjdF9mYWlsZWQiLCBwcm9qZWN0X2lkPXByb2plY3RfaWQsIGVycm9yPXN0cihlKSkKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTUwMCwgZGV0YWlsPWYiRmFpbGVkIHRvIGNyZWF0ZSBkb3dubG9hZCB6aXA6IHtzdHIoZSl9IikKCg==
+# ====================================================================
+# JARVIS OMEGA — SaaS Boilerplate Generator Router
+# ====================================================================
+"""
+Boilerplate Generator REST API and WebSocket endpoints.
+Provides endpoints for generation, live dev-servers, GitHub sync, Vercel deploys,
+and real-time dev log streaming.
+"""
+
+from __future__ import annotations
+
+import asyncio
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel
+
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, status
+
+import os
+import json
+import zipfile
+import tempfile
+from pathlib import Path
+from fastapi.responses import FileResponse
+from backend.config import settings
+
+from backend.services.boilerplate_service import boilerplate_service
+from shared.logger import get_logger
+
+log = get_logger("router_build")
+router = APIRouter(prefix="/api/build", tags=["SaaS Boilerplate Studio"])
+
+
+class GenerateRequest(BaseModel):
+    prompt: str
+
+
+class DeployRequest(BaseModel):
+    repo_name: str
+
+
+class SaveFileRequest(BaseModel):
+    filepath: str
+    content: str
+
+
+class PatchRequest(BaseModel):
+    error_log: str
+
+
+@router.post("/generate", response_model=Dict[str, Any])
+async def generate_project(req: GenerateRequest):
+    """Generate a new project boilerplate from prompt."""
+    try:
+        meta = await boilerplate_service.generate_project(req.prompt)
+        return meta
+    except Exception as e:
+        log.error("boilerplate_generation_endpoint_failed", error=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Project generation failed: {str(e)}"
+        )
+
+
+@router.get("/{project_id}/files", response_model=Dict[str, Any])
+async def get_project_files(project_id: str):
+    """Retrieve file structure and content of a generated project."""
+    try:
+        files_data = await boilerplate_service.get_project_files(project_id)
+        return files_data
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Project not found")
+    except Exception as e:
+        log.error("get_project_files_failed", project_id=project_id, error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put("/{project_id}/file", response_model=Dict[str, Any])
+async def save_project_file(project_id: str, req: SaveFileRequest):
+    """Save code changes from Monaco editor to disk."""
+    success = await boilerplate_service.save_project_file(project_id, req.filepath, req.content)
+    if not success:
+        raise HTTPException(status_code=400, detail="Failed to save file. Check directory path.")
+    return {"status": "success", "file": req.filepath}
+
+
+@router.post("/{project_id}/run", response_model=Dict[str, Any])
+async def run_local_dev(project_id: str):
+    """Launch the local development server for the generated project."""
+    result = await boilerplate_service.run_local_dev(project_id)
+    if not result.get("success"):
+        raise HTTPException(status_code=500, detail=result.get("message", "Dev server failed to start"))
+    return result
+
+
+@router.post("/{project_id}/deploy", response_model=Dict[str, Any])
+async def deploy_project(project_id: str, req: DeployRequest):
+    """Push code to GitHub and trigger Vercel deployment."""
+    try:
+        # 1. Push to GitHub
+        github_url = await boilerplate_service.push_to_github(project_id, req.repo_name)
+        
+        # 2. Deploy to Vercel
+        vercel_url = await boilerplate_service.deploy_to_vercel(project_id, github_url)
+        
+        return {
+            "status": "deployed",
+            "github_url": github_url,
+            "vercel_url": vercel_url
+        }
+    except Exception as e:
+        log.error("boilerplate_deploy_failed", project_id=project_id, error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/{project_id}/patch", response_model=Dict[str, Any])
+async def patch_project(project_id: str, req: PatchRequest):
+    """Attempt LLM auto-patching of build errors."""
+    raise HTTPException(
+        status_code=501,
+        detail=(
+            "Automatic build-error repair is not available in this build: "
+            "the self-healing service it depends on was not carried over. "
+            "Fix the errors from the log manually and redeploy."
+        ),
+    )
+
+
+@router.websocket("/ws/logs/{project_id}")
+async def websocket_logs(websocket: WebSocket, project_id: str):
+    """WebSocket endpoint for real-time local server logs streaming."""
+    await websocket.accept()
+    last_index = 0
+    try:
+        while True:
+            logs = boilerplate_service.get_server_logs(project_id)
+            if len(logs) > last_index:
+                for line in logs[last_index:]:
+                    await websocket.send_text(line)
+                last_index = len(logs)
+            await asyncio.sleep(0.5)
+    except WebSocketDisconnect:
+        pass
+    except Exception as e:
+        log.error("websocket_logs_error", project_id=project_id, error=str(e))
+
+
+@router.get("/{project_id}/download")
+async def download_project(project_id: str):
+    """Zips the generated project folder and returns it as a download file."""
+    build_dir = Path(settings.workspace_dir) / "builds" / project_id
+    if not build_dir.exists():
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    # Determine project name
+    meta_file = build_dir / ".jarvis_meta.json"
+    project_name = project_id
+    if meta_file.exists():
+        try:
+            meta = json.loads(meta_file.read_text(encoding="utf-8"))
+            project_name = meta.get("prompt", project_id)[:30]
+            project_name = "".join(c for c in project_name if c.isalnum() or c in ("-", "_")).strip() or project_id
+        except Exception:
+            pass
+
+    # Create temporary zip file
+    temp_zip = Path(tempfile.gettempdir()) / f"{project_name}_{project_id}.zip"
+    
+    try:
+        # Zip the directory excluding node_modules, .git, .next, dist, build
+        with zipfile.ZipFile(temp_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, dirs, files in os.walk(build_dir):
+                # Modify dirs in-place to exclude directories
+                dirs[:] = [d for d in dirs if d not in ("node_modules", ".git", ".next", "dist", "build")]
+                for file in files:
+                    # Don't include the metadata or temp files in user download if they are private
+                    if file == ".jarvis_meta.json":
+                        continue
+                    file_path = Path(root) / file
+                    rel_path = file_path.relative_to(build_dir)
+                    zipf.write(file_path, rel_path)
+
+        return FileResponse(
+            path=str(temp_zip),
+            media_type="application/x-zip-compressed",
+            filename=f"{project_name}.zip"
+        )
+    except Exception as e:
+        log.error("zip_project_failed", project_id=project_id, error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to create download zip: {str(e)}")
+

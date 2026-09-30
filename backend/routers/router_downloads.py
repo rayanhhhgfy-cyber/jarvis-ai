@@ -1,1 +1,112 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgUmVsZWFzZSBEb3dubG9hZHMgUm91dGVyCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiU2VydmUgZGVza3RvcC9BbmRyb2lkIHJlbGVhc2UgYXJ0aWZhY3RzIGZyb20gdGhlIHJlbGVhc2VzLyBkaXJlY3RvcnkuIiIiCgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgppbXBvcnQgb3MKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QKCmZyb20gZmFzdGFwaSBpbXBvcnQgQVBJUm91dGVyLCBIVFRQRXhjZXB0aW9uCmZyb20gZmFzdGFwaS5yZXNwb25zZXMgaW1wb3J0IEZpbGVSZXNwb25zZQoKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJyb3V0ZXJfZG93bmxvYWRzIikKCnJvdXRlciA9IEFQSVJvdXRlcihwcmVmaXg9Ii9hcGkvZG93bmxvYWRzIiwgdGFncz1bIkRvd25sb2FkcyJdKQoKIyBQcm9qZWN0IHJvb3Q6IGJhY2tlbmQvcm91dGVycyAtPiBiYWNrZW5kIC0+IHByb2plY3Qgcm9vdApfUFJPSkVDVF9ST09UID0gUGF0aChfX2ZpbGVfXykucmVzb2x2ZSgpLnBhcmVudHNbMl0KX1JFTEVBU0VTX0RJUiA9IF9QUk9KRUNUX1JPT1QgLyAicmVsZWFzZXMiCgojIEFsbG93ZWQgZmlsZW5hbWVzIChwcmV2ZW50cyBwYXRoIHRyYXZlcnNhbCkKX0NBVEFMT0c6IERpY3Rbc3RyLCBEaWN0W3N0ciwgc3RyXV0gPSB7CiAgICAiamFydmlzLWRlc2t0b3Atd2luZG93cy56aXAiOiB7CiAgICAgICAgInRpdGxlIjogIkRlc2t0b3AgQ2xpZW50IChXaW5kb3dzKSIsCiAgICAgICAgImRlc2NyaXB0aW9uIjogIlB5dGhvbiBkYWVtb24gKyBsYXVuY2hlciDigJQgZXh0cmFjdCBhbmQgcnVuIFN0YXJ0LUphcnZpcy1EZXNrdG9wLmJhdCIsCiAgICAgICAgInBsYXRmb3JtIjogIndpbmRvd3MiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiYXBwbGljYXRpb24vemlwIiwKICAgIH0sCiAgICAiamFydmlzLWFuZHJvaWQtYnVpbGQtZ3VpZGUudHh0IjogewogICAgICAgICJ0aXRsZSI6ICJBbmRyb2lkIEFQSyDigJQgQnVpbGQgR3VpZGUiLAogICAgICAgICJkZXNjcmlwdGlvbiI6ICJJbnN0cnVjdGlvbnMgdG8gYnVpbGQgdGhlIEFQSyBpbiBBbmRyb2lkIFN0dWRpbyIsCiAgICAgICAgInBsYXRmb3JtIjogImFuZHJvaWQiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAidGV4dC9wbGFpbiIsCiAgICB9LAogICAgImphcnZpcy1hbmRyb2lkLmFwayI6IHsKICAgICAgICAidGl0bGUiOiAiQW5kcm9pZCBBcHAgKEFQSykiLAogICAgICAgICJkZXNjcmlwdGlvbiI6ICJJbnN0YWxsIG9uIHlvdXIgcGhvbmUgKHNpZGVsb2FkKSIsCiAgICAgICAgInBsYXRmb3JtIjogImFuZHJvaWQiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiYXBwbGljYXRpb24vdm5kLmFuZHJvaWQucGFja2FnZS1hcmNoaXZlIiwKICAgIH0sCn0KCgpkZWYgX2NhdGFsb2dfbmFtZXMoKSAtPiBMaXN0W3N0cl06CiAgICAiIiJBbGwga25vd24gcmVsZWFzZSBmaWxlbmFtZXMgKEFQSyBvbmx5IGxpc3RlZCBpZiBwcmVzZW50IG9uIGRpc2spLiIiIgogICAgbmFtZXMgPSBsaXN0KF9DQVRBTE9HLmtleXMoKSkKICAgIGFwayA9IF9yZWxlYXNlc19wYXRoKCkgLyAiamFydmlzLWFuZHJvaWQuYXBrIgogICAgaWYgbm90IGFway5pc19maWxlKCkgYW5kICJqYXJ2aXMtYW5kcm9pZC5hcGsiIGluIG5hbWVzOgogICAgICAgIHJldHVybiBbbiBmb3IgbiBpbiBuYW1lcyBpZiBuICE9ICJqYXJ2aXMtYW5kcm9pZC5hcGsiXQogICAgcmV0dXJuIG5hbWVzCgoKZGVmIF9yZWxlYXNlc19wYXRoKCkgLT4gUGF0aDoKICAgIF9SRUxFQVNFU19ESVIubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQogICAgcmV0dXJuIF9SRUxFQVNFU19ESVIKCgpkZWYgX2ZpbGVfaW5mbyhuYW1lOiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgcGF0aCA9IF9yZWxlYXNlc19wYXRoKCkgLyBuYW1lCiAgICBtZXRhID0gX0NBVEFMT0cuZ2V0KG5hbWUsIHt9KQogICAgZXhpc3RzID0gcGF0aC5pc19maWxlKCkKICAgIHJldHVybiB7CiAgICAgICAgImlkIjogbmFtZSwKICAgICAgICAiZmlsZW5hbWUiOiBuYW1lLAogICAgICAgICJ0aXRsZSI6IG1ldGEuZ2V0KCJ0aXRsZSIsIG5hbWUpLAogICAgICAgICJkZXNjcmlwdGlvbiI6IG1ldGEuZ2V0KCJkZXNjcmlwdGlvbiIsICIiKSwKICAgICAgICAicGxhdGZvcm0iOiBtZXRhLmdldCgicGxhdGZvcm0iLCAidW5rbm93biIpLAogICAgICAgICJhdmFpbGFibGUiOiBleGlzdHMsCiAgICAgICAgInNpemVfYnl0ZXMiOiBwYXRoLnN0YXQoKS5zdF9zaXplIGlmIGV4aXN0cyBlbHNlIDAsCiAgICAgICAgImRvd25sb2FkX3VybCI6IGYiL2FwaS9kb3dubG9hZHMve25hbWV9IiBpZiBleGlzdHMgZWxzZSBOb25lLAogICAgfQoKCkByb3V0ZXIuZ2V0KCIiKQphc3luYyBkZWYgbGlzdF9kb3dubG9hZHMoKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkxpc3QgcmVsZWFzZSBhcnRpZmFjdHMgYW5kIHdoZXRoZXIgZWFjaCBmaWxlIGlzIG9uIGRpc2suIiIiCiAgICBpdGVtcyA9IFtfZmlsZV9pbmZvKG5hbWUpIGZvciBuYW1lIGluIF9jYXRhbG9nX25hbWVzKCldCiAgICByZXR1cm4gewogICAgICAgICJyZWxlYXNlc19kaXIiOiBzdHIoX3JlbGVhc2VzX3BhdGgoKSksCiAgICAgICAgIml0ZW1zIjogaXRlbXMsCiAgICAgICAgImF2YWlsYWJsZV9jb3VudCI6IHN1bSgxIGZvciBpIGluIGl0ZW1zIGlmIGlbImF2YWlsYWJsZSJdKSwKICAgIH0KCgpAcm91dGVyLmdldCgiL3tmaWxlbmFtZX0iKQphc3luYyBkZWYgZG93bmxvYWRfZmlsZShmaWxlbmFtZTogc3RyKToKICAgICIiIkRvd25sb2FkIGEgcmVsZWFzZSBmaWxlIGJ5IG5hbWUuIiIiCiAgICBzYWZlX25hbWUgPSBvcy5wYXRoLmJhc2VuYW1lKGZpbGVuYW1lKQogICAgaWYgc2FmZV9uYW1lIG5vdCBpbiBfQ0FUQUxPRzoKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwNCwgZGV0YWlsPSJVbmtub3duIGRvd25sb2FkIikKCiAgICBwYXRoID0gX3JlbGVhc2VzX3BhdGgoKSAvIHNhZmVfbmFtZQogICAgaWYgbm90IHBhdGguaXNfZmlsZSgpOgogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oCiAgICAgICAgICAgIHN0YXR1c19jb2RlPTQwNCwKICAgICAgICAgICAgZGV0YWlsPSgKICAgICAgICAgICAgICAgIGYiRmlsZSAne3NhZmVfbmFtZX0nIGlzIG5vdCBidWlsdCB5ZXQuIE5vIGRlc2t0b3AtY2xpZW50ICIKICAgICAgICAgICAgICAgICJwYWNrYWdpbmcgc2NyaXB0IHNoaXBzIHdpdGggdGhpcyBidWlsZC4iCiAgICAgICAgICAgICksCiAgICAgICAgKQoKICAgIG1ldGEgPSBfQ0FUQUxPR1tzYWZlX25hbWVdCiAgICBsb2cuaW5mbygiZG93bmxvYWRfc2VydmVkIiwgZmlsZW5hbWU9c2FmZV9uYW1lLCBzaXplPXBhdGguc3RhdCgpLnN0X3NpemUpCiAgICByZXR1cm4gRmlsZVJlc3BvbnNlKAogICAgICAgIHBhdGg9cGF0aCwKICAgICAgICBmaWxlbmFtZT1zYWZlX25hbWUsCiAgICAgICAgbWVkaWFfdHlwZT1tZXRhLmdldCgiY29udGVudF90eXBlIiwgImFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbSIpLAogICAgKQo=
+# ====================================================================
+# JARVIS OMEGA — Release Downloads Router
+# ====================================================================
+"""Serve desktop/Android release artifacts from the releases/ directory."""
+
+from __future__ import annotations
+
+import os
+from pathlib import Path
+from typing import Any, Dict, List
+
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+
+from shared.logger import get_logger
+
+log = get_logger("router_downloads")
+
+router = APIRouter(prefix="/api/downloads", tags=["Downloads"])
+
+# Project root: backend/routers -> backend -> project root
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+_RELEASES_DIR = _PROJECT_ROOT / "releases"
+
+# Allowed filenames (prevents path traversal)
+_CATALOG: Dict[str, Dict[str, str]] = {
+    "jarvis-desktop-windows.zip": {
+        "title": "Desktop Client (Windows)",
+        "description": "Python daemon + launcher — extract and run Start-Jarvis-Desktop.bat",
+        "platform": "windows",
+        "content_type": "application/zip",
+    },
+    "jarvis-android-build-guide.txt": {
+        "title": "Android APK — Build Guide",
+        "description": "Instructions to build the APK in Android Studio",
+        "platform": "android",
+        "content_type": "text/plain",
+    },
+    "jarvis-android.apk": {
+        "title": "Android App (APK)",
+        "description": "Install on your phone (sideload)",
+        "platform": "android",
+        "content_type": "application/vnd.android.package-archive",
+    },
+}
+
+
+def _catalog_names() -> List[str]:
+    """All known release filenames (APK only listed if present on disk)."""
+    names = list(_CATALOG.keys())
+    apk = _releases_path() / "jarvis-android.apk"
+    if not apk.is_file() and "jarvis-android.apk" in names:
+        return [n for n in names if n != "jarvis-android.apk"]
+    return names
+
+
+def _releases_path() -> Path:
+    _RELEASES_DIR.mkdir(parents=True, exist_ok=True)
+    return _RELEASES_DIR
+
+
+def _file_info(name: str) -> Dict[str, Any]:
+    path = _releases_path() / name
+    meta = _CATALOG.get(name, {})
+    exists = path.is_file()
+    return {
+        "id": name,
+        "filename": name,
+        "title": meta.get("title", name),
+        "description": meta.get("description", ""),
+        "platform": meta.get("platform", "unknown"),
+        "available": exists,
+        "size_bytes": path.stat().st_size if exists else 0,
+        "download_url": f"/api/downloads/{name}" if exists else None,
+    }
+
+
+@router.get("")
+async def list_downloads() -> Dict[str, Any]:
+    """List release artifacts and whether each file is on disk."""
+    items = [_file_info(name) for name in _catalog_names()]
+    return {
+        "releases_dir": str(_releases_path()),
+        "items": items,
+        "available_count": sum(1 for i in items if i["available"]),
+    }
+
+
+@router.get("/{filename}")
+async def download_file(filename: str):
+    """Download a release file by name."""
+    safe_name = os.path.basename(filename)
+    if safe_name not in _CATALOG:
+        raise HTTPException(status_code=404, detail="Unknown download")
+
+    path = _releases_path() / safe_name
+    if not path.is_file():
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                f"File '{safe_name}' is not built yet. No desktop-client "
+                "packaging script ships with this build."
+            ),
+        )
+
+    meta = _CATALOG[safe_name]
+    log.info("download_served", filename=safe_name, size=path.stat().st_size)
+    return FileResponse(
+        path=path,
+        filename=safe_name,
+        media_type=meta.get("content_type", "application/octet-stream"),
+    )

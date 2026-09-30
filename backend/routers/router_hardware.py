@@ -1,1 +1,78 @@
-IiIiCkhhcmR3YXJlIFJvdXRlciDigJQgV2FrZS1vbi1MQU4sIHRlcm11eC1ub3RpZmljYXRpb24sIGRldmljZSBoYXJkd2FyZSBlbmRwb2ludHMuCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KaW1wb3J0IHNvY2tldAppbXBvcnQgc3RydWN0CmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIE9wdGlvbmFsCgpmcm9tIGZhc3RhcGkgaW1wb3J0IEFQSVJvdXRlciwgSFRUUEV4Y2VwdGlvbgpmcm9tIHB5ZGFudGljIGltcG9ydCBCYXNlTW9kZWwKCmZyb20gc2hhcmVkLmxvZ2dlciBpbXBvcnQgZ2V0X2xvZ2dlcgoKbG9nID0gZ2V0X2xvZ2dlcigicm91dGVyX2hhcmR3YXJlIikKcm91dGVyID0gQVBJUm91dGVyKHByZWZpeD0iL2FwaS9oYXJkd2FyZSIsIHRhZ3M9WyJIYXJkd2FyZSJdKQoKCmNsYXNzIFdha2VPbkxhblJlcXVlc3QoQmFzZU1vZGVsKToKICAgIG1hY19hZGRyZXNzOiBzdHIKICAgIGJyb2FkY2FzdF9pcDogc3RyID0gIjI1NS4yNTUuMjU1LjI1NSIKICAgIHBvcnQ6IGludCA9IDkKCgpjbGFzcyBUZXJtdXhOb3RpZnlSZXF1ZXN0KEJhc2VNb2RlbCk6CiAgICB0aXRsZTogc3RyCiAgICBjb250ZW50OiBzdHIKICAgIGJ1dHRvbl90ZXh0OiBPcHRpb25hbFtzdHJdID0gTm9uZQogICAgYnV0dG9uX2FjdGlvbjogT3B0aW9uYWxbc3RyXSA9IE5vbmUKCgpkZWYgX3NlbmRfd29sKG1hYzogc3RyLCBicm9hZGNhc3RfaXA6IHN0ciwgcG9ydDogaW50KSAtPiBib29sOgogICAgIiIiU2VuZCBXYWtlLW9uLUxBTiBtYWdpYyBwYWNrZXQuIiIiCiAgICB0cnk6CiAgICAgICAgbWFjX2NsZWFuID0gbWFjLnJlcGxhY2UoIjoiLCAiIikucmVwbGFjZSgiLSIsICIiKS5yZXBsYWNlKCIuIiwgIiIpCiAgICAgICAgaWYgbGVuKG1hY19jbGVhbikgIT0gMTI6CiAgICAgICAgICAgIHJldHVybiBGYWxzZQogICAgICAgIG1hY19ieXRlcyA9IGJ5dGVzLmZyb21oZXgobWFjX2NsZWFuKQogICAgICAgIG1hZ2ljID0gYiJceGZmIiAqIDYgKyBtYWNfYnl0ZXMgKiAxNgoKICAgICAgICB3aXRoIHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX0RHUkFNKSBhcyBzb2NrOgogICAgICAgICAgICBzb2NrLnNldHNvY2tvcHQoc29ja2V0LlNPTF9TT0NLRVQsIHNvY2tldC5TT19CUk9BRENBU1QsIDEpCiAgICAgICAgICAgIHNvY2suc2VuZHRvKG1hZ2ljLCAoYnJvYWRjYXN0X2lwLCBwb3J0KSkKICAgICAgICByZXR1cm4gVHJ1ZQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIGxvZy5lcnJvcigid29sX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICByZXR1cm4gRmFsc2UKCgpAcm91dGVyLnBvc3QoIi93YWtlIikKYXN5bmMgZGVmIHdha2Vfb25fbGFuKHJlcXVlc3Q6IFdha2VPbkxhblJlcXVlc3QpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiU2VuZCBXYWtlLW9uLUxBTiBtYWdpYyBwYWNrZXQgdG8gYSBNQUMgYWRkcmVzcy4iIiIKICAgIHN1Y2Nlc3MgPSBhd2FpdCBhc3luY2lvLmdldF9ydW5uaW5nX2xvb3AoKS5ydW5faW5fZXhlY3V0b3IoCiAgICAgICAgTm9uZSwgX3NlbmRfd29sLCByZXF1ZXN0Lm1hY19hZGRyZXNzLCByZXF1ZXN0LmJyb2FkY2FzdF9pcCwgcmVxdWVzdC5wb3J0CiAgICApCiAgICBpZiBzdWNjZXNzOgogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBUcnVlLCAiZGV0YWlsIjogZiJXb0wgcGFja2V0IHNlbnQgdG8ge3JlcXVlc3QubWFjX2FkZHJlc3N9In0KICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDAwLCBkZXRhaWw9ZiJGYWlsZWQgdG8gc2VuZCBXb0wgdG8ge3JlcXVlc3QubWFjX2FkZHJlc3N9IikKCgpAcm91dGVyLnBvc3QoIi90ZXJtdXgtbm90aWZpY2F0aW9uIikKYXN5bmMgZGVmIHRlcm11eF9ub3RpZmljYXRpb24ocmVxdWVzdDogVGVybXV4Tm90aWZ5UmVxdWVzdCkgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiJTZW5kIGEgVGVybXV4IG5vdGlmaWNhdGlvbiAoQW5kcm9pZCkuIiIiCiAgICB0cnk6CiAgICAgICAgaW1wb3J0IHN1YnByb2Nlc3MKICAgICAgICBjbWQgPSBbInRlcm11eC1ub3RpZmljYXRpb24iLCAiLS10aXRsZSIsIHJlcXVlc3QudGl0bGUsICItLWNvbnRlbnQiLCByZXF1ZXN0LmNvbnRlbnRdCiAgICAgICAgaWYgcmVxdWVzdC5idXR0b25fdGV4dCBhbmQgcmVxdWVzdC5idXR0b25fYWN0aW9uOgogICAgICAgICAgICBjbWQuZXh0ZW5kKFsiLS1idXR0b24xIiwgcmVxdWVzdC5idXR0b25fdGV4dCwgIi0tYnV0dG9uMS1hY3Rpb24iLCByZXF1ZXN0LmJ1dHRvbl9hY3Rpb25dKQogICAgICAgIHN1YnByb2Nlc3MuUG9wZW4oY21kLCBzdGRvdXQ9c3VicHJvY2Vzcy5ERVZOVUxMLCBzdGRlcnI9c3VicHJvY2Vzcy5ERVZOVUxMKQogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBUcnVlLCAiZGV0YWlsIjogZiJOb3RpZmljYXRpb24gc2VudDoge3JlcXVlc3QudGl0bGV9In0KICAgIGV4Y2VwdCBGaWxlTm90Rm91bmRFcnJvcjoKICAgICAgICBsb2cud2FybmluZygidGVybXV4LW5vdGlmaWNhdGlvbl9ub3RfYXZhaWxhYmxlIikKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTUwMSwgZGV0YWlsPSJ0ZXJtdXgtbm90aWZpY2F0aW9uIG5vdCBhdmFpbGFibGUgb24gdGhpcyBwbGF0Zm9ybSIpCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgbG9nLmVycm9yKCJub3RpZmljYXRpb25fZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NTAwLCBkZXRhaWw9c3RyKGUpKQo=
+"""
+Hardware Router — Wake-on-LAN, termux-notification, device hardware endpoints.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import socket
+import struct
+from typing import Any, Dict, Optional
+
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+from shared.logger import get_logger
+
+log = get_logger("router_hardware")
+router = APIRouter(prefix="/api/hardware", tags=["Hardware"])
+
+
+class WakeOnLanRequest(BaseModel):
+    mac_address: str
+    broadcast_ip: str = "255.255.255.255"
+    port: int = 9
+
+
+class TermuxNotifyRequest(BaseModel):
+    title: str
+    content: str
+    button_text: Optional[str] = None
+    button_action: Optional[str] = None
+
+
+def _send_wol(mac: str, broadcast_ip: str, port: int) -> bool:
+    """Send Wake-on-LAN magic packet."""
+    try:
+        mac_clean = mac.replace(":", "").replace("-", "").replace(".", "")
+        if len(mac_clean) != 12:
+            return False
+        mac_bytes = bytes.fromhex(mac_clean)
+        magic = b"\xff" * 6 + mac_bytes * 16
+
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            sock.sendto(magic, (broadcast_ip, port))
+        return True
+    except Exception as e:
+        log.error("wol_failed", error=str(e))
+        return False
+
+
+@router.post("/wake")
+async def wake_on_lan(request: WakeOnLanRequest) -> Dict[str, Any]:
+    """Send Wake-on-LAN magic packet to a MAC address."""
+    success = await asyncio.get_running_loop().run_in_executor(
+        None, _send_wol, request.mac_address, request.broadcast_ip, request.port
+    )
+    if success:
+        return {"success": True, "detail": f"WoL packet sent to {request.mac_address}"}
+    raise HTTPException(status_code=400, detail=f"Failed to send WoL to {request.mac_address}")
+
+
+@router.post("/termux-notification")
+async def termux_notification(request: TermuxNotifyRequest) -> Dict[str, Any]:
+    """Send a Termux notification (Android)."""
+    try:
+        import subprocess
+        cmd = ["termux-notification", "--title", request.title, "--content", request.content]
+        if request.button_text and request.button_action:
+            cmd.extend(["--button1", request.button_text, "--button1-action", request.button_action])
+        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return {"success": True, "detail": f"Notification sent: {request.title}"}
+    except FileNotFoundError:
+        log.warning("termux-notification_not_available")
+        raise HTTPException(status_code=501, detail="termux-notification not available on this platform")
+    except Exception as e:
+        log.error("notification_failed", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))

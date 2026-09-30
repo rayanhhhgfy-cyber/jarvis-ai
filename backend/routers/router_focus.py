@@ -1,1 +1,62 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgRm9jdXMgTW9kZSBSb3V0ZXIKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoiIiIKQVBJIGVuZHBvaW50cyBmb3IgYWN0aXZhdGluZywgZGVhY3RpdmF0aW5nLCBhbmQgY2hlY2tpbmcgdGhlIHN0YXR1cyBvZiBGb2N1cyBNb2RlLgpQcm92aWRlcyByZWFsIG1pc3NlZCBtZXNzYWdlIHN1bW1hcmllcyB1cG9uIGRlYWN0aXZhdGlvbi4KIiIiCgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgpmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBPcHRpb25hbApmcm9tIGZhc3RhcGkgaW1wb3J0IEFQSVJvdXRlciwgSFRUUEV4Y2VwdGlvbgpmcm9tIHB5ZGFudGljIGltcG9ydCBCYXNlTW9kZWwKCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5mb2N1c19tb2RlIGltcG9ydCBmb2N1c19tb2RlX3NlcnZpY2UKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJyb3V0ZXJfZm9jdXMiKQpyb3V0ZXIgPSBBUElSb3V0ZXIocHJlZml4PSIvYXBpL2ZvY3VzIiwgdGFncz1bIkZvY3VzIE1vZGUiXSkKCgpjbGFzcyBGb2N1c0FjdGl2YXRlUmVxdWVzdChCYXNlTW9kZWwpOgogICAgbm90ZTogc3RyCiAgICBkdXJhdGlvbl9taW51dGVzOiBPcHRpb25hbFtpbnRdID0gTm9uZQogICAgbGFuZ3VhZ2U6IHN0ciA9ICJhcmFiaWMiICAjICJhcmFiaWMiIG9yICJlbmdsaXNoIgoKCkByb3V0ZXIuZ2V0KCIvc3RhdHVzIikKYXN5bmMgZGVmIGdldF9mb2N1c19zdGF0dXMoKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIlJldHJpZXZlIGN1cnJlbnQgRm9jdXMgTW9kZSBzdGF0dXMsIHJlbWFpbmluZyB0aW1lLCBhbmQgYWN0aXZlIGNvbmZpZ3VyYXRpb25zLiIiIgogICAgcmV0dXJuIGZvY3VzX21vZGVfc2VydmljZS5nZXRfc3RhdHVzKCkKCgpAcm91dGVyLnBvc3QoIi9hY3RpdmF0ZSIpCmFzeW5jIGRlZiBhY3RpdmF0ZV9mb2N1cyhyZXE6IEZvY3VzQWN0aXZhdGVSZXF1ZXN0KSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkFjdGl2YXRlIEZvY3VzIE1vZGUgd2l0aCBhIG5vdGUsIG9wdGlvbmFsIGR1cmF0aW9uLCBhbmQgbGFuZ3VhZ2UgKGFyYWJpYy9lbmdsaXNoKS4KCiAgICBXaGVuIGFjdGl2ZSwgSmFydmlzIHBvbGxzIEluc3RhZ3JhbSBETXMgZXZlcnkgMzAgc2Vjb25kcyBhbmQgYXV0by1yZXBsaWVzCiAgICBpbiB0aGUgY29uZmlndXJlZCBsYW5ndWFnZSBleHBsYWluaW5nIFNpciBpcyBidXN5LgogICAgIiIiCiAgICBmb2N1c19tb2RlX3NlcnZpY2UuYWN0aXZhdGUocmVxLm5vdGUsIGR1cmF0aW9uX21pbnV0ZXM9cmVxLmR1cmF0aW9uX21pbnV0ZXMsIGxhbmd1YWdlPXJlcS5sYW5ndWFnZSBvciAiYXJhYmljIikKICAgIHJldHVybiBmb2N1c19tb2RlX3NlcnZpY2UuZ2V0X3N0YXR1cygpCgoKQHJvdXRlci5wb3N0KCIvZGVhY3RpdmF0ZSIpCmFzeW5jIGRlZiBkZWFjdGl2YXRlX2ZvY3VzKCkgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiJEZWFjdGl2YXRlIEZvY3VzIE1vZGUgYW5kIHJldHVybiBxdWV1ZWQgbWVzc2FnZXMgcGx1cyBhbiBMTE0gc3VtbWFyeS4iIiIKICAgIHJlc3VsdCA9IGZvY3VzX21vZGVfc2VydmljZS5kZWFjdGl2YXRlKCkKICAgIHN1bW1hcnkgPSAiIgogICAgaWYgcmVzdWx0LmdldCgicXVldWVkX2NvdW50IiwgMCkgPiAwOgogICAgICAgIHRyeToKICAgICAgICAgICAgc3VtbWFyeSA9IGF3YWl0IGZvY3VzX21vZGVfc2VydmljZS5nZW5lcmF0ZV9xdWV1ZWRfc3VtbWFyeSgpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoImZhaWxlZF90b19nZW5lcmF0ZV9zdW1tYXJ5X2luX3JvdXRlciIsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgc3VtbWFyeSA9IGYiU2lyLCB5b3UgbWlzc2VkIHtyZXN1bHQuZ2V0KCdxdWV1ZWRfY291bnQnKX0gbWVzc2FnZXMuIgogICAgICAgICAgICAKICAgIHJldHVybiB7CiAgICAgICAgInN0YXR1cyI6IGZvY3VzX21vZGVfc2VydmljZS5nZXRfc3RhdHVzKCksCiAgICAgICAgInF1ZXVlZF9jb3VudCI6IHJlc3VsdC5nZXQoInF1ZXVlZF9jb3VudCIsIDApLAogICAgICAgICJxdWV1ZWRfbWVzc2FnZXMiOiByZXN1bHQuZ2V0KCJxdWV1ZWRfbWVzc2FnZXMiLCBbXSksCiAgICAgICAgInN1bW1hcnkiOiBzdW1tYXJ5LAogICAgfQo=
+# ====================================================================
+# JARVIS OMEGA — Focus Mode Router
+# ====================================================================
+"""
+API endpoints for activating, deactivating, and checking the status of Focus Mode.
+Provides real missed message summaries upon deactivation.
+"""
+
+from __future__ import annotations
+
+from typing import Any, Dict, Optional
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+from backend.services.focus_mode import focus_mode_service
+from shared.logger import get_logger
+
+log = get_logger("router_focus")
+router = APIRouter(prefix="/api/focus", tags=["Focus Mode"])
+
+
+class FocusActivateRequest(BaseModel):
+    note: str
+    duration_minutes: Optional[int] = None
+    language: str = "arabic"  # "arabic" or "english"
+
+
+@router.get("/status")
+async def get_focus_status() -> Dict[str, Any]:
+    """Retrieve current Focus Mode status, remaining time, and active configurations."""
+    return focus_mode_service.get_status()
+
+
+@router.post("/activate")
+async def activate_focus(req: FocusActivateRequest) -> Dict[str, Any]:
+    """Activate Focus Mode with a note, optional duration, and language (arabic/english).
+
+    When active, Jarvis polls Instagram DMs every 30 seconds and auto-replies
+    in the configured language explaining Sir is busy.
+    """
+    focus_mode_service.activate(req.note, duration_minutes=req.duration_minutes, language=req.language or "arabic")
+    return focus_mode_service.get_status()
+
+
+@router.post("/deactivate")
+async def deactivate_focus() -> Dict[str, Any]:
+    """Deactivate Focus Mode and return queued messages plus an LLM summary."""
+    result = focus_mode_service.deactivate()
+    summary = ""
+    if result.get("queued_count", 0) > 0:
+        try:
+            summary = await focus_mode_service.generate_queued_summary()
+        except Exception as e:
+            log.error("failed_to_generate_summary_in_router", error=str(e))
+            summary = f"Sir, you missed {result.get('queued_count')} messages."
+            
+    return {
+        "status": focus_mode_service.get_status(),
+        "queued_count": result.get("queued_count", 0),
+        "queued_messages": result.get("queued_messages", []),
+        "summary": summary,
+    }

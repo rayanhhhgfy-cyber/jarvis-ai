@@ -1,1 +1,204 @@
-IiIiClBhdHRlcm4gRGV0ZWN0aW9uICYgV29ya2Zsb3cgUm91dGVyLgpFeHBvc2VzIHBhdHRlcm4gZGV0ZWN0aW9uLCB3b3JrZmxvdyBhdXRvbWF0aW9uLCBhbmQgZ29hbCBleGVjdXRpb24gZW5kcG9pbnRzLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lem9uZQpmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0Cgpmcm9tIGZhc3RhcGkgaW1wb3J0IEFQSVJvdXRlciwgSFRUUEV4Y2VwdGlvbgoKZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnBhdHRlcm5fZGV0ZWN0b3IgaW1wb3J0IHBhdHRlcm5fZGV0ZWN0b3IKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJyb3V0ZXJfcGF0dGVybnMiKQpyb3V0ZXIgPSBBUElSb3V0ZXIocHJlZml4PSIvYXBpL3BhdHRlcm5zIiwgdGFncz1bIlBhdHRlcm5zICYgV29ya2Zsb3dzIl0pCgoKQHJvdXRlci5nZXQoIi9kZXRlY3QiKQphc3luYyBkZWYgZGV0ZWN0X3BhdHRlcm5zKCkgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiJTY2FuIGV4ZWN1dGlvbiBoaXN0b3J5IGZvciByZXBlYXRlZCBjb21tYW5kIHBhdHRlcm5zLiIiIgogICAgcGF0dGVybnMgPSBwYXR0ZXJuX2RldGVjdG9yLmRldGVjdF9wYXR0ZXJucygpCiAgICByZXR1cm4gewogICAgICAgICJwYXR0ZXJucyI6IHBhdHRlcm5zLAogICAgICAgICJjb3VudCI6IGxlbihwYXR0ZXJucyksCiAgICAgICAgInRvdGFsX2NvbW1hbmRzIjogbGVuKHBhdHRlcm5fZGV0ZWN0b3IuX2hpc3RvcnkpLAogICAgfQoKCkByb3V0ZXIuZ2V0KCIvc3RhdHMiKQphc3luYyBkZWYgZ2V0X3BhdHRlcm5fc3RhdHMoKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkdldCBwYXR0ZXJuIGRldGVjdGlvbiBzdGF0aXN0aWNzLiIiIgogICAgcmV0dXJuIHBhdHRlcm5fZGV0ZWN0b3IuZ2V0X3N0YXRzKCkKCgpAcm91dGVyLnBvc3QoIi93b3JrZmxvd3MiKQphc3luYyBkZWYgY3JlYXRlX3dvcmtmbG93KGRhdGE6IERpY3Rbc3RyLCBBbnldKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkNyZWF0ZSBhIG5ldyB3b3JrZmxvdyBmcm9tIGEgbGlzdCBvZiBjb21tYW5kcy4iIiIKICAgIG5hbWUgPSBkYXRhLmdldCgibmFtZSIsICIiKQogICAgY29tbWFuZHMgPSBkYXRhLmdldCgiY29tbWFuZHMiLCBbXSkKICAgIGRlc2NyaXB0aW9uID0gZGF0YS5nZXQoImRlc2NyaXB0aW9uIiwgIiIpCiAgICBjcm9uID0gZGF0YS5nZXQoImNyb24iLCAiIikKICAgIGlmIG5vdCBjb21tYW5kczoKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwMCwgZGV0YWlsPSJjb21tYW5kcyBsaXN0IGlzIHJlcXVpcmVkIikKICAgIGlmIG5vdCBuYW1lOgogICAgICAgIG5hbWUgPSBwYXR0ZXJuX2RldGVjdG9yLnN1Z2dlc3Rfd29ya2Zsb3dfbmFtZSh7ImNvbW1hbmRfdHlwZXMiOiBbIm90aGVyIl19KQogICAgd29ya2Zsb3cgPSBwYXR0ZXJuX2RldGVjdG9yLmNyZWF0ZV93b3JrZmxvdyhuYW1lLCBjb21tYW5kcywgZGVzY3JpcHRpb24pCiAgICBpZiBjcm9uOgogICAgICAgIHdvcmtmbG93WyJjcm9uIl0gPSBjcm9uCiAgICAgICAgX3NjaGVkdWxlX3dvcmtmbG93X2Nyb24od29ya2Zsb3csIGNyb24pCiAgICByZXR1cm4gd29ya2Zsb3cKCgpAcm91dGVyLmdldCgiL3dvcmtmbG93cyIpCmFzeW5jIGRlZiBsaXN0X3dvcmtmbG93cygpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiTGlzdCBhbGwgc2F2ZWQgd29ya2Zsb3dzLiIiIgogICAgd29ya2Zsb3dzID0gcGF0dGVybl9kZXRlY3Rvci5nZXRfd29ya2Zsb3dzKCkKICAgIHJldHVybiB7IndvcmtmbG93cyI6IHdvcmtmbG93cywgImNvdW50IjogbGVuKHdvcmtmbG93cyl9CgoKQHJvdXRlci5nZXQoIi93b3JrZmxvd3Mve3dvcmtmbG93X2lkfSIpCmFzeW5jIGRlZiBnZXRfd29ya2Zsb3cod29ya2Zsb3dfaWQ6IHN0cikgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiJHZXQgYSBzcGVjaWZpYyB3b3JrZmxvdyBieSBJRC4iIiIKICAgIHdvcmtmbG93cyA9IHBhdHRlcm5fZGV0ZWN0b3IuZ2V0X3dvcmtmbG93cygpCiAgICBmb3Igd2YgaW4gd29ya2Zsb3dzOgogICAgICAgIGlmIHdmWyJ3b3JrZmxvd19pZCJdID09IHdvcmtmbG93X2lkOgogICAgICAgICAgICByZXR1cm4gd2YKICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDA0LCBkZXRhaWw9ZiJXb3JrZmxvdyB7d29ya2Zsb3dfaWR9IG5vdCBmb3VuZCIpCgoKQHJvdXRlci5wdXQoIi93b3JrZmxvd3Mve3dvcmtmbG93X2lkfSIpCmFzeW5jIGRlZiB1cGRhdGVfd29ya2Zsb3cod29ya2Zsb3dfaWQ6IHN0ciwgZGF0YTogRGljdFtzdHIsIEFueV0pIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiVXBkYXRlIGEgd29ya2Zsb3cncyBuYW1lLCBkZXNjcmlwdGlvbiwgY29tbWFuZHMsIG9yIGNyb24gc2NoZWR1bGUuIiIiCiAgICB3b3JrZmxvd3MgPSBwYXR0ZXJuX2RldGVjdG9yLmdldF93b3JrZmxvd3MoKQogICAgdGFyZ2V0ID0gTm9uZQogICAgZm9yIHdmIGluIHdvcmtmbG93czoKICAgICAgICBpZiB3Zlsid29ya2Zsb3dfaWQiXSA9PSB3b3JrZmxvd19pZDoKICAgICAgICAgICAgdGFyZ2V0ID0gd2YKICAgICAgICAgICAgYnJlYWsKICAgIGlmIG5vdCB0YXJnZXQ6CiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT00MDQsIGRldGFpbD1mIldvcmtmbG93IHt3b3JrZmxvd19pZH0gbm90IGZvdW5kIikKCiAgICBpZiAibmFtZSIgaW4gZGF0YToKICAgICAgICB0YXJnZXRbIm5hbWUiXSA9IGRhdGFbIm5hbWUiXQogICAgaWYgImRlc2NyaXB0aW9uIiBpbiBkYXRhOgogICAgICAgIHRhcmdldFsiZGVzY3JpcHRpb24iXSA9IGRhdGFbImRlc2NyaXB0aW9uIl0KICAgIGlmICJjb21tYW5kcyIgaW4gZGF0YToKICAgICAgICBpZiBub3QgZGF0YVsiY29tbWFuZHMiXToKICAgICAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT00MDAsIGRldGFpbD0iY29tbWFuZHMgbGlzdCBjYW5ub3QgYmUgZW1wdHkiKQogICAgICAgIHRhcmdldFsiY29tbWFuZHMiXSA9IGRhdGFbImNvbW1hbmRzIl0KICAgICAgICB0YXJnZXRbInN0ZXBfY291bnQiXSA9IGxlbihkYXRhWyJjb21tYW5kcyJdKQogICAgaWYgImNyb24iIGluIGRhdGE6CiAgICAgICAgdGFyZ2V0WyJjcm9uIl0gPSBkYXRhWyJjcm9uIl0KICAgICAgICBfc2NoZWR1bGVfd29ya2Zsb3dfY3Jvbih0YXJnZXQsIGRhdGFbImNyb24iXSkKCiAgICB0YXJnZXRbInVwZGF0ZWRfYXQiXSA9IGRhdGV0aW1lLm5vdyh0aW1lem9uZS51dGMpLmlzb2Zvcm1hdCgpCiAgICBwYXR0ZXJuX2RldGVjdG9yLl9zYXZlKCkKICAgIHJldHVybiB0YXJnZXQKCgpAcm91dGVyLnBvc3QoIi93b3JrZmxvd3Mve3dvcmtmbG93X2lkfS9zY2hlZHVsZSIpCmFzeW5jIGRlZiBzY2hlZHVsZV93b3JrZmxvdyh3b3JrZmxvd19pZDogc3RyLCBkYXRhOiBEaWN0W3N0ciwgQW55XSkgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiJTY2hlZHVsZSBhIHdvcmtmbG93IHdpdGggYSBjcm9uIGV4cHJlc3Npb24uIiIiCiAgICB3b3JrZmxvd3MgPSBwYXR0ZXJuX2RldGVjdG9yLmdldF93b3JrZmxvd3MoKQogICAgdGFyZ2V0ID0gTm9uZQogICAgZm9yIHdmIGluIHdvcmtmbG93czoKICAgICAgICBpZiB3Zlsid29ya2Zsb3dfaWQiXSA9PSB3b3JrZmxvd19pZDoKICAgICAgICAgICAgdGFyZ2V0ID0gd2YKICAgICAgICAgICAgYnJlYWsKICAgIGlmIG5vdCB0YXJnZXQ6CiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT00MDQsIGRldGFpbD1mIldvcmtmbG93IHt3b3JrZmxvd19pZH0gbm90IGZvdW5kIikKCiAgICBjcm9uID0gZGF0YS5nZXQoImNyb24iLCAiIikKICAgIGlmIG5vdCBjcm9uOgogICAgICAgIHJhaXNlIEhUVFBFeGNlcHRpb24oc3RhdHVzX2NvZGU9NDAwLCBkZXRhaWw9ImNyb24gZXhwcmVzc2lvbiBpcyByZXF1aXJlZCIpCgogICAgdGFyZ2V0WyJjcm9uIl0gPSBjcm9uCiAgICB0YXJnZXRbInVwZGF0ZWRfYXQiXSA9IGRhdGV0aW1lLm5vdyh0aW1lem9uZS51dGMpLmlzb2Zvcm1hdCgpCiAgICBwYXR0ZXJuX2RldGVjdG9yLl9zYXZlKCkKCiAgICBqb2JfaWQgPSBfc2NoZWR1bGVfd29ya2Zsb3dfY3Jvbih0YXJnZXQsIGNyb24pCiAgICByZXR1cm4geyJzdGF0dXMiOiAic2NoZWR1bGVkIiwgIndvcmtmbG93X2lkIjogd29ya2Zsb3dfaWQsICJjcm9uIjogY3JvbiwgImpvYl9pZCI6IGpvYl9pZH0KCgpAcm91dGVyLnBvc3QoIi93b3JrZmxvd3Mve3dvcmtmbG93X2lkfS9ydW4iKQphc3luYyBkZWYgcnVuX3dvcmtmbG93KHdvcmtmbG93X2lkOiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiRXhlY3V0ZSBhIHdvcmtmbG93J3MgY29tbWFuZHMgc2VxdWVudGlhbGx5LiIiIgogICAgcmVzdWx0ID0gYXdhaXQgcGF0dGVybl9kZXRlY3Rvci5ydW5fd29ya2Zsb3cod29ya2Zsb3dfaWQpCiAgICBpZiBub3QgcmVzdWx0LmdldCgic3VjY2VzcyIpIGFuZCAibm90IGZvdW5kIiBpbiByZXN1bHQuZ2V0KCJlcnJvciIsICIiKToKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKHN0YXR1c19jb2RlPTQwNCwgZGV0YWlsPXJlc3VsdFsiZXJyb3IiXSkKICAgIHJldHVybiByZXN1bHQKCgpAcm91dGVyLmRlbGV0ZSgiL3dvcmtmbG93cy97d29ya2Zsb3dfaWR9IikKYXN5bmMgZGVmIGRlbGV0ZV93b3JrZmxvdyh3b3JrZmxvd19pZDogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkRlbGV0ZSBhIHdvcmtmbG93LiIiIgogICAgc3VjY2VzcyA9IHBhdHRlcm5fZGV0ZWN0b3IuZGVsZXRlX3dvcmtmbG93KHdvcmtmbG93X2lkKQogICAgaWYgbm90IHN1Y2Nlc3M6CiAgICAgICAgcmFpc2UgSFRUUEV4Y2VwdGlvbihzdGF0dXNfY29kZT00MDQsIGRldGFpbD1mIldvcmtmbG93IHt3b3JrZmxvd19pZH0gbm90IGZvdW5kIikKICAgIF9jYW5jZWxfd29ya2Zsb3dfam9iKHdvcmtmbG93X2lkKQogICAgcmV0dXJuIHsic3RhdHVzIjogImRlbGV0ZWQiLCAid29ya2Zsb3dfaWQiOiB3b3JrZmxvd19pZH0KCgpkZWYgX3NjaGVkdWxlX3dvcmtmbG93X2Nyb24od29ya2Zsb3c6IERpY3Rbc3RyLCBBbnldLCBjcm9uOiBzdHIpIC0+IHN0cjoKICAgICIiIlNjaGVkdWxlIGEgd29ya2Zsb3cgam9iIGluIEFQU2NoZWR1bGVyLiIiIgogICAgZnJvbSBiYWNrZW5kLnNjaGVkdWxlciBpbXBvcnQgc2NoZWR1bGVyCgogICAgd2ZfaWQgPSB3b3JrZmxvd1sid29ya2Zsb3dfaWQiXQogICAgam9iX2lkID0gZiJ3Zl97d2ZfaWR9IgoKICAgIGlmIGhhc2F0dHIoc2NoZWR1bGVyLCAnY2FuY2VsX2pvYicpOgogICAgICAgIHNjaGVkdWxlci5jYW5jZWxfam9iKGpvYl9pZCkKCiAgICBzY2hlZHVsZXIuc2NoZWR1bGVfY3JvbigKICAgICAgICBqb2JfaWQ9am9iX2lkLAogICAgICAgIGZ1bmM9ImJhY2tlbmQucm91dGVycy5yb3V0ZXJfcGF0dGVybnM6cnVuX3dvcmtmbG93X2J5X2lkIiwKICAgICAgICBhcmdzPVt3Zl9pZF0sCiAgICAgICAgY3Jvbl9leHByZXNzaW9uPWNyb24sCiAgICAgICAgZGVzY3JpcHRpb249ZiJXb3JrZmxvdzoge3dvcmtmbG93LmdldCgnbmFtZScsICcnKX0iCiAgICApCiAgICByZXR1cm4gam9iX2lkCgoKYXN5bmMgZGVmIHJ1bl93b3JrZmxvd19ieV9pZCh3Zl9pZDogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIkFQU2NoZWR1bGVyIGpvYiB0YXJnZXQ6IGV4ZWN1dGUgYSBzYXZlZCB3b3JrZmxvdyBieSBpZC4KCiAgICBSZWZlcmVuY2VkIGJ5IHN0cmluZyBmcm9tIF9zY2hlZHVsZV93b3JrZmxvd19jcm9uLCBzbyBpdCBtdXN0IHN0YXkgYQogICAgbW9kdWxlLWxldmVsIGZ1bmN0aW9uIHdpdGggYSBzdGFibGUgbmFtZS4KICAgICIiIgogICAgcmVzdWx0ID0gYXdhaXQgcGF0dGVybl9kZXRlY3Rvci5ydW5fd29ya2Zsb3cod2ZfaWQpCiAgICBsb2cuaW5mbygic2NoZWR1bGVkX3dvcmtmbG93X3JhbiIsIHdvcmtmbG93X2lkPXdmX2lkLCBzdWNjZXNzPXJlc3VsdC5nZXQoInN1Y2Nlc3MiKSkKICAgIHJldHVybiByZXN1bHQKCgpkZWYgX2NhbmNlbF93b3JrZmxvd19qb2Iod29ya2Zsb3dfaWQ6IHN0cik6CiAgICAiIiJDYW5jZWwgYSBzY2hlZHVsZWQgd29ya2Zsb3cgam9iLiIiIgogICAgZnJvbSBiYWNrZW5kLnNjaGVkdWxlciBpbXBvcnQgc2NoZWR1bGVyCiAgICBqb2JfaWQgPSBmIndmX3t3b3JrZmxvd19pZH0iCiAgICBpZiBoYXNhdHRyKHNjaGVkdWxlciwgJ2NhbmNlbF9qb2InKToKICAgICAgICBzY2hlZHVsZXIuY2FuY2VsX2pvYihqb2JfaWQpCgoKQHJvdXRlci5wb3N0KCIvc3VnZ2VzdCIpCmFzeW5jIGRlZiBzdWdnZXN0X3dvcmtmbG93KCkgLT4gRGljdFtzdHIsIEFueV06CiAgICAiIiIKICAgIEF1dG9tYXRpY2FsbHkgc3VnZ2VzdCBhIHdvcmtmbG93IGJhc2VkIG9uIGRldGVjdGVkIHBhdHRlcm5zLgogICAgQ3JlYXRlcyBhIHdvcmtmbG93IGZyb20gdGhlIG1vc3QgZnJlcXVlbnQgcGF0dGVybi4KICAgICIiIgogICAgcGF0dGVybnMgPSBwYXR0ZXJuX2RldGVjdG9yLmRldGVjdF9wYXR0ZXJucygpCiAgICBpZiBub3QgcGF0dGVybnM6CiAgICAgICAgcmV0dXJuIHsic3VnZ2VzdGVkIjogRmFsc2UsICJtZXNzYWdlIjogIk5vIHBhdHRlcm5zIGRldGVjdGVkIHlldCJ9CgogICAgYmVzdCA9IHBhdHRlcm5zWzBdCiAgICBpZiBiZXN0WyJmcmVxdWVuY3kiXSA8IDI6CiAgICAgICAgcmV0dXJuIHsic3VnZ2VzdGVkIjogRmFsc2UsICJtZXNzYWdlIjogZiJQYXR0ZXJuIG9ubHkgc2VlbiB7YmVzdFsnZnJlcXVlbmN5J119IHRpbWUocyksIG5lZWQgYXQgbGVhc3QgMiJ9CgogICAgbmFtZSA9IHBhdHRlcm5fZGV0ZWN0b3Iuc3VnZ2VzdF93b3JrZmxvd19uYW1lKGJlc3QpCiAgICB3b3JrZmxvdyA9IHBhdHRlcm5fZGV0ZWN0b3IuY3JlYXRlX3dvcmtmbG93KAogICAgICAgIG5hbWU9bmFtZSwKICAgICAgICBjb21tYW5kcz1iZXN0WyJjb21tYW5kcyJdLAogICAgICAgIGRlc2NyaXB0aW9uPWYiQXV0b21hdGVkIGZyb20gcGF0dGVybiBzZWVuIHtiZXN0WydmcmVxdWVuY3knXX0gdGltZXMiLAogICAgKQogICAgcmV0dXJuIHsic3VnZ2VzdGVkIjogVHJ1ZSwgInBhdHRlcm4iOiBiZXN0LCAid29ya2Zsb3ciOiB3b3JrZmxvd30K
+"""
+Pattern Detection & Workflow Router.
+Exposes pattern detection, workflow automation, and goal execution endpoints.
+"""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from typing import Any, Dict
+
+from fastapi import APIRouter, HTTPException
+
+from backend.services.pattern_detector import pattern_detector
+from shared.logger import get_logger
+
+log = get_logger("router_patterns")
+router = APIRouter(prefix="/api/patterns", tags=["Patterns & Workflows"])
+
+
+@router.get("/detect")
+async def detect_patterns() -> Dict[str, Any]:
+    """Scan execution history for repeated command patterns."""
+    patterns = pattern_detector.detect_patterns()
+    return {
+        "patterns": patterns,
+        "count": len(patterns),
+        "total_commands": len(pattern_detector._history),
+    }
+
+
+@router.get("/stats")
+async def get_pattern_stats() -> Dict[str, Any]:
+    """Get pattern detection statistics."""
+    return pattern_detector.get_stats()
+
+
+@router.post("/workflows")
+async def create_workflow(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Create a new workflow from a list of commands."""
+    name = data.get("name", "")
+    commands = data.get("commands", [])
+    description = data.get("description", "")
+    cron = data.get("cron", "")
+    if not commands:
+        raise HTTPException(status_code=400, detail="commands list is required")
+    if not name:
+        name = pattern_detector.suggest_workflow_name({"command_types": ["other"]})
+    workflow = pattern_detector.create_workflow(name, commands, description)
+    if cron:
+        workflow["cron"] = cron
+        _schedule_workflow_cron(workflow, cron)
+    return workflow
+
+
+@router.get("/workflows")
+async def list_workflows() -> Dict[str, Any]:
+    """List all saved workflows."""
+    workflows = pattern_detector.get_workflows()
+    return {"workflows": workflows, "count": len(workflows)}
+
+
+@router.get("/workflows/{workflow_id}")
+async def get_workflow(workflow_id: str) -> Dict[str, Any]:
+    """Get a specific workflow by ID."""
+    workflows = pattern_detector.get_workflows()
+    for wf in workflows:
+        if wf["workflow_id"] == workflow_id:
+            return wf
+    raise HTTPException(status_code=404, detail=f"Workflow {workflow_id} not found")
+
+
+@router.put("/workflows/{workflow_id}")
+async def update_workflow(workflow_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    """Update a workflow's name, description, commands, or cron schedule."""
+    workflows = pattern_detector.get_workflows()
+    target = None
+    for wf in workflows:
+        if wf["workflow_id"] == workflow_id:
+            target = wf
+            break
+    if not target:
+        raise HTTPException(status_code=404, detail=f"Workflow {workflow_id} not found")
+
+    if "name" in data:
+        target["name"] = data["name"]
+    if "description" in data:
+        target["description"] = data["description"]
+    if "commands" in data:
+        if not data["commands"]:
+            raise HTTPException(status_code=400, detail="commands list cannot be empty")
+        target["commands"] = data["commands"]
+        target["step_count"] = len(data["commands"])
+    if "cron" in data:
+        target["cron"] = data["cron"]
+        _schedule_workflow_cron(target, data["cron"])
+
+    target["updated_at"] = datetime.now(timezone.utc).isoformat()
+    pattern_detector._save()
+    return target
+
+
+@router.post("/workflows/{workflow_id}/schedule")
+async def schedule_workflow(workflow_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    """Schedule a workflow with a cron expression."""
+    workflows = pattern_detector.get_workflows()
+    target = None
+    for wf in workflows:
+        if wf["workflow_id"] == workflow_id:
+            target = wf
+            break
+    if not target:
+        raise HTTPException(status_code=404, detail=f"Workflow {workflow_id} not found")
+
+    cron = data.get("cron", "")
+    if not cron:
+        raise HTTPException(status_code=400, detail="cron expression is required")
+
+    target["cron"] = cron
+    target["updated_at"] = datetime.now(timezone.utc).isoformat()
+    pattern_detector._save()
+
+    job_id = _schedule_workflow_cron(target, cron)
+    return {"status": "scheduled", "workflow_id": workflow_id, "cron": cron, "job_id": job_id}
+
+
+@router.post("/workflows/{workflow_id}/run")
+async def run_workflow(workflow_id: str) -> Dict[str, Any]:
+    """Execute a workflow's commands sequentially."""
+    result = await pattern_detector.run_workflow(workflow_id)
+    if not result.get("success") and "not found" in result.get("error", ""):
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+
+@router.delete("/workflows/{workflow_id}")
+async def delete_workflow(workflow_id: str) -> Dict[str, Any]:
+    """Delete a workflow."""
+    success = pattern_detector.delete_workflow(workflow_id)
+    if not success:
+        raise HTTPException(status_code=404, detail=f"Workflow {workflow_id} not found")
+    _cancel_workflow_job(workflow_id)
+    return {"status": "deleted", "workflow_id": workflow_id}
+
+
+def _schedule_workflow_cron(workflow: Dict[str, Any], cron: str) -> str:
+    """Schedule a workflow job in APScheduler."""
+    from backend.scheduler import scheduler
+
+    wf_id = workflow["workflow_id"]
+    job_id = f"wf_{wf_id}"
+
+    if hasattr(scheduler, 'cancel_job'):
+        scheduler.cancel_job(job_id)
+
+    scheduler.schedule_cron(
+        job_id=job_id,
+        func="backend.routers.router_patterns:run_workflow_by_id",
+        args=[wf_id],
+        cron_expression=cron,
+        description=f"Workflow: {workflow.get('name', '')}"
+    )
+    return job_id
+
+
+async def run_workflow_by_id(wf_id: str) -> Dict[str, Any]:
+    """APScheduler job target: execute a saved workflow by id.
+
+    Referenced by string from _schedule_workflow_cron, so it must stay a
+    module-level function with a stable name.
+    """
+    result = await pattern_detector.run_workflow(wf_id)
+    log.info("scheduled_workflow_ran", workflow_id=wf_id, success=result.get("success"))
+    return result
+
+
+def _cancel_workflow_job(workflow_id: str):
+    """Cancel a scheduled workflow job."""
+    from backend.scheduler import scheduler
+    job_id = f"wf_{workflow_id}"
+    if hasattr(scheduler, 'cancel_job'):
+        scheduler.cancel_job(job_id)
+
+
+@router.post("/suggest")
+async def suggest_workflow() -> Dict[str, Any]:
+    """
+    Automatically suggest a workflow based on detected patterns.
+    Creates a workflow from the most frequent pattern.
+    """
+    patterns = pattern_detector.detect_patterns()
+    if not patterns:
+        return {"suggested": False, "message": "No patterns detected yet"}
+
+    best = patterns[0]
+    if best["frequency"] < 2:
+        return {"suggested": False, "message": f"Pattern only seen {best['frequency']} time(s), need at least 2"}
+
+    name = pattern_detector.suggest_workflow_name(best)
+    workflow = pattern_detector.create_workflow(
+        name=name,
+        commands=best["commands"],
+        description=f"Automated from pattern seen {best['frequency']} times",
+    )
+    return {"suggested": True, "pattern": best, "workflow": workflow}

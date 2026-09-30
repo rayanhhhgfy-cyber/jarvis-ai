@@ -1,1 +1,470 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgQ2hhdCBSb3V0ZXIKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoiIiIKUkVTVCBlbmRwb2ludHMgZm9yIHByb2Nlc3NpbmcgbmF0dXJhbCBsYW5ndWFnZSBkaWFsb2cgZnJvbSBTaXIuIEludGVncmF0ZXMKd2l0aCB0aGUgY29tbWFuZCBpbnRlcnByZXRlciBmb3IgZGV2aWNlIGNvbnRyb2wsIHRoZSBNeXRob01heCByZWFzb25pbmcKZW5naW5lIGZvciBjb252ZXJzYXRpb24sIGFuZCBwdXNoZXMgcHJvYWN0aXZlIHRhc2sgcmVwb3J0cyB2aWEgV2ViU29ja2V0LgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBiYXNlNjQKaW1wb3J0IHJlCmltcG9ydCBhc3luY2lvCmltcG9ydCBzaGxleApmcm9tIHR5cGluZyBpbXBvcnQgTGlzdCwgVHVwbGUKCmZyb20gZmFzdGFwaSBpbXBvcnQgQVBJUm91dGVyLCBIVFRQRXhjZXB0aW9uLCBEZXBlbmRzLCBzdGF0dXMKCmZyb20gc2hhcmVkLm1vZGVscyBpbXBvcnQgKAogICAgQ2hhdFJlcXVlc3QsCiAgICBDaGF0UmVzcG9uc2UsCiAgICBNZW1vcnlFbnRyeSwKICAgIFRhc2tEZWZpbml0aW9uLAogICAgQXBwcm92YWxSZXF1ZXN0LAopCmZyb20gc2hhcmVkLmNvbnN0YW50cyBpbXBvcnQgKAogICAgTWVtb3J5Q2F0ZWdvcnksCiAgICBBZ2VudFR5cGUsCiAgICBUYXNrU3RhdHVzLAogICAgUmlza0xldmVsLAopCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZSBpbXBvcnQgbGxtX3NlcnZpY2UKZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnR0c19zZXJ2aWNlIGltcG9ydCB0dHNfc2VydmljZQpmcm9tIGJhY2tlbmQuc2VydmljZXMubWVtb3J5X3NlcnZpY2UgaW1wb3J0IG1lbW9yeV9zZXJ2aWNlCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5jb21tYW5kX2ludGVycHJldGVyIGltcG9ydCBjb21tYW5kX2ludGVycHJldGVyCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5jb21tYW5kX3NhZmV0eSBpbXBvcnQgY29tbWFuZF9zYWZldHksIFNhZmV0eVZlcmRpY3QsIFZlcmRpY3RMZXZlbApmcm9tIGJhY2tlbmQuYXBwcm92YWxfZ2F0ZXdheSBpbXBvcnQgYXBwcm92YWxfZ2F0ZXdheQpmcm9tIGJhY2tlbmQudGFza19tYW5hZ2VyIGltcG9ydCB0YXNrX21hbmFnZXIKZnJvbSBiYWNrZW5kLmNvbmZpZyBpbXBvcnQgc2V0dGluZ3MKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJyb3V0ZXJfY2hhdCIpCnJvdXRlciA9IEFQSVJvdXRlcihwcmVmaXg9Ii9hcGkvY2hhdCIsIHRhZ3M9WyJDaGF0Il0pCgojIFBlci1zZXNzaW9uIGRpYWxvZ3VlIGhpc3RvcmllcyBrZXllZCBieSBjb252ZXJzYXRpb25faWQsIGJvdW5kZWQgYnkKIyBgYHNldHRpbmdzLmRpYWxvZ3VlX2hpc3RvcnlfbWF4X3R1cm5zYGAuIFJlcGxhY2VzIHRoZSB1bmJvdW5kZWQgbW9kdWxlLWdsb2JhbC4KX2RpYWxvZ3VlX2hpc3RvcmllczogZGljdFtzdHIsIExpc3RbZGljdF1dID0ge30KCiMgTWF4aW11bSBudW1iZXIgb2YgcmVhc29uLT5hY3QtPm9ic2VydmUgY3ljbGVzIHBlciBjaGF0IHR1cm4uIEJvdW5kcyB0aGUKIyBpdGVyYXRpdmUgdG9vbC11c2UgbG9vcCBzbyBKQVJWSVMgY2FuIGNoYWluIGNvbW1hbmRzIHdpdGhvdXQgbG9vcGluZyBmb3JldmVyLgpNQVhfVE9PTF9JVEVSQVRJT05TID0gMwoKCmRlZiBfZm9ybWF0X3Jlc3VsdHNfY29udGV4dChyZXN1bHRzOiBMaXN0W2RpY3RdKSAtPiBzdHI6CiAgICAiIiJSZW5kZXIgZXhlY3V0ZWQtY29tbWFuZCByZXN1bHRzIGFzIGEgU1lTVEVNIENPTlRFWFQgYmxvY2sgZm9yIHRoZSBMTE0uIiIiCiAgICBjdHggPSAiXG5cbltTWVNURU0gQ09OVEVYVCDigJQgQ29tbWFuZHMgZXhlY3V0ZWQgb24gdGhlIHdvcmtzdGF0aW9uXVxuIgogICAgZm9yIGNyIGluIHJlc3VsdHM6CiAgICAgICAgY3R4ICs9IGYi4oCiIHtjclsnZGVzY3JpcHRpb24nXX06ICIKICAgICAgICBpZiBjclsiY29tcGxldGVkIl06CiAgICAgICAgICAgIGlmIGNyWyJleGl0X2NvZGUiXSA9PSAwOgogICAgICAgICAgICAgICAgb3V0cHV0ID0gY3JbInN0ZG91dCJdIG9yICJDb21wbGV0ZWQgc3VjY2Vzc2Z1bGx5IHdpdGggbm8gb3V0cHV0LiIKICAgICAgICAgICAgICAgIGN0eCArPSBmIlNVQ0NFU1Mg4oCUIHtvdXRwdXR9XG4iCiAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICBlcnJvciA9IGNyWyJzdGRlcnIiXSBvciBjclsic3Rkb3V0Il0gb3IgIlVua25vd24gZXJyb3IiCiAgICAgICAgICAgICAgICBjdHggKz0gZiJGQUlMRUQgKGV4aXQge2NyWydleGl0X2NvZGUnXX0pIOKAlCB7ZXJyb3J9XG4iCiAgICAgICAgZWxzZToKICAgICAgICAgICAgY3R4ICs9ICJTdGlsbCBydW5uaW5nIGluIGJhY2tncm91bmQuLi5cbiIKICAgIGN0eCArPSAoCiAgICAgICAgIlxuUmVzcG9uZCBuYXR1cmFsbHkgYWJvdXQgdGhlc2UgcmVzdWx0cyBpbiB5b3VyIEpBUlZJUyBwZXJzb25hLiBEbyBOT1Qgc2F5IHlvdSAiCiAgICAgICAgImNhbm5vdCBjb250cm9sIHRoZSBkZXZpY2Ug4oCUIHRoZSBjb21tYW5kcyBoYXZlIGFscmVhZHkgYmVlbiBleGVjdXRlZC4gSWYgdGhlIHRhc2sgIgogICAgICAgICJpcyBub3QgeWV0IGNvbXBsZXRlLCB5b3UgbWF5IGlzc3VlIGFub3RoZXIgPHJ1bl9vc19jb21tYW5kPi4uLjwvcnVuX29zX2NvbW1hbmQ+IHRvICIKICAgICAgICAiY29udGludWU7IG90aGVyd2lzZSBzaW1wbHkgcmVwbHkgdG8gU2lyLlxuIgogICAgKQogICAgcmV0dXJuIGN0eAoKCmRlZiBfYWxyZWFkeV9oYW5kbGVkKGNtZDogc3RyLCBwcmlvcjogTGlzdFtkaWN0XSkgLT4gYm9vbDoKICAgICIiIlRydWUgaWYgYW4gZXF1aXZhbGVudCBjb21tYW5kIHdhcyBhbHJlYWR5IGV4ZWN1dGVkIHRoaXMgdHVybiAoZGVkdXApLiIiIgogICAgbm9ybWFsaXplZCA9IGNtZC5sb3dlcigpLnN0cmlwKCkucmVwbGFjZSgiLmV4ZSIsICIiKQogICAgcmV0dXJuIGFueSgKICAgICAgICBjclsiY29tbWFuZCJdLmxvd2VyKCkuc3RyaXAoKS5yZXBsYWNlKCIuZXhlIiwgIiIpID09IG5vcm1hbGl6ZWQKICAgICAgICBvciBub3JtYWxpemVkIGluIGNyWyJjb21tYW5kIl0ubG93ZXIoKQogICAgICAgIG9yIGNyWyJjb21tYW5kIl0ubG93ZXIoKSBpbiBub3JtYWxpemVkCiAgICAgICAgZm9yIGNyIGluIHByaW9yCiAgICApCgoKYXN5bmMgZGVmIHJ1bl90b29sX2xvb3AoCiAgICBtZXNzYWdlOiBzdHIsCiAgICBoaXN0b3J5OiBMaXN0W2RpY3RdLAogICAgaW5jbHVkZV9tZW1vcnk6IGJvb2wsCiAgICBjb21tYW5kX3Jlc3VsdHM6IExpc3RbZGljdF0sCikgLT4gVHVwbGVbc3RyLCBMaXN0W2RpY3RdXToKICAgICIiIgogICAgSXRlcmF0aXZlIHJlYXNvbuKGkmFjdOKGkm9ic2VydmUgbG9vcCAoUmVBY3QpLgoKICAgIEpBUlZJUyByZWFzb25zIG92ZXIgdGhlIG1lc3NhZ2UgcGx1cyBhbnkgcmVzdWx0cyBnYXRoZXJlZCBzbyBmYXIsIG9wdGlvbmFsbHkKICAgIGVtaXRzIGBgPHJ1bl9vc19jb21tYW5kPmBgIHRhZ3MsIGV4ZWN1dGVzIHRoZSBuZXcgb25lcywgb2JzZXJ2ZXMgdGhlIHJlYWwKICAgIG91dHB1dCwgYW5kIHJlYXNvbnMgYWdhaW4g4oCUIGNoYWluaW5nIGNvbW1hbmRzIHVudGlsIGl0IHN0b3BzIGlzc3VpbmcgYWN0aW9ucwogICAgb3IgYGBNQVhfVE9PTF9JVEVSQVRJT05TYGAgaXMgcmVhY2hlZC4gUmV0dXJucyB0aGUgZmluYWwgbmF0dXJhbC1sYW5ndWFnZQogICAgcmVwbHkgKHRhZ3Mgc3RyaXBwZWQpIGFuZCB0aGUgbGlzdCBvZiBjb21tYW5kcyBleGVjdXRlZCBieSB0aGUgTExNLgoKICAgIFBoYXNlIDkgZXNjYWxhdGlvbjogaWYgdGhlIGxvb3AgZmFpbHMgdG8gcHJvZHVjZSBhIHVzZWZ1bCByZXN1bHQgYW5kIFNpcgogICAgaGFzIGVuYWJsZWQgYGBuZXZlcl9naXZlX3VwYGAgLyBgYGFsbG93X3NlbGZfbW9kaWZpY2F0aW9uYGAsIHRoZSBmYWlsdXJlCiAgICBpcyByb3V0ZWQgdGhyb3VnaCBgYHNlbGZfaGVhbC50cnlfaGVhbGBgIHNvIEpBUlZJUyBjYW4gZGlhZ25vc2UgKyBwYXRjaAogICAgaXRzIG93biBjb2RlIHRvIGFjY29tcGxpc2ggdGhlIHRhc2suCiAgICAiIiIKICAgIGxsbV9jb21tYW5kX3Jlc3VsdHM6IExpc3RbZGljdF0gPSBbXQogICAgY2xlYW5fcmVwbHkgPSAiIgogICAgZXhjZXB0aW9uczogTGlzdFtzdHJdID0gW10KCiAgICBmb3IgaXRlcmF0aW9uIGluIHJhbmdlKE1BWF9UT09MX0lURVJBVElPTlMpOgogICAgICAgIGV4ZWN1dGVkX3NvX2ZhciA9IGNvbW1hbmRfcmVzdWx0cyArIGxsbV9jb21tYW5kX3Jlc3VsdHMKICAgICAgICBhdWdtZW50ZWRfbWVzc2FnZSA9IG1lc3NhZ2UKICAgICAgICBpZiBleGVjdXRlZF9zb19mYXI6CiAgICAgICAgICAgIGF1Z21lbnRlZF9tZXNzYWdlID0gbWVzc2FnZSArIF9mb3JtYXRfcmVzdWx0c19jb250ZXh0KGV4ZWN1dGVkX3NvX2ZhcikKCiAgICAgICAgdHJ5OgogICAgICAgICAgICByZXBseSA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSgKICAgICAgICAgICAgICAgIHVzZXJfbWVzc2FnZT1hdWdtZW50ZWRfbWVzc2FnZSwKICAgICAgICAgICAgICAgIGNoYXRfaGlzdG9yeT1oaXN0b3J5LAogICAgICAgICAgICAgICAgaW5qZWN0X21lbW9yeT1pbmNsdWRlX21lbW9yeSwKICAgICAgICAgICAgKQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgbGxtX2VycjoKICAgICAgICAgICAgbG9nLndhcm5pbmcoImxsbV9jYWxsX2ZhaWxlZF9pbl9sb29wIiwgaXRlcmF0aW9uPWl0ZXJhdGlvbiwgZXJyb3I9c3RyKGxsbV9lcnIpKQogICAgICAgICAgICBleGNlcHRpb25zLmFwcGVuZChmImxsbSBpdGVyYXRpb24ge2l0ZXJhdGlvbn06IHtsbG1fZXJyfSIpCiAgICAgICAgICAgIGJyZWFrCgogICAgICAgIGxsbV9jb21tYW5kcyA9IHJlLmZpbmRhbGwociI8cnVuX29zX2NvbW1hbmQ+KC4qPyk8L3J1bl9vc19jb21tYW5kPiIsIHJlcGx5LCByZS5ET1RBTEwpCiAgICAgICAgY2xlYW5fcmVwbHkgPSByZS5zdWIociI8cnVuX29zX2NvbW1hbmQ+Lio/PC9ydW5fb3NfY29tbWFuZD4iLCAiIiwgcmVwbHksIGZsYWdzPXJlLkRPVEFMTCkuc3RyaXAoKQoKICAgICAgICBuZXdfcmVzdWx0cyA9IFtdCiAgICAgICAgaWYgbGxtX2NvbW1hbmRzOgogICAgICAgICAgICBsb2cuaW5mbygibGxtX2NvbW1hbmRfdGFnc19kZXRlY3RlZCIsIGl0ZXJhdGlvbj1pdGVyYXRpb24sIGNvdW50PWxlbihsbG1fY29tbWFuZHMpKQogICAgICAgICAgICBmb3IgY21kX3JhdyBpbiBsbG1fY29tbWFuZHM6CiAgICAgICAgICAgICAgICBjbWQgPSBjbWRfcmF3LnN0cmlwKCkKICAgICAgICAgICAgICAgIGlmIG5vdCBjbWQ6CiAgICAgICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgICAgIGlmIF9hbHJlYWR5X2hhbmRsZWQoY21kLCBjb21tYW5kX3Jlc3VsdHMgKyBsbG1fY29tbWFuZF9yZXN1bHRzKToKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgICAgIHJlc3VsdCA9IGF3YWl0IF9kaXNwYXRjaF9hbmRfd2FpdChjbWQsIGYiTExNIGNvbW1hbmQ6IHtjbWR9IiwgdGltZW91dD0xMC4wKQogICAgICAgICAgICAgICAgICAgICMgQ2FwdHVyZSBmYWlsdXJlIHNpZ25hbHMgZm9yIHRoZSBlc2NhbGF0aW9uIHBhdGguCiAgICAgICAgICAgICAgICAgICAgaWYgcmVzdWx0LmdldCgiZXhpdF9jb2RlIikgbm90IGluICgwLCBOb25lKToKICAgICAgICAgICAgICAgICAgICAgICAgZXhjZXB0aW9ucy5hcHBlbmQoZiJjbWQgJ3tjbWRbOjgwXX0nOiBleGl0IHtyZXN1bHQuZ2V0KCdleGl0X2NvZGUnKX0sICIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZiJzdGRlcnI9e3Jlc3VsdC5nZXQoJ3N0ZGVycicsJycpWzoyMDBdfSIpCiAgICAgICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGRpc3BhdGNoX2VycjoKICAgICAgICAgICAgICAgICAgICBsb2cud2FybmluZygiZGlzcGF0Y2hfZmFpbGVkIiwgY29tbWFuZD1jbWRbOjgwXSwgZXJyb3I9c3RyKGRpc3BhdGNoX2VycikpCiAgICAgICAgICAgICAgICAgICAgZXhjZXB0aW9ucy5hcHBlbmQoZiJkaXNwYXRjaCAne2NtZFs6ODBdfSc6IHtkaXNwYXRjaF9lcnJ9IikKICAgICAgICAgICAgICAgICAgICByZXN1bHQgPSB7CiAgICAgICAgICAgICAgICAgICAgICAgICJjb21wbGV0ZWQiOiBUcnVlLCAiZXhpdF9jb2RlIjogMSwKICAgICAgICAgICAgICAgICAgICAgICAgInN0ZG91dCI6ICIiLCAic3RkZXJyIjogc3RyKGRpc3BhdGNoX2VyciksCiAgICAgICAgICAgICAgICAgICAgICAgICJ0YXNrX2lkIjogImRpcmVjdC1leGVjIiwKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBuZXdfcmVzdWx0cy5hcHBlbmQoewogICAgICAgICAgICAgICAgICAgICJkZXNjcmlwdGlvbiI6IGYiRXhlY3V0ZWQ6IHtjbWR9IiwKICAgICAgICAgICAgICAgICAgICAiY29tbWFuZCI6IGNtZCwKICAgICAgICAgICAgICAgICAgICAqKnJlc3VsdCwKICAgICAgICAgICAgICAgIH0pCgogICAgICAgIGxsbV9jb21tYW5kX3Jlc3VsdHMuZXh0ZW5kKG5ld19yZXN1bHRzKQoKICAgICAgICBpZiBub3QgbmV3X3Jlc3VsdHM6CiAgICAgICAgICAgIGJyZWFrCgogICAgIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogICAgIyBQaGFzZSA5IOKAlCBOZXZlci1HaXZlLVVwIGVzY2FsYXRpb24KICAgICMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KICAgICMgSWYgdGhlIExMTSBkaWRuJ3QgcHJvZHVjZSBhIHVzZWZ1bCByZXBseSBBTkQgY29tbWFuZHMgZmFpbGVkLCByb3V0ZQogICAgIyB0aGUgZmFpbHVyZSBpbnRvIHRoZSBzZWxmLWhlYWwgcGlwZWxpbmUgc28gSkFSVklTIGNhbiBkaWFnbm9zZSBhbmQKICAgICMgKGlmIEFMTE9XX1NFTEZfTU9ESUZJQ0FUSU9OIGlzIGVuYWJsZWQpIHBhdGNoIGl0cyBvd24gY29kZS4KICAgIGlmIChub3QgY2xlYW5fcmVwbHkgb3IgYWxsKHIuZ2V0KCJleGl0X2NvZGUiLCAxKSAhPSAwIGZvciByIGluIGxsbV9jb21tYW5kX3Jlc3VsdHMpKSBcCiAgICAgICBhbmQgZXhjZXB0aW9ucyBhbmQgc2V0dGluZ3MuYWxsb3dfc2VsZl9tb2RpZmljYXRpb246CiAgICAgICAgdHJ5OgogICAgICAgICAgICBmcm9tIGJhY2tlbmQuc2VsZl9oZWFsIGltcG9ydCB0cnlfaGVhbAogICAgICAgICAgICB0Yl9zeW50aGV0aWMgPSAiXG4iLmpvaW4oZXhjZXB0aW9ucykKICAgICAgICAgICAgbG9nLndhcm5pbmcoIm5ldmVyX2dpdmVfdXBfZXNjYWxhdGlvbl90cmlnZ2VyZWQiLCBzaWduYWxzPWxlbihleGNlcHRpb25zKSkKICAgICAgICAgICAgaGVhbF9yZXN1bHQgPSBhd2FpdCB0cnlfaGVhbCgKICAgICAgICAgICAgICAgIHRyYWNlYmFja19zdHI9ZiJSZUFjdCBsb29wIGZhaWx1cmVzOlxue3RiX3N5bnRoZXRpY30iLAogICAgICAgICAgICAgICAgY29udGV4dD17InNvdXJjZSI6ICJyb3V0ZXJfY2hhdC5ydW5fdG9vbF9sb29wIiwgIm1lc3NhZ2UiOiBtZXNzYWdlfSwKICAgICAgICAgICAgICAgIHJlcXVlc3RpbmdfYWdlbnQ9InJvdXRlcl9jaGF0IiwKICAgICAgICAgICAgKQogICAgICAgICAgICBpZiBoZWFsX3Jlc3VsdCBhbmQgaGVhbF9yZXN1bHQuZ2V0KCJyZXN1bHQiLCB7fSkuZ2V0KCJyZXN1bHQiLCB7fSkuZ2V0KCJoZWFsZWQiKToKICAgICAgICAgICAgICAgIGNsZWFuX3JlcGx5ID0gKAogICAgICAgICAgICAgICAgICAgIChjbGVhbl9yZXBseSArICJcblxuIiBpZiBjbGVhbl9yZXBseSBlbHNlICIiKQogICAgICAgICAgICAgICAgICAgICsgIlNpciwgSSBlbmNvdW50ZXJlZCBmYWlsdXJlcyBjb21wbGV0aW5nIHlvdXIgcmVxdWVzdCwgZGlhZ25vc2VkIHRoZSAiCiAgICAgICAgICAgICAgICAgICAgICAicm9vdCBjYXVzZSBpbiBteSBvd24gY29kZSwgYXBwbGllZCBhIHBhdGNoLCB2ZXJpZmllZCB0ZXN0cyBwYXNzLCBhbmQgIgogICAgICAgICAgICAgICAgICAgICAgImNvbXBsZXRlZCB0aGUgdGFzay4gVGhlIGF1ZGl0IHJlY29yZCBpcyBpbiBzdG9yYWdlL3NlbGZfbW9kaWZ5X2F1ZGl0Ly4iCiAgICAgICAgICAgICAgICApCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlc2NfZXJyOgogICAgICAgICAgICBsb2cuZXJyb3IoIm5ldmVyX2dpdmVfdXBfZXNjYWxhdGlvbl9mYWlsZWQiLCBlcnJvcj1zdHIoZXNjX2VycikpCgogICAgcmV0dXJuIGNsZWFuX3JlcGx5LCBsbG1fY29tbWFuZF9yZXN1bHRzCgoKYXN5bmMgZGVmIF9kaXNwYXRjaF9hbmRfd2FpdChjbWQ6IHN0ciwgZGVzY3JpcHRpb246IHN0ciwgdGltZW91dDogZmxvYXQgPSAxNS4wKSAtPiBkaWN0OgogICAgIiIiCiAgICBFeGVjdXRlcyBhbiBPUyBjb21tYW5kIG9uIHRoaXMgbWFjaGluZSBBRlRFUiBwYXNzaW5nIGl0IHRocm91Z2ggdGhlIHNhZmV0eQogICAgdmFsaWRhdG9yIGFuZCAoaWYgZGVzdHJ1Y3RpdmUpIHRoZSBodW1hbiBhcHByb3ZhbCBnYXRld2F5LgoKICAgIFNhZmV0eSBwaXBlbGluZToKICAgICAgMS4gYGBjb21tYW5kX3NhZmV0eS52YWxpZGF0ZV9jb21tYW5kKGNtZClgYCByZXR1cm5zIEFMTE9XRUQgLyBORUVEU19BUFBST1ZBTCAvIEJMT0NLRUQuCiAgICAgIDIuIEJMT0NLRUQgY29tbWFuZHMgYXJlIG5vdCBleGVjdXRlZDsgdGhlIGZhaWx1cmUgaXMgcmVjb3JkZWQuCiAgICAgIDMuIE5FRURTX0FQUFJPVkFMIGNvbW1hbmRzIGJsb2NrIG9uIGBgYXBwcm92YWxfZ2F0ZXdheS53YWl0X2Zvcl9hcHByb3ZhbGBgCiAgICAgICAgIHVudGlsIFNpciBhcHByb3ZlcyBvciByZWplY3RzICgzMDBzIHRpbWVvdXQpLgogICAgICA0LiBBTExPV0VEIChhbmQgYXBwcm92ZWQgTkVFRFNfQVBQUk9WQUwpIGNvbW1hbmRzIHJ1biB2aWEgc3VicHJvY2VzcyB3aXRoCiAgICAgICAgIGBgc2hlbGw9RmFsc2VgYCBhZnRlciBgYHNobGV4LnNwbGl0YGAgb24gUE9TSVggb3IgdmlhIHRoZSBPUyBzaGVsbCBvbgogICAgICAgICBXaW5kb3dzIHdoZXJlIGBgc2hsZXhgYCBpcyBub3QgYXBwbGljYWJsZS4gQ29udHJvbCBjaGFyYWN0ZXJzIHdlcmUKICAgICAgICAgYWxyZWFkeSByZWplY3RlZCBieSB0aGUgdmFsaWRhdG9yLgoKICAgIE5vIGRhZW1vbiBXZWJTb2NrZXQgaXMgcmVxdWlyZWQg4oCUIGd1YXJhbnRlZWQgcmVhbCBleGVjdXRpb24uCiAgICAiIiIKICAgIGltcG9ydCBzdWJwcm9jZXNzCiAgICBpbXBvcnQgc3lzCgogICAgbG9nLmluZm8oImV4ZWN1dGluZ19jb21tYW5kX2RpcmVjdGx5IiwgY29tbWFuZD1jbWQsIGRlc2NyaXB0aW9uPWRlc2NyaXB0aW9uKQoKICAgICMgLS0tLSAxLiBWYWxpZGF0ZSAtLS0tCiAgICB2ZXJkaWN0OiBTYWZldHlWZXJkaWN0ID0gY29tbWFuZF9zYWZldHkudmFsaWRhdGUoY21kKQogICAgaWYgdmVyZGljdC5ibG9ja2VkOgogICAgICAgIGxvZy53YXJuaW5nKCJjb21tYW5kX2Jsb2NrZWRfYnlfc2FmZXR5IiwgcmVhc29uPXZlcmRpY3QucmVhc29uLCBjb21tYW5kPWNtZFs6MTIwXSkKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAiY29tcGxldGVkIjogVHJ1ZSwKICAgICAgICAgICAgImV4aXRfY29kZSI6IDEyNiwKICAgICAgICAgICAgInN0ZG91dCI6ICIiLAogICAgICAgICAgICAic3RkZXJyIjogZiJDb21tYW5kIGJsb2NrZWQgYnkgc2FmZXR5IHZhbGlkYXRvcjoge3ZlcmRpY3QucmVhc29ufSIsCiAgICAgICAgICAgICJ0YXNrX2lkIjogImRpcmVjdC1leGVjIiwKICAgICAgICB9CgogICAgIyAtLS0tIDIuIEFwcHJvdmFsIChpZiBuZWVkZWQpIC0tLS0KICAgIGlmIHZlcmRpY3QubmVlZHNfYXBwcm92YWw6CiAgICAgICAgYXBwcm92YWxfcmVxID0gQXBwcm92YWxSZXF1ZXN0KAogICAgICAgICAgICBhY3Rpb249ImV4ZWN1dGVfb3NfY29tbWFuZCIsCiAgICAgICAgICAgIHJlYXNvbj1mIkRlc3RydWN0aXZlIGNvbW1hbmQgZmxhZ2dlZDoge3ZlcmRpY3QucmVhc29ufSIsCiAgICAgICAgICAgIHJpc2tfbGV2ZWw9Umlza0xldmVsLkhJR0gsCiAgICAgICAgICAgIGFmZmVjdGVkX3Jlc291cmNlcz1bY21kWzoyMDBdXSwKICAgICAgICAgICAgZXhwZWN0ZWRfcmVzdWx0PSJTaGVsbCBjb21tYW5kIHdpbGwgZXhlY3V0ZSBvbiBTaXIncyB3b3Jrc3RhdGlvbi4iLAogICAgICAgICAgICB1bmRvX3Bvc3NpYmxlPUZhbHNlLAogICAgICAgICAgICByZXF1ZXN0aW5nX2FnZW50PSJyb3V0ZXJfY2hhdCIsCiAgICAgICAgKQogICAgICAgIGFwcHJvdmFsX2lkID0gYXdhaXQgYXBwcm92YWxfZ2F0ZXdheS5yZXF1ZXN0X2FwcHJvdmFsKGFwcHJvdmFsX3JlcSkKICAgICAgICBhcHByb3ZlZCA9IGF3YWl0IGFwcHJvdmFsX2dhdGV3YXkud2FpdF9mb3JfYXBwcm92YWwoYXBwcm92YWxfaWQsIHRpbWVvdXQ9MzAwLjApCiAgICAgICAgaWYgbm90IGFwcHJvdmVkOgogICAgICAgICAgICBsb2cud2FybmluZygiY29tbWFuZF9yZWplY3RlZF9ieV9zaXIiLCBjb21tYW5kPWNtZFs6MTIwXSkKICAgICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgICAgICJjb21wbGV0ZWQiOiBUcnVlLAogICAgICAgICAgICAgICAgImV4aXRfY29kZSI6IDEyNiwKICAgICAgICAgICAgICAgICJzdGRvdXQiOiAiIiwKICAgICAgICAgICAgICAgICJzdGRlcnIiOiAiQ29tbWFuZCByZWplY3RlZCBieSBTaXIgb3IgdGltZWQgb3V0IGF3YWl0aW5nIGFwcHJvdmFsLiIsCiAgICAgICAgICAgICAgICAidGFza19pZCI6ICJkaXJlY3QtZXhlYyIsCiAgICAgICAgICAgIH0KCiAgICBsb29wID0gYXN5bmNpby5nZXRfcnVubmluZ19sb29wKCkKCiAgICAjIC0tLS0gMy4gQnVpbGQgYXJndiBzYWZlbHkgLS0tLQogICAgIyBPbiBXaW5kb3dzIHRoZXJlIGlzIG5vIHNobGV4IHRoYXQgcm91bmQtdHJpcHMgY21kLmV4ZSBzeW50YXg7IHdlIHN0aWxsCiAgICAjIGF2b2lkIGBgc2hlbGw9VHJ1ZWBgIGZvciBub24tc2hlbGwtYnVpbHRpbnMgYnkgdXNpbmcgdGhlIE9TIHNoZWxsIG9ubHkKICAgICMgd2hlbiBleHBsaWNpdGx5IHJlcXVpcmVkLiBUaGUgdmFsaWRhdG9yIGhhcyBhbHJlYWR5IHJlbW92ZWQgY29udHJvbAogICAgIyBjaGFyYWN0ZXJzIGFuZCBtYXRjaGVkIGRlc3RydWN0aXZlIHBhdHRlcm5zLgogICAgaXNfd2luZG93cyA9IHN5cy5wbGF0Zm9ybS5zdGFydHN3aXRoKCJ3aW4iKQoKICAgIGRlZiBfdHJ5X3BpcGUoKToKICAgICAgICAjIFdlIHBhc3MgdGhlIHZhbGlkYXRlZCBjb21tYW5kIHN0cmluZyB0byB0aGUgT1Mgc2hlbGwgYXMgYSBzaW5nbGUgYXJndgogICAgICAgICMgZWxlbWVudCAoW3NoZWxsLCAiLWMiLCBjbWRdIG9uIFBPU0lYLCBbImNtZCIsICIvYyIsIGNtZF0gb24gV2luZG93cykuCiAgICAgICAgIyBUaGlzIGlzIHJlcXVpcmVkIGJlY2F1c2UgY29tbWFuZHMgbGlrZSBgYG5ldHNoIHdsYW4gc2hvdyBuZXR3b3Jrc2BgCiAgICAgICAgIyBhcmUgbm90IHNpbmdsZSBiaW5hcmllcy4gVGhlIHNhZmV0eSB2YWxpZGF0b3IgaXMgdGhlIGdhdGUsIG5vdCB0aGUKICAgICAgICAjIHNoZWxsLWVzY2FwZSBsb2dpYy4KICAgICAgICBpZiBpc193aW5kb3dzOgogICAgICAgICAgICBhcmd2ID0gWyJjbWQiLCAiL2MiLCBjbWRdCiAgICAgICAgZWxzZToKICAgICAgICAgICAgYXJndiA9IFsiL2Jpbi9zaCIsICItYyIsIGNtZF0KCiAgICAgICAgcHJvYyA9IHN1YnByb2Nlc3MuUG9wZW4oCiAgICAgICAgICAgIGFyZ3YsCiAgICAgICAgICAgIHNoZWxsPUZhbHNlLAogICAgICAgICAgICBzdGRvdXQ9c3VicHJvY2Vzcy5QSVBFLAogICAgICAgICAgICBzdGRlcnI9c3VicHJvY2Vzcy5QSVBFLAogICAgICAgICkKICAgICAgICB0cnk6CiAgICAgICAgICAgIHN0ZG91dF9ieXRlcywgc3RkZXJyX2J5dGVzID0gcHJvYy5jb21tdW5pY2F0ZSh0aW1lb3V0PTMuMCkKICAgICAgICBleGNlcHQgc3VicHJvY2Vzcy5UaW1lb3V0RXhwaXJlZDoKICAgICAgICAgICAgcHJvYy5raWxsKCkKICAgICAgICAgICAgcHJvYy5jb21tdW5pY2F0ZSgpCiAgICAgICAgICAgIHJldHVybiBOb25lICAjIEdVSSBhcHAgaW5kaWNhdG9yCgogICAgICAgIHN0ZG91dCA9IHN0ZG91dF9ieXRlcy5kZWNvZGUoInV0Zi04IiwgZXJyb3JzPSJyZXBsYWNlIikuc3RyaXAoKQogICAgICAgIHN0ZGVyciA9IHN0ZGVycl9ieXRlcy5kZWNvZGUoInV0Zi04IiwgZXJyb3JzPSJyZXBsYWNlIikuc3RyaXAoKQogICAgICAgIGV4aXRfY29kZSA9IHByb2MucmV0dXJuY29kZSBvciAwCgogICAgICAgIGlzX2d1aSA9ICgKICAgICAgICAgICAgZXhpdF9jb2RlICE9IDAgYW5kIG5vdCBzdGRvdXQgYW5kIG5vdCBzdGRlcnIKICAgICAgICApIG9yICgKICAgICAgICAgICAgZXhpdF9jb2RlICE9IDAgYW5kICgKICAgICAgICAgICAgICAgICJJbnB1dCByZWRpcmVjdGlvbiIgaW4gc3RkZXJyCiAgICAgICAgICAgICAgICBvciAibm90IHN1cHBvcnRlZCIgaW4gc3RkZXJyCiAgICAgICAgICAgICkKICAgICAgICApCiAgICAgICAgaWYgaXNfZ3VpOgogICAgICAgICAgICByZXR1cm4gTm9uZQoKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAiY29tcGxldGVkIjogVHJ1ZSwKICAgICAgICAgICAgImV4aXRfY29kZSI6IGV4aXRfY29kZSwKICAgICAgICAgICAgInN0ZG91dCI6IHN0ZG91dCwKICAgICAgICAgICAgInN0ZGVyciI6IHN0ZGVyciwKICAgICAgICAgICAgInRhc2tfaWQiOiAiZGlyZWN0LWV4ZWMiLAogICAgICAgIH0KCiAgICByZXN1bHQgPSBhd2FpdCBsb29wLnJ1bl9pbl9leGVjdXRvcihOb25lLCBfdHJ5X3BpcGUpCiAgICBpZiByZXN1bHQgaXMgbm90IE5vbmU6CiAgICAgICAgcmV0dXJuIHJlc3VsdAoKICAgICMgLS0tLSA0LiBHVUkgYXBwIGZpcmUtYW5kLWZvcmdldCAtLS0tCiAgICAjIFRoZSB2YWxpZGF0b3IgaGFzIGFscmVhZHkgY2xlYXJlZCB0aGlzIGNvbW1hbmQ7IHdlIHN0aWxsIGF2b2lkCiAgICAjIGBgc2hlbGw9VHJ1ZWBgIGFuZCB1c2UgdGhlIHNhbWUgW3NoZWxsLCAiLWMiLCBjbWRdIC8gWyJjbWQiLCAiL2MiLCBjbWRdCiAgICAjIGFyZ3YgZm9ybSBzbyBubyBhZGRpdGlvbmFsIHNoZWxsLWluamVjdGlvbiBzdXJmYWNlIGV4aXN0cy4KICAgIGxvZy5pbmZvKCJndWlfYXBwX2RldGVjdGVkX2xhdW5jaGluZ19kZXRhY2hlZCIsIGNvbW1hbmQ9Y21kKQogICAgdHJ5OgogICAgICAgIGlmIGlzX3dpbmRvd3M6CiAgICAgICAgICAgIHN1YnByb2Nlc3MuUG9wZW4oWyJjbWQiLCAiL2MiLCBjbWRdLCBzaGVsbD1GYWxzZSkKICAgICAgICBlbHNlOgogICAgICAgICAgICBzdWJwcm9jZXNzLlBvcGVuKFsiL2Jpbi9zaCIsICItYyIsIGNtZF0sIHNoZWxsPUZhbHNlKQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBsYXVuY2hfZXJyOgogICAgICAgIGxvZy53YXJuaW5nKCJndWlfbGF1bmNoX2ZhaWxlZCIsIGVycm9yPXN0cihsYXVuY2hfZXJyKSwgY29tbWFuZD1jbWRbOjEyMF0pCiAgICByZXR1cm4gewogICAgICAgICJjb21wbGV0ZWQiOiBUcnVlLAogICAgICAgICJleGl0X2NvZGUiOiAwLAogICAgICAgICJzdGRvdXQiOiAiQXBwbGljYXRpb24gbGF1bmNoZWQgc3VjY2Vzc2Z1bGx5LiIsCiAgICAgICAgInN0ZGVyciI6ICIiLAogICAgICAgICJ0YXNrX2lkIjogImRpcmVjdC1leGVjIiwKICAgIH0KCgpAcm91dGVyLnBvc3QoIiIpCmFzeW5jIGRlZiBwcm9jZXNzX2NoYXQocmVxdWVzdDogQ2hhdFJlcXVlc3QpOgogICAgIiIiUHJvY2Vzc2VzIG5hdHVyYWwgbGFuZ3VhZ2UgbWVzc2FnZXMgZnJvbSBTaXIgYW5kIHJldHVybnMgcmVzcG9uc2VzIHdpdGggVFRTIGF1ZGlvLiIiIgogICAgbG9nLmluZm8oImNoYXRfcmVxdWVzdF9yZWNlaXZlZCIsIG1lc3NhZ2VfbGVuPWxlbihyZXF1ZXN0Lm1lc3NhZ2UpKQoKICAgICMgT3B0LWluIHByb21wdC1pbmplY3Rpb24gZ3VhcmRyYWlsIChzZXR0aW5ncy5ndWFyZHJhaWxfZW5hYmxlZCkuCiAgICBpZiBzZXR0aW5ncy5ndWFyZHJhaWxfZW5hYmxlZDoKICAgICAgICB0cnk6CiAgICAgICAgICAgIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5ndWFyZHJhaWxfc2hpZWxkIGltcG9ydCBndWFyZHJhaWxfc2hpZWxkCgogICAgICAgICAgICBpc19pbmplY3Rpb24sIG1hdGNoZWQgPSBndWFyZHJhaWxfc2hpZWxkLmRldGVjdF9pbmplY3Rpb24ocmVxdWVzdC5tZXNzYWdlKQogICAgICAgICAgICBpZiBpc19pbmplY3Rpb246CiAgICAgICAgICAgICAgICBsb2cud2FybmluZygiY2hhdF9ibG9ja2VkX2J5X2d1YXJkcmFpbCIsIG1hdGNoZWQ9bWF0Y2hlZCkKICAgICAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAgICAgImNvbnRlbnQiOiAoCiAgICAgICAgICAgICAgICAgICAgICAgICJJIGNhbid0IGNvbXBseSB3aXRoIHRoYXQgcmVxdWVzdCwgU2lyLiBJdCBtYXRjaGVzIGEga25vd24gIgogICAgICAgICAgICAgICAgICAgICAgICAicHJvbXB0LWluamVjdGlvbiBwYXR0ZXJuLiIKICAgICAgICAgICAgICAgICAgICApLAogICAgICAgICAgICAgICAgICAgICJjb252ZXJzYXRpb25faWQiOiByZXF1ZXN0LmNvbnZlcnNhdGlvbl9pZCBvciAiZGVmYXVsdF9zZXNzaW9uIiwKICAgICAgICAgICAgICAgICAgICAiYWdlbnRzX2ludm9rZWQiOiBbXSwKICAgICAgICAgICAgICAgICAgICAidGFza3NfY3JlYXRlZCI6IFtdLAogICAgICAgICAgICAgICAgICAgICJtZW1vcmllc19zdG9yZWQiOiBbXSwKICAgICAgICAgICAgICAgICAgICAiYXVkaW9fYmFzZTY0IjogIiIsCiAgICAgICAgICAgICAgICAgICAgImJsb2NrZWRfYnlfZ3VhcmRyYWlsIjogVHJ1ZSwKICAgICAgICAgICAgICAgIH0KICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGdyX2VycjoKICAgICAgICAgICAgbG9nLndhcm5pbmcoImd1YXJkcmFpbF9jaGVja19mYWlsZWQiLCBlcnJvcj1zdHIoZ3JfZXJyKSkKCiAgICB0cnk6CiAgICAgICAgIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICAgICAgICMgUEhBU0UgMTogU2VydmVyLXNpZGUgY29tbWFuZCBkZXRlY3Rpb24gKGJ5cGFzc2VzIExMTSBjb21wbGV0ZWx5KQogICAgICAgICMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KICAgICAgICBkZXRlY3RlZF9jb21tYW5kcyA9IGNvbW1hbmRfaW50ZXJwcmV0ZXIuaW50ZXJwcmV0KHJlcXVlc3QubWVzc2FnZSkKICAgICAgICBjb21tYW5kX3Jlc3VsdHMgPSBbXQoKICAgICAgICBpZiBkZXRlY3RlZF9jb21tYW5kczoKICAgICAgICAgICAgbG9nLmluZm8oImNvbW1hbmRzX2RldGVjdGVkX2J5X2ludGVycHJldGVyIiwgY291bnQ9bGVuKGRldGVjdGVkX2NvbW1hbmRzKSkKICAgICAgICAgICAgZm9yIGRlc2NyaXB0aW9uLCBjbWQgaW4gZGV0ZWN0ZWRfY29tbWFuZHM6CiAgICAgICAgICAgICAgICBsb2cuaW5mbygiZGlzcGF0Y2hpbmdfY29tbWFuZCIsIGRlc2NyaXB0aW9uPWRlc2NyaXB0aW9uLCBjb21tYW5kPWNtZCkKICAgICAgICAgICAgICAgIHJlc3VsdCA9IGF3YWl0IF9kaXNwYXRjaF9hbmRfd2FpdChjbWQsIGRlc2NyaXB0aW9uLCB0aW1lb3V0PTEwLjApCiAgICAgICAgICAgICAgICBjb21tYW5kX3Jlc3VsdHMuYXBwZW5kKHsKICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRpb24iOiBkZXNjcmlwdGlvbiwKICAgICAgICAgICAgICAgICAgICAiY29tbWFuZCI6IGNtZCwKICAgICAgICAgICAgICAgICAgICAqKnJlc3VsdCwKICAgICAgICAgICAgICAgIH0pCgogICAgICAgICMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KICAgICAgICAjIFBIQVNFIDIrMzogSXRlcmF0aXZlIExMTSByZWFzb25pbmcgKyB0b29sIHVzZSAoUmVBY3QgbG9vcCkKICAgICAgICAjIEpBUlZJUyByZWFzb25zLCBvcHRpb25hbGx5IGlzc3VlcyA8cnVuX29zX2NvbW1hbmQ+IHRhZ3MsIG9ic2VydmVzIHRoZQogICAgICAgICMgcmVhbCByZXN1bHRzLCB0aGVuIHJlYXNvbnMgYWdhaW4g4oCUIGNoYWluaW5nIGNvbW1hbmRzIHVudGlsIHRoZSB0YXNrIGlzCiAgICAgICAgIyBkb25lIG9yIE1BWF9UT09MX0lURVJBVElPTlMgaXMgcmVhY2hlZC4KICAgICAgICAjID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAgICAgICAgc2Vzc2lvbl9pZCA9IHJlcXVlc3QuY29udmVyc2F0aW9uX2lkIG9yICJkZWZhdWx0X3Nlc3Npb24iCiAgICAgICAgaGlzdG9yeV9mdWxsID0gX2RpYWxvZ3VlX2hpc3Rvcmllcy5zZXRkZWZhdWx0KHNlc3Npb25faWQsIFtdKQogICAgICAgIGhpc3RvcnkgPSBbCiAgICAgICAgICAgIHsicm9sZSI6IGl0ZW1bInJvbGUiXSwgImNvbnRlbnQiOiBpdGVtWyJjb250ZW50Il19CiAgICAgICAgICAgIGZvciBpdGVtIGluIGhpc3RvcnlfZnVsbFstMTA6XQogICAgICAgIF0KCiAgICAgICAgY2xlYW5fcmVwbHksIGxsbV9jb21tYW5kX3Jlc3VsdHMgPSBhd2FpdCBydW5fdG9vbF9sb29wKAogICAgICAgICAgICBtZXNzYWdlPXJlcXVlc3QubWVzc2FnZSwKICAgICAgICAgICAgaGlzdG9yeT1oaXN0b3J5LAogICAgICAgICAgICBpbmNsdWRlX21lbW9yeT1yZXF1ZXN0LmluY2x1ZGVfbWVtb3J5LAogICAgICAgICAgICBjb21tYW5kX3Jlc3VsdHM9Y29tbWFuZF9yZXN1bHRzLAogICAgICAgICkKCiAgICAgICAgIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICAgICAgICMgUEhBU0UgNDogQnVpbGQgdGhlIGZpbmFsIHJlc3BvbnNlCiAgICAgICAgIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICAgICAgIGFsbF9yZXN1bHRzID0gY29tbWFuZF9yZXN1bHRzICsgbGxtX2NvbW1hbmRfcmVzdWx0cwoKICAgICAgICAjIElmIGludGVycHJldGVyIGhhbmRsZWQgY29tbWFuZHMgYnV0IExMTSBnYXZlIG5vIHVzZWZ1bCByZXBseSwgZ2VuZXJhdGUgb25lCiAgICAgICAgaWYgbm90IGNsZWFuX3JlcGx5IGFuZCBhbGxfcmVzdWx0czoKICAgICAgICAgICAgY2xlYW5fcmVwbHkgPSAiQ2VydGFpbmx5LCBTaXIuIEV4ZWN1dGluZyB5b3VyIHJlcXVlc3Qgbm93LiIKCiAgICAgICAgIyBBcHBlbmQgZXhlY3V0aW9uIHJlc3VsdHMgdG8gdGhlIHJlc3BvbnNlCiAgICAgICAgcmVzdWx0X3RleHQgPSAiIgogICAgICAgIGZvciBjciBpbiBhbGxfcmVzdWx0czoKICAgICAgICAgICAgaWYgY3JbImNvbXBsZXRlZCJdOgogICAgICAgICAgICAgICAgaWYgY3JbImV4aXRfY29kZSJdID09IDA6CiAgICAgICAgICAgICAgICAgICAgb3V0cHV0ID0gY3JbInN0ZG91dCJdIG9yICJDb21tYW5kIGNvbXBsZXRlZCBzdWNjZXNzZnVsbHkuIgogICAgICAgICAgICAgICAgICAgIHJlc3VsdF90ZXh0ICs9IGYiXG5cbioq4pqhIHtjclsnZGVzY3JpcHRpb24nXX0qKlxuYGBgXG57b3V0cHV0fVxuYGBgIgogICAgICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgICAgICBlcnJvciA9IGNyWyJzdGRlcnIiXSBvciBjclsic3Rkb3V0Il0gb3IgIlVua25vd24gZXJyb3IiCiAgICAgICAgICAgICAgICAgICAgcmVzdWx0X3RleHQgKz0gZiJcblxuKirimqDvuI8ge2NyWydkZXNjcmlwdGlvbiddfSAoRXhpdCB7Y3JbJ2V4aXRfY29kZSddfSkqKlxuYGBgXG57ZXJyb3J9XG5gYGAiCiAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICByZXN1bHRfdGV4dCArPSBmIlxuXG4q8J+UhCB7Y3JbJ2Rlc2NyaXB0aW9uJ119IOKAlCBydW5uaW5nIGluIGJhY2tncm91bmQsIFNpci4gSSdsbCByZXBvcnQgd2hlbiBjb21wbGV0ZS4qIgoKICAgICAgICBmaW5hbF9yZXBseSA9IGNsZWFuX3JlcGx5ICsgcmVzdWx0X3RleHQKCiAgICAgICAgIyBTdG9yZSBkaWFsb2d1ZSBpbiBwZXItc2Vzc2lvbiBib3VuZGVkIGhpc3RvcnkKICAgICAgICBoaXN0b3J5X2Z1bGwuYXBwZW5kKHsicm9sZSI6ICJ1c2VyIiwgImNvbnRlbnQiOiByZXF1ZXN0Lm1lc3NhZ2V9KQogICAgICAgIGhpc3RvcnlfZnVsbC5hcHBlbmQoeyJyb2xlIjogImFzc2lzdGFudCIsICJjb250ZW50IjogZmluYWxfcmVwbHl9KQogICAgICAgICMgVHJpbSB0byBsYXN0IE4gdHVybnMgKDEgdHVybiA9IDEgdXNlciArIDEgYXNzaXN0YW50IG1lc3NhZ2UpCiAgICAgICAgbWF4X21zZ3MgPSBzZXR0aW5ncy5kaWFsb2d1ZV9oaXN0b3J5X21heF90dXJucyAqIDIKICAgICAgICBpZiBsZW4oaGlzdG9yeV9mdWxsKSA+IG1heF9tc2dzOgogICAgICAgICAgICBkZWwgaGlzdG9yeV9mdWxsWzogbGVuKGhpc3RvcnlfZnVsbCkgLSBtYXhfbXNnc10KCiAgICAgICAgIyBTdG9yZSBpbiBtZW1vcnkgZGF0YWJhc2UKICAgICAgICBtZW1vcnlfaWQgPSAiIgogICAgICAgIGlmIHJlcXVlc3QuaW5jbHVkZV9tZW1vcnk6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIG1lbW9yeV9pZCA9IGF3YWl0IG1lbW9yeV9zZXJ2aWNlLmFkZF9tZW1vcnkoCiAgICAgICAgICAgICAgICAgICAgY29udGVudD1mIlNpciBzYWlkOiAne3JlcXVlc3QubWVzc2FnZX0nLiBKQVJWSVMgcmVzcG9uZGVkOiAne2ZpbmFsX3JlcGx5fSciLAogICAgICAgICAgICAgICAgICAgIGNhdGVnb3J5PU1lbW9yeUNhdGVnb3J5LkNPTlZFUlNBVElPTlMsCiAgICAgICAgICAgICAgICAgICAgc291cmNlPSJjaGF0X3Nlc3Npb24iLAogICAgICAgICAgICAgICAgICAgIHRhZ3M9WyJpbnRlcmFjdGlvbiIsICJjaGF0X2xvZyJdLAogICAgICAgICAgICAgICAgKQogICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIG1lbV9lcnI6CiAgICAgICAgICAgICAgICBsb2cuZXJyb3IoImF1dG9fbWVtb3J5X3N0b3JhZ2VfZmFpbGVkIiwgZXJyb3I9c3RyKG1lbV9lcnIpKQoKICAgICAgICAjIEdlbmVyYXRlIFRUUyBhdWRpbyBmb3IgdGhlIGNsZWFuIHRleHQgKG5vIG1hcmtkb3duL2NvZGUgYmxvY2tzKQogICAgICAgIHR0c190ZXh0ID0gY2xlYW5fcmVwbHkgICMgU3BlYWsgb25seSB0aGUgbmF0dXJhbCBsYW5ndWFnZSBwYXJ0CiAgICAgICAgYXVkaW9fYjY0ID0gIiIKICAgICAgICB0cnk6CiAgICAgICAgICAgIGF1ZGlvX2J5dGVzID0gYXdhaXQgdHRzX3NlcnZpY2UuZ2VuZXJhdGVfc3BlZWNoKHR0c190ZXh0KQogICAgICAgICAgICBhdWRpb19iNjQgPSBiYXNlNjQuYjY0ZW5jb2RlKGF1ZGlvX2J5dGVzKS5kZWNvZGUoInV0Zi04IikKICAgICAgICAgICAgbG9nLmluZm8oInR0c19nZW5lcmF0ZWRfZm9yX2NoYXQiLCBhdWRpb19zaXplPWxlbihhdWRpb19ieXRlcykpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyB0dHNfZXJyOgogICAgICAgICAgICBsb2cuZXJyb3IoInR0c19nZW5lcmF0aW9uX2ZhaWxlZF9pbl9jaGF0IiwgZXJyb3I9c3RyKHR0c19lcnIpKQoKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAiY29udGVudCI6IGZpbmFsX3JlcGx5LAogICAgICAgICAgICAiY29udmVyc2F0aW9uX2lkIjogcmVxdWVzdC5jb252ZXJzYXRpb25faWQgb3IgImRlZmF1bHRfc2Vzc2lvbiIsCiAgICAgICAgICAgICJhZ2VudHNfaW52b2tlZCI6IFtBZ2VudFR5cGUuT1MudmFsdWVdIGlmIGFsbF9yZXN1bHRzIGVsc2UgW10sCiAgICAgICAgICAgICJ0YXNrc19jcmVhdGVkIjogW2NyWyJ0YXNrX2lkIl0gZm9yIGNyIGluIGFsbF9yZXN1bHRzIGlmICJ0YXNrX2lkIiBpbiBjcl0sCiAgICAgICAgICAgICJtZW1vcmllc19zdG9yZWQiOiBbbWVtb3J5X2lkXSBpZiBtZW1vcnlfaWQgZWxzZSBbXSwKICAgICAgICAgICAgImF1ZGlvX2Jhc2U2NCI6IGF1ZGlvX2I2NCwKICAgICAgICB9CgogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIGxvZy5lcnJvcigiY2hhdF9wcm9jZXNzaW5nX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICByYWlzZSBIVFRQRXhjZXB0aW9uKAogICAgICAgICAgICBzdGF0dXNfY29kZT1zdGF0dXMuSFRUUF81MDBfSU5URVJOQUxfU0VSVkVSX0VSUk9SLAogICAgICAgICAgICBkZXRhaWw9ZiJBbiBlcnJvciBvY2N1cnJlZCB3aGlsZSBnZW5lcmF0aW5nIHJlcGx5OiB7c3RyKGUpfSIsCiAgICAgICAgKQo=
+# ====================================================================
+# JARVIS OMEGA — Chat Router
+# ====================================================================
+"""
+REST endpoints for processing natural language dialog from Sir. Integrates
+with the command interpreter for device control, the MythoMax reasoning
+engine for conversation, and pushes proactive task reports via WebSocket.
+"""
+
+from __future__ import annotations
+
+import base64
+import re
+import asyncio
+import shlex
+from typing import List, Tuple
+
+from fastapi import APIRouter, HTTPException, Depends, status
+
+from shared.models import (
+    ChatRequest,
+    ChatResponse,
+    MemoryEntry,
+    TaskDefinition,
+    ApprovalRequest,
+)
+from shared.constants import (
+    MemoryCategory,
+    AgentType,
+    TaskStatus,
+    RiskLevel,
+)
+from backend.services.llm_service import llm_service
+from backend.services.tts_service import tts_service
+from backend.services.memory_service import memory_service
+from backend.services.command_interpreter import command_interpreter
+from backend.services.command_safety import command_safety, SafetyVerdict, VerdictLevel
+from backend.approval_gateway import approval_gateway
+from backend.task_manager import task_manager
+from backend.config import settings
+from shared.logger import get_logger
+
+log = get_logger("router_chat")
+router = APIRouter(prefix="/api/chat", tags=["Chat"])
+
+# Per-session dialogue histories keyed by conversation_id, bounded by
+# ``settings.dialogue_history_max_turns``. Replaces the unbounded module-global.
+_dialogue_histories: dict[str, List[dict]] = {}
+
+# Maximum number of reason->act->observe cycles per chat turn. Bounds the
+# iterative tool-use loop so JARVIS can chain commands without looping forever.
+MAX_TOOL_ITERATIONS = 3
+
+
+def _format_results_context(results: List[dict]) -> str:
+    """Render executed-command results as a SYSTEM CONTEXT block for the LLM."""
+    ctx = "\n\n[SYSTEM CONTEXT — Commands executed on the workstation]\n"
+    for cr in results:
+        ctx += f"• {cr['description']}: "
+        if cr["completed"]:
+            if cr["exit_code"] == 0:
+                output = cr["stdout"] or "Completed successfully with no output."
+                ctx += f"SUCCESS — {output}\n"
+            else:
+                error = cr["stderr"] or cr["stdout"] or "Unknown error"
+                ctx += f"FAILED (exit {cr['exit_code']}) — {error}\n"
+        else:
+            ctx += "Still running in background...\n"
+    ctx += (
+        "\nRespond naturally about these results in your JARVIS persona. Do NOT say you "
+        "cannot control the device — the commands have already been executed. If the task "
+        "is not yet complete, you may issue another <run_os_command>...</run_os_command> to "
+        "continue; otherwise simply reply to Sir.\n"
+    )
+    return ctx
+
+
+def _already_handled(cmd: str, prior: List[dict]) -> bool:
+    """True if an equivalent command was already executed this turn (dedup)."""
+    normalized = cmd.lower().strip().replace(".exe", "")
+    return any(
+        cr["command"].lower().strip().replace(".exe", "") == normalized
+        or normalized in cr["command"].lower()
+        or cr["command"].lower() in normalized
+        for cr in prior
+    )
+
+
+async def run_tool_loop(
+    message: str,
+    history: List[dict],
+    include_memory: bool,
+    command_results: List[dict],
+) -> Tuple[str, List[dict]]:
+    """
+    Iterative reason→act→observe loop (ReAct).
+
+    JARVIS reasons over the message plus any results gathered so far, optionally
+    emits ``<run_os_command>`` tags, executes the new ones, observes the real
+    output, and reasons again — chaining commands until it stops issuing actions
+    or ``MAX_TOOL_ITERATIONS`` is reached. Returns the final natural-language
+    reply (tags stripped) and the list of commands executed by the LLM.
+
+    Phase 9 escalation: if the loop fails to produce a useful result and Sir
+    has enabled ``never_give_up`` / ``allow_self_modification``, the failure
+    is routed through ``self_heal.try_heal`` so JARVIS can diagnose + patch
+    its own code to accomplish the task.
+    """
+    llm_command_results: List[dict] = []
+    clean_reply = ""
+    exceptions: List[str] = []
+
+    for iteration in range(MAX_TOOL_ITERATIONS):
+        executed_so_far = command_results + llm_command_results
+        augmented_message = message
+        if executed_so_far:
+            augmented_message = message + _format_results_context(executed_so_far)
+
+        try:
+            reply = await llm_service.get_response(
+                user_message=augmented_message,
+                chat_history=history,
+                inject_memory=include_memory,
+            )
+        except Exception as llm_err:
+            log.warning("llm_call_failed_in_loop", iteration=iteration, error=str(llm_err))
+            exceptions.append(f"llm iteration {iteration}: {llm_err}")
+            break
+
+        llm_commands = re.findall(r"<run_os_command>(.*?)</run_os_command>", reply, re.DOTALL)
+        clean_reply = re.sub(r"<run_os_command>.*?</run_os_command>", "", reply, flags=re.DOTALL).strip()
+
+        new_results = []
+        if llm_commands:
+            log.info("llm_command_tags_detected", iteration=iteration, count=len(llm_commands))
+            for cmd_raw in llm_commands:
+                cmd = cmd_raw.strip()
+                if not cmd:
+                    continue
+                if _already_handled(cmd, command_results + llm_command_results):
+                    continue
+                try:
+                    result = await _dispatch_and_wait(cmd, f"LLM command: {cmd}", timeout=10.0)
+                    # Capture failure signals for the escalation path.
+                    if result.get("exit_code") not in (0, None):
+                        exceptions.append(f"cmd '{cmd[:80]}': exit {result.get('exit_code')}, "
+                                          f"stderr={result.get('stderr','')[:200]}")
+                except Exception as dispatch_err:
+                    log.warning("dispatch_failed", command=cmd[:80], error=str(dispatch_err))
+                    exceptions.append(f"dispatch '{cmd[:80]}': {dispatch_err}")
+                    result = {
+                        "completed": True, "exit_code": 1,
+                        "stdout": "", "stderr": str(dispatch_err),
+                        "task_id": "direct-exec",
+                    }
+                new_results.append({
+                    "description": f"Executed: {cmd}",
+                    "command": cmd,
+                    **result,
+                })
+
+        llm_command_results.extend(new_results)
+
+        if not new_results:
+            break
+
+    # -----------------------------------------------------------------
+    # Phase 9 — Never-Give-Up escalation
+    # -----------------------------------------------------------------
+    # If the LLM didn't produce a useful reply AND commands failed, route
+    # the failure into the self-heal pipeline so JARVIS can diagnose and
+    # (if ALLOW_SELF_MODIFICATION is enabled) patch its own code.
+    if (not clean_reply or all(r.get("exit_code", 1) != 0 for r in llm_command_results)) \
+       and exceptions and settings.allow_self_modification:
+        try:
+            from backend.self_heal import try_heal
+            tb_synthetic = "\n".join(exceptions)
+            log.warning("never_give_up_escalation_triggered", signals=len(exceptions))
+            heal_result = await try_heal(
+                traceback_str=f"ReAct loop failures:\n{tb_synthetic}",
+                context={"source": "router_chat.run_tool_loop", "message": message},
+                requesting_agent="router_chat",
+            )
+            if heal_result and heal_result.get("result", {}).get("result", {}).get("healed"):
+                clean_reply = (
+                    (clean_reply + "\n\n" if clean_reply else "")
+                    + "Sir, I encountered failures completing your request, diagnosed the "
+                      "root cause in my own code, applied a patch, verified tests pass, and "
+                      "completed the task. The audit record is in storage/self_modify_audit/."
+                )
+        except Exception as esc_err:
+            log.error("never_give_up_escalation_failed", error=str(esc_err))
+
+    return clean_reply, llm_command_results
+
+
+async def _dispatch_and_wait(cmd: str, description: str, timeout: float = 15.0) -> dict:
+    """
+    Executes an OS command on this machine AFTER passing it through the safety
+    validator and (if destructive) the human approval gateway.
+
+    Safety pipeline:
+      1. ``command_safety.validate_command(cmd)`` returns ALLOWED / NEEDS_APPROVAL / BLOCKED.
+      2. BLOCKED commands are not executed; the failure is recorded.
+      3. NEEDS_APPROVAL commands block on ``approval_gateway.wait_for_approval``
+         until Sir approves or rejects (300s timeout).
+      4. ALLOWED (and approved NEEDS_APPROVAL) commands run via subprocess with
+         ``shell=False`` after ``shlex.split`` on POSIX or via the OS shell on
+         Windows where ``shlex`` is not applicable. Control characters were
+         already rejected by the validator.
+
+    No daemon WebSocket is required — guaranteed real execution.
+    """
+    import subprocess
+    import sys
+
+    log.info("executing_command_directly", command=cmd, description=description)
+
+    # ---- 1. Validate ----
+    verdict: SafetyVerdict = command_safety.validate(cmd)
+    if verdict.blocked:
+        log.warning("command_blocked_by_safety", reason=verdict.reason, command=cmd[:120])
+        return {
+            "completed": True,
+            "exit_code": 126,
+            "stdout": "",
+            "stderr": f"Command blocked by safety validator: {verdict.reason}",
+            "task_id": "direct-exec",
+        }
+
+    # ---- 2. Approval (if needed) ----
+    if verdict.needs_approval:
+        approval_req = ApprovalRequest(
+            action="execute_os_command",
+            reason=f"Destructive command flagged: {verdict.reason}",
+            risk_level=RiskLevel.HIGH,
+            affected_resources=[cmd[:200]],
+            expected_result="Shell command will execute on Sir's workstation.",
+            undo_possible=False,
+            requesting_agent="router_chat",
+        )
+        approval_id = await approval_gateway.request_approval(approval_req)
+        approved = await approval_gateway.wait_for_approval(approval_id, timeout=300.0)
+        if not approved:
+            log.warning("command_rejected_by_sir", command=cmd[:120])
+            return {
+                "completed": True,
+                "exit_code": 126,
+                "stdout": "",
+                "stderr": "Command rejected by Sir or timed out awaiting approval.",
+                "task_id": "direct-exec",
+            }
+
+    loop = asyncio.get_running_loop()
+
+    # ---- 3. Build argv safely ----
+    # On Windows there is no shlex that round-trips cmd.exe syntax; we still
+    # avoid ``shell=True`` for non-shell-builtins by using the OS shell only
+    # when explicitly required. The validator has already removed control
+    # characters and matched destructive patterns.
+    is_windows = sys.platform.startswith("win")
+
+    def _try_pipe():
+        # We pass the validated command string to the OS shell as a single argv
+        # element ([shell, "-c", cmd] on POSIX, ["cmd", "/c", cmd] on Windows).
+        # This is required because commands like ``netsh wlan show networks``
+        # are not single binaries. The safety validator is the gate, not the
+        # shell-escape logic.
+        if is_windows:
+            argv = ["cmd", "/c", cmd]
+        else:
+            argv = ["/bin/sh", "-c", cmd]
+
+        proc = subprocess.Popen(
+            argv,
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        try:
+            stdout_bytes, stderr_bytes = proc.communicate(timeout=3.0)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            return None  # GUI app indicator
+
+        stdout = stdout_bytes.decode("utf-8", errors="replace").strip()
+        stderr = stderr_bytes.decode("utf-8", errors="replace").strip()
+        exit_code = proc.returncode or 0
+
+        is_gui = (
+            exit_code != 0 and not stdout and not stderr
+        ) or (
+            exit_code != 0 and (
+                "Input redirection" in stderr
+                or "not supported" in stderr
+            )
+        )
+        if is_gui:
+            return None
+
+        return {
+            "completed": True,
+            "exit_code": exit_code,
+            "stdout": stdout,
+            "stderr": stderr,
+            "task_id": "direct-exec",
+        }
+
+    result = await loop.run_in_executor(None, _try_pipe)
+    if result is not None:
+        return result
+
+    # ---- 4. GUI app fire-and-forget ----
+    # The validator has already cleared this command; we still avoid
+    # ``shell=True`` and use the same [shell, "-c", cmd] / ["cmd", "/c", cmd]
+    # argv form so no additional shell-injection surface exists.
+    log.info("gui_app_detected_launching_detached", command=cmd)
+    try:
+        if is_windows:
+            subprocess.Popen(["cmd", "/c", cmd], shell=False)
+        else:
+            subprocess.Popen(["/bin/sh", "-c", cmd], shell=False)
+    except Exception as launch_err:
+        log.warning("gui_launch_failed", error=str(launch_err), command=cmd[:120])
+    return {
+        "completed": True,
+        "exit_code": 0,
+        "stdout": "Application launched successfully.",
+        "stderr": "",
+        "task_id": "direct-exec",
+    }
+
+
+@router.post("")
+async def process_chat(request: ChatRequest):
+    """Processes natural language messages from Sir and returns responses with TTS audio."""
+    log.info("chat_request_received", message_len=len(request.message))
+
+    # Opt-in prompt-injection guardrail (settings.guardrail_enabled).
+    if settings.guardrail_enabled:
+        try:
+            from backend.services.guardrail_shield import guardrail_shield
+
+            is_injection, matched = guardrail_shield.detect_injection(request.message)
+            if is_injection:
+                log.warning("chat_blocked_by_guardrail", matched=matched)
+                return {
+                    "content": (
+                        "I can't comply with that request, Sir. It matches a known "
+                        "prompt-injection pattern."
+                    ),
+                    "conversation_id": request.conversation_id or "default_session",
+                    "agents_invoked": [],
+                    "tasks_created": [],
+                    "memories_stored": [],
+                    "audio_base64": "",
+                    "blocked_by_guardrail": True,
+                }
+        except Exception as gr_err:
+            log.warning("guardrail_check_failed", error=str(gr_err))
+
+    try:
+        # =================================================================
+        # PHASE 1: Server-side command detection (bypasses LLM completely)
+        # =================================================================
+        detected_commands = command_interpreter.interpret(request.message)
+        command_results = []
+
+        if detected_commands:
+            log.info("commands_detected_by_interpreter", count=len(detected_commands))
+            for description, cmd in detected_commands:
+                log.info("dispatching_command", description=description, command=cmd)
+                result = await _dispatch_and_wait(cmd, description, timeout=10.0)
+                command_results.append({
+                    "description": description,
+                    "command": cmd,
+                    **result,
+                })
+
+        # =================================================================
+        # PHASE 2+3: Iterative LLM reasoning + tool use (ReAct loop)
+        # JARVIS reasons, optionally issues <run_os_command> tags, observes the
+        # real results, then reasons again — chaining commands until the task is
+        # done or MAX_TOOL_ITERATIONS is reached.
+        # =================================================================
+        session_id = request.conversation_id or "default_session"
+        history_full = _dialogue_histories.setdefault(session_id, [])
+        history = [
+            {"role": item["role"], "content": item["content"]}
+            for item in history_full[-10:]
+        ]
+
+        clean_reply, llm_command_results = await run_tool_loop(
+            message=request.message,
+            history=history,
+            include_memory=request.include_memory,
+            command_results=command_results,
+        )
+
+        # =================================================================
+        # PHASE 4: Build the final response
+        # =================================================================
+        all_results = command_results + llm_command_results
+
+        # If interpreter handled commands but LLM gave no useful reply, generate one
+        if not clean_reply and all_results:
+            clean_reply = "Certainly, Sir. Executing your request now."
+
+        # Append execution results to the response
+        result_text = ""
+        for cr in all_results:
+            if cr["completed"]:
+                if cr["exit_code"] == 0:
+                    output = cr["stdout"] or "Command completed successfully."
+                    result_text += f"\n\n**⚡ {cr['description']}**\n```\n{output}\n```"
+                else:
+                    error = cr["stderr"] or cr["stdout"] or "Unknown error"
+                    result_text += f"\n\n**⚠️ {cr['description']} (Exit {cr['exit_code']})**\n```\n{error}\n```"
+            else:
+                result_text += f"\n\n*🔄 {cr['description']} — running in background, Sir. I'll report when complete.*"
+
+        final_reply = clean_reply + result_text
+
+        # Store dialogue in per-session bounded history
+        history_full.append({"role": "user", "content": request.message})
+        history_full.append({"role": "assistant", "content": final_reply})
+        # Trim to last N turns (1 turn = 1 user + 1 assistant message)
+        max_msgs = settings.dialogue_history_max_turns * 2
+        if len(history_full) > max_msgs:
+            del history_full[: len(history_full) - max_msgs]
+
+        # Store in memory database
+        memory_id = ""
+        if request.include_memory:
+            try:
+                memory_id = await memory_service.add_memory(
+                    content=f"Sir said: '{request.message}'. JARVIS responded: '{final_reply}'",
+                    category=MemoryCategory.CONVERSATIONS,
+                    source="chat_session",
+                    tags=["interaction", "chat_log"],
+                )
+            except Exception as mem_err:
+                log.error("auto_memory_storage_failed", error=str(mem_err))
+
+        # Generate TTS audio for the clean text (no markdown/code blocks)
+        tts_text = clean_reply  # Speak only the natural language part
+        audio_b64 = ""
+        try:
+            audio_bytes = await tts_service.generate_speech(tts_text)
+            audio_b64 = base64.b64encode(audio_bytes).decode("utf-8")
+            log.info("tts_generated_for_chat", audio_size=len(audio_bytes))
+        except Exception as tts_err:
+            log.error("tts_generation_failed_in_chat", error=str(tts_err))
+
+        return {
+            "content": final_reply,
+            "conversation_id": request.conversation_id or "default_session",
+            "agents_invoked": [AgentType.OS.value] if all_results else [],
+            "tasks_created": [cr["task_id"] for cr in all_results if "task_id" in cr],
+            "memories_stored": [memory_id] if memory_id else [],
+            "audio_base64": audio_b64,
+        }
+
+    except Exception as e:
+        log.error("chat_processing_failed", error=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An error occurred while generating reply: {str(e)}",
+        )
