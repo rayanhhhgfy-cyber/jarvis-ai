@@ -15,9 +15,29 @@ def test_app_metadata():
     assert app.version == "1.0.0"
 
 
+def _all_route_paths():
+    """Collect every registered route path.
+
+    FastAPI >= 0.118 keeps included routers as ``_IncludedRouter`` wrapper
+    objects inside ``app.routes`` (older versions flatten them). Unwrap both
+    shapes so this test works regardless of the installed FastAPI version.
+    """
+    paths = []
+    for route in app.routes:
+        if hasattr(route, "path"):
+            paths.append(route.path)
+            continue
+        original = getattr(route, "original_router", None)
+        prefix = getattr(getattr(route, "include_context", None), "prefix", "") or ""
+        for sub in getattr(original, "routes", []):
+            if hasattr(sub, "path"):
+                paths.append(prefix + sub.path)
+    return paths
+
+
 def test_routes_registered():
     """Verify that all core modular routers are registered."""
-    route_paths = [route.path for route in app.routes]
+    route_paths = _all_route_paths()
     
     # Check REST and WS endpoints are present
     assert "/health" in route_paths
