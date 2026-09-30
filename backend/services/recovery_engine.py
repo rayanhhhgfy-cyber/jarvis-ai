@@ -1,1 +1,212 @@
-IiIiClJlY292ZXJ5IEVuZ2luZSDigJQgc2VsZi1oZWFsaW5nIGRlYnVnIGxvb3AgYW5kIHN1cHBseS1jaGFpbiB2dWxuZXJhYmlsaXR5IHdhdGNoZG9nLgoKIyBwaXAgaW5zdGFsbDogaHR0cHgKIyBOVkQgQVBJOiBmcmVlIHVuYXV0aGVudGljYXRlZCB0aWVyIChyYXRlLWxpbWl0ZWQpCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KaW1wb3J0IHJlCmltcG9ydCBzdWJwcm9jZXNzCmltcG9ydCB0cmFjZWJhY2sKZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzLCBmaWVsZApmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZQpmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBMaXN0LCBPcHRpb25hbAoKaW1wb3J0IGh0dHB4Cgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoInJlY292ZXJ5X2VuZ2luZSIpCgoKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgREFUQSBUWVBFUwojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KCgpAZGF0YWNsYXNzCmNsYXNzIERlYnVnQW5kUmV0cnlQYXlsb2FkOgogICAgZXhjZXB0aW9uOiBFeGNlcHRpb24KICAgIHN0YWNrX3RyYWNlOiBzdHIKICAgIHNvdXJjZTogc3RyID0gIiIKICAgIGF0dGVtcHQ6IGludCA9IDAKICAgIGNvbnRleHQ6IERpY3Rbc3RyLCBBbnldID0gZmllbGQoZGVmYXVsdF9mYWN0b3J5PWRpY3QpCgoKQGRhdGFjbGFzcwpjbGFzcyBDVkVSZXBvcnQ6CiAgICBjdmVfaWQ6IHN0cgogICAgZGVzY3JpcHRpb246IHN0cgogICAgY3Zzc19zY29yZTogZmxvYXQKICAgIHNldmVyaXR5OiBzdHIKICAgIGFmZmVjdGVkX3BhY2thZ2VzOiBMaXN0W3N0cl0gPSBmaWVsZChkZWZhdWx0X2ZhY3Rvcnk9bGlzdCkKICAgIHJlbWVkaWF0aW9uOiBzdHIgPSAiIgoKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEFVVE8tREVCVUcgTE9PUAojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KCgpjbGFzcyBBdXRvRGVidWdMb29wOgogICAgIiIiCiAgICAzLXR1cm4gcmV0cnkgbG9vcCB3aXRoIGV4cG9uZW50aWFsIGJhY2tvZmYuCiAgICBXcmFwcyBzdWJwcm9jZXNzL2FzeW5jIGV4Y2VwdGlvbnMgYW5kIHJldHJpZXMgd2l0aCBlc2NhbGF0aW5nIGRlbGF5cy4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCBtYXhfcmV0cmllczogaW50ID0gMyk6CiAgICAgICAgc2VsZi5tYXhfcmV0cmllcyA9IG1heF9yZXRyaWVzCiAgICAgICAgc2VsZi5fYmFja29mZl90aW1lcyA9IFsxLCA0LCA5XSAgIyAxcyDihpIgNHMg4oaSIDlzCgogICAgYXN5bmMgZGVmIGV4ZWN1dGUoc2VsZiwgcGF5bG9hZDogRGVidWdBbmRSZXRyeVBheWxvYWQsIGNvcm9fZmFjdG9yeSkgLT4gQW55OgogICAgICAgICIiIgogICAgICAgIEV4ZWN1dGUgYSBjb3JvdXRpbmUgd2l0aCByZXRyeSBsb2dpYy4KCiAgICAgICAgQXJnczoKICAgICAgICAgICAgcGF5bG9hZDogRGVidWcgY29udGV4dCBmcm9tIHRoZSBmYWlsZWQgYXR0ZW1wdAogICAgICAgICAgICBjb3JvX2ZhY3Rvcnk6IEFzeW5jIGNhbGxhYmxlIHRoYXQgcmV0dXJucyB0aGUgb3BlcmF0aW9uIHJlc3VsdAogICAgICAgIFJldHVybnM6CiAgICAgICAgICAgIFN1Y2Nlc3NmdWwgcmVzdWx0IG9yIHJhaXNlcyBhZnRlciBtYXggcmV0cmllcwogICAgICAgICIiIgogICAgICAgIGxhc3RfZXJyb3IgPSBwYXlsb2FkLmV4Y2VwdGlvbgoKICAgICAgICBmb3IgYXR0ZW1wdCBpbiByYW5nZShwYXlsb2FkLmF0dGVtcHQsIHNlbGYubWF4X3JldHJpZXMpOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICByZXR1cm4gYXdhaXQgY29yb19mYWN0b3J5KCkKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgbGFzdF9lcnJvciA9IGUKICAgICAgICAgICAgICAgIGJhY2tvZmYgPSBzZWxmLl9iYWNrb2ZmX3RpbWVzW2F0dGVtcHRdIGlmIGF0dGVtcHQgPCBsZW4oc2VsZi5fYmFja29mZl90aW1lcykgZWxzZSAxMAogICAgICAgICAgICAgICAgbG9nLndhcm5pbmcoCiAgICAgICAgICAgICAgICAgICAgImRlYnVnX3JldHJ5IiwKICAgICAgICAgICAgICAgICAgICBhdHRlbXB0PWF0dGVtcHQgKyAxLAogICAgICAgICAgICAgICAgICAgIG1heD1zZWxmLm1heF9yZXRyaWVzLAogICAgICAgICAgICAgICAgICAgIGJhY2tvZmY9YmFja29mZiwKICAgICAgICAgICAgICAgICAgICBlcnJvcj1zdHIoZSlbOjEwMF0sCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnNvdW5kX2VuZ2luZSBpbXBvcnQgc291bmRfZW5naW5lLCBKYXJ2aXNFdmVudAogICAgICAgICAgICAgICAgICAgIGF3YWl0IHNvdW5kX2VuZ2luZS5qYXJ2aXNfYWxlcnQoSmFydmlzRXZlbnQuREVCVUdfUkVUUlkpCiAgICAgICAgICAgICAgICBleGNlcHQgSW1wb3J0RXJyb3I6CiAgICAgICAgICAgICAgICAgICAgcGFzcyAgIyBzb3VuZF9lbmdpbmUgaXMgbm90IHBhcnQgb2YgdGhpcyBidWlsZDsgcmV0cnkgbG9nZ2luZyBhYm92ZSBpcyB0aGUgcmVhbCBhbGVydAogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgICAgICAgICBwYXNzCiAgICAgICAgICAgICAgICBhd2FpdCBhc3luY2lvLnNsZWVwKGJhY2tvZmYpCgogICAgICAgIHRyeToKICAgICAgICAgICAgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnNvdW5kX2VuZ2luZSBpbXBvcnQgc291bmRfZW5naW5lLCBKYXJ2aXNFdmVudAogICAgICAgICAgICBhd2FpdCBzb3VuZF9lbmdpbmUuamFydmlzX2FsZXJ0KEphcnZpc0V2ZW50LkRFQlVHX0ZBSUxFRCkKICAgICAgICBleGNlcHQgSW1wb3J0RXJyb3I6CiAgICAgICAgICAgIHBhc3MgICMgc291bmRfZW5naW5lIGlzIG5vdCBwYXJ0IG9mIHRoaXMgYnVpbGQKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCiAgICAgICAgcmFpc2UgbGFzdF9lcnJvcgoKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIFNVUFBMWS1DSEFJTiBWVUxORVJBQklMSVRZIFdBVENIRE9HCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoKCmNsYXNzIFN1cHBseUNoYWluV2F0Y2hkb2c6CiAgICAiIiIKICAgIENoZWNrcyBpbnN0YWxsZWQgcGFja2FnZXMgYWdhaW5zdCB0aGUgTlZEIGRhdGFiYXNlLgogICAgVXNlcyBmcmVlIHVuYXV0aGVudGljYXRlZCB0aWVyIChyYXRlLWxpbWl0ZWQgdG8gfjUgcmVxcyAvIDMwcykuCiAgICAiIiIKCiAgICBOVkRfQVBJX0JBU0UgPSAiaHR0cHM6Ly9zZXJ2aWNlcy5udmQubmlzdC5nb3YvcmVzdC9qc29uL2N2ZXMvMi4wIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICBzZWxmLl9odHRwID0gaHR0cHguQXN5bmNDbGllbnQodGltZW91dD0xNS4wLCBmb2xsb3dfcmVkaXJlY3RzPVRydWUpCiAgICAgICAgc2VsZi5fY2FjaGU6IERpY3Rbc3RyLCBMaXN0W0NWRVJlcG9ydF1dID0ge30KCiAgICBhc3luYyBkZWYgY2hlY2tfcGFja2FnZShzZWxmLCBwYWNrYWdlX25hbWU6IHN0ciwgdmVyc2lvbjogc3RyKSAtPiBMaXN0W0NWRVJlcG9ydF06CiAgICAgICAgIiIiUXVlcnkgTlZEIGZvciBrbm93biB2dWxuZXJhYmlsaXRpZXMgaW4gYSBwYWNrYWdlLiIiIgogICAgICAgIGNhY2hlX2tleSA9IGYie3BhY2thZ2VfbmFtZX1Ae3ZlcnNpb259IgogICAgICAgIGlmIGNhY2hlX2tleSBpbiBzZWxmLl9jYWNoZToKICAgICAgICAgICAgcmV0dXJuIHNlbGYuX2NhY2hlW2NhY2hlX2tleV0KCiAgICAgICAgcmVzdWx0czogTGlzdFtDVkVSZXBvcnRdID0gW10KICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlc3AgPSBhd2FpdCBzZWxmLl9odHRwLmdldCgKICAgICAgICAgICAgICAgIHNlbGYuTlZEX0FQSV9CQVNFLAogICAgICAgICAgICAgICAgcGFyYW1zPXsKICAgICAgICAgICAgICAgICAgICAia2V5d29yZFNlYXJjaCI6IGYie3BhY2thZ2VfbmFtZX0ge3ZlcnNpb259IiwKICAgICAgICAgICAgICAgICAgICAicmVzdWx0c1BlclBhZ2UiOiAxMCwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICBoZWFkZXJzPXsiVXNlci1BZ2VudCI6ICJKQVJWSVMtT21lZ2EvMS4wIn0sCiAgICAgICAgICAgICkKICAgICAgICAgICAgaWYgcmVzcC5zdGF0dXNfY29kZSAhPSAyMDA6CiAgICAgICAgICAgICAgICBsb2cud2FybmluZygibnZkX2FwaV9lcnJvciIsIHN0YXR1cz1yZXNwLnN0YXR1c19jb2RlKQogICAgICAgICAgICAgICAgcmV0dXJuIHJlc3VsdHMKCiAgICAgICAgICAgIGRhdGEgPSByZXNwLmpzb24oKQogICAgICAgICAgICBmb3IgdnVsbiBpbiBkYXRhLmdldCgidnVsbmVyYWJpbGl0aWVzIiwgW10pOgogICAgICAgICAgICAgICAgY3ZlID0gdnVsbi5nZXQoImN2ZSIsIHt9KQogICAgICAgICAgICAgICAgbWV0cmljcyA9IGN2ZS5nZXQoIm1ldHJpY3MiLCB7fSkKICAgICAgICAgICAgICAgIGN2c3NfdjMgPSBtZXRyaWNzLmdldCgiY3Zzc01ldHJpY1YzMSIsIFt7fV0pWzBdLmdldCgiY3Zzc0RhdGEiLCB7fSkKICAgICAgICAgICAgICAgIGN2c3Nfc2NvcmUgPSBjdnNzX3YzLmdldCgiYmFzZVNjb3JlIiwgMC4wKQoKICAgICAgICAgICAgICAgIHJlcG9ydCA9IENWRVJlcG9ydCgKICAgICAgICAgICAgICAgICAgICBjdmVfaWQ9Y3ZlLmdldCgiaWQiLCAiVU5LTk9XTiIpLAogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uPWN2ZS5nZXQoImRlc2NyaXB0aW9ucyIsIFt7fV0pWzBdLmdldCgidmFsdWUiLCAiIilbOjMwMF0sCiAgICAgICAgICAgICAgICAgICAgY3Zzc19zY29yZT1jdnNzX3Njb3JlLAogICAgICAgICAgICAgICAgICAgIHNldmVyaXR5PWN2c3NfdjMuZ2V0KCJiYXNlU2V2ZXJpdHkiLCAiVU5LTk9XTiIpLAogICAgICAgICAgICAgICAgICAgIGFmZmVjdGVkX3BhY2thZ2VzPVtwYWNrYWdlX25hbWVdLAogICAgICAgICAgICAgICAgICAgIHJlbWVkaWF0aW9uPWYiVXBkYXRlIHtwYWNrYWdlX25hbWV9IHRvIHRoZSBsYXRlc3QgdmVyc2lvbiIsCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICAjIEFsZXJ0IG9uIGhpZ2gvY3JpdGljYWwKICAgICAgICAgICAgICAgIGlmIGN2c3Nfc2NvcmUgPj0gNy4wOgogICAgICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICAgICAgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnNvdW5kX2VuZ2luZSBpbXBvcnQgc291bmRfZW5naW5lLCBKYXJ2aXNFdmVudAogICAgICAgICAgICAgICAgICAgICAgICBhd2FpdCBzb3VuZF9lbmdpbmUuamFydmlzX2FsZXJ0KEphcnZpc0V2ZW50LlZVTE5FUkFCSUxJVFlfREVURUNURUQpCiAgICAgICAgICAgICAgICAgICAgZXhjZXB0IEltcG9ydEVycm9yOgogICAgICAgICAgICAgICAgICAgICAgICBwYXNzICAjIHNvdW5kX2VuZ2luZSBpcyBub3QgcGFydCBvZiB0aGlzIGJ1aWxkOyB0aGUgbG9nIGJlbG93IGlzIHRoZSByZWFsIGFsZXJ0CiAgICAgICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgICAgICAgICAgICAgcGFzcwogICAgICAgICAgICAgICAgICAgIGxvZy53YXJuaW5nKCJ2dWxuZXJhYmlsaXR5X2RldGVjdGVkIiwgY3ZlPXJlcG9ydC5jdmVfaWQsIHNjb3JlPWN2c3Nfc2NvcmUsIHBhY2thZ2U9cGFja2FnZV9uYW1lKQoKICAgICAgICAgICAgICAgIHJlc3VsdHMuYXBwZW5kKHJlcG9ydCkKCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoIm52ZF9xdWVyeV9mYWlsZWQiLCBwYWNrYWdlPXBhY2thZ2VfbmFtZSwgZXJyb3I9c3RyKGUpKQoKICAgICAgICBzZWxmLl9jYWNoZVtjYWNoZV9rZXldID0gcmVzdWx0cwogICAgICAgIHJldHVybiByZXN1bHRzCgogICAgYXN5bmMgZGVmIGNoZWNrX2luc3RhbGxlZF9wYWNrYWdlcyhzZWxmKSAtPiBMaXN0W0NWRVJlcG9ydF06CiAgICAgICAgIiIiQ2hlY2sgYWxsIGluc3RhbGxlZCBwaXAgcGFja2FnZXMgYWdhaW5zdCBOVkQuIiIiCiAgICAgICAgYWxsX3JlcG9ydHM6IExpc3RbQ1ZFUmVwb3J0XSA9IFtdCiAgICAgICAgdHJ5OgogICAgICAgICAgICBwcm9jID0gc3VicHJvY2Vzcy5ydW4oCiAgICAgICAgICAgICAgICBbInBpcCIsICJsaXN0IiwgIi0tZm9ybWF0PWZyZWV6ZSJdLAogICAgICAgICAgICAgICAgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSwgdGV4dD1UcnVlLCB0aW1lb3V0PTMwLAogICAgICAgICAgICApCiAgICAgICAgICAgIGZvciBsaW5lIGluIHByb2Muc3Rkb3V0LnN0cmlwKCkuc3BsaXQoIlxuIik6CiAgICAgICAgICAgICAgICBpZiAiPT0iIGluIGxpbmU6CiAgICAgICAgICAgICAgICAgICAgbmFtZSwgdmVyID0gbGluZS5zcGxpdCgiPT0iLCAxKQogICAgICAgICAgICAgICAgICAgIHJlcG9ydHMgPSBhd2FpdCBzZWxmLmNoZWNrX3BhY2thZ2UobmFtZS5zdHJpcCgpLCB2ZXIuc3RyaXAoKSkKICAgICAgICAgICAgICAgICAgICBhbGxfcmVwb3J0cy5leHRlbmQocmVwb3J0cykKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigicGFja2FnZV9saXN0X2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICByZXR1cm4gYWxsX3JlcG9ydHMKCiAgICBhc3luYyBkZWYgY2xvc2Uoc2VsZik6CiAgICAgICAgYXdhaXQgc2VsZi5faHR0cC5hY2xvc2UoKQoKCiMgR2xvYmFsIGluc3RhbmNlcwphdXRvX2RlYnVnID0gQXV0b0RlYnVnTG9vcCgpCnN1cHBseV9jaGFpbl93YXRjaGRvZyA9IFN1cHBseUNoYWluV2F0Y2hkb2coKQoKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIFVTQUdFIEVYQU1QTEUKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgLS0tCiMgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLnJlY292ZXJ5X2VuZ2luZSBpbXBvcnQgYXV0b19kZWJ1ZywgRGVidWdBbmRSZXRyeVBheWxvYWQKIyBwYXlsb2FkID0gRGVidWdBbmRSZXRyeVBheWxvYWQoZXhjZXB0aW9uPVZhbHVlRXJyb3IoInRlc3QiKSwgc3RhY2tfdHJhY2U9Ii4uLiIsIHNvdXJjZT0idGVzdCIpCiMgcmVzdWx0ID0gYXdhaXQgYXV0b19kZWJ1Zy5leGVjdXRlKHBheWxvYWQsIGxhbWJkYTogc29tZV9hc3luY19vcGVyYXRpb24oKSkKIyAtLS0K
+"""
+Recovery Engine — self-healing debug loop and supply-chain vulnerability watchdog.
+
+# pip install: httpx
+# NVD API: free unauthenticated tier (rate-limited)
+"""
+
+from __future__ import annotations
+
+import asyncio
+import re
+import subprocess
+import traceback
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+import httpx
+
+from shared.logger import get_logger
+
+log = get_logger("recovery_engine")
+
+
+# =========================================================================
+# DATA TYPES
+# =========================================================================
+
+
+@dataclass
+class DebugAndRetryPayload:
+    exception: Exception
+    stack_trace: str
+    source: str = ""
+    attempt: int = 0
+    context: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class CVEReport:
+    cve_id: str
+    description: str
+    cvss_score: float
+    severity: str
+    affected_packages: List[str] = field(default_factory=list)
+    remediation: str = ""
+
+
+# =========================================================================
+# AUTO-DEBUG LOOP
+# =========================================================================
+
+
+class AutoDebugLoop:
+    """
+    3-turn retry loop with exponential backoff.
+    Wraps subprocess/async exceptions and retries with escalating delays.
+    """
+
+    def __init__(self, max_retries: int = 3):
+        self.max_retries = max_retries
+        self._backoff_times = [1, 4, 9]  # 1s → 4s → 9s
+
+    async def execute(self, payload: DebugAndRetryPayload, coro_factory) -> Any:
+        """
+        Execute a coroutine with retry logic.
+
+        Args:
+            payload: Debug context from the failed attempt
+            coro_factory: Async callable that returns the operation result
+        Returns:
+            Successful result or raises after max retries
+        """
+        last_error = payload.exception
+
+        for attempt in range(payload.attempt, self.max_retries):
+            try:
+                return await coro_factory()
+            except Exception as e:
+                last_error = e
+                backoff = self._backoff_times[attempt] if attempt < len(self._backoff_times) else 10
+                log.warning(
+                    "debug_retry",
+                    attempt=attempt + 1,
+                    max=self.max_retries,
+                    backoff=backoff,
+                    error=str(e)[:100],
+                )
+                try:
+                    from backend.services.sound_engine import sound_engine, JarvisEvent
+                    await sound_engine.jarvis_alert(JarvisEvent.DEBUG_RETRY)
+                except ImportError:
+                    pass  # sound_engine is not part of this build; retry logging above is the real alert
+                except Exception:
+                    pass
+                await asyncio.sleep(backoff)
+
+        try:
+            from backend.services.sound_engine import sound_engine, JarvisEvent
+            await sound_engine.jarvis_alert(JarvisEvent.DEBUG_FAILED)
+        except ImportError:
+            pass  # sound_engine is not part of this build
+        except Exception:
+            pass
+        raise last_error
+
+
+# =========================================================================
+# SUPPLY-CHAIN VULNERABILITY WATCHDOG
+# =========================================================================
+
+
+class SupplyChainWatchdog:
+    """
+    Checks installed packages against the NVD database.
+    Uses free unauthenticated tier (rate-limited to ~5 reqs / 30s).
+    """
+
+    NVD_API_BASE = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+
+    def __init__(self):
+        self._http = httpx.AsyncClient(timeout=15.0, follow_redirects=True)
+        self._cache: Dict[str, List[CVEReport]] = {}
+
+    async def check_package(self, package_name: str, version: str) -> List[CVEReport]:
+        """Query NVD for known vulnerabilities in a package."""
+        cache_key = f"{package_name}@{version}"
+        if cache_key in self._cache:
+            return self._cache[cache_key]
+
+        results: List[CVEReport] = []
+        try:
+            resp = await self._http.get(
+                self.NVD_API_BASE,
+                params={
+                    "keywordSearch": f"{package_name} {version}",
+                    "resultsPerPage": 10,
+                },
+                headers={"User-Agent": "JARVIS-Omega/1.0"},
+            )
+            if resp.status_code != 200:
+                log.warning("nvd_api_error", status=resp.status_code)
+                return results
+
+            data = resp.json()
+            for vuln in data.get("vulnerabilities", []):
+                cve = vuln.get("cve", {})
+                metrics = cve.get("metrics", {})
+                cvss_v3 = metrics.get("cvssMetricV31", [{}])[0].get("cvssData", {})
+                cvss_score = cvss_v3.get("baseScore", 0.0)
+
+                report = CVEReport(
+                    cve_id=cve.get("id", "UNKNOWN"),
+                    description=cve.get("descriptions", [{}])[0].get("value", "")[:300],
+                    cvss_score=cvss_score,
+                    severity=cvss_v3.get("baseSeverity", "UNKNOWN"),
+                    affected_packages=[package_name],
+                    remediation=f"Update {package_name} to the latest version",
+                )
+                # Alert on high/critical
+                if cvss_score >= 7.0:
+                    try:
+                        from backend.services.sound_engine import sound_engine, JarvisEvent
+                        await sound_engine.jarvis_alert(JarvisEvent.VULNERABILITY_DETECTED)
+                    except ImportError:
+                        pass  # sound_engine is not part of this build; the log below is the real alert
+                    except Exception:
+                        pass
+                    log.warning("vulnerability_detected", cve=report.cve_id, score=cvss_score, package=package_name)
+
+                results.append(report)
+
+        except Exception as e:
+            log.error("nvd_query_failed", package=package_name, error=str(e))
+
+        self._cache[cache_key] = results
+        return results
+
+    async def check_installed_packages(self) -> List[CVEReport]:
+        """Check all installed pip packages against NVD."""
+        all_reports: List[CVEReport] = []
+        try:
+            proc = subprocess.run(
+                ["pip", "list", "--format=freeze"],
+                capture_output=True, text=True, timeout=30,
+            )
+            for line in proc.stdout.strip().split("\n"):
+                if "==" in line:
+                    name, ver = line.split("==", 1)
+                    reports = await self.check_package(name.strip(), ver.strip())
+                    all_reports.extend(reports)
+        except Exception as e:
+            log.error("package_list_failed", error=str(e))
+        return all_reports
+
+    async def close(self):
+        await self._http.aclose()
+
+
+# Global instances
+auto_debug = AutoDebugLoop()
+supply_chain_watchdog = SupplyChainWatchdog()
+
+
+# =========================================================================
+# USAGE EXAMPLE
+# =========================================================================
+# ---
+# from backend.services.recovery_engine import auto_debug, DebugAndRetryPayload
+# payload = DebugAndRetryPayload(exception=ValueError("test"), stack_trace="...", source="test")
+# result = await auto_debug.execute(payload, lambda: some_async_operation())
+# ---

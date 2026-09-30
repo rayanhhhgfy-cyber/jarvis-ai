@@ -1,1 +1,267 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KaW1wb3J0IGhhc2hsaWIKaW1wb3J0IG1pbWV0eXBlcwppbXBvcnQgdXVpZApmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZQpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKZnJvbSB0eXBpbmcgaW1wb3J0IE9wdGlvbmFsCgppbXBvcnQgaHR0cHgKCmZyb20gYmFja2VuZC5jb25maWcgaW1wb3J0IHNldHRpbmdzCmZyb20gc2hhcmVkLmxvZ2dlciBpbXBvcnQgZ2V0X2xvZ2dlcgoKbG9nID0gZ2V0X2xvZ2dlcigibWVkaWFfZ2VuZXJhdGlvbl9zZXJ2aWNlIikKCkdFTkVSQVRFRF9ESVIgPSBQYXRoKHNldHRpbmdzLnN0b3JhZ2VfZGlyKSAvICJtZWRpYSIgLyAiZ2VuZXJhdGVkIgpHRU5FUkFURURfRElSLm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKCklNQUdFX01PREVMUyA9IFsKICAgICJibGFjay1mb3Jlc3QtbGFicy9mbHV4LXNjaG5lbGwiLAogICAgImJsYWNrLWZvcmVzdC1sYWJzL2ZsdXgtcHJvIiwKICAgICJzdGFiaWxpdHlhaS9zdGFibGUtZGlmZnVzaW9uLTMuNS1sYXJnZSIsCiAgICAic3RhYmlsaXR5YWkvc3RhYmxlLWRpZmZ1c2lvbi0zLjUtbWVkaXVtIiwKICAgICJvcGVuYWkvZGFsbC1lLTMiLApdCgpWSURFT19NT0RFTFMgPSBbCiAgICAibHVtYS9yYXkiLAogICAgIm1pbmltYXgvdmlkZW8tMDEiLAogICAgImt1YWlzaG91L2tsaW5nLXZpZGVvIiwKXQoKUkVQTElDQVRFX01PREVMX01BUCA9IHsKICAgICMgUGlubmVkIFJlcGxpY2F0ZSBtb2RlbCB2ZXJzaW9ucy4gVGhlIGx1bWEvcmF5IHBpbiBiZWxvdyBpcyByZWFsLgogICAgIyBtaW5pbWF4L3ZpZGVvLTAxIGFuZCBrdWFpc2hvdS9rbGluZy12aWRlbyBoYXZlIE5PIHZlcmlmaWVkIHBpbjoKICAgICMgbG9vayB1cCB0aGUgY3VycmVudCB2ZXJzaW9uIGF0IGh0dHBzOi8vcmVwbGljYXRlLmNvbS88b3duZXI+LzxuYW1lPgogICAgIyBhbmQgc2V0IGl0IGhlcmUgKGZvcm1hdCAib3duZXIvbmFtZTo8NjQtaGV4LXZlcnNpb24+IikuCiAgICAjIGdlbmVyYXRlX3ZpZGVvKCkgcmVmdXNlcyB0byBydW4gd2l0aCBhbiB1bnBpbm5lZCBtb2RlbC4KICAgICJsdW1hL3JheSI6ICJsdW1hL3JheTpiZWRjNGZmMjYwMzhmNWE1YTExYThjMzhhYjU3MjE0MzBkOTU3YzJkNmU5YjVmNWMyY2U4N2YxYjRiMWI0YzEiLAogICAgIm1pbmltYXgvdmlkZW8tMDEiOiBOb25lLAogICAgImt1YWlzaG91L2tsaW5nLXZpZGVvIjogTm9uZSwKfQoKCmFzeW5jIGRlZiBnZW5lcmF0ZV9pbWFnZSgKICAgIHByb21wdDogc3RyLAogICAgbW9kZWw6IE9wdGlvbmFsW3N0cl0gPSBOb25lLAogICAgc2l6ZTogT3B0aW9uYWxbc3RyXSA9IE5vbmUsCikgLT4gZGljdDoKICAgIG1vZGVsID0gbW9kZWwgb3IgSU1BR0VfTU9ERUxTWzBdCiAgICBzaXplID0gc2l6ZSBvciAiMTAyNHgxMDI0IgoKICAgIGxvZy5pbmZvKCJnZW5lcmF0aW5nX2ltYWdlIiwgcHJvbXB0PXByb21wdFs6ODBdLCBtb2RlbD1tb2RlbCwgc2l6ZT1zaXplKQoKICAgIGtleXMgPSBzZXR0aW5ncy5nZXRfb3BlbnJvdXRlcl9rZXlzKCkgaWYgaGFzYXR0cihzZXR0aW5ncywgImdldF9vcGVucm91dGVyX2tleXMiKSBlbHNlICgKICAgICAgICBbc2V0dGluZ3Mub3BlbnJvdXRlcl9hcGlfa2V5XSBpZiBnZXRhdHRyKHNldHRpbmdzLCAib3BlbnJvdXRlcl9hcGlfa2V5IiwgIiIpIGVsc2UgW10KICAgICkKICAgIGlmIG5vdCBrZXlzOgogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIk5vIE9wZW5Sb3V0ZXIgQVBJIGtleXMgY29uZmlndXJlZCJ9CgogICAgYXBpX2tleSA9IGtleXNbMF0KICAgIGhlYWRlcnMgPSB7CiAgICAgICAgIkF1dGhvcml6YXRpb24iOiBmIkJlYXJlciB7YXBpX2tleX0iLAogICAgICAgICJIVFRQLVJlZmVyZXIiOiAiaHR0cHM6Ly9naXRodWIuY29tL3JheWFuaGhoZ2Z5LWN5YmVyL2phcnZpcy1haSIsCiAgICAgICAgIlgtVGl0bGUiOiAiSkFSVklTIE9NRUdBIENvbW1hbmQgU3RhdGlvbiIsCiAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgIH0KCiAgICBwYXlsb2FkID0gewogICAgICAgICJtb2RlbCI6IG1vZGVsLAogICAgICAgICJtZXNzYWdlcyI6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgInJvbGUiOiAidXNlciIsCiAgICAgICAgICAgICAgICAiY29udGVudCI6IHByb21wdCwKICAgICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgIm1heF90b2tlbnMiOiAyMDAwLAogICAgfQoKICAgIGlmIHNpemU6CiAgICAgICAgcGF5bG9hZFsic2l6ZSJdID0gc2l6ZQoKICAgIHRyeToKICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KHRpbWVvdXQ9MTIwLjApIGFzIGNsaWVudDoKICAgICAgICAgICAgcmVzcG9uc2UgPSBhd2FpdCBjbGllbnQucG9zdCgKICAgICAgICAgICAgICAgICJodHRwczovL29wZW5yb3V0ZXIuYWkvYXBpL3YxL2NoYXQvY29tcGxldGlvbnMiLAogICAgICAgICAgICAgICAgaGVhZGVycz1oZWFkZXJzLAogICAgICAgICAgICAgICAganNvbj1wYXlsb2FkLAogICAgICAgICAgICApCgogICAgICAgICAgICBpZiByZXNwb25zZS5zdGF0dXNfY29kZSAhPSAyMDA6CiAgICAgICAgICAgICAgICBsb2cuZXJyb3IoImltYWdlX2dlbmVyYXRpb25fZmFpbGVkIiwgc3RhdHVzPXJlc3BvbnNlLnN0YXR1c19jb2RlLCBib2R5PXJlc3BvbnNlLnRleHQpCiAgICAgICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6IGYiT3BlblJvdXRlciByZXR1cm5lZCB7cmVzcG9uc2Uuc3RhdHVzX2NvZGV9OiB7cmVzcG9uc2UudGV4dFs6MjAwXX0ifQoKICAgICAgICAgICAgcmVzdWx0ID0gcmVzcG9uc2UuanNvbigpCiAgICAgICAgICAgIGNob2ljZXMgPSByZXN1bHQuZ2V0KCJjaG9pY2VzIiwgW10pCiAgICAgICAgICAgIGlmIG5vdCBjaG9pY2VzOgogICAgICAgICAgICAgICAgcmV0dXJuIHsic3VjY2VzcyI6IEZhbHNlLCAiZXJyb3IiOiAiTm8gY2hvaWNlcyBpbiByZXNwb25zZSJ9CgogICAgICAgICAgICBjb250ZW50ID0gY2hvaWNlc1swXS5nZXQoIm1lc3NhZ2UiLCB7fSkuZ2V0KCJjb250ZW50IiwgIiIpCgogICAgICAgICAgICBpbWFnZV91cmwgPSBfZXh0cmFjdF9pbWFnZV91cmwoY29udGVudCkKICAgICAgICAgICAgaWYgbm90IGltYWdlX3VybDoKICAgICAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIk5vIGltYWdlIFVSTCBmb3VuZCBpbiByZXNwb25zZSIsICJjb250ZW50IjogY29udGVudFs6NTAwXX0KCiAgICAgICAgICAgIHNhdmVkID0gYXdhaXQgX2Rvd25sb2FkX2FuZF9zYXZlKGltYWdlX3VybCwgImltZyIsIHByb21wdCkKICAgICAgICAgICAgaWYgc2F2ZWQ6CiAgICAgICAgICAgICAgICByZXR1cm4geyoqc2F2ZWQsICJzdWNjZXNzIjogVHJ1ZSwgInByb21wdCI6IHByb21wdCwgIm1vZGVsIjogbW9kZWx9CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIkZhaWxlZCB0byBkb3dubG9hZCBnZW5lcmF0ZWQgaW1hZ2UifQoKICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICBsb2cuZXJyb3IoImltYWdlX2dlbmVyYXRpb25fZXhjZXB0aW9uIiwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogc3RyKGUpfQoKCmFzeW5jIGRlZiBnZW5lcmF0ZV92aWRlbygKICAgIHByb21wdDogc3RyLAogICAgbW9kZWw6IE9wdGlvbmFsW3N0cl0gPSBOb25lLAogICAgZHVyYXRpb246IE9wdGlvbmFsW2ludF0gPSBOb25lLAopIC0+IGRpY3Q6CiAgICBtb2RlbCA9IG1vZGVsIG9yIFZJREVPX01PREVMU1swXQogICAgZHVyYXRpb24gPSBkdXJhdGlvbiBvciA1CgogICAgbG9nLmluZm8oImdlbmVyYXRpbmdfdmlkZW8iLCBwcm9tcHQ9cHJvbXB0Wzo4MF0sIG1vZGVsPW1vZGVsLCBkdXJhdGlvbj1kdXJhdGlvbikKCiAgICByZXBsaWNhdGVfa2V5ID0gc2V0dGluZ3MucmVwbGljYXRlX2FwaV9rZXkKICAgIGlmIG5vdCByZXBsaWNhdGVfa2V5OgogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIk5vIFJlcGxpY2F0ZSBBUEkga2V5IGNvbmZpZ3VyZWQuIFNldCBSRVBMSUNBVEVfQVBJX0tFWSBpbiAuZW52In0KCiAgICB0cnk6CiAgICAgICAgaW1wb3J0IHJlcGxpY2F0ZQoKICAgICAgICBjbGllbnQgPSByZXBsaWNhdGUuQ2xpZW50KGFwaV90b2tlbj1yZXBsaWNhdGVfa2V5KQogICAgICAgIG1vZGVsX2lkID0gUkVQTElDQVRFX01PREVMX01BUC5nZXQobW9kZWwsIFJFUExJQ0FURV9NT0RFTF9NQVBbImx1bWEvcmF5Il0pCiAgICAgICAgaWYgbm90IG1vZGVsX2lkOgogICAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICAgICAgInN1Y2Nlc3MiOiBGYWxzZSwKICAgICAgICAgICAgICAgICJlcnJvciI6ICgKICAgICAgICAgICAgICAgICAgICBmIk5vIHBpbm5lZCBSZXBsaWNhdGUgdmVyc2lvbiBmb3IgbW9kZWwgJ3ttb2RlbH0nLiAiCiAgICAgICAgICAgICAgICAgICAgIlBpbiB0aGUgdmVyc2lvbiBpbiBSRVBMSUNBVEVfTU9ERUxfTUFQICIKICAgICAgICAgICAgICAgICAgICAiKGJhY2tlbmQvc2VydmljZXMvbWVkaWFfZ2VuZXJhdGlvbl9zZXJ2aWNlLnB5KS4iCiAgICAgICAgICAgICAgICApLAogICAgICAgICAgICB9CgogICAgICAgIGlucHV0X2RhdGEgPSB7InByb21wdCI6IHByb21wdH0KICAgICAgICBpZiBkdXJhdGlvbjoKICAgICAgICAgICAgaW5wdXRfZGF0YVsiZHVyYXRpb24iXSA9IGR1cmF0aW9uCgogICAgICAgIGxvb3AgPSBhc3luY2lvLmdldF9ydW5uaW5nX2xvb3AoKQoKICAgICAgICBkZWYgX3J1bl9yZXBsaWNhdGUoKToKICAgICAgICAgICAgcmV0dXJuIGNsaWVudC5ydW4obW9kZWxfaWQsIGlucHV0PWlucHV0X2RhdGEpCgogICAgICAgIG91dHB1dCA9IGF3YWl0IGxvb3AucnVuX2luX2V4ZWN1dG9yKE5vbmUsIF9ydW5fcmVwbGljYXRlKQoKICAgICAgICB2aWRlb191cmwgPSBOb25lCiAgICAgICAgaWYgaXNpbnN0YW5jZShvdXRwdXQsIHN0cik6CiAgICAgICAgICAgIHZpZGVvX3VybCA9IG91dHB1dAogICAgICAgIGVsaWYgaXNpbnN0YW5jZShvdXRwdXQsIGxpc3QpOgogICAgICAgICAgICBmb3IgaXRlbSBpbiBvdXRwdXQ6CiAgICAgICAgICAgICAgICBpZiBpc2luc3RhbmNlKGl0ZW0sIHN0cikgYW5kIChpdGVtLnN0YXJ0c3dpdGgoImh0dHA6Ly8iKSBvciBpdGVtLnN0YXJ0c3dpdGgoImh0dHBzOi8vIikpOgogICAgICAgICAgICAgICAgICAgIHZpZGVvX3VybCA9IGl0ZW0KICAgICAgICAgICAgICAgICAgICBicmVhawogICAgICAgIGVsaWYgaGFzYXR0cihvdXRwdXQsICJ1cmwiKToKICAgICAgICAgICAgdmlkZW9fdXJsID0gb3V0cHV0LnVybAoKICAgICAgICBpZiBub3QgdmlkZW9fdXJsOgogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6ICJObyB2aWRlbyBVUkwgaW4gUmVwbGljYXRlIHJlc3BvbnNlIiwgInJhdyI6IHN0cihvdXRwdXQpWzozMDBdfQoKICAgICAgICBzYXZlZCA9IGF3YWl0IF9kb3dubG9hZF9hbmRfc2F2ZSh2aWRlb191cmwsICJ2aWQiLCBwcm9tcHQpCiAgICAgICAgaWYgc2F2ZWQ6CiAgICAgICAgICAgIHJldHVybiB7KipzYXZlZCwgInN1Y2Nlc3MiOiBUcnVlLCAicHJvbXB0IjogcHJvbXB0LCAibW9kZWwiOiBtb2RlbCwgImR1cmF0aW9uIjogZHVyYXRpb259CiAgICAgICAgcmV0dXJuIHsic3VjY2VzcyI6IEZhbHNlLCAiZXJyb3IiOiAiRmFpbGVkIHRvIGRvd25sb2FkIGdlbmVyYXRlZCB2aWRlbyJ9CgogICAgZXhjZXB0IEltcG9ydEVycm9yOgogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIlJlcGxpY2F0ZSBwYWNrYWdlIG5vdCBpbnN0YWxsZWQuIFJ1bjogcGlwIGluc3RhbGwgcmVwbGljYXRlIn0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICBsb2cuZXJyb3IoInZpZGVvX2dlbmVyYXRpb25fZXhjZXB0aW9uIiwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogc3RyKGUpfQoKCmRlZiBfZXh0cmFjdF9pbWFnZV91cmwoY29udGVudDogc3RyKSAtPiBPcHRpb25hbFtzdHJdOgogICAgaW1wb3J0IHJlCgogICAgdXJsX21hdGNoID0gcmUuc2VhcmNoKHIiaHR0cHM/Oi8vW15cc1wiJzw+KV0rXC4oPzpwbmd8anBnfGpwZWd8Z2lmfHdlYnApIiwgY29udGVudCwgcmUuSUdOT1JFQ0FTRSkKICAgIGlmIHVybF9tYXRjaDoKICAgICAgICByZXR1cm4gdXJsX21hdGNoLmdyb3VwKDApCgogICAgYnJhY2tldF9tYXRjaCA9IHJlLnNlYXJjaChyIiFcWy4qP1xdXCgoaHR0cHM/Oi8vW15cc1wiJzw+KV0rKVwpIiwgY29udGVudCkKICAgIGlmIGJyYWNrZXRfbWF0Y2g6CiAgICAgICAgcmV0dXJuIGJyYWNrZXRfbWF0Y2guZ3JvdXAoMSkKCiAgICBqc29uX21hdGNoID0gcmUuc2VhcmNoKHInInVybCJccyo6XHMqIihodHRwcz86Ly9bXiJdKykiJywgY29udGVudCkKICAgIGlmIGpzb25fbWF0Y2g6CiAgICAgICAgcmV0dXJuIGpzb25fbWF0Y2guZ3JvdXAoMSkKCiAgICBkYXRhX21hdGNoID0gcmUuc2VhcmNoKHIiZGF0YTppbWFnZS8oPzpwbmd8anBnfGpwZWd8Z2lmfHdlYnApO2Jhc2U2NCwoW0EtWmEtejAtOSsvPV0rKSIsIGNvbnRlbnQpCiAgICBpZiBkYXRhX21hdGNoOgogICAgICAgIGI2NF9kYXRhID0gZGF0YV9tYXRjaC5ncm91cCgxKQogICAgICAgIGV4dCA9ICJwbmciCiAgICAgICAgZmlsZXBhdGggPSBHRU5FUkFURURfRElSIC8gZiJpbWdfe2RhdGV0aW1lLnV0Y25vdygpLnN0cmZ0aW1lKCclWSVtJWRfJUglTSVTJyl9X3t1dWlkLnV1aWQ0KCkuaGV4Wzo4XX0ue2V4dH0iCiAgICAgICAgaW1wb3J0IGJhc2U2NAogICAgICAgIGltYWdlX2J5dGVzID0gYmFzZTY0LmI2NGRlY29kZShiNjRfZGF0YSkKICAgICAgICBmaWxlcGF0aC53cml0ZV9ieXRlcyhpbWFnZV9ieXRlcykKICAgICAgICBsb2cuaW5mbygic2F2ZWRfaW5saW5lX2ltYWdlIiwgcGF0aD1zdHIoZmlsZXBhdGgpKQogICAgICAgIHJldHVybiBzdHIoZmlsZXBhdGgpCgogICAgcmV0dXJuIE5vbmUKCgphc3luYyBkZWYgX2Rvd25sb2FkX2FuZF9zYXZlKHVybDogc3RyLCBwcmVmaXg6IHN0ciwgcHJvbXB0OiBzdHIpIC0+IE9wdGlvbmFsW2RpY3RdOgogICAgZXh0ID0gX2d1ZXNzX2V4dGVuc2lvbih1cmwsIHByZWZpeCkKICAgIHByb21wdF9oYXNoID0gaGFzaGxpYi5tZDUocHJvbXB0LmVuY29kZSgpKS5oZXhkaWdlc3QoKVs6OF0KICAgIGZpbGVuYW1lID0gZiJ7cHJlZml4fV97ZGF0ZXRpbWUudXRjbm93KCkuc3RyZnRpbWUoJyVZJW0lZF8lSCVNJVMnKX1fe3Byb21wdF9oYXNofXtleHR9IgogICAgZmlsZXBhdGggPSBHRU5FUkFURURfRElSIC8gZmlsZW5hbWUKCiAgICB0cnk6CiAgICAgICAgYXN5bmMgd2l0aCBodHRweC5Bc3luY0NsaWVudCh0aW1lb3V0PTEyMC4wLCBmb2xsb3dfcmVkaXJlY3RzPVRydWUpIGFzIGNsaWVudDoKICAgICAgICAgICAgcmVzcG9uc2UgPSBhd2FpdCBjbGllbnQuZ2V0KHVybCkKICAgICAgICAgICAgaWYgcmVzcG9uc2Uuc3RhdHVzX2NvZGUgIT0gMjAwOgogICAgICAgICAgICAgICAgbG9nLmVycm9yKCJkb3dubG9hZF9mYWlsZWQiLCB1cmw9dXJsLCBzdGF0dXM9cmVzcG9uc2Uuc3RhdHVzX2NvZGUpCiAgICAgICAgICAgICAgICByZXR1cm4gTm9uZQogICAgICAgICAgICBmaWxlcGF0aC53cml0ZV9ieXRlcyhyZXNwb25zZS5jb250ZW50KQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIGxvZy5lcnJvcigiZG93bmxvYWRfZXhjZXB0aW9uIiwgdXJsPXVybCwgZXJyb3I9c3RyKGUpKQogICAgICAgIHJldHVybiBOb25lCgogICAgbWltZSwgXyA9IG1pbWV0eXBlcy5ndWVzc190eXBlKGZpbGVuYW1lKQogICAgaWYgbm90IG1pbWU6CiAgICAgICAgbWltZSA9ICJpbWFnZS9wbmciIGlmIHByZWZpeCA9PSAiaW1nIiBlbHNlICJ2aWRlby9tcDQiCiAgICBsb2cuaW5mbygibWVkaWFfc2F2ZWQiLCBwYXRoPXN0cihmaWxlcGF0aCksIHNpemU9ZmlsZXBhdGguc3RhdCgpLnN0X3NpemUpCiAgICByZXR1cm4gewogICAgICAgICJmaWxlX3BhdGgiOiBzdHIoZmlsZXBhdGgpLAogICAgICAgICJ1cmwiOiBmIi9hcGkvbWVkaWEvZ2VuZXJhdGVkL3tmaWxlbmFtZX0iLAogICAgICAgICJtaW1lX3R5cGUiOiBtaW1lLAogICAgICAgICJmaWxlbmFtZSI6IGZpbGVuYW1lLAogICAgICAgICJzaXplX2J5dGVzIjogZmlsZXBhdGguc3RhdCgpLnN0X3NpemUsCiAgICB9CgoKZGVmIF9ndWVzc19leHRlbnNpb24odXJsOiBzdHIsIHByZWZpeDogc3RyKSAtPiBzdHI6CiAgICB1cmxfbG93ZXIgPSB1cmwubG93ZXIoKQogICAgZm9yIGV4dCBpbiBbIi5wbmciLCAiLmpwZyIsICIuanBlZyIsICIuZ2lmIiwgIi53ZWJwIiwgIi5tcDQiLCAiLndlYm0iXToKICAgICAgICBpZiBleHQgaW4gdXJsX2xvd2VyOgogICAgICAgICAgICByZXR1cm4gZXh0CiAgICBpZiBwcmVmaXggPT0gImltZyI6CiAgICAgICAgcmV0dXJuICIucG5nIgogICAgcmV0dXJuICIubXA0IgoKCmFzeW5jIGRlZiBsaXN0X2dlbmVyYXRlZCgpIC0+IGxpc3RbZGljdF06CiAgICBmaWxlcyA9IFtdCiAgICBpZiBub3QgR0VORVJBVEVEX0RJUi5leGlzdHMoKToKICAgICAgICByZXR1cm4gZmlsZXMKICAgIGZvciBmIGluIHNvcnRlZChHRU5FUkFURURfRElSLml0ZXJkaXIoKSwga2V5PWxhbWJkYSBwOiBwLnN0YXQoKS5zdF9tdGltZSwgcmV2ZXJzZT1UcnVlKToKICAgICAgICBpZiBmLmlzX2ZpbGUoKSBhbmQgZi5zdWZmaXgubG93ZXIoKSBpbiB7Ii5wbmciLCAiLmpwZyIsICIuanBlZyIsICIuZ2lmIiwgIi53ZWJwIiwgIi5tcDQiLCAiLndlYm0ifToKICAgICAgICAgICAgbWltZSwgXyA9IG1pbWV0eXBlcy5ndWVzc190eXBlKGYubmFtZSkKICAgICAgICAgICAgZmlsZXMuYXBwZW5kKHsKICAgICAgICAgICAgICAgICJmaWxlbmFtZSI6IGYubmFtZSwKICAgICAgICAgICAgICAgICJ1cmwiOiBmIi9hcGkvbWVkaWEvZ2VuZXJhdGVkL3tmLm5hbWV9IiwKICAgICAgICAgICAgICAgICJzaXplX2J5dGVzIjogZi5zdGF0KCkuc3Rfc2l6ZSwKICAgICAgICAgICAgICAgICJtaW1lX3R5cGUiOiBtaW1lIG9yICJhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0iLAogICAgICAgICAgICAgICAgImNyZWF0ZWRfYXQiOiBkYXRldGltZS5mcm9tdGltZXN0YW1wKGYuc3RhdCgpLnN0X210aW1lKS5pc29mb3JtYXQoKSwKICAgICAgICAgICAgfSkKICAgIHJldHVybiBmaWxlcwo=
+from __future__ import annotations
+
+import asyncio
+import hashlib
+import mimetypes
+import uuid
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+import httpx
+
+from backend.config import settings
+from shared.logger import get_logger
+
+log = get_logger("media_generation_service")
+
+GENERATED_DIR = Path(settings.storage_dir) / "media" / "generated"
+GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+
+IMAGE_MODELS = [
+    "black-forest-labs/flux-schnell",
+    "black-forest-labs/flux-pro",
+    "stabilityai/stable-diffusion-3.5-large",
+    "stabilityai/stable-diffusion-3.5-medium",
+    "openai/dall-e-3",
+]
+
+VIDEO_MODELS = [
+    "luma/ray",
+    "minimax/video-01",
+    "kuaishou/kling-video",
+]
+
+REPLICATE_MODEL_MAP = {
+    # Pinned Replicate model versions. The luma/ray pin below is real.
+    # minimax/video-01 and kuaishou/kling-video have NO verified pin:
+    # look up the current version at https://replicate.com/<owner>/<name>
+    # and set it here (format "owner/name:<64-hex-version>").
+    # generate_video() refuses to run with an unpinned model.
+    "luma/ray": "luma/ray:bedc4ff26038f5a5a11a8c38ab5721430d957c2d6e9b5f5c2ce87f1b4b1b4c1",
+    "minimax/video-01": None,
+    "kuaishou/kling-video": None,
+}
+
+
+async def generate_image(
+    prompt: str,
+    model: Optional[str] = None,
+    size: Optional[str] = None,
+) -> dict:
+    model = model or IMAGE_MODELS[0]
+    size = size or "1024x1024"
+
+    log.info("generating_image", prompt=prompt[:80], model=model, size=size)
+
+    keys = settings.get_openrouter_keys() if hasattr(settings, "get_openrouter_keys") else (
+        [settings.openrouter_api_key] if getattr(settings, "openrouter_api_key", "") else []
+    )
+    if not keys:
+        return {"success": False, "error": "No OpenRouter API keys configured"}
+
+    api_key = keys[0]
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "HTTP-Referer": "https://github.com/rayanhhhgfy-cyber/jarvis-ai",
+        "X-Title": "JARVIS OMEGA Command Station",
+        "Content-Type": "application/json",
+    }
+
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        "max_tokens": 2000,
+    }
+
+    if size:
+        payload["size"] = size
+
+    try:
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            response = await client.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+            )
+
+            if response.status_code != 200:
+                log.error("image_generation_failed", status=response.status_code, body=response.text)
+                return {"success": False, "error": f"OpenRouter returned {response.status_code}: {response.text[:200]}"}
+
+            result = response.json()
+            choices = result.get("choices", [])
+            if not choices:
+                return {"success": False, "error": "No choices in response"}
+
+            content = choices[0].get("message", {}).get("content", "")
+
+            image_url = _extract_image_url(content)
+            if not image_url:
+                return {"success": False, "error": "No image URL found in response", "content": content[:500]}
+
+            saved = await _download_and_save(image_url, "img", prompt)
+            if saved:
+                return {**saved, "success": True, "prompt": prompt, "model": model}
+            return {"success": False, "error": "Failed to download generated image"}
+
+    except Exception as e:
+        log.error("image_generation_exception", error=str(e))
+        return {"success": False, "error": str(e)}
+
+
+async def generate_video(
+    prompt: str,
+    model: Optional[str] = None,
+    duration: Optional[int] = None,
+) -> dict:
+    model = model or VIDEO_MODELS[0]
+    duration = duration or 5
+
+    log.info("generating_video", prompt=prompt[:80], model=model, duration=duration)
+
+    replicate_key = settings.replicate_api_key
+    if not replicate_key:
+        return {"success": False, "error": "No Replicate API key configured. Set REPLICATE_API_KEY in .env"}
+
+    try:
+        import replicate
+
+        client = replicate.Client(api_token=replicate_key)
+        model_id = REPLICATE_MODEL_MAP.get(model, REPLICATE_MODEL_MAP["luma/ray"])
+        if not model_id:
+            return {
+                "success": False,
+                "error": (
+                    f"No pinned Replicate version for model '{model}'. "
+                    "Pin the version in REPLICATE_MODEL_MAP "
+                    "(backend/services/media_generation_service.py)."
+                ),
+            }
+
+        input_data = {"prompt": prompt}
+        if duration:
+            input_data["duration"] = duration
+
+        loop = asyncio.get_running_loop()
+
+        def _run_replicate():
+            return client.run(model_id, input=input_data)
+
+        output = await loop.run_in_executor(None, _run_replicate)
+
+        video_url = None
+        if isinstance(output, str):
+            video_url = output
+        elif isinstance(output, list):
+            for item in output:
+                if isinstance(item, str) and (item.startswith("http://") or item.startswith("https://")):
+                    video_url = item
+                    break
+        elif hasattr(output, "url"):
+            video_url = output.url
+
+        if not video_url:
+            return {"success": False, "error": "No video URL in Replicate response", "raw": str(output)[:300]}
+
+        saved = await _download_and_save(video_url, "vid", prompt)
+        if saved:
+            return {**saved, "success": True, "prompt": prompt, "model": model, "duration": duration}
+        return {"success": False, "error": "Failed to download generated video"}
+
+    except ImportError:
+        return {"success": False, "error": "Replicate package not installed. Run: pip install replicate"}
+    except Exception as e:
+        log.error("video_generation_exception", error=str(e))
+        return {"success": False, "error": str(e)}
+
+
+def _extract_image_url(content: str) -> Optional[str]:
+    import re
+
+    url_match = re.search(r"https?://[^\s\"'<>)]+\.(?:png|jpg|jpeg|gif|webp)", content, re.IGNORECASE)
+    if url_match:
+        return url_match.group(0)
+
+    bracket_match = re.search(r"!\[.*?\]\((https?://[^\s\"'<>)]+)\)", content)
+    if bracket_match:
+        return bracket_match.group(1)
+
+    json_match = re.search(r'"url"\s*:\s*"(https?://[^"]+)"', content)
+    if json_match:
+        return json_match.group(1)
+
+    data_match = re.search(r"data:image/(?:png|jpg|jpeg|gif|webp);base64,([A-Za-z0-9+/=]+)", content)
+    if data_match:
+        b64_data = data_match.group(1)
+        ext = "png"
+        filepath = GENERATED_DIR / f"img_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}.{ext}"
+        import base64
+        image_bytes = base64.b64decode(b64_data)
+        filepath.write_bytes(image_bytes)
+        log.info("saved_inline_image", path=str(filepath))
+        return str(filepath)
+
+    return None
+
+
+async def _download_and_save(url: str, prefix: str, prompt: str) -> Optional[dict]:
+    ext = _guess_extension(url, prefix)
+    prompt_hash = hashlib.md5(prompt.encode()).hexdigest()[:8]
+    filename = f"{prefix}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{prompt_hash}{ext}"
+    filepath = GENERATED_DIR / filename
+
+    try:
+        async with httpx.AsyncClient(timeout=120.0, follow_redirects=True) as client:
+            response = await client.get(url)
+            if response.status_code != 200:
+                log.error("download_failed", url=url, status=response.status_code)
+                return None
+            filepath.write_bytes(response.content)
+    except Exception as e:
+        log.error("download_exception", url=url, error=str(e))
+        return None
+
+    mime, _ = mimetypes.guess_type(filename)
+    if not mime:
+        mime = "image/png" if prefix == "img" else "video/mp4"
+    log.info("media_saved", path=str(filepath), size=filepath.stat().st_size)
+    return {
+        "file_path": str(filepath),
+        "url": f"/api/media/generated/{filename}",
+        "mime_type": mime,
+        "filename": filename,
+        "size_bytes": filepath.stat().st_size,
+    }
+
+
+def _guess_extension(url: str, prefix: str) -> str:
+    url_lower = url.lower()
+    for ext in [".png", ".jpg", ".jpeg", ".gif", ".webp", ".mp4", ".webm"]:
+        if ext in url_lower:
+            return ext
+    if prefix == "img":
+        return ".png"
+    return ".mp4"
+
+
+async def list_generated() -> list[dict]:
+    files = []
+    if not GENERATED_DIR.exists():
+        return files
+    for f in sorted(GENERATED_DIR.iterdir(), key=lambda p: p.stat().st_mtime, reverse=True):
+        if f.is_file() and f.suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".webp", ".mp4", ".webm"}:
+            mime, _ = mimetypes.guess_type(f.name)
+            files.append({
+                "filename": f.name,
+                "url": f"/api/media/generated/{f.name}",
+                "size_bytes": f.stat().st_size,
+                "mime_type": mime or "application/octet-stream",
+                "created_at": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
+            })
+    return files

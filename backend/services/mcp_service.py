@@ -1,1 +1,242 @@
-IiIiCk1DUCAoTW9kZWwgQ29udGV4dCBQcm90b2NvbCkgU2VydmVyIENvbm5lY3Rpdml0eSBTZXJ2aWNlLgpDb25uZWN0cyB0byBleHRlcm5hbCBNQ1Agc2VydmVycyB2aWEgSlNPTi1SUEMgb3ZlciBIVFRQIHRvIGRpc2NvdmVyCmFuZCBleGVjdXRlIHRvb2xzLCByZXNvdXJjZXMsIGFuZCBwcm9tcHRzLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBqc29uCmltcG9ydCB1dWlkCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBMaXN0LCBPcHRpb25hbAoKaW1wb3J0IGh0dHB4Cgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoIm1jcF9zZXJ2aWNlIikKCgpjbGFzcyBNQ1BTZXJ2ZXJDb25uZWN0aW9uOgogICAgIiIiUmVwcmVzZW50cyBhIGNvbm5lY3Rpb24gdG8gYW4gZXh0ZXJuYWwgTUNQIHNlcnZlci4iIiIKCiAgICBkZWYgX19pbml0X18oc2VsZiwgbmFtZTogc3RyLCB1cmw6IHN0ciwgaGVhZGVyczogT3B0aW9uYWxbRGljdFtzdHIsIHN0cl1dID0gTm9uZSk6CiAgICAgICAgc2VsZi5uYW1lID0gbmFtZQogICAgICAgIHNlbGYudXJsID0gdXJsLnJzdHJpcCgiLyIpCiAgICAgICAgc2VsZi5oZWFkZXJzID0gaGVhZGVycyBvciB7fQogICAgICAgIHNlbGYuX3JlcXVlc3RfaWQgPSAwCiAgICAgICAgc2VsZi5fdG9vbHM6IExpc3RbRGljdFtzdHIsIEFueV1dID0gW10KICAgICAgICBzZWxmLl9yZXNvdXJjZXM6IExpc3RbRGljdFtzdHIsIEFueV1dID0gW10KICAgICAgICBzZWxmLl9jb25uZWN0ZWQgPSBGYWxzZQoKICAgIGRlZiBfbmV4dF9pZChzZWxmKSAtPiBpbnQ6CiAgICAgICAgc2VsZi5fcmVxdWVzdF9pZCArPSAxCiAgICAgICAgcmV0dXJuIHNlbGYuX3JlcXVlc3RfaWQKCiAgICBhc3luYyBkZWYgX3JlcXVlc3Qoc2VsZiwgbWV0aG9kOiBzdHIsIHBhcmFtczogT3B0aW9uYWxbRGljdFtzdHIsIEFueV1dID0gTm9uZSkgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgcGF5bG9hZCA9IHsKICAgICAgICAgICAgImpzb25ycGMiOiAiMi4wIiwKICAgICAgICAgICAgImlkIjogc2VsZi5fbmV4dF9pZCgpLAogICAgICAgICAgICAibWV0aG9kIjogbWV0aG9kLAogICAgICAgIH0KICAgICAgICBpZiBwYXJhbXM6CiAgICAgICAgICAgIHBheWxvYWRbInBhcmFtcyJdID0gcGFyYW1zCgogICAgICAgIGFzeW5jIHdpdGggaHR0cHguQXN5bmNDbGllbnQodGltZW91dD0zMC4wKSBhcyBjbGllbnQ6CiAgICAgICAgICAgIHJlc3AgPSBhd2FpdCBjbGllbnQucG9zdCgKICAgICAgICAgICAgICAgIHNlbGYudXJsLAogICAgICAgICAgICAgICAganNvbj1wYXlsb2FkLAogICAgICAgICAgICAgICAgaGVhZGVycz17KipzZWxmLmhlYWRlcnMsICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiJ9LAogICAgICAgICAgICApCiAgICAgICAgICAgIHJlc3AucmFpc2VfZm9yX3N0YXR1cygpCiAgICAgICAgICAgIHJldHVybiByZXNwLmpzb24oKQoKICAgIGFzeW5jIGRlZiBpbml0aWFsaXplKHNlbGYpIC0+IGJvb2w6CiAgICAgICAgIiIiSW5pdGlhbGl6ZSB0aGUgTUNQIGNvbm5lY3Rpb24gYW5kIGRpc2NvdmVyIGNhcGFiaWxpdGllcy4iIiIKICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlc3VsdCA9IGF3YWl0IHNlbGYuX3JlcXVlc3QoImluaXRpYWxpemUiLCB7CiAgICAgICAgICAgICAgICAicHJvdG9jb2xWZXJzaW9uIjogIjAuMS4wIiwKICAgICAgICAgICAgICAgICJjbGllbnRJbmZvIjogeyJuYW1lIjogImphcnZpcy1vbWVnYSIsICJ2ZXJzaW9uIjogIjEuMC4wIn0sCiAgICAgICAgICAgIH0pCiAgICAgICAgICAgIHNlbGYuX2Nvbm5lY3RlZCA9IFRydWUKCiAgICAgICAgICAgICMgRGlzY292ZXIgdG9vbHMKICAgICAgICAgICAgdG9vbHNfcmVzdWx0ID0gYXdhaXQgc2VsZi5fcmVxdWVzdCgidG9vbHMvbGlzdCIpCiAgICAgICAgICAgIHNlbGYuX3Rvb2xzID0gdG9vbHNfcmVzdWx0LmdldCgicmVzdWx0Iiwge30pLmdldCgidG9vbHMiLCBbXSkKCiAgICAgICAgICAgICMgRGlzY292ZXIgcmVzb3VyY2VzCiAgICAgICAgICAgIHJlc291cmNlc19yZXN1bHQgPSBhd2FpdCBzZWxmLl9yZXF1ZXN0KCJyZXNvdXJjZXMvbGlzdCIpCiAgICAgICAgICAgIHNlbGYuX3Jlc291cmNlcyA9IHJlc291cmNlc19yZXN1bHQuZ2V0KCJyZXN1bHQiLCB7fSkuZ2V0KCJyZXNvdXJjZXMiLCBbXSkKCiAgICAgICAgICAgIGxvZy5pbmZvKCJtY3Bfc2VydmVyX2luaXRpYWxpemVkIiwKICAgICAgICAgICAgICAgICAgICAgbmFtZT1zZWxmLm5hbWUsIHRvb2xzPWxlbihzZWxmLl90b29scyksIHJlc291cmNlcz1sZW4oc2VsZi5fcmVzb3VyY2VzKSkKICAgICAgICAgICAgcmV0dXJuIFRydWUKCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoIm1jcF9pbml0aWFsaXplX2ZhaWxlZCIsIG5hbWU9c2VsZi5uYW1lLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgICAgIHNlbGYuX2Nvbm5lY3RlZCA9IEZhbHNlCiAgICAgICAgICAgIHJldHVybiBGYWxzZQoKICAgIGFzeW5jIGRlZiBleGVjdXRlX3Rvb2woc2VsZiwgdG9vbF9uYW1lOiBzdHIsIGFyZ3VtZW50czogRGljdFtzdHIsIEFueV0pIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIkV4ZWN1dGUgYSB0b29sIG9uIHRoZSBNQ1Agc2VydmVyLiIiIgogICAgICAgIGlmIG5vdCBzZWxmLl9jb25uZWN0ZWQ6CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogIk5vdCBjb25uZWN0ZWQgdG8gTUNQIHNlcnZlciJ9CgogICAgICAgIHRyeToKICAgICAgICAgICAgcmVzdWx0ID0gYXdhaXQgc2VsZi5fcmVxdWVzdCgidG9vbHMvY2FsbCIsIHsKICAgICAgICAgICAgICAgICJuYW1lIjogdG9vbF9uYW1lLAogICAgICAgICAgICAgICAgImFyZ3VtZW50cyI6IGFyZ3VtZW50cywKICAgICAgICAgICAgfSkKICAgICAgICAgICAgcmVzdWx0X2RhdGEgPSByZXN1bHQuZ2V0KCJyZXN1bHQiLCB7fSkKICAgICAgICAgICAgbG9nLmluZm8oIm1jcF90b29sX2V4ZWN1dGVkIiwgc2VydmVyPXNlbGYubmFtZSwgdG9vbD10b29sX25hbWUpCiAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAic3VjY2VzcyI6IFRydWUsCiAgICAgICAgICAgICAgICAiY29udGVudCI6IHJlc3VsdF9kYXRhLmdldCgiY29udGVudCIsIFtdKSwKICAgICAgICAgICAgICAgICJpc0Vycm9yIjogcmVzdWx0X2RhdGEuZ2V0KCJpc0Vycm9yIiwgRmFsc2UpLAogICAgICAgICAgICB9CiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoIm1jcF90b29sX2ZhaWxlZCIsIHNlcnZlcj1zZWxmLm5hbWUsIHRvb2w9dG9vbF9uYW1lLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogc3RyKGUpfQoKICAgIGFzeW5jIGRlZiByZWFkX3Jlc291cmNlKHNlbGYsIHVyaTogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJSZWFkIGEgcmVzb3VyY2UgZnJvbSB0aGUgTUNQIHNlcnZlci4iIiIKICAgICAgICBpZiBub3Qgc2VsZi5fY29ubmVjdGVkOgogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6ICJOb3QgY29ubmVjdGVkIHRvIE1DUCBzZXJ2ZXIifQoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlc3VsdCA9IGF3YWl0IHNlbGYuX3JlcXVlc3QoInJlc291cmNlcy9yZWFkIiwgeyJ1cmkiOiB1cml9KQogICAgICAgICAgICByZXN1bHRfZGF0YSA9IHJlc3VsdC5nZXQoInJlc3VsdCIsIHt9KQogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogVHJ1ZSwgImNvbnRlbnRzIjogcmVzdWx0X2RhdGEuZ2V0KCJjb250ZW50cyIsIFtdKX0KICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigibWNwX3Jlc291cmNlX3JlYWRfZmFpbGVkIiwgc2VydmVyPXNlbGYubmFtZSwgdXJpPXVyaSwgZXJyb3I9c3RyKGUpKQogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6IHN0cihlKX0KCiAgICBAcHJvcGVydHkKICAgIGRlZiB0b29scyhzZWxmKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICByZXR1cm4gc2VsZi5fdG9vbHMKCiAgICBAcHJvcGVydHkKICAgIGRlZiByZXNvdXJjZXMoc2VsZikgLT4gTGlzdFtEaWN0W3N0ciwgQW55XV06CiAgICAgICAgcmV0dXJuIHNlbGYuX3Jlc291cmNlcwoKICAgIEBwcm9wZXJ0eQogICAgZGVmIGNvbm5lY3RlZChzZWxmKSAtPiBib29sOgogICAgICAgIHJldHVybiBzZWxmLl9jb25uZWN0ZWQKCiAgICBkZWYgdG9fZGljdChzZWxmKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAibmFtZSI6IHNlbGYubmFtZSwKICAgICAgICAgICAgInVybCI6IHNlbGYudXJsLAogICAgICAgICAgICAiY29ubmVjdGVkIjogc2VsZi5fY29ubmVjdGVkLAogICAgICAgICAgICAidG9vbHMiOiBzZWxmLl90b29scywKICAgICAgICAgICAgInJlc291cmNlcyI6IHNlbGYuX3Jlc291cmNlcywKICAgICAgICB9CgoKY2xhc3MgTUNQU2VydmljZToKICAgICIiIgogICAgTWFuYWdlcyBtdWx0aXBsZSBNQ1Agc2VydmVyIGNvbm5lY3Rpb25zLgogICAgUHJvdmlkZXMgYSB1bmlmaWVkIGludGVyZmFjZSBmb3IgZGlzY292ZXJpbmcgYW5kIGV4ZWN1dGluZyB0b29scwogICAgYWNyb3NzIGFsbCBjb25uZWN0ZWQgc2VydmVycy4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICBzZWxmLl9zZXJ2ZXJzOiBEaWN0W3N0ciwgTUNQU2VydmVyQ29ubmVjdGlvbl0gPSB7fQogICAgICAgIHNlbGYuX2NvbmZpZ19maWxlID0gUGF0aCgiLi9zdG9yYWdlL21jcF9zZXJ2ZXJzLmpzb24iKQogICAgICAgIHNlbGYuX2xvYWRfY29uZmlnKCkKCiAgICBhc3luYyBkZWYgYWRkX3NlcnZlcihzZWxmLCBuYW1lOiBzdHIsIHVybDogc3RyLCBoZWFkZXJzOiBPcHRpb25hbFtEaWN0W3N0ciwgc3RyXV0gPSBOb25lKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJBZGQgYW5kIGNvbm5lY3QgdG8gYSBuZXcgTUNQIHNlcnZlci4iIiIKICAgICAgICBpZiBuYW1lIGluIHNlbGYuX3NlcnZlcnM6CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogZiJTZXJ2ZXIgJ3tuYW1lfScgYWxyZWFkeSByZWdpc3RlcmVkIn0KCiAgICAgICAgY29ubmVjdGlvbiA9IE1DUFNlcnZlckNvbm5lY3Rpb24obmFtZSwgdXJsLCBoZWFkZXJzKQogICAgICAgIG9rID0gYXdhaXQgY29ubmVjdGlvbi5pbml0aWFsaXplKCkKICAgICAgICBpZiBvazoKICAgICAgICAgICAgc2VsZi5fc2VydmVyc1tuYW1lXSA9IGNvbm5lY3Rpb24KICAgICAgICAgICAgc2VsZi5fc2F2ZV9jb25maWcoKQogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogVHJ1ZSwgInNlcnZlciI6IGNvbm5lY3Rpb24udG9fZGljdCgpfQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogZiJGYWlsZWQgdG8gY29ubmVjdCB0byB7dXJsfSJ9CgogICAgZGVmIHJlbW92ZV9zZXJ2ZXIoc2VsZiwgbmFtZTogc3RyKSAtPiBib29sOgogICAgICAgICIiIlJlbW92ZSBhbiBNQ1Agc2VydmVyIGNvbm5lY3Rpb24uIiIiCiAgICAgICAgaWYgbmFtZSBpbiBzZWxmLl9zZXJ2ZXJzOgogICAgICAgICAgICBkZWwgc2VsZi5fc2VydmVyc1tuYW1lXQogICAgICAgICAgICBzZWxmLl9zYXZlX2NvbmZpZygpCiAgICAgICAgICAgIHJldHVybiBUcnVlCiAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgYXN5bmMgZGVmIHJlY29ubmVjdF9zZXJ2ZXIoc2VsZiwgbmFtZTogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJSZWNvbm5lY3QgdG8gYW4gZXhpc3RpbmcgTUNQIHNlcnZlci4iIiIKICAgICAgICBpZiBuYW1lIG5vdCBpbiBzZWxmLl9zZXJ2ZXJzOgogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6IGYiU2VydmVyICd7bmFtZX0nIG5vdCBmb3VuZCJ9CiAgICAgICAgY29ubmVjdGlvbiA9IHNlbGYuX3NlcnZlcnNbbmFtZV0KICAgICAgICBvayA9IGF3YWl0IGNvbm5lY3Rpb24uaW5pdGlhbGl6ZSgpCiAgICAgICAgcmV0dXJuIHsic3VjY2VzcyI6IG9rLCAic2VydmVyIjogY29ubmVjdGlvbi50b19kaWN0KCl9CgogICAgYXN5bmMgZGVmIGV4ZWN1dGVfdG9vbChzZWxmLCBzZXJ2ZXJfbmFtZTogc3RyLCB0b29sX25hbWU6IHN0ciwgYXJndW1lbnRzOiBEaWN0W3N0ciwgQW55XSkgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiRXhlY3V0ZSBhIHRvb2wgb24gYSBzcGVjaWZpYyBNQ1Agc2VydmVyLiIiIgogICAgICAgIHNlcnZlciA9IHNlbGYuX3NlcnZlcnMuZ2V0KHNlcnZlcl9uYW1lKQogICAgICAgIGlmIG5vdCBzZXJ2ZXI6CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogZiJTZXJ2ZXIgJ3tzZXJ2ZXJfbmFtZX0nIG5vdCBmb3VuZCJ9CiAgICAgICAgcmV0dXJuIGF3YWl0IHNlcnZlci5leGVjdXRlX3Rvb2wodG9vbF9uYW1lLCBhcmd1bWVudHMpCgogICAgYXN5bmMgZGVmIGV4ZWN1dGVfdG9vbF9hbnkoc2VsZiwgdG9vbF9uYW1lOiBzdHIsIGFyZ3VtZW50czogRGljdFtzdHIsIEFueV0pIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIgogICAgICAgIEV4ZWN1dGUgYSB0b29sIG9uIHRoZSBmaXJzdCBzZXJ2ZXIgdGhhdCBwcm92aWRlcyBpdC4KICAgICAgICBTZWFyY2hlcyBhbGwgY29ubmVjdGVkIHNlcnZlcnMuCiAgICAgICAgIiIiCiAgICAgICAgZm9yIHNlcnZlciBpbiBzZWxmLl9zZXJ2ZXJzLnZhbHVlcygpOgogICAgICAgICAgICBmb3IgdG9vbCBpbiBzZXJ2ZXIudG9vbHM6CiAgICAgICAgICAgICAgICBpZiB0b29sLmdldCgibmFtZSIpID09IHRvb2xfbmFtZToKICAgICAgICAgICAgICAgICAgICBpZiBub3Qgc2VydmVyLmNvbm5lY3RlZDoKICAgICAgICAgICAgICAgICAgICAgICAgYXdhaXQgc2VydmVyLmluaXRpYWxpemUoKQogICAgICAgICAgICAgICAgICAgIHJldHVybiBhd2FpdCBzZXJ2ZXIuZXhlY3V0ZV90b29sKHRvb2xfbmFtZSwgYXJndW1lbnRzKQogICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogZiJUb29sICd7dG9vbF9uYW1lfScgbm90IGZvdW5kIG9uIGFueSBjb25uZWN0ZWQgc2VydmVyIn0KCiAgICBkZWYgbGlzdF9zZXJ2ZXJzKHNlbGYpIC0+IExpc3RbRGljdFtzdHIsIEFueV1dOgogICAgICAgICIiIkxpc3QgYWxsIGNvbm5lY3RlZCBNQ1Agc2VydmVycyBhbmQgdGhlaXIgY2FwYWJpbGl0aWVzLiIiIgogICAgICAgIHJldHVybiBbcy50b19kaWN0KCkgZm9yIHMgaW4gc2VsZi5fc2VydmVycy52YWx1ZXMoKV0KCiAgICBkZWYgbGlzdF9hbGxfdG9vbHMoc2VsZikgLT4gTGlzdFtEaWN0W3N0ciwgQW55XV06CiAgICAgICAgIiIiTGlzdCBhbGwgYXZhaWxhYmxlIHRvb2xzIGFjcm9zcyBhbGwgY29ubmVjdGVkIHNlcnZlcnMuIiIiCiAgICAgICAgdG9vbHMgPSBbXQogICAgICAgIGZvciBzZXJ2ZXIgaW4gc2VsZi5fc2VydmVycy52YWx1ZXMoKToKICAgICAgICAgICAgZm9yIHRvb2wgaW4gc2VydmVyLnRvb2xzOgogICAgICAgICAgICAgICAgdG9vbHMuYXBwZW5kKHsqKnRvb2wsICJzZXJ2ZXIiOiBzZXJ2ZXIubmFtZX0pCiAgICAgICAgcmV0dXJuIHRvb2xzCgogICAgZGVmIF9zYXZlX2NvbmZpZyhzZWxmKSAtPiBOb25lOgogICAgICAgICIiIlBlcnNpc3QgTUNQIHNlcnZlciBjb25maWd1cmF0aW9ucy4iIiIKICAgICAgICB0cnk6CiAgICAgICAgICAgIGRhdGEgPSBbXQogICAgICAgICAgICBmb3IgbmFtZSwgc2VydmVyIGluIHNlbGYuX3NlcnZlcnMuaXRlbXMoKToKICAgICAgICAgICAgICAgIGRhdGEuYXBwZW5kKHsKICAgICAgICAgICAgICAgICAgICAibmFtZSI6IG5hbWUsCiAgICAgICAgICAgICAgICAgICAgInVybCI6IHNlcnZlci51cmwsCiAgICAgICAgICAgICAgICAgICAgImhlYWRlcnMiOiBzZXJ2ZXIuaGVhZGVycywKICAgICAgICAgICAgICAgIH0pCiAgICAgICAgICAgIHNlbGYuX2NvbmZpZ19maWxlLnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgICAgIHNlbGYuX2NvbmZpZ19maWxlLndyaXRlX3RleHQoanNvbi5kdW1wcyhkYXRhLCBpbmRlbnQ9MikpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoIm1jcF9jb25maWdfc2F2ZV9mYWlsZWQiLCBlcnJvcj1zdHIoZSkpCgogICAgZGVmIF9sb2FkX2NvbmZpZyhzZWxmKSAtPiBOb25lOgogICAgICAgICIiIkxvYWQgTUNQIHNlcnZlciBjb25maWd1cmF0aW9ucyBmcm9tIGRpc2suIiIiCiAgICAgICAgdHJ5OgogICAgICAgICAgICBpZiBzZWxmLl9jb25maWdfZmlsZS5leGlzdHMoKToKICAgICAgICAgICAgICAgIGRhdGEgPSBqc29uLmxvYWRzKHNlbGYuX2NvbmZpZ19maWxlLnJlYWRfdGV4dCgpKQogICAgICAgICAgICAgICAgZm9yIGVudHJ5IGluIGRhdGE6CiAgICAgICAgICAgICAgICAgICAgbmFtZSA9IGVudHJ5LmdldCgibmFtZSIsICIiKQogICAgICAgICAgICAgICAgICAgIHNlbGYuX3NlcnZlcnNbbmFtZV0gPSBNQ1BTZXJ2ZXJDb25uZWN0aW9uKAogICAgICAgICAgICAgICAgICAgICAgICBuYW1lPW5hbWUsCiAgICAgICAgICAgICAgICAgICAgICAgIHVybD1lbnRyeS5nZXQoInVybCIsICIiKSwKICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVycz1lbnRyeS5nZXQoImhlYWRlcnMiLCB7fSksCiAgICAgICAgICAgICAgICAgICAgKQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgbG9nLmVycm9yKCJtY3BfY29uZmlnX2xvYWRfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQoKCm1jcF9zZXJ2aWNlID0gTUNQU2VydmljZSgpCg==
+"""
+MCP (Model Context Protocol) Server Connectivity Service.
+Connects to external MCP servers via JSON-RPC over HTTP to discover
+and execute tools, resources, and prompts.
+"""
+
+from __future__ import annotations
+
+import json
+import uuid
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import httpx
+
+from shared.logger import get_logger
+
+log = get_logger("mcp_service")
+
+
+class MCPServerConnection:
+    """Represents a connection to an external MCP server."""
+
+    def __init__(self, name: str, url: str, headers: Optional[Dict[str, str]] = None):
+        self.name = name
+        self.url = url.rstrip("/")
+        self.headers = headers or {}
+        self._request_id = 0
+        self._tools: List[Dict[str, Any]] = []
+        self._resources: List[Dict[str, Any]] = []
+        self._connected = False
+
+    def _next_id(self) -> int:
+        self._request_id += 1
+        return self._request_id
+
+    async def _request(self, method: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        payload = {
+            "jsonrpc": "2.0",
+            "id": self._next_id(),
+            "method": method,
+        }
+        if params:
+            payload["params"] = params
+
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            resp = await client.post(
+                self.url,
+                json=payload,
+                headers={**self.headers, "Content-Type": "application/json"},
+            )
+            resp.raise_for_status()
+            return resp.json()
+
+    async def initialize(self) -> bool:
+        """Initialize the MCP connection and discover capabilities."""
+        try:
+            result = await self._request("initialize", {
+                "protocolVersion": "0.1.0",
+                "clientInfo": {"name": "jarvis-omega", "version": "1.0.0"},
+            })
+            self._connected = True
+
+            # Discover tools
+            tools_result = await self._request("tools/list")
+            self._tools = tools_result.get("result", {}).get("tools", [])
+
+            # Discover resources
+            resources_result = await self._request("resources/list")
+            self._resources = resources_result.get("result", {}).get("resources", [])
+
+            log.info("mcp_server_initialized",
+                     name=self.name, tools=len(self._tools), resources=len(self._resources))
+            return True
+
+        except Exception as e:
+            log.error("mcp_initialize_failed", name=self.name, error=str(e))
+            self._connected = False
+            return False
+
+    async def execute_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute a tool on the MCP server."""
+        if not self._connected:
+            return {"success": False, "error": "Not connected to MCP server"}
+
+        try:
+            result = await self._request("tools/call", {
+                "name": tool_name,
+                "arguments": arguments,
+            })
+            result_data = result.get("result", {})
+            log.info("mcp_tool_executed", server=self.name, tool=tool_name)
+            return {
+                "success": True,
+                "content": result_data.get("content", []),
+                "isError": result_data.get("isError", False),
+            }
+        except Exception as e:
+            log.error("mcp_tool_failed", server=self.name, tool=tool_name, error=str(e))
+            return {"success": False, "error": str(e)}
+
+    async def read_resource(self, uri: str) -> Dict[str, Any]:
+        """Read a resource from the MCP server."""
+        if not self._connected:
+            return {"success": False, "error": "Not connected to MCP server"}
+
+        try:
+            result = await self._request("resources/read", {"uri": uri})
+            result_data = result.get("result", {})
+            return {"success": True, "contents": result_data.get("contents", [])}
+        except Exception as e:
+            log.error("mcp_resource_read_failed", server=self.name, uri=uri, error=str(e))
+            return {"success": False, "error": str(e)}
+
+    @property
+    def tools(self) -> List[Dict[str, Any]]:
+        return self._tools
+
+    @property
+    def resources(self) -> List[Dict[str, Any]]:
+        return self._resources
+
+    @property
+    def connected(self) -> bool:
+        return self._connected
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "url": self.url,
+            "connected": self._connected,
+            "tools": self._tools,
+            "resources": self._resources,
+        }
+
+
+class MCPService:
+    """
+    Manages multiple MCP server connections.
+    Provides a unified interface for discovering and executing tools
+    across all connected servers.
+    """
+
+    def __init__(self):
+        self._servers: Dict[str, MCPServerConnection] = {}
+        self._config_file = Path("./storage/mcp_servers.json")
+        self._load_config()
+
+    async def add_server(self, name: str, url: str, headers: Optional[Dict[str, str]] = None) -> Dict[str, Any]:
+        """Add and connect to a new MCP server."""
+        if name in self._servers:
+            return {"success": False, "error": f"Server '{name}' already registered"}
+
+        connection = MCPServerConnection(name, url, headers)
+        ok = await connection.initialize()
+        if ok:
+            self._servers[name] = connection
+            self._save_config()
+            return {"success": True, "server": connection.to_dict()}
+        else:
+            return {"success": False, "error": f"Failed to connect to {url}"}
+
+    def remove_server(self, name: str) -> bool:
+        """Remove an MCP server connection."""
+        if name in self._servers:
+            del self._servers[name]
+            self._save_config()
+            return True
+        return False
+
+    async def reconnect_server(self, name: str) -> Dict[str, Any]:
+        """Reconnect to an existing MCP server."""
+        if name not in self._servers:
+            return {"success": False, "error": f"Server '{name}' not found"}
+        connection = self._servers[name]
+        ok = await connection.initialize()
+        return {"success": ok, "server": connection.to_dict()}
+
+    async def execute_tool(self, server_name: str, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute a tool on a specific MCP server."""
+        server = self._servers.get(server_name)
+        if not server:
+            return {"success": False, "error": f"Server '{server_name}' not found"}
+        return await server.execute_tool(tool_name, arguments)
+
+    async def execute_tool_any(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Execute a tool on the first server that provides it.
+        Searches all connected servers.
+        """
+        for server in self._servers.values():
+            for tool in server.tools:
+                if tool.get("name") == tool_name:
+                    if not server.connected:
+                        await server.initialize()
+                    return await server.execute_tool(tool_name, arguments)
+        return {"success": False, "error": f"Tool '{tool_name}' not found on any connected server"}
+
+    def list_servers(self) -> List[Dict[str, Any]]:
+        """List all connected MCP servers and their capabilities."""
+        return [s.to_dict() for s in self._servers.values()]
+
+    def list_all_tools(self) -> List[Dict[str, Any]]:
+        """List all available tools across all connected servers."""
+        tools = []
+        for server in self._servers.values():
+            for tool in server.tools:
+                tools.append({**tool, "server": server.name})
+        return tools
+
+    def _save_config(self) -> None:
+        """Persist MCP server configurations."""
+        try:
+            data = []
+            for name, server in self._servers.items():
+                data.append({
+                    "name": name,
+                    "url": server.url,
+                    "headers": server.headers,
+                })
+            self._config_file.parent.mkdir(parents=True, exist_ok=True)
+            self._config_file.write_text(json.dumps(data, indent=2))
+        except Exception as e:
+            log.error("mcp_config_save_failed", error=str(e))
+
+    def _load_config(self) -> None:
+        """Load MCP server configurations from disk."""
+        try:
+            if self._config_file.exists():
+                data = json.loads(self._config_file.read_text())
+                for entry in data:
+                    name = entry.get("name", "")
+                    self._servers[name] = MCPServerConnection(
+                        name=name,
+                        url=entry.get("url", ""),
+                        headers=entry.get("headers", {}),
+                    )
+        except Exception as e:
+            log.error("mcp_config_load_failed", error=str(e))
+
+
+mcp_service = MCPService()

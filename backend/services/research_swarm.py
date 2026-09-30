@@ -1,1 +1,213 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgUmVzZWFyY2ggU3dhcm0gU2VydmljZQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpSZXNlYXJjaCBTd2FybSBTZXJ2aWNlLgpTcGF3bnMgcGFyYWxsZWwgcmVzZWFyY2ggcXVlcmllcyBhY3Jvc3MgdmFyaW91cyB3ZWIgc2VhcmNoIHNvdXJjZXMsCmNyYXdscyByZXN1bHRzLCBhbmQgc3ludGhlc2l6ZXMgYSBjb21wcmVoZW5zaXZlIHJlc2VhcmNoIHJlcG9ydCB2aWEgTExNLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBhc3luY2lvCmltcG9ydCBqc29uCmltcG9ydCByZQpmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBMaXN0Cgpmcm9tIGJhY2tlbmQuc2VydmljZXMud2ViX3NlYXJjaF9zZXJ2aWNlIGltcG9ydCB3ZWJfc2VhcmNoX3NlcnZpY2UKZnJvbSBiYWNrZW5kLnNlcnZpY2VzLmxsbV9zZXJ2aWNlIGltcG9ydCBsbG1fc2VydmljZQpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoInJlc2VhcmNoX3N3YXJtIikKCgphc3luYyBkZWYgX2ZldGNoX3VybF90ZXh0KHVybDogc3RyLCBtYXhfY2hhcnM6IGludCA9IDQwMDApIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiRmV0Y2ggYSBVUkwgYW5kIHJldHVybiBwbGFpbi10ZXh0IGNvbnRlbnQsIGNhcHBlZCBhdCBtYXhfY2hhcnMuCgogICAgUmVwbGFjZXMgdGhlIGJyYW5jaCdzIHdlYl9zZWFyY2hfc2VydmljZS5mZXRjaF91cmwoKSwgd2hpY2ggZG9lcyBub3QKICAgIGV4aXN0IG9uIG1haW4uIFJldHVybnMgdGhlIHNhbWUgeyJzdWNjZXNzIiwidXJsIiwiY29udGVudCJ9IHNoYXBlLgogICAgIiIiCiAgICBpbXBvcnQgaHR0cHgKCiAgICB0cnk6CiAgICAgICAgYXN5bmMgd2l0aCBodHRweC5Bc3luY0NsaWVudCh0aW1lb3V0PTIwLjAsIGZvbGxvd19yZWRpcmVjdHM9VHJ1ZSkgYXMgY2xpZW50OgogICAgICAgICAgICByZXNwID0gYXdhaXQgY2xpZW50LmdldCgKICAgICAgICAgICAgICAgIHVybCwgaGVhZGVycz17IlVzZXItQWdlbnQiOiAiTW96aWxsYS81LjAgKGNvbXBhdGlibGU7IEpBUlZJUy8xLjApIn0KICAgICAgICAgICAgKQogICAgICAgICAgICByZXNwLnJhaXNlX2Zvcl9zdGF0dXMoKQogICAgICAgICAgICBodG1sID0gcmVzcC50ZXh0CiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgbG9nLndhcm5pbmcoInN3YXJtX2ZldGNoX2ZhaWxlZCIsIHVybD11cmwsIGVycm9yPXN0cihlKSkKICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJ1cmwiOiB1cmwsICJjb250ZW50IjogIiJ9CgogICAgIyBTdHJpcCB0YWdzIHRvIHBsYWluIHRleHQKICAgIHRleHQgPSByZS5zdWIociI8c2NyaXB0Lio/PC9zY3JpcHQ+IiwgIiAiLCBodG1sLCBmbGFncz1yZS5ET1RBTEwgfCByZS5JR05PUkVDQVNFKQogICAgdGV4dCA9IHJlLnN1YihyIjxzdHlsZS4qPzwvc3R5bGU+IiwgIiAiLCB0ZXh0LCBmbGFncz1yZS5ET1RBTEwgfCByZS5JR05PUkVDQVNFKQogICAgdGV4dCA9IHJlLnN1YihyIjxbXj5dKz4iLCAiICIsIHRleHQpCiAgICB0ZXh0ID0gcmUuc3ViKHIiXHMrIiwgIiAiLCB0ZXh0KS5zdHJpcCgpCiAgICByZXR1cm4geyJzdWNjZXNzIjogVHJ1ZSwgInVybCI6IHVybCwgImNvbnRlbnQiOiB0ZXh0WzptYXhfY2hhcnNdfQoKCmNsYXNzIFJlc2VhcmNoU3dhcm06CiAgICBhc3luYyBkZWYgcnVuX3N3YXJtKHNlbGYsIHF1ZXJ5OiBzdHIsIG51bV9hZ2VudHM6IGludCA9IDUpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIgogICAgICAgIFJ1bnMgYSBwYXJhbGxlbCB3ZWIgcmVzZWFyY2ggY2FtcGFpZ24uCiAgICAgICAgMS4gR2VuZXJhdGUgZGl2ZXJzZSBzdWItcXVlcmllcyBhbmQgdGFyZ2V0IHNvdXJjZXMgYmFzZWQgb24gdGhlIHF1ZXJ5LgogICAgICAgIDIuIEV4ZWN1dGUgRHVja0R1Y2tHbyBzZWFyY2hlcyBpbiBwYXJhbGxlbC4KICAgICAgICAzLiBGZXRjaCBwYWdlIGNvbnRlbnRzIGZyb20gdG9wIFVSTHMgaW4gcGFyYWxsZWwuCiAgICAgICAgNC4gU3ludGhlc2l6ZSBhIGNvbXByZWhlbnNpdmUgcmVzZWFyY2ggcmVwb3J0IHVzaW5nIHRoZSBMTE0uCiAgICAgICAgIiIiCiAgICAgICAgbG9nLmluZm8oInN0YXJ0aW5nX3Jlc2VhcmNoX3N3YXJtIiwgcXVlcnk9cXVlcnksIGFnZW50cz1udW1fYWdlbnRzKQoKICAgICAgICAjIFN0ZXAgMTogR2VuZXJhdGUgc3ViLXF1ZXJpZXMKICAgICAgICBzdWJfcXVlcmllcyA9IGF3YWl0IHNlbGYuX2dlbmVyYXRlX3N1Yl9xdWVyaWVzKHF1ZXJ5LCBudW1fYWdlbnRzKQogICAgICAgIGxvZy5pbmZvKCJzd2FybV9zdWJfcXVlcmllc19nZW5lcmF0ZWQiLCBzdWJfcXVlcmllcz1zdWJfcXVlcmllcykKCiAgICAgICAgIyBTdGVwIDI6IFNlYXJjaCBpbiBwYXJhbGxlbAogICAgICAgIHNlYXJjaF90YXNrcyA9IFsKICAgICAgICAgICAgd2ViX3NlYXJjaF9zZXJ2aWNlLnNlYXJjaChxLCBtYXhfcmVzdWx0cz0zKSBmb3IgcSBpbiBzdWJfcXVlcmllcwogICAgICAgIF0KICAgICAgICBzZWFyY2hfcmVzdWx0c19saXN0ID0gYXdhaXQgYXN5bmNpby5nYXRoZXIoKnNlYXJjaF90YXNrcywgcmV0dXJuX2V4Y2VwdGlvbnM9VHJ1ZSkKCiAgICAgICAgIyBBZ2dyZWdhdGUgYW5kIGRlZHVwbGljYXRlIHNlYXJjaCByZXN1bHRzIGJ5IFVSTAogICAgICAgIHVuaXF1ZV9yZXN1bHRzOiBEaWN0W3N0ciwgRGljdFtzdHIsIHN0cl1dID0ge30KICAgICAgICBmb3IgcmVzIGluIHNlYXJjaF9yZXN1bHRzX2xpc3Q6CiAgICAgICAgICAgIGlmIGlzaW5zdGFuY2UocmVzLCBsaXN0KToKICAgICAgICAgICAgICAgIGZvciByIGluIHJlczoKICAgICAgICAgICAgICAgICAgICB1cmwgPSByLmdldCgidXJsIikKICAgICAgICAgICAgICAgICAgICBpZiB1cmwgYW5kIHVybCBub3QgaW4gdW5pcXVlX3Jlc3VsdHM6CiAgICAgICAgICAgICAgICAgICAgICAgIHVuaXF1ZV9yZXN1bHRzW3VybF0gPSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiByLmdldCgidGl0bGUiLCAiTm8gVGl0bGUiKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJzbmlwcGV0Ijogci5nZXQoInNuaXBwZXQiLCAiIiksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAidXJsIjogdXJsLAogICAgICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgIGlmIG5vdCB1bmlxdWVfcmVzdWx0czoKICAgICAgICAgICAgbG9nLndhcm5pbmcoInN3YXJtX25vX3NlYXJjaF9yZXN1bHRzX2ZvdW5kIiwgcXVlcnk9cXVlcnkpCiAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAic3VjY2VzcyI6IEZhbHNlLAogICAgICAgICAgICAgICAgInJlcG9ydCI6ICJObyB3ZWIgcmVzdWx0cyBjb3VsZCBiZSByZXRyaWV2ZWQgZm9yIHRoaXMgcXVlcnkuIiwKICAgICAgICAgICAgICAgICJzb3VyY2VzIjogW10sCiAgICAgICAgICAgIH0KCiAgICAgICAgIyBTdGVwIDM6IEZldGNoIHRvcCBwYWdlcyBpbiBwYXJhbGxlbCAodXAgdG8gNiB0b3AgVVJMcyB0byBzYXZlIHRva2VucykKICAgICAgICB0b3BfdXJscyA9IGxpc3QodW5pcXVlX3Jlc3VsdHMua2V5cygpKVs6Nl0KICAgICAgICBmZXRjaF90YXNrcyA9IFtfZmV0Y2hfdXJsX3RleHQodXJsLCBtYXhfY2hhcnM9NDAwMCkgZm9yIHVybCBpbiB0b3BfdXJsc10KICAgICAgICBmZXRjaGVkX3BhZ2VzID0gYXdhaXQgYXN5bmNpby5nYXRoZXIoKmZldGNoX3Rhc2tzLCByZXR1cm5fZXhjZXB0aW9ucz1UcnVlKQoKICAgICAgICAjIEFnZ3JlZ2F0ZSBjcmF3bGVkIGNvbnRlbnQKICAgICAgICByZXNlYXJjaF9jb250ZXh0ID0gW10KICAgICAgICBzb3VyY2VzID0gW10KICAgICAgICBmb3IgaSwgcGFnZSBpbiBlbnVtZXJhdGUoZmV0Y2hlZF9wYWdlcyk6CiAgICAgICAgICAgIGlmIGlzaW5zdGFuY2UocGFnZSwgZGljdCkgYW5kIHBhZ2UuZ2V0KCJzdWNjZXNzIikgYW5kIHBhZ2UuZ2V0KCJjb250ZW50Iik6CiAgICAgICAgICAgICAgICB1cmwgPSBwYWdlLmdldCgidXJsIikKICAgICAgICAgICAgICAgIG1ldGEgPSB1bmlxdWVfcmVzdWx0cy5nZXQodXJsLCB7fSkKICAgICAgICAgICAgICAgIHRpdGxlID0gbWV0YS5nZXQoInRpdGxlIiwgIlNvdXJjZSBQYWdlIikKICAgICAgICAgICAgICAgIHNuaXBwZXQgPSBtZXRhLmdldCgic25pcHBldCIsICIiKQogICAgICAgICAgICAgICAgY29udGVudCA9IHBhZ2UuZ2V0KCJjb250ZW50IiwgIiIpCgogICAgICAgICAgICAgICAgcmVzZWFyY2hfY29udGV4dC5hcHBlbmQoCiAgICAgICAgICAgICAgICAgICAgZiItLS0gU09VUkNFICN7aSsxfSAtLS1cbiIKICAgICAgICAgICAgICAgICAgICBmIlRpdGxlOiB7dGl0bGV9XG4iCiAgICAgICAgICAgICAgICAgICAgZiJVUkw6IHt1cmx9XG4iCiAgICAgICAgICAgICAgICAgICAgZiJTbmlwcGV0OiB7c25pcHBldH1cblxuIgogICAgICAgICAgICAgICAgICAgIGYiQ29udGVudDpcbntjb250ZW50fVxuIgogICAgICAgICAgICAgICAgKQogICAgICAgICAgICAgICAgc291cmNlcy5hcHBlbmQoeyJ0aXRsZSI6IHRpdGxlLCAidXJsIjogdXJsfSkKICAgICAgICAgICAgZWxpZiBpc2luc3RhbmNlKHBhZ2UsIGRpY3QpOgogICAgICAgICAgICAgICAgIyBGYWxsIGJhY2sgdG8gc25pcHBldCBpZiBmZXRjaCBmYWlsZWQKICAgICAgICAgICAgICAgIHVybCA9IHBhZ2UuZ2V0KCJ1cmwiKQogICAgICAgICAgICAgICAgbWV0YSA9IHVuaXF1ZV9yZXN1bHRzLmdldCh1cmwsIHt9KQogICAgICAgICAgICAgICAgaWYgbWV0YToKICAgICAgICAgICAgICAgICAgICByZXNlYXJjaF9jb250ZXh0LmFwcGVuZCgKICAgICAgICAgICAgICAgICAgICAgICAgZiItLS0gU09VUkNFICN7aSsxfSAoU25pcHBldCBPbmx5KSAtLS1cbiIKICAgICAgICAgICAgICAgICAgICAgICAgZiJUaXRsZToge21ldGEuZ2V0KCd0aXRsZScpfVxuIgogICAgICAgICAgICAgICAgICAgICAgICBmIlVSTDoge3VybH1cbiIKICAgICAgICAgICAgICAgICAgICAgICAgZiJTbmlwcGV0OiB7bWV0YS5nZXQoJ3NuaXBwZXQnKX1cbiIKICAgICAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICAgICAgc291cmNlcy5hcHBlbmQoeyJ0aXRsZSI6IG1ldGEuZ2V0KCd0aXRsZScpLCAidXJsIjogdXJsfSkKCiAgICAgICAgIyBTdGVwIDQ6IFN5bnRoZXNpemUgUmVwb3J0CiAgICAgICAgY29udGV4dF9zdHIgPSAiXG4iLmpvaW4ocmVzZWFyY2hfY29udGV4dClbOjI0MDAwXSAjIENhcCBjb250ZXh0IHNpemUKICAgICAgICByZXBvcnQgPSBhd2FpdCBzZWxmLl9zeW50aGVzaXplX3JlcG9ydChxdWVyeSwgY29udGV4dF9zdHIpCgogICAgICAgIGxvZy5pbmZvKCJzd2FybV9yZXNlYXJjaF9yZXBvcnRfc3ludGhlc2l6ZWQiLCBzb3VyY2VzPWxlbihzb3VyY2VzKSkKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAic3VjY2VzcyI6IFRydWUsCiAgICAgICAgICAgICJyZXBvcnQiOiByZXBvcnQsCiAgICAgICAgICAgICJzb3VyY2VzIjogc291cmNlcywKICAgICAgICAgICAgInN1Yl9xdWVyaWVzIjogc3ViX3F1ZXJpZXMsCiAgICAgICAgfQoKICAgIGFzeW5jIGRlZiBfZ2VuZXJhdGVfc3ViX3F1ZXJpZXMoc2VsZiwgbWFpbl9xdWVyeTogc3RyLCBjb3VudDogaW50KSAtPiBMaXN0W3N0cl06CiAgICAgICAgIiIiVXNlIExMTSB0byBnZW5lcmF0ZSBkaXZlcnNlIHF1ZXJ5IHZhcmlhdGlvbnMgYW5kIHNvdXJjZSByZXN0cmljdGlvbnMuIiIiCiAgICAgICAgc3lzdGVtX3Byb21wdCA9ICgKICAgICAgICAgICAgIllvdSBhcmUgYW4gZXhwZXJ0IHNlYXJjaCBlbmdpbmUgc3RyYXRlZ2lzdC4gR2l2ZW4gYSByZXNlYXJjaCB0b3BpYywgIgogICAgICAgICAgICBmImdlbmVyYXRlIGV4YWN0bHkge2NvdW50fSBkaXN0aW5jdCBzZWFyY2ggcXVlcmllcyB0byBnYXRoZXIgY29tcHJlaGVuc2l2ZSBpbmZvcm1hdGlvbiBmcm9tIGRpZmZlcmVudCBzb3VyY2VzLlxuIgogICAgICAgICAgICAiSW5jb3Jwb3JhdGUgc2l0ZSByZXN0cmljdGlvbnMgKGUuZy4gc2l0ZTpyZWRkaXQuY29tLCBzaXRlOmdpdGh1Yi5jb20sIHNpdGU6c3RhY2tvdmVyZmxvdy5jb20sIHNpdGU6d2lraXBlZGlhLm9yZykgIgogICAgICAgICAgICAid2hlcmUgYXBwcm9wcmlhdGUsIG9yIHRhcmdldCBkaWZmZXJlbnQgc3ViLXRvcGljcywgY29kZSBleGFtcGxlcywgb3IgZG9jdW1lbnRhdGlvbi5cbiIKICAgICAgICAgICAgIlJldHVybiBPTkxZIGEgSlNPTiBsaXN0IG9mIHN0cmluZ3MuIE5vIGV4cGxhbmF0aW9ucywgbm8gbWFya2Rvd24gZm9ybWF0dGluZy4iCiAgICAgICAgKQogICAgICAgIHVzZXJfcHJvbXB0ID0gZiJUb3BpYzoge21haW5fcXVlcnl9IgoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlc3BvbnNlID0gYXdhaXQgbGxtX3NlcnZpY2UuZ2V0X3Jlc3BvbnNlKAogICAgICAgICAgICAgICAgdXNlcl9tZXNzYWdlPXVzZXJfcHJvbXB0LAogICAgICAgICAgICAgICAgc3lzdGVtX2luc3RydWN0aW9ucz1zeXN0ZW1fcHJvbXB0LAogICAgICAgICAgICAgICAgaW5qZWN0X21lbW9yeT1GYWxzZSwKICAgICAgICAgICAgKQogICAgICAgICAgICBjbGVhbiA9IHJlc3BvbnNlLnN0cmlwKCkKICAgICAgICAgICAgaWYgY2xlYW4uc3RhcnRzd2l0aCgiYGBgIik6CiAgICAgICAgICAgICAgICBjbGVhbiA9IHJlLnN1YihyIl5gYGAoPzpqc29uKT9cbiIsICIiLCBjbGVhbikKICAgICAgICAgICAgICAgIGNsZWFuID0gcmUuc3ViKHIiXG5gYGAkIiwgIiIsIGNsZWFuKQogICAgICAgICAgICAKICAgICAgICAgICAgcXVlcmllcyA9IGpzb24ubG9hZHMoY2xlYW4uc3RyaXAoKSkKICAgICAgICAgICAgaWYgaXNpbnN0YW5jZShxdWVyaWVzLCBsaXN0KSBhbmQgbGVuKHF1ZXJpZXMpID4gMDoKICAgICAgICAgICAgICAgIHJldHVybiBbc3RyKHEpIGZvciBxIGluIHF1ZXJpZXNbOmNvdW50XV0KICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy53YXJuaW5nKCJzdWJfcXVlcnlfZ2VuZXJhdGlvbl9mYWlsZWRfdXNpbmdfZGVmYXVsdHMiLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgCiAgICAgICAgIyBGYWxsYmFjayBzdWItcXVlcmllcyBpZiBMTE0gZmFpbHMKICAgICAgICByZXR1cm4gWwogICAgICAgICAgICBtYWluX3F1ZXJ5LAogICAgICAgICAgICBmInttYWluX3F1ZXJ5fSBkb2N1bWVudGF0aW9uIiwKICAgICAgICAgICAgZiJ7bWFpbl9xdWVyeX0gZXhhbXBsZXMgZ2l0aHViIiwKICAgICAgICAgICAgZiJ7bWFpbl9xdWVyeX0gc2l0ZTpyZWRkaXQuY29tIiwKICAgICAgICAgICAgZiJ7bWFpbl9xdWVyeX0gYmVzdCBwcmFjdGljZXMiLAogICAgICAgIF1bOmNvdW50XQoKICAgIGFzeW5jIGRlZiBfc3ludGhlc2l6ZV9yZXBvcnQoc2VsZiwgcXVlcnk6IHN0ciwgY29udGV4dDogc3RyKSAtPiBzdHI6CiAgICAgICAgIiIiU3ludGhlc2l6ZSBjb2xsZWN0ZWQgd2ViIHBhZ2UgY29udGVudCBpbnRvIGEgY29tcHJlaGVuc2l2ZSBtYXJrZG93biByZXBvcnQuIiIiCiAgICAgICAgc3lzdGVtX3Byb21wdCA9ICgKICAgICAgICAgICAgIllvdSBhcmUgSkFSVklTLCBhbiBlbGl0ZSBBSSByZXNlYXJjaCBhc3Npc3RhbnQuIFlvdXIgdGFzayBpcyB0byB3cml0ZSBhIGNvbXByZWhlbnNpdmUsICIKICAgICAgICAgICAgImV4dHJlbWVseSBkZXRhaWxlZCwgYW5kIHByb2Zlc3Npb25hbCBtYXJrZG93biByZXNlYXJjaCByZXBvcnQgYmFzZWQgb24gdGhlIHdlYiBjcmF3bCBjb250ZXh0IHByb3ZpZGVkLlxuXG4iCiAgICAgICAgICAgICJTdHJ1Y3R1cmUgeW91ciByZXBvcnQgdXNpbmcgdGhlc2UgaGVhZGluZ3M6XG4iCiAgICAgICAgICAgICIjIERlZXAgUmVzZWFyY2ggUmVwb3J0OiBbVG9waWNdXG4iCiAgICAgICAgICAgICIjIyBFeGVjdXRpdmUgU3VtbWFyeVxuIgogICAgICAgICAgICAiIyMgVGVjaG5pY2FsIERlZXAtRGl2ZSAvIERldGFpbGVkIEFuYWx5c2lzXG4iCiAgICAgICAgICAgICIjIyBQcmFjdGljYWwgQ29kZSBFeGFtcGxlcyAvIENhc2UgU3R1ZGllcyAoaWYgYXBwbGljYWJsZSlcbiIKICAgICAgICAgICAgIiMjIENyaXRpY2FsIENvbnNpZGVyYXRpb25zICYgR290Y2hhcyAod2hhdCB0byB3YXRjaCBvdXQgZm9yKVxuIgogICAgICAgICAgICAiIyMgUmVmZXJlbmNlcyAoaW5jbHVkZSBVUkxzIGFuZCBzb3VyY2UgbmFtZXMpXG5cbiIKICAgICAgICAgICAgIkVuc3VyZSB0aGUgcmVwb3J0IGlzIGhpZ2hseSBkZXRhaWxlZCwgd2VsbC1zdHJ1Y3R1cmVkLCBvYmplY3RpdmUsIGFuZCBjb250YWlucyByZWFsIGNvZGUvY29tbWFuZHMgaWYgdGhlIHRvcGljIGlzIHRlY2huaWNhbC4gIgogICAgICAgICAgICAiVXNlIGNsZWFyIGhlYWRpbmdzLCBib2xkaW5nLCBsaXN0cywgYW5kIGZvcm1hdHRpbmcuIERvIG5vdCBoYWxsdWNpbmF0ZSBsaW5rczsgdXNlIG9ubHkgdGhlIFVSTHMgcHJlc2VudCBpbiB0aGUgc291cmNlcy4iCiAgICAgICAgKQogICAgICAgIAogICAgICAgIHVzZXJfcHJvbXB0ID0gKAogICAgICAgICAgICBmIlJlc2VhcmNoIFF1ZXJ5OiB7cXVlcnl9XG5cbiIKICAgICAgICAgICAgZiJDb2xsZWN0ZWQgV2ViIENvbnRleHQ6XG57Y29udGV4dH0iCiAgICAgICAgKQoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlcG9ydCA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSgKICAgICAgICAgICAgICAgIHVzZXJfbWVzc2FnZT11c2VyX3Byb21wdCwKICAgICAgICAgICAgICAgIHN5c3RlbV9pbnN0cnVjdGlvbnM9c3lzdGVtX3Byb21wdCwKICAgICAgICAgICAgICAgIGluamVjdF9tZW1vcnk9RmFsc2UsCiAgICAgICAgICAgICkKICAgICAgICAgICAgcmV0dXJuIHJlcG9ydAogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgbG9nLmVycm9yKCJyZXBvcnRfc3ludGhlc2lzX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgcmV0dXJuIGYiIyBSZXNlYXJjaCBSZXBvcnQ6IHtxdWVyeX1cblxuRXJyb3IgZ2VuZXJhdGluZyByZXBvcnQ6IHtzdHIoZSl9IgoKCiMgU2luZ2xldG9uCnJlc2VhcmNoX3N3YXJtID0gUmVzZWFyY2hTd2FybSgpCg==
+# ====================================================================
+# JARVIS OMEGA — Research Swarm Service
+# ====================================================================
+"""
+Research Swarm Service.
+Spawns parallel research queries across various web search sources,
+crawls results, and synthesizes a comprehensive research report via LLM.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import re
+from typing import Any, Dict, List
+
+from backend.services.web_search_service import web_search_service
+from backend.services.llm_service import llm_service
+from shared.logger import get_logger
+
+log = get_logger("research_swarm")
+
+
+async def _fetch_url_text(url: str, max_chars: int = 4000) -> Dict[str, Any]:
+    """Fetch a URL and return plain-text content, capped at max_chars.
+
+    Replaces the branch's web_search_service.fetch_url(), which does not
+    exist on main. Returns the same {"success","url","content"} shape.
+    """
+    import httpx
+
+    try:
+        async with httpx.AsyncClient(timeout=20.0, follow_redirects=True) as client:
+            resp = await client.get(
+                url, headers={"User-Agent": "Mozilla/5.0 (compatible; JARVIS/1.0)"}
+            )
+            resp.raise_for_status()
+            html = resp.text
+    except Exception as e:
+        log.warning("swarm_fetch_failed", url=url, error=str(e))
+        return {"success": False, "url": url, "content": ""}
+
+    # Strip tags to plain text
+    text = re.sub(r"<script.*?</script>", " ", html, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<style.*?</style>", " ", text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return {"success": True, "url": url, "content": text[:max_chars]}
+
+
+class ResearchSwarm:
+    async def run_swarm(self, query: str, num_agents: int = 5) -> Dict[str, Any]:
+        """
+        Runs a parallel web research campaign.
+        1. Generate diverse sub-queries and target sources based on the query.
+        2. Execute DuckDuckGo searches in parallel.
+        3. Fetch page contents from top URLs in parallel.
+        4. Synthesize a comprehensive research report using the LLM.
+        """
+        log.info("starting_research_swarm", query=query, agents=num_agents)
+
+        # Step 1: Generate sub-queries
+        sub_queries = await self._generate_sub_queries(query, num_agents)
+        log.info("swarm_sub_queries_generated", sub_queries=sub_queries)
+
+        # Step 2: Search in parallel
+        search_tasks = [
+            web_search_service.search(q, max_results=3) for q in sub_queries
+        ]
+        search_results_list = await asyncio.gather(*search_tasks, return_exceptions=True)
+
+        # Aggregate and deduplicate search results by URL
+        unique_results: Dict[str, Dict[str, str]] = {}
+        for res in search_results_list:
+            if isinstance(res, list):
+                for r in res:
+                    url = r.get("url")
+                    if url and url not in unique_results:
+                        unique_results[url] = {
+                            "title": r.get("title", "No Title"),
+                            "snippet": r.get("snippet", ""),
+                            "url": url,
+                        }
+
+        if not unique_results:
+            log.warning("swarm_no_search_results_found", query=query)
+            return {
+                "success": False,
+                "report": "No web results could be retrieved for this query.",
+                "sources": [],
+            }
+
+        # Step 3: Fetch top pages in parallel (up to 6 top URLs to save tokens)
+        top_urls = list(unique_results.keys())[:6]
+        fetch_tasks = [_fetch_url_text(url, max_chars=4000) for url in top_urls]
+        fetched_pages = await asyncio.gather(*fetch_tasks, return_exceptions=True)
+
+        # Aggregate crawled content
+        research_context = []
+        sources = []
+        for i, page in enumerate(fetched_pages):
+            if isinstance(page, dict) and page.get("success") and page.get("content"):
+                url = page.get("url")
+                meta = unique_results.get(url, {})
+                title = meta.get("title", "Source Page")
+                snippet = meta.get("snippet", "")
+                content = page.get("content", "")
+
+                research_context.append(
+                    f"--- SOURCE #{i+1} ---\n"
+                    f"Title: {title}\n"
+                    f"URL: {url}\n"
+                    f"Snippet: {snippet}\n\n"
+                    f"Content:\n{content}\n"
+                )
+                sources.append({"title": title, "url": url})
+            elif isinstance(page, dict):
+                # Fall back to snippet if fetch failed
+                url = page.get("url")
+                meta = unique_results.get(url, {})
+                if meta:
+                    research_context.append(
+                        f"--- SOURCE #{i+1} (Snippet Only) ---\n"
+                        f"Title: {meta.get('title')}\n"
+                        f"URL: {url}\n"
+                        f"Snippet: {meta.get('snippet')}\n"
+                    )
+                    sources.append({"title": meta.get('title'), "url": url})
+
+        # Step 4: Synthesize Report
+        context_str = "\n".join(research_context)[:24000] # Cap context size
+        report = await self._synthesize_report(query, context_str)
+
+        log.info("swarm_research_report_synthesized", sources=len(sources))
+        return {
+            "success": True,
+            "report": report,
+            "sources": sources,
+            "sub_queries": sub_queries,
+        }
+
+    async def _generate_sub_queries(self, main_query: str, count: int) -> List[str]:
+        """Use LLM to generate diverse query variations and source restrictions."""
+        system_prompt = (
+            "You are an expert search engine strategist. Given a research topic, "
+            f"generate exactly {count} distinct search queries to gather comprehensive information from different sources.\n"
+            "Incorporate site restrictions (e.g. site:reddit.com, site:github.com, site:stackoverflow.com, site:wikipedia.org) "
+            "where appropriate, or target different sub-topics, code examples, or documentation.\n"
+            "Return ONLY a JSON list of strings. No explanations, no markdown formatting."
+        )
+        user_prompt = f"Topic: {main_query}"
+
+        try:
+            response = await llm_service.get_response(
+                user_message=user_prompt,
+                system_instructions=system_prompt,
+                inject_memory=False,
+            )
+            clean = response.strip()
+            if clean.startswith("```"):
+                clean = re.sub(r"^```(?:json)?\n", "", clean)
+                clean = re.sub(r"\n```$", "", clean)
+            
+            queries = json.loads(clean.strip())
+            if isinstance(queries, list) and len(queries) > 0:
+                return [str(q) for q in queries[:count]]
+        except Exception as e:
+            log.warning("sub_query_generation_failed_using_defaults", error=str(e))
+        
+        # Fallback sub-queries if LLM fails
+        return [
+            main_query,
+            f"{main_query} documentation",
+            f"{main_query} examples github",
+            f"{main_query} site:reddit.com",
+            f"{main_query} best practices",
+        ][:count]
+
+    async def _synthesize_report(self, query: str, context: str) -> str:
+        """Synthesize collected web page content into a comprehensive markdown report."""
+        system_prompt = (
+            "You are JARVIS, an elite AI research assistant. Your task is to write a comprehensive, "
+            "extremely detailed, and professional markdown research report based on the web crawl context provided.\n\n"
+            "Structure your report using these headings:\n"
+            "# Deep Research Report: [Topic]\n"
+            "## Executive Summary\n"
+            "## Technical Deep-Dive / Detailed Analysis\n"
+            "## Practical Code Examples / Case Studies (if applicable)\n"
+            "## Critical Considerations & Gotchas (what to watch out for)\n"
+            "## References (include URLs and source names)\n\n"
+            "Ensure the report is highly detailed, well-structured, objective, and contains real code/commands if the topic is technical. "
+            "Use clear headings, bolding, lists, and formatting. Do not hallucinate links; use only the URLs present in the sources."
+        )
+        
+        user_prompt = (
+            f"Research Query: {query}\n\n"
+            f"Collected Web Context:\n{context}"
+        )
+
+        try:
+            report = await llm_service.get_response(
+                user_message=user_prompt,
+                system_instructions=system_prompt,
+                inject_memory=False,
+            )
+            return report
+        except Exception as e:
+            log.error("report_synthesis_failed", error=str(e))
+            return f"# Research Report: {query}\n\nError generating report: {str(e)}"
+
+
+# Singleton
+research_swarm = ResearchSwarm()

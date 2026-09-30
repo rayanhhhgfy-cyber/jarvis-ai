@@ -1,1 +1,227 @@
-IiIiClBhdHRlcm4gZGV0ZWN0aW9uIGFuZCB3b3JrZmxvdyBhdXRvbWF0aW9uIHNlcnZpY2UuClRyYWNrcyBjb21tYW5kIGV4ZWN1dGlvbiBoaXN0b3J5IGFuZCBkZXRlY3RzIHJlcGVhdGVkIHNlcXVlbmNlcwp0aGF0IGNhbiBiZSB0dXJuZWQgaW50byByZXVzYWJsZSB3b3JrZmxvd3MuCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsLCBUdXBsZQoKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJwYXR0ZXJuX2RldGVjdG9yIikKCgpjbGFzcyBQYXR0ZXJuRGV0ZWN0b3I6CiAgICAiIiIKICAgIERldGVjdHMgcmVwZWF0ZWQgY29tbWFuZCBwYXR0ZXJucyBpbiBleGVjdXRpb24gaGlzdG9yeSBhbmQKICAgIHN1Z2dlc3RzL2NyZWF0ZXMgYXV0b21hdGVkIHdvcmtmbG93cy4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICBzZWxmLl9oaXN0b3J5OiBMaXN0W0RpY3Rbc3RyLCBBbnldXSA9IFtdCiAgICAgICAgc2VsZi5fd29ya2Zsb3dzOiBEaWN0W3N0ciwgRGljdFtzdHIsIEFueV1dID0ge30KICAgICAgICBzZWxmLl9wYXR0ZXJuc19maWxlID0gUGF0aCgiLi9zdG9yYWdlL2NvbW1hbmRfcGF0dGVybnMuanNvbiIpCiAgICAgICAgc2VsZi5fbG9hZCgpCgogICAgZGVmIHJlY29yZF9leGVjdXRpb24oc2VsZiwgY29tbWFuZDogc3RyLCBzdWNjZXNzOiBib29sLCBvdXRwdXQ6IHN0ciA9ICIiLCB1c2VyX2ludGVudDogc3RyID0gIiIpIC0+IE5vbmU6CiAgICAgICAgIiIiUmVjb3JkIGEgY29tbWFuZCBleGVjdXRpb24gZm9yIHBhdHRlcm4gYW5hbHlzaXMuIiIiCiAgICAgICAgZW50cnkgPSB7CiAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKSwKICAgICAgICAgICAgImNvbW1hbmQiOiBjb21tYW5kLAogICAgICAgICAgICAic3VjY2VzcyI6IHN1Y2Nlc3MsCiAgICAgICAgICAgICJvdXRwdXRfcHJldmlldyI6IG91dHB1dFs6MjAwXSwKICAgICAgICAgICAgInVzZXJfaW50ZW50IjogdXNlcl9pbnRlbnQsCiAgICAgICAgICAgICJjb21tYW5kX3R5cGUiOiBzZWxmLl9jbGFzc2lmeV9jb21tYW5kKGNvbW1hbmQpLAogICAgICAgIH0KICAgICAgICBzZWxmLl9oaXN0b3J5LmFwcGVuZChlbnRyeSkKICAgICAgICAjIEtlZXAgbGFzdCAyMDAgZW50cmllcwogICAgICAgIGlmIGxlbihzZWxmLl9oaXN0b3J5KSA+IDIwMDoKICAgICAgICAgICAgc2VsZi5faGlzdG9yeSA9IHNlbGYuX2hpc3RvcnlbLTIwMDpdCiAgICAgICAgc2VsZi5fc2F2ZSgpCgogICAgZGVmIGRldGVjdF9wYXR0ZXJucyhzZWxmKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICAiIiIKICAgICAgICBTY2FuIGV4ZWN1dGlvbiBoaXN0b3J5IGZvciByZXBlYXRlZCBjb21tYW5kIHNlcXVlbmNlcy4KICAgICAgICBSZXR1cm5zIGRldGVjdGVkIHBhdHRlcm5zIHdpdGggZnJlcXVlbmN5IHNjb3Jlcy4KICAgICAgICAiIiIKICAgICAgICBpZiBsZW4oc2VsZi5faGlzdG9yeSkgPCA0OgogICAgICAgICAgICByZXR1cm4gW10KCiAgICAgICAgcGF0dGVybnMgPSBbXQogICAgICAgIHNlcXVlbmNlX2xlbmd0aHMgPSBbMiwgM10gICMgTG9vayBmb3IgMi1zdGVwIGFuZCAzLXN0ZXAgcGF0dGVybnMKCiAgICAgICAgZm9yIHNlcV9sZW4gaW4gc2VxdWVuY2VfbGVuZ3RoczoKICAgICAgICAgICAgc2VxdWVuY2VzOiBEaWN0W3N0ciwgTGlzdFtpbnRdXSA9IHt9CiAgICAgICAgICAgIGZvciBpIGluIHJhbmdlKGxlbihzZWxmLl9oaXN0b3J5KSAtIHNlcV9sZW4gKyAxKToKICAgICAgICAgICAgICAgIHNlcSA9IHNlbGYuX2hpc3RvcnlbaTppICsgc2VxX2xlbl0KICAgICAgICAgICAgICAgIGtleSA9IHNlbGYuX3NlcXVlbmNlX2tleShzZXEpCiAgICAgICAgICAgICAgICBpZiBrZXkgbm90IGluIHNlcXVlbmNlczoKICAgICAgICAgICAgICAgICAgICBzZXF1ZW5jZXNba2V5XSA9IFtdCiAgICAgICAgICAgICAgICBzZXF1ZW5jZXNba2V5XS5hcHBlbmQoaSkKCiAgICAgICAgICAgIGZvciBrZXksIGluZGljZXMgaW4gc2VxdWVuY2VzLml0ZW1zKCk6CiAgICAgICAgICAgICAgICBpZiBsZW4oaW5kaWNlcykgPj0gMjogICMgUmVwZWF0ZWQgYXQgbGVhc3QgdHdpY2UKICAgICAgICAgICAgICAgICAgICBzZXFfZW50cmllcyA9IFtzZWxmLl9oaXN0b3J5W2ldIGZvciBpIGluIGluZGljZXNbOnNlcV9sZW5dXQogICAgICAgICAgICAgICAgICAgIHBhdHRlcm5zLmFwcGVuZCh7CiAgICAgICAgICAgICAgICAgICAgICAgICJwYXR0ZXJuX2tleSI6IGtleSwKICAgICAgICAgICAgICAgICAgICAgICAgImZyZXF1ZW5jeSI6IGxlbihpbmRpY2VzKSwKICAgICAgICAgICAgICAgICAgICAgICAgInNlcXVlbmNlX2xlbmd0aCI6IHNlcV9sZW4sCiAgICAgICAgICAgICAgICAgICAgICAgICJsYXN0X2RldGVjdGVkIjogc2VxX2VudHJpZXNbLTFdWyJ0aW1lc3RhbXAiXSwKICAgICAgICAgICAgICAgICAgICAgICAgImNvbW1hbmRzIjogW2VbImNvbW1hbmQiXSBmb3IgZSBpbiBzZXFfZW50cmllc10sCiAgICAgICAgICAgICAgICAgICAgICAgICJjb21tYW5kX3R5cGVzIjogW2VbImNvbW1hbmRfdHlwZSJdIGZvciBlIGluIHNlcV9lbnRyaWVzXSwKICAgICAgICAgICAgICAgICAgICAgICAgInN1Z2dlc3Rfd29ya2Zsb3ciOiBsZW4oaW5kaWNlcykgPj0gMywgICMgU3VnZ2VzdCBpZiAzKyByZXBldGl0aW9ucwogICAgICAgICAgICAgICAgICAgIH0pCgogICAgICAgIHBhdHRlcm5zLnNvcnQoa2V5PWxhbWJkYSBwOiBwWyJmcmVxdWVuY3kiXSwgcmV2ZXJzZT1UcnVlKQogICAgICAgIHJldHVybiBwYXR0ZXJucwoKICAgIGRlZiBzdWdnZXN0X3dvcmtmbG93X25hbWUoc2VsZiwgcGF0dGVybjogRGljdFtzdHIsIEFueV0pIC0+IHN0cjoKICAgICAgICAiIiJHZW5lcmF0ZSBhIGh1bWFuLXJlYWRhYmxlIHdvcmtmbG93IG5hbWUgZnJvbSBhIHBhdHRlcm4uIiIiCiAgICAgICAgdHlwZXMgPSBwYXR0ZXJuLmdldCgiY29tbWFuZF90eXBlcyIsIFtdKQogICAgICAgIHR5cGVfbmFtZXMgPSB7CiAgICAgICAgICAgICJicm93c2VyIjogIkJyb3dzZXIiLAogICAgICAgICAgICAiZGVza3RvcCI6ICJEZXNrdG9wIiwKICAgICAgICAgICAgImZpbGUiOiAiRmlsZSIsCiAgICAgICAgICAgICJzZWFyY2giOiAiU2VhcmNoIiwKICAgICAgICAgICAgInBvd2Vyc2hlbGwiOiAiUG93ZXJTaGVsbCIsCiAgICAgICAgICAgICJtZWRpYSI6ICJNZWRpYSIsCiAgICAgICAgICAgICJvdGhlciI6ICJDb21tYW5kIiwKICAgICAgICB9CiAgICAgICAgbGFiZWxzID0gW3R5cGVfbmFtZXMuZ2V0KHQsIHQpIGZvciB0IGluIHR5cGVzIGlmIHRdCiAgICAgICAgcmV0dXJuICIg4oaSICIuam9pbihsYWJlbHMpIGlmIGxhYmVscyBlbHNlICJXb3JrZmxvdyIKCiAgICBkZWYgY3JlYXRlX3dvcmtmbG93KHNlbGYsIG5hbWU6IHN0ciwgY29tbWFuZHM6IExpc3Rbc3RyXSwgZGVzY3JpcHRpb246IHN0ciA9ICIiKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJDcmVhdGUgYSByZXVzYWJsZSB3b3JrZmxvdyBmcm9tIGEgbGlzdCBvZiBjb21tYW5kcy4iIiIKICAgICAgICB3b3JrZmxvd19pZCA9IGYid2Zfe2RhdGV0aW1lLnV0Y25vdygpLnN0cmZ0aW1lKCclWSVtJWRfJUglTSVTJyl9IgogICAgICAgIHdvcmtmbG93ID0gewogICAgICAgICAgICAid29ya2Zsb3dfaWQiOiB3b3JrZmxvd19pZCwKICAgICAgICAgICAgIm5hbWUiOiBuYW1lLAogICAgICAgICAgICAiZGVzY3JpcHRpb24iOiBkZXNjcmlwdGlvbiBvciBmIkF1dG9tYXRlZCB3b3JrZmxvdyB3aXRoIHtsZW4oY29tbWFuZHMpfSBzdGVwcyIsCiAgICAgICAgICAgICJjb21tYW5kcyI6IGNvbW1hbmRzLAogICAgICAgICAgICAic3RlcF9jb3VudCI6IGxlbihjb21tYW5kcyksCiAgICAgICAgICAgICJjcmVhdGVkX2F0IjogZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICJ1cGRhdGVkX2F0IjogZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICJydW5fY291bnQiOiAwLAogICAgICAgIH0KICAgICAgICBzZWxmLl93b3JrZmxvd3Nbd29ya2Zsb3dfaWRdID0gd29ya2Zsb3cKICAgICAgICBzZWxmLl9zYXZlKCkKICAgICAgICBsb2cuaW5mbygid29ya2Zsb3dfY3JlYXRlZCIsIHdvcmtmbG93X2lkPXdvcmtmbG93X2lkLCBuYW1lPW5hbWUsIHN0ZXBzPWxlbihjb21tYW5kcykpCiAgICAgICAgcmV0dXJuIHdvcmtmbG93CgogICAgZGVmIGdldF93b3JrZmxvd3Moc2VsZikgLT4gTGlzdFtEaWN0W3N0ciwgQW55XV06CiAgICAgICAgIiIiUmV0dXJuIGFsbCBzYXZlZCB3b3JrZmxvd3MuIiIiCiAgICAgICAgcmV0dXJuIGxpc3Qoc2VsZi5fd29ya2Zsb3dzLnZhbHVlcygpKQoKICAgIGRlZiBkZWxldGVfd29ya2Zsb3coc2VsZiwgd29ya2Zsb3dfaWQ6IHN0cikgLT4gYm9vbDoKICAgICAgICAiIiJEZWxldGUgYSB3b3JrZmxvdy4iIiIKICAgICAgICBpZiB3b3JrZmxvd19pZCBpbiBzZWxmLl93b3JrZmxvd3M6CiAgICAgICAgICAgIGRlbCBzZWxmLl93b3JrZmxvd3Nbd29ya2Zsb3dfaWRdCiAgICAgICAgICAgIHNlbGYuX3NhdmUoKQogICAgICAgICAgICByZXR1cm4gVHJ1ZQogICAgICAgIHJldHVybiBGYWxzZQoKICAgIGFzeW5jIGRlZiBydW5fd29ya2Zsb3coc2VsZiwgd29ya2Zsb3dfaWQ6IHN0cikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiCiAgICAgICAgRXhlY3V0ZSBhIHdvcmtmbG93J3MgY29tbWFuZHMgc2VxdWVudGlhbGx5LgogICAgICAgIFJldHVybnMgZXhlY3V0aW9uIHJlc3VsdHMuCiAgICAgICAgIiIiCiAgICAgICAgd29ya2Zsb3cgPSBzZWxmLl93b3JrZmxvd3MuZ2V0KHdvcmtmbG93X2lkKQogICAgICAgIGlmIG5vdCB3b3JrZmxvdzoKICAgICAgICAgICAgcmV0dXJuIHsic3VjY2VzcyI6IEZhbHNlLCAiZXJyb3IiOiBmIldvcmtmbG93IHt3b3JrZmxvd19pZH0gbm90IGZvdW5kIn0KCiAgICAgICAgZnJvbSBiYWNrZW5kLnJvdXRlcnMucm91dGVyX2NoYXQgaW1wb3J0IF9kaXNwYXRjaF9hbmRfd2FpdAoKICAgICAgICByZXN1bHRzID0gW10KICAgICAgICBhbGxfc3VjY2VzcyA9IFRydWUKCiAgICAgICAgZm9yIGksIGNtZCBpbiBlbnVtZXJhdGUod29ya2Zsb3dbImNvbW1hbmRzIl0pOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICByZXN1bHQgPSBhd2FpdCBfZGlzcGF0Y2hfYW5kX3dhaXQoY21kLCBmIldvcmtmbG93IHN0ZXAge2kgKyAxfToge2NtZFs6NjBdfSIsIHRpbWVvdXQ9MzAuMCkKICAgICAgICAgICAgICAgIHN0ZXBfcmVzdWx0ID0gewogICAgICAgICAgICAgICAgICAgICJzdGVwIjogaSArIDEsCiAgICAgICAgICAgICAgICAgICAgImNvbW1hbmQiOiBjbWQsCiAgICAgICAgICAgICAgICAgICAgInN1Y2Nlc3MiOiByZXN1bHQuZ2V0KCJjb21wbGV0ZWQiLCBGYWxzZSksCiAgICAgICAgICAgICAgICAgICAgIm91dHB1dCI6IHJlc3VsdC5nZXQoInN0ZG91dCIsICIiKSwKICAgICAgICAgICAgICAgICAgICAiZXJyb3IiOiByZXN1bHQuZ2V0KCJzdGRlcnIiLCAiIiksCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBpZiBub3Qgc3RlcF9yZXN1bHRbInN1Y2Nlc3MiXToKICAgICAgICAgICAgICAgICAgICBhbGxfc3VjY2VzcyA9IEZhbHNlCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIHN0ZXBfcmVzdWx0ID0geyJzdGVwIjogaSArIDEsICJjb21tYW5kIjogY21kLCAic3VjY2VzcyI6IEZhbHNlLCAiZXJyb3IiOiBzdHIoZSl9CiAgICAgICAgICAgICAgICBhbGxfc3VjY2VzcyA9IEZhbHNlCgogICAgICAgICAgICByZXN1bHRzLmFwcGVuZChzdGVwX3Jlc3VsdCkKCiAgICAgICAgd29ya2Zsb3dbInJ1bl9jb3VudCJdID0gd29ya2Zsb3cuZ2V0KCJydW5fY291bnQiLCAwKSArIDEKICAgICAgICBzZWxmLl9zYXZlKCkKCiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgInN1Y2Nlc3MiOiBhbGxfc3VjY2VzcywKICAgICAgICAgICAgIndvcmtmbG93X2lkIjogd29ya2Zsb3dfaWQsCiAgICAgICAgICAgICJuYW1lIjogd29ya2Zsb3dbIm5hbWUiXSwKICAgICAgICAgICAgInN0ZXBzIjogcmVzdWx0cywKICAgICAgICAgICAgImFsbF9zdWNjZXNzIjogYWxsX3N1Y2Nlc3MsCiAgICAgICAgfQoKICAgIGRlZiBfY2xhc3NpZnlfY29tbWFuZChzZWxmLCBjb21tYW5kOiBzdHIpIC0+IHN0cjoKICAgICAgICAiIiJDbGFzc2lmeSBhIGNvbW1hbmQgaW50byBhIHR5cGUgY2F0ZWdvcnkuIiIiCiAgICAgICAgY21kX2xvd2VyID0gY29tbWFuZC5sb3dlcigpCiAgICAgICAgaWYgImJyb3dzZXJfIiBpbiBjbWRfbG93ZXI6CiAgICAgICAgICAgIHJldHVybiAiYnJvd3NlciIKICAgICAgICBpZiAiZGVza3RvcF8iIGluIGNtZF9sb3dlcjoKICAgICAgICAgICAgcmV0dXJuICJkZXNrdG9wIgogICAgICAgIGlmIGFueShrdyBpbiBjbWRfbG93ZXIgZm9yIGt3IGluIFsic2V0LWNvbnRlbnQiLCAib3V0LWZpbGUiLCAibmV3LWl0ZW0iLCAiY29weS1pdGVtIiwgInJlbW92ZS1pdGVtIl0pOgogICAgICAgICAgICByZXR1cm4gImZpbGUiCiAgICAgICAgaWYgYW55KGt3IGluIGNtZF9sb3dlciBmb3Iga3cgaW4gWyJzZWFyY2hfd2ViIiwgImZldGNoX3VybCIsICJzZWFyY2hfbWFwcyJdKToKICAgICAgICAgICAgcmV0dXJuICJzZWFyY2giCiAgICAgICAgaWYgYW55KGt3IGluIGNtZF9sb3dlciBmb3Iga3cgaW4gWyJnZW5lcmF0ZV9pbWFnZSIsICJnZW5lcmF0ZV92aWRlbyJdKToKICAgICAgICAgICAgcmV0dXJuICJtZWRpYSIKICAgICAgICBpZiAicG93ZXJzaGVsbCIgaW4gY21kX2xvd2VyOgogICAgICAgICAgICByZXR1cm4gInBvd2Vyc2hlbGwiCiAgICAgICAgcmV0dXJuICJvdGhlciIKCiAgICBkZWYgX3NlcXVlbmNlX2tleShzZWxmLCBzZXF1ZW5jZTogTGlzdFtEaWN0W3N0ciwgQW55XV0pIC0+IHN0cjoKICAgICAgICAiIiJDcmVhdGUgYSBoYXNoYWJsZSBrZXkgZm9yIGEgY29tbWFuZCBzZXF1ZW5jZS4iIiIKICAgICAgICB0eXBlcyA9IFtlWyJjb21tYW5kX3R5cGUiXSBmb3IgZSBpbiBzZXF1ZW5jZV0KICAgICAgICByZXR1cm4gInwiLmpvaW4odHlwZXMpCgogICAgZGVmIF9zYXZlKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgIiIiUGVyc2lzdCBwYXR0ZXJucyBhbmQgd29ya2Zsb3dzIHRvIGRpc2suIiIiCiAgICAgICAgdHJ5OgogICAgICAgICAgICBkYXRhID0gewogICAgICAgICAgICAgICAgImhpc3RvcnkiOiBzZWxmLl9oaXN0b3J5LAogICAgICAgICAgICAgICAgIndvcmtmbG93cyI6IHNlbGYuX3dvcmtmbG93cywKICAgICAgICAgICAgfQogICAgICAgICAgICBzZWxmLl9wYXR0ZXJuc19maWxlLnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgICAgIHNlbGYuX3BhdHRlcm5zX2ZpbGUud3JpdGVfdGV4dChqc29uLmR1bXBzKGRhdGEsIGluZGVudD0yKSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigicGF0dGVybl9zYXZlX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKCiAgICBkZWYgX2xvYWQoc2VsZikgLT4gTm9uZToKICAgICAgICAiIiJMb2FkIHBlcnNpc3RlZCBkYXRhIGZyb20gZGlzay4iIiIKICAgICAgICB0cnk6CiAgICAgICAgICAgIGlmIHNlbGYuX3BhdHRlcm5zX2ZpbGUuZXhpc3RzKCk6CiAgICAgICAgICAgICAgICBkYXRhID0ganNvbi5sb2FkcyhzZWxmLl9wYXR0ZXJuc19maWxlLnJlYWRfdGV4dCgpKQogICAgICAgICAgICAgICAgc2VsZi5faGlzdG9yeSA9IGRhdGEuZ2V0KCJoaXN0b3J5IiwgW10pCiAgICAgICAgICAgICAgICBzZWxmLl93b3JrZmxvd3MgPSBkYXRhLmdldCgid29ya2Zsb3dzIiwge30pCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoInBhdHRlcm5fbG9hZF9mYWlsZWQiLCBlcnJvcj1zdHIoZSkpCgogICAgZGVmIGdldF9zdGF0cyhzZWxmKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJSZXR1cm4gcGF0dGVybiBkZXRlY3Rpb24gc3RhdGlzdGljcy4iIiIKICAgICAgICBwYXR0ZXJucyA9IHNlbGYuZGV0ZWN0X3BhdHRlcm5zKCkKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAidG90YWxfY29tbWFuZHNfcmVjb3JkZWQiOiBsZW4oc2VsZi5faGlzdG9yeSksCiAgICAgICAgICAgICJwYXR0ZXJuc19kZXRlY3RlZCI6IGxlbihwYXR0ZXJucyksCiAgICAgICAgICAgICJ3b3JrZmxvd3NfY3JlYXRlZCI6IGxlbihzZWxmLl93b3JrZmxvd3MpLAogICAgICAgICAgICAiaGlnaF9mcmVxdWVuY3lfcGF0dGVybnMiOiBbcCBmb3IgcCBpbiBwYXR0ZXJucyBpZiBwWyJmcmVxdWVuY3kiXSA+PSAzXSwKICAgICAgICAgICAgInJlY2VudF9jb21tYW5kcyI6IHNlbGYuX2hpc3RvcnlbLTEwOl0gaWYgc2VsZi5faGlzdG9yeSBlbHNlIFtdLAogICAgICAgIH0KCgpwYXR0ZXJuX2RldGVjdG9yID0gUGF0dGVybkRldGVjdG9yKCkK
+"""
+Pattern detection and workflow automation service.
+Tracks command execution history and detects repeated sequences
+that can be turned into reusable workflows.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+from shared.logger import get_logger
+
+log = get_logger("pattern_detector")
+
+
+class PatternDetector:
+    """
+    Detects repeated command patterns in execution history and
+    suggests/creates automated workflows.
+    """
+
+    def __init__(self):
+        self._history: List[Dict[str, Any]] = []
+        self._workflows: Dict[str, Dict[str, Any]] = {}
+        self._patterns_file = Path("./storage/command_patterns.json")
+        self._load()
+
+    def record_execution(self, command: str, success: bool, output: str = "", user_intent: str = "") -> None:
+        """Record a command execution for pattern analysis."""
+        entry = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "command": command,
+            "success": success,
+            "output_preview": output[:200],
+            "user_intent": user_intent,
+            "command_type": self._classify_command(command),
+        }
+        self._history.append(entry)
+        # Keep last 200 entries
+        if len(self._history) > 200:
+            self._history = self._history[-200:]
+        self._save()
+
+    def detect_patterns(self) -> List[Dict[str, Any]]:
+        """
+        Scan execution history for repeated command sequences.
+        Returns detected patterns with frequency scores.
+        """
+        if len(self._history) < 4:
+            return []
+
+        patterns = []
+        sequence_lengths = [2, 3]  # Look for 2-step and 3-step patterns
+
+        for seq_len in sequence_lengths:
+            sequences: Dict[str, List[int]] = {}
+            for i in range(len(self._history) - seq_len + 1):
+                seq = self._history[i:i + seq_len]
+                key = self._sequence_key(seq)
+                if key not in sequences:
+                    sequences[key] = []
+                sequences[key].append(i)
+
+            for key, indices in sequences.items():
+                if len(indices) >= 2:  # Repeated at least twice
+                    seq_entries = [self._history[i] for i in indices[:seq_len]]
+                    patterns.append({
+                        "pattern_key": key,
+                        "frequency": len(indices),
+                        "sequence_length": seq_len,
+                        "last_detected": seq_entries[-1]["timestamp"],
+                        "commands": [e["command"] for e in seq_entries],
+                        "command_types": [e["command_type"] for e in seq_entries],
+                        "suggest_workflow": len(indices) >= 3,  # Suggest if 3+ repetitions
+                    })
+
+        patterns.sort(key=lambda p: p["frequency"], reverse=True)
+        return patterns
+
+    def suggest_workflow_name(self, pattern: Dict[str, Any]) -> str:
+        """Generate a human-readable workflow name from a pattern."""
+        types = pattern.get("command_types", [])
+        type_names = {
+            "browser": "Browser",
+            "desktop": "Desktop",
+            "file": "File",
+            "search": "Search",
+            "powershell": "PowerShell",
+            "media": "Media",
+            "other": "Command",
+        }
+        labels = [type_names.get(t, t) for t in types if t]
+        return " → ".join(labels) if labels else "Workflow"
+
+    def create_workflow(self, name: str, commands: List[str], description: str = "") -> Dict[str, Any]:
+        """Create a reusable workflow from a list of commands."""
+        workflow_id = f"wf_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        workflow = {
+            "workflow_id": workflow_id,
+            "name": name,
+            "description": description or f"Automated workflow with {len(commands)} steps",
+            "commands": commands,
+            "step_count": len(commands),
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat(),
+            "run_count": 0,
+        }
+        self._workflows[workflow_id] = workflow
+        self._save()
+        log.info("workflow_created", workflow_id=workflow_id, name=name, steps=len(commands))
+        return workflow
+
+    def get_workflows(self) -> List[Dict[str, Any]]:
+        """Return all saved workflows."""
+        return list(self._workflows.values())
+
+    def delete_workflow(self, workflow_id: str) -> bool:
+        """Delete a workflow."""
+        if workflow_id in self._workflows:
+            del self._workflows[workflow_id]
+            self._save()
+            return True
+        return False
+
+    async def run_workflow(self, workflow_id: str) -> Dict[str, Any]:
+        """
+        Execute a workflow's commands sequentially.
+        Returns execution results.
+        """
+        workflow = self._workflows.get(workflow_id)
+        if not workflow:
+            return {"success": False, "error": f"Workflow {workflow_id} not found"}
+
+        from backend.routers.router_chat import _dispatch_and_wait
+
+        results = []
+        all_success = True
+
+        for i, cmd in enumerate(workflow["commands"]):
+            try:
+                result = await _dispatch_and_wait(cmd, f"Workflow step {i + 1}: {cmd[:60]}", timeout=30.0)
+                step_result = {
+                    "step": i + 1,
+                    "command": cmd,
+                    "success": result.get("completed", False),
+                    "output": result.get("stdout", ""),
+                    "error": result.get("stderr", ""),
+                }
+                if not step_result["success"]:
+                    all_success = False
+            except Exception as e:
+                step_result = {"step": i + 1, "command": cmd, "success": False, "error": str(e)}
+                all_success = False
+
+            results.append(step_result)
+
+        workflow["run_count"] = workflow.get("run_count", 0) + 1
+        self._save()
+
+        return {
+            "success": all_success,
+            "workflow_id": workflow_id,
+            "name": workflow["name"],
+            "steps": results,
+            "all_success": all_success,
+        }
+
+    def _classify_command(self, command: str) -> str:
+        """Classify a command into a type category."""
+        cmd_lower = command.lower()
+        if "browser_" in cmd_lower:
+            return "browser"
+        if "desktop_" in cmd_lower:
+            return "desktop"
+        if any(kw in cmd_lower for kw in ["set-content", "out-file", "new-item", "copy-item", "remove-item"]):
+            return "file"
+        if any(kw in cmd_lower for kw in ["search_web", "fetch_url", "search_maps"]):
+            return "search"
+        if any(kw in cmd_lower for kw in ["generate_image", "generate_video"]):
+            return "media"
+        if "powershell" in cmd_lower:
+            return "powershell"
+        return "other"
+
+    def _sequence_key(self, sequence: List[Dict[str, Any]]) -> str:
+        """Create a hashable key for a command sequence."""
+        types = [e["command_type"] for e in sequence]
+        return "|".join(types)
+
+    def _save(self) -> None:
+        """Persist patterns and workflows to disk."""
+        try:
+            data = {
+                "history": self._history,
+                "workflows": self._workflows,
+            }
+            self._patterns_file.parent.mkdir(parents=True, exist_ok=True)
+            self._patterns_file.write_text(json.dumps(data, indent=2))
+        except Exception as e:
+            log.error("pattern_save_failed", error=str(e))
+
+    def _load(self) -> None:
+        """Load persisted data from disk."""
+        try:
+            if self._patterns_file.exists():
+                data = json.loads(self._patterns_file.read_text())
+                self._history = data.get("history", [])
+                self._workflows = data.get("workflows", {})
+        except Exception as e:
+            log.error("pattern_load_failed", error=str(e))
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Return pattern detection statistics."""
+        patterns = self.detect_patterns()
+        return {
+            "total_commands_recorded": len(self._history),
+            "patterns_detected": len(patterns),
+            "workflows_created": len(self._workflows),
+            "high_frequency_patterns": [p for p in patterns if p["frequency"] >= 3],
+            "recent_commands": self._history[-10:] if self._history else [],
+        }
+
+
+pattern_detector = PatternDetector()

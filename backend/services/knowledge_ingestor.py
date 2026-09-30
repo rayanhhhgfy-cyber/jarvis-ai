@@ -1,1 +1,138 @@
-IiIiCktub3dsZWRnZSBJbmdlc3RvciDigJQgdW5zdHJ1Y3R1cmVkLXRleHQtdG8tbWFya2Rvd24gcGlwZWxpbmUgdmlhIEZhc3RBUEkgQmFja2dyb3VuZFRhc2tzLgoKIyBwaXAgaW5zdGFsbDogaHR0cHgKIiIiCgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgpmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZSwgdGltZXpvbmUKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsCgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoImtub3dsZWRnZV9pbmdlc3RvciIpCgpfSU5HRVNUX0RJUiA9IFBhdGguaG9tZSgpIC8gIi5qYXJ2aXMiIC8gImtub3dsZWRnZSIKX0lOR0VTVF9ESVIubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQoKCmNsYXNzIEtub3dsZWRnZUluZ2VzdG9yOgogICAgIiIiCiAgICBBY2NlcHRzIHVuc3RydWN0dXJlZCB0ZXh0LCBjaHVua3MgaW50byBzZWdtZW50cywKICAgIGNvbnZlcnRzIGVhY2ggdG8gbWFya2Rvd24gdmlhIExMTSwgYW5kIHN0b3JlcyBpbiBrbm93bGVkZ2UgZGlyZWN0b3J5LgogICAgIiIiCgogICAgZGVmIF9faW5pdF9fKHNlbGYpOgogICAgICAgIHNlbGYuX3Byb2Nlc3NpbmcgPSBGYWxzZQoKICAgIGFzeW5jIGRlZiBpbmdlc3RfdGV4dChzZWxmLCB0aXRsZTogc3RyLCBjb250ZW50OiBzdHIsIHNvdXJjZTogc3RyID0gIm1hbnVhbCIpIC0+IHN0cjoKICAgICAgICAiIiIKICAgICAgICBDb252ZXJ0IHVuc3RydWN0dXJlZCB0ZXh0IHRvIG1hcmtkb3duIGFuZCBzYXZlLgogICAgICAgIFJldHVybnMgdGhlIGZpbGUgcGF0aC4KICAgICAgICAiIiIKICAgICAgICBzZWxmLl9wcm9jZXNzaW5nID0gVHJ1ZQogICAgICAgIHRyeToKICAgICAgICAgICAgIyBDaHVuayBsYXJnZSB0ZXh0CiAgICAgICAgICAgIGNodW5rcyA9IHNlbGYuX2NodW5rX3RleHQoY29udGVudCwgbWF4X2NoYXJzPTMwMDApCiAgICAgICAgICAgIG1kX3BhcnRzOiBMaXN0W3N0cl0gPSBbXQoKICAgICAgICAgICAgZm9yIGksIGNodW5rIGluIGVudW1lcmF0ZShjaHVua3MpOgogICAgICAgICAgICAgICAgbWQgPSBhd2FpdCBzZWxmLl9jb252ZXJ0X3RvX21hcmtkb3duKGNodW5rLCB0aXRsZSwgaSArIDEsIGxlbihjaHVua3MpKQogICAgICAgICAgICAgICAgbWRfcGFydHMuYXBwZW5kKG1kKQoKICAgICAgICAgICAgZnVsbF9tZCA9ICJcblxuIi5qb2luKG1kX3BhcnRzKQogICAgICAgICAgICB0aW1lc3RhbXAgPSBkYXRldGltZS5ub3codGltZXpvbmUudXRjKS5zdHJmdGltZSgiJVklbSVkXyVIJU0lUyIpCiAgICAgICAgICAgIHNhZmVfbmFtZSA9ICIiLmpvaW4oYyBpZiBjLmlzYWxudW0oKSBvciBjIGluICIgXy0iIGVsc2UgIl8iIGZvciBjIGluIHRpdGxlKVs6NTBdCiAgICAgICAgICAgIGZpbGVwYXRoID0gX0lOR0VTVF9ESVIgLyBmInt0aW1lc3RhbXB9X3tzYWZlX25hbWV9Lm1kIgogICAgICAgICAgICBmaWxlcGF0aC53cml0ZV90ZXh0KGYiIyB7dGl0bGV9XG5cbj4gU291cmNlOiB7c291cmNlfVxuXG57ZnVsbF9tZH0iKQogICAgICAgICAgICBsb2cuaW5mbygia25vd2xlZGdlX2luZ2VzdGVkIiwgdGl0bGU9dGl0bGUsIHBhdGg9c3RyKGZpbGVwYXRoKSkKICAgICAgICAgICAgcmV0dXJuIHN0cihmaWxlcGF0aCkKICAgICAgICBmaW5hbGx5OgogICAgICAgICAgICBzZWxmLl9wcm9jZXNzaW5nID0gRmFsc2UKCiAgICBkZWYgX2NodW5rX3RleHQoc2VsZiwgdGV4dDogc3RyLCBtYXhfY2hhcnM6IGludCA9IDMwMDApIC0+IExpc3Rbc3RyXToKICAgICAgICAiIiJTcGxpdCB0ZXh0IGludG8gY2h1bmtzIGF0IHBhcmFncmFwaCBib3VuZGFyaWVzLiIiIgogICAgICAgIHBhcmFncmFwaHMgPSB0ZXh0LnNwbGl0KCJcblxuIikKICAgICAgICBjaHVua3MgPSBbXQogICAgICAgIGN1cnJlbnQgPSAiIgogICAgICAgIGZvciBwYXJhIGluIHBhcmFncmFwaHM6CiAgICAgICAgICAgIGlmIGxlbihjdXJyZW50KSArIGxlbihwYXJhKSA+IG1heF9jaGFycyBhbmQgY3VycmVudDoKICAgICAgICAgICAgICAgIGNodW5rcy5hcHBlbmQoY3VycmVudC5zdHJpcCgpKQogICAgICAgICAgICAgICAgY3VycmVudCA9IHBhcmEKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIGN1cnJlbnQgKz0gKCJcblxuIiArIHBhcmEpIGlmIGN1cnJlbnQgZWxzZSBwYXJhCiAgICAgICAgaWYgY3VycmVudDoKICAgICAgICAgICAgY2h1bmtzLmFwcGVuZChjdXJyZW50LnN0cmlwKCkpCiAgICAgICAgcmV0dXJuIGNodW5rcyBvciBbdGV4dF0KCiAgICBhc3luYyBkZWYgX2NvbnZlcnRfdG9fbWFya2Rvd24oc2VsZiwgdGV4dDogc3RyLCB0aXRsZTogc3RyLCBwYXJ0OiBpbnQsIHRvdGFsOiBpbnQpIC0+IHN0cjoKICAgICAgICAiIiJVc2UgTExNIHRvIGNvbnZlcnQgdGV4dCBjaHVuayB0byBjbGVhbiBtYXJrZG93bi4iIiIKICAgICAgICBwcm9tcHQgPSBmIiIiQ29udmVydCB0aGUgZm9sbG93aW5nIHRleHQgdG8gY2xlYW4gbWFya2Rvd24uIFByZXNlcnZlIGFsbCBpbmZvcm1hdGlvbi4gVXNlIGhlYWRpbmdzLCBsaXN0cywgYW5kIGNvZGUgYmxvY2tzIGFzIGFwcHJvcHJpYXRlLgoKVGl0bGU6IHt0aXRsZX0gKFBhcnQge3BhcnR9L3t0b3RhbH0pCgpUZXh0Ogp7dGV4dH0KCk91dHB1dCBvbmx5IHRoZSBtYXJrZG93biBjb250ZW50LiIiIgogICAgICAgIHRyeToKICAgICAgICAgICAgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLmxsbV9zZXJ2aWNlIGltcG9ydCBsbG1fc2VydmljZQogICAgICAgICAgICByZXNwb25zZSA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSh1c2VyX21lc3NhZ2U9cHJvbXB0LCBpbmplY3RfbWVtb3J5PUZhbHNlKQogICAgICAgICAgICByZXR1cm4gcmVzcG9uc2Uuc3RyaXAoKS5zdHJpcCgiYGBgIikuc3RyaXAoKQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgbG9nLmRlYnVnKCJtZF9jb252ZXJzaW9uX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgcmV0dXJuIHRleHQKCiAgICBhc3luYyBkZWYgaW5nZXN0X3VybChzZWxmLCB1cmw6IHN0cikgLT4gT3B0aW9uYWxbc3RyXToKICAgICAgICAiIiJGZXRjaCBVUkwgY29udGVudCBhbmQgaW5nZXN0IGFzIGtub3dsZWRnZS4KCiAgICAgICAgVXNlcyBhIHBsYWluIGh0dHB4IGZldGNoICh0aGUgYnJhbmNoJ3MgbWNwX2NsaWVudC5leHRyYWN0X3RleHQoKQogICAgICAgIGRvZXMgbm90IGV4aXN0IG9uIG1haW4pLgogICAgICAgICIiIgogICAgICAgIHRyeToKICAgICAgICAgICAgaW1wb3J0IGh0dHB4CiAgICAgICAgICAgIGltcG9ydCByZSBhcyBfcmUKCiAgICAgICAgICAgIGFzeW5jIHdpdGggaHR0cHguQXN5bmNDbGllbnQodGltZW91dD0yMC4wLCBmb2xsb3dfcmVkaXJlY3RzPVRydWUpIGFzIGNsaWVudDoKICAgICAgICAgICAgICAgIHJlc3AgPSBhd2FpdCBjbGllbnQuZ2V0KAogICAgICAgICAgICAgICAgICAgIHVybCwgaGVhZGVycz17IlVzZXItQWdlbnQiOiAiTW96aWxsYS81LjAgKGNvbXBhdGlibGU7IEpBUlZJUy8xLjApIn0KICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgIHJlc3AucmFpc2VfZm9yX3N0YXR1cygpCiAgICAgICAgICAgICAgICBodG1sID0gcmVzcC50ZXh0CiAgICAgICAgICAgIHRleHQgPSBfcmUuc3ViKHIiPHNjcmlwdC4qPzwvc2NyaXB0PiIsICIgIiwgaHRtbCwgZmxhZ3M9X3JlLkRPVEFMTCB8IF9yZS5JR05PUkVDQVNFKQogICAgICAgICAgICB0ZXh0ID0gX3JlLnN1YihyIjxzdHlsZS4qPzwvc3R5bGU+IiwgIiAiLCB0ZXh0LCBmbGFncz1fcmUuRE9UQUxMIHwgX3JlLklHTk9SRUNBU0UpCiAgICAgICAgICAgIHRleHQgPSBfcmUuc3ViKHIiPFtePl0rPiIsICIgIiwgdGV4dCkKICAgICAgICAgICAgdGV4dCA9IF9yZS5zdWIociJccysiLCAiICIsIHRleHQpLnN0cmlwKCkKICAgICAgICAgICAgaWYgdGV4dDoKICAgICAgICAgICAgICAgIHJldHVybiBhd2FpdCBzZWxmLmluZ2VzdF90ZXh0KGYiV2ViOiB7dXJsfSIsIHRleHQsIHNvdXJjZT11cmwpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoInVybF9pbmdlc3RfZmFpbGVkIiwgdXJsPXVybFs6ODBdLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgcmV0dXJuIE5vbmUKCiAgICBkZWYgbGlzdF9kb2N1bWVudHMoc2VsZikgLT4gTGlzdFtEaWN0W3N0ciwgQW55XV06CiAgICAgICAgIiIiTGlzdCBhbGwgaW5nZXN0ZWQga25vd2xlZGdlIGRvY3VtZW50cy4iIiIKICAgICAgICBkb2NzID0gW10KICAgICAgICBmb3IgZiBpbiBzb3J0ZWQoX0lOR0VTVF9ESVIuZ2xvYigiKi5tZCIpLCByZXZlcnNlPVRydWUpOgogICAgICAgICAgICBkb2NzLmFwcGVuZCh7CiAgICAgICAgICAgICAgICAicGF0aCI6IHN0cihmKSwKICAgICAgICAgICAgICAgICJuYW1lIjogZi5zdGVtLAogICAgICAgICAgICAgICAgInNpemVfa2IiOiByb3VuZChmLnN0YXQoKS5zdF9zaXplIC8gMTAyNCwgMSksCiAgICAgICAgICAgICAgICAibW9kaWZpZWQiOiBkYXRldGltZS5mcm9tdGltZXN0YW1wKGYuc3RhdCgpLnN0X210aW1lKS5pc29mb3JtYXQoKSwKICAgICAgICAgICAgfSkKICAgICAgICByZXR1cm4gZG9jcwoKCmtub3dsZWRnZV9pbmdlc3RvciA9IEtub3dsZWRnZUluZ2VzdG9yKCkKCgojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIyBVU0FHRSBFWEFNUExFCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIC0tLQojIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5rbm93bGVkZ2VfaW5nZXN0b3IgaW1wb3J0IGtub3dsZWRnZV9pbmdlc3RvcgojIHBhdGggPSBhd2FpdCBrbm93bGVkZ2VfaW5nZXN0b3IuaW5nZXN0X3RleHQoIk15IE5vdGVzIiwgIlJhdyB1bnN0cnVjdHVyZWQgY29udGVudCBoZXJlLi4uIikKIyBwcmludChwYXRoKQojIGRvY3MgPSBrbm93bGVkZ2VfaW5nZXN0b3IubGlzdF9kb2N1bWVudHMoKQojIC0tLQo=
+"""
+Knowledge Ingestor — unstructured-text-to-markdown pipeline via FastAPI BackgroundTasks.
+
+# pip install: httpx
+"""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from shared.logger import get_logger
+
+log = get_logger("knowledge_ingestor")
+
+_INGEST_DIR = Path.home() / ".jarvis" / "knowledge"
+_INGEST_DIR.mkdir(parents=True, exist_ok=True)
+
+
+class KnowledgeIngestor:
+    """
+    Accepts unstructured text, chunks into segments,
+    converts each to markdown via LLM, and stores in knowledge directory.
+    """
+
+    def __init__(self):
+        self._processing = False
+
+    async def ingest_text(self, title: str, content: str, source: str = "manual") -> str:
+        """
+        Convert unstructured text to markdown and save.
+        Returns the file path.
+        """
+        self._processing = True
+        try:
+            # Chunk large text
+            chunks = self._chunk_text(content, max_chars=3000)
+            md_parts: List[str] = []
+
+            for i, chunk in enumerate(chunks):
+                md = await self._convert_to_markdown(chunk, title, i + 1, len(chunks))
+                md_parts.append(md)
+
+            full_md = "\n\n".join(md_parts)
+            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+            safe_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in title)[:50]
+            filepath = _INGEST_DIR / f"{timestamp}_{safe_name}.md"
+            filepath.write_text(f"# {title}\n\n> Source: {source}\n\n{full_md}")
+            log.info("knowledge_ingested", title=title, path=str(filepath))
+            return str(filepath)
+        finally:
+            self._processing = False
+
+    def _chunk_text(self, text: str, max_chars: int = 3000) -> List[str]:
+        """Split text into chunks at paragraph boundaries."""
+        paragraphs = text.split("\n\n")
+        chunks = []
+        current = ""
+        for para in paragraphs:
+            if len(current) + len(para) > max_chars and current:
+                chunks.append(current.strip())
+                current = para
+            else:
+                current += ("\n\n" + para) if current else para
+        if current:
+            chunks.append(current.strip())
+        return chunks or [text]
+
+    async def _convert_to_markdown(self, text: str, title: str, part: int, total: int) -> str:
+        """Use LLM to convert text chunk to clean markdown."""
+        prompt = f"""Convert the following text to clean markdown. Preserve all information. Use headings, lists, and code blocks as appropriate.
+
+Title: {title} (Part {part}/{total})
+
+Text:
+{text}
+
+Output only the markdown content."""
+        try:
+            from backend.services.llm_service import llm_service
+            response = await llm_service.get_response(user_message=prompt, inject_memory=False)
+            return response.strip().strip("```").strip()
+        except Exception as e:
+            log.debug("md_conversion_failed", error=str(e))
+            return text
+
+    async def ingest_url(self, url: str) -> Optional[str]:
+        """Fetch URL content and ingest as knowledge.
+
+        Uses a plain httpx fetch (the branch's mcp_client.extract_text()
+        does not exist on main).
+        """
+        try:
+            import httpx
+            import re as _re
+
+            async with httpx.AsyncClient(timeout=20.0, follow_redirects=True) as client:
+                resp = await client.get(
+                    url, headers={"User-Agent": "Mozilla/5.0 (compatible; JARVIS/1.0)"}
+                )
+                resp.raise_for_status()
+                html = resp.text
+            text = _re.sub(r"<script.*?</script>", " ", html, flags=_re.DOTALL | _re.IGNORECASE)
+            text = _re.sub(r"<style.*?</style>", " ", text, flags=_re.DOTALL | _re.IGNORECASE)
+            text = _re.sub(r"<[^>]+>", " ", text)
+            text = _re.sub(r"\s+", " ", text).strip()
+            if text:
+                return await self.ingest_text(f"Web: {url}", text, source=url)
+        except Exception as e:
+            log.error("url_ingest_failed", url=url[:80], error=str(e))
+        return None
+
+    def list_documents(self) -> List[Dict[str, Any]]:
+        """List all ingested knowledge documents."""
+        docs = []
+        for f in sorted(_INGEST_DIR.glob("*.md"), reverse=True):
+            docs.append({
+                "path": str(f),
+                "name": f.stem,
+                "size_kb": round(f.stat().st_size / 1024, 1),
+                "modified": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
+            })
+        return docs
+
+
+knowledge_ingestor = KnowledgeIngestor()
+
+
+# =========================================================================
+# USAGE EXAMPLE
+# =========================================================================
+# ---
+# from backend.services.knowledge_ingestor import knowledge_ingestor
+# path = await knowledge_ingestor.ingest_text("My Notes", "Raw unstructured content here...")
+# print(path)
+# docs = knowledge_ingestor.list_documents()
+# ---
