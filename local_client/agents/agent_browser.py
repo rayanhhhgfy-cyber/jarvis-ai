@@ -1,1 +1,247 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgQnJvd3NlciBBZ2VudAojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpTcGVjaWFsaXplZCBCcm93c2VyIEFnZW50IHJlc3BvbnNpYmxlIGZvciBQbGF5d3JpZ2h0LWJhc2VkIGF1dG9tYXRpb24sCndlYiBzZWFyY2hpbmcsIHNjcmFwaW5nLCBhbmQgYXV0b21hdGVkIHJlc2VhcmNoIHdvcmtmbG93cy4KIiIiCgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgppbXBvcnQgb3MKaW1wb3J0IHRpbWUKaW1wb3J0IHRyYWNlYmFjawpmcm9tIHR5cGluZyBpbXBvcnQgRGljdCwgQW55LCBMaXN0CmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lCgpmcm9tIHNoYXJlZC5tb2RlbHMgaW1wb3J0IFRhc2tEZWZpbml0aW9uLCBUYXNrUmVzdWx0CmZyb20gc2hhcmVkLmNvbnN0YW50cyBpbXBvcnQgQWdlbnRUeXBlLCBUYXNrU3RhdHVzCmZyb20gc2hhcmVkLmxvZ2dlciBpbXBvcnQgZ2V0X2xvZ2dlcgpmcm9tIHNoYXJlZC5sZWFybmluZ19sb29wIGltcG9ydCBsZWFybmluZ19sb29wCgpsb2cgPSBnZXRfbG9nZ2VyKCJhZ2VudF9icm93c2VyIikKCiMgUGxheXdyaWdodCBhdmFpbGFiaWxpdHkgaW1wb3J0CnBsYXl3cmlnaHRfYXZhaWxhYmxlID0gRmFsc2UKdHJ5OgogICAgZnJvbSBwbGF5d3JpZ2h0LmFzeW5jX2FwaSBpbXBvcnQgYXN5bmNfcGxheXdyaWdodAogICAgcGxheXdyaWdodF9hdmFpbGFibGUgPSBUcnVlCmV4Y2VwdCBJbXBvcnRFcnJvcjoKICAgIGxvZy53YXJuaW5nKCJwbGF5d3JpZ2h0X25vdF9pbnN0YWxsZWRfdXNpbmdfc3R1Yl9mYWxsYmFjayIpCgpjbGFzcyBBZ2VudEJyb3dzZXI6CiAgICAiIiIKICAgIEF1dG9tYXRlZCBicm93c2VyIGFnZW50LiBJbnRlcmZhY2VzIHdpdGggUGxheXdyaWdodCB0byBicm93c2UgcGFnZXMsCiAgICBmaWxsIG91dCBmb3JtcywgZG93bmxvYWQgbG9ncywgYW5kIGNhcHR1cmUgVUkgcmVwb3J0cy4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKSAtPiBOb25lOgogICAgICAgIHNlbGYuYWdlbnRfaWQgPSAiYWdlbnRfYnJvd3NlciIKICAgICAgICBzZWxmLmFnZW50X3R5cGUgPSBBZ2VudFR5cGUuQlJPV1NFUgoKICAgIGFzeW5jIGRlZiBleGVjdXRlX3Rhc2soc2VsZiwgdGFzazogVGFza0RlZmluaXRpb24pIC0+IFRhc2tSZXN1bHQ6CiAgICAgICAgIiIiUHJvY2Vzc2VzIGJyb3dzaW5nIHJlcXVlc3RzIGxpa2UgcGFnZSBsb2Fkcywgd2ViIHNlYXJjaGluZywgb3Igc2NyZWVuc2hvdCBjYXB0dXJpbmcuIiIiCiAgICAgICAgbG9nLmluZm8oImJyb3dzZXJfYWdlbnRfZXhlY3V0aW5nIiwgdGFza19pZD10YXNrLnRhc2tfaWQsIHRpdGxlPXRhc2sudGl0bGUpCiAgICAgICAgc3RhcnRfdGltZSA9IHRpbWUudGltZSgpCgogICAgICAgICMgQ29uc3VsdCBwYXN0IGxlc3NvbnMgYmVmb3JlIGFjdGluZwogICAgICAgIHRyeToKICAgICAgICAgICAgcmVsZXZhbnQgPSBsZWFybmluZ19sb29wLnF1ZXJ5X2xlc3NvbnModGFzay50aXRsZSBvciAiIikKICAgICAgICAgICAgaWYgcmVsZXZhbnQ6CiAgICAgICAgICAgICAgICBsb2cuaW5mbygKICAgICAgICAgICAgICAgICAgICAiYnJvd3Nlcl9hZ2VudF9yZWxldmFudF9sZXNzb25zIiwKICAgICAgICAgICAgICAgICAgICBjb3VudD1sZW4ocmVsZXZhbnQpLAogICAgICAgICAgICAgICAgICAgIHRvcF9lcnJvcj1yZWxldmFudFswXS5nZXQoImVycm9yX3BhdHRlcm4iLCAiIilbOjEyMF0sCiAgICAgICAgICAgICAgICApCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgcGFzcyAgIyBsZXNzb24gbG9va3VwIG11c3QgbmV2ZXIgYmxvY2sgdGFzayBleGVjdXRpb24KCiAgICAgICAgdHJ5OgogICAgICAgICAgICBhY3Rpb24gPSB0YXNrLnBheWxvYWQuZ2V0KCJhY3Rpb24iLCAic2VhcmNoIikKICAgICAgICAgICAgCiAgICAgICAgICAgIGlmIGFjdGlvbiA9PSAic2VhcmNoIiBvciBhY3Rpb24gPT0gInJlc2VhcmNoIjoKICAgICAgICAgICAgICAgIHJlc3VsdF9kYXRhID0gYXdhaXQgc2VsZi5fcGVyZm9ybV93ZWJfc2VhcmNoKHRhc2spCiAgICAgICAgICAgIGVsaWYgYWN0aW9uID09ICJzY3JhcGUiOgogICAgICAgICAgICAgICAgcmVzdWx0X2RhdGEgPSBhd2FpdCBzZWxmLl9zY3JhcGVfcGFnZSh0YXNrKQogICAgICAgICAgICBlbGlmIGFjdGlvbiA9PSAic2NyZWVuc2hvdCI6CiAgICAgICAgICAgICAgICByZXN1bHRfZGF0YSA9IGF3YWl0IHNlbGYuX2NhcHR1cmVfc2NyZWVuc2hvdCh0YXNrKQogICAgICAgICAgICBlbGlmIGFjdGlvbiA9PSAiZXZhbHVhdGVfanMiOgogICAgICAgICAgICAgICAgcmVzdWx0X2RhdGEgPSBhd2FpdCBzZWxmLl9ldmFsdWF0ZV9qYXZhc2NyaXB0KHRhc2spCiAgICAgICAgICAgIGVsaWYgYWN0aW9uID09ICJmaWxsX2Zvcm0iOgogICAgICAgICAgICAgICAgcmVzdWx0X2RhdGEgPSBhd2FpdCBzZWxmLl9maWxsX2Zvcm0odGFzaykKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoZiJVbmtub3duIEJyb3dzZXIgYWN0aW9uOiB7YWN0aW9ufSIpCgogICAgICAgICAgICBlbGFwc2VkID0gKHRpbWUudGltZSgpIC0gc3RhcnRfdGltZSkgKiAxMDAwCiAgICAgICAgICAgIHJldHVybiBUYXNrUmVzdWx0KAogICAgICAgICAgICAgICAgdGFza19pZD10YXNrLnRhc2tfaWQsCiAgICAgICAgICAgICAgICBhZ2VudF9pZD1zZWxmLmFnZW50X2lkLAogICAgICAgICAgICAgICAgc3RhdHVzPVRhc2tTdGF0dXMuQ09NUExFVEVELAogICAgICAgICAgICAgICAgcmVzdWx0PXJlc3VsdF9kYXRhLAogICAgICAgICAgICAgICAgZXhlY3V0aW9uX3RpbWU9ZWxhcHNlZCwKICAgICAgICAgICAgKQoKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGVsYXBzZWQgPSAodGltZS50aW1lKCkgLSBzdGFydF90aW1lKSAqIDEwMDAKICAgICAgICAgICAgZXJyX21zZyA9IGYie3N0cihlKX1cbnt0cmFjZWJhY2suZm9ybWF0X2V4YygpfSIKICAgICAgICAgICAgbG9nLmVycm9yKCJicm93c2VyX2FnZW50X2ZhaWxlZCIsIHRhc2tfaWQ9dGFzay50YXNrX2lkLCBlcnJvcj1lcnJfbXNnKQogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBsZWFybmluZ19sb29wLnJlbWVtYmVyX2xlc3NvbigKICAgICAgICAgICAgICAgICAgICB0YXNrX2Rlc2NyaXB0aW9uPXRhc2sudGl0bGUgb3IgYWN0aW9uLAogICAgICAgICAgICAgICAgICAgIGVycm9yX3BhdHRlcm49dHlwZShlKS5fX25hbWVfXywKICAgICAgICAgICAgICAgICAgICByb290X2NhdXNlPXN0cihlKVs6NTAwXSwKICAgICAgICAgICAgICAgICAgICBzb2x1dGlvbj0iIiwKICAgICAgICAgICAgICAgICAgICBmaWxlX3BhdGg9ImxvY2FsX2NsaWVudC9hZ2VudHMvYWdlbnRfYnJvd3Nlci5weSIsCiAgICAgICAgICAgICAgICAgICAgc3VjY2Vzcz1GYWxzZSwKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgICAgIHBhc3MgICMgbGVzc29uIHJlY29yZGluZyBtdXN0IG5ldmVyIG1hc2sgdGhlIG9yaWdpbmFsIGZhaWx1cmUKICAgICAgICAgICAgcmV0dXJuIFRhc2tSZXN1bHQoCiAgICAgICAgICAgICAgICB0YXNrX2lkPXRhc2sudGFza19pZCwKICAgICAgICAgICAgICAgIGFnZW50X2lkPXNlbGYuYWdlbnRfaWQsCiAgICAgICAgICAgICAgICBzdGF0dXM9VGFza1N0YXR1cy5GQUlMRUQsCiAgICAgICAgICAgICAgICBlcnJvcj1lcnJfbXNnLAogICAgICAgICAgICAgICAgZXhlY3V0aW9uX3RpbWU9ZWxhcHNlZCwKICAgICAgICAgICAgKQoKICAgIGFzeW5jIGRlZiBfcGVyZm9ybV93ZWJfc2VhcmNoKHNlbGYsIHRhc2s6IFRhc2tEZWZpbml0aW9uKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJSdW5zIGEgcmVhbCB3ZWIgc2VhcmNoIHF1ZXJ5IHZpYSBEdWNrRHVja0dvLgoKICAgICAgICBQcmVmZXJzIFBsYXl3cmlnaHQtZHJpdmVuIGh0bWwuZHVja2R1Y2tnby5jb20gd2hlbiBhdmFpbGFibGUsIGZhbGxzIGJhY2sKICAgICAgICB0byB0aGUgcmVwbydzIHJlYWwgV2ViU2VhcmNoU2VydmljZSAoRHVja0R1Y2tHbyBMaXRlIG92ZXIgaHR0cHgpLgogICAgICAgIFJhaXNlcyBpbnN0ZWFkIG9mIHJldHVybmluZyBmYWJyaWNhdGVkIHJlc3VsdHMuCiAgICAgICAgIiIiCiAgICAgICAgcXVlcnkgPSB0YXNrLnBheWxvYWQuZ2V0KCJxdWVyeSIpCiAgICAgICAgaWYgbm90IHF1ZXJ5OgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJxdWVyeSBpcyByZXF1aXJlZCBmb3Igd2ViIHNlYXJjaCIpCgogICAgICAgIGxvZy5pbmZvKCJwZXJmb3JtaW5nX2Jyb3dzZXJfc2VhcmNoIiwgcXVlcnk9cXVlcnkpCgogICAgICAgICMgUmVhbCB3ZWIgc2VhcmNoIHdpdGggUGxheXdyaWdodCBpZiBhdmFpbGFibGUKICAgICAgICBpZiBwbGF5d3JpZ2h0X2F2YWlsYWJsZToKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgYXN5bmMgd2l0aCBhc3luY19wbGF5d3JpZ2h0KCkgYXMgcDoKICAgICAgICAgICAgICAgICAgICBicm93c2VyID0gYXdhaXQgcC5jaHJvbWl1bS5sYXVuY2goaGVhZGxlc3M9VHJ1ZSkKICAgICAgICAgICAgICAgICAgICBwYWdlID0gYXdhaXQgYnJvd3Nlci5uZXdfcGFnZSgpCiAgICAgICAgICAgICAgICAgICAgIyBCcm93c2UgRHVja0R1Y2tHbwogICAgICAgICAgICAgICAgICAgIGF3YWl0IHBhZ2UuZ290byhmImh0dHBzOi8vaHRtbC5kdWNrZHVja2dvLmNvbS9odG1sLz9xPXtxdWVyeX0iKQogICAgICAgICAgICAgICAgICAgIGxpbmtzID0gYXdhaXQgcGFnZS5sb2NhdG9yKCIucmVzdWx0X19zbmlwcGV0IikuYWxsX3RleHRfY29udGVudHMoKQogICAgICAgICAgICAgICAgICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKQoKICAgICAgICAgICAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICAgICAgICAgICAgICAic2VhcmNoX3F1ZXJ5IjogcXVlcnksCiAgICAgICAgICAgICAgICAgICAgICAgICJyZXN1bHRzIjogbGlua3NbOjVdLAogICAgICAgICAgICAgICAgICAgICAgICAic291cmNlIjogIkR1Y2tEdWNrR28gKFBsYXl3cmlnaHQpIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgbG9nLmVycm9yKCJwbGF5d3JpZ2h0X3NlYXJjaF9mYWlsZWRfZmFsbGluZ19iYWNrIiwgZXJyb3I9c3RyKGUpKQoKICAgICAgICAjIFJlYWwgZmFsbGJhY2s6IHJlcG8ncyBXZWJTZWFyY2hTZXJ2aWNlIChEdWNrRHVja0dvIExpdGUsIG5vIGJyb3dzZXIgbmVlZGVkKQogICAgICAgIHRyeToKICAgICAgICAgICAgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLndlYl9zZWFyY2hfc2VydmljZSBpbXBvcnQgd2ViX3NlYXJjaF9zZXJ2aWNlCiAgICAgICAgICAgIHJlc3VsdHMgPSBhd2FpdCB3ZWJfc2VhcmNoX3NlcnZpY2Uuc2VhcmNoKHF1ZXJ5LCBtYXhfcmVzdWx0cz01KQogICAgICAgICAgICBpZiByZXN1bHRzOgogICAgICAgICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgICAgICAgICAic2VhcmNoX3F1ZXJ5IjogcXVlcnksCiAgICAgICAgICAgICAgICAgICAgInJlc3VsdHMiOiBbCiAgICAgICAgICAgICAgICAgICAgICAgIGYie3IuZ2V0KCd0aXRsZScsICcnKX0g4oCUIHtyLmdldCgnc25pcHBldCcsICcnKX0gKHtyLmdldCgndXJsJywgJycpfSkiCiAgICAgICAgICAgICAgICAgICAgICAgIGZvciByIGluIHJlc3VsdHMKICAgICAgICAgICAgICAgICAgICBdLAogICAgICAgICAgICAgICAgICAgICJzb3VyY2UiOiAiRHVja0R1Y2tHbyBMaXRlIChXZWJTZWFyY2hTZXJ2aWNlKSIsCiAgICAgICAgICAgICAgICB9CiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoIndlYl9zZWFyY2hfc2VydmljZV9mYWlsZWQiLCBlcnJvcj1zdHIoZSkpCgogICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigKICAgICAgICAgICAgIldlYiBzZWFyY2ggaXMgdW5hdmFpbGFibGU6IFBsYXl3cmlnaHQgaXMgbm90IGluc3RhbGxlZCBhbmQgdGhlICIKICAgICAgICAgICAgIkR1Y2tEdWNrR28gZmFsbGJhY2sgZmFpbGVkLiBJbnN0YWxsIHBsYXl3cmlnaHQgIgogICAgICAgICAgICAiKHBpcCBpbnN0YWxsIHBsYXl3cmlnaHQgJiYgcGxheXdyaWdodCBpbnN0YWxsIGNocm9taXVtKSBvciBjaGVjayAiCiAgICAgICAgICAgICJuZXR3b3JrIGNvbm5lY3Rpdml0eSwgdGhlbiByZXRyeS4iCiAgICAgICAgKQoKICAgIGFzeW5jIGRlZiBfY2FwdHVyZV9zY3JlZW5zaG90KHNlbGYsIHRhc2s6IFRhc2tEZWZpbml0aW9uKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJDYXB0dXJlcyBhIHNjcmVlbnNob3Qgb2YgYSBzcGVjaWZpYyBVUkwuIiIiCiAgICAgICAgdXJsID0gdGFzay5wYXlsb2FkLmdldCgidXJsIikKICAgICAgICBpZiBub3QgdXJsOgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJ1cmwgaXMgcmVxdWlyZWQgZm9yIHNjcmVlbnNob3QgYWN0aW9uIikKCiAgICAgICAgaWYgcGxheXdyaWdodF9hdmFpbGFibGU6CiAgICAgICAgICAgIGFzeW5jIHdpdGggYXN5bmNfcGxheXdyaWdodCgpIGFzIHA6CiAgICAgICAgICAgICAgICBicm93c2VyID0gYXdhaXQgcC5jaHJvbWl1bS5sYXVuY2goaGVhZGxlc3M9VHJ1ZSkKICAgICAgICAgICAgICAgIHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld19wYWdlKCkKICAgICAgICAgICAgICAgIGF3YWl0IHBhZ2UuZ290byh1cmwpCiAgICAgICAgICAgICAgICBzaG90X3BhdGggPSBmInNoYXJlZC9zY3JlZW5zaG90cy9zaG90X3tpbnQodGltZS50aW1lKCkpfS5wbmciCiAgICAgICAgICAgICAgICBvcy5tYWtlZGlycygic2hhcmVkL3NjcmVlbnNob3RzIiwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICAgICAgICAgIGF3YWl0IHBhZ2Uuc2NyZWVuc2hvdChwYXRoPXNob3RfcGF0aCkKICAgICAgICAgICAgICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKQogICAgICAgICAgICAgICAgcmV0dXJuIHsic2NyZWVuc2hvdF9wYXRoIjogc2hvdF9wYXRoLCAidXJsIjogdXJsfQogICAgICAgIHJldHVybiB7ImVycm9yIjogIlBsYXl3cmlnaHQgdW5hdmFpbGFibGUifQoKICAgIGFzeW5jIGRlZiBfZXZhbHVhdGVfamF2YXNjcmlwdChzZWxmLCB0YXNrOiBUYXNrRGVmaW5pdGlvbikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiRXZhbHVhdGVzIGN1c3RvbSBKUyBvbiBhIHBhZ2UuIiIiCiAgICAgICAgdXJsID0gdGFzay5wYXlsb2FkLmdldCgidXJsIikKICAgICAgICBzY3JpcHQgPSB0YXNrLnBheWxvYWQuZ2V0KCJzY3JpcHQiKQogICAgICAgIGlmIG5vdCB1cmw6CiAgICAgICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoInVybCBpcyByZXF1aXJlZCBmb3IgZXZhbHVhdGVfanMgYWN0aW9uIikKICAgICAgICBpZiBub3Qgc2NyaXB0OgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJzY3JpcHQgaXMgcmVxdWlyZWQgZm9yIGV2YWx1YXRlX2pzIGFjdGlvbiIpCiAgICAgICAgaWYgcGxheXdyaWdodF9hdmFpbGFibGU6CiAgICAgICAgICAgIGFzeW5jIHdpdGggYXN5bmNfcGxheXdyaWdodCgpIGFzIHA6CiAgICAgICAgICAgICAgICBicm93c2VyID0gYXdhaXQgcC5jaHJvbWl1bS5sYXVuY2goaGVhZGxlc3M9VHJ1ZSkKICAgICAgICAgICAgICAgIHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld19wYWdlKCkKICAgICAgICAgICAgICAgIGF3YWl0IHBhZ2UuZ290byh1cmwpCiAgICAgICAgICAgICAgICByZXMgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKHNjcmlwdCkKICAgICAgICAgICAgICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKQogICAgICAgICAgICAgICAgcmV0dXJuIHsicmVzdWx0IjogcmVzfQogICAgICAgIHJldHVybiB7ImVycm9yIjogIlBsYXl3cmlnaHQgdW5hdmFpbGFibGUifQoKICAgIGFzeW5jIGRlZiBfZmlsbF9mb3JtKHNlbGYsIHRhc2s6IFRhc2tEZWZpbml0aW9uKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJGaWxscyBhIGZvcm0gYW5kIHN1Ym1pdHMgaXQuIiIiCiAgICAgICAgdXJsID0gdGFzay5wYXlsb2FkLmdldCgidXJsIikKICAgICAgICBmaWVsZHMgPSB0YXNrLnBheWxvYWQuZ2V0KCJmaWVsZHMiLCB7fSkgICMge3NlbGVjdG9yOiB2YWx1ZX0KICAgICAgICBpZiBub3QgdXJsOgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJ1cmwgaXMgcmVxdWlyZWQgZm9yIGZpbGxfZm9ybSBhY3Rpb24iKQogICAgICAgIGlmIHBsYXl3cmlnaHRfYXZhaWxhYmxlOgogICAgICAgICAgICBhc3luYyB3aXRoIGFzeW5jX3BsYXl3cmlnaHQoKSBhcyBwOgogICAgICAgICAgICAgICAgYnJvd3NlciA9IGF3YWl0IHAuY2hyb21pdW0ubGF1bmNoKGhlYWRsZXNzPVRydWUpCiAgICAgICAgICAgICAgICBwYWdlID0gYXdhaXQgYnJvd3Nlci5uZXdfcGFnZSgpCiAgICAgICAgICAgICAgICBhd2FpdCBwYWdlLmdvdG8odXJsKQogICAgICAgICAgICAgICAgZm9yIHNlbGVjdG9yLCB2YWx1ZSBpbiBmaWVsZHMuaXRlbXMoKToKICAgICAgICAgICAgICAgICAgICBhd2FpdCBwYWdlLmZpbGwoc2VsZWN0b3IsIHZhbHVlKQogICAgICAgICAgICAgICAgYXdhaXQgcGFnZS5rZXlib2FyZC5wcmVzcygiRW50ZXIiKQogICAgICAgICAgICAgICAgYXdhaXQgcGFnZS53YWl0X2Zvcl9sb2FkX3N0YXRlKCJuZXR3b3JraWRsZSIpCiAgICAgICAgICAgICAgICByZXNfdXJsID0gcGFnZS51cmwKICAgICAgICAgICAgICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKQogICAgICAgICAgICAgICAgcmV0dXJuIHsiZmluYWxfdXJsIjogcmVzX3VybCwgInN0YXR1cyI6ICJmb3JtX3N1Ym1pdHRlZCJ9CiAgICAgICAgcmV0dXJuIHsiZXJyb3IiOiAiUGxheXdyaWdodCB1bmF2YWlsYWJsZSJ9CgogICAgYXN5bmMgZGVmIF9zY3JhcGVfcGFnZShzZWxmLCB0YXNrOiBUYXNrRGVmaW5pdGlvbikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiTG9hZHMgYSBzcGVjaWZpYyBVUkwgcGFnZSBhbmQgcmV0dXJucyBmdWxsIHBhcnNlZCB0ZXh0LiIiIgogICAgICAgIHVybCA9IHRhc2sucGF5bG9hZC5nZXQoInVybCIpCiAgICAgICAgaWYgbm90IHVybDoKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigidXJsIGlzIHJlcXVpcmVkIGZvciBzY3JhcGUgYWN0aW9uIikKCiAgICAgICAgaWYgcGxheXdyaWdodF9hdmFpbGFibGU6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGFzeW5jIHdpdGggYXN5bmNfcGxheXdyaWdodCgpIGFzIHA6CiAgICAgICAgICAgICAgICAgICAgYnJvd3NlciA9IGF3YWl0IHAuY2hyb21pdW0ubGF1bmNoKGhlYWRsZXNzPVRydWUpCiAgICAgICAgICAgICAgICAgICAgcGFnZSA9IGF3YWl0IGJyb3dzZXIubmV3X3BhZ2UoKQogICAgICAgICAgICAgICAgICAgIGF3YWl0IHBhZ2UuZ290byh1cmwpCiAgICAgICAgICAgICAgICAgICAgdGV4dCA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoIigpID0+IGRvY3VtZW50LmJvZHkuaW5uZXJUZXh0IikKICAgICAgICAgICAgICAgICAgICB0aXRsZSA9IGF3YWl0IHBhZ2UudGl0bGUoKQogICAgICAgICAgICAgICAgICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKQogICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ1cmwiOiB1cmwsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6IHRpdGxlLAogICAgICAgICAgICAgICAgICAgICAgICAicGFnZV90ZXh0IjogdGV4dFs6NTAwMF0sICAjIENhcCByZXNwb25zZSBzaXplCiAgICAgICAgICAgICAgICAgICAgICAgICJzY3JhcGVkX3N1Y2Nlc3NmdWxseSI6IFRydWUKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy5lcnJvcigicGxheXdyaWdodF9zY3JhcGVfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQoKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAidXJsIjogdXJsLAogICAgICAgICAgICAic2NyYXBlZF9zdWNjZXNzZnVsbHkiOiBGYWxzZSwKICAgICAgICAgICAgImVycm9yIjogIlBsYXl3cmlnaHQgaXMgbm90IGxvYWRlZC9lbmFibGVkIG9uIHRoaXMgbWFjaGluZSBlbnZpcm9ubWVudC4iCiAgICAgICAgfQo=
+# ====================================================================
+# JARVIS OMEGA — Browser Agent
+# ====================================================================
+"""
+Specialized Browser Agent responsible for Playwright-based automation,
+web searching, scraping, and automated research workflows.
+"""
+
+from __future__ import annotations
+
+import os
+import time
+import traceback
+from typing import Dict, Any, List
+from datetime import datetime
+
+from shared.models import TaskDefinition, TaskResult
+from shared.constants import AgentType, TaskStatus
+from shared.logger import get_logger
+from shared.learning_loop import learning_loop
+
+log = get_logger("agent_browser")
+
+# Playwright availability import
+playwright_available = False
+try:
+    from playwright.async_api import async_playwright
+    playwright_available = True
+except ImportError:
+    log.warning("playwright_not_installed_using_stub_fallback")
+
+class AgentBrowser:
+    """
+    Automated browser agent. Interfaces with Playwright to browse pages,
+    fill out forms, download logs, and capture UI reports.
+    """
+
+    def __init__(self) -> None:
+        self.agent_id = "agent_browser"
+        self.agent_type = AgentType.BROWSER
+
+    async def execute_task(self, task: TaskDefinition) -> TaskResult:
+        """Processes browsing requests like page loads, web searching, or screenshot capturing."""
+        log.info("browser_agent_executing", task_id=task.task_id, title=task.title)
+        start_time = time.time()
+
+        # Consult past lessons before acting
+        try:
+            relevant = learning_loop.query_lessons(task.title or "")
+            if relevant:
+                log.info(
+                    "browser_agent_relevant_lessons",
+                    count=len(relevant),
+                    top_error=relevant[0].get("error_pattern", "")[:120],
+                )
+        except Exception:
+            pass  # lesson lookup must never block task execution
+
+        try:
+            action = task.payload.get("action", "search")
+            
+            if action == "search" or action == "research":
+                result_data = await self._perform_web_search(task)
+            elif action == "scrape":
+                result_data = await self._scrape_page(task)
+            elif action == "screenshot":
+                result_data = await self._capture_screenshot(task)
+            elif action == "evaluate_js":
+                result_data = await self._evaluate_javascript(task)
+            elif action == "fill_form":
+                result_data = await self._fill_form(task)
+            else:
+                raise ValueError(f"Unknown Browser action: {action}")
+
+            elapsed = (time.time() - start_time) * 1000
+            return TaskResult(
+                task_id=task.task_id,
+                agent_id=self.agent_id,
+                status=TaskStatus.COMPLETED,
+                result=result_data,
+                execution_time=elapsed,
+            )
+
+        except Exception as e:
+            elapsed = (time.time() - start_time) * 1000
+            err_msg = f"{str(e)}\n{traceback.format_exc()}"
+            log.error("browser_agent_failed", task_id=task.task_id, error=err_msg)
+            try:
+                learning_loop.remember_lesson(
+                    task_description=task.title or action,
+                    error_pattern=type(e).__name__,
+                    root_cause=str(e)[:500],
+                    solution="",
+                    file_path="local_client/agents/agent_browser.py",
+                    success=False,
+                )
+            except Exception:
+                pass  # lesson recording must never mask the original failure
+            return TaskResult(
+                task_id=task.task_id,
+                agent_id=self.agent_id,
+                status=TaskStatus.FAILED,
+                error=err_msg,
+                execution_time=elapsed,
+            )
+
+    async def _perform_web_search(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Runs a real web search query via DuckDuckGo.
+
+        Prefers Playwright-driven html.duckduckgo.com when available, falls back
+        to the repo's real WebSearchService (DuckDuckGo Lite over httpx).
+        Raises instead of returning fabricated results.
+        """
+        query = task.payload.get("query")
+        if not query:
+            raise ValueError("query is required for web search")
+
+        log.info("performing_browser_search", query=query)
+
+        # Real web search with Playwright if available
+        if playwright_available:
+            try:
+                async with async_playwright() as p:
+                    browser = await p.chromium.launch(headless=True)
+                    page = await browser.new_page()
+                    # Browse DuckDuckGo
+                    await page.goto(f"https://html.duckduckgo.com/html/?q={query}")
+                    links = await page.locator(".result__snippet").all_text_contents()
+                    await browser.close()
+
+                    return {
+                        "search_query": query,
+                        "results": links[:5],
+                        "source": "DuckDuckGo (Playwright)"
+                    }
+            except Exception as e:
+                log.error("playwright_search_failed_falling_back", error=str(e))
+
+        # Real fallback: repo's WebSearchService (DuckDuckGo Lite, no browser needed)
+        try:
+            from backend.services.web_search_service import web_search_service
+            results = await web_search_service.search(query, max_results=5)
+            if results:
+                return {
+                    "search_query": query,
+                    "results": [
+                        f"{r.get('title', '')} — {r.get('snippet', '')} ({r.get('url', '')})"
+                        for r in results
+                    ],
+                    "source": "DuckDuckGo Lite (WebSearchService)",
+                }
+        except Exception as e:
+            log.error("web_search_service_failed", error=str(e))
+
+        raise RuntimeError(
+            "Web search is unavailable: Playwright is not installed and the "
+            "DuckDuckGo fallback failed. Install playwright "
+            "(pip install playwright && playwright install chromium) or check "
+            "network connectivity, then retry."
+        )
+
+    async def _capture_screenshot(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Captures a screenshot of a specific URL."""
+        url = task.payload.get("url")
+        if not url:
+            raise ValueError("url is required for screenshot action")
+
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                shot_path = f"shared/screenshots/shot_{int(time.time())}.png"
+                os.makedirs("shared/screenshots", exist_ok=True)
+                await page.screenshot(path=shot_path)
+                await browser.close()
+                return {"screenshot_path": shot_path, "url": url}
+        return {"error": "Playwright unavailable"}
+
+    async def _evaluate_javascript(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Evaluates custom JS on a page."""
+        url = task.payload.get("url")
+        script = task.payload.get("script")
+        if not url:
+            raise ValueError("url is required for evaluate_js action")
+        if not script:
+            raise ValueError("script is required for evaluate_js action")
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                res = await page.evaluate(script)
+                await browser.close()
+                return {"result": res}
+        return {"error": "Playwright unavailable"}
+
+    async def _fill_form(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Fills a form and submits it."""
+        url = task.payload.get("url")
+        fields = task.payload.get("fields", {})  # {selector: value}
+        if not url:
+            raise ValueError("url is required for fill_form action")
+        if playwright_available:
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url)
+                for selector, value in fields.items():
+                    await page.fill(selector, value)
+                await page.keyboard.press("Enter")
+                await page.wait_for_load_state("networkidle")
+                res_url = page.url
+                await browser.close()
+                return {"final_url": res_url, "status": "form_submitted"}
+        return {"error": "Playwright unavailable"}
+
+    async def _scrape_page(self, task: TaskDefinition) -> Dict[str, Any]:
+        """Loads a specific URL page and returns full parsed text."""
+        url = task.payload.get("url")
+        if not url:
+            raise ValueError("url is required for scrape action")
+
+        if playwright_available:
+            try:
+                async with async_playwright() as p:
+                    browser = await p.chromium.launch(headless=True)
+                    page = await browser.new_page()
+                    await page.goto(url)
+                    text = await page.evaluate("() => document.body.innerText")
+                    title = await page.title()
+                    await browser.close()
+                    
+                    return {
+                        "url": url,
+                        "title": title,
+                        "page_text": text[:5000],  # Cap response size
+                        "scraped_successfully": True
+                    }
+            except Exception as e:
+                log.error("playwright_scrape_failed", error=str(e))
+
+        return {
+            "url": url,
+            "scraped_successfully": False,
+            "error": "Playwright is not loaded/enabled on this machine environment."
+        }

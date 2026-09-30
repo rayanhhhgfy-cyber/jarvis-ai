@@ -1,1 +1,527 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSAtIE1hcmtldGluZyBQbHVnaW4gKFBoYXNlIDExKQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpNdWx0aS1wbGF0Zm9ybSBtYXJrZXRpbmc6IGNvbnRlbnQgZ2VuZXJhdGlvbiwgc2NoZWR1bGluZywgYW5kIHBvc3RpbmcuCgpQbGF0Zm9ybXMgc3VwcG9ydGVkIChhbGwgZnJlZSk6CiAgKiBUd2l0dGVyIC8gWCAgICAgICAgLSBkaXJlY3QgQVBJIHYyIHdpdGggYmVhcmVyIHRva2VuIGluIHZhdWx0CiAgKiBNYXN0b2RvbiAgICAgICAgICAgLSBhbnkgaW5zdGFuY2UsIGFjY2VzcyB0b2tlbiBpbiB2YXVsdAogICogUmVkZGl0ICAgICAgICAgICAgIC0gc2NyaXB0LWFwcCBPQXV0aCAoZnJlZSkKICAqIExpbmtlZEluICAgICAgICAgICAtICJzaGFyZSBVUkwiIGFwcHJvYWNoIChvcGVucyBicm93c2VyKTsgb2ZmaWNpYWwKICAgICAgICAgICAgICAgICAgICAgICAgIEFQSSByZXF1aXJlcyBidXNpbmVzcyB2ZXJpZmljYXRpb24KICAqIERpc2NvcmQgLyBUZWxlZ3JhbSAtIHJldXNlIHdlYmhvb2tzIGZyb20gUGhhc2UgOCBjb21tdW5pY2F0aW9uIHBsdWdpbgogICogRW1haWwgICAgICAgICAgICAgIC0gcmV1c2UgZXhpc3RpbmcgZW1haWwuc2VuZCAoU01UUCkKCkV2ZXJ5IHBvc3QgaXMgbG9nZ2VkIHRvIHRoZSBgYHBvc3RzYGAgdGFibGUgd2l0aCBzdGF0dXMgLyBlbmdhZ2VtZW50IC8KZXJyb3IgaW5mbywgc28gU2lyIGNhbiBzZWUgZXhhY3RseSB3aGF0J3MgYmVlbiBwdWJsaXNoZWQgYW5kIHdoYXQncyBxdWV1ZWQuCgpDb250ZW50IGdlbmVyYXRpb24gdXNlcyB0aGUgZXhpc3RpbmcgT3BlblJvdXRlciBMTE0gKGZyZWUgdGllcikuCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KaW1wb3J0IGpzb24KaW1wb3J0IHVybGxpYi5wYXJzZQpmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZSwgdGltZWRlbHRhCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsCgppbXBvcnQgaHR0cHgKCmZyb20gYmFja2VuZC50b29scyBpbXBvcnQgdG9vbCwgUmlza1RpZXIKZnJvbSBiYWNrZW5kIGltcG9ydCBidXNpbmVzc19kYgpmcm9tIGJhY2tlbmQuY29uZmlnIGltcG9ydCBzZXR0aW5ncwpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoIm1hcmtldGluZyIpCgoKZGVmIF9jcmVkKGtleTogc3RyKSAtPiBPcHRpb25hbFtzdHJdOgogICAgdHJ5OgogICAgICAgIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5jcmVkZW50aWFsc192YXVsdCBpbXBvcnQgY3JlZGVudGlhbHNfdmF1bHQKICAgICAgICByZXR1cm4gY3JlZGVudGlhbHNfdmF1bHQuZ2V0KGtleSkgb3IgTm9uZQogICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICByZXR1cm4gTm9uZQoKCiMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KIyBDb250ZW50IGdlbmVyYXRpb24KIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKQHRvb2woCiAgICBuYW1lPSJtYXJrZXRpbmcuY3JlYXRlX2NvbnRlbnQiLAogICAgZGVzY3JpcHRpb249IkdlbmVyYXRlIHNvY2lhbC1tZWRpYSBjb250ZW50IGZvciBhIHRvcGljLiBSZXR1cm5zIDEtMyB2YXJpYW50cyB3aXRoIGhhc2h0YWdzLiBVc2VzIHRoZSBleGlzdGluZyBPcGVuUm91dGVyIExMTS4iLAogICAgcGFyYW1ldGVycz17CiAgICAgICAgInR5cGUiOiAib2JqZWN0IiwKICAgICAgICAicHJvcGVydGllcyI6IHsKICAgICAgICAgICAgInRvcGljIjogeyJ0eXBlIjogInN0cmluZyJ9LAogICAgICAgICAgICAicGxhdGZvcm0iOiB7InR5cGUiOiAic3RyaW5nIiwgImVudW0iOiBbInR3aXR0ZXIiLCAibGlua2VkaW4iLCAicmVkZGl0IiwgImJsb2ciLCAiZW1haWwiXSwgImRlZmF1bHQiOiAidHdpdHRlciJ9LAogICAgICAgICAgICAidG9uZSI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVmYXVsdCI6ICJwcm9mZXNzaW9uYWwiLCAiZGVzY3JpcHRpb24iOiAiZS5nLiAncHJvZmVzc2lvbmFsJywgJ3BsYXlmdWwnLCAndXJnZW50JywgJ2luc3BpcmF0aW9uYWwnIn0sCiAgICAgICAgICAgICJ2YXJpYW50cyI6IHsidHlwZSI6ICJpbnRlZ2VyIiwgImRlZmF1bHQiOiAzfSwKICAgICAgICAgICAgImluY2x1ZGVfY3RhIjogeyJ0eXBlIjogImJvb2xlYW4iLCAiZGVmYXVsdCI6IFRydWV9LAogICAgICAgICAgICAibWF4X2xlbmd0aCI6IHsidHlwZSI6ICJpbnRlZ2VyIiwgImRlZmF1bHQiOiAyODB9LAogICAgICAgIH0sCiAgICAgICAgInJlcXVpcmVkIjogWyJ0b3BpYyJdLAogICAgfSwKICAgIHJpc2tfdGllcj1SaXNrVGllci5USUVSXzFfUkVWRVJTSUJMRSwKICAgIGNhdGVnb3J5PSJtYXJrZXRpbmciLAopCmFzeW5jIGRlZiBtYXJrZXRpbmdfY3JlYXRlX2NvbnRlbnQoCiAgICB0b3BpYzogc3RyLCBwbGF0Zm9ybTogc3RyID0gInR3aXR0ZXIiLCB0b25lOiBzdHIgPSAicHJvZmVzc2lvbmFsIiwKICAgIHZhcmlhbnRzOiBpbnQgPSAzLCBpbmNsdWRlX2N0YTogYm9vbCA9IFRydWUsIG1heF9sZW5ndGg6IGludCA9IDI4MCwKKSAtPiBEaWN0W3N0ciwgQW55XToKICAgIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZSBpbXBvcnQgbGxtX3NlcnZpY2UKCiAgICBwbGF0Zm9ybV9oaW50cyA9IHsKICAgICAgICAidHdpdHRlciI6IGYiVHdlZXQgc3R5bGUsIG1heCB7bWF4X2xlbmd0aH0gY2hhcnMuIFB1bmNoeSBob29rICsgdmFsdWUuIiwKICAgICAgICAibGlua2VkaW4iOiAiUHJvZmVzc2lvbmFsIHBvc3QsIDMtNSBzaG9ydCBwYXJhZ3JhcGhzLCBsZWFkZXJzaGlwIHRvbmUuIiwKICAgICAgICAicmVkZGl0IjogIlJlZGRpdCBwb3N0OiB0aXRsZSArIGJvZHkuIENvbnZlcnNhdGlvbmFsLCBubyBtYXJrZXRpbmcgc3BlYWsuIiwKICAgICAgICAiYmxvZyI6ICJMb25nLWZvcm0gYmxvZyBwb3N0IGludHJvICgzMDAtNTAwIHdvcmRzKS4iLAogICAgICAgICJlbWFpbCI6ICJNYXJrZXRpbmcgZW1haWw6IHN1YmplY3QgKyBwcmV2aWV3ICsgYm9keS4gUGVyc29uYWwgdG9uZS4iLAogICAgfQogICAgc3lzX3Byb21wdCA9ICgKICAgICAgICBmIllvdSBhcmUgSkFSVklTLCBhIHNlbmlvciBjb250ZW50IG1hcmtldGVyLiBQbGF0Zm9ybToge3BsYXRmb3JtfS4gIgogICAgICAgIGYiVG9uZToge3RvbmV9LiB7cGxhdGZvcm1faGludHMuZ2V0KHBsYXRmb3JtLCAnJyl9XG4iCiAgICAgICAgZiJPdXRwdXQgU1RSSUNUIEpTT046IHt7XCJ2YXJpYW50c1wiOiBbe3tcImNvbnRlbnRcIjogc3RyaW5nLCBcImhhc2h0YWdzXCI6IFtzdHJpbmcsIC4uLl19fV19fS5cbiIKICAgICAgICBmIkVtaXQge3ZhcmlhbnRzfSB2YXJpYW50cy4gSW5jbHVkZSAzLTYgaGFzaHRhZ3Mgd2hlcmUgYXBwcm9wcmlhdGUuICIKICAgICAgICBmInsnRW5kIHdpdGggYSBjbGVhciBDVEEuJyBpZiBpbmNsdWRlX2N0YSBlbHNlICdObyBDVEEuJ31cbiIKICAgICAgICAiRG8gTk9UIHdyYXAgaW4gbWFya2Rvd24gZmVuY2VzLiIKICAgICkKICAgIHRyeToKICAgICAgICByZXBseSA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSgKICAgICAgICAgICAgdXNlcl9tZXNzYWdlPWYiVG9waWM6IHt0b3BpY30iLAogICAgICAgICAgICBzeXN0ZW1faW5zdHJ1Y3Rpb25zPXN5c19wcm9tcHQsCiAgICAgICAgICAgIGluamVjdF9tZW1vcnk9RmFsc2UsCiAgICAgICAgKQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6IGYiTExNIGNhbGwgZmFpbGVkOiB7ZX0ifQoKICAgICMgUGFyc2UgSlNPTiAodG9sZXJhdGUgZmVuY2VzIC8gdHJhaWxpbmcgcHJvc2UpLgogICAgY2xlYW5lZCA9IHJlcGx5LnN0cmlwKCkKICAgIGlmIGNsZWFuZWQuc3RhcnRzd2l0aCgiYGBgIik6CiAgICAgICAgbGluZXMgPSBjbGVhbmVkLnNwbGl0bGluZXMoKQogICAgICAgIGlmIGxpbmVzIGFuZCBsaW5lc1swXS5zdGFydHN3aXRoKCJgYGAiKToKICAgICAgICAgICAgbGluZXMgPSBsaW5lc1sxOl0KICAgICAgICBpZiBsaW5lcyBhbmQgbGluZXNbLTFdLnN0cmlwKCkgPT0gImBgYCI6CiAgICAgICAgICAgIGxpbmVzID0gbGluZXNbOi0xXQogICAgICAgIGNsZWFuZWQgPSAiXG4iLmpvaW4obGluZXMpLnN0cmlwKCkKICAgIHRyeToKICAgICAgICBwYXJzZWQgPSBqc29uLmxvYWRzKGNsZWFuZWQpCiAgICBleGNlcHQganNvbi5KU09ORGVjb2RlRXJyb3I6CiAgICAgICAgIyBTYWx2YWdlIGxhcmdlc3Qgey4uLn0gYmxvY2suCiAgICAgICAgc3RhcnQgPSBjbGVhbmVkLmZpbmQoInsiKQogICAgICAgIGlmIHN0YXJ0ID09IC0xOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiAiTExNIGRpZCBub3QgcmV0dXJuIEpTT04iLCAicmF3IjogY2xlYW5lZFs6MzAwXX0KICAgICAgICBkZXB0aCA9IDAKICAgICAgICBmb3IgaSBpbiByYW5nZShzdGFydCwgbGVuKGNsZWFuZWQpKToKICAgICAgICAgICAgaWYgY2xlYW5lZFtpXSA9PSAieyI6CiAgICAgICAgICAgICAgICBkZXB0aCArPSAxCiAgICAgICAgICAgIGVsaWYgY2xlYW5lZFtpXSA9PSAifSI6CiAgICAgICAgICAgICAgICBkZXB0aCAtPSAxCiAgICAgICAgICAgICAgICBpZiBkZXB0aCA9PSAwOgogICAgICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICAgICAgcGFyc2VkID0ganNvbi5sb2FkcyhjbGVhbmVkW3N0YXJ0OmkgKyAxXSkKICAgICAgICAgICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICAgICAgICAgICAgICBleGNlcHQganNvbi5KU09ORGVjb2RlRXJyb3I6CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJMTE0gSlNPTiB1bnBhcnNlYWJsZSIsICJyYXciOiBjbGVhbmVkWzozMDBdfQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJMTE0gSlNPTiB1bnBhcnNlYWJsZSIsICJyYXciOiBjbGVhbmVkWzozMDBdfQoKICAgIG91dCA9IHBhcnNlZC5nZXQoInZhcmlhbnRzIiwgW10pCiAgICByZXR1cm4gewogICAgICAgICJvayI6IFRydWUsCiAgICAgICAgInRvcGljIjogdG9waWMsCiAgICAgICAgInBsYXRmb3JtIjogcGxhdGZvcm0sCiAgICAgICAgInRvbmUiOiB0b25lLAogICAgICAgICJjb3VudCI6IGxlbihvdXQpLAogICAgICAgICJ2YXJpYW50cyI6IG91dCwKICAgIH0KCgpAdG9vbCgKICAgIG5hbWU9Im1hcmtldGluZy5oYXNodGFnX3Jlc2VhcmNoIiwKICAgIGRlc2NyaXB0aW9uPSJTdWdnZXN0IGhpZ2gtcmVsZXZhbmNlIGhhc2h0YWdzIGZvciBhIHRvcGljLiBVc2VzIExMTSAobm8gcGFpZCBrZXl3b3JkIEFQSSkuIiwKICAgIHBhcmFtZXRlcnM9ewogICAgICAgICJ0eXBlIjogIm9iamVjdCIsCiAgICAgICAgInByb3BlcnRpZXMiOiB7CiAgICAgICAgICAgICJ0b3BpYyI6IHsidHlwZSI6ICJzdHJpbmcifSwKICAgICAgICAgICAgImNvdW50IjogeyJ0eXBlIjogImludGVnZXIiLCAiZGVmYXVsdCI6IDE1fSwKICAgICAgICB9LAogICAgICAgICJyZXF1aXJlZCI6IFsidG9waWMiXSwKICAgIH0sCiAgICByaXNrX3RpZXI9Umlza1RpZXIuVElFUl8wX09CU0VSVkUsCiAgICBjYXRlZ29yeT0ibWFya2V0aW5nIiwKKQphc3luYyBkZWYgbWFya2V0aW5nX2hhc2h0YWdfcmVzZWFyY2godG9waWM6IHN0ciwgY291bnQ6IGludCA9IDE1KSAtPiBEaWN0W3N0ciwgQW55XToKICAgIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZSBpbXBvcnQgbGxtX3NlcnZpY2UKICAgIHRyeToKICAgICAgICByZXBseSA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSgKICAgICAgICAgICAgdXNlcl9tZXNzYWdlPWYiVG9waWM6IHt0b3BpY30iLAogICAgICAgICAgICBzeXN0ZW1faW5zdHJ1Y3Rpb25zPSgKICAgICAgICAgICAgICAgIGYiU3VnZ2VzdCB7Y291bnR9IGVmZmVjdGl2ZSBoYXNodGFncyBmb3IgdGhpcyB0b3BpYy4gT3V0cHV0IFNUUklDVCBKU09OOiAiCiAgICAgICAgICAgICAgICAie1wiaGFzaHRhZ3NcIjogW1wiI3RhZzFcIiwgXCIjdGFnMlwiLCAuLi5dfS4gTWl4IHBvcHVsYXIgYW5kIG5pY2hlIHRhZ3MuIE5vIHByb3NlLiIKICAgICAgICAgICAgKSwKICAgICAgICAgICAgaW5qZWN0X21lbW9yeT1GYWxzZSwKICAgICAgICApCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogc3RyKGUpfQogICAgY2xlYW5lZCA9IHJlcGx5LnN0cmlwKCkubHN0cmlwKCJgIikucnN0cmlwKCJgIikKICAgIGlmIGNsZWFuZWQuc3RhcnRzd2l0aCgianNvbiIpOgogICAgICAgIGNsZWFuZWQgPSBjbGVhbmVkWzQ6XQogICAgdHJ5OgogICAgICAgIHBhcnNlZCA9IGpzb24ubG9hZHMoY2xlYW5lZCkKICAgICAgICByZXR1cm4geyJvayI6IFRydWUsICJ0b3BpYyI6IHRvcGljLCAiaGFzaHRhZ3MiOiBwYXJzZWQuZ2V0KCJoYXNodGFncyIsIFtdKVs6Y291bnRdfQogICAgZXhjZXB0IGpzb24uSlNPTkRlY29kZUVycm9yOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJMTE0gZGlkIG5vdCByZXR1cm4gdmFsaWQgSlNPTiIsICJyYXciOiByZXBseVs6MzAwXX0KCgojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiMgTXVsdGktcGxhdGZvcm0gcG9zdGluZwojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgphc3luYyBkZWYgX3R3aXR0ZXJfcG9zdCh0ZXh0OiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiVHdpdHRlciAvIFggdjIg4oCUIG5lZWRzIHR3aXR0ZXJfYmVhcmVyX3Rva2VuICsgdHdpdHRlcl9jb25zdW1lcl9rZXkgKyBzZWNyZXQgaW4gdmF1bHQuIiIiCiAgICBiZWFyZXIgPSBfY3JlZCgidHdpdHRlcl9iZWFyZXJfdG9rZW4iKQogICAgY29uc3VtZXJfa2V5ID0gX2NyZWQoInR3aXR0ZXJfY29uc3VtZXJfa2V5IikKICAgIGNvbnN1bWVyX3NlY3JldCA9IF9jcmVkKCJ0d2l0dGVyX2NvbnN1bWVyX3NlY3JldCIpCiAgICBhY2Nlc3NfdG9rZW4gPSBfY3JlZCgidHdpdHRlcl9hY2Nlc3NfdG9rZW4iKQogICAgYWNjZXNzX3NlY3JldCA9IF9jcmVkKCJ0d2l0dGVyX2FjY2Vzc190b2tlbl9zZWNyZXQiKQogICAgaWYgbm90IGFsbChbY29uc3VtZXJfa2V5LCBjb25zdW1lcl9zZWNyZXQsIGFjY2Vzc190b2tlbiwgYWNjZXNzX3NlY3JldF0pOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJUd2l0dGVyIE9BdXRoIGNyZWRlbnRpYWxzIG1pc3NpbmcgaW4gdmF1bHQifQogICAgdHJ5OgogICAgICAgICMgVXNlIE9BdXRoIDEuMGEgdXNlci1jb250ZXh0IChmcmVlIHRpZXIgYWxsb3dzIDEsNTAwIHBvc3RzL21vbnRoKS4KICAgICAgICBmcm9tIHJlcXVlc3RzX29hdXRobGliIGltcG9ydCBPQXV0aDEgICMgdHlwZTogaWdub3JlCiAgICAgICAgaW1wb3J0IHJlcXVlc3RzCiAgICAgICAgYXV0aCA9IE9BdXRoMShjb25zdW1lcl9rZXksIGNvbnN1bWVyX3NlY3JldCwgYWNjZXNzX3Rva2VuLCBhY2Nlc3Nfc2VjcmV0KQogICAgICAgIHJlc3AgPSByZXF1ZXN0cy5wb3N0KAogICAgICAgICAgICAiaHR0cHM6Ly9hcGkudHdpdHRlci5jb20vMi90d2VldHMiLAogICAgICAgICAgICBqc29uPXsidGV4dCI6IHRleHR9LAogICAgICAgICAgICBhdXRoPWF1dGgsCiAgICAgICAgICAgIHRpbWVvdXQ9MzAsCiAgICAgICAgKQogICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAic3RhdHVzIjogcmVzcC5zdGF0dXNfY29kZSwgImVycm9yIjogcmVzcC50ZXh0WzozMDBdfQogICAgICAgIGRhdGEgPSByZXNwLmpzb24oKQogICAgICAgIHJldHVybiB7Im9rIjogVHJ1ZSwgImV4dGVybmFsX2lkIjogZGF0YS5nZXQoImRhdGEiLCB7fSkuZ2V0KCJpZCIpfQogICAgZXhjZXB0IEltcG9ydEVycm9yOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJyZXF1ZXN0cy1vYXV0aGxpYiBub3QgaW5zdGFsbGVkIn0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiBzdHIoZSl9CgoKYXN5bmMgZGVmIF9tYXN0b2Rvbl9wb3N0KHRleHQ6IHN0ciwgbWVkaWFfcGF0aDogc3RyID0gIiIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiTWFzdG9kb24g4oCUIG5lZWRzIG1hc3RvZG9uX2luc3RhbmNlICsgbWFzdG9kb25fYWNjZXNzX3Rva2VuIGluIHZhdWx0LiIiIgogICAgaW5zdGFuY2UgPSBfY3JlZCgibWFzdG9kb25faW5zdGFuY2UiKSAgIyBlLmcuIGh0dHBzOi8vbWFzdG9kb24uc29jaWFsCiAgICB0b2tlbiA9IF9jcmVkKCJtYXN0b2Rvbl9hY2Nlc3NfdG9rZW4iKQogICAgaWYgbm90IChpbnN0YW5jZSBhbmQgdG9rZW4pOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJNYXN0b2RvbiBpbnN0YW5jZSAvIGFjY2VzcyB0b2tlbiBtaXNzaW5nIGluIHZhdWx0In0KICAgIHRyeToKICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KHRpbWVvdXQ9MzApIGFzIGNsaWVudDoKICAgICAgICAgICAgcmVzcCA9IGF3YWl0IGNsaWVudC5wb3N0KAogICAgICAgICAgICAgICAgZiJ7aW5zdGFuY2UucnN0cmlwKCcvJyl9L2FwaS92MS9zdGF0dXNlcyIsCiAgICAgICAgICAgICAgICBkYXRhPXsic3RhdHVzIjogdGV4dCwgInZpc2liaWxpdHkiOiAicHVibGljIn0sCiAgICAgICAgICAgICAgICBoZWFkZXJzPXsiQXV0aG9yaXphdGlvbiI6IGYiQmVhcmVyIHt0b2tlbn0ifSwKICAgICAgICAgICAgKQogICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAic3RhdHVzIjogcmVzcC5zdGF0dXNfY29kZSwgImVycm9yIjogcmVzcC50ZXh0WzozMDBdfQogICAgICAgIHJldHVybiB7Im9rIjogVHJ1ZSwgImV4dGVybmFsX2lkIjogcmVzcC5qc29uKCkuZ2V0KCJpZCIpfQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6IHN0cihlKX0KCgphc3luYyBkZWYgX3JlZGRpdF9wb3N0KHRpdGxlOiBzdHIsIGJvZHk6IHN0ciwgc3VicmVkZGl0OiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiUmVkZGl0IC0gbmVlZHMgcmVkZGl0X2NsaWVudF9pZCArIHNlY3JldCArIHVzZXJuYW1lICsgcGFzc3dvcmQgKyB1c2VyX2FnZW50IGluIHZhdWx0LiIiIgogICAgY2xpZW50X2lkID0gX2NyZWQoInJlZGRpdF9jbGllbnRfaWQiKQogICAgc2VjcmV0ID0gX2NyZWQoInJlZGRpdF9jbGllbnRfc2VjcmV0IikKICAgIHVzZXJuYW1lID0gX2NyZWQoInJlZGRpdF91c2VybmFtZSIpCiAgICBwYXNzd29yZCA9IF9jcmVkKCJyZWRkaXRfcGFzc3dvcmQiKQogICAgdXNlcl9hZ2VudCA9IF9jcmVkKCJyZWRkaXRfdXNlcl9hZ2VudCIpIG9yICJKQVJWSVMtT01FR0EvMS4wIGJ5IC91LyIgKyAodXNlcm5hbWUgb3IgImphcnZpcyIpCiAgICBpZiBub3QgYWxsKFtjbGllbnRfaWQsIHNlY3JldCwgdXNlcm5hbWUsIHBhc3N3b3JkXSk6CiAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogIlJlZGRpdCBjcmVkZW50aWFscyBtaXNzaW5nIGluIHZhdWx0In0KICAgIHRyeToKICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KHRpbWVvdXQ9MzApIGFzIGNsaWVudDoKICAgICAgICAgICAgIyBPQXV0aCB0b2tlbgogICAgICAgICAgICB0b2sgPSBhd2FpdCBjbGllbnQucG9zdCgKICAgICAgICAgICAgICAgICJodHRwczovL3d3dy5yZWRkaXQuY29tL2FwaS92MS9hY2Nlc3NfdG9rZW4iLAogICAgICAgICAgICAgICAgZGF0YT17ImdyYW50X3R5cGUiOiAicGFzc3dvcmQiLCAidXNlcm5hbWUiOiB1c2VybmFtZSwgInBhc3N3b3JkIjogcGFzc3dvcmR9LAogICAgICAgICAgICAgICAgYXV0aD0oY2xpZW50X2lkLCBzZWNyZXQpLAogICAgICAgICAgICAgICAgaGVhZGVycz17IlVzZXItQWdlbnQiOiB1c2VyX2FnZW50fSwKICAgICAgICAgICAgKQogICAgICAgICAgICBpZiB0b2suc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogZiJPQXV0aCBmYWlsZWQ6IHt0b2sudGV4dFs6MjAwXX0ifQogICAgICAgICAgICBhY2Nlc3MgPSB0b2suanNvbigpLmdldCgiYWNjZXNzX3Rva2VuIikKICAgICAgICAgICAgaWYgbm90IGFjY2VzczoKICAgICAgICAgICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJubyBhY2Nlc3MgdG9rZW4gaW4gT0F1dGggcmVzcG9uc2UifQogICAgICAgICAgICAjIFN1Ym1pdAogICAgICAgICAgICByZXNwID0gYXdhaXQgY2xpZW50LnBvc3QoCiAgICAgICAgICAgICAgICAiaHR0cHM6Ly9vYXV0aC5yZWRkaXQuY29tL2FwaS9zdWJtaXQiLAogICAgICAgICAgICAgICAgZGF0YT17CiAgICAgICAgICAgICAgICAgICAgImtpbmQiOiAic2VsZiIsCiAgICAgICAgICAgICAgICAgICAgInNyIjogc3VicmVkZGl0LAogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6IHRpdGxlLAogICAgICAgICAgICAgICAgICAgICJ0ZXh0IjogYm9keSwKICAgICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgICBoZWFkZXJzPXsKICAgICAgICAgICAgICAgICAgICAiQXV0aG9yaXphdGlvbiI6IGYiQmVhcmVyIHthY2Nlc3N9IiwKICAgICAgICAgICAgICAgICAgICAiVXNlci1BZ2VudCI6IHVzZXJfYWdlbnQsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICApCiAgICAgICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgInN0YXR1cyI6IHJlc3Auc3RhdHVzX2NvZGUsICJlcnJvciI6IHJlc3AudGV4dFs6MzAwXX0KICAgICAgICAgICAgZGF0YSA9IHJlc3AuanNvbigpCiAgICAgICAgICAgIGlmIG5vdCBkYXRhLmdldCgic3VjY2VzcyIpOgogICAgICAgICAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogZiJyZWRkaXQgcmVqZWN0ZWQ6IHtkYXRhfSJ9CiAgICAgICAgICAgIHJldHVybiB7Im9rIjogVHJ1ZSwgImV4dGVybmFsX2lkIjogZGF0YS5nZXQoImpzb24iLCB7fSkuZ2V0KCJkYXRhIiwge30pLmdldCgiaWQiKX0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiBzdHIoZSl9CgoKYXN5bmMgZGVmIF9saW5rZWRpbl9zaGFyZSh1cmw6IHN0ciwgdGl0bGU6IHN0ciwgc3VtbWFyeTogc3RyID0gIiIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgIiIiTGlua2VkSW4gLSByZXR1cm5zIHRoZSBzaGFyZSBVUkwgU2lyIGNhbiBvcGVuLiAoRnVsbCBBUEkgbmVlZHMgYnVzaW5lc3MgdmVyaWZpY2F0aW9uLikiIiIKICAgIHNoYXJlID0gKAogICAgICAgIGYiaHR0cHM6Ly93d3cubGlua2VkaW4uY29tL3NoYXJpbmcvc2hhcmUtb2Zmc2l0ZS8/dXJsPXt1cmxsaWIucGFyc2UucXVvdGUodXJsLCBzYWZlPScnKX0iCiAgICApCiAgICByZXR1cm4gewogICAgICAgICJvayI6IFRydWUsCiAgICAgICAgInNoYXJlX3VybCI6IHNoYXJlLAogICAgICAgICJ0aXRsZSI6IHRpdGxlLAogICAgICAgICJzdW1tYXJ5Ijogc3VtbWFyeSwKICAgICAgICAibm90ZSI6ICJPcGVuIHRoaXMgVVJMIGluIGEgYnJvd3NlciB0byBwb3N0LiBMaW5rZWRJbidzIG9mZmljaWFsIEFQSSByZXF1aXJlcyBidXNpbmVzcyB2ZXJpZmljYXRpb24uIiwKICAgIH0KCgphc3luYyBkZWYgX2Rpc2NvcmRfcG9zdCh3ZWJob29rX25hbWU6IHN0ciwgdGV4dDogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgIHVybCA9IF9jcmVkKHdlYmhvb2tfbmFtZSkKICAgIGlmIG5vdCB1cmw6CiAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogZiJ7d2ViaG9va19uYW1lfSBub3QgaW4gdmF1bHQifQogICAgdHJ5OgogICAgICAgIGFzeW5jIHdpdGggaHR0cHguQXN5bmNDbGllbnQodGltZW91dD0xNSkgYXMgY2xpZW50OgogICAgICAgICAgICByZXNwID0gYXdhaXQgY2xpZW50LnBvc3QodXJsLCBqc29uPXsiY29udGVudCI6IHRleHR9KQogICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAic3RhdHVzIjogcmVzcC5zdGF0dXNfY29kZSwgImVycm9yIjogcmVzcC50ZXh0WzozMDBdfQogICAgICAgIHJldHVybiB7Im9rIjogVHJ1ZX0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiBzdHIoZSl9CgoKYXN5bmMgZGVmIF90ZWxlZ3JhbV9wb3N0KGNoYXRfaWQ6IHN0ciwgdGV4dDogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgIHRva2VuID0gX2NyZWQoInRlbGVncmFtX2JvdF90b2tlbiIpCiAgICBpZiBub3QgdG9rZW46CiAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogInRlbGVncmFtX2JvdF90b2tlbiBub3QgaW4gdmF1bHQifQogICAgdHJ5OgogICAgICAgIGFzeW5jIHdpdGggaHR0cHguQXN5bmNDbGllbnQodGltZW91dD0xNSkgYXMgY2xpZW50OgogICAgICAgICAgICByZXNwID0gYXdhaXQgY2xpZW50LnBvc3QoCiAgICAgICAgICAgICAgICBmImh0dHBzOi8vYXBpLnRlbGVncmFtLm9yZy9ib3R7dG9rZW59L3NlbmRNZXNzYWdlIiwKICAgICAgICAgICAgICAgIGpzb249eyJjaGF0X2lkIjogY2hhdF9pZCwgInRleHQiOiB0ZXh0fSwKICAgICAgICAgICAgKQogICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPj0gNDAwOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAic3RhdHVzIjogcmVzcC5zdGF0dXNfY29kZSwgImVycm9yIjogcmVzcC50ZXh0WzozMDBdfQogICAgICAgIHJldHVybiB7Im9rIjogVHJ1ZX0KICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiBzdHIoZSl9CgoKYXN5bmMgZGVmIF9lbWFpbF9wb3N0KHRvOiBzdHIsIHN1YmplY3Q6IHN0ciwgYm9keTogc3RyKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICIiIlNlbmQgdmlhIHRoZSBleGlzdGluZyBTTVRQIHRvb2wuIiIiCiAgICBmcm9tIHBsdWdpbnMuY29tbXVuaWNhdGlvbi5wbHVnaW4gaW1wb3J0IGVtYWlsX3NlbmQKICAgIHJldHVybiBhd2FpdCBlbWFpbF9zZW5kKHRvPXRvLCBzdWJqZWN0PXN1YmplY3QsIGJvZHk9Ym9keSkKCgojIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiMgVW5pZmllZCBwb3N0aW5nIHRvb2wKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKQHRvb2woCiAgICBuYW1lPSJtYXJrZXRpbmcucG9zdCIsCiAgICBkZXNjcmlwdGlvbj0iUG9zdCBjb250ZW50IHRvIG9uZSBvciBtb3JlIHBsYXRmb3Jtcy4gUGVyc2lzdHMgdG8gdGhlIHBvc3RzIHRhYmxlIHdpdGggc3RhdHVzLiBTdXBwb3J0ZWQ6IHR3aXR0ZXIsIG1hc3RvZG9uLCByZWRkaXQsIGxpbmtlZGluLCBkaXNjb3JkLCB0ZWxlZ3JhbSwgZW1haWwuIiwKICAgIHBhcmFtZXRlcnM9ewogICAgICAgICJ0eXBlIjogIm9iamVjdCIsCiAgICAgICAgInByb3BlcnRpZXMiOiB7CiAgICAgICAgICAgICJwbGF0Zm9ybSI6IHsKICAgICAgICAgICAgICAgICJ0eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZW51bSI6IFsidHdpdHRlciIsICJtYXN0b2RvbiIsICJyZWRkaXQiLCAibGlua2VkaW4iLCAiZGlzY29yZCIsICJ0ZWxlZ3JhbSIsICJlbWFpbCJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICAiY29udGVudCI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVzY3JpcHRpb24iOiAiTWFpbiB0ZXh0IC8gYm9keSBvZiB0aGUgcG9zdC4ifSwKICAgICAgICAgICAgInRpdGxlIjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogIiIsICJkZXNjcmlwdGlvbiI6ICJSZXF1aXJlZCBmb3IgcmVkZGl0IC8gZW1haWwgc3ViamVjdC4ifSwKICAgICAgICAgICAgInN1YnJlZGRpdCI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVmYXVsdCI6ICIiLCAiZGVzY3JpcHRpb24iOiAiUmVxdWlyZWQgZm9yIHJlZGRpdC4ifSwKICAgICAgICAgICAgIndlYmhvb2tfbmFtZSI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVmYXVsdCI6ICJkaXNjb3JkX3dlYmhvb2tfZ2VuZXJhbCIsICJkZXNjcmlwdGlvbiI6ICJWYXVsdCBrZXkgZm9yIERpc2NvcmQgd2ViaG9vayAoRGlzY29yZCBvbmx5KS4ifSwKICAgICAgICAgICAgImNoYXRfaWQiOiB7InR5cGUiOiAic3RyaW5nIiwgImRlZmF1bHQiOiAiIiwgImRlc2NyaXB0aW9uIjogIlRlbGVncmFtIGNoYXQgSUQgKFRlbGVncmFtIG9ubHkpLiJ9LAogICAgICAgICAgICAidG8iOiB7InR5cGUiOiAic3RyaW5nIiwgImRlZmF1bHQiOiAiIiwgImRlc2NyaXB0aW9uIjogIlJlY2lwaWVudCBlbWFpbCAoZW1haWwgb25seSkuIn0sCiAgICAgICAgICAgICJ1cmwiOiB7InR5cGUiOiAic3RyaW5nIiwgImRlZmF1bHQiOiAiIiwgImRlc2NyaXB0aW9uIjogIlNoYXJlZCBVUkwgKExpbmtlZEluKS4ifSwKICAgICAgICAgICAgImNhbXBhaWduX2lkIjogeyJ0eXBlIjogImludGVnZXIiLCAiZGVmYXVsdCI6IDAsICJkZXNjcmlwdGlvbiI6ICJPcHRpb25hbDogbGluayB0byBhIGNhbXBhaWduLiJ9LAogICAgICAgIH0sCiAgICAgICAgInJlcXVpcmVkIjogWyJwbGF0Zm9ybSIsICJjb250ZW50Il0sCiAgICB9LAogICAgcmlza190aWVyPVJpc2tUaWVyLlRJRVJfNF9FWFRFUk5BTCwKICAgIGNhdGVnb3J5PSJtYXJrZXRpbmciLAopCmFzeW5jIGRlZiBtYXJrZXRpbmdfcG9zdCgKICAgIHBsYXRmb3JtOiBzdHIsIGNvbnRlbnQ6IHN0ciwgdGl0bGU6IHN0ciA9ICIiLCBzdWJyZWRkaXQ6IHN0ciA9ICIiLAogICAgd2ViaG9va19uYW1lOiBzdHIgPSAiZGlzY29yZF93ZWJob29rX2dlbmVyYWwiLCBjaGF0X2lkOiBzdHIgPSAiIiwKICAgIHRvOiBzdHIgPSAiIiwgdXJsOiBzdHIgPSAiIiwgY2FtcGFpZ25faWQ6IGludCA9IDAsCikgLT4gRGljdFtzdHIsIEFueV06CiAgICAjIERpc3BhdGNoCiAgICByZXN1bHQ6IERpY3Rbc3RyLCBBbnldCiAgICBpZiBwbGF0Zm9ybSA9PSAidHdpdHRlciI6CiAgICAgICAgcmVzdWx0ID0gYXdhaXQgX3R3aXR0ZXJfcG9zdChjb250ZW50KQogICAgZWxpZiBwbGF0Zm9ybSA9PSAibWFzdG9kb24iOgogICAgICAgIHJlc3VsdCA9IGF3YWl0IF9tYXN0b2Rvbl9wb3N0KGNvbnRlbnQpCiAgICBlbGlmIHBsYXRmb3JtID09ICJyZWRkaXQiOgogICAgICAgIGlmIG5vdCBzdWJyZWRkaXQ6CiAgICAgICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJyZWRkaXQgcG9zdHMgcmVxdWlyZSAnc3VicmVkZGl0JyJ9CiAgICAgICAgcmVzdWx0ID0gYXdhaXQgX3JlZGRpdF9wb3N0KHRpdGxlPXRpdGxlIG9yIGNvbnRlbnRbOjgwXSwgYm9keT1jb250ZW50LCBzdWJyZWRkaXQ9c3VicmVkZGl0KQogICAgZWxpZiBwbGF0Zm9ybSA9PSAibGlua2VkaW4iOgogICAgICAgIGlmIG5vdCB1cmw6CiAgICAgICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6ICJsaW5rZWRpbiBwb3N0cyByZXF1aXJlICd1cmwnICh0aGUgc2hhcmUtVVJMIGFwcHJvYWNoKSJ9CiAgICAgICAgcmVzdWx0ID0gYXdhaXQgX2xpbmtlZGluX3NoYXJlKHVybD11cmwsIHRpdGxlPXRpdGxlLCBzdW1tYXJ5PWNvbnRlbnQpCiAgICBlbGlmIHBsYXRmb3JtID09ICJkaXNjb3JkIjoKICAgICAgICByZXN1bHQgPSBhd2FpdCBfZGlzY29yZF9wb3N0KHdlYmhvb2tfbmFtZSwgY29udGVudCkKICAgICMgRGVjaXNpb24gR292ZXJuYW5jZSBQcmUtQ2hlY2sKICAgIHRyeToKICAgICAgICBmcm9tIGJhY2tlbmQuZ292ZXJuYW5jZSBpbXBvcnQgZ292ZXJuYW5jZV9sYXllciwgR292ZXJuYW5jZVJldmlld1JlcXVlc3QKICAgICAgICBnb3ZfcmVxID0gR292ZXJuYW5jZVJldmlld1JlcXVlc3QoCiAgICAgICAgICAgIGRlY2lzaW9uX3R5cGU9Im1hcmtldGluZyIsCiAgICAgICAgICAgIGFjdGlvbj1mIk1hcmtldGluZyBwb3N0IG9uIHtwbGF0Zm9ybX0iLAogICAgICAgICAgICBjaGFubmVsPXBsYXRmb3JtLAogICAgICAgICAgICBkZXRhaWxzPXsiY29udGVudCI6IGNvbnRlbnRbOjIwMF19LAogICAgICAgICkKICAgICAgICBnb3ZfZXZhbCA9IGF3YWl0IGdvdmVybmFuY2VfbGF5ZXIuZXZhbHVhdGVfZGVjaXNpb24oZ292X3JlcSkKICAgICAgICBpZiBub3QgZ292X2V2YWwuZ2V0KCJhcHByb3ZlZCIpOgogICAgICAgICAgICByZXR1cm4geyJvayI6IEZhbHNlLCAiZXJyb3IiOiAiVmV0b2VkIGJ5IERlY2lzaW9uIEdvdmVybmFuY2UgTGF5ZXIiLCAidmV0byI6IGdvdl9ldmFsLmdldCgidmV0byIpfQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBnb3ZfZXJyOgogICAgICAgIGxvZy53YXJuaW5nKCJnb3Zlcm5hbmNlX2NoZWNrX2ZhaWxlZF9mb3JfbWFya2V0aW5nX3Bvc3QiLCBlcnJvcj1zdHIoZ292X2VycikpCgogICAgaWYgcGxhdGZvcm0gPT0gInRlbGVncmFtIjoKICAgICAgICBpZiBub3QgY2hhdF9pZDoKICAgICAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogInRlbGVncmFtIHBvc3RzIHJlcXVpcmUgJ2NoYXRfaWQnIn0KICAgICAgICByZXN1bHQgPSBhd2FpdCBfdGVsZWdyYW1fcG9zdChjaGF0X2lkLCBjb250ZW50KQogICAgZWxpZiBwbGF0Zm9ybSA9PSAiZW1haWwiOgogICAgICAgIGlmIG5vdCB0bzoKICAgICAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogImVtYWlsIHBvc3RzIHJlcXVpcmUgJ3RvJyJ9CiAgICAgICAgcmVzdWx0ID0gYXdhaXQgX2VtYWlsX3Bvc3QodG89dG8sIHN1YmplY3Q9dGl0bGUgb3IgIihubyBzdWJqZWN0KSIsIGJvZHk9Y29udGVudCkKICAgIGVsc2U6CiAgICAgICAgcmV0dXJuIHsib2siOiBGYWxzZSwgImVycm9yIjogZiJ1bmtub3duIHBsYXRmb3JtOiB7cGxhdGZvcm19In0KCiAgICAjIFBlcnNpc3QgdG8gcG9zdHMgdGFibGUKICAgIHN0YXR1cyA9ICJwb3N0ZWQiIGlmIHJlc3VsdC5nZXQoIm9rIikgZWxzZSAiZmFpbGVkIgogICAgdHJ5OgogICAgICAgIGJ1c2luZXNzX2RiLmV4ZWN1dGUoCiAgICAgICAgICAgICIiIklOU0VSVCBJTlRPIHBvc3RzIChjYW1wYWlnbl9pZCwgcGxhdGZvcm0sIGNvbnRlbnQsIHNjaGVkdWxlZF9hdCwgcG9zdGVkX2F0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZXh0ZXJuYWxfaWQsIHN0YXR1cywgZXJyb3IsIGNyZWF0ZWRfYXQpCiAgICAgICAgICAgICAgIFZBTFVFUyAoPywgPywgPywgPywgPywgPywgPywgPywgPykiIiIsCiAgICAgICAgICAgICgKICAgICAgICAgICAgICAgIGNhbXBhaWduX2lkIG9yIE5vbmUsIHBsYXRmb3JtLCBjb250ZW50LAogICAgICAgICAgICAgICAgZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICAgICBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKSBpZiByZXN1bHQuZ2V0KCJvayIpIGVsc2UgTm9uZSwKICAgICAgICAgICAgICAgIHJlc3VsdC5nZXQoImV4dGVybmFsX2lkIiksCiAgICAgICAgICAgICAgICBzdGF0dXMsCiAgICAgICAgICAgICAgICByZXN1bHQuZ2V0KCJlcnJvciIpLAogICAgICAgICAgICAgICAgZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICksCiAgICAgICAgKQogICAgICAgIGJ1c2luZXNzX2RiLmF1ZGl0KCJwb3N0IiwgIm1hcmtldGluZyIsIHRhcmdldD1wbGF0Zm9ybSwKICAgICAgICAgICAgICAgICAgICAgICAgICBkZXRhaWxzPXsiY29udGVudF9sZW4iOiBsZW4oY29udGVudCksICJvayI6IHJlc3VsdC5nZXQoIm9rIil9KQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBkYl9lcnI6CiAgICAgICAgbG9nLndhcm5pbmcoInBvc3RfcGVyc2lzdF9mYWlsZWQiLCBlcnJvcj1zdHIoZGJfZXJyKSkKCiAgICByZXR1cm4gcmVzdWx0CgoKQHRvb2woCiAgICBuYW1lPSJtYXJrZXRpbmcuc2NoZWR1bGUiLAogICAgZGVzY3JpcHRpb249IlNjaGVkdWxlIGEgcG9zdCBmb3IgbGF0ZXIgKHN0b3JlZCBhcyAnc2NoZWR1bGVkJyBzdGF0dXM7IHRoZSBzY2hlZHVsZXIgam9iIHB1Ymxpc2hlcyBpdCkuIiwKICAgIHBhcmFtZXRlcnM9ewogICAgICAgICJ0eXBlIjogIm9iamVjdCIsCiAgICAgICAgInByb3BlcnRpZXMiOiB7CiAgICAgICAgICAgICJwbGF0Zm9ybSI6IHsidHlwZSI6ICJzdHJpbmcifSwKICAgICAgICAgICAgImNvbnRlbnQiOiB7InR5cGUiOiAic3RyaW5nIn0sCiAgICAgICAgICAgICJzY2hlZHVsZWRfYXQiOiB7InR5cGUiOiAic3RyaW5nIiwgImRlc2NyaXB0aW9uIjogIklTTyA4NjAxIGRhdGV0aW1lIGluIFVUQy4ifSwKICAgICAgICAgICAgInRpdGxlIjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogIiJ9LAogICAgICAgICAgICAic3VicmVkZGl0IjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogIiJ9LAogICAgICAgICAgICAiY2FtcGFpZ25faWQiOiB7InR5cGUiOiAiaW50ZWdlciIsICJkZWZhdWx0IjogMH0sCiAgICAgICAgfSwKICAgICAgICAicmVxdWlyZWQiOiBbInBsYXRmb3JtIiwgImNvbnRlbnQiLCAic2NoZWR1bGVkX2F0Il0sCiAgICB9LAogICAgcmlza190aWVyPVJpc2tUaWVyLlRJRVJfMV9SRVZFUlNJQkxFLAogICAgY2F0ZWdvcnk9Im1hcmtldGluZyIsCikKYXN5bmMgZGVmIG1hcmtldGluZ19zY2hlZHVsZSgKICAgIHBsYXRmb3JtOiBzdHIsIGNvbnRlbnQ6IHN0ciwgc2NoZWR1bGVkX2F0OiBzdHIsCiAgICB0aXRsZTogc3RyID0gIiIsIHN1YnJlZGRpdDogc3RyID0gIiIsIGNhbXBhaWduX2lkOiBpbnQgPSAwLAopIC0+IERpY3Rbc3RyLCBBbnldOgogICAgdHJ5OgogICAgICAgIGR0ID0gZGF0ZXRpbWUuZnJvbWlzb2Zvcm1hdChzY2hlZHVsZWRfYXQpCiAgICBleGNlcHQgVmFsdWVFcnJvciBhcyBlOgogICAgICAgIHJldHVybiB7Im9rIjogRmFsc2UsICJlcnJvciI6IGYiaW52YWxpZCBzY2hlZHVsZWRfYXQ6IHtlfSJ9CiAgICBwb3N0X2lkID0gYnVzaW5lc3NfZGIuZXhlY3V0ZSgKICAgICAgICAiIiJJTlNFUlQgSU5UTyBwb3N0cyAoY2FtcGFpZ25faWQsIHBsYXRmb3JtLCBjb250ZW50LCB0aXRsZSwgc3VicmVkZGl0LCBzY2hlZHVsZWRfYXQsIHN0YXR1cywgY3JlYXRlZF9hdCkKICAgICAgICAgICBWQUxVRVMgKD8sID8sID8sID8sID8sID8sICdzY2hlZHVsZWQnLCA/KSIiIiwKICAgICAgICAoY2FtcGFpZ25faWQgb3IgTm9uZSwgcGxhdGZvcm0sIGNvbnRlbnQsIHRpdGxlLCBzdWJyZWRkaXQsCiAgICAgICAgIGR0Lmlzb2Zvcm1hdCgpLCBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKSksCiAgICApCiAgICByZXR1cm4geyJvayI6IFRydWUsICJwb3N0X2lkIjogcG9zdF9pZCwgInNjaGVkdWxlZF9hdCI6IGR0Lmlzb2Zvcm1hdCgpfQoKCkB0b29sKAogICAgbmFtZT0ibWFya2V0aW5nLmxpc3RfcG9zdHMiLAogICAgZGVzY3JpcHRpb249Ikxpc3QgcmVjZW50IHBvc3RzIChvcHRpb25hbGx5IGZpbHRlciBieSBzdGF0dXMpLiIsCiAgICBwYXJhbWV0ZXJzPXsKICAgICAgICAidHlwZSI6ICJvYmplY3QiLAogICAgICAgICJwcm9wZXJ0aWVzIjogewogICAgICAgICAgICAic3RhdHVzIjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogIiJ9LAogICAgICAgICAgICAibGltaXQiOiB7InR5cGUiOiAiaW50ZWdlciIsICJkZWZhdWx0IjogMjB9LAogICAgICAgIH0sCiAgICB9LAogICAgcmlza190aWVyPVJpc2tUaWVyLlRJRVJfMF9PQlNFUlZFLAogICAgY2F0ZWdvcnk9Im1hcmtldGluZyIsCikKYXN5bmMgZGVmIG1hcmtldGluZ19saXN0X3Bvc3RzKHN0YXR1czogc3RyID0gIiIsIGxpbWl0OiBpbnQgPSAyMCkgLT4gRGljdFtzdHIsIEFueV06CiAgICBzcWwgPSAiU0VMRUNUIGlkLCBwbGF0Zm9ybSwgY29udGVudCwgc3RhdHVzLCBzY2hlZHVsZWRfYXQsIHBvc3RlZF9hdCwgZXh0ZXJuYWxfaWQsIGVycm9yIEZST00gcG9zdHMiCiAgICBwYXJhbXM6IHR1cGxlID0gKCkKICAgIGlmIHN0YXR1czoKICAgICAgICBzcWwgKz0gIiBXSEVSRSBzdGF0dXMgPSA/IgogICAgICAgIHBhcmFtcyA9IChzdGF0dXMsKQogICAgc3FsICs9ICIgT1JERVIgQlkgaWQgREVTQyBMSU1JVCA/IgogICAgcGFyYW1zID0gcGFyYW1zICsgKGxpbWl0LCkKICAgIHJvd3MgPSBidXNpbmVzc19kYi5yb3dzX3RvX2RpY3RzKGJ1c2luZXNzX2RiLnF1ZXJ5KHNxbCwgcGFyYW1zKSkKICAgIHJldHVybiB7Im9rIjogVHJ1ZSwgImNvdW50IjogbGVuKHJvd3MpLCAicG9zdHMiOiByb3dzfQoKCkB0b29sKAogICAgbmFtZT0ibWFya2V0aW5nLmNyZWF0ZV9jYW1wYWlnbiIsCiAgICBkZXNjcmlwdGlvbj0iQ3JlYXRlIGEgbWFya2V0aW5nIGNhbXBhaWduIHJvdyBpbiB0aGUgREIuIiwKICAgIHBhcmFtZXRlcnM9ewogICAgICAgICJ0eXBlIjogIm9iamVjdCIsCiAgICAgICAgInByb3BlcnRpZXMiOiB7CiAgICAgICAgICAgICJjbGllbnRfaWQiOiB7InR5cGUiOiAiaW50ZWdlciIsICJkZWZhdWx0IjogMH0sCiAgICAgICAgICAgICJuYW1lIjogeyJ0eXBlIjogInN0cmluZyJ9LAogICAgICAgICAgICAicGxhdGZvcm0iOiB7InR5cGUiOiAic3RyaW5nIiwgImRlZmF1bHQiOiAidHdpdHRlciJ9LAogICAgICAgICAgICAib2JqZWN0aXZlIjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogImF3YXJlbmVzcyJ9LAogICAgICAgICAgICAic3RhcnRfZGF0ZSI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVmYXVsdCI6ICIifSwKICAgICAgICAgICAgImVuZF9kYXRlIjogeyJ0eXBlIjogInN0cmluZyIsICJkZWZhdWx0IjogIiJ9LAogICAgICAgICAgICAiYnVkZ2V0IjogeyJ0eXBlIjogIm51bWJlciIsICJkZWZhdWx0IjogMH0sCiAgICAgICAgICAgICJub3RlcyI6IHsidHlwZSI6ICJzdHJpbmciLCAiZGVmYXVsdCI6ICIifSwKICAgICAgICB9LAogICAgICAgICJyZXF1aXJlZCI6IFsibmFtZSJdLAogICAgfSwKICAgIHJpc2tfdGllcj1SaXNrVGllci5USUVSXzFfUkVWRVJTSUJMRSwKICAgIGNhdGVnb3J5PSJtYXJrZXRpbmciLAopCmFzeW5jIGRlZiBtYXJrZXRpbmdfY3JlYXRlX2NhbXBhaWduKAogICAgY2xpZW50X2lkOiBpbnQgPSAwLCBuYW1lOiBzdHIgPSAiIiwgcGxhdGZvcm06IHN0ciA9ICJ0d2l0dGVyIiwKICAgIG9iamVjdGl2ZTogc3RyID0gImF3YXJlbmVzcyIsIHN0YXJ0X2RhdGU6IHN0ciA9ICIiLCBlbmRfZGF0ZTogc3RyID0gIiIsCiAgICBidWRnZXQ6IGZsb2F0ID0gMCwgbm90ZXM6IHN0ciA9ICIiLAopIC0+IERpY3Rbc3RyLCBBbnldOgogICAgY2lkID0gYnVzaW5lc3NfZGIuZXhlY3V0ZSgKICAgICAgICAiIiJJTlNFUlQgSU5UTyBjYW1wYWlnbnMgKGNsaWVudF9pZCwgbmFtZSwgcGxhdGZvcm0sIG9iamVjdGl2ZSwgc3RhcnRfZGF0ZSwgZW5kX2RhdGUsIGJ1ZGdldCwgbm90ZXMsIGNyZWF0ZWRfYXQpCiAgICAgICAgICAgVkFMVUVTICg/LCA/LCA/LCA/LCA/LCA/LCA/LCA/LCA/KSIiIiwKICAgICAgICAoY2xpZW50X2lkIG9yIE5vbmUsIG5hbWUsIHBsYXRmb3JtLCBvYmplY3RpdmUsIHN0YXJ0X2RhdGUgb3IgTm9uZSwgZW5kX2RhdGUgb3IgTm9uZSwKICAgICAgICAgYnVkZ2V0LCBub3RlcywgZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCkpLAogICAgKQogICAgcmV0dXJuIHsib2siOiBUcnVlLCAiY2FtcGFpZ25faWQiOiBjaWQsICJuYW1lIjogbmFtZX0KCgpQTFVHSU5fTkFNRSA9ICJtYXJrZXRpbmciClBMVUdJTl9WRVJTSU9OID0gIjEuMC4wIgpQTFVHSU5fREVTQ1JJUFRJT04gPSAiTXVsdGktcGxhdGZvcm0gbWFya2V0aW5nOiBjb250ZW50IGdlbiwgc2NoZWR1bGluZywgcG9zdGluZyAoVHdpdHRlci9NYXN0b2Rvbi9SZWRkaXQvTGlua2VkSW4vRGlzY29yZC9UZWxlZ3JhbS9FbWFpbCkuIgo=
+# ====================================================================
+# JARVIS OMEGA - Marketing Plugin (Phase 11)
+# ====================================================================
+"""
+Multi-platform marketing: content generation, scheduling, and posting.
+
+Platforms supported (all free):
+  * Twitter / X        - direct API v2 with bearer token in vault
+  * Mastodon           - any instance, access token in vault
+  * Reddit             - script-app OAuth (free)
+  * LinkedIn           - "share URL" approach (opens browser); official
+                         API requires business verification
+  * Discord / Telegram - reuse webhooks from Phase 8 communication plugin
+  * Email              - reuse existing email.send (SMTP)
+
+Every post is logged to the ``posts`` table with status / engagement /
+error info, so Sir can see exactly what's been published and what's queued.
+
+Content generation uses the existing OpenRouter LLM (free tier).
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import urllib.parse
+from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional
+
+import httpx
+
+from backend.tools import tool, RiskTier
+from backend import business_db
+from backend.config import settings
+from shared.logger import get_logger
+
+log = get_logger("marketing")
+
+
+def _cred(key: str) -> Optional[str]:
+    try:
+        from backend.services.credentials_vault import credentials_vault
+        return credentials_vault.get(key) or None
+    except Exception:
+        return None
+
+
+# --------------------------------------------------------------------
+# Content generation
+# --------------------------------------------------------------------
+
+@tool(
+    name="marketing.create_content",
+    description="Generate social-media content for a topic. Returns 1-3 variants with hashtags. Uses the existing OpenRouter LLM.",
+    parameters={
+        "type": "object",
+        "properties": {
+            "topic": {"type": "string"},
+            "platform": {"type": "string", "enum": ["twitter", "linkedin", "reddit", "blog", "email"], "default": "twitter"},
+            "tone": {"type": "string", "default": "professional", "description": "e.g. 'professional', 'playful', 'urgent', 'inspirational'"},
+            "variants": {"type": "integer", "default": 3},
+            "include_cta": {"type": "boolean", "default": True},
+            "max_length": {"type": "integer", "default": 280},
+        },
+        "required": ["topic"],
+    },
+    risk_tier=RiskTier.TIER_1_REVERSIBLE,
+    category="marketing",
+)
+async def marketing_create_content(
+    topic: str, platform: str = "twitter", tone: str = "professional",
+    variants: int = 3, include_cta: bool = True, max_length: int = 280,
+) -> Dict[str, Any]:
+    from backend.services.llm_service import llm_service
+
+    platform_hints = {
+        "twitter": f"Tweet style, max {max_length} chars. Punchy hook + value.",
+        "linkedin": "Professional post, 3-5 short paragraphs, leadership tone.",
+        "reddit": "Reddit post: title + body. Conversational, no marketing speak.",
+        "blog": "Long-form blog post intro (300-500 words).",
+        "email": "Marketing email: subject + preview + body. Personal tone.",
+    }
+    sys_prompt = (
+        f"You are JARVIS, a senior content marketer. Platform: {platform}. "
+        f"Tone: {tone}. {platform_hints.get(platform, '')}\n"
+        f"Output STRICT JSON: {{\"variants\": [{{\"content\": string, \"hashtags\": [string, ...]}}]}}.\n"
+        f"Emit {variants} variants. Include 3-6 hashtags where appropriate. "
+        f"{'End with a clear CTA.' if include_cta else 'No CTA.'}\n"
+        "Do NOT wrap in markdown fences."
+    )
+    try:
+        reply = await llm_service.get_response(
+            user_message=f"Topic: {topic}",
+            system_instructions=sys_prompt,
+            inject_memory=False,
+        )
+    except Exception as e:
+        return {"ok": False, "error": f"LLM call failed: {e}"}
+
+    # Parse JSON (tolerate fences / trailing prose).
+    cleaned = reply.strip()
+    if cleaned.startswith("```"):
+        lines = cleaned.splitlines()
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        cleaned = "\n".join(lines).strip()
+    try:
+        parsed = json.loads(cleaned)
+    except json.JSONDecodeError:
+        # Salvage largest {...} block.
+        start = cleaned.find("{")
+        if start == -1:
+            return {"ok": False, "error": "LLM did not return JSON", "raw": cleaned[:300]}
+        depth = 0
+        for i in range(start, len(cleaned)):
+            if cleaned[i] == "{":
+                depth += 1
+            elif cleaned[i] == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        parsed = json.loads(cleaned[start:i + 1])
+                        break
+                    except json.JSONDecodeError:
+                        return {"ok": False, "error": "LLM JSON unparseable", "raw": cleaned[:300]}
+        else:
+            return {"ok": False, "error": "LLM JSON unparseable", "raw": cleaned[:300]}
+
+    out = parsed.get("variants", [])
+    return {
+        "ok": True,
+        "topic": topic,
+        "platform": platform,
+        "tone": tone,
+        "count": len(out),
+        "variants": out,
+    }
+
+
+@tool(
+    name="marketing.hashtag_research",
+    description="Suggest high-relevance hashtags for a topic. Uses LLM (no paid keyword API).",
+    parameters={
+        "type": "object",
+        "properties": {
+            "topic": {"type": "string"},
+            "count": {"type": "integer", "default": 15},
+        },
+        "required": ["topic"],
+    },
+    risk_tier=RiskTier.TIER_0_OBSERVE,
+    category="marketing",
+)
+async def marketing_hashtag_research(topic: str, count: int = 15) -> Dict[str, Any]:
+    from backend.services.llm_service import llm_service
+    try:
+        reply = await llm_service.get_response(
+            user_message=f"Topic: {topic}",
+            system_instructions=(
+                f"Suggest {count} effective hashtags for this topic. Output STRICT JSON: "
+                "{\"hashtags\": [\"#tag1\", \"#tag2\", ...]}. Mix popular and niche tags. No prose."
+            ),
+            inject_memory=False,
+        )
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+    cleaned = reply.strip().lstrip("`").rstrip("`")
+    if cleaned.startswith("json"):
+        cleaned = cleaned[4:]
+    try:
+        parsed = json.loads(cleaned)
+        return {"ok": True, "topic": topic, "hashtags": parsed.get("hashtags", [])[:count]}
+    except json.JSONDecodeError:
+        return {"ok": False, "error": "LLM did not return valid JSON", "raw": reply[:300]}
+
+
+# --------------------------------------------------------------------
+# Multi-platform posting
+# --------------------------------------------------------------------
+
+async def _twitter_post(text: str) -> Dict[str, Any]:
+    """Twitter / X v2 — needs twitter_bearer_token + twitter_consumer_key + secret in vault."""
+    bearer = _cred("twitter_bearer_token")
+    consumer_key = _cred("twitter_consumer_key")
+    consumer_secret = _cred("twitter_consumer_secret")
+    access_token = _cred("twitter_access_token")
+    access_secret = _cred("twitter_access_token_secret")
+    if not all([consumer_key, consumer_secret, access_token, access_secret]):
+        return {"ok": False, "error": "Twitter OAuth credentials missing in vault"}
+    try:
+        # Use OAuth 1.0a user-context (free tier allows 1,500 posts/month).
+        from requests_oauthlib import OAuth1  # type: ignore
+        import requests
+        auth = OAuth1(consumer_key, consumer_secret, access_token, access_secret)
+        resp = requests.post(
+            "https://api.twitter.com/2/tweets",
+            json={"text": text},
+            auth=auth,
+            timeout=30,
+        )
+        if resp.status_code >= 400:
+            return {"ok": False, "status": resp.status_code, "error": resp.text[:300]}
+        data = resp.json()
+        return {"ok": True, "external_id": data.get("data", {}).get("id")}
+    except ImportError:
+        return {"ok": False, "error": "requests-oauthlib not installed"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def _mastodon_post(text: str, media_path: str = "") -> Dict[str, Any]:
+    """Mastodon — needs mastodon_instance + mastodon_access_token in vault."""
+    instance = _cred("mastodon_instance")  # e.g. https://mastodon.social
+    token = _cred("mastodon_access_token")
+    if not (instance and token):
+        return {"ok": False, "error": "Mastodon instance / access token missing in vault"}
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            resp = await client.post(
+                f"{instance.rstrip('/')}/api/v1/statuses",
+                data={"status": text, "visibility": "public"},
+                headers={"Authorization": f"Bearer {token}"},
+            )
+        if resp.status_code >= 400:
+            return {"ok": False, "status": resp.status_code, "error": resp.text[:300]}
+        return {"ok": True, "external_id": resp.json().get("id")}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def _reddit_post(title: str, body: str, subreddit: str) -> Dict[str, Any]:
+    """Reddit - needs reddit_client_id + secret + username + password + user_agent in vault."""
+    client_id = _cred("reddit_client_id")
+    secret = _cred("reddit_client_secret")
+    username = _cred("reddit_username")
+    password = _cred("reddit_password")
+    user_agent = _cred("reddit_user_agent") or "JARVIS-OMEGA/1.0 by /u/" + (username or "jarvis")
+    if not all([client_id, secret, username, password]):
+        return {"ok": False, "error": "Reddit credentials missing in vault"}
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            # OAuth token
+            tok = await client.post(
+                "https://www.reddit.com/api/v1/access_token",
+                data={"grant_type": "password", "username": username, "password": password},
+                auth=(client_id, secret),
+                headers={"User-Agent": user_agent},
+            )
+            if tok.status_code >= 400:
+                return {"ok": False, "error": f"OAuth failed: {tok.text[:200]}"}
+            access = tok.json().get("access_token")
+            if not access:
+                return {"ok": False, "error": "no access token in OAuth response"}
+            # Submit
+            resp = await client.post(
+                "https://oauth.reddit.com/api/submit",
+                data={
+                    "kind": "self",
+                    "sr": subreddit,
+                    "title": title,
+                    "text": body,
+                },
+                headers={
+                    "Authorization": f"Bearer {access}",
+                    "User-Agent": user_agent,
+                },
+            )
+            if resp.status_code >= 400:
+                return {"ok": False, "status": resp.status_code, "error": resp.text[:300]}
+            data = resp.json()
+            if not data.get("success"):
+                return {"ok": False, "error": f"reddit rejected: {data}"}
+            return {"ok": True, "external_id": data.get("json", {}).get("data", {}).get("id")}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def _linkedin_share(url: str, title: str, summary: str = "") -> Dict[str, Any]:
+    """LinkedIn - returns the share URL Sir can open. (Full API needs business verification.)"""
+    share = (
+        f"https://www.linkedin.com/sharing/share-offsite/?url={urllib.parse.quote(url, safe='')}"
+    )
+    return {
+        "ok": True,
+        "share_url": share,
+        "title": title,
+        "summary": summary,
+        "note": "Open this URL in a browser to post. LinkedIn's official API requires business verification.",
+    }
+
+
+async def _discord_post(webhook_name: str, text: str) -> Dict[str, Any]:
+    url = _cred(webhook_name)
+    if not url:
+        return {"ok": False, "error": f"{webhook_name} not in vault"}
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            resp = await client.post(url, json={"content": text})
+        if resp.status_code >= 400:
+            return {"ok": False, "status": resp.status_code, "error": resp.text[:300]}
+        return {"ok": True}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def _telegram_post(chat_id: str, text: str) -> Dict[str, Any]:
+    token = _cred("telegram_bot_token")
+    if not token:
+        return {"ok": False, "error": "telegram_bot_token not in vault"}
+    try:
+        async with httpx.AsyncClient(timeout=15) as client:
+            resp = await client.post(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                json={"chat_id": chat_id, "text": text},
+            )
+        if resp.status_code >= 400:
+            return {"ok": False, "status": resp.status_code, "error": resp.text[:300]}
+        return {"ok": True}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
+async def _email_post(to: str, subject: str, body: str) -> Dict[str, Any]:
+    """Send via the existing SMTP tool."""
+    from plugins.communication.plugin import email_send
+    return await email_send(to=to, subject=subject, body=body)
+
+
+# --------------------------------------------------------------------
+# Unified posting tool
+# --------------------------------------------------------------------
+
+@tool(
+    name="marketing.post",
+    description="Post content to one or more platforms. Persists to the posts table with status. Supported: twitter, mastodon, reddit, linkedin, discord, telegram, email.",
+    parameters={
+        "type": "object",
+        "properties": {
+            "platform": {
+                "type": "string",
+                "enum": ["twitter", "mastodon", "reddit", "linkedin", "discord", "telegram", "email"],
+            },
+            "content": {"type": "string", "description": "Main text / body of the post."},
+            "title": {"type": "string", "default": "", "description": "Required for reddit / email subject."},
+            "subreddit": {"type": "string", "default": "", "description": "Required for reddit."},
+            "webhook_name": {"type": "string", "default": "discord_webhook_general", "description": "Vault key for Discord webhook (Discord only)."},
+            "chat_id": {"type": "string", "default": "", "description": "Telegram chat ID (Telegram only)."},
+            "to": {"type": "string", "default": "", "description": "Recipient email (email only)."},
+            "url": {"type": "string", "default": "", "description": "Shared URL (LinkedIn)."},
+            "campaign_id": {"type": "integer", "default": 0, "description": "Optional: link to a campaign."},
+        },
+        "required": ["platform", "content"],
+    },
+    risk_tier=RiskTier.TIER_4_EXTERNAL,
+    category="marketing",
+)
+async def marketing_post(
+    platform: str, content: str, title: str = "", subreddit: str = "",
+    webhook_name: str = "discord_webhook_general", chat_id: str = "",
+    to: str = "", url: str = "", campaign_id: int = 0,
+) -> Dict[str, Any]:
+    # Dispatch
+    result: Dict[str, Any]
+    if platform == "twitter":
+        result = await _twitter_post(content)
+    elif platform == "mastodon":
+        result = await _mastodon_post(content)
+    elif platform == "reddit":
+        if not subreddit:
+            return {"ok": False, "error": "reddit posts require 'subreddit'"}
+        result = await _reddit_post(title=title or content[:80], body=content, subreddit=subreddit)
+    elif platform == "linkedin":
+        if not url:
+            return {"ok": False, "error": "linkedin posts require 'url' (the share-URL approach)"}
+        result = await _linkedin_share(url=url, title=title, summary=content)
+    elif platform == "discord":
+        result = await _discord_post(webhook_name, content)
+    # Decision Governance Pre-Check
+    try:
+        from backend.governance import governance_layer, GovernanceReviewRequest
+        gov_req = GovernanceReviewRequest(
+            decision_type="marketing",
+            action=f"Marketing post on {platform}",
+            channel=platform,
+            details={"content": content[:200]},
+        )
+        gov_eval = await governance_layer.evaluate_decision(gov_req)
+        if not gov_eval.get("approved"):
+            return {"ok": False, "error": "Vetoed by Decision Governance Layer", "veto": gov_eval.get("veto")}
+    except Exception as gov_err:
+        log.warning("governance_check_failed_for_marketing_post", error=str(gov_err))
+
+    if platform == "telegram":
+        if not chat_id:
+            return {"ok": False, "error": "telegram posts require 'chat_id'"}
+        result = await _telegram_post(chat_id, content)
+    elif platform == "email":
+        if not to:
+            return {"ok": False, "error": "email posts require 'to'"}
+        result = await _email_post(to=to, subject=title or "(no subject)", body=content)
+    else:
+        return {"ok": False, "error": f"unknown platform: {platform}"}
+
+    # Persist to posts table
+    status = "posted" if result.get("ok") else "failed"
+    try:
+        business_db.execute(
+            """INSERT INTO posts (campaign_id, platform, content, scheduled_at, posted_at,
+                                  external_id, status, error, created_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (
+                campaign_id or None, platform, content,
+                datetime.utcnow().isoformat(),
+                datetime.utcnow().isoformat() if result.get("ok") else None,
+                result.get("external_id"),
+                status,
+                result.get("error"),
+                datetime.utcnow().isoformat(),
+            ),
+        )
+        business_db.audit("post", "marketing", target=platform,
+                          details={"content_len": len(content), "ok": result.get("ok")})
+    except Exception as db_err:
+        log.warning("post_persist_failed", error=str(db_err))
+
+    return result
+
+
+@tool(
+    name="marketing.schedule",
+    description="Schedule a post for later (stored as 'scheduled' status; the scheduler job publishes it).",
+    parameters={
+        "type": "object",
+        "properties": {
+            "platform": {"type": "string"},
+            "content": {"type": "string"},
+            "scheduled_at": {"type": "string", "description": "ISO 8601 datetime in UTC."},
+            "title": {"type": "string", "default": ""},
+            "subreddit": {"type": "string", "default": ""},
+            "campaign_id": {"type": "integer", "default": 0},
+        },
+        "required": ["platform", "content", "scheduled_at"],
+    },
+    risk_tier=RiskTier.TIER_1_REVERSIBLE,
+    category="marketing",
+)
+async def marketing_schedule(
+    platform: str, content: str, scheduled_at: str,
+    title: str = "", subreddit: str = "", campaign_id: int = 0,
+) -> Dict[str, Any]:
+    try:
+        dt = datetime.fromisoformat(scheduled_at)
+    except ValueError as e:
+        return {"ok": False, "error": f"invalid scheduled_at: {e}"}
+    post_id = business_db.execute(
+        """INSERT INTO posts (campaign_id, platform, content, title, subreddit, scheduled_at, status, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, 'scheduled', ?)""",
+        (campaign_id or None, platform, content, title, subreddit,
+         dt.isoformat(), datetime.utcnow().isoformat()),
+    )
+    return {"ok": True, "post_id": post_id, "scheduled_at": dt.isoformat()}
+
+
+@tool(
+    name="marketing.list_posts",
+    description="List recent posts (optionally filter by status).",
+    parameters={
+        "type": "object",
+        "properties": {
+            "status": {"type": "string", "default": ""},
+            "limit": {"type": "integer", "default": 20},
+        },
+    },
+    risk_tier=RiskTier.TIER_0_OBSERVE,
+    category="marketing",
+)
+async def marketing_list_posts(status: str = "", limit: int = 20) -> Dict[str, Any]:
+    sql = "SELECT id, platform, content, status, scheduled_at, posted_at, external_id, error FROM posts"
+    params: tuple = ()
+    if status:
+        sql += " WHERE status = ?"
+        params = (status,)
+    sql += " ORDER BY id DESC LIMIT ?"
+    params = params + (limit,)
+    rows = business_db.rows_to_dicts(business_db.query(sql, params))
+    return {"ok": True, "count": len(rows), "posts": rows}
+
+
+@tool(
+    name="marketing.create_campaign",
+    description="Create a marketing campaign row in the DB.",
+    parameters={
+        "type": "object",
+        "properties": {
+            "client_id": {"type": "integer", "default": 0},
+            "name": {"type": "string"},
+            "platform": {"type": "string", "default": "twitter"},
+            "objective": {"type": "string", "default": "awareness"},
+            "start_date": {"type": "string", "default": ""},
+            "end_date": {"type": "string", "default": ""},
+            "budget": {"type": "number", "default": 0},
+            "notes": {"type": "string", "default": ""},
+        },
+        "required": ["name"],
+    },
+    risk_tier=RiskTier.TIER_1_REVERSIBLE,
+    category="marketing",
+)
+async def marketing_create_campaign(
+    client_id: int = 0, name: str = "", platform: str = "twitter",
+    objective: str = "awareness", start_date: str = "", end_date: str = "",
+    budget: float = 0, notes: str = "",
+) -> Dict[str, Any]:
+    cid = business_db.execute(
+        """INSERT INTO campaigns (client_id, name, platform, objective, start_date, end_date, budget, notes, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (client_id or None, name, platform, objective, start_date or None, end_date or None,
+         budget, notes, datetime.utcnow().isoformat()),
+    )
+    return {"ok": True, "campaign_id": cid, "name": name}
+
+
+PLUGIN_NAME = "marketing"
+PLUGIN_VERSION = "1.0.0"
+PLUGIN_DESCRIPTION = "Multi-platform marketing: content gen, scheduling, posting (Twitter/Mastodon/Reddit/LinkedIn/Discord/Telegram/Email)."
