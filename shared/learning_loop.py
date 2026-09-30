@@ -1,1 +1,114 @@
-IiIiCkpBUlZJUyBPTUVHQSDigJQgQ29udGludW91cyBMZWFybmluZyBMb29wClN0b3JlcyBhbmQgcmV0cmlldmVzIGxlc3NvbnMgbGVhcm5lZCBmcm9tIGV2ZXJ5IHRhc2ssIGZhaWx1cmUsIGFuZCBzdWNjZXNzLgpBbGwgYWdlbnRzIGNvbnN1bHQgdGhpcyBiZWZvcmUgYWN0aW5nIGFuZCB3cml0ZSB0byBpdCBhZnRlciBhY3RpbmcuCiIiIgoKaW1wb3J0IGpzb24KaW1wb3J0IG9zCmZyb20gdHlwaW5nIGltcG9ydCBEaWN0LCBBbnksIExpc3QsIE9wdGlvbmFsCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lem9uZQpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoImxlYXJuaW5nX2xvb3AiKQoKTEVTU09OU19GSUxFID0gb3MucGF0aC5qb2luKG9zLnBhdGguZGlybmFtZShfX2ZpbGVfXyksICJsZXNzb25zX2xlYXJuZWQuanNvbiIpCkNBUEFCSUxJVElFU19GSUxFID0gb3MucGF0aC5qb2luKG9zLnBhdGguZGlybmFtZShfX2ZpbGVfXyksICJjYXBhYmlsaXRpZXNfY2FjaGUuanNvbiIpCgpjbGFzcyBMZWFybmluZ0xvb3A6CiAgICAiIiIKICAgIFBlcnNpc3RlbnQgbGVhcm5pbmcgc3lzdGVtLiBTdG9yZXMgZXZlcnkgbGVzc29uLCBzdWNjZXNzIHBhdHRlcm4sCiAgICBhbmQgZXJyb3IgYW5hbHlzaXMuIEFnZW50cyBxdWVyeSB0aGlzIGJlZm9yZSB0YXNrcyBhbmQgd3JpdGUgdG8gaXQgYWZ0ZXIuCiAgICBUaGlzIGlzIGhvdyBKQVJWSVMgZ2V0cyBzbWFydGVyIG92ZXIgdGltZSB3aXRob3V0IHJldHJhaW5pbmcuCiAgICAiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgc2VsZi5sZXNzb25zID0gc2VsZi5fbG9hZF9sZXNzb25zKCkKICAgICAgICBzZWxmLmNhcGFiaWxpdGllcyA9IHNlbGYuX2xvYWRfY2FwYWJpbGl0aWVzKCkKCiAgICBkZWYgX2xvYWRfbGVzc29ucyhzZWxmKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICBpZiBvcy5wYXRoLmV4aXN0cyhMRVNTT05TX0ZJTEUpOgogICAgICAgICAgICB3aXRoIG9wZW4oTEVTU09OU19GSUxFLCAiciIpIGFzIGY6CiAgICAgICAgICAgICAgICByZXR1cm4ganNvbi5sb2FkKGYpCiAgICAgICAgcmV0dXJuIFtdCgogICAgZGVmIF9sb2FkX2NhcGFiaWxpdGllcyhzZWxmKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICBpZiBvcy5wYXRoLmV4aXN0cyhDQVBBQklMSVRJRVNfRklMRSk6CiAgICAgICAgICAgIHdpdGggb3BlbihDQVBBQklMSVRJRVNfRklMRSwgInIiKSBhcyBmOgogICAgICAgICAgICAgICAgcmV0dXJuIGpzb24ubG9hZChmKQogICAgICAgIHJldHVybiB7InNlbGZfYWRkZWRfdG9vbHMiOiBbXSwgInNlbGZfYWRkZWRfYWN0aW9ucyI6IFtdLCAibW9kaWZpZWRfZmlsZXMiOiBbXX0KCiAgICBkZWYgX3NhdmVfbGVzc29ucyhzZWxmKToKICAgICAgICBvcy5tYWtlZGlycyhvcy5wYXRoLmRpcm5hbWUoTEVTU09OU19GSUxFKSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICB3aXRoIG9wZW4oTEVTU09OU19GSUxFLCAidyIpIGFzIGY6CiAgICAgICAgICAgIGpzb24uZHVtcChzZWxmLmxlc3NvbnMsIGYsIGluZGVudD0yKQoKICAgIGRlZiBfc2F2ZV9jYXBhYmlsaXRpZXMoc2VsZik6CiAgICAgICAgb3MubWFrZWRpcnMob3MucGF0aC5kaXJuYW1lKENBUEFCSUxJVElFU19GSUxFKSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICB3aXRoIG9wZW4oQ0FQQUJJTElUSUVTX0ZJTEUsICJ3IikgYXMgZjoKICAgICAgICAgICAganNvbi5kdW1wKHNlbGYuY2FwYWJpbGl0aWVzLCBmLCBpbmRlbnQ9MikKCiAgICBkZWYgcmVtZW1iZXJfbGVzc29uKHNlbGYsIHRhc2tfZGVzY3JpcHRpb246IHN0ciwgZXJyb3JfcGF0dGVybjogc3RyLAogICAgICAgICAgICAgICAgICAgICAgICByb290X2NhdXNlOiBzdHIsIHNvbHV0aW9uOiBzdHIsIGZpbGVfcGF0aDogT3B0aW9uYWxbc3RyXSA9IE5vbmUsCiAgICAgICAgICAgICAgICAgICAgICAgIHN1Y2Nlc3M6IGJvb2wgPSBGYWxzZSk6CiAgICAgICAgIiIiU3RvcmUgYSBsZXNzb24gbGVhcm5lZCBmcm9tIHN1Y2Nlc3Mgb3IgZmFpbHVyZS4iIiIKICAgICAgICBsZXNzb24gPSB7CiAgICAgICAgICAgICJ0aW1lc3RhbXAiOiBkYXRldGltZS5ub3codGltZXpvbmUudXRjKS5pc29mb3JtYXQoKSwKICAgICAgICAgICAgInRhc2tfZGVzY3JpcHRpb24iOiB0YXNrX2Rlc2NyaXB0aW9uLAogICAgICAgICAgICAiZXJyb3JfcGF0dGVybiI6IGVycm9yX3BhdHRlcm4sCiAgICAgICAgICAgICJyb290X2NhdXNlIjogcm9vdF9jYXVzZSwKICAgICAgICAgICAgInNvbHV0aW9uIjogc29sdXRpb24sCiAgICAgICAgICAgICJmaWxlX3BhdGgiOiBmaWxlX3BhdGgsCiAgICAgICAgICAgICJzdWNjZXNzIjogc3VjY2VzcywKICAgICAgICAgICAgImFwcGxpZWRfY291bnQiOiAwCiAgICAgICAgfQogICAgICAgIHNlbGYubGVzc29ucy5hcHBlbmQobGVzc29uKQogICAgICAgIHNlbGYuX3NhdmVfbGVzc29ucygpCiAgICAgICAgbG9nLmluZm8oImxlc3Nvbl9yZWNvcmRlZCIsIGVycm9yX3BhdHRlcm49ZXJyb3JfcGF0dGVybiwgc29sdXRpb25fbGVuZ3RoPWxlbihzb2x1dGlvbikpCgogICAgZGVmIHF1ZXJ5X2xlc3NvbnMoc2VsZiwgdGFza19kZXNjcmlwdGlvbjogc3RyKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICAiIiJGaW5kIHJlbGV2YW50IHBhc3QgbGVzc29ucyBmb3IgYSBnaXZlbiB0YXNrIGRlc2NyaXB0aW9uLgogICAgICAgIE1hdGNoZXMgYnkga2V5d29yZCBvdmVybGFwIGJldHdlZW4gdGFzayBkZXNjcmlwdGlvbiBhbmQgc3RvcmVkIHBhdHRlcm5zLiIiIgogICAgICAgIGtleXdvcmRzID0gc2V0KHRhc2tfZGVzY3JpcHRpb24ubG93ZXIoKS5zcGxpdCgpKQogICAgICAgIHNjb3JlZCA9IFtdCiAgICAgICAgZm9yIGxlc3NvbiBpbiBzZWxmLmxlc3NvbnM6CiAgICAgICAgICAgIGxlc3Nvbl90ZXh0ID0gZiJ7bGVzc29uWyd0YXNrX2Rlc2NyaXB0aW9uJ119IHtsZXNzb25bJ2Vycm9yX3BhdHRlcm4nXX0ge2xlc3Nvblsncm9vdF9jYXVzZSddfSB7bGVzc29uWydzb2x1dGlvbiddfSIKICAgICAgICAgICAgbGVzc29uX2tleXdvcmRzID0gc2V0KGxlc3Nvbl90ZXh0Lmxvd2VyKCkuc3BsaXQoKSkKICAgICAgICAgICAgb3ZlcmxhcCA9IGxlbihrZXl3b3JkcyAmIGxlc3Nvbl9rZXl3b3JkcykKICAgICAgICAgICAgaWYgb3ZlcmxhcCA+IDA6CiAgICAgICAgICAgICAgICBzY29yZWQuYXBwZW5kKChvdmVybGFwLCBsZXNzb24pKQogICAgICAgIHNjb3JlZC5zb3J0KGtleT1sYW1iZGEgeDogeFswXSwgcmV2ZXJzZT1UcnVlKQogICAgICAgIHJldHVybiBbaXRlbVsxXSBmb3IgaXRlbSBpbiBzY29yZWRbOjVdXQoKICAgIGRlZiByZWNvcmRfc2VsZl9tb2RpZmljYXRpb24oc2VsZiwgZmlsZV9wYXRoOiBzdHIsIGRlc2NyaXB0aW9uOiBzdHIsIHRvb2xfbmFtZTogT3B0aW9uYWxbc3RyXSA9IE5vbmUsIGFjdGlvbl9uYW1lOiBPcHRpb25hbFtzdHJdID0gTm9uZSk6CiAgICAgICAgIiIiUmVjb3JkIHRoYXQgdGhlIGFnZW50IG1vZGlmaWVkIGl0cyBvd24gY29kZSB0byBhZGQgYSBjYXBhYmlsaXR5LiIiIgogICAgICAgIGVudHJ5ID0gewogICAgICAgICAgICAidGltZXN0YW1wIjogZGF0ZXRpbWUubm93KHRpbWV6b25lLnV0YykuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICJmaWxlX3BhdGgiOiBmaWxlX3BhdGgsCiAgICAgICAgICAgICJkZXNjcmlwdGlvbiI6IGRlc2NyaXB0aW9uLAogICAgICAgICAgICAidG9vbF9uYW1lIjogdG9vbF9uYW1lLAogICAgICAgICAgICAiYWN0aW9uX25hbWUiOiBhY3Rpb25fbmFtZQogICAgICAgIH0KICAgICAgICBzZWxmLmNhcGFiaWxpdGllc1sibW9kaWZpZWRfZmlsZXMiXS5hcHBlbmQoZW50cnkpCiAgICAgICAgaWYgdG9vbF9uYW1lOgogICAgICAgICAgICBzZWxmLmNhcGFiaWxpdGllc1sic2VsZl9hZGRlZF90b29scyJdLmFwcGVuZChlbnRyeSkKICAgICAgICBpZiBhY3Rpb25fbmFtZToKICAgICAgICAgICAgc2VsZi5jYXBhYmlsaXRpZXNbInNlbGZfYWRkZWRfYWN0aW9ucyJdLmFwcGVuZChlbnRyeSkKICAgICAgICBzZWxmLl9zYXZlX2NhcGFiaWxpdGllcygpCiAgICAgICAgbG9nLmluZm8oInNlbGZfbW9kaWZpY2F0aW9uX3JlY29yZGVkIiwgZmlsZT1maWxlX3BhdGgsIGRlc2M9ZGVzY3JpcHRpb24pCgogICAgZGVmIGdldF9zdGF0cyhzZWxmKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJSZXR1cm4gbGVhcm5pbmcgc3RhdGlzdGljcy4iIiIKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAidG90YWxfbGVzc29ucyI6IGxlbihzZWxmLmxlc3NvbnMpLAogICAgICAgICAgICAidG90YWxfc2VsZl9tb2RpZmljYXRpb25zIjogbGVuKHNlbGYuY2FwYWJpbGl0aWVzWyJtb2RpZmllZF9maWxlcyJdKSwKICAgICAgICAgICAgInNlbGZfYWRkZWRfdG9vbHMiOiBzZWxmLmNhcGFiaWxpdGllc1sic2VsZl9hZGRlZF90b29scyJdLAogICAgICAgICAgICAic2VsZl9hZGRlZF9hY3Rpb25zIjogc2VsZi5jYXBhYmlsaXRpZXNbInNlbGZfYWRkZWRfYWN0aW9ucyJdLAogICAgICAgICAgICAibGVzc29uc19ieV90eXBlIjogewogICAgICAgICAgICAgICAgInN1Y2Nlc3NlcyI6IHN1bSgxIGZvciBsIGluIHNlbGYubGVzc29ucyBpZiBsWyJzdWNjZXNzIl0pLAogICAgICAgICAgICAgICAgImZhaWx1cmVzIjogc3VtKDEgZm9yIGwgaW4gc2VsZi5sZXNzb25zIGlmIG5vdCBsWyJzdWNjZXNzIl0pCiAgICAgICAgICAgIH0KICAgICAgICB9CgojIEdsb2JhbCBzaW5nbGV0b24KbGVhcm5pbmdfbG9vcCA9IExlYXJuaW5nTG9vcCgpCg==
+"""
+JARVIS OMEGA — Continuous Learning Loop
+Stores and retrieves lessons learned from every task, failure, and success.
+All agents consult this before acting and write to it after acting.
+"""
+
+import json
+import os
+from typing import Dict, Any, List, Optional
+from datetime import datetime, timezone
+from shared.logger import get_logger
+
+log = get_logger("learning_loop")
+
+LESSONS_FILE = os.path.join(os.path.dirname(__file__), "lessons_learned.json")
+CAPABILITIES_FILE = os.path.join(os.path.dirname(__file__), "capabilities_cache.json")
+
+class LearningLoop:
+    """
+    Persistent learning system. Stores every lesson, success pattern,
+    and error analysis. Agents query this before tasks and write to it after.
+    This is how JARVIS gets smarter over time without retraining.
+    """
+
+    def __init__(self):
+        self.lessons = self._load_lessons()
+        self.capabilities = self._load_capabilities()
+
+    def _load_lessons(self) -> List[Dict[str, Any]]:
+        if os.path.exists(LESSONS_FILE):
+            with open(LESSONS_FILE, "r") as f:
+                return json.load(f)
+        return []
+
+    def _load_capabilities(self) -> Dict[str, Any]:
+        if os.path.exists(CAPABILITIES_FILE):
+            with open(CAPABILITIES_FILE, "r") as f:
+                return json.load(f)
+        return {"self_added_tools": [], "self_added_actions": [], "modified_files": []}
+
+    def _save_lessons(self):
+        os.makedirs(os.path.dirname(LESSONS_FILE), exist_ok=True)
+        with open(LESSONS_FILE, "w") as f:
+            json.dump(self.lessons, f, indent=2)
+
+    def _save_capabilities(self):
+        os.makedirs(os.path.dirname(CAPABILITIES_FILE), exist_ok=True)
+        with open(CAPABILITIES_FILE, "w") as f:
+            json.dump(self.capabilities, f, indent=2)
+
+    def remember_lesson(self, task_description: str, error_pattern: str,
+                        root_cause: str, solution: str, file_path: Optional[str] = None,
+                        success: bool = False):
+        """Store a lesson learned from success or failure."""
+        lesson = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "task_description": task_description,
+            "error_pattern": error_pattern,
+            "root_cause": root_cause,
+            "solution": solution,
+            "file_path": file_path,
+            "success": success,
+            "applied_count": 0
+        }
+        self.lessons.append(lesson)
+        self._save_lessons()
+        log.info("lesson_recorded", error_pattern=error_pattern, solution_length=len(solution))
+
+    def query_lessons(self, task_description: str) -> List[Dict[str, Any]]:
+        """Find relevant past lessons for a given task description.
+        Matches by keyword overlap between task description and stored patterns."""
+        keywords = set(task_description.lower().split())
+        scored = []
+        for lesson in self.lessons:
+            lesson_text = f"{lesson['task_description']} {lesson['error_pattern']} {lesson['root_cause']} {lesson['solution']}"
+            lesson_keywords = set(lesson_text.lower().split())
+            overlap = len(keywords & lesson_keywords)
+            if overlap > 0:
+                scored.append((overlap, lesson))
+        scored.sort(key=lambda x: x[0], reverse=True)
+        return [item[1] for item in scored[:5]]
+
+    def record_self_modification(self, file_path: str, description: str, tool_name: Optional[str] = None, action_name: Optional[str] = None):
+        """Record that the agent modified its own code to add a capability."""
+        entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "file_path": file_path,
+            "description": description,
+            "tool_name": tool_name,
+            "action_name": action_name
+        }
+        self.capabilities["modified_files"].append(entry)
+        if tool_name:
+            self.capabilities["self_added_tools"].append(entry)
+        if action_name:
+            self.capabilities["self_added_actions"].append(entry)
+        self._save_capabilities()
+        log.info("self_modification_recorded", file=file_path, desc=description)
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Return learning statistics."""
+        return {
+            "total_lessons": len(self.lessons),
+            "total_self_modifications": len(self.capabilities["modified_files"]),
+            "self_added_tools": self.capabilities["self_added_tools"],
+            "self_added_actions": self.capabilities["self_added_actions"],
+            "lessons_by_type": {
+                "successes": sum(1 for l in self.lessons if l["success"]),
+                "failures": sum(1 for l in self.lessons if not l["success"])
+            }
+        }
+
+# Global singleton
+learning_loop = LearningLoop()

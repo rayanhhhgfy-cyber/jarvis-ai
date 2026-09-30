@@ -1,1 +1,14 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgU2hhcmVkIFBhY2thZ2UKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoiIiIKU2hhcmVkIG1vZGVscywgY29uc3RhbnRzLCBzZWN1cml0eSwgYW5kIHV0aWxpdGllcyB1c2VkIGFjcm9zcwp0aGUgYmFja2VuZCBzZXJ2ZXIsIGxvY2FsIGNsaWVudCBkYWVtb24sIGFuZCBhZ2VudCBzeXN0ZW0uCiIiIgoKX192ZXJzaW9uX18gPSAiMS4wLjAiCl9fY29kZW5hbWVfXyA9ICJPTUVHQSIKCmZyb20gc2hhcmVkLmxlYXJuaW5nX2xvb3AgaW1wb3J0IExlYXJuaW5nTG9vcCwgbGVhcm5pbmdfbG9vcAoKX19hbGxfXyA9IFsiTGVhcm5pbmdMb29wIiwgImxlYXJuaW5nX2xvb3AiXQo=
+# ====================================================================
+# JARVIS OMEGA — Shared Package
+# ====================================================================
+"""
+Shared models, constants, security, and utilities used across
+the backend server, local client daemon, and agent system.
+"""
+
+__version__ = "1.0.0"
+__codename__ = "OMEGA"
+
+from shared.learning_loop import LearningLoop, learning_loop
+
+__all__ = ["LearningLoop", "learning_loop"]
