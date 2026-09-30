@@ -1,1 +1,105 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgQ2xpcCBNYWNoaW5lIFNlcnZpY2UgVW5pdCBUZXN0cwojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpVbml0IHRlc3RzIGZvciBDbGlwTWFjaGluZVNlcnZpY2UsIG1vY2tpbmcgdHJhbnNjcmlwdGlvbiwgaGlnaGxpZ2h0IGRldGVjdGlvbiwKRkZtcGVnIGN1dHRpbmcgb3BlcmF0aW9ucywgYW5kIHZpcmFsaXR5IHNjb3JpbmcuCiIiIgoKaW1wb3J0IGpzb24KaW1wb3J0IHB5dGVzdAppbXBvcnQgc2h1dGlsCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHVuaXR0ZXN0Lm1vY2sgaW1wb3J0IEFzeW5jTW9jaywgcGF0Y2gsIE1hZ2ljTW9jawpmcm9tIGJhY2tlbmQuc2VydmljZXMuY2xpcF9tYWNoaW5lX3NlcnZpY2UgaW1wb3J0IENsaXBNYWNoaW5lU2VydmljZSwgQ0xJUF9KT0JTCgpURVNUX0NMSVBTX0RJUiA9IFBhdGgoIi4vd29ya3NwYWNlL3Rlc3RfY2xpcHNfdGVtcCIpCgpAcHl0ZXN0LmZpeHR1cmUKZGVmIGFueWlvX2JhY2tlbmQoKToKICAgIHJldHVybiAiYXN5bmNpbyIKCkBweXRlc3QuZml4dHVyZQpkZWYgY2xpcF9zdmMoKToKICAgIGlmIFRFU1RfQ0xJUFNfRElSLmV4aXN0cygpOgogICAgICAgIHNodXRpbC5ybXRyZWUoVEVTVF9DTElQU19ESVIpCiAgICBURVNUX0NMSVBTX0RJUi5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAKICAgIHdpdGggcGF0Y2goImJhY2tlbmQuc2VydmljZXMuY2xpcF9tYWNoaW5lX3NlcnZpY2Uuc2V0dGluZ3MiKSBhcyBtb2NrX3NldHRpbmdzOgogICAgICAgIG1vY2tfc2V0dGluZ3Mud29ya3NwYWNlX2RpciA9IHN0cihURVNUX0NMSVBTX0RJUikKICAgICAgICAKICAgICAgICBzZXJ2aWNlID0gQ2xpcE1hY2hpbmVTZXJ2aWNlKCkKICAgICAgICB5aWVsZCBzZXJ2aWNlCiAgICAgICAgCiAgICBpZiBURVNUX0NMSVBTX0RJUi5leGlzdHMoKToKICAgICAgICBzaHV0aWwucm10cmVlKFRFU1RfQ0xJUFNfRElSKQoKQHB5dGVzdC5tYXJrLmFueWlvCkBwYXRjaCgiYmFja2VuZC5zZXJ2aWNlcy5jbGlwX21hY2hpbmVfc2VydmljZS50cmFuc2NyaXB0aW9uX3NlcnZpY2UiKQpAcGF0Y2goImJhY2tlbmQuc2VydmljZXMuY2xpcF9tYWNoaW5lX3NlcnZpY2UubGxtX3NlcnZpY2UiKQphc3luYyBkZWYgdGVzdF9jbGlwX21hY2hpbmVfcGlwZWxpbmUobW9ja19sbG0sIG1vY2tfdHJhbnNjcmliZSwgY2xpcF9zdmMpOgogICAgIiIiVGVzdCBmdWxsIGNsaXAgbWFjaGluZSBwaXBlbGluZSBmcm9tIHVwbG9hZCB0byBoaWdobGlnaHQgZXh0cmFjdGlvbiBhbmQgc2NvcmluZy4iIiIKICAgICMgMS4gVXBsb2FkIG1vY2sgdmlkZW8KICAgIG9yaWdpbmFsX3ZpZGVvX2RhdGEgPSBiImZha2UgdmlkZW8gYnl0ZXMiCiAgICBmaWxlbmFtZSA9ICJ0ZXN0X2dhbWVwbGF5Lm1wNCIKICAgIGpvYiA9IGF3YWl0IGNsaXBfc3ZjLnVwbG9hZF92aWRlbyhmaWxlbmFtZSwgb3JpZ2luYWxfdmlkZW9fZGF0YSkKICAgIAogICAgYXNzZXJ0IGpvYi5zdGF0dXMgPT0gInVwbG9hZGVkIgogICAgYXNzZXJ0IGpvYi5qb2JfaWQuc3RhcnRzd2l0aCgiY2xpcF8iKQogICAgYXNzZXJ0IFBhdGgoam9iLnZpZGVvX3BhdGgpLmV4aXN0cygpCiAgICAKICAgICMgMi4gTW9jayBXaGlzcGVyIHRyYW5zY3JpcHRpb24gcmVzcG9uc2UKICAgIG1vY2tfdHJhbnNjcmliZS50cmFuc2NyaWJlX2ZpbGUgPSBBc3luY01vY2socmV0dXJuX3ZhbHVlPSJIZWxsbyB3b3JsZCB0aGlzIGlzIHNvbWUgYW1hemluZyBnYW1lcGxheS4gTG9vayBhdCB0aGlzIHRyaXBsZSBraWxsISIpCiAgICAKICAgICMgTW9jayB2aWRlbyBkdXJhdGlvbiBjaGVjawogICAgY2xpcF9zdmMuX2dldF92aWRlb19kdXJhdGlvbiA9IEFzeW5jTW9jayhyZXR1cm5fdmFsdWU9NjAuMCkKCiAgICAKICAgICMgTW9jayBMTE0gaGlnaGxpZ2h0IGRldGVjdGlvbiBKU09OCiAgICBtb2NrX2xsbS5nZXRfcmVzcG9uc2UgPSBBc3luY01vY2soc2lkZV9lZmZlY3Q9WwogICAgICAgICMgQ2FsbCAxOiBkZXRlY3RfaGlnaGxpZ2h0cwogICAgICAgIGpzb24uZHVtcHMoWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAic3RhcnQiOiA1LjAsCiAgICAgICAgICAgICAgICAiZW5kIjogMTUuMCwKICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJBbWF6aW5nIFRyaXBsZSBLaWxsIiwKICAgICAgICAgICAgICAgICJyZWFzb24iOiAiSGlnaCBhY3Rpb24gbW9tZW50IHdpdGggZXhjaXRlbWVudCIsCiAgICAgICAgICAgICAgICAic2NvcmUiOiA5NS4wCiAgICAgICAgICAgIH0KICAgICAgICBdKSwKICAgICAgICAjIENhbGwgMjogc2NvcmVfdmlyYWxpdHkgKG92ZXJhbGwgc2NvcmluZykKICAgICAgICBqc29uLmR1bXBzKHsKICAgICAgICAgICAgImhvb2tfc3RyZW5ndGgiOiA5MCwKICAgICAgICAgICAgInBhY2luZyI6IDg1LAogICAgICAgICAgICAiZW1vdGlvbiI6IDk1LAogICAgICAgICAgICAic2hhcmVhYmlsaXR5IjogODAsCiAgICAgICAgICAgICJvdmVyYWxsIjogODgsCiAgICAgICAgICAgICJyZWFzb25pbmciOiAiSGlnaCBlbW90aW9uYWwgcmVzcG9uc2UiCiAgICAgICAgfSkKICAgIF0pCiAgICAKICAgICMgTW9jayBGRm1wZWcgLyBGRnByb2JlIHN1YnByb2Nlc3MgY2FsbHMgdG8gYXZvaWQgYWN0dWFsIHN5c3RlbSB2aWRlbyBjdXR0aW5nCiAgICB3aXRoIHBhdGNoKCJhc3luY2lvLmNyZWF0ZV9zdWJwcm9jZXNzX2V4ZWMiKSBhcyBtb2NrX2V4ZWM6CiAgICAgICAgbW9ja19wcm9jID0gQXN5bmNNb2NrKCkKICAgICAgICBtb2NrX3Byb2MuY29tbXVuaWNhdGUgPSBBc3luY01vY2socmV0dXJuX3ZhbHVlPShiIiIsIGIiIikpCiAgICAgICAgbW9ja19wcm9jLnJldHVybmNvZGUgPSAwCiAgICAgICAgbW9ja19leGVjLnJldHVybl92YWx1ZSA9IG1vY2tfcHJvYwogICAgICAgIAogICAgICAgICMgT3ZlcnJpZGUgZmZtcGVnIHBhdGggdG8gdGVzdCBpdAogICAgICAgIGNsaXBfc3ZjLl9mZm1wZWcgPSAiZmZtcGVnIgogICAgICAgIGNsaXBfc3ZjLl9mZnByb2JlID0gImZmcHJvYmUiCiAgICAgICAgCiAgICAgICAgIyBSdW4gcGlwZWxpbmUKICAgICAgICByZXNfam9iID0gYXdhaXQgY2xpcF9zdmMucHJvY2Vzc192aWRlbyhqb2Iuam9iX2lkLCBwbGF0Zm9ybXM9WyJ0aWt0b2siXSkKICAgICAgICAKICAgICAgICBhc3NlcnQgcmVzX2pvYi5zdGF0dXMgPT0gImNvbXBsZXRlIgogICAgICAgIGFzc2VydCBsZW4ocmVzX2pvYi5oaWdobGlnaHRzKSA9PSAxCiAgICAgICAgYXNzZXJ0IHJlc19qb2IuaGlnaGxpZ2h0c1swXS50aXRsZSA9PSAiQW1hemluZyBUcmlwbGUgS2lsbCIKICAgICAgICAKICAgICAgICAjIEFzc2VydCBjbGlwcyBtZXRhZGF0YSB3YXMgdXBkYXRlZAogICAgICAgIGFzc2VydCBsZW4ocmVzX2pvYi5jbGlwcykgPT0gMQogICAgICAgIGNsaXAgPSByZXNfam9iLmNsaXBzWzBdCiAgICAgICAgYXNzZXJ0IGNsaXAudGl0bGUgPT0gIkFtYXppbmcgVHJpcGxlIEtpbGwiCiAgICAgICAgYXNzZXJ0IGNsaXAucGxhdGZvcm0gPT0gInRpa3RvayIKICAgICAgICBhc3NlcnQgY2xpcC52aXJhbF9zY29yZSBpcyBub3QgTm9uZQogICAgICAgIGFzc2VydCBjbGlwLnZpcmFsX3Njb3JlLm92ZXJhbGwgPT0gODgK
+# ====================================================================
+# JARVIS OMEGA — Clip Machine Service Unit Tests
+# ====================================================================
+"""
+Unit tests for ClipMachineService, mocking transcription, highlight detection,
+FFmpeg cutting operations, and virality scoring.
+"""
+
+import json
+import pytest
+import shutil
+from pathlib import Path
+from unittest.mock import AsyncMock, patch, MagicMock
+from backend.services.clip_machine_service import ClipMachineService, CLIP_JOBS
+
+TEST_CLIPS_DIR = Path("./workspace/test_clips_temp")
+
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
+
+@pytest.fixture
+def clip_svc():
+    if TEST_CLIPS_DIR.exists():
+        shutil.rmtree(TEST_CLIPS_DIR)
+    TEST_CLIPS_DIR.mkdir(parents=True, exist_ok=True)
+    
+    with patch("backend.services.clip_machine_service.settings") as mock_settings:
+        mock_settings.workspace_dir = str(TEST_CLIPS_DIR)
+        
+        service = ClipMachineService()
+        yield service
+        
+    if TEST_CLIPS_DIR.exists():
+        shutil.rmtree(TEST_CLIPS_DIR)
+
+@pytest.mark.anyio
+@patch("backend.services.clip_machine_service.transcription_service")
+@patch("backend.services.clip_machine_service.llm_service")
+async def test_clip_machine_pipeline(mock_llm, mock_transcribe, clip_svc):
+    """Test full clip machine pipeline from upload to highlight extraction and scoring."""
+    # 1. Upload mock video
+    original_video_data = b"fake video bytes"
+    filename = "test_gameplay.mp4"
+    job = await clip_svc.upload_video(filename, original_video_data)
+    
+    assert job.status == "uploaded"
+    assert job.job_id.startswith("clip_")
+    assert Path(job.video_path).exists()
+    
+    # 2. Mock Whisper transcription response
+    mock_transcribe.transcribe_file = AsyncMock(return_value="Hello world this is some amazing gameplay. Look at this triple kill!")
+    
+    # Mock video duration check
+    clip_svc._get_video_duration = AsyncMock(return_value=60.0)
+
+    
+    # Mock LLM highlight detection JSON
+    mock_llm.get_response = AsyncMock(side_effect=[
+        # Call 1: detect_highlights
+        json.dumps([
+            {
+                "start": 5.0,
+                "end": 15.0,
+                "title": "Amazing Triple Kill",
+                "reason": "High action moment with excitement",
+                "score": 95.0
+            }
+        ]),
+        # Call 2: score_virality (overall scoring)
+        json.dumps({
+            "hook_strength": 90,
+            "pacing": 85,
+            "emotion": 95,
+            "shareability": 80,
+            "overall": 88,
+            "reasoning": "High emotional response"
+        })
+    ])
+    
+    # Mock FFmpeg / FFprobe subprocess calls to avoid actual system video cutting
+    with patch("asyncio.create_subprocess_exec") as mock_exec:
+        mock_proc = AsyncMock()
+        mock_proc.communicate = AsyncMock(return_value=(b"", b""))
+        mock_proc.returncode = 0
+        mock_exec.return_value = mock_proc
+        
+        # Override ffmpeg path to test it
+        clip_svc._ffmpeg = "ffmpeg"
+        clip_svc._ffprobe = "ffprobe"
+        
+        # Run pipeline
+        res_job = await clip_svc.process_video(job.job_id, platforms=["tiktok"])
+        
+        assert res_job.status == "complete"
+        assert len(res_job.highlights) == 1
+        assert res_job.highlights[0].title == "Amazing Triple Kill"
+        
+        # Assert clips metadata was updated
+        assert len(res_job.clips) == 1
+        clip = res_job.clips[0]
+        assert clip.title == "Amazing Triple Kill"
+        assert clip.platform == "tiktok"
+        assert clip.viral_score is not None
+        assert clip.viral_score.overall == 88

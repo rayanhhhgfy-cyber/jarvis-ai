@@ -1,1 +1,85 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgU2FhUyBCb2lsZXJwbGF0ZSBHZW5lcmF0b3IgVW5pdCBUZXN0cwojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpVbml0IHRlc3RzIGZvciBCb2lsZXJwbGF0ZVNlcnZpY2UsIHZhbGlkYXRpbmcgcHJvamVjdCBza2VsZXRvbnMgZ2VuZXJhdGlvbiwKZmlsZSB3cml0aW5nL21vZGlmeWluZywgYW5kIGRldiBzZXJ2ZXIgc2ltdWxhdGlvbi4KIiIiCgppbXBvcnQganNvbgppbXBvcnQgcHl0ZXN0CmltcG9ydCBzaHV0aWwKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdW5pdHRlc3QubW9jayBpbXBvcnQgQXN5bmNNb2NrLCBwYXRjaApmcm9tIGJhY2tlbmQuc2VydmljZXMuYm9pbGVycGxhdGVfc2VydmljZSBpbXBvcnQgQm9pbGVycGxhdGVTZXJ2aWNlCgpURVNUX1dPUktTUEFDRV9ESVIgPSBQYXRoKCIuL3dvcmtzcGFjZS90ZXN0X2J1aWxkc190ZW1wIikKCkBweXRlc3QuZml4dHVyZQpkZWYgYW55aW9fYmFja2VuZCgpOgogICAgcmV0dXJuICJhc3luY2lvIgoKQHB5dGVzdC5maXh0dXJlCmRlZiBib2lsZXJwbGF0ZV9zdmMoKToKICAgIGlmIFRFU1RfV09SS1NQQUNFX0RJUi5leGlzdHMoKToKICAgICAgICBzaHV0aWwucm10cmVlKFRFU1RfV09SS1NQQUNFX0RJUikKICAgIFRFU1RfV09SS1NQQUNFX0RJUi5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAKICAgIHdpdGggcGF0Y2goImJhY2tlbmQuc2VydmljZXMuYm9pbGVycGxhdGVfc2VydmljZS5zZXR0aW5ncyIpIGFzIG1vY2tfc2V0dGluZ3M6CiAgICAgICAgbW9ja19zZXR0aW5ncy53b3Jrc3BhY2VfZGlyID0gc3RyKFRFU1RfV09SS1NQQUNFX0RJUikKICAgICAgICAKICAgICAgICBzZXJ2aWNlID0gQm9pbGVycGxhdGVTZXJ2aWNlKCkKICAgICAgICB5aWVsZCBzZXJ2aWNlCiAgICAgICAgCiAgICBpZiBURVNUX1dPUktTUEFDRV9ESVIuZXhpc3RzKCk6CiAgICAgICAgc2h1dGlsLnJtdHJlZShURVNUX1dPUktTUEFDRV9ESVIpCgpAcHl0ZXN0Lm1hcmsuYW55aW8KQHBhdGNoKCJiYWNrZW5kLnNlcnZpY2VzLmJvaWxlcnBsYXRlX3NlcnZpY2UubGxtX3NlcnZpY2UiKQphc3luYyBkZWYgdGVzdF9nZW5lcmF0ZV9wcm9qZWN0X2xpZmVjeWNsZShtb2NrX2xsbSwgYm9pbGVycGxhdGVfc3ZjKToKICAgICIiIlRlc3QgZnVsbCBib2lsZXJwbGF0ZSBnZW5lcmF0aW9uLCBsaXN0aW5nIGZpbGVzLCBhbmQgZWRpdGluZyBmaWxlcy4iIiIKICAgICMgMS4gTW9jayBMTE0gb3V0cHV0IEpTT04KICAgIG1vY2tfbGxtLmdldF9yZXNwb25zZSA9IEFzeW5jTW9jayhyZXR1cm5fdmFsdWU9anNvbi5kdW1wcyh7CiAgICAgICAgImZyYW1ld29yayI6ICJuZXh0anMiLAogICAgICAgICJzdHlsaW5nIjogInRhaWx3aW5kIiwKICAgICAgICAiZGF0YWJhc2UiOiAic3VwYWJhc2UiLAogICAgICAgICJhdXRoIjogIm5vbmUiLAogICAgICAgICJkZXNjcmlwdGlvbiI6ICJUZXN0IEUtQ29tbWVyY2UgU3RvcmUiLAogICAgICAgICJmaWxlcyI6IHsKICAgICAgICAgICAgInBhY2thZ2UuanNvbiI6ICd7Im5hbWUiOiAidGVzdC1hcHAifScsCiAgICAgICAgICAgICJhcHAvcGFnZS50c3giOiAiZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUGFnZSgpIHsgcmV0dXJuIDxkaXY+U3RvcmU8L2Rpdj4gfSIKICAgICAgICB9CiAgICB9KSkKICAgIAogICAgIyBHZW5lcmF0ZQogICAgbWV0YSA9IGF3YWl0IGJvaWxlcnBsYXRlX3N2Yy5nZW5lcmF0ZV9wcm9qZWN0KHByb21wdD0iQnVpbGQgYSBzaW1wbGUgZS1jb21tZXJjZSBzdG9yZSIpCiAgICBhc3NlcnQgbWV0YVsiZnJhbWV3b3JrIl0gPT0gIm5leHRqcyIKICAgIGFzc2VydCBtZXRhWyJkYXRhYmFzZSJdID09ICJzdXBhYmFzZSIKICAgIGFzc2VydCAicGFja2FnZS5qc29uIiBpbiBtZXRhWyJmaWxlcyJdCiAgICAKICAgIHByb2plY3RfaWQgPSBtZXRhWyJwcm9qZWN0X2lkIl0KICAgIAogICAgIyAyLiBHZXQgcHJvamVjdCBmaWxlcyBsaXN0IGFuZCBjb250ZW50CiAgICBjb250ZW50cyA9IGF3YWl0IGJvaWxlcnBsYXRlX3N2Yy5nZXRfcHJvamVjdF9maWxlcyhwcm9qZWN0X2lkKQogICAgYXNzZXJ0IGxlbihjb250ZW50c1siZmlsZV90cmVlIl0pID09IDIKICAgIGFzc2VydCAicGFja2FnZS5qc29uIiBpbiBjb250ZW50c1siZmlsZV90cmVlIl0KICAgIGFzc2VydCAiYXBwL3BhZ2UudHN4IiBpbiBjb250ZW50c1siZmlsZV90cmVlIl0KICAgIGFzc2VydCBjb250ZW50c1siZmlsZXMiXVsicGFja2FnZS5qc29uIl0gPT0gJ3sibmFtZSI6ICJ0ZXN0LWFwcCJ9JwogICAgCiAgICAjIDMuIE1vZGlmeSBmaWxlIGNvbnRlbnQgdmlhIE1vbmFjbyBtb2NrIHNhdmUKICAgIG5ld19jb250ZW50ID0gImV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIFBhZ2UoKSB7IHJldHVybiA8ZGl2PlVwZGF0ZWQgU3RvcmU8L2Rpdj4gfSIKICAgIHNhdmVfc3VjY2VzcyA9IGF3YWl0IGJvaWxlcnBsYXRlX3N2Yy5zYXZlX3Byb2plY3RfZmlsZShwcm9qZWN0X2lkLCAiYXBwL3BhZ2UudHN4IiwgbmV3X2NvbnRlbnQpCiAgICBhc3NlcnQgc2F2ZV9zdWNjZXNzIGlzIFRydWUKICAgIAogICAgIyBDaGVjayBhZ2FpbgogICAgY29udGVudHNfdXBkYXRlZCA9IGF3YWl0IGJvaWxlcnBsYXRlX3N2Yy5nZXRfcHJvamVjdF9maWxlcyhwcm9qZWN0X2lkKQogICAgYXNzZXJ0IGNvbnRlbnRzX3VwZGF0ZWRbImZpbGVzIl1bImFwcC9wYWdlLnRzeCJdID09IG5ld19jb250ZW50CgpAcHl0ZXN0Lm1hcmsuYW55aW8KQHBhdGNoKCJiYWNrZW5kLnNlcnZpY2VzLmJvaWxlcnBsYXRlX3NlcnZpY2UubGxtX3NlcnZpY2UiKQphc3luYyBkZWYgdGVzdF9nZW5lcmF0ZV9wcm9qZWN0X2ludmFsaWRfanNvbl9yYWlzZXMobW9ja19sbG0sIGJvaWxlcnBsYXRlX3N2Yyk6CiAgICAiIiJJbnZhbGlkIExMTSBKU09OIG11c3QgcmFpc2UgbG91ZGx5IOKAlCBubyBtb2NrLXNrZWxldG9uIGZhbGxiYWNrLiIiIgogICAgbW9ja19sbG0uZ2V0X3Jlc3BvbnNlID0gQXN5bmNNb2NrKHJldHVybl92YWx1ZT0iTm9uLUpTT04gcmF3IHN0cmluZyBlcnJvciByZXNwb25zZSIpCgogICAgd2l0aCBweXRlc3QucmFpc2VzKFJ1bnRpbWVFcnJvciwgbWF0Y2g9InBhcnNlYWJsZSBwcm9qZWN0IEpTT04iKToKICAgICAgICBhd2FpdCBib2lsZXJwbGF0ZV9zdmMuZ2VuZXJhdGVfcHJvamVjdChwcm9tcHQ9IkJ1aWxkIG5leHRqcyBhcHAiKQo=
+# ====================================================================
+# JARVIS OMEGA — SaaS Boilerplate Generator Unit Tests
+# ====================================================================
+"""
+Unit tests for BoilerplateService, validating project skeletons generation,
+file writing/modifying, and dev server simulation.
+"""
+
+import json
+import pytest
+import shutil
+from pathlib import Path
+from unittest.mock import AsyncMock, patch
+from backend.services.boilerplate_service import BoilerplateService
+
+TEST_WORKSPACE_DIR = Path("./workspace/test_builds_temp")
+
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
+
+@pytest.fixture
+def boilerplate_svc():
+    if TEST_WORKSPACE_DIR.exists():
+        shutil.rmtree(TEST_WORKSPACE_DIR)
+    TEST_WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
+    
+    with patch("backend.services.boilerplate_service.settings") as mock_settings:
+        mock_settings.workspace_dir = str(TEST_WORKSPACE_DIR)
+        
+        service = BoilerplateService()
+        yield service
+        
+    if TEST_WORKSPACE_DIR.exists():
+        shutil.rmtree(TEST_WORKSPACE_DIR)
+
+@pytest.mark.anyio
+@patch("backend.services.boilerplate_service.llm_service")
+async def test_generate_project_lifecycle(mock_llm, boilerplate_svc):
+    """Test full boilerplate generation, listing files, and editing files."""
+    # 1. Mock LLM output JSON
+    mock_llm.get_response = AsyncMock(return_value=json.dumps({
+        "framework": "nextjs",
+        "styling": "tailwind",
+        "database": "supabase",
+        "auth": "none",
+        "description": "Test E-Commerce Store",
+        "files": {
+            "package.json": '{"name": "test-app"}',
+            "app/page.tsx": "export default function Page() { return <div>Store</div> }"
+        }
+    }))
+    
+    # Generate
+    meta = await boilerplate_svc.generate_project(prompt="Build a simple e-commerce store")
+    assert meta["framework"] == "nextjs"
+    assert meta["database"] == "supabase"
+    assert "package.json" in meta["files"]
+    
+    project_id = meta["project_id"]
+    
+    # 2. Get project files list and content
+    contents = await boilerplate_svc.get_project_files(project_id)
+    assert len(contents["file_tree"]) == 2
+    assert "package.json" in contents["file_tree"]
+    assert "app/page.tsx" in contents["file_tree"]
+    assert contents["files"]["package.json"] == '{"name": "test-app"}'
+    
+    # 3. Modify file content via Monaco mock save
+    new_content = "export default function Page() { return <div>Updated Store</div> }"
+    save_success = await boilerplate_svc.save_project_file(project_id, "app/page.tsx", new_content)
+    assert save_success is True
+    
+    # Check again
+    contents_updated = await boilerplate_svc.get_project_files(project_id)
+    assert contents_updated["files"]["app/page.tsx"] == new_content
+
+@pytest.mark.anyio
+@patch("backend.services.boilerplate_service.llm_service")
+async def test_generate_project_invalid_json_raises(mock_llm, boilerplate_svc):
+    """Invalid LLM JSON must raise loudly — no mock-skeleton fallback."""
+    mock_llm.get_response = AsyncMock(return_value="Non-JSON raw string error response")
+
+    with pytest.raises(RuntimeError, match="parseable project JSON"):
+        await boilerplate_svc.generate_project(prompt="Build nextjs app")

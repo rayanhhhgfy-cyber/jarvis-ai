@@ -1,1 +1,427 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgTWVtb3J5IEVuZ2luZSAoQ2hyb21hREIgd2l0aCBTUUxpdGUgRmFsbGJhY2spCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiCkNocm9tYURCIGludGVncmF0aW9uOiAxMCBkZWRpY2F0ZWQgY29sbGVjdGlvbnMsIHNlbWFudGljIHNpbWlsYXJpdHkKc2VhcmNoLCBtZW1vcnkgc3RvcmFnZS9yZXRyaWV2YWwsIGFuZCBTSEEtMjU2IGhhc2gtYmFzZWQgZGVkdXAuCkdyYWNlZnVsbHkgZmFsbHMgYmFjayB0byBhIGxvY2FsIFNRTGl0ZSBkYXRhYmFzZSBpZiBjaHJvbWFkYiBpcyBub3QgaW5zdGFsbGVkLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBoYXNobGliCmltcG9ydCBqc29uCmltcG9ydCBzcWxpdGUzCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBMaXN0LCBPcHRpb25hbAoKdHJ5OgogICAgaW1wb3J0IGNocm9tYWRiCiAgICBmcm9tIGNocm9tYWRiLmNvbmZpZyBpbXBvcnQgU2V0dGluZ3MgYXMgQ2hyb21hU2V0dGluZ3MKICAgIENIUk9NQV9BVkFJTEFCTEUgPSBUcnVlCmV4Y2VwdCBJbXBvcnRFcnJvcjoKICAgIENIUk9NQV9BVkFJTEFCTEUgPSBGYWxzZQoKZnJvbSBzaGFyZWQuY29uc3RhbnRzIGltcG9ydCBNZW1vcnlDYXRlZ29yeQpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKZnJvbSBzaGFyZWQubW9kZWxzIGltcG9ydCBNZW1vcnlDb250ZXh0LCBNZW1vcnlFbnRyeSwgTWVtb3J5UXVlcnkKCmxvZyA9IGdldF9sb2dnZXIoIm1lbW9yeV9lbmdpbmUiKQoKIyBDb2xsZWN0aW9uIG5hbWVzIG1hdGNoaW5nIHRoZSBzcGVjCkNPTExFQ1RJT05TID0gW2NhdC52YWx1ZSBmb3IgY2F0IGluIE1lbW9yeUNhdGVnb3J5XQoKCmNsYXNzIE1lbW9yeUVuZ2luZToKICAgICIiIgogICAgUGVyc2lzdGVudCBtZW1vcnkgYXJjaGl0ZWN0dXJlIHVzaW5nIENocm9tYURCLCB3aXRoIGEgemVyby1kZXAgU1FMaXRlIGZhbGxiYWNrLgogICAgTWFuYWdlcyAxMCBkZWRpY2F0ZWQgY29sbGVjdGlvbnMgd2l0aCBzZW1hbnRpYyBzZWFyY2guCiAgICAiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZiwgcGVyc2lzdF9kaXI6IHN0ciA9ICIuL3N0b3JhZ2UvY2hyb21hZGIiKSAtPiBOb25lOgogICAgICAgIHNlbGYuX3BlcnNpc3RfZGlyID0gUGF0aChwZXJzaXN0X2RpcikKICAgICAgICBzZWxmLl9wZXJzaXN0X2Rpci5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgc2VsZi5fY2xpZW50OiBPcHRpb25hbFtBbnldID0gTm9uZQogICAgICAgIHNlbGYuX2NvbGxlY3Rpb25zOiBEaWN0W3N0ciwgQW55XSA9IHt9CiAgICAgICAgc2VsZi5faGFzaF9jYWNoZTogRGljdFtzdHIsIHN0cl0gPSB7fSAgIyBTSEEtMjU2IGRlZHVwIGNhY2hlCiAgICAgICAgc2VsZi5fc3FsaXRlX2Nvbm46IE9wdGlvbmFsW3NxbGl0ZTMuQ29ubmVjdGlvbl0gPSBOb25lCgogICAgYXN5bmMgZGVmIGluaXRpYWxpemUoc2VsZikgLT4gTm9uZToKICAgICAgICAiIiJJbml0aWFsaXplIENocm9tYURCIGNsaWVudCBvciBTUUxpdGUgZmFsbGJhY2sgYW5kIHByZXBhcmUgY29sbGVjdGlvbnMuIiIiCiAgICAgICAgbG9nLmluZm8oIm1lbW9yeV9lbmdpbmVfaW5pdCIsIHBlcnNpc3RfZGlyPXN0cihzZWxmLl9wZXJzaXN0X2RpciksIGNocm9tYV9hdmFpbGFibGU9Q0hST01BX0FWQUlMQUJMRSkKCiAgICAgICAgaWYgQ0hST01BX0FWQUlMQUJMRToKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgc2VsZi5fY2xpZW50ID0gY2hyb21hZGIuUGVyc2lzdGVudENsaWVudCgKICAgICAgICAgICAgICAgICAgICBwYXRoPXN0cihzZWxmLl9wZXJzaXN0X2RpciksCiAgICAgICAgICAgICAgICAgICAgc2V0dGluZ3M9Q2hyb21hU2V0dGluZ3MoCiAgICAgICAgICAgICAgICAgICAgICAgIGFub255bWl6ZWRfdGVsZW1ldHJ5PUZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICBhbGxvd19yZXNldD1UcnVlLAogICAgICAgICAgICAgICAgICAgICksCiAgICAgICAgICAgICAgICApCgogICAgICAgICAgICAgICAgZm9yIGNvbGxlY3Rpb25fbmFtZSBpbiBDT0xMRUNUSU9OUzoKICAgICAgICAgICAgICAgICAgICBzZWxmLl9jb2xsZWN0aW9uc1tjb2xsZWN0aW9uX25hbWVdID0gc2VsZi5fY2xpZW50LmdldF9vcl9jcmVhdGVfY29sbGVjdGlvbigKICAgICAgICAgICAgICAgICAgICAgICAgbmFtZT1jb2xsZWN0aW9uX25hbWUsCiAgICAgICAgICAgICAgICAgICAgICAgIG1ldGFkYXRhPXsiaG5zdzpzcGFjZSI6ICJjb3NpbmUifSwKICAgICAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICAgICAgY291bnQgPSBzZWxmLl9jb2xsZWN0aW9uc1tjb2xsZWN0aW9uX25hbWVdLmNvdW50KCkKICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygiY29sbGVjdGlvbl9yZWFkeSIsIG5hbWU9Y29sbGVjdGlvbl9uYW1lLCBjb3VudD1jb3VudCkKCiAgICAgICAgICAgICAgICBsb2cuaW5mbygibWVtb3J5X2VuZ2luZV9yZWFkeSIsIGNvbGxlY3Rpb25zPWxlbihzZWxmLl9jb2xsZWN0aW9ucykpCiAgICAgICAgICAgICAgICByZXR1cm4KICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgbG9nLndhcm5pbmcoImNocm9tYWRiX2luaXRfZmFpbGVkX2ZhbGxpbmdfYmFja190b19zcWxpdGUiLCBlcnJvcj1zdHIoZSkpCgogICAgICAgICMgU1FMaXRlIEZhbGxiYWNrIEluaXRpYWxpemF0aW9uCiAgICAgICAgZGJfcGF0aCA9IHNlbGYuX3BlcnNpc3RfZGlyIC8gIm1lbW9yeV9mYWxsYmFjay5kYiIKICAgICAgICBzZWxmLl9zcWxpdGVfY29ubiA9IHNxbGl0ZTMuY29ubmVjdChzdHIoZGJfcGF0aCksIGNoZWNrX3NhbWVfdGhyZWFkPUZhbHNlKQogICAgICAgIHNlbGYuX3NxbGl0ZV9jb25uLnJvd19mYWN0b3J5ID0gc3FsaXRlMy5Sb3cKICAgICAgICBjdXJzb3IgPSBzZWxmLl9zcWxpdGVfY29ubi5jdXJzb3IoKQogICAgICAgIGN1cnNvci5leGVjdXRlKCIiIgogICAgICAgICAgICBDUkVBVEUgVEFCTEUgSUYgTk9UIEVYSVNUUyBtZW1vcmllcyAoCiAgICAgICAgICAgICAgICBtZW1vcnlfaWQgVEVYVCBQUklNQVJZIEtFWSwKICAgICAgICAgICAgICAgIGNhdGVnb3J5IFRFWFQsCiAgICAgICAgICAgICAgICBjb250ZW50IFRFWFQsCiAgICAgICAgICAgICAgICBzb3VyY2UgVEVYVCwKICAgICAgICAgICAgICAgIHRhZ3MgVEVYVCwKICAgICAgICAgICAgICAgIHBpbm5lZCBJTlRFR0VSLAogICAgICAgICAgICAgICAgY3JlYXRlZF9hdCBURVhULAogICAgICAgICAgICAgICAgdXBkYXRlZF9hdCBURVhULAogICAgICAgICAgICAgICAgY29udGVudF9oYXNoIFRFWFQsCiAgICAgICAgICAgICAgICBtZXRhZGF0YSBURVhUCiAgICAgICAgICAgICkKICAgICAgICAiIiIpCiAgICAgICAgc2VsZi5fc3FsaXRlX2Nvbm4uY29tbWl0KCkKICAgICAgICBsb2cuaW5mbygibWVtb3J5X2VuZ2luZV9yZWFkeV9zcWxpdGVfZmFsbGJhY2siKQoKICAgIGFzeW5jIGRlZiBzdG9yZShzZWxmLCBlbnRyeTogTWVtb3J5RW50cnkpIC0+IHN0cjoKICAgICAgICAiIiJTdG9yZSBhIG1lbW9yeSBlbnRyeS4gUmV0dXJucyBtZW1vcnlfaWQuIiIiCiAgICAgICAgIyBEZWR1cCBjaGVjayB2aWEgY29udGVudCBoYXNoCiAgICAgICAgY29udGVudF9oYXNoID0gaGFzaGxpYi5zaGEyNTYoZW50cnkuY29udGVudC5lbmNvZGUoKSkuaGV4ZGlnZXN0KCkKICAgICAgICBpZiBjb250ZW50X2hhc2ggaW4gc2VsZi5faGFzaF9jYWNoZToKICAgICAgICAgICAgbG9nLmRlYnVnKCJtZW1vcnlfZGVkdXBfaGl0IiwgaGFzaD1jb250ZW50X2hhc2hbOjEyXSkKICAgICAgICAgICAgcmV0dXJuIHNlbGYuX2hhc2hfY2FjaGVbY29udGVudF9oYXNoXQoKICAgICAgICBpZiBDSFJPTUFfQVZBSUxBQkxFIGFuZCBzZWxmLl9jbGllbnQgaXMgbm90IE5vbmU6CiAgICAgICAgICAgIGNvbGxlY3Rpb24gPSBzZWxmLl9jb2xsZWN0aW9ucy5nZXQoZW50cnkuY2F0ZWdvcnkudmFsdWUpCiAgICAgICAgICAgIGlmIGNvbGxlY3Rpb246CiAgICAgICAgICAgICAgICBtZXRhZGF0YSA9IHsKICAgICAgICAgICAgICAgICAgICAic291cmNlIjogZW50cnkuc291cmNlLAogICAgICAgICAgICAgICAgICAgICJ0YWdzIjoganNvbi5kdW1wcyhlbnRyeS50YWdzKSwKICAgICAgICAgICAgICAgICAgICAicGlubmVkIjogZW50cnkucGlubmVkLAogICAgICAgICAgICAgICAgICAgICJjcmVhdGVkX2F0IjogZW50cnkuY3JlYXRlZF9hdC5pc29mb3JtYXQoKSwKICAgICAgICAgICAgICAgICAgICAidXBkYXRlZF9hdCI6IGVudHJ5LnVwZGF0ZWRfYXQuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICAgICAgICAgImNvbnRlbnRfaGFzaCI6IGNvbnRlbnRfaGFzaCwKICAgICAgICAgICAgICAgICAgICAqKntrOiBzdHIodikgZm9yIGssIHYgaW4gZW50cnkubWV0YWRhdGEuaXRlbXMoKX0sCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgY29sbGVjdGlvbi51cHNlcnQoCiAgICAgICAgICAgICAgICAgICAgaWRzPVtlbnRyeS5tZW1vcnlfaWRdLAogICAgICAgICAgICAgICAgICAgIGRvY3VtZW50cz1bZW50cnkuY29udGVudF0sCiAgICAgICAgICAgICAgICAgICAgbWV0YWRhdGFzPVttZXRhZGF0YV0sCiAgICAgICAgICAgICAgICApCgogICAgICAgICAgICAgICAgc2VsZi5faGFzaF9jYWNoZVtjb250ZW50X2hhc2hdID0gZW50cnkubWVtb3J5X2lkCiAgICAgICAgICAgICAgICBsb2cuaW5mbygibWVtb3J5X3N0b3JlZF9jaHJvbWEiLCBtZW1vcnlfaWQ9ZW50cnkubWVtb3J5X2lkLCBjYXRlZ29yeT1lbnRyeS5jYXRlZ29yeS52YWx1ZSkKICAgICAgICAgICAgICAgIHJldHVybiBlbnRyeS5tZW1vcnlfaWQKCiAgICAgICAgIyBTUUxpdGUgRmFsbGJhY2sgU3RvcmUKICAgICAgICBpZiBzZWxmLl9zcWxpdGVfY29ubjoKICAgICAgICAgICAgY3Vyc29yID0gc2VsZi5fc3FsaXRlX2Nvbm4uY3Vyc29yKCkKICAgICAgICAgICAgY3Vyc29yLmV4ZWN1dGUoCiAgICAgICAgICAgICAgICAiIiIKICAgICAgICAgICAgICAgIElOU0VSVCBPUiBSRVBMQUNFIElOVE8gbWVtb3JpZXMKICAgICAgICAgICAgICAgIChtZW1vcnlfaWQsIGNhdGVnb3J5LCBjb250ZW50LCBzb3VyY2UsIHRhZ3MsIHBpbm5lZCwgY3JlYXRlZF9hdCwgdXBkYXRlZF9hdCwgY29udGVudF9oYXNoLCBtZXRhZGF0YSkKICAgICAgICAgICAgICAgIFZBTFVFUyAoPywgPywgPywgPywgPywgPywgPywgPywgPywgPykKICAgICAgICAgICAgICAgICIiIiwKICAgICAgICAgICAgICAgICgKICAgICAgICAgICAgICAgICAgICBlbnRyeS5tZW1vcnlfaWQsCiAgICAgICAgICAgICAgICAgICAgZW50cnkuY2F0ZWdvcnkudmFsdWUsCiAgICAgICAgICAgICAgICAgICAgZW50cnkuY29udGVudCwKICAgICAgICAgICAgICAgICAgICBlbnRyeS5zb3VyY2UsCiAgICAgICAgICAgICAgICAgICAganNvbi5kdW1wcyhlbnRyeS50YWdzKSwKICAgICAgICAgICAgICAgICAgICAxIGlmIGVudHJ5LnBpbm5lZCBlbHNlIDAsCiAgICAgICAgICAgICAgICAgICAgZW50cnkuY3JlYXRlZF9hdC5pc29mb3JtYXQoKSwKICAgICAgICAgICAgICAgICAgICBlbnRyeS51cGRhdGVkX2F0Lmlzb2Zvcm1hdCgpLAogICAgICAgICAgICAgICAgICAgIGNvbnRlbnRfaGFzaCwKICAgICAgICAgICAgICAgICAgICBqc29uLmR1bXBzKGVudHJ5Lm1ldGFkYXRhKSwKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgKQogICAgICAgICAgICBzZWxmLl9zcWxpdGVfY29ubi5jb21taXQoKQogICAgICAgICAgICBzZWxmLl9oYXNoX2NhY2hlW2NvbnRlbnRfaGFzaF0gPSBlbnRyeS5tZW1vcnlfaWQKICAgICAgICAgICAgbG9nLmluZm8oIm1lbW9yeV9zdG9yZWRfc3FsaXRlIiwgbWVtb3J5X2lkPWVudHJ5Lm1lbW9yeV9pZCwgY2F0ZWdvcnk9ZW50cnkuY2F0ZWdvcnkudmFsdWUpCiAgICAgICAgICAgIHJldHVybiBlbnRyeS5tZW1vcnlfaWQKCiAgICAgICAgcmV0dXJuICIiCgogICAgYXN5bmMgZGVmIHF1ZXJ5KHNlbGYsIHF1ZXJ5OiBNZW1vcnlRdWVyeSkgLT4gTGlzdFtNZW1vcnlFbnRyeV06CiAgICAgICAgIiIiU2VtYW50aWMgc2VhcmNoIChDaHJvbWFEQikgb3IgU1FMIExJS0Ugc2VhcmNoIChTUUxpdGUpIGFjcm9zcyBtZW1vcnkgY2F0ZWdvcmllcy4iIiIKICAgICAgICByZXN1bHRzOiBMaXN0W01lbW9yeUVudHJ5XSA9IFtdCiAgICAgICAgY2F0ZWdvcmllcyA9IHF1ZXJ5LmNhdGVnb3JpZXMgb3IgbGlzdChNZW1vcnlDYXRlZ29yeSkKCiAgICAgICAgaWYgQ0hST01BX0FWQUlMQUJMRSBhbmQgc2VsZi5fY2xpZW50IGlzIG5vdCBOb25lOgogICAgICAgICAgICBmb3IgY2F0ZWdvcnkgaW4gY2F0ZWdvcmllczoKICAgICAgICAgICAgICAgIGNhdF92YWwgPSBjYXRlZ29yeS52YWx1ZSBpZiBpc2luc3RhbmNlKGNhdGVnb3J5LCBNZW1vcnlDYXRlZ29yeSkgZWxzZSBjYXRlZ29yeQogICAgICAgICAgICAgICAgY29sbGVjdGlvbiA9IHNlbGYuX2NvbGxlY3Rpb25zLmdldChjYXRfdmFsKQogICAgICAgICAgICAgICAgaWYgbm90IGNvbGxlY3Rpb24gb3IgY29sbGVjdGlvbi5jb3VudCgpID09IDA6CiAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgc2VhcmNoX3Jlc3VsdHMgPSBjb2xsZWN0aW9uLnF1ZXJ5KAogICAgICAgICAgICAgICAgICAgICAgICBxdWVyeV90ZXh0cz1bcXVlcnkucXVlcnldLAogICAgICAgICAgICAgICAgICAgICAgICBuX3Jlc3VsdHM9bWluKHF1ZXJ5LnRvcF9rLCBjb2xsZWN0aW9uLmNvdW50KCkpLAogICAgICAgICAgICAgICAgICAgICkKCiAgICAgICAgICAgICAgICAgICAgaWYgc2VhcmNoX3Jlc3VsdHMgYW5kIHNlYXJjaF9yZXN1bHRzWyJkb2N1bWVudHMiXToKICAgICAgICAgICAgICAgICAgICAgICAgZm9yIGksIGRvYyBpbiBlbnVtZXJhdGUoc2VhcmNoX3Jlc3VsdHNbImRvY3VtZW50cyJdWzBdKToKICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1ldGEgPSBzZWFyY2hfcmVzdWx0c1sibWV0YWRhdGFzIl1bMF1baV0gaWYgc2VhcmNoX3Jlc3VsdHNbIm1ldGFkYXRhcyJdIGVsc2Uge30KICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRpc3RhbmNlID0gc2VhcmNoX3Jlc3VsdHNbImRpc3RhbmNlcyJdWzBdW2ldIGlmIHNlYXJjaF9yZXN1bHRzWyJkaXN0YW5jZXMiXSBlbHNlIDEuMAogICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVsZXZhbmNlID0gbWF4KDAuMCwgMS4wIC0gZGlzdGFuY2UpCgogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgcmVsZXZhbmNlIDwgcXVlcnkubWluX3JlbGV2YW5jZToKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVudHJ5ID0gTWVtb3J5RW50cnkoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWVtb3J5X2lkPXNlYXJjaF9yZXN1bHRzWyJpZHMiXVswXVtpXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYXRlZ29yeT1NZW1vcnlDYXRlZ29yeShjYXRfdmFsKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250ZW50PWRvYywKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzb3VyY2U9bWV0YS5nZXQoInNvdXJjZSIsICIiKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzPWpzb24ubG9hZHMobWV0YS5nZXQoInRhZ3MiLCAiW10iKSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGlubmVkPW1ldGEuZ2V0KCJwaW5uZWQiLCBGYWxzZSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVsZXZhbmNlX3Njb3JlPXJlbGV2YW5jZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRhZGF0YT17azogdiBmb3IgaywgdiBpbiBtZXRhLml0ZW1zKCkgaWYgayBub3QgaW4gKCJzb3VyY2UiLCAidGFncyIsICJwaW5uZWQiLCAiY3JlYXRlZF9hdCIsICJ1cGRhdGVkX2F0IiwgImNvbnRlbnRfaGFzaCIpfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlc3VsdHMuYXBwZW5kKGVudHJ5KQogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X3F1ZXJ5X2Vycm9yIiwgY2F0ZWdvcnk9Y2F0X3ZhbCwgZXJyb3I9c3RyKGUpKQoKICAgICAgICAgICAgIyBTb3J0IGJ5IHJlbGV2YW5jZQogICAgICAgICAgICByZXN1bHRzLnNvcnQoa2V5PWxhbWJkYSB4OiB4LnJlbGV2YW5jZV9zY29yZSwgcmV2ZXJzZT1UcnVlKQogICAgICAgICAgICByZXR1cm4gcmVzdWx0c1s6cXVlcnkudG9wX2tdCgogICAgICAgICMgU1FMaXRlIEZhbGxiYWNrIFF1ZXJ5CiAgICAgICAgaWYgc2VsZi5fc3FsaXRlX2Nvbm46CiAgICAgICAgICAgIGN1cnNvciA9IHNlbGYuX3NxbGl0ZV9jb25uLmN1cnNvcigpCiAgICAgICAgICAgIGZvciBjYXRlZ29yeSBpbiBjYXRlZ29yaWVzOgogICAgICAgICAgICAgICAgY2F0X3ZhbCA9IGNhdGVnb3J5LnZhbHVlIGlmIGlzaW5zdGFuY2UoY2F0ZWdvcnksIE1lbW9yeUNhdGVnb3J5KSBlbHNlIGNhdGVnb3J5CiAgICAgICAgICAgICAgICAjIEtleXdvcmQgc2VhcmNoOiBtYXRjaCBpZiBBTlkgc2lnbmlmaWNhbnQgcXVlcnkgd29yZCBhcHBlYXJzIGluCiAgICAgICAgICAgICAgICAjIGNvbnRlbnQvc291cmNlL3RhZ3MuIChDaHJvbWFEQiBkb2VzIHNlbWFudGljIHNlYXJjaDsgdGhlCiAgICAgICAgICAgICAgICAjIGZhbGxiYWNrIGRvZXMgaG9uZXN0IHRva2VuLWJhc2VkIGtleXdvcmQgbWF0Y2hpbmcgaW5zdGVhZC4pCiAgICAgICAgICAgICAgICB3b3JkcyA9IFt3IGZvciB3IGluIHF1ZXJ5LnF1ZXJ5LnN0cmlwKCkuc3BsaXQoKSBpZiBsZW4odykgPiAyXQogICAgICAgICAgICAgICAgaWYgd29yZHM6CiAgICAgICAgICAgICAgICAgICAgY2xhdXNlcyA9ICIgT1IgIi5qb2luKAogICAgICAgICAgICAgICAgICAgICAgICAiKGNvbnRlbnQgTElLRSA/IE9SIHNvdXJjZSBMSUtFID8gT1IgdGFncyBMSUtFID8pIgogICAgICAgICAgICAgICAgICAgICAgICBmb3IgXyBpbiB3b3JkcwogICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICBwYXJhbXM6IGxpc3QgPSBbY2F0X3ZhbF0KICAgICAgICAgICAgICAgICAgICBmb3IgdyBpbiB3b3JkczoKICAgICAgICAgICAgICAgICAgICAgICAgcGFyYW1zLmV4dGVuZChbZiIle3d9JSIsIGYiJXt3fSUiLCBmIiV7d30lIl0pCiAgICAgICAgICAgICAgICAgICAgY3Vyc29yLmV4ZWN1dGUoCiAgICAgICAgICAgICAgICAgICAgICAgIGYiU0VMRUNUICogRlJPTSBtZW1vcmllcyBXSEVSRSBjYXRlZ29yeSA9ID8gQU5EICh7Y2xhdXNlc30pIiwKICAgICAgICAgICAgICAgICAgICAgICAgcGFyYW1zLAogICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgY3Vyc29yLmV4ZWN1dGUoIlNFTEVDVCAqIEZST00gbWVtb3JpZXMgV0hFUkUgY2F0ZWdvcnkgPSA/IE9SREVSIEJZIGNyZWF0ZWRfYXQgREVTQyIsIChjYXRfdmFsLCkpCgogICAgICAgICAgICAgICAgcm93cyA9IGN1cnNvci5mZXRjaGFsbCgpCiAgICAgICAgICAgICAgICBmb3IgciBpbiByb3dzOgogICAgICAgICAgICAgICAgICAgICMgSG9uZXN0IHJlbGV2YW5jZSBmb3Iga2V5d29yZCBmYWxsYmFjazogZnJhY3Rpb24gb2YgcXVlcnkKICAgICAgICAgICAgICAgICAgICAjIHdvcmRzIGFjdHVhbGx5IGZvdW5kIGluIHRoaXMgcm93J3MgdGV4dC4KICAgICAgICAgICAgICAgICAgICBoYXlzdGFjayA9IGYie3JbJ2NvbnRlbnQnXX0ge3JbJ3NvdXJjZSddfSB7clsndGFncyddfSIubG93ZXIoKQogICAgICAgICAgICAgICAgICAgIG1hdGNoZWQgPSBzdW0oMSBmb3IgdyBpbiB3b3JkcyBpZiB3Lmxvd2VyKCkgaW4gaGF5c3RhY2spIGlmIHdvcmRzIGVsc2UgMAogICAgICAgICAgICAgICAgICAgIHJlbGV2YW5jZSA9IChtYXRjaGVkIC8gbGVuKHdvcmRzKSkgaWYgd29yZHMgZWxzZSAxLjAKICAgICAgICAgICAgICAgICAgICByZXN1bHRzLmFwcGVuZChNZW1vcnlFbnRyeSgKICAgICAgICAgICAgICAgICAgICAgICAgbWVtb3J5X2lkPXJbIm1lbW9yeV9pZCJdLAogICAgICAgICAgICAgICAgICAgICAgICBjYXRlZ29yeT1NZW1vcnlDYXRlZ29yeShyWyJjYXRlZ29yeSJdKSwKICAgICAgICAgICAgICAgICAgICAgICAgY29udGVudD1yWyJjb250ZW50Il0sCiAgICAgICAgICAgICAgICAgICAgICAgIHNvdXJjZT1yWyJzb3VyY2UiXSwKICAgICAgICAgICAgICAgICAgICAgICAgdGFncz1qc29uLmxvYWRzKHJbInRhZ3MiXSksCiAgICAgICAgICAgICAgICAgICAgICAgIHBpbm5lZD1ib29sKHJbInBpbm5lZCJdKSwKICAgICAgICAgICAgICAgICAgICAgICAgcmVsZXZhbmNlX3Njb3JlPXJvdW5kKHJlbGV2YW5jZSwgMyksCiAgICAgICAgICAgICAgICAgICAgICAgIG1ldGFkYXRhPWpzb24ubG9hZHMoclsibWV0YWRhdGEiXSkgaWYgclsibWV0YWRhdGEiXSBlbHNlIHt9LAogICAgICAgICAgICAgICAgICAgICkpCgogICAgICAgICAgICAjIEZvciBmYWxsYmFjaywgc29ydCBwaW5uZWQgZmlyc3QsIHRoZW4gYnkgbWVtb3J5X2lkIG9yIGRhdGUKICAgICAgICAgICAgcmVzdWx0cy5zb3J0KGtleT1sYW1iZGEgeDogKHgucGlubmVkLCB4Lm1lbW9yeV9pZCksIHJldmVyc2U9VHJ1ZSkKICAgICAgICAgICAgcmV0dXJuIHJlc3VsdHNbOnF1ZXJ5LnRvcF9rXQoKICAgICAgICByZXR1cm4gW10KCiAgICBhc3luYyBkZWYgYnVpbGRfY29udGV4dChzZWxmLCBxdWVyeV90ZXh0OiBzdHIpIC0+IE1lbW9yeUNvbnRleHQ6CiAgICAgICAgIiIiCiAgICAgICAgQnVpbGQgY29tcGxldGUgbWVtb3J5IGNvbnRleHQgZm9yIExMTSByZWFzb25pbmcuCiAgICAgICAgUmV0cmlldmVzIHRvcCBtZW1vcmllcyBhY3Jvc3MgYWxsIHJlcXVpcmVkIGNhdGVnb3JpZXMuCiAgICAgICAgIiIiCiAgICAgICAgZ2VuZXJhbCA9IGF3YWl0IHNlbGYucXVlcnkoTWVtb3J5UXVlcnkocXVlcnk9cXVlcnlfdGV4dCwgdG9wX2s9MTApKQoKICAgICAgICBwcm9qZWN0X21lbW9yaWVzID0gYXdhaXQgc2VsZi5xdWVyeShNZW1vcnlRdWVyeSgKICAgICAgICAgICAgcXVlcnk9cXVlcnlfdGV4dCwKICAgICAgICAgICAgY2F0ZWdvcmllcz1bTWVtb3J5Q2F0ZWdvcnkuUFJPSkVDVFMsIE1lbW9yeUNhdGVnb3J5LkNPREVdLAogICAgICAgICAgICB0b3Bfaz01LAogICAgICAgICkpCgogICAgICAgIHRhc2tfbWVtb3JpZXMgPSBhd2FpdCBzZWxmLnF1ZXJ5KE1lbW9yeVF1ZXJ5KAogICAgICAgICAgICBxdWVyeT1xdWVyeV90ZXh0LAogICAgICAgICAgICBjYXRlZ29yaWVzPVtNZW1vcnlDYXRlZ29yeS5UQVNLU10sCiAgICAgICAgICAgIHRvcF9rPTUsCiAgICAgICAgKSkKCiAgICAgICAgZGVidWdfbWVtb3JpZXMgPSBhd2FpdCBzZWxmLnF1ZXJ5KE1lbW9yeVF1ZXJ5KAogICAgICAgICAgICBxdWVyeT1xdWVyeV90ZXh0LAogICAgICAgICAgICBjYXRlZ29yaWVzPVtNZW1vcnlDYXRlZ29yeS5ERUJVR0dJTkddLAogICAgICAgICAgICB0b3Bfaz01LAogICAgICAgICkpCgogICAgICAgIHByZWZfbWVtb3JpZXMgPSBhd2FpdCBzZWxmLnF1ZXJ5KE1lbW9yeVF1ZXJ5KAogICAgICAgICAgICBxdWVyeT1xdWVyeV90ZXh0LAogICAgICAgICAgICBjYXRlZ29yaWVzPVtNZW1vcnlDYXRlZ29yeS5QUkVGRVJFTkNFU10sCiAgICAgICAgICAgIHRvcF9rPTUsCiAgICAgICAgKSkKCiAgICAgICAgcmV0dXJuIE1lbW9yeUNvbnRleHQoCiAgICAgICAgICAgIGdlbmVyYWxfbWVtb3JpZXM9Z2VuZXJhbCwKICAgICAgICAgICAgcHJvamVjdF9tZW1vcmllcz1wcm9qZWN0X21lbW9yaWVzLAogICAgICAgICAgICB0YXNrX21lbW9yaWVzPXRhc2tfbWVtb3JpZXMsCiAgICAgICAgICAgIGRlYnVnZ2luZ19tZW1vcmllcz1kZWJ1Z19tZW1vcmllcywKICAgICAgICAgICAgcHJlZmVyZW5jZV9tZW1vcmllcz1wcmVmX21lbW9yaWVzLAogICAgICAgICkKCiAgICBhc3luYyBkZWYgZGVsZXRlKHNlbGYsIG1lbW9yeV9pZDogc3RyLCBjYXRlZ29yeTogTWVtb3J5Q2F0ZWdvcnkpIC0+IGJvb2w6CiAgICAgICAgIiIiRGVsZXRlIGEgc3BlY2lmaWMgbWVtb3J5IGVudHJ5LiIiIgogICAgICAgIGlmIENIUk9NQV9BVkFJTEFCTEUgYW5kIHNlbGYuX2NsaWVudCBpcyBub3QgTm9uZToKICAgICAgICAgICAgY29sbGVjdGlvbiA9IHNlbGYuX2NvbGxlY3Rpb25zLmdldChjYXRlZ29yeS52YWx1ZSkKICAgICAgICAgICAgaWYgY29sbGVjdGlvbjoKICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICBjb2xsZWN0aW9uLmRlbGV0ZShpZHM9W21lbW9yeV9pZF0pCiAgICAgICAgICAgICAgICAgICAgbG9nLmluZm8oIm1lbW9yeV9kZWxldGVkX2Nocm9tYSIsIG1lbW9yeV9pZD1tZW1vcnlfaWQsIGNhdGVnb3J5PWNhdGVnb3J5LnZhbHVlKQogICAgICAgICAgICAgICAgICAgIHJldHVybiBUcnVlCiAgICAgICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgICAgICAgICAgbG9nLmVycm9yKCJtZW1vcnlfZGVsZXRlX2Vycm9yX2Nocm9tYSIsIGVycm9yPXN0cihlKSkKCiAgICAgICAgIyBTUUxpdGUgRmFsbGJhY2sgRGVsZXRlCiAgICAgICAgaWYgc2VsZi5fc3FsaXRlX2Nvbm46CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGN1cnNvciA9IHNlbGYuX3NxbGl0ZV9jb25uLmN1cnNvcigpCiAgICAgICAgICAgICAgICBjdXJzb3IuZXhlY3V0ZSgiREVMRVRFIEZST00gbWVtb3JpZXMgV0hFUkUgbWVtb3J5X2lkID0gPyBBTkQgY2F0ZWdvcnkgPSA/IiwgKG1lbW9yeV9pZCwgY2F0ZWdvcnkudmFsdWUpKQogICAgICAgICAgICAgICAgc2VsZi5fc3FsaXRlX2Nvbm4uY29tbWl0KCkKICAgICAgICAgICAgICAgIGxvZy5pbmZvKCJtZW1vcnlfZGVsZXRlZF9zcWxpdGUiLCBtZW1vcnlfaWQ9bWVtb3J5X2lkLCBjYXRlZ29yeT1jYXRlZ29yeS52YWx1ZSkKICAgICAgICAgICAgICAgIHJldHVybiBUcnVlCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X2RlbGV0ZV9lcnJvcl9zcWxpdGUiLCBlcnJvcj1zdHIoZSkpCgogICAgICAgIHJldHVybiBGYWxzZQoKICAgIGFzeW5jIGRlZiB1cGRhdGUoc2VsZiwgbWVtb3J5X2lkOiBzdHIsIGNhdGVnb3J5OiBNZW1vcnlDYXRlZ29yeSwgY29udGVudDogc3RyLCBtZXRhZGF0YTogT3B0aW9uYWxbRGljdF0gPSBOb25lKSAtPiBib29sOgogICAgICAgICIiIlVwZGF0ZSBhbiBleGlzdGluZyBtZW1vcnkgZW50cnkuIiIiCiAgICAgICAgaWYgQ0hST01BX0FWQUlMQUJMRSBhbmQgc2VsZi5fY2xpZW50IGlzIG5vdCBOb25lOgogICAgICAgICAgICBjb2xsZWN0aW9uID0gc2VsZi5fY29sbGVjdGlvbnMuZ2V0KGNhdGVnb3J5LnZhbHVlKQogICAgICAgICAgICBpZiBjb2xsZWN0aW9uOgogICAgICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgICAgIHVwZGF0ZV9tZXRhID0gbWV0YWRhdGEgb3Ige30KICAgICAgICAgICAgICAgICAgICB1cGRhdGVfbWV0YVsidXBkYXRlZF9hdCJdID0gZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCkKICAgICAgICAgICAgICAgICAgICBjb2xsZWN0aW9uLnVwZGF0ZSgKICAgICAgICAgICAgICAgICAgICAgICAgaWRzPVttZW1vcnlfaWRdLAogICAgICAgICAgICAgICAgICAgICAgICBkb2N1bWVudHM9W2NvbnRlbnRdLAogICAgICAgICAgICAgICAgICAgICAgICBtZXRhZGF0YXM9W3trOiBzdHIodikgZm9yIGssIHYgaW4gdXBkYXRlX21ldGEuaXRlbXMoKX1dLAogICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygibWVtb3J5X3VwZGF0ZWRfY2hyb21hIiwgbWVtb3J5X2lkPW1lbW9yeV9pZCkKICAgICAgICAgICAgICAgICAgICByZXR1cm4gVHJ1ZQogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X3VwZGF0ZV9lcnJvcl9jaHJvbWEiLCBlcnJvcj1zdHIoZSkpCgogICAgICAgICMgU1FMaXRlIEZhbGxiYWNrIFVwZGF0ZQogICAgICAgIGlmIHNlbGYuX3NxbGl0ZV9jb25uOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBjdXJzb3IgPSBzZWxmLl9zcWxpdGVfY29ubi5jdXJzb3IoKQogICAgICAgICAgICAgICAgbm93X2lzbyA9IGRhdGV0aW1lLnV0Y25vdygpLmlzb2Zvcm1hdCgpCiAgICAgICAgICAgICAgICBjdXJzb3IuZXhlY3V0ZSgKICAgICAgICAgICAgICAgICAgICAiVVBEQVRFIG1lbW9yaWVzIFNFVCBjb250ZW50ID0gPywgdXBkYXRlZF9hdCA9ID8sIG1ldGFkYXRhID0gPyBXSEVSRSBtZW1vcnlfaWQgPSA/IEFORCBjYXRlZ29yeSA9ID8iLAogICAgICAgICAgICAgICAgICAgIChjb250ZW50LCBub3dfaXNvLCBqc29uLmR1bXBzKG1ldGFkYXRhIG9yIHt9KSwgbWVtb3J5X2lkLCBjYXRlZ29yeS52YWx1ZSkKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgIHNlbGYuX3NxbGl0ZV9jb25uLmNvbW1pdCgpCiAgICAgICAgICAgICAgICBsb2cuaW5mbygibWVtb3J5X3VwZGF0ZWRfc3FsaXRlIiwgbWVtb3J5X2lkPW1lbW9yeV9pZCkKICAgICAgICAgICAgICAgIHJldHVybiBUcnVlCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X3VwZGF0ZV9lcnJvcl9zcWxpdGUiLCBlcnJvcj1zdHIoZSkpCgogICAgICAgIHJldHVybiBGYWxzZQoKICAgIGFzeW5jIGRlZiBnZXRfYWxsKHNlbGYsIGNhdGVnb3J5OiBNZW1vcnlDYXRlZ29yeSwgbGltaXQ6IGludCA9IDEwMCkgLT4gTGlzdFtNZW1vcnlFbnRyeV06CiAgICAgICAgIiIiR2V0IGFsbCBtZW1vcmllcyBpbiBhIGNhdGVnb3J5LiIiIgogICAgICAgIGlmIENIUk9NQV9BVkFJTEFCTEUgYW5kIHNlbGYuX2NsaWVudCBpcyBub3QgTm9uZToKICAgICAgICAgICAgY29sbGVjdGlvbiA9IHNlbGYuX2NvbGxlY3Rpb25zLmdldChjYXRlZ29yeS52YWx1ZSkKICAgICAgICAgICAgaWYgY29sbGVjdGlvbiBhbmQgY29sbGVjdGlvbi5jb3VudCgpID4gMDoKICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICByZXN1bHRzID0gY29sbGVjdGlvbi5nZXQobGltaXQ9bWluKGxpbWl0LCBjb2xsZWN0aW9uLmNvdW50KCkpKQogICAgICAgICAgICAgICAgICAgIGVudHJpZXMgPSBbXQogICAgICAgICAgICAgICAgICAgIGZvciBpLCBkb2MgaW4gZW51bWVyYXRlKHJlc3VsdHNbImRvY3VtZW50cyJdKToKICAgICAgICAgICAgICAgICAgICAgICAgbWV0YSA9IHJlc3VsdHNbIm1ldGFkYXRhcyJdW2ldIGlmIHJlc3VsdHNbIm1ldGFkYXRhcyJdIGVsc2Uge30KICAgICAgICAgICAgICAgICAgICAgICAgZW50cmllcy5hcHBlbmQoTWVtb3J5RW50cnkoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZW1vcnlfaWQ9cmVzdWx0c1siaWRzIl1baV0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjYXRlZ29yeT1jYXRlZ29yeSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRlbnQ9ZG9jLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgc291cmNlPW1ldGEuZ2V0KCJzb3VyY2UiLCAiIiksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0YWdzPWpzb24ubG9hZHMobWV0YS5nZXQoInRhZ3MiLCAiW10iKSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBwaW5uZWQ9bWV0YS5nZXQoInBpbm5lZCIsIEZhbHNlKSwKICAgICAgICAgICAgICAgICAgICAgICAgKSkKICAgICAgICAgICAgICAgICAgICByZXR1cm4gZW50cmllcwogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X2dldF9hbGxfZXJyb3JfY2hyb21hIiwgZXJyb3I9c3RyKGUpKQoKICAgICAgICAjIFNRTGl0ZSBGYWxsYmFjayBHZXQgQWxsCiAgICAgICAgaWYgc2VsZi5fc3FsaXRlX2Nvbm46CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGN1cnNvciA9IHNlbGYuX3NxbGl0ZV9jb25uLmN1cnNvcigpCiAgICAgICAgICAgICAgICBjdXJzb3IuZXhlY3V0ZSgiU0VMRUNUICogRlJPTSBtZW1vcmllcyBXSEVSRSBjYXRlZ29yeSA9ID8gTElNSVQgPyIsIChjYXRlZ29yeS52YWx1ZSwgbGltaXQpKQogICAgICAgICAgICAgICAgcm93cyA9IGN1cnNvci5mZXRjaGFsbCgpCiAgICAgICAgICAgICAgICBlbnRyaWVzID0gW10KICAgICAgICAgICAgICAgIGZvciByIGluIHJvd3M6CiAgICAgICAgICAgICAgICAgICAgZW50cmllcy5hcHBlbmQoTWVtb3J5RW50cnkoCiAgICAgICAgICAgICAgICAgICAgICAgIG1lbW9yeV9pZD1yWyJtZW1vcnlfaWQiXSwKICAgICAgICAgICAgICAgICAgICAgICAgY2F0ZWdvcnk9Y2F0ZWdvcnksCiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRlbnQ9clsiY29udGVudCJdLAogICAgICAgICAgICAgICAgICAgICAgICBzb3VyY2U9clsic291cmNlIl0sCiAgICAgICAgICAgICAgICAgICAgICAgIHRhZ3M9anNvbi5sb2FkcyhyWyJ0YWdzIl0pLAogICAgICAgICAgICAgICAgICAgICAgICBwaW5uZWQ9Ym9vbChyWyJwaW5uZWQiXSksCiAgICAgICAgICAgICAgICAgICAgKSkKICAgICAgICAgICAgICAgIHJldHVybiBlbnRyaWVzCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibWVtb3J5X2dldF9hbGxfZXJyb3Jfc3FsaXRlIiwgZXJyb3I9c3RyKGUpKQoKICAgICAgICByZXR1cm4gW10KCiAgICBhc3luYyBkZWYgZ2V0X3N0YXRzKHNlbGYpIC0+IERpY3Rbc3RyLCBpbnRdOgogICAgICAgICIiIkdldCBtZW1vcnkgY291bnRzIHBlciBjb2xsZWN0aW9uLiIiIgogICAgICAgIHN0YXRzID0ge30KICAgICAgICBpZiBDSFJPTUFfQVZBSUxBQkxFIGFuZCBzZWxmLl9jbGllbnQgaXMgbm90IE5vbmU6CiAgICAgICAgICAgIGZvciBuYW1lLCBjb2xsZWN0aW9uIGluIHNlbGYuX2NvbGxlY3Rpb25zLml0ZW1zKCk6CiAgICAgICAgICAgICAgICBzdGF0c1tuYW1lXSA9IGNvbGxlY3Rpb24uY291bnQoKQogICAgICAgICAgICByZXR1cm4gc3RhdHMKCiAgICAgICAgIyBTUUxpdGUgRmFsbGJhY2sgU3RhdHMKICAgICAgICBpZiBzZWxmLl9zcWxpdGVfY29ubjoKICAgICAgICAgICAgY3Vyc29yID0gc2VsZi5fc3FsaXRlX2Nvbm4uY3Vyc29yKCkKICAgICAgICAgICAgZm9yIGNhdCBpbiBDT0xMRUNUSU9OUzoKICAgICAgICAgICAgICAgIGN1cnNvci5leGVjdXRlKCJTRUxFQ1QgQ09VTlQoKikgYXMgY250IEZST00gbWVtb3JpZXMgV0hFUkUgY2F0ZWdvcnkgPSA/IiwgKGNhdCwpKQogICAgICAgICAgICAgICAgc3RhdHNbY2F0XSA9IGN1cnNvci5mZXRjaG9uZSgpWyJjbnQiXQogICAgICAgICAgICByZXR1cm4gc3RhdHMKCiAgICAgICAgcmV0dXJuIHtjYXQ6IDAgZm9yIGNhdCBpbiBDT0xMRUNUSU9OU30KCiAgICBkZWYgY2hlY2tfZG9jdW1lbnRfaGFzaChzZWxmLCBmaWxlX3BhdGg6IHN0cikgLT4gT3B0aW9uYWxbc3RyXToKICAgICAgICAiIiJDaGVjayBpZiBhIGRvY3VtZW50IGhhcyBhbHJlYWR5IGJlZW4gcHJvY2Vzc2VkIChTSEEtMjU2IGNhY2hlKS4iIiIKICAgICAgICBmcm9tIHNoYXJlZC5zZWN1cml0eSBpbXBvcnQgc2hhMjU2X2ZpbGUKICAgICAgICBmaWxlX2hhc2ggPSBzaGEyNTZfZmlsZShmaWxlX3BhdGgpCiAgICAgICAgcmV0dXJuIHNlbGYuX2hhc2hfY2FjaGUuZ2V0KGZpbGVfaGFzaCkKCiAgICBkZWYgcmVnaXN0ZXJfZG9jdW1lbnRfaGFzaChzZWxmLCBmaWxlX3BhdGg6IHN0ciwgbWVtb3J5X2lkOiBzdHIpIC0+IE5vbmU6CiAgICAgICAgIiIiUmVnaXN0ZXIgYSBwcm9jZXNzZWQgZG9jdW1lbnQgaGFzaC4iIiIKICAgICAgICBmcm9tIHNoYXJlZC5zZWN1cml0eSBpbXBvcnQgc2hhMjU2X2ZpbGUKICAgICAgICBmaWxlX2hhc2ggPSBzaGEyNTZfZmlsZShmaWxlX3BhdGgpCiAgICAgICAgc2VsZi5faGFzaF9jYWNoZVtmaWxlX2hhc2hdID0gbWVtb3J5X2lkCgoKIyBHbG9iYWwgbWVtb3J5IGVuZ2luZSBpbnN0YW5jZQptZW1vcnlfZW5naW5lID0gTWVtb3J5RW5naW5lKCkK
+# ====================================================================
+# JARVIS OMEGA — Memory Engine (ChromaDB with SQLite Fallback)
+# ====================================================================
+"""
+ChromaDB integration: 10 dedicated collections, semantic similarity
+search, memory storage/retrieval, and SHA-256 hash-based dedup.
+Gracefully falls back to a local SQLite database if chromadb is not installed.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import sqlite3
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+try:
+    import chromadb
+    from chromadb.config import Settings as ChromaSettings
+    CHROMA_AVAILABLE = True
+except ImportError:
+    CHROMA_AVAILABLE = False
+
+from shared.constants import MemoryCategory
+from shared.logger import get_logger
+from shared.models import MemoryContext, MemoryEntry, MemoryQuery
+
+log = get_logger("memory_engine")
+
+# Collection names matching the spec
+COLLECTIONS = [cat.value for cat in MemoryCategory]
+
+
+class MemoryEngine:
+    """
+    Persistent memory architecture using ChromaDB, with a zero-dep SQLite fallback.
+    Manages 10 dedicated collections with semantic search.
+    """
+
+    def __init__(self, persist_dir: str = "./storage/chromadb") -> None:
+        self._persist_dir = Path(persist_dir)
+        self._persist_dir.mkdir(parents=True, exist_ok=True)
+        self._client: Optional[Any] = None
+        self._collections: Dict[str, Any] = {}
+        self._hash_cache: Dict[str, str] = {}  # SHA-256 dedup cache
+        self._sqlite_conn: Optional[sqlite3.Connection] = None
+
+    async def initialize(self) -> None:
+        """Initialize ChromaDB client or SQLite fallback and prepare collections."""
+        log.info("memory_engine_init", persist_dir=str(self._persist_dir), chroma_available=CHROMA_AVAILABLE)
+
+        if CHROMA_AVAILABLE:
+            try:
+                self._client = chromadb.PersistentClient(
+                    path=str(self._persist_dir),
+                    settings=ChromaSettings(
+                        anonymized_telemetry=False,
+                        allow_reset=True,
+                    ),
+                )
+
+                for collection_name in COLLECTIONS:
+                    self._collections[collection_name] = self._client.get_or_create_collection(
+                        name=collection_name,
+                        metadata={"hnsw:space": "cosine"},
+                    )
+                    count = self._collections[collection_name].count()
+                    log.info("collection_ready", name=collection_name, count=count)
+
+                log.info("memory_engine_ready", collections=len(self._collections))
+                return
+            except Exception as e:
+                log.warning("chromadb_init_failed_falling_back_to_sqlite", error=str(e))
+
+        # SQLite Fallback Initialization
+        db_path = self._persist_dir / "memory_fallback.db"
+        self._sqlite_conn = sqlite3.connect(str(db_path), check_same_thread=False)
+        self._sqlite_conn.row_factory = sqlite3.Row
+        cursor = self._sqlite_conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS memories (
+                memory_id TEXT PRIMARY KEY,
+                category TEXT,
+                content TEXT,
+                source TEXT,
+                tags TEXT,
+                pinned INTEGER,
+                created_at TEXT,
+                updated_at TEXT,
+                content_hash TEXT,
+                metadata TEXT
+            )
+        """)
+        self._sqlite_conn.commit()
+        log.info("memory_engine_ready_sqlite_fallback")
+
+    async def store(self, entry: MemoryEntry) -> str:
+        """Store a memory entry. Returns memory_id."""
+        # Dedup check via content hash
+        content_hash = hashlib.sha256(entry.content.encode()).hexdigest()
+        if content_hash in self._hash_cache:
+            log.debug("memory_dedup_hit", hash=content_hash[:12])
+            return self._hash_cache[content_hash]
+
+        if CHROMA_AVAILABLE and self._client is not None:
+            collection = self._collections.get(entry.category.value)
+            if collection:
+                metadata = {
+                    "source": entry.source,
+                    "tags": json.dumps(entry.tags),
+                    "pinned": entry.pinned,
+                    "created_at": entry.created_at.isoformat(),
+                    "updated_at": entry.updated_at.isoformat(),
+                    "content_hash": content_hash,
+                    **{k: str(v) for k, v in entry.metadata.items()},
+                }
+
+                collection.upsert(
+                    ids=[entry.memory_id],
+                    documents=[entry.content],
+                    metadatas=[metadata],
+                )
+
+                self._hash_cache[content_hash] = entry.memory_id
+                log.info("memory_stored_chroma", memory_id=entry.memory_id, category=entry.category.value)
+                return entry.memory_id
+
+        # SQLite Fallback Store
+        if self._sqlite_conn:
+            cursor = self._sqlite_conn.cursor()
+            cursor.execute(
+                """
+                INSERT OR REPLACE INTO memories
+                (memory_id, category, content, source, tags, pinned, created_at, updated_at, content_hash, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    entry.memory_id,
+                    entry.category.value,
+                    entry.content,
+                    entry.source,
+                    json.dumps(entry.tags),
+                    1 if entry.pinned else 0,
+                    entry.created_at.isoformat(),
+                    entry.updated_at.isoformat(),
+                    content_hash,
+                    json.dumps(entry.metadata),
+                )
+            )
+            self._sqlite_conn.commit()
+            self._hash_cache[content_hash] = entry.memory_id
+            log.info("memory_stored_sqlite", memory_id=entry.memory_id, category=entry.category.value)
+            return entry.memory_id
+
+        return ""
+
+    async def query(self, query: MemoryQuery) -> List[MemoryEntry]:
+        """Semantic search (ChromaDB) or SQL LIKE search (SQLite) across memory categories."""
+        results: List[MemoryEntry] = []
+        categories = query.categories or list(MemoryCategory)
+
+        if CHROMA_AVAILABLE and self._client is not None:
+            for category in categories:
+                cat_val = category.value if isinstance(category, MemoryCategory) else category
+                collection = self._collections.get(cat_val)
+                if not collection or collection.count() == 0:
+                    continue
+
+                try:
+                    search_results = collection.query(
+                        query_texts=[query.query],
+                        n_results=min(query.top_k, collection.count()),
+                    )
+
+                    if search_results and search_results["documents"]:
+                        for i, doc in enumerate(search_results["documents"][0]):
+                            meta = search_results["metadatas"][0][i] if search_results["metadatas"] else {}
+                            distance = search_results["distances"][0][i] if search_results["distances"] else 1.0
+                            relevance = max(0.0, 1.0 - distance)
+
+                            if relevance < query.min_relevance:
+                                continue
+
+                            entry = MemoryEntry(
+                                memory_id=search_results["ids"][0][i],
+                                category=MemoryCategory(cat_val),
+                                content=doc,
+                                source=meta.get("source", ""),
+                                tags=json.loads(meta.get("tags", "[]")),
+                                pinned=meta.get("pinned", False),
+                                relevance_score=relevance,
+                                metadata={k: v for k, v in meta.items() if k not in ("source", "tags", "pinned", "created_at", "updated_at", "content_hash")},
+                            )
+                            results.append(entry)
+                except Exception as e:
+                    log.error("memory_query_error", category=cat_val, error=str(e))
+
+            # Sort by relevance
+            results.sort(key=lambda x: x.relevance_score, reverse=True)
+            return results[:query.top_k]
+
+        # SQLite Fallback Query
+        if self._sqlite_conn:
+            cursor = self._sqlite_conn.cursor()
+            for category in categories:
+                cat_val = category.value if isinstance(category, MemoryCategory) else category
+                # Keyword search: match if ANY significant query word appears in
+                # content/source/tags. (ChromaDB does semantic search; the
+                # fallback does honest token-based keyword matching instead.)
+                words = [w for w in query.query.strip().split() if len(w) > 2]
+                if words:
+                    clauses = " OR ".join(
+                        "(content LIKE ? OR source LIKE ? OR tags LIKE ?)"
+                        for _ in words
+                    )
+                    params: list = [cat_val]
+                    for w in words:
+                        params.extend([f"%{w}%", f"%{w}%", f"%{w}%"])
+                    cursor.execute(
+                        f"SELECT * FROM memories WHERE category = ? AND ({clauses})",
+                        params,
+                    )
+                else:
+                    cursor.execute("SELECT * FROM memories WHERE category = ? ORDER BY created_at DESC", (cat_val,))
+
+                rows = cursor.fetchall()
+                for r in rows:
+                    # Honest relevance for keyword fallback: fraction of query
+                    # words actually found in this row's text.
+                    haystack = f"{r['content']} {r['source']} {r['tags']}".lower()
+                    matched = sum(1 for w in words if w.lower() in haystack) if words else 0
+                    relevance = (matched / len(words)) if words else 1.0
+                    results.append(MemoryEntry(
+                        memory_id=r["memory_id"],
+                        category=MemoryCategory(r["category"]),
+                        content=r["content"],
+                        source=r["source"],
+                        tags=json.loads(r["tags"]),
+                        pinned=bool(r["pinned"]),
+                        relevance_score=round(relevance, 3),
+                        metadata=json.loads(r["metadata"]) if r["metadata"] else {},
+                    ))
+
+            # For fallback, sort pinned first, then by memory_id or date
+            results.sort(key=lambda x: (x.pinned, x.memory_id), reverse=True)
+            return results[:query.top_k]
+
+        return []
+
+    async def build_context(self, query_text: str) -> MemoryContext:
+        """
+        Build complete memory context for LLM reasoning.
+        Retrieves top memories across all required categories.
+        """
+        general = await self.query(MemoryQuery(query=query_text, top_k=10))
+
+        project_memories = await self.query(MemoryQuery(
+            query=query_text,
+            categories=[MemoryCategory.PROJECTS, MemoryCategory.CODE],
+            top_k=5,
+        ))
+
+        task_memories = await self.query(MemoryQuery(
+            query=query_text,
+            categories=[MemoryCategory.TASKS],
+            top_k=5,
+        ))
+
+        debug_memories = await self.query(MemoryQuery(
+            query=query_text,
+            categories=[MemoryCategory.DEBUGGING],
+            top_k=5,
+        ))
+
+        pref_memories = await self.query(MemoryQuery(
+            query=query_text,
+            categories=[MemoryCategory.PREFERENCES],
+            top_k=5,
+        ))
+
+        return MemoryContext(
+            general_memories=general,
+            project_memories=project_memories,
+            task_memories=task_memories,
+            debugging_memories=debug_memories,
+            preference_memories=pref_memories,
+        )
+
+    async def delete(self, memory_id: str, category: MemoryCategory) -> bool:
+        """Delete a specific memory entry."""
+        if CHROMA_AVAILABLE and self._client is not None:
+            collection = self._collections.get(category.value)
+            if collection:
+                try:
+                    collection.delete(ids=[memory_id])
+                    log.info("memory_deleted_chroma", memory_id=memory_id, category=category.value)
+                    return True
+                except Exception as e:
+                    log.error("memory_delete_error_chroma", error=str(e))
+
+        # SQLite Fallback Delete
+        if self._sqlite_conn:
+            try:
+                cursor = self._sqlite_conn.cursor()
+                cursor.execute("DELETE FROM memories WHERE memory_id = ? AND category = ?", (memory_id, category.value))
+                self._sqlite_conn.commit()
+                log.info("memory_deleted_sqlite", memory_id=memory_id, category=category.value)
+                return True
+            except Exception as e:
+                log.error("memory_delete_error_sqlite", error=str(e))
+
+        return False
+
+    async def update(self, memory_id: str, category: MemoryCategory, content: str, metadata: Optional[Dict] = None) -> bool:
+        """Update an existing memory entry."""
+        if CHROMA_AVAILABLE and self._client is not None:
+            collection = self._collections.get(category.value)
+            if collection:
+                try:
+                    update_meta = metadata or {}
+                    update_meta["updated_at"] = datetime.utcnow().isoformat()
+                    collection.update(
+                        ids=[memory_id],
+                        documents=[content],
+                        metadatas=[{k: str(v) for k, v in update_meta.items()}],
+                    )
+                    log.info("memory_updated_chroma", memory_id=memory_id)
+                    return True
+                except Exception as e:
+                    log.error("memory_update_error_chroma", error=str(e))
+
+        # SQLite Fallback Update
+        if self._sqlite_conn:
+            try:
+                cursor = self._sqlite_conn.cursor()
+                now_iso = datetime.utcnow().isoformat()
+                cursor.execute(
+                    "UPDATE memories SET content = ?, updated_at = ?, metadata = ? WHERE memory_id = ? AND category = ?",
+                    (content, now_iso, json.dumps(metadata or {}), memory_id, category.value)
+                )
+                self._sqlite_conn.commit()
+                log.info("memory_updated_sqlite", memory_id=memory_id)
+                return True
+            except Exception as e:
+                log.error("memory_update_error_sqlite", error=str(e))
+
+        return False
+
+    async def get_all(self, category: MemoryCategory, limit: int = 100) -> List[MemoryEntry]:
+        """Get all memories in a category."""
+        if CHROMA_AVAILABLE and self._client is not None:
+            collection = self._collections.get(category.value)
+            if collection and collection.count() > 0:
+                try:
+                    results = collection.get(limit=min(limit, collection.count()))
+                    entries = []
+                    for i, doc in enumerate(results["documents"]):
+                        meta = results["metadatas"][i] if results["metadatas"] else {}
+                        entries.append(MemoryEntry(
+                            memory_id=results["ids"][i],
+                            category=category,
+                            content=doc,
+                            source=meta.get("source", ""),
+                            tags=json.loads(meta.get("tags", "[]")),
+                            pinned=meta.get("pinned", False),
+                        ))
+                    return entries
+                except Exception as e:
+                    log.error("memory_get_all_error_chroma", error=str(e))
+
+        # SQLite Fallback Get All
+        if self._sqlite_conn:
+            try:
+                cursor = self._sqlite_conn.cursor()
+                cursor.execute("SELECT * FROM memories WHERE category = ? LIMIT ?", (category.value, limit))
+                rows = cursor.fetchall()
+                entries = []
+                for r in rows:
+                    entries.append(MemoryEntry(
+                        memory_id=r["memory_id"],
+                        category=category,
+                        content=r["content"],
+                        source=r["source"],
+                        tags=json.loads(r["tags"]),
+                        pinned=bool(r["pinned"]),
+                    ))
+                return entries
+            except Exception as e:
+                log.error("memory_get_all_error_sqlite", error=str(e))
+
+        return []
+
+    async def get_stats(self) -> Dict[str, int]:
+        """Get memory counts per collection."""
+        stats = {}
+        if CHROMA_AVAILABLE and self._client is not None:
+            for name, collection in self._collections.items():
+                stats[name] = collection.count()
+            return stats
+
+        # SQLite Fallback Stats
+        if self._sqlite_conn:
+            cursor = self._sqlite_conn.cursor()
+            for cat in COLLECTIONS:
+                cursor.execute("SELECT COUNT(*) as cnt FROM memories WHERE category = ?", (cat,))
+                stats[cat] = cursor.fetchone()["cnt"]
+            return stats
+
+        return {cat: 0 for cat in COLLECTIONS}
+
+    def check_document_hash(self, file_path: str) -> Optional[str]:
+        """Check if a document has already been processed (SHA-256 cache)."""
+        from shared.security import sha256_file
+        file_hash = sha256_file(file_path)
+        return self._hash_cache.get(file_hash)
+
+    def register_document_hash(self, file_path: str, memory_id: str) -> None:
+        """Register a processed document hash."""
+        from shared.security import sha256_file
+        file_hash = sha256_file(file_path)
+        self._hash_cache[file_hash] = memory_id
+
+
+# Global memory engine instance
+memory_engine = MemoryEngine()

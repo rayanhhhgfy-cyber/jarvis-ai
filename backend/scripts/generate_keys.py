@@ -1,1 +1,30 @@
-aW1wb3J0IHNlY3JldHMKaW1wb3J0IGJhc2U2NAppbXBvcnQgb3MKCmRlZiBnZW5lcmF0ZV9rZXlzKCk6CiAgICAjIDEuIEdlbmVyYXRlIGEgc3Ryb25nLCByYW5kb20gc3RyaW5nIGZvciBCQUNLRU5EX1NFQ1JFVF9LRVkKICAgICMgVGhpcyBpcyB1c2VkIGZvciBKV1Qgc2lnbmluZyBhbmQgZ2VuZXJhbCBzZXNzaW9uIHNlY3VyaXR5LgogICAgYmFja2VuZF9zZWNyZXQgPSBzZWNyZXRzLnRva2VuX3VybHNhZmUoMzIpCgogICAgIyAyLiBHZW5lcmF0ZSBhIDMyLWNoYXJhY3RlciByYW5kb20gc3RyaW5nIGZvciBFTkNSWVBUSU9OX0tFWQogICAgIyBUaGlzIGlzIHVzZWQgZm9yIEFFUy0yNTYgc3ltbWV0cmljIGVuY3J5cHRpb24gb2Ygc3RvcmVkIGRhdGEuCiAgICAjIE5vdGU6IENyeXB0b2dyYXBoeS9GZXJuZXQgb2Z0ZW4gZXhwZWN0cyBiYXNlNjQgZW5jb2RlZCBieXRlcyBvZiAzMiByYW5kb20gYnl0ZXMuCiAgICByYXdfa2V5ID0gc2VjcmV0cy50b2tlbl9ieXRlcygzMikKICAgIGVuY3J5cHRpb25fa2V5ID0gYmFzZTY0LnVybHNhZmVfYjY0ZW5jb2RlKHJhd19rZXkpLmRlY29kZSgndXRmLTgnKQoKICAgIHByaW50KCI9IiAqIDYwKQogICAgcHJpbnQoIkpBUlZJUyBPTUVHQSAtIFNFQ1VSSVRZIEtFWSBHRU5FUkFUT1IiKQogICAgcHJpbnQoIj0iICogNjApCiAgICBwcmludChmIkJBQ0tFTkRfU0VDUkVUX0tFWT17YmFja2VuZF9zZWNyZXR9IikKICAgIHByaW50KGYiRU5DUllQVElPTl9LRVk9e2VuY3J5cHRpb25fa2V5fSIpCiAgICBwcmludCgiPSIgKiA2MCkKICAgIHByaW50KCJcbltJTlNUUlVDVElPTlNdIikKICAgIHByaW50KCIxLiBDb3B5IHRoZSB2YWx1ZXMgYWJvdmUuIikKICAgIHByaW50KCIyLiBPcGVuIHlvdXIgJy5lbnYnIGZpbGUgaW4gdGhlIHJvb3QgZGlyZWN0b3J5LiIpCiAgICBwcmludCgiMy4gUGFzdGUgdGhlbSBpbnRvIHRoZSBjb3JyZXNwb25kaW5nIGZpZWxkcy4iKQogICAgcHJpbnQoIjQuIEtlZXAgdGhlc2Uga2V5cyBzZWNyZXQhIElmIGxvc3QsIGVuY3J5cHRlZCBkYXRhIG1heSBiZWNvbWUgaW5hY2Nlc3NpYmxlLiIpCiAgICBwcmludCgiPSIgKiA2MCkKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBnZW5lcmF0ZV9rZXlzKCkK
+import secrets
+import base64
+import os
+
+def generate_keys():
+    # 1. Generate a strong, random string for BACKEND_SECRET_KEY
+    # This is used for JWT signing and general session security.
+    backend_secret = secrets.token_urlsafe(32)
+
+    # 2. Generate a 32-character random string for ENCRYPTION_KEY
+    # This is used for AES-256 symmetric encryption of stored data.
+    # Note: Cryptography/Fernet often expects base64 encoded bytes of 32 random bytes.
+    raw_key = secrets.token_bytes(32)
+    encryption_key = base64.urlsafe_b64encode(raw_key).decode('utf-8')
+
+    print("=" * 60)
+    print("JARVIS OMEGA - SECURITY KEY GENERATOR")
+    print("=" * 60)
+    print(f"BACKEND_SECRET_KEY={backend_secret}")
+    print(f"ENCRYPTION_KEY={encryption_key}")
+    print("=" * 60)
+    print("\n[INSTRUCTIONS]")
+    print("1. Copy the values above.")
+    print("2. Open your '.env' file in the root directory.")
+    print("3. Paste them into the corresponding fields.")
+    print("4. Keep these keys secret! If lost, encrypted data may become inaccessible.")
+    print("=" * 60)
+
+if __name__ == "__main__":
+    generate_keys()

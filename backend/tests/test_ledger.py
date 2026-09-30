@@ -1,1 +1,76 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgVGVzdCBGaW5hbmNpYWwgTGVkZ2VyIChQaGFzZSAxKQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CgppbXBvcnQgcHl0ZXN0CmZyb20gYmFja2VuZC5sZWRnZXIgaW1wb3J0IGxlZGdlcgpmcm9tIGJhY2tlbmQuYnVzaW5lc3NfZGIgaW1wb3J0IGV4ZWN1dGUsIHF1ZXJ5X29uZQoKCmRlZiB0ZXN0X2xlZGdlcl9yZWNvcmRfZW50cnlfY3JlZGl0X2FuZF9kZWJpdCgpOgogICAgY19pZCA9IGxlZGdlci5yZWNvcmRfZW50cnkoCiAgICAgICAgZW50cnlfdHlwZT0iY3JlZGl0IiwKICAgICAgICBhbW91bnQ9MTUwLjAsCiAgICAgICAgY2F0ZWdvcnk9InN0cmlwZV9wYXltZW50IiwKICAgICAgICBjdXJyZW5jeT0iVVNEIiwKICAgICAgICBidXNpbmVzc19pZD0xLAogICAgICAgIHNvdXJjZV9ldmVudD0ic3RyaXBlX2NoYXJnZSIsCiAgICAgICAgcmVmZXJlbmNlX2lkPSJjaF8xMjM0NSIsCiAgICApCiAgICBhc3NlcnQgY19pZCA+IDAKCiAgICBkX2lkID0gbGVkZ2VyLnJlY29yZF9lbnRyeSgKICAgICAgICBlbnRyeV90eXBlPSJkZWJpdCIsCiAgICAgICAgYW1vdW50PTUwLjAsCiAgICAgICAgY2F0ZWdvcnk9ImFkX3NwZW5kIiwKICAgICAgICBjdXJyZW5jeT0iVVNEIiwKICAgICAgICBidXNpbmVzc19pZD0xLAogICAgICAgIHNvdXJjZV9ldmVudD0iZmFjZWJvb2tfYWRzIiwKICAgICAgICByZWZlcmVuY2VfaWQ9ImFkXzY3ODkwIiwKICAgICkKICAgIGFzc2VydCBkX2lkID4gMAoKICAgIGJhbGFuY2UgPSBsZWRnZXIuZ2V0X2J1c2luZXNzX2JhbGFuY2UoMSkKICAgIGFzc2VydCBiYWxhbmNlWyJ0b3RhbF9jcmVkaXRzIl0gPj0gMTUwLjAKICAgIGFzc2VydCBiYWxhbmNlWyJ0b3RhbF9kZWJpdHMiXSA+PSA1MC4wCiAgICBhc3NlcnQgYmFsYW5jZVsibmV0X2JhbGFuY2UiXSA+PSAxMDAuMAoKCmRlZiB0ZXN0X2xlZGdlcl9wb3J0Zm9saW9fYmFsYW5jZSgpOgogICAgbGVkZ2VyLnJlY29yZF9lbnRyeShlbnRyeV90eXBlPSJjcmVkaXQiLCBhbW91bnQ9MjAwLjAsIGNhdGVnb3J5PSJzZXJ2aWNlX2ZlZSIsIGJ1c2luZXNzX2lkPTIpCiAgICBwb3J0Zm9saW8gPSBsZWRnZXIuZ2V0X3BvcnRmb2xpb19iYWxhbmNlKCkKICAgIGFzc2VydCBwb3J0Zm9saW9bInRvdGFsX2NyZWRpdHMiXSA+PSAzNTAuMAogICAgYXNzZXJ0IHBvcnRmb2xpb1sibmV0X2JhbGFuY2UiXSA+IDAKCgpkZWYgdGVzdF9sZWRnZXJfc3BlbmRfYnlfY2F0ZWdvcnkoKToKICAgIGxlZGdlci5yZWNvcmRfZW50cnkoZW50cnlfdHlwZT0iZGViaXQiLCBhbW91bnQ9MzAuMCwgY2F0ZWdvcnk9ImFwaV9mZWUiLCBidXNpbmVzc19pZD0xKQogICAgc3BlbmRfY2F0cyA9IGxlZGdlci5nZXRfc3BlbmRfYnlfY2F0ZWdvcnkoYnVzaW5lc3NfaWQ9MSkKICAgIGNhdGVnb3JpZXMgPSBbc1siY2F0ZWdvcnkiXSBmb3IgcyBpbiBzcGVuZF9jYXRzXQogICAgYXNzZXJ0ICJhZF9zcGVuZCIgaW4gY2F0ZWdvcmllcwogICAgYXNzZXJ0ICJhcGlfZmVlIiBpbiBjYXRlZ29yaWVzCgoKaW1wb3J0IHV1aWQKCmRlZiB0ZXN0X2xlZGdlcl9yZWNvbmNpbGlhdGlvbigpOgogICAgIyBJbnNlcnQgZHVtbXkgY2xpZW50IGZpcnN0IHRvIHNhdGlzZnkgZm9yZWlnbiBrZXkgY29uc3RyYWludAogICAgY2xpZW50X2lkID0gZXhlY3V0ZSgKICAgICAgICAiSU5TRVJUIElOVE8gY2xpZW50cyAobmFtZSwgY3JlYXRlZF9hdCkgVkFMVUVTICgnVGVzdCBDbGllbnQnLCAnMjAyNi0wOC0wMVQwMDowMDowMCcpIiwKICAgICkKICAgICMgSW5zZXJ0IGR1bW15IHBhaWQgb3JkZXIgd2l0aCBjbGllbnRfaWQKICAgIGV4ZWN1dGUoCiAgICAgICAgIklOU0VSVCBJTlRPIG9yZGVycyAoY2xpZW50X2lkLCBjdXN0b21lcl9uYW1lLCB0b3RhbCwgY3VycmVuY3ksIHN0YXR1cywgY3JlYXRlZF9hdCkgVkFMVUVTICg/LCAnSm9obicsIDk5LjAsICdVU0QnLCAncGFpZCcsICcyMDI2LTA4LTAxVDAwOjAwOjAwJykiLAogICAgICAgIChjbGllbnRfaWQsKSwKICAgICkKICAgIGludl9udW0gPSBmIklOVi1URVNULXt1dWlkLnV1aWQ0KCkuaGV4Wzo2XX0iCiAgICBleGVjdXRlKAogICAgICAgICJJTlNFUlQgSU5UTyBpbnZvaWNlcyAoY2xpZW50X2lkLCBudW1iZXIsIGFtb3VudCwgY3VycmVuY3ksIHN0YXR1cywgY3JlYXRlZF9hdCkgVkFMVUVTICg/LCA/LCA1MDAuMCwgJ1VTRCcsICdwYWlkJywgJzIwMjYtMDgtMDFUMDA6MDA6MDAnKSIsCiAgICAgICAgKGNsaWVudF9pZCwgaW52X251bSksCiAgICApCgogICAgcmVzID0gbGVkZ2VyLnJlY29uY2lsZV9vbl9maXJzdF9ydW4oKQogICAgaWYgcmVzWyJyZWNvbmNpbGVkIl06CiAgICAgICAgYXNzZXJ0IHJlc1siZW50cmllc19hZGRlZCJdID49IDIKICAgIGVsc2U6CiAgICAgICAgYXNzZXJ0IHJlc1sicmVhc29uIl0gPT0gIkFscmVhZHkgcmVjb25jaWxlZCIK
+# ====================================================================
+# JARVIS OMEGA — Test Financial Ledger (Phase 1)
+# ====================================================================
+
+import pytest
+from backend.ledger import ledger
+from backend.business_db import execute, query_one
+
+
+def test_ledger_record_entry_credit_and_debit():
+    c_id = ledger.record_entry(
+        entry_type="credit",
+        amount=150.0,
+        category="stripe_payment",
+        currency="USD",
+        business_id=1,
+        source_event="stripe_charge",
+        reference_id="ch_12345",
+    )
+    assert c_id > 0
+
+    d_id = ledger.record_entry(
+        entry_type="debit",
+        amount=50.0,
+        category="ad_spend",
+        currency="USD",
+        business_id=1,
+        source_event="facebook_ads",
+        reference_id="ad_67890",
+    )
+    assert d_id > 0
+
+    balance = ledger.get_business_balance(1)
+    assert balance["total_credits"] >= 150.0
+    assert balance["total_debits"] >= 50.0
+    assert balance["net_balance"] >= 100.0
+
+
+def test_ledger_portfolio_balance():
+    ledger.record_entry(entry_type="credit", amount=200.0, category="service_fee", business_id=2)
+    portfolio = ledger.get_portfolio_balance()
+    assert portfolio["total_credits"] >= 350.0
+    assert portfolio["net_balance"] > 0
+
+
+def test_ledger_spend_by_category():
+    ledger.record_entry(entry_type="debit", amount=30.0, category="api_fee", business_id=1)
+    spend_cats = ledger.get_spend_by_category(business_id=1)
+    categories = [s["category"] for s in spend_cats]
+    assert "ad_spend" in categories
+    assert "api_fee" in categories
+
+
+import uuid
+
+def test_ledger_reconciliation():
+    # Insert dummy client first to satisfy foreign key constraint
+    client_id = execute(
+        "INSERT INTO clients (name, created_at) VALUES ('Test Client', '2026-08-01T00:00:00')",
+    )
+    # Insert dummy paid order with client_id
+    execute(
+        "INSERT INTO orders (client_id, customer_name, total, currency, status, created_at) VALUES (?, 'John', 99.0, 'USD', 'paid', '2026-08-01T00:00:00')",
+        (client_id,),
+    )
+    inv_num = f"INV-TEST-{uuid.uuid4().hex[:6]}"
+    execute(
+        "INSERT INTO invoices (client_id, number, amount, currency, status, created_at) VALUES (?, ?, 500.0, 'USD', 'paid', '2026-08-01T00:00:00')",
+        (client_id, inv_num),
+    )
+
+    res = ledger.reconcile_on_first_run()
+    if res["reconciled"]:
+        assert res["entries_added"] >= 2
+    else:
+        assert res["reason"] == "Already reconciled"

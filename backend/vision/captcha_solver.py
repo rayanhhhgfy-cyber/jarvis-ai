@@ -1,1 +1,62 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSB0eXBpbmcgaW1wb3J0IE9wdGlvbmFsLCBEaWN0LCBBbnkKCmZyb20gYmFja2VuZC5zZXJ2aWNlcy52aXNpb25fc2VydmljZSBpbXBvcnQgdmlzaW9uX3NlcnZpY2UKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJjYXB0Y2hhX3NvbHZlciIpCgoKY2xhc3MgQ2FwdGNoYVNvbHZlcjoKICAgICIiIgogICAgVmlzaW9uLWJhc2VkIENBUFRDSEEgc29sdmVyIHVzaW5nIFF3ZW4tVkwuCiAgICBTdXBwb3J0cyB0ZXh0IENBUFRDSEFzLCBpbWFnZSBzZWxlY3Rpb24sIGFuZCByZUNBUFRDSEEgYW5hbHlzaXMuCiAgICAiIiIKCiAgICBERVRFQ1RJT05fUFJPTVBUID0gKAogICAgICAgICJBbmFseXplIHRoaXMgaW1hZ2UgYW5kIHRlbGwgbWUgaWYgaXQgY29udGFpbnMgYSBDQVBUQ0hBIGNoYWxsZW5nZS4gIgogICAgICAgICJSZXNwb25kIHdpdGggZXhhY3RseSBvbmUgd29yZDogJ1RFWFQnIGZvciB0ZXh0LWJhc2VkIENBUFRDSEEsICIKICAgICAgICAiJ0lNQUdFJyBmb3IgaW1hZ2Utc2VsZWN0aW9uIENBUFRDSEEsICdSRUNBUFRDSEEnIGZvciByZUNBUFRDSEEsICIKICAgICAgICAib3IgJ05PTkUnIGlmIG5vIENBUFRDSEEgaXMgcHJlc2VudCwgZm9sbG93ZWQgYnkgeW91ciBjb25maWRlbmNlIDAtMTAwLiIKICAgICkKCiAgICBURVhUX1NPTFZFX1BST01QVCA9ICgKICAgICAgICAiVGhpcyBpbWFnZSBjb250YWlucyBhIHRleHQtYmFzZWQgQ0FQVENIQS4gIgogICAgICAgICJSZWFkIHRoZSBkaXN0b3J0ZWQgdGV4dCBjaGFyYWN0ZXJzIGNhcmVmdWxseSBhbmQgIgogICAgICAgICJyZXNwb25kIHdpdGggT05MWSB0aGUgZXhhY3QgY2hhcmFjdGVycyB5b3Ugc2VlLCBubyBleHBsYW5hdGlvbi4iCiAgICApCgogICAgYXN5bmMgZGVmIGRldGVjdChzZWxmLCBpbWFnZV9ieXRlczogYnl0ZXMpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgIHJlc3VsdCA9IGF3YWl0IHZpc2lvbl9zZXJ2aWNlLmFuYWx5emVfaW1hZ2VfYnl0ZXMoCiAgICAgICAgICAgIGltYWdlX2J5dGVzLCBzZWxmLkRFVEVDVElPTl9QUk9NUFQKICAgICAgICApCiAgICAgICAgcmVzdWx0ID0gcmVzdWx0LnN0cmlwKCkudXBwZXIoKQogICAgICAgIGNhcHRjaGFfdHlwZSA9ICJOT05FIgogICAgICAgIGNvbmZpZGVuY2UgPSAwCiAgICAgICAgZm9yIHQgaW4gWyJURVhUIiwgIklNQUdFIiwgIlJFQ0FQVENIQSIsICJOT05FIl06CiAgICAgICAgICAgIGlmIHQgaW4gcmVzdWx0OgogICAgICAgICAgICAgICAgY2FwdGNoYV90eXBlID0gdAogICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICBmb3IgcGFydCBpbiByZXN1bHQuc3BsaXQoKToKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgY29uZmlkZW5jZSA9IGludChwYXJ0KQogICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICAgICAgZXhjZXB0IFZhbHVlRXJyb3I6CiAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgIHJldHVybiB7InR5cGUiOiBjYXB0Y2hhX3R5cGUsICJjb25maWRlbmNlIjogY29uZmlkZW5jZSwgInJhdyI6IHJlc3VsdH0KCiAgICBhc3luYyBkZWYgc29sdmVfdGV4dChzZWxmLCBpbWFnZV9ieXRlczogYnl0ZXMpIC0+IE9wdGlvbmFsW3N0cl06CiAgICAgICAgcmV0dXJuIGF3YWl0IHZpc2lvbl9zZXJ2aWNlLmFuYWx5emVfaW1hZ2VfYnl0ZXMoCiAgICAgICAgICAgIGltYWdlX2J5dGVzLCBzZWxmLlRFWFRfU09MVkVfUFJPTVBUCiAgICAgICAgKQoKICAgIGFzeW5jIGRlZiBzb2x2ZShzZWxmLCBpbWFnZV9ieXRlczogYnl0ZXMpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgIGRldGVjdGlvbiA9IGF3YWl0IHNlbGYuZGV0ZWN0KGltYWdlX2J5dGVzKQogICAgICAgIGlmIGRldGVjdGlvblsidHlwZSJdID09ICJURVhUIiBhbmQgZGV0ZWN0aW9uWyJjb25maWRlbmNlIl0gPiA1MDoKICAgICAgICAgICAgc29sdXRpb24gPSBhd2FpdCBzZWxmLnNvbHZlX3RleHQoaW1hZ2VfYnl0ZXMpCiAgICAgICAgICAgIGRldGVjdGlvblsic29sdXRpb24iXSA9IHNvbHV0aW9uCiAgICAgICAgcmV0dXJuIGRldGVjdGlvbgoKCmNhcHRjaGFfc29sdmVyID0gQ2FwdGNoYVNvbHZlcigpCg==
+from __future__ import annotations
+
+from typing import Optional, Dict, Any
+
+from backend.services.vision_service import vision_service
+from shared.logger import get_logger
+
+log = get_logger("captcha_solver")
+
+
+class CaptchaSolver:
+    """
+    Vision-based CAPTCHA solver using Qwen-VL.
+    Supports text CAPTCHAs, image selection, and reCAPTCHA analysis.
+    """
+
+    DETECTION_PROMPT = (
+        "Analyze this image and tell me if it contains a CAPTCHA challenge. "
+        "Respond with exactly one word: 'TEXT' for text-based CAPTCHA, "
+        "'IMAGE' for image-selection CAPTCHA, 'RECAPTCHA' for reCAPTCHA, "
+        "or 'NONE' if no CAPTCHA is present, followed by your confidence 0-100."
+    )
+
+    TEXT_SOLVE_PROMPT = (
+        "This image contains a text-based CAPTCHA. "
+        "Read the distorted text characters carefully and "
+        "respond with ONLY the exact characters you see, no explanation."
+    )
+
+    async def detect(self, image_bytes: bytes) -> Dict[str, Any]:
+        result = await vision_service.analyze_image_bytes(
+            image_bytes, self.DETECTION_PROMPT
+        )
+        result = result.strip().upper()
+        captcha_type = "NONE"
+        confidence = 0
+        for t in ["TEXT", "IMAGE", "RECAPTCHA", "NONE"]:
+            if t in result:
+                captcha_type = t
+                break
+        for part in result.split():
+            try:
+                confidence = int(part)
+                break
+            except ValueError:
+                continue
+        return {"type": captcha_type, "confidence": confidence, "raw": result}
+
+    async def solve_text(self, image_bytes: bytes) -> Optional[str]:
+        return await vision_service.analyze_image_bytes(
+            image_bytes, self.TEXT_SOLVE_PROMPT
+        )
+
+    async def solve(self, image_bytes: bytes) -> Dict[str, Any]:
+        detection = await self.detect(image_bytes)
+        if detection["type"] == "TEXT" and detection["confidence"] > 50:
+            solution = await self.solve_text(image_bytes)
+            detection["solution"] = solution
+        return detection
+
+
+captcha_solver = CaptchaSolver()

@@ -1,1 +1,56 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgUmVzZWFyY2ggU3dhcm0gU2VydmljZSBVbml0IFRlc3RzCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiClVuaXQgdGVzdHMgZm9yIHRoZSBSZXNlYXJjaCBTd2FybSBzZXJ2aWNlIChtdWx0aS1hZ2VudCB3ZWIgcmVzZWFyY2ggY2FtcGFpZ24pLgoiIiIKCmltcG9ydCBweXRlc3QKZnJvbSB1bml0dGVzdC5tb2NrIGltcG9ydCBBc3luY01vY2ssIHBhdGNoCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5yZXNlYXJjaF9zd2FybSBpbXBvcnQgUmVzZWFyY2hTd2FybQoKQHB5dGVzdC5maXh0dXJlCmRlZiBhbnlpb19iYWNrZW5kKCk6CiAgICByZXR1cm4gImFzeW5jaW8iCgpAcHl0ZXN0LmZpeHR1cmUKZGVmIHN3YXJtKCk6CiAgICByZXR1cm4gUmVzZWFyY2hTd2FybSgpCgpAcHl0ZXN0Lm1hcmsuYW55aW8KQHBhdGNoKCJiYWNrZW5kLnNlcnZpY2VzLnJlc2VhcmNoX3N3YXJtLmxsbV9zZXJ2aWNlIikKQHBhdGNoKCJiYWNrZW5kLnNlcnZpY2VzLnJlc2VhcmNoX3N3YXJtLndlYl9zZWFyY2hfc2VydmljZSIpCmFzeW5jIGRlZiB0ZXN0X3J1bl9zd2FybShtb2NrX3NlYXJjaCwgbW9ja19sbG0sIHN3YXJtKToKICAgICIiIlRlc3QgZnVsbCByZXNlYXJjaCBzd2FybSBmbG93IHdpdGggbW9ja2VkIExMTSBxdWVyaWVzIGFuZCB3ZWIgc2VhcmNoIHJlc3VsdHMuIiIiCiAgICAjIE1vY2sgTExNIGdlbmVyYXRpbmcgc3ViLXF1ZXJpZXMKICAgIG1vY2tfbGxtLmdldF9yZXNwb25zZSA9IEFzeW5jTW9jayhzaWRlX2VmZmVjdD1bCiAgICAgICAgJ1sic2l0ZTpyZWRkaXQuY29tIFB5dGhvbiAzLjEzIiwgIlB5dGhvbiAzLjEzIHBlcmZvcm1hbmNlIGltcHJvdmVtZW50cyJdJywgIyBzdWItcXVlcmllcwogICAgICAgICIjIERlZXAgUmVzZWFyY2ggUmVwb3J0OiBQeXRob24gMy4xM1xuXG4jIyBFeGVjdXRpdmUgU3VtbWFyeVxuSGlnaGx5IHBlcmZvcm1hbnQuIiAjIHN5bnRoZXNpemVkIHJlcG9ydAogICAgXSkKICAgIAogICAgIyBNb2NrIHNlYXJjaCByZXN1bHRzIChtYWluJ3Mgd2ViX3NlYXJjaF9zZXJ2aWNlLnNlYXJjaCByZXR1cm5zIGEgcGxhaW4gbGlzdCkKICAgIG1vY2tfc2VhcmNoLnNlYXJjaCA9IEFzeW5jTW9jayhyZXR1cm5fdmFsdWU9WwogICAgICAgIHsidGl0bGUiOiAiUHl0aG9uIDMuMTMgcmVsZWFzZSIsICJzbmlwcGV0IjogIlB5dGhvbiAzLjEzIGlzIG91dCB3aXRoIHBlcmZvcm1hbmNlIGJvb3N0cy4iLCAidXJsIjogImh0dHBzOi8vcHl0aG9uLm9yZy8zLjEzIn0sCiAgICAgICAgeyJ0aXRsZSI6ICJSZWRkaXQgdGhyZWFkIiwgInNuaXBwZXQiOiAiRGlzY3Vzc2luZyBQeXRob24gMy4xMyBmZWF0dXJlcy4iLCAidXJsIjogImh0dHBzOi8vcmVkZGl0LmNvbS9yL3B5dGhvbiJ9CiAgICBdKQoKICAgICMgTW9jayBwYWdlIGZldGNoIChtb2R1bGUtbGV2ZWwgaGVscGVyIHJlcGxhY2luZyB0aGUgYnJhbmNoJ3MgZmV0Y2hfdXJsKQogICAgd2l0aCBwYXRjaCgiYmFja2VuZC5zZXJ2aWNlcy5yZXNlYXJjaF9zd2FybS5fZmV0Y2hfdXJsX3RleHQiLAogICAgICAgICAgICAgICBuZXc9QXN5bmNNb2NrKHNpZGVfZWZmZWN0PWxhbWJkYSB1cmwsIG1heF9jaGFycz00MDAwOiB7CiAgICAgICAgICAgICAgICAgICAic3VjY2VzcyI6IFRydWUsCiAgICAgICAgICAgICAgICAgICAidXJsIjogdXJsLAogICAgICAgICAgICAgICAgICAgImNvbnRlbnQiOiBmIkZ1bGwgY29udGVudCBvZiB7dXJsfSBzaG93aW5nIGZlYXR1cmVzLiIKICAgICAgICAgICAgICAgfSkpIGFzIG1vY2tfZmV0Y2g6CiAgICAKICAgICAgICByZXN1bHQgPSBhd2FpdCBzd2FybS5ydW5fc3dhcm0ocXVlcnk9IlB5dGhvbiAzLjEzIGZlYXR1cmVzIiwgbnVtX2FnZW50cz0yKQoKICAgICAgICBhc3NlcnQgcmVzdWx0WyJzdWNjZXNzIl0gaXMgVHJ1ZQogICAgICAgIGFzc2VydCAiRXhlY3V0aXZlIFN1bW1hcnkiIGluIHJlc3VsdFsicmVwb3J0Il0KICAgICAgICBhc3NlcnQgbGVuKHJlc3VsdFsic291cmNlcyJdKSA9PSAyCiAgICAgICAgYXNzZXJ0IHJlc3VsdFsic291cmNlcyJdWzBdWyJ1cmwiXSA9PSAiaHR0cHM6Ly9weXRob24ub3JnLzMuMTMiCiAgICAgICAgYXNzZXJ0IHJlc3VsdFsic3ViX3F1ZXJpZXMiXSA9PSBbInNpdGU6cmVkZGl0LmNvbSBQeXRob24gMy4xMyIsICJQeXRob24gMy4xMyBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMiXQoKICAgICAgICAjIFZlcmlmeSBtb2NrIGNhbGwgY291bnRzCiAgICAgICAgYXNzZXJ0IG1vY2tfc2VhcmNoLnNlYXJjaC5jYWxsX2NvdW50ID09IDIKICAgICAgICBhc3NlcnQgbW9ja19mZXRjaC5jYWxsX2NvdW50ID09IDIKICAgICAgICBhc3NlcnQgbW9ja19sbG0uZ2V0X3Jlc3BvbnNlLmNhbGxfY291bnQgPT0gMgo=
+# ====================================================================
+# JARVIS OMEGA — Research Swarm Service Unit Tests
+# ====================================================================
+"""
+Unit tests for the Research Swarm service (multi-agent web research campaign).
+"""
+
+import pytest
+from unittest.mock import AsyncMock, patch
+from backend.services.research_swarm import ResearchSwarm
+
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
+
+@pytest.fixture
+def swarm():
+    return ResearchSwarm()
+
+@pytest.mark.anyio
+@patch("backend.services.research_swarm.llm_service")
+@patch("backend.services.research_swarm.web_search_service")
+async def test_run_swarm(mock_search, mock_llm, swarm):
+    """Test full research swarm flow with mocked LLM queries and web search results."""
+    # Mock LLM generating sub-queries
+    mock_llm.get_response = AsyncMock(side_effect=[
+        '["site:reddit.com Python 3.13", "Python 3.13 performance improvements"]', # sub-queries
+        "# Deep Research Report: Python 3.13\n\n## Executive Summary\nHighly performant." # synthesized report
+    ])
+    
+    # Mock search results (main's web_search_service.search returns a plain list)
+    mock_search.search = AsyncMock(return_value=[
+        {"title": "Python 3.13 release", "snippet": "Python 3.13 is out with performance boosts.", "url": "https://python.org/3.13"},
+        {"title": "Reddit thread", "snippet": "Discussing Python 3.13 features.", "url": "https://reddit.com/r/python"}
+    ])
+
+    # Mock page fetch (module-level helper replacing the branch's fetch_url)
+    with patch("backend.services.research_swarm._fetch_url_text",
+               new=AsyncMock(side_effect=lambda url, max_chars=4000: {
+                   "success": True,
+                   "url": url,
+                   "content": f"Full content of {url} showing features."
+               })) as mock_fetch:
+    
+        result = await swarm.run_swarm(query="Python 3.13 features", num_agents=2)
+
+        assert result["success"] is True
+        assert "Executive Summary" in result["report"]
+        assert len(result["sources"]) == 2
+        assert result["sources"][0]["url"] == "https://python.org/3.13"
+        assert result["sub_queries"] == ["site:reddit.com Python 3.13", "Python 3.13 performance improvements"]
+
+        # Verify mock call counts
+        assert mock_search.search.call_count == 2
+        assert mock_fetch.call_count == 2
+        assert mock_llm.get_response.call_count == 2

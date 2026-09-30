@@ -1,1 +1,42 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGhhc2hsaWIKZnJvbSB0eXBpbmcgaW1wb3J0IE9wdGlvbmFsLCBDYWxsYWJsZQoKCmNsYXNzIER5bmFtaWNTYW1wbGVyOgogICAgIiIiCiAgICBDb21wYXJlcyBzY3JlZW5zaG90IGhhc2hlcyB0byBhdm9pZCBzZW5kaW5nIGlkZW50aWNhbCBmcmFtZXMgdG8gdGhlCiAgICB2aXNpb24gbW9kZWwsIHJlZHVjaW5nIHRva2VuIGNvc3RzIGJ5IHVwIHRvIDkwJSBvbiBzdGF0aWMgc2NyZWVucy4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKSAtPiBOb25lOgogICAgICAgIHNlbGYuX2xhc3RfaGFzaDogT3B0aW9uYWxbc3RyXSA9IE5vbmUKICAgICAgICBzZWxmLl9za2lwX2NvdW50OiBpbnQgPSAwCiAgICAgICAgc2VsZi5fdG90YWxfY291bnQ6IGludCA9IDAKICAgICAgICBzZWxmLl9jaGFuZ2VfdGhyZXNob2xkOiBmbG9hdCA9IDAuMDUKCiAgICBkZWYgc2hvdWxkX2FuYWx5emUoc2VsZiwgaW1hZ2VfYnl0ZXM6IGJ5dGVzKSAtPiBib29sOgogICAgICAgIHNlbGYuX3RvdGFsX2NvdW50ICs9IDEKICAgICAgICBoID0gaGFzaGxpYi5zaGEyNTYoaW1hZ2VfYnl0ZXMpLmhleGRpZ2VzdCgpCiAgICAgICAgaWYgaCA9PSBzZWxmLl9sYXN0X2hhc2g6CiAgICAgICAgICAgIHNlbGYuX3NraXBfY291bnQgKz0gMQogICAgICAgICAgICByZXR1cm4gRmFsc2UKICAgICAgICBzZWxmLl9sYXN0X2hhc2ggPSBoCiAgICAgICAgcmV0dXJuIFRydWUKCiAgICBkZWYgcmVzZXQoc2VsZikgLT4gTm9uZToKICAgICAgICBzZWxmLl9sYXN0X2hhc2ggPSBOb25lCgogICAgQHByb3BlcnR5CiAgICBkZWYgc3RhdHMoc2VsZikgLT4gZGljdDoKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAidG90YWxfZnJhbWVzIjogc2VsZi5fdG90YWxfY291bnQsCiAgICAgICAgICAgICJza2lwcGVkX2ZyYW1lcyI6IHNlbGYuX3NraXBfY291bnQsCiAgICAgICAgICAgICJzYXZpbmdzX3BjdCI6IHJvdW5kKAogICAgICAgICAgICAgICAgKHNlbGYuX3NraXBfY291bnQgLyBtYXgoc2VsZi5fdG90YWxfY291bnQsIDEpKSAqIDEwMCwgMQogICAgICAgICAgICApLAogICAgICAgIH0KCgpkeW5hbWljX3NhbXBsZXIgPSBEeW5hbWljU2FtcGxlcigpCg==
+from __future__ import annotations
+
+import hashlib
+from typing import Optional, Callable
+
+
+class DynamicSampler:
+    """
+    Compares screenshot hashes to avoid sending identical frames to the
+    vision model, reducing token costs by up to 90% on static screens.
+    """
+
+    def __init__(self) -> None:
+        self._last_hash: Optional[str] = None
+        self._skip_count: int = 0
+        self._total_count: int = 0
+        self._change_threshold: float = 0.05
+
+    def should_analyze(self, image_bytes: bytes) -> bool:
+        self._total_count += 1
+        h = hashlib.sha256(image_bytes).hexdigest()
+        if h == self._last_hash:
+            self._skip_count += 1
+            return False
+        self._last_hash = h
+        return True
+
+    def reset(self) -> None:
+        self._last_hash = None
+
+    @property
+    def stats(self) -> dict:
+        return {
+            "total_frames": self._total_count,
+            "skipped_frames": self._skip_count,
+            "savings_pct": round(
+                (self._skip_count / max(self._total_count, 1)) * 100, 1
+            ),
+        }
+
+
+dynamic_sampler = DynamicSampler()

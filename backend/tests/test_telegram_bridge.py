@@ -1,1 +1,64 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgVGVsZWdyYW0gQnJpZGdlIFVuaXQgVGVzdHMKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoiIiIKVW5pdCB0ZXN0cyBmb3IgdGhlIFRlbGVncmFtIEJyaWRnZSBhbmQgaXRzIHJlcGx5IGNvbW1hbmQuCiIiIgoKaW1wb3J0IHB5dGVzdApmcm9tIHVuaXR0ZXN0Lm1vY2sgaW1wb3J0IEFzeW5jTW9jaywgTWFnaWNNb2NrLCBwYXRjaApmcm9tIGJhY2tlbmQudGVsZWdyYW1fYXBwLnRlbGVncmFtX2JyaWRnZSBpbXBvcnQgVGVsZWdyYW1CcmlkZ2UKCkBweXRlc3QuZml4dHVyZQpkZWYgYW55aW9fYmFja2VuZCgpOgogICAgcmV0dXJuICJhc3luY2lvIgoKQHB5dGVzdC5maXh0dXJlCmRlZiBicmlkZ2UoKToKICAgIHRiID0gVGVsZWdyYW1CcmlkZ2UoKQogICAgdGIuX2JvdCA9IE1hZ2ljTW9jaygpCiAgICB0Yi5fYm90LnNlbmRfbWVzc2FnZSA9IEFzeW5jTW9jaygpCiAgICByZXR1cm4gdGIKCkBweXRlc3QubWFyay5hbnlpbwphc3luYyBkZWYgdGVzdF9yZWNvcmRfY2hhdChicmlkZ2UpOgogICAgIiIiVGVzdCB0aGF0IGluY29taW5nIG1lc3NhZ2UgbWV0YWRhdGEgaXMgY29ycmVjdGx5IGNhY2hlZC4iIiIKICAgIG1vY2tfdXBkYXRlID0gTWFnaWNNb2NrKCkKICAgIG1vY2tfdXBkYXRlLmVmZmVjdGl2ZV91c2VyLmZpcnN0X25hbWUgPSAiQWxpY2UiCiAgICBtb2NrX3VwZGF0ZS5lZmZlY3RpdmVfdXNlci5sYXN0X25hbWUgPSAiU21pdGgiCiAgICBtb2NrX3VwZGF0ZS5lZmZlY3RpdmVfdXNlci51c2VybmFtZSA9ICJhbGljZXNtaXRoIgogICAgbW9ja191cGRhdGUuZWZmZWN0aXZlX2NoYXQuaWQgPSAxMjM0NQogICAgCiAgICBicmlkZ2UuX3JlY29yZF9jaGF0KG1vY2tfdXBkYXRlKQogICAgCiAgICBhc3NlcnQgYnJpZGdlLl90ZWxlZ3JhbV9jaGF0c1siYWxpY2UiXSA9PSAxMjM0NQogICAgYXNzZXJ0IGJyaWRnZS5fdGVsZWdyYW1fY2hhdHNbInNtaXRoIl0gPT0gMTIzNDUKICAgIGFzc2VydCBicmlkZ2UuX3RlbGVncmFtX2NoYXRzWyJhbGljZSBzbWl0aCJdID09IDEyMzQ1CiAgICBhc3NlcnQgYnJpZGdlLl90ZWxlZ3JhbV9jaGF0c1siYWxpY2VzbWl0aCJdID09IDEyMzQ1CiAgICBhc3NlcnQgYnJpZGdlLl90ZWxlZ3JhbV9jaGF0c1siQGFsaWNlc21pdGgiXSA9PSAxMjM0NQoKQHB5dGVzdC5tYXJrLmFueWlvCkBwYXRjaCgiYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZS5sbG1fc2VydmljZSIpCmFzeW5jIGRlZiB0ZXN0X2NtZF9yZXBseV90ZWxlZ3JhbV9kaXJlY3QobW9ja19sbG0sIGJyaWRnZSk6CiAgICAiIiJUZXN0IHRoZSAvcmVwbHkgY29tbWFuZCBmb3IgZGlyZWN0IFRlbGVncmFtIHJvdXRpbmcuIiIiCiAgICAjIFByZS1wb3B1bGF0ZSBjaGF0IElECiAgICBicmlkZ2UuX3RlbGVncmFtX2NoYXRzWyJib2IiXSA9IDY3ODkwCiAgICAKICAgIG1vY2tfdXBkYXRlID0gTWFnaWNNb2NrKCkKICAgIG1vY2tfdXBkYXRlLm1lc3NhZ2UucmVwbHlfdGV4dCA9IEFzeW5jTW9jaygpCiAgICAKICAgIG1vY2tfY29udGV4dCA9IE1hZ2ljTW9jaygpCiAgICBtb2NrX2NvbnRleHQuYXJncyA9IFsiYm9iIiwgIkkiLCAiYW0iLCAiYnVzeSJdCiAgICAKICAgIG1vY2tfbGxtLmdldF9yZXNwb25zZSA9IEFzeW5jTW9jayhyZXR1cm5fdmFsdWU9IkpBUlZJUzogSSBhbSBjdXJyZW50bHkgb2NjdXBpZWQuIikKICAgIAogICAgIyBNb2NrIGF1dGhvcml6ZSB0byByZXR1cm4gVHJ1ZQogICAgd2l0aCBwYXRjaC5vYmplY3QoYnJpZGdlLCAiX2F1dGhvcml6ZSIsIHJldHVybl92YWx1ZT1UcnVlKToKICAgICAgICBhd2FpdCBicmlkZ2UuX2NtZF9yZXBseShtb2NrX3VwZGF0ZSwgbW9ja19jb250ZXh0KQogICAgICAgIAogICAgICAgICMgVmVyaWZ5IExMTSB3YXMgY2FsbGVkIHRvIHBvbGlzaAogICAgICAgIG1vY2tfbGxtLmdldF9yZXNwb25zZS5hc3NlcnRfY2FsbGVkX29uY2UoKQogICAgICAgICMgVmVyaWZ5IG1lc3NhZ2Ugd2FzIHNlbnQgdG8gVGVsZWdyYW0gYm90CiAgICAgICAgYnJpZGdlLl9ib3Quc2VuZF9tZXNzYWdlLmFzc2VydF9jYWxsZWRfb25jZV93aXRoKGNoYXRfaWQ9Njc4OTAsIHRleHQ9IkpBUlZJUzogSSBhbSBjdXJyZW50bHkgb2NjdXBpZWQuIikKICAgICAgICAjIFZlcmlmeSBmZWVkYmFjayBtZXNzYWdlIHRvIFNpcgogICAgICAgIG1vY2tfdXBkYXRlLm1lc3NhZ2UucmVwbHlfdGV4dC5hc3NlcnRfYW55X2NhbGwoIuKchSBNZXNzYWdlIHNlbnQgdG8gYm9iIG9uIFRlbGVncmFtOlxuXG5KQVJWSVM6IEkgYW0gY3VycmVudGx5IG9jY3VwaWVkLiIpCg==
+# ====================================================================
+# JARVIS OMEGA — Telegram Bridge Unit Tests
+# ====================================================================
+"""
+Unit tests for the Telegram Bridge and its reply command.
+"""
+
+import pytest
+from unittest.mock import AsyncMock, MagicMock, patch
+from backend.telegram_app.telegram_bridge import TelegramBridge
+
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
+
+@pytest.fixture
+def bridge():
+    tb = TelegramBridge()
+    tb._bot = MagicMock()
+    tb._bot.send_message = AsyncMock()
+    return tb
+
+@pytest.mark.anyio
+async def test_record_chat(bridge):
+    """Test that incoming message metadata is correctly cached."""
+    mock_update = MagicMock()
+    mock_update.effective_user.first_name = "Alice"
+    mock_update.effective_user.last_name = "Smith"
+    mock_update.effective_user.username = "alicesmith"
+    mock_update.effective_chat.id = 12345
+    
+    bridge._record_chat(mock_update)
+    
+    assert bridge._telegram_chats["alice"] == 12345
+    assert bridge._telegram_chats["smith"] == 12345
+    assert bridge._telegram_chats["alice smith"] == 12345
+    assert bridge._telegram_chats["alicesmith"] == 12345
+    assert bridge._telegram_chats["@alicesmith"] == 12345
+
+@pytest.mark.anyio
+@patch("backend.services.llm_service.llm_service")
+async def test_cmd_reply_telegram_direct(mock_llm, bridge):
+    """Test the /reply command for direct Telegram routing."""
+    # Pre-populate chat ID
+    bridge._telegram_chats["bob"] = 67890
+    
+    mock_update = MagicMock()
+    mock_update.message.reply_text = AsyncMock()
+    
+    mock_context = MagicMock()
+    mock_context.args = ["bob", "I", "am", "busy"]
+    
+    mock_llm.get_response = AsyncMock(return_value="JARVIS: I am currently occupied.")
+    
+    # Mock authorize to return True
+    with patch.object(bridge, "_authorize", return_value=True):
+        await bridge._cmd_reply(mock_update, mock_context)
+        
+        # Verify LLM was called to polish
+        mock_llm.get_response.assert_called_once()
+        # Verify message was sent to Telegram bot
+        bridge._bot.send_message.assert_called_once_with(chat_id=67890, text="JARVIS: I am currently occupied.")
+        # Verify feedback message to Sir
+        mock_update.message.reply_text.assert_any_call("✅ Message sent to bob on Telegram:\n\nJARVIS: I am currently occupied.")
