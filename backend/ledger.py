@@ -1,1 +1,260 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgRmluYW5jaWFsIExlZGdlciAoRG91YmxlLUVudHJ5IFNpbmdsZSBTb3VyY2Ugb2YgVHJ1dGgpCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiCkZpbmFuY2lhbCBMZWRnZXIgaW1wbGVtZW50YXRpb24uIFNlcnZlcyBhcyB0aGUgc2luZ2xlIGNhbm9uaWNhbCBzb3VyY2UKb2YgdHJ1dGggZm9yIGFsbCBtb25leSBmbG93aW5nIGludG8gb3Igb3V0IG9mIEpBUlZJUyBPTUVHQSBidXNpbmVzc2VzLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBqc29uCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsCgpmcm9tIGJhY2tlbmQuYnVzaW5lc3NfZGIgaW1wb3J0IGV4ZWN1dGUsIHF1ZXJ5LCBxdWVyeV9vbmUsIHJvd3NfdG9fZGljdHMKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJsZWRnZXIiKQoKCmNsYXNzIEZpbmFuY2lhbExlZGdlcjoKICAgICIiIgogICAgQ2Fub25pY2FsIEZpbmFuY2lhbCBMZWRnZXIuIFRyYWNrcyBjcmVkaXRzIChpbmNvbWUpIGFuZCBkZWJpdHMgKGV4cGVuc2VzKQogICAgcGVyIGJ1c2luZXNzIG9yIGFjcm9zcyB0aGUgZW50aXJlIHBvcnRmb2xpby4KICAgICIiIgoKICAgIGRlZiByZWNvcmRfZW50cnkoCiAgICAgICAgc2VsZiwKICAgICAgICBlbnRyeV90eXBlOiBzdHIsICAjICdjcmVkaXQnIHwgJ2RlYml0JwogICAgICAgIGFtb3VudDogZmxvYXQsCiAgICAgICAgY2F0ZWdvcnk6IHN0ciwKICAgICAgICBjdXJyZW5jeTogc3RyID0gIlVTRCIsCiAgICAgICAgYnVzaW5lc3NfaWQ6IE9wdGlvbmFsW2ludF0gPSBOb25lLAogICAgICAgIHNvdXJjZV9ldmVudDogc3RyID0gIiIsCiAgICAgICAgcmVmZXJlbmNlX2lkOiBzdHIgPSAiIiwKICAgICAgICBkZXRhaWxzOiBPcHRpb25hbFtEaWN0W3N0ciwgQW55XV0gPSBOb25lLAogICAgICAgIHRpbWVzdGFtcDogT3B0aW9uYWxbc3RyXSA9IE5vbmUsCiAgICApIC0+IGludDoKICAgICAgICAiIiIKICAgICAgICBSZWNvcmQgYSBjcmVkaXQgb3IgZGViaXQgZW50cnkgaW4gdGhlIGxlZGdlci4KICAgICAgICAiIiIKICAgICAgICBpZiBlbnRyeV90eXBlIG5vdCBpbiAoImNyZWRpdCIsICJkZWJpdCIpOgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKGYiSW52YWxpZCBlbnRyeV90eXBlOiB7ZW50cnlfdHlwZX0uIE11c3QgYmUgJ2NyZWRpdCcgb3IgJ2RlYml0Jy4iKQoKICAgICAgICB0cyA9IHRpbWVzdGFtcCBvciBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKQogICAgICAgIGRldGFpbHNfanNvbiA9IGpzb24uZHVtcHMoZGV0YWlscyBvciB7fSkKCiAgICAgICAgZW50cnlfaWQgPSBleGVjdXRlKAogICAgICAgICAgICAiIiIKICAgICAgICAgICAgSU5TRVJUIElOVE8gbGVkZ2VyX2VudHJpZXMgKAogICAgICAgICAgICAgICAgZW50cnlfdHlwZSwgYW1vdW50LCBjdXJyZW5jeSwgYnVzaW5lc3NfaWQsIGNhdGVnb3J5LAogICAgICAgICAgICAgICAgc291cmNlX2V2ZW50LCByZWZlcmVuY2VfaWQsIGRldGFpbHMsIHRpbWVzdGFtcAogICAgICAgICAgICApIFZBTFVFUyAoPywgPywgPywgPywgPywgPywgPywgPywgPykKICAgICAgICAgICAgIiIiLAogICAgICAgICAgICAoCiAgICAgICAgICAgICAgICBlbnRyeV90eXBlLAogICAgICAgICAgICAgICAgZmxvYXQoYW1vdW50KSwKICAgICAgICAgICAgICAgIGN1cnJlbmN5LnVwcGVyKCksCiAgICAgICAgICAgICAgICBidXNpbmVzc19pZCwKICAgICAgICAgICAgICAgIGNhdGVnb3J5LAogICAgICAgICAgICAgICAgc291cmNlX2V2ZW50LAogICAgICAgICAgICAgICAgc3RyKHJlZmVyZW5jZV9pZCksCiAgICAgICAgICAgICAgICBkZXRhaWxzX2pzb24sCiAgICAgICAgICAgICAgICB0cywKICAgICAgICAgICAgKSwKICAgICAgICApCiAgICAgICAgbG9nLmluZm8oCiAgICAgICAgICAgICJsZWRnZXJfZW50cnlfcmVjb3JkZWQiLAogICAgICAgICAgICBlbnRyeV9pZD1lbnRyeV9pZCwKICAgICAgICAgICAgZW50cnlfdHlwZT1lbnRyeV90eXBlLAogICAgICAgICAgICBhbW91bnQ9YW1vdW50LAogICAgICAgICAgICBjYXRlZ29yeT1jYXRlZ29yeSwKICAgICAgICAgICAgYnVzaW5lc3NfaWQ9YnVzaW5lc3NfaWQsCiAgICAgICAgKQogICAgICAgIHJldHVybiBlbnRyeV9pZAoKICAgIGRlZiBnZXRfYnVzaW5lc3NfYmFsYW5jZShzZWxmLCBidXNpbmVzc19pZDogaW50KSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiIKICAgICAgICBHZXQgdG90YWwgY3JlZGl0cywgZGViaXRzLCBhbmQgbmV0IGJhbGFuY2UgZm9yIGEgc3BlY2lmaWMgYnVzaW5lc3MuCiAgICAgICAgIiIiCiAgICAgICAgY3JlZGl0X3JvdyA9IHF1ZXJ5X29uZSgKICAgICAgICAgICAgIlNFTEVDVCBDT0FMRVNDRShTVU0oYW1vdW50KSwgMCkgYXMgdG90YWwgRlJPTSBsZWRnZXJfZW50cmllcyBXSEVSRSBidXNpbmVzc19pZCA9ID8gQU5EIGVudHJ5X3R5cGUgPSAnY3JlZGl0JyIsCiAgICAgICAgICAgIChidXNpbmVzc19pZCwpLAogICAgICAgICkKICAgICAgICBkZWJpdF9yb3cgPSBxdWVyeV9vbmUoCiAgICAgICAgICAgICJTRUxFQ1QgQ09BTEVTQ0UoU1VNKGFtb3VudCksIDApIGFzIHRvdGFsIEZST00gbGVkZ2VyX2VudHJpZXMgV0hFUkUgYnVzaW5lc3NfaWQgPSA/IEFORCBlbnRyeV90eXBlID0gJ2RlYml0JyIsCiAgICAgICAgICAgIChidXNpbmVzc19pZCwpLAogICAgICAgICkKCiAgICAgICAgdG90YWxfY3JlZGl0cyA9IGZsb2F0KGNyZWRpdF9yb3dbInRvdGFsIl0pIGlmIGNyZWRpdF9yb3cgZWxzZSAwLjAKICAgICAgICB0b3RhbF9kZWJpdHMgPSBmbG9hdChkZWJpdF9yb3dbInRvdGFsIl0pIGlmIGRlYml0X3JvdyBlbHNlIDAuMAogICAgICAgIG5ldF9iYWxhbmNlID0gdG90YWxfY3JlZGl0cyAtIHRvdGFsX2RlYml0cwoKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAiYnVzaW5lc3NfaWQiOiBidXNpbmVzc19pZCwKICAgICAgICAgICAgInRvdGFsX2NyZWRpdHMiOiB0b3RhbF9jcmVkaXRzLAogICAgICAgICAgICAidG90YWxfZGViaXRzIjogdG90YWxfZGViaXRzLAogICAgICAgICAgICAibmV0X2JhbGFuY2UiOiBuZXRfYmFsYW5jZSwKICAgICAgICB9CgogICAgZGVmIGdldF9wb3J0Zm9saW9fYmFsYW5jZShzZWxmKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiIKICAgICAgICBHZXQgdG90YWwgY3JlZGl0cywgZGViaXRzLCBhbmQgbmV0IGJhbGFuY2UgYWNyb3NzIHRoZSBlbnRpcmUgcG9ydGZvbGlvLgogICAgICAgICIiIgogICAgICAgIGNyZWRpdF9yb3cgPSBxdWVyeV9vbmUoCiAgICAgICAgICAgICJTRUxFQ1QgQ09BTEVTQ0UoU1VNKGFtb3VudCksIDApIGFzIHRvdGFsIEZST00gbGVkZ2VyX2VudHJpZXMgV0hFUkUgZW50cnlfdHlwZSA9ICdjcmVkaXQnIgogICAgICAgICkKICAgICAgICBkZWJpdF9yb3cgPSBxdWVyeV9vbmUoCiAgICAgICAgICAgICJTRUxFQ1QgQ09BTEVTQ0UoU1VNKGFtb3VudCksIDApIGFzIHRvdGFsIEZST00gbGVkZ2VyX2VudHJpZXMgV0hFUkUgZW50cnlfdHlwZSA9ICdkZWJpdCciCiAgICAgICAgKQoKICAgICAgICB0b3RhbF9jcmVkaXRzID0gZmxvYXQoY3JlZGl0X3Jvd1sidG90YWwiXSkgaWYgY3JlZGl0X3JvdyBlbHNlIDAuMAogICAgICAgIHRvdGFsX2RlYml0cyA9IGZsb2F0KGRlYml0X3Jvd1sidG90YWwiXSkgaWYgZGViaXRfcm93IGVsc2UgMC4wCiAgICAgICAgbmV0X2JhbGFuY2UgPSB0b3RhbF9jcmVkaXRzIC0gdG90YWxfZGViaXRzCgogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICJ0b3RhbF9jcmVkaXRzIjogdG90YWxfY3JlZGl0cywKICAgICAgICAgICAgInRvdGFsX2RlYml0cyI6IHRvdGFsX2RlYml0cywKICAgICAgICAgICAgIm5ldF9iYWxhbmNlIjogbmV0X2JhbGFuY2UsCiAgICAgICAgfQoKICAgIGRlZiBnZXRfc3BlbmRfYnlfY2F0ZWdvcnkoc2VsZiwgYnVzaW5lc3NfaWQ6IE9wdGlvbmFsW2ludF0gPSBOb25lKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICAiIiIKICAgICAgICBHZXQgdG90YWwgc3BlbmQgKGRlYml0cykgZ3JvdXBlZCBieSBjYXRlZ29yeS4KICAgICAgICAiIiIKICAgICAgICBpZiBidXNpbmVzc19pZCBpcyBub3QgTm9uZToKICAgICAgICAgICAgcm93cyA9IHF1ZXJ5KAogICAgICAgICAgICAgICAgIiIiCiAgICAgICAgICAgICAgICBTRUxFQ1QgY2F0ZWdvcnksIFNVTShhbW91bnQpIGFzIHRvdGFsX3NwZW5kCiAgICAgICAgICAgICAgICBGUk9NIGxlZGdlcl9lbnRyaWVzCiAgICAgICAgICAgICAgICBXSEVSRSBlbnRyeV90eXBlID0gJ2RlYml0JyBBTkQgYnVzaW5lc3NfaWQgPSA/CiAgICAgICAgICAgICAgICBHUk9VUCBCWSBjYXRlZ29yeQogICAgICAgICAgICAgICAgT1JERVIgQlkgdG90YWxfc3BlbmQgREVTQwogICAgICAgICAgICAgICAgIiIiLAogICAgICAgICAgICAgICAgKGJ1c2luZXNzX2lkLCksCiAgICAgICAgICAgICkKICAgICAgICBlbHNlOgogICAgICAgICAgICByb3dzID0gcXVlcnkoCiAgICAgICAgICAgICAgICAiIiIKICAgICAgICAgICAgICAgIFNFTEVDVCBjYXRlZ29yeSwgU1VNKGFtb3VudCkgYXMgdG90YWxfc3BlbmQKICAgICAgICAgICAgICAgIEZST00gbGVkZ2VyX2VudHJpZXMKICAgICAgICAgICAgICAgIFdIRVJFIGVudHJ5X3R5cGUgPSAnZGViaXQnCiAgICAgICAgICAgICAgICBHUk9VUCBCWSBjYXRlZ29yeQogICAgICAgICAgICAgICAgT1JERVIgQlkgdG90YWxfc3BlbmQgREVTQwogICAgICAgICAgICAgICAgIiIiCiAgICAgICAgICAgICkKICAgICAgICByZXR1cm4gW3siY2F0ZWdvcnkiOiByWyJjYXRlZ29yeSJdLCAidG90YWxfc3BlbmQiOiBmbG9hdChyWyJ0b3RhbF9zcGVuZCJdKX0gZm9yIHIgaW4gcm93c10KCiAgICBkZWYgZ2V0X3NwZW5kX292ZXJfdGltZSgKICAgICAgICBzZWxmLAogICAgICAgIHN0YXJ0X3RpbWU6IHN0ciwKICAgICAgICBlbmRfdGltZTogc3RyLAogICAgICAgIGJ1c2luZXNzX2lkOiBPcHRpb25hbFtpbnRdID0gTm9uZSwKICAgICkgLT4gTGlzdFtEaWN0W3N0ciwgQW55XV06CiAgICAgICAgIiIiCiAgICAgICAgR2V0IGFsbCBkZWJpdHMgd2l0aGluIGEgc3BlY2lmaWMgSVNPIHRpbWVzdGFtcCB0aW1lIHJhbmdlLgogICAgICAgICIiIgogICAgICAgIGlmIGJ1c2luZXNzX2lkIGlzIG5vdCBOb25lOgogICAgICAgICAgICByb3dzID0gcXVlcnkoCiAgICAgICAgICAgICAgICAiIiIKICAgICAgICAgICAgICAgIFNFTEVDVCAqIEZST00gbGVkZ2VyX2VudHJpZXMKICAgICAgICAgICAgICAgIFdIRVJFIGVudHJ5X3R5cGUgPSAnZGViaXQnCiAgICAgICAgICAgICAgICAgIEFORCBidXNpbmVzc19pZCA9ID8KICAgICAgICAgICAgICAgICAgQU5EIHRpbWVzdGFtcCA+PSA/CiAgICAgICAgICAgICAgICAgIEFORCB0aW1lc3RhbXAgPD0gPwogICAgICAgICAgICAgICAgT1JERVIgQlkgdGltZXN0YW1wIEFTQwogICAgICAgICAgICAgICAgIiIiLAogICAgICAgICAgICAgICAgKGJ1c2luZXNzX2lkLCBzdGFydF90aW1lLCBlbmRfdGltZSksCiAgICAgICAgICAgICkKICAgICAgICBlbHNlOgogICAgICAgICAgICByb3dzID0gcXVlcnkoCiAgICAgICAgICAgICAgICAiIiIKICAgICAgICAgICAgICAgIFNFTEVDVCAqIEZST00gbGVkZ2VyX2VudHJpZXMKICAgICAgICAgICAgICAgIFdIRVJFIGVudHJ5X3R5cGUgPSAnZGViaXQnCiAgICAgICAgICAgICAgICAgIEFORCB0aW1lc3RhbXAgPj0gPwogICAgICAgICAgICAgICAgICBBTkQgdGltZXN0YW1wIDw9ID8KICAgICAgICAgICAgICAgIE9SREVSIEJZIHRpbWVzdGFtcCBBU0MKICAgICAgICAgICAgICAgICIiIiwKICAgICAgICAgICAgICAgIChzdGFydF90aW1lLCBlbmRfdGltZSksCiAgICAgICAgICAgICkKICAgICAgICByZXR1cm4gcm93c190b19kaWN0cyhyb3dzKQoKICAgIGRlZiByZWNvbmNpbGVfb25fZmlyc3RfcnVuKHNlbGYpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIgogICAgICAgIFJlY29uY2lsZSBleGlzdGluZyBoaXN0b3JpY2FsIGZpbmFuY2lhbCBkYXRhIGZyb20gYG9yZGVyc2AsIGBpbnZvaWNlc2AsCiAgICAgICAgYW5kIGBhdWRpdF9sb2dgIGludG8gdGhlIGxlZGdlciBpZiBub3QgYWxyZWFkeSByZWNvbmNpbGVkLgogICAgICAgICIiIgogICAgICAgICMgQ2hlY2sgaWYgcmVjb25jaWxpYXRpb24gaGFzIGFscmVhZHkgcnVuCiAgICAgICAgZXhpc3RpbmdfcmVjb25jaWxlID0gcXVlcnlfb25lKAogICAgICAgICAgICAiU0VMRUNUIENPVU5UKCopIGFzIGNvdW50IEZST00gbGVkZ2VyX2VudHJpZXMgV0hFUkUgc291cmNlX2V2ZW50ID0gJ2F1ZGl0X2xvZ19yZWNvbmNpbGUnIE9SIHNvdXJjZV9ldmVudCA9ICdvcmRlcnNfcmVjb25jaWxlJyIKICAgICAgICApCiAgICAgICAgaWYgZXhpc3RpbmdfcmVjb25jaWxlIGFuZCBleGlzdGluZ19yZWNvbmNpbGVbImNvdW50Il0gPiAwOgogICAgICAgICAgICByZXR1cm4geyJyZWNvbmNpbGVkIjogRmFsc2UsICJyZWFzb24iOiAiQWxyZWFkeSByZWNvbmNpbGVkIiwgImVudHJpZXNfYWRkZWQiOiAwfQoKICAgICAgICByZWNvbmNpbGVkX2NvdW50ID0gMAoKICAgICAgICAjIDEuIFJlY29uY2lsZSBwYWlkIG9yZGVycwogICAgICAgIHBhaWRfb3JkZXJzID0gcXVlcnkoIlNFTEVDVCAqIEZST00gb3JkZXJzIFdIRVJFIHN0YXR1cyBpbiAoJ3BhaWQnLCAnZnVsZmlsbGVkJywgJ2RlbGl2ZXJlZCcpIikKICAgICAgICBmb3Igb3JkZXIgaW4gcGFpZF9vcmRlcnM6CiAgICAgICAgICAgIG9fZGljdCA9IGRpY3Qob3JkZXIpCiAgICAgICAgICAgIHNlbGYucmVjb3JkX2VudHJ5KAogICAgICAgICAgICAgICAgZW50cnlfdHlwZT0iY3JlZGl0IiwKICAgICAgICAgICAgICAgIGFtb3VudD1mbG9hdChvX2RpY3QuZ2V0KCJ0b3RhbCIpIG9yIDAuMCksCiAgICAgICAgICAgICAgICBjdXJyZW5jeT1vX2RpY3QuZ2V0KCJjdXJyZW5jeSIpIG9yICJVU0QiLAogICAgICAgICAgICAgICAgYnVzaW5lc3NfaWQ9b19kaWN0LmdldCgiY2xpZW50X2lkIiksCiAgICAgICAgICAgICAgICBjYXRlZ29yeT0ic3RyaXBlX3BheW1lbnQiLAogICAgICAgICAgICAgICAgc291cmNlX2V2ZW50PSJvcmRlcnNfcmVjb25jaWxlIiwKICAgICAgICAgICAgICAgIHJlZmVyZW5jZV9pZD1zdHIob19kaWN0LmdldCgiaWQiKSksCiAgICAgICAgICAgICAgICBkZXRhaWxzPW9fZGljdCwKICAgICAgICAgICAgICAgIHRpbWVzdGFtcD1vX2RpY3QuZ2V0KCJjcmVhdGVkX2F0IiksCiAgICAgICAgICAgICkKICAgICAgICAgICAgcmVjb25jaWxlZF9jb3VudCArPSAxCgogICAgICAgICMgMi4gUmVjb25jaWxlIHBhaWQgaW52b2ljZXMKICAgICAgICBwYWlkX2ludm9pY2VzID0gcXVlcnkoIlNFTEVDVCAqIEZST00gaW52b2ljZXMgV0hFUkUgc3RhdHVzID0gJ3BhaWQnIikKICAgICAgICBmb3IgaW52IGluIHBhaWRfaW52b2ljZXM6CiAgICAgICAgICAgIGludl9kaWN0ID0gZGljdChpbnYpCiAgICAgICAgICAgIHNlbGYucmVjb3JkX2VudHJ5KAogICAgICAgICAgICAgICAgZW50cnlfdHlwZT0iY3JlZGl0IiwKICAgICAgICAgICAgICAgIGFtb3VudD1mbG9hdChpbnZfZGljdC5nZXQoImFtb3VudCIpIG9yIDAuMCksCiAgICAgICAgICAgICAgICBjdXJyZW5jeT1pbnZfZGljdC5nZXQoImN1cnJlbmN5Iikgb3IgIlVTRCIsCiAgICAgICAgICAgICAgICBidXNpbmVzc19pZD1pbnZfZGljdC5nZXQoImNsaWVudF9pZCIpLAogICAgICAgICAgICAgICAgY2F0ZWdvcnk9Imludm9pY2VfcGF5bWVudCIsCiAgICAgICAgICAgICAgICBzb3VyY2VfZXZlbnQ9Imludm9pY2VzX3JlY29uY2lsZSIsCiAgICAgICAgICAgICAgICByZWZlcmVuY2VfaWQ9c3RyKGludl9kaWN0LmdldCgiaWQiKSksCiAgICAgICAgICAgICAgICBkZXRhaWxzPWludl9kaWN0LAogICAgICAgICAgICAgICAgdGltZXN0YW1wPWludl9kaWN0LmdldCgicGFpZF9hdCIpIG9yIGludl9kaWN0LmdldCgiY3JlYXRlZF9hdCIpLAogICAgICAgICAgICApCiAgICAgICAgICAgIHJlY29uY2lsZWRfY291bnQgKz0gMQoKICAgICAgICAjIDMuIFJlY29uY2lsZSBhdWRpdF9sb2cgZW50cmllcyBjb250YWluaW5nIGZpbmFuY2lhbCBwYXltZW50cyBvciBzcGVuZAogICAgICAgIGF1ZGl0X3Jvd3MgPSBxdWVyeSgiU0VMRUNUICogRlJPTSBhdWRpdF9sb2cgV0hFUkUgY2F0ZWdvcnkgSU4gKCdwYXltZW50cycsICdtYXJrZXRpbmcnLCAncGF5b3V0cycpIikKICAgICAgICBmb3IgbG9nX3JvdyBpbiBhdWRpdF9yb3dzOgogICAgICAgICAgICBsX2RpY3QgPSBkaWN0KGxvZ19yb3cpCiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGR0X2RldGFpbHMgPSBqc29uLmxvYWRzKGxfZGljdC5nZXQoImRldGFpbHMiKSBvciAie30iKSBpZiBpc2luc3RhbmNlKGxfZGljdC5nZXQoImRldGFpbHMiKSwgc3RyKSBlbHNlIChsX2RpY3QuZ2V0KCJkZXRhaWxzIikgb3Ige30pCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICBkdF9kZXRhaWxzID0ge30KCiAgICAgICAgICAgIGFtb3VudCA9IGZsb2F0KGR0X2RldGFpbHMuZ2V0KCJhbW91bnQiKSBvciBkdF9kZXRhaWxzLmdldCgiYW1vdW50X3VzZCIpIG9yIGR0X2RldGFpbHMuZ2V0KCJjb3N0Iikgb3IgMC4wKQogICAgICAgICAgICBpZiBhbW91bnQgPiAwOgogICAgICAgICAgICAgICAgYWN0aW9uID0gbF9kaWN0LmdldCgiYWN0aW9uIiwgIiIpCiAgICAgICAgICAgICAgICBlbnRyeV90eXBlID0gImNyZWRpdCIgaWYgInBheW1lbnQiIGluIGFjdGlvbiBvciAiY2hhcmdlIiBpbiBhY3Rpb24gb3IgInJldmVudWUiIGluIGFjdGlvbiBlbHNlICJkZWJpdCIKICAgICAgICAgICAgICAgIHNlbGYucmVjb3JkX2VudHJ5KAogICAgICAgICAgICAgICAgICAgIGVudHJ5X3R5cGU9ZW50cnlfdHlwZSwKICAgICAgICAgICAgICAgICAgICBhbW91bnQ9YW1vdW50LAogICAgICAgICAgICAgICAgICAgIGN1cnJlbmN5PWR0X2RldGFpbHMuZ2V0KCJjdXJyZW5jeSIpIG9yICJVU0QiLAogICAgICAgICAgICAgICAgICAgIGJ1c2luZXNzX2lkPWR0X2RldGFpbHMuZ2V0KCJidXNpbmVzc19pZCIpLAogICAgICAgICAgICAgICAgICAgIGNhdGVnb3J5PWxfZGljdC5nZXQoImNhdGVnb3J5Iikgb3IgIm90aGVyIiwKICAgICAgICAgICAgICAgICAgICBzb3VyY2VfZXZlbnQ9ImF1ZGl0X2xvZ19yZWNvbmNpbGUiLAogICAgICAgICAgICAgICAgICAgIHJlZmVyZW5jZV9pZD1zdHIobF9kaWN0LmdldCgiaWQiKSksCiAgICAgICAgICAgICAgICAgICAgZGV0YWlscz1kdF9kZXRhaWxzLAogICAgICAgICAgICAgICAgICAgIHRpbWVzdGFtcD1sX2RpY3QuZ2V0KCJ0aW1lc3RhbXAiKSwKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgIHJlY29uY2lsZWRfY291bnQgKz0gMQoKICAgICAgICByZXR1cm4geyJyZWNvbmNpbGVkIjogVHJ1ZSwgImVudHJpZXNfYWRkZWQiOiByZWNvbmNpbGVkX2NvdW50fQoKCmxlZGdlciA9IEZpbmFuY2lhbExlZGdlcigpCg==
+# ====================================================================
+# JARVIS OMEGA — Financial Ledger (Double-Entry Single Source of Truth)
+# ====================================================================
+"""
+Financial Ledger implementation. Serves as the single canonical source
+of truth for all money flowing into or out of JARVIS OMEGA businesses.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+from backend.business_db import execute, query, query_one, rows_to_dicts
+from shared.logger import get_logger
+
+log = get_logger("ledger")
+
+
+class FinancialLedger:
+    """
+    Canonical Financial Ledger. Tracks credits (income) and debits (expenses)
+    per business or across the entire portfolio.
+    """
+
+    def record_entry(
+        self,
+        entry_type: str,  # 'credit' | 'debit'
+        amount: float,
+        category: str,
+        currency: str = "USD",
+        business_id: Optional[int] = None,
+        source_event: str = "",
+        reference_id: str = "",
+        details: Optional[Dict[str, Any]] = None,
+        timestamp: Optional[str] = None,
+    ) -> int:
+        """
+        Record a credit or debit entry in the ledger.
+        """
+        if entry_type not in ("credit", "debit"):
+            raise ValueError(f"Invalid entry_type: {entry_type}. Must be 'credit' or 'debit'.")
+
+        ts = timestamp or datetime.utcnow().isoformat()
+        details_json = json.dumps(details or {})
+
+        entry_id = execute(
+            """
+            INSERT INTO ledger_entries (
+                entry_type, amount, currency, business_id, category,
+                source_event, reference_id, details, timestamp
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                entry_type,
+                float(amount),
+                currency.upper(),
+                business_id,
+                category,
+                source_event,
+                str(reference_id),
+                details_json,
+                ts,
+            ),
+        )
+        log.info(
+            "ledger_entry_recorded",
+            entry_id=entry_id,
+            entry_type=entry_type,
+            amount=amount,
+            category=category,
+            business_id=business_id,
+        )
+        return entry_id
+
+    def get_business_balance(self, business_id: int) -> Dict[str, Any]:
+        """
+        Get total credits, debits, and net balance for a specific business.
+        """
+        credit_row = query_one(
+            "SELECT COALESCE(SUM(amount), 0) as total FROM ledger_entries WHERE business_id = ? AND entry_type = 'credit'",
+            (business_id,),
+        )
+        debit_row = query_one(
+            "SELECT COALESCE(SUM(amount), 0) as total FROM ledger_entries WHERE business_id = ? AND entry_type = 'debit'",
+            (business_id,),
+        )
+
+        total_credits = float(credit_row["total"]) if credit_row else 0.0
+        total_debits = float(debit_row["total"]) if debit_row else 0.0
+        net_balance = total_credits - total_debits
+
+        return {
+            "business_id": business_id,
+            "total_credits": total_credits,
+            "total_debits": total_debits,
+            "net_balance": net_balance,
+        }
+
+    def get_portfolio_balance(self) -> Dict[str, Any]:
+        """
+        Get total credits, debits, and net balance across the entire portfolio.
+        """
+        credit_row = query_one(
+            "SELECT COALESCE(SUM(amount), 0) as total FROM ledger_entries WHERE entry_type = 'credit'"
+        )
+        debit_row = query_one(
+            "SELECT COALESCE(SUM(amount), 0) as total FROM ledger_entries WHERE entry_type = 'debit'"
+        )
+
+        total_credits = float(credit_row["total"]) if credit_row else 0.0
+        total_debits = float(debit_row["total"]) if debit_row else 0.0
+        net_balance = total_credits - total_debits
+
+        return {
+            "total_credits": total_credits,
+            "total_debits": total_debits,
+            "net_balance": net_balance,
+        }
+
+    def get_spend_by_category(self, business_id: Optional[int] = None) -> List[Dict[str, Any]]:
+        """
+        Get total spend (debits) grouped by category.
+        """
+        if business_id is not None:
+            rows = query(
+                """
+                SELECT category, SUM(amount) as total_spend
+                FROM ledger_entries
+                WHERE entry_type = 'debit' AND business_id = ?
+                GROUP BY category
+                ORDER BY total_spend DESC
+                """,
+                (business_id,),
+            )
+        else:
+            rows = query(
+                """
+                SELECT category, SUM(amount) as total_spend
+                FROM ledger_entries
+                WHERE entry_type = 'debit'
+                GROUP BY category
+                ORDER BY total_spend DESC
+                """
+            )
+        return [{"category": r["category"], "total_spend": float(r["total_spend"])} for r in rows]
+
+    def get_spend_over_time(
+        self,
+        start_time: str,
+        end_time: str,
+        business_id: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Get all debits within a specific ISO timestamp time range.
+        """
+        if business_id is not None:
+            rows = query(
+                """
+                SELECT * FROM ledger_entries
+                WHERE entry_type = 'debit'
+                  AND business_id = ?
+                  AND timestamp >= ?
+                  AND timestamp <= ?
+                ORDER BY timestamp ASC
+                """,
+                (business_id, start_time, end_time),
+            )
+        else:
+            rows = query(
+                """
+                SELECT * FROM ledger_entries
+                WHERE entry_type = 'debit'
+                  AND timestamp >= ?
+                  AND timestamp <= ?
+                ORDER BY timestamp ASC
+                """,
+                (start_time, end_time),
+            )
+        return rows_to_dicts(rows)
+
+    def reconcile_on_first_run(self) -> Dict[str, Any]:
+        """
+        Reconcile existing historical financial data from `orders`, `invoices`,
+        and `audit_log` into the ledger if not already reconciled.
+        """
+        # Check if reconciliation has already run
+        existing_reconcile = query_one(
+            "SELECT COUNT(*) as count FROM ledger_entries WHERE source_event = 'audit_log_reconcile' OR source_event = 'orders_reconcile'"
+        )
+        if existing_reconcile and existing_reconcile["count"] > 0:
+            return {"reconciled": False, "reason": "Already reconciled", "entries_added": 0}
+
+        reconciled_count = 0
+
+        # 1. Reconcile paid orders
+        paid_orders = query("SELECT * FROM orders WHERE status in ('paid', 'fulfilled', 'delivered')")
+        for order in paid_orders:
+            o_dict = dict(order)
+            self.record_entry(
+                entry_type="credit",
+                amount=float(o_dict.get("total") or 0.0),
+                currency=o_dict.get("currency") or "USD",
+                business_id=o_dict.get("client_id"),
+                category="stripe_payment",
+                source_event="orders_reconcile",
+                reference_id=str(o_dict.get("id")),
+                details=o_dict,
+                timestamp=o_dict.get("created_at"),
+            )
+            reconciled_count += 1
+
+        # 2. Reconcile paid invoices
+        paid_invoices = query("SELECT * FROM invoices WHERE status = 'paid'")
+        for inv in paid_invoices:
+            inv_dict = dict(inv)
+            self.record_entry(
+                entry_type="credit",
+                amount=float(inv_dict.get("amount") or 0.0),
+                currency=inv_dict.get("currency") or "USD",
+                business_id=inv_dict.get("client_id"),
+                category="invoice_payment",
+                source_event="invoices_reconcile",
+                reference_id=str(inv_dict.get("id")),
+                details=inv_dict,
+                timestamp=inv_dict.get("paid_at") or inv_dict.get("created_at"),
+            )
+            reconciled_count += 1
+
+        # 3. Reconcile audit_log entries containing financial payments or spend
+        audit_rows = query("SELECT * FROM audit_log WHERE category IN ('payments', 'marketing', 'payouts')")
+        for log_row in audit_rows:
+            l_dict = dict(log_row)
+            try:
+                dt_details = json.loads(l_dict.get("details") or "{}") if isinstance(l_dict.get("details"), str) else (l_dict.get("details") or {})
+            except Exception:
+                dt_details = {}
+
+            amount = float(dt_details.get("amount") or dt_details.get("amount_usd") or dt_details.get("cost") or 0.0)
+            if amount > 0:
+                action = l_dict.get("action", "")
+                entry_type = "credit" if "payment" in action or "charge" in action or "revenue" in action else "debit"
+                self.record_entry(
+                    entry_type=entry_type,
+                    amount=amount,
+                    currency=dt_details.get("currency") or "USD",
+                    business_id=dt_details.get("business_id"),
+                    category=l_dict.get("category") or "other",
+                    source_event="audit_log_reconcile",
+                    reference_id=str(l_dict.get("id")),
+                    details=dt_details,
+                    timestamp=l_dict.get("timestamp"),
+                )
+                reconciled_count += 1
+
+        return {"reconciled": True, "entries_added": reconciled_count}
+
+
+ledger = FinancialLedger()

@@ -1,1 +1,281 @@
-IyBBcmNoaXRlY3R1cmUKClRoaXMgZG9jdW1lbnQgZGVzY3JpYmVzIGhvdyBKQVJWSVMgT01FR0EgaXMgd2lyZWQgdG9nZXRoZXIgYXQgdGhlIG1vZHVsZQpsZXZlbC4gSXQncyBpbnRlbmRlZCBmb3IgY29udHJpYnV0b3JzIHdobyBuZWVkIHRvIGtub3cgd2hlcmUgdG8gcGx1ZyBhIG5ldwpmZWF0dXJlIGluLgoKIyMgSGlnaC1MZXZlbCBEaWFncmFtCgpgYGAK4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQCuKUgiAgICAgICAgICAgICAgICAgICAgICAgRnJvbnRlbmQgZGFzaGJvYXJkICAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSCICAgICAgICAgICAgICAgICAgKHN0YXRpYyBIVE1MIGF0IGZyb250ZW5kL2luZGV4Lmh0bWwpICAgICAgICAgICAgIOKUggrilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilKzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJgKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKUgiBXUyAvd3MvdWkgICh1bmF1dGhlbnRpY2F0ZWQsIGxvY2FsKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pa8CuKUjOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkArilIIgICAgICAgICAgICAgICAgICAgICAgICAgIEZhc3RBUEkgYmFja2VuZCAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSCICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAgIOKUjOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkCAg4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAgIOKUggrilIIgIOKUgiByb3V0ZXJzLyAgIOKUgiAg4pSCIHNlcnZpY2VzLyAgIOKUgiAg4pSCIGFwcHJvdmFsXyAg4pSCICDilIIgZGV2aWNlXyAgIOKUgiAg4pSCCuKUgiAg4pSCIGNoYXQsbWVtLOKApiDilILihpIg4pSCIGxsbSwgdHRzLOKApiAg4pSCICDilIIgZ2F0ZXdheSAgICDilIIgIOKUgiByZWdpc3RyeSAg4pSCICDilIIK4pSCICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmCAg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggIOKUggrilIIgICAgICAgICDilIIgICAgICAgICAgICAgIOKUgiAgICAgICAgICAgICAg4payICAgICAgICAgICAgICAgIOKWsiAgICAgICAgICDilIIK4pSCICAgICAgICAg4pa8ICAgICAgICAgICAgICDilrwgICAgICAgICAgICAgIOKUgiAgICAgICAgICAgICAgICDilIIgICAgICAgICAg4pSCCuKUgiAg4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAgICAgIOKUgiAgICAgICAgICAgICAgICDilIIgICAgICAgICAg4pSCCuKUgiAg4pSCIGNvbW1hbmRfICAg4pSCICDilIIgbWVtb3J5XyAgICAg4pSCICAgICDilIIgICAgICAgICAgICAgICAg4pSCICAgICAgICAgIOKUggrilIIgIOKUgiBzYWZldHkgICAgIOKUgiAg4pSCIGVuZ2luZSAgICAgIOKUgiAgICAg4pSCICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICDilIIK4pSCICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmCAgICAg4pSCICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICDilIIK4pSCICAgICAgICAg4pSCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICDilIIK4pSCICAgICAgICAg4pa8ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCICAgICAgICAgICAgICAgIOKUgiAgICAgICAgICDilIIK4pSCICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAg4pSCICAgICAgICAgIOKUggrilIIgIOKUgiBfZGlzcGF0Y2hfYW5kX3dhaXQg4oCUIHRoZSBPTkxZIHNoZWxsLWV4ZWN1dGlvbiAgICDilIIg4pSCICAgICAgICAgIOKUggrilIIgIOKUgiBzaXRlIGluIHRoZSBzeXN0ZW0uIEV2ZXJ5IGNvbW1hbmQgZmxvd3MgaGVyZS4gICAg4pSC4pSA4pSYICAgICAgICAgIOKUggrilIIgIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmCAgICAgICAgICAgIOKUggrilIIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSCICBldmVudF9idXMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQ4pSCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgc2NoZWR1bGVyIChBUFNjaGVkdWxlcikgICAg4pSC4pSCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgaGVhbHRoX21vbml0b3IgICAgICAgICAgICAg4pa84pSCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgd3NfbWFuYWdlciDil4TilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSs4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilIIgV1MgL3dzL3tkZXZpY2VfaWR9IChKV1QtdmVyaWZpZWQpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDilrwK4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQCuKUgiAgICAgICAgICAgICAgICAgICAgICAgTG9jYWwgY2xpZW50IGRhZW1vbiAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKUggrilIIgIGRhZW1vbi5weSBib290cyBpbiBkZXBlbmRlbmN5IG9yZGVyOiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgICAxLiBzdGF0ZV9tYW5hZ2VyICAgICAgbG9hZHMgY29uZmlnL2NsaWVudF9jb25maWcuanNvbiAgICAgICAgICDilIIK4pSCICAgIDIuIHdlYnNvY2tldF9jbGllbnQgICBwZXJzaXN0ZW50IFdTIHRvIGJhY2tlbmQgICAgICAgICAgICAgICAgIOKUggrilIIgICAgMy4gaGVhbHRoX3JlcG9ydGVyICAgIHB1c2hlcyBDUFUvbWVtIHN0YXRzICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgICA0LiBjbGlwYm9hcmRfbWFuYWdlciAgY3Jvc3MtZGV2aWNlIGNsaXBib2FyZCBzeW5jICAgICAgICAgICAgICDilIIK4pSCICAgIDUuIGZpbGVzeXN0ZW1fd2F0Y2hlciB3b3Jrc3BhY2UgY2hhbmdlIGV2ZW50cyAgICAgICAgICAgICAgICAgIOKUggrilIIgICAgNi4gbWljcm9waG9uZV9saXN0ZW5lciBWQUQgKyBTVFQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgICA3LiB3YWtld29yZF9kZXRlY3RvciAgImphcnZpcyIgaG90d29yZCAgICAgICAgICAgICAgICAgICAgICAgICDilIIK4pSCICAgIDguIHRhc2tfZXhlY3V0b3IgICAgICByZWNlaXZlcyBFWEVDVVRFX1RBU0sgbWVzc2FnZXMgICAgICAgICAgIOKUggrilIIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4pSCCuKUgiAgYWdlbnRzLyBjb250YWlucyAxNSBzcGVjaWFsaXplZCBhZ2VudHMgbG9hZGVkIGR5bmFtaWNhbGx5IGJ5ICAgICDilIIK4pSCICB0aGUgb3JjaGVzdHJhdG9yIHZpYSBpbXBvcnRsaWIuaW1wb3J0X21vZHVsZSgpLiAgICAgICAgICAgICAgICAgIOKUggrilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJgKYGBgCgojIyBCb290IE9yZGVyCgpgYmFja2VuZC9tYWluLnB5OmxpZmVzcGFuYCBkb2VzIHRoZSBmb2xsb3dpbmcgb24gc3RhcnR1cDoKCjEuIGBzZXR0aW5ncy5lbnN1cmVfZGlyZWN0b3JpZXMoKWAg4oCUIGNyZWF0ZSBzdG9yYWdlL2xvZ3MvbWVtb3J5L2NhY2hlLgoyLiBgc2V0dGluZ3MudmFsaWRhdGVfc2VjdXJpdHlfc2V0dGluZ3MoKWAg4oCUIGZhaWwgZmFzdCBvbiBtaXNzaW5nIHNlY3JldHMuCjMuIGBpbml0X3NlY3VyaXR5KC4uLilgIOKAlCBwb3B1bGF0ZSBKV1Qgc2lnbmluZyBrZXkgKyBGZXJuZXQga2V5Lgo0LiBXaXJlIHVwIGV2ZW50LWJ1cyBkZXBlbmRlbmNpZXMgYmV0d2VlbiB3c19tYW5hZ2VyLCBkZXZpY2VfcmVnaXN0cnksCiAgIGFwcHJvdmFsX2dhdGV3YXksIHRhc2tfbWFuYWdlciwgaGVhbHRoX21vbml0b3IuCjUuIFN1YnNjcmliZSB0YXNrLWNyZWF0aW9uIGFuZCBhcHByb3ZhbC1ldmVudCBoYW5kbGVycyB0byB0aGUgZXZlbnQgYnVzLgo2LiBgZGV2aWNlX3JlZ2lzdHJ5LmluaXRpYWxpemUoKWAg4oCUIGxvYWQgYHN0b3JhZ2UvZGV2aWNlcy5qc29uYCBhbmQgbG9nCiAgIHRoZSB0cnVzdCBzbmFwc2hvdCAobWFrZXMgdGhlIFdlYlNvY2tldCA0MDMgY2FzZSBvYnNlcnZhYmxlKS4KNy4gYG1lbW9yeV9lbmdpbmUuaW5pdGlhbGl6ZSgpYCDigJQgb3BlbiBDaHJvbWFEQiBwZXJzaXN0ZW50IGNsaWVudC4KOC4gYHByb2plY3RfZ3JhcGguaW5pdGlhbGl6ZSgpYCDigJQgbG9hZCBwcm9qZWN0IGdyYXBoLgo5LiBSZWdpc3RlciBjb21wb25lbnRzIGluIGhlYWx0aF9tb25pdG9yLgoxMC4gU3RhcnQgYmFja2dyb3VuZCBzZXJ2aWNlczogc2NoZWR1bGVyLCBoZWFsdGhfbW9uaXRvciwgbWVtb3J5X2luZGV4ZXIsCiAgICBoZWFydGJlYXQgbG9vcC4KMTEuIFJlYWR5LgoKIyMgVGhlIFR3byBXZWJTb2NrZXQgRW5kcG9pbnRzCgp8IEVuZHBvaW50IHwgQXV0aCB8IFB1cnBvc2UgfAp8LS0tLS0tLS0tLXwtLS0tLS18LS0tLS0tLS0tfAp8IGBXUyAvd3MvdWlgIHwgTm9uZSAobG9jYWwgTEFOIG9ubHkpIHwgRnJvbnRlbmQgZGFzaGJvYXJkIOKAlCBwcm9hY3RpdmUgcmVwb3J0cywgYXBwcm92YWwgcmVxdWVzdHMsIHN5c3RlbSBzdGF0dXMuIHwKfCBgV1MgL3dzL3tkZXZpY2VfaWR9P3Rva2VuPeKApmAgfCBKV1QgdmVyaWZpZWQgKyBkZXZpY2VfcmVnaXN0cnkuaXNfdHJ1c3RlZCB8IExvY2FsIGNsaWVudCBkYWVtb24g4oCUIGJpZGlyZWN0aW9uYWwgY29tbWFuZC9yZXN1bHQgY2hhbm5lbC4gfAoKVUkgY2xpZW50cyBhcmUgdHJhY2tlZCBpbiBgX3VpX2NsaWVudHNgIGluIGBtYWluLnB5YC4gRGV2aWNlcyBhcmUgdHJhY2tlZCBpbgpgd3NfbWFuYWdlci5fY29ubmVjdGlvbnNgLiBUaGUgYXBwcm92YWwgZ2F0ZXdheSBicm9hZGNhc3RzIHRvIEJPVEgg4oCUIHRvCmRldmljZXMgdmlhIGB3c19tYW5hZ2VyLmJyb2FkY2FzdGAgYW5kIHRvIFVJIHZpYSB0aGUKYGhhbmRsZV9hcHByb3ZhbF9ldmVudGAgZXZlbnQtYnVzIHN1YnNjcmliZXIuCgojIyBBZ2VudCBIaWVyYXJjaHkKCkFsbCAxNSBhZ2VudHMgc2hhcmUgYSBjb21tb24gc2tlbGV0b246CgpgYGBweXRob24KY2xhc3MgQWdlbnRYOgogICAgYWdlbnRfaWQgPSAiYWdlbnRfeCIKICAgIGFnZW50X3R5cGUgPSBBZ2VudFR5cGUuWAoKICAgIGFzeW5jIGRlZiBleGVjdXRlX3Rhc2soc2VsZiwgdGFzazogVGFza0RlZmluaXRpb24pIC0+IFRhc2tSZXN1bHQ6CiAgICAgICAgYWN0aW9uID0gdGFzay5wYXlsb2FkLmdldCgiYWN0aW9uIiwgIjxkZWZhdWx0PiIpCiAgICAgICAgIyBkaXNwYXRjaCBvbiBhY3Rpb24uLi4KYGBgCgpUaGUgb3JjaGVzdHJhdG9yIChgbG9jYWxfY2xpZW50L2FnZW50cy9hZ2VudF9vcmNoZXN0cmF0b3IucHlgKSBkZWNvbXBvc2VzIGEKZ29hbCBpbnRvIHN1YnRhc2tzICh2aWEgYGFnZW50X3BsYW5uZXJgKSwgZmFucyB0aGVtIG91dCB0byB0aGUgYXBwcm9wcmlhdGUKYWdlbnRzLCByZXRyaWVzIGZhaWx1cmVzLCBhbmQgb24gcGVybWFuZW50IGZhaWx1cmUgaW52b2tlcyBgYWdlbnRfcmVwYWlyYApmb3IgZGlhZ25vc2lzLgoKIyMjIEFnZW50IHJvc3RlcgoKfCBBZ2VudCB8IFBoYXNlIDQgc3RhdHVzIHwKfC0tLS0tLS18LS0tLS0tLS0tLS0tLS0tLXwKfCBgYWdlbnRfb3JjaGVzdHJhdG9yYCB8IE9yaWdpbmFsICh1bmNoYW5nZWQpIHwKfCBgYWdlbnRfcGxhbm5lcmAgfCAqKlJlYWwgTExNLWRyaXZlbiBkZWNvbXBvc2l0aW9uKiogd2l0aCB0ZW1wbGF0ZSBmYWxsYmFjayB8CnwgYGFnZW50X3NlY3VyaXR5YCB8ICoqUmVhbCByZWdleC1iYXNlZCBzZWNyZXQgc2Nhbm5lcioqIChBV1MvT3BlblJvdXRlci9HaXRIdWIvU2xhY2svU3RyaXBlL1BFTS9ldGMuKSB8CnwgYGFnZW50X21lbW9yeWAgfCAqKlJlYWwgQ2hyb21hREIgYXJjaGl2YWwvcHJ1bmluZyoqICsgbG9nIGNsZWFudXAgfAp8IGBhZ2VudF92aXNpb25gIHwgKipSZWFsIFF3ZW4gMi41IFZMIE9DUioqIHZpYSBPcGVuUm91dGVyIHwKfCBgYWdlbnRfcmVwYWlyYCB8ICoqU3RydWN0dXJlZCB0cmFjZWJhY2sgcGFyc2VyKiogKyBoZXVyaXN0aWMgZml4IHByb3Bvc2FscyB8CnwgYGFnZW50X3Rlc3RpbmdgIHwgKipTdHJ1Y3R1cmVkIHB5dGVzdCByZXN1bHQgcGFyc2VyKiogfAp8IGBhZ2VudF9jb2RlYCB8IE9yaWdpbmFsIHwKfCBgYWdlbnRfb3NgIHwgT3JpZ2luYWwgfAp8IGBhZ2VudF9icm93c2VyYCB8IE9yaWdpbmFsIChQbGF5d3JpZ2h0KSB8CnwgYGFnZW50X3ZpZGVvYCB8IE9yaWdpbmFsIChPcGVuQ1YpIHwKfCBgYWdlbnRfZGVwbG95bWVudGAgfCBPcmlnaW5hbCB8CnwgYGFnZW50X21vbml0b3JgIHwgT3JpZ2luYWwgfAp8IGBhZ2VudF9kb2N1bWVudGAgfCBPcmlnaW5hbCB8CnwgYGFnZW50X3Jlc2VhcmNoYCB8IE9yaWdpbmFsIHwKCiMjIENvbW1hbmQgRXhlY3V0aW9uIEZsb3cKClRoaXMgaXMgdGhlIGxvYWQtYmVhcmluZyBwYXRoIGZvciB0aGUgd2hvbGUgc3lzdGVtLiBSZWFkIGl0IGNhcmVmdWxseS4KCmBgYApVc2VyIG1lc3NhZ2UKICAg4pSCCiAgIOKWvApyb3V0ZXJfY2hhdC5wcm9jZXNzX2NoYXQKICAg4pSCCiAgIOKUnOKUgOKWuiBjb21tYW5kX2ludGVycHJldGVyLmludGVycHJldChtZXNzYWdlKSAg4pSA4pa6IFsoZGVzY3JpcHRpb24sIGNtZCksIC4uLl0KICAg4pSCICAgICAgIGZvciBlYWNoOiBfZGlzcGF0Y2hfYW5kX3dhaXQoY21kKQogICDilIIKICAg4pSU4pSA4pa6IHJ1bl90b29sX2xvb3AobWVzc2FnZSwgaGlzdG9yeSwgcmVzdWx0cykKICAgICAgICAgIOKUggogICAgICAgICAg4pSc4pSA4pa6IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSguLi4pCiAgICAgICAgICDilIIgICAgICAgbWF5IGVtaXQgPHJ1bl9vc19jb21tYW5kPuKApjwvcnVuX29zX2NvbW1hbmQ+IHRhZ3MKICAgICAgICAgIOKUggogICAgICAgICAg4pSU4pSA4pa6IF9kaXNwYXRjaF9hbmRfd2FpdChjbWQpICDihpAgdGhpcyBpcyB0aGUgT05MWSBzaGVsbC1leGVjIHNpdGUKICAgICAgICAgICAgICAgICAg4pSCCiAgICAgICAgICAgICAgICAgIOKUnOKUgOKWuiBjb21tYW5kX3NhZmV0eS52YWxpZGF0ZShjbWQpCiAgICAgICAgICAgICAgICAgIOKUgiAgICAgICDilJzilIAgQUxMT1dFRCAgICAgICDihpIgcHJvY2VlZAogICAgICAgICAgICAgICAgICDilIIgICAgICAg4pSc4pSAIE5FRURTX0FQUFJPVkFMIOKGkiBhcHByb3ZhbF9nYXRld2F5LnJlcXVlc3QgKyB3YWl0CiAgICAgICAgICAgICAgICAgIOKUgiAgICAgICDilJTilIAgQkxPQ0tFRCAgICAgICDihpIgcmV0dXJuIGVhcmx5LCBsb2csIG5vIGV4ZWMKICAgICAgICAgICAgICAgICAg4pSCCiAgICAgICAgICAgICAgICAgIOKUlOKUgOKWuiBzdWJwcm9jZXNzLlBvcGVuKFsiY21kIiwiL2MiLGNtZF0sIHNoZWxsPUZhbHNlKQogICAgICAgICAgICAgICAgICAgICAgICAgIChvciBbIi9iaW4vc2giLCItYyIsY21kXSBvbiBQT1NJWCkKYGBgCgpUaHJlZSBpbmRlcGVuZGVudCBzYWZldHkgbGF5ZXJzIHN0YWNrOgoKMS4gUGF0dGVybiB0YWJsZXMgaW4gYHNoYXJlZC9jb25zdGFudHMucHlgLgoyLiBWYWxpZGF0b3IgaW4gYGJhY2tlbmQvc2VydmljZXMvY29tbWFuZF9zYWZldHkucHlgLgozLiBIdW1hbiBhcHByb3ZhbCBpbiBgYmFja2VuZC9hcHByb3ZhbF9nYXRld2F5LnB5YC4KCiMjIEZpbmFuY2lhbCBMZWRnZXIgU3lzdGVtIChQaGFzZSAxKQoKVGhlIHN5c3RlbSBtYWludGFpbnMgYSBkb3VibGUtZW50cnkgc3R5bGUgY2Fub25pY2FsIGZpbmFuY2lhbCBsZWRnZXIgaW4gYGxlZGdlcl9lbnRyaWVzYCB3aXRoaW4gYHN0b3JhZ2UvYnVzaW5lc3MuZGJgLgotICoqRGF0YSBNb2RlbCoqOiBSZWNvcmRzIGBlbnRyeV90eXBlYCAoYGNyZWRpdGAvYGRlYml0YCksIGBhbW91bnRgLCBgY3VycmVuY3lgLCBgYnVzaW5lc3NfaWRgLCBgY2F0ZWdvcnlgLCBgc291cmNlX2V2ZW50YCwgYHJlZmVyZW5jZV9pZGAsIGBkZXRhaWxzYCwgYW5kIGB0aW1lc3RhbXBgLgotICoqUmVjb25jaWxpYXRpb24qKjogQXV0b21hdGljYWxseSByZWNvbmNpbGVzIGhpc3RvcmljYWwgcmV2ZW51ZSBmcm9tIGBvcmRlcnNgIGFuZCBgaW52b2ljZXNgIGFsb25nc2lkZSBgYXVkaXRfbG9nYCBlbnRyaWVzIG9uIGZpcnN0IHJ1bi4KCiMjIERlY2lzaW9uIEdvdmVybmFuY2UgTGF5ZXIgKFBoYXNlIDIpCgpBIHVuaWZpZWQgZGVjaXNpb24gZ292ZXJuYW5jZSBnYXRld2F5IGluIGBiYWNrZW5kL2dvdmVybmFuY2UucHlgIGV2YWx1YXRlcyBtYWpvciBhdXRvbm9tb3VzIGRlY2lzaW9ucyBiZWZvcmUgZXhlY3V0aW9uIHVzaW5nIGZvdXIgcmV2aWV3ZXIgcm9sZXM6CjEuICoqUmVkLVRlYW0gUmV2aWV3ZXIqKjogVmFsaWRhdGVzIGxvZ2ljYWwgYXNzdW1wdGlvbnMgYW5kIG92ZXJjb25maWRlbmNlIGNsYWltcy4KMi4gKipDb21wbGlhbmNlIFJldmlld2VyKio6IEVuZm9yY2VzIHJlZ3VsYXRvcnkgbGltaXRzIChXaGF0c0FwcCByYXRlIGxpbWl0cywgQ0FOLVNQQU0gb3B0LW91dHMsIEZUQyBkaXNjbG9zdXJlcywgQ0JKIGFkdmlzb3JpZXMpLgozLiAqKkZpbmFuY2lhbCBSZXZpZXdlcioqOiBWYWxpZGF0ZXMgZXhwZW5kaXR1cmUgYWdhaW5zdCBwb3J0Zm9saW8gYmFsYW5jZSBhbmQgZGFpbHkvcGVyLWFjdGlvbiBidWRnZXQgY2Fwcy4KNC4gKipSaXNrL0JyYW5kIFJldmlld2VyKio6IEJsb2NrcyByZXB1dGF0aW9uYWwgdGhyZWF0cyBhbmQgdG94aWMgYnJhbmQga2V5d29yZHMuCgpFdmFsdWF0aW9uIFJ1bGVzOgotICoqQ29uc2Vuc3VzIFJ1bGUqKjogUmVxdWlyZXMgdW5hbmltb3VzICg0LzQpIGFwcHJvdmFsIGZvciBuZXcgYnVzaW5lc3MgbGF1bmNoZXMsIGFkIHNwZW5kLCBhbmQgZGFuZ2Vyb3VzIHNoZWxsIGFjdGlvbnMuCi0gKipNYWpvcml0eSBSdWxlKio6IFJlcXVpcmVzIDMvNCBhcHByb3ZhbCBmb3IgbG93ZXItc3Rha2VzIHN0cmF0ZWd5IGNoYW5nZXMuCgojIyBNZW1vcnkgRW5naW5lCgpDaHJvbWFEQi1iYWNrZWQgdmVjdG9yIHN0b3JlLiBFdmVyeSBgTWVtb3J5Q2F0ZWdvcnlgIGlzIGEgc2VwYXJhdGUKY29sbGVjdGlvbi4gVGhlIG1lbW9yeV9pbmRleGVyIHJ1bnMgaW4gdGhlIGJhY2tncm91bmQgYW5kIGluZGV4ZXMgbmV3Cm1lbW9yeSBlbnRyaWVzIGZvciBzZW1hbnRpYyBzZWFyY2guCgpgYGAKTWVtb3J5RW50cnkg4pSA4pSA4pa6IG1lbW9yeV9lbmdpbmUuc3RvcmUoKQogICAgICAgICAgICAgICAgICAgICAg4pSCCiAgICAgICAgICAgICAgICAgICAgICDilrwKICAgICAgICAgICAgICBDaHJvbWFEQiBjb2xsZWN0aW9uIChvbmUgcGVyIE1lbW9yeUNhdGVnb3J5KQogICAgICAgICAgICAgICAgICAgICAg4pSCCiAgICAgICAgICAgICAgICAgICAgICDilrwKICAgICAgICAgICAgICBtZW1vcnlfZW5naW5lLnF1ZXJ5KE1lbW9yeVF1ZXJ5KSDilIDilrogTGlzdFtNZW1vcnlFbnRyeV0KICAgICAgICAgICAgICAgICAgICAgIOKUggogICAgICAgICAgICAgICAgICAgICAg4pa8CiAgICAgICAgICAgICAgbGxtX3NlcnZpY2UuX2Zvcm1hdF9tZW1vcnlfY29udGV4dChNZW1vcnlDb250ZXh0KQogICAgICAgICAgICAgICAgICAgICAg4pSCCiAgICAgICAgICAgICAgICAgICAgICDilrwKICAgICAgICAgICAgICBpbmplY3RlZCBpbnRvIHRoZSBMTE0gc3lzdGVtIGNvbnRleHQKYGBgCgojIyBUb29sIFJlZ2lzdHJ5IChQaGFzZSA4IOKAlCBpbiBwcm9ncmVzcykKClRoZSBjdXJyZW50IGA8cnVuX29zX2NvbW1hbmQ+YCB0YWctYmFzZWQgdG9vbCBpbnRlcmZhY2UgaXMgYmVpbmcgcmVwbGFjZWQKd2l0aCBhIHByb3BlciBmdW5jdGlvbi1jYWxsaW5nIHN1YnN0cmF0ZS4gV2hlbiBjb21wbGV0ZToKCi0gYGJhY2tlbmQvdG9vbHMvcmVnaXN0cnkucHlgIGhvbGRzIGEgYEB0b29sYCBkZWNvcmF0b3IgYW5kIGEgcHJvY2Vzcy13aWRlCiAgYFRvb2xSZWdpc3RyeWAuCi0gRXZlcnkgdG9vbCBkZWNsYXJlcyBhIEpTT04gc2NoZW1hIGZvciBpdHMgYXJndW1lbnRzIGFuZCBhIGBSaXNrVGllcmAuCi0gVGhlIExMTSBpcyBpbnZva2VkIHdpdGggdGhlIGZ1bGwgbGlzdCBvZiB0b29sIHNjaGVtYXMgKG5hdGl2ZQogIGZ1bmN0aW9uLWNhbGxpbmcgb24gT3BlblJvdXRlci9PcGVuQUkpLgotIGBiYWNrZW5kL3Rvb2xzL2V4ZWN1dG9yLnB5YCBkaXNwYXRjaGVzIHRvb2wgY2FsbHMsIGVuZm9yY2VzIHRoZSByaXNrIHRpZXIsCiAgYW5kIHJlbWVtYmVycyBwZXItc2Vzc2lvbiBhcHByb3ZhbCBkZWNpc2lvbnMuCi0gRXhpc3RpbmcgMTUgYWdlbnRzIGJlY29tZSBwbHVnaW5zIHVuZGVyIGBwbHVnaW5zL2AuCgpDYXBhYmlsaXR5IHRpZXJzOgoKfCBUaWVyIHwgRXhhbXBsZSB0b29scyB8IEFwcHJvdmFsIHJ1bGUgfAp8LS0tLS0tfC0tLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLS18CnwgMCDigJQgT2JzZXJ2ZSB8IGBmaWxlcy5yZWFkYCwgYGZpbGVzLnNlYXJjaGAsIGB3ZWIuc2VhcmNoYCB8IEFsd2F5cyBhbGxvd2VkIHwKfCAxIOKAlCBSZXZlcnNpYmxlIHwgYGZpbGVzLndyaXRlYCBpbiB3b3Jrc3BhY2UsIGBnaXQuY29tbWl0YCB8IEFsbG93ZWQgKyBsb2dnZWQgfAp8IDIg4oCUIFN5c3RlbSB8IGBzaGVsbC5ydW5gIChpbnN0YWxsKSwgYHByb2Nlc3Mua2lsbGAsIGBhcHAub3BlbmAgfCBBc2sgb25jZSBwZXIgdG9vbCB8CnwgMyDigJQgRGVzdHJ1Y3RpdmUgfCBgZmlsZXMuZGVsZXRlYCwgYGZvcm1hdC5kcml2ZWAsIGBuZXQubW9kaWZ5YCB8IEFsd2F5cyBhc2sgfAp8IDQg4oCUIEV4dGVybmFsIHwgYGVtYWlsLnNlbmRgLCBgc2xhY2sucG9zdGAsIGBwYXltZW50LnNlbmRgIHwgQWx3YXlzIGFzayArIDJGQSB8CgojIyBXaGF0IGxpdmVzIHdoZXJlCgp8IENvbmNlcm4gfCBGaWxlIC8gZGlyIHwKfC0tLS0tLS0tLXwtLS0tLS0tLS0tLXwKfCBGYXN0QVBJIGFwcCArIGxpZmVzcGFuIHwgYGJhY2tlbmQvbWFpbi5weWAgfAp8IFJFU1Qgcm91dGVycyB8IGBiYWNrZW5kL3JvdXRlcnMvcm91dGVyXyoucHlgIHwKfCBMTE0gKE9wZW5Sb3V0ZXIpIHwgYGJhY2tlbmQvc2VydmljZXMvbGxtX3NlcnZpY2UucHlgIHwKfCBNZW1vcnkgKENocm9tYURCKSB8IGBiYWNrZW5kL21lbW9yeV9lbmdpbmUucHlgIHwKfCBEZXZpY2UgcGFpcmluZyArIHRydXN0IHwgYGJhY2tlbmQvZGV2aWNlX3JlZ2lzdHJ5LnB5YCB8CnwgQXBwcm92YWwgZmxvdyB8IGBiYWNrZW5kL2FwcHJvdmFsX2dhdGV3YXkucHlgIHwKfCBDb21tYW5kIHZhbGlkYXRvciB8IGBiYWNrZW5kL3NlcnZpY2VzL2NvbW1hbmRfc2FmZXR5LnB5YCB8CnwgV1MgaHViIChkZXZpY2VzKSB8IGBiYWNrZW5kL3dlYnNvY2tldF9tYW5hZ2VyLnB5YCB8CnwgV1MgaHViIChVSSkgfCBgYmFja2VuZC9tYWluLnB5Ol91aV9jbGllbnRzYCB8CnwgQ3JvbiAvIGludGVydmFsIGpvYnMgfCBgYmFja2VuZC9zY2hlZHVsZXIucHlgIHwKfCBQeWRhbnRpYyBtb2RlbHMgfCBgc2hhcmVkL21vZGVscy5weWAgfAp8IEVudW1zICsgcGF0dGVybiB0YWJsZXMgfCBgc2hhcmVkL2NvbnN0YW50cy5weWAgfAp8IEpXVCAvIEZlcm5ldCAvIHNpZ25hdHVyZXMgfCBgc2hhcmVkL3NlY3VyaXR5LnB5YCB8CnwgU3RydWN0dXJlZCBsb2dnaW5nIHwgYHNoYXJlZC9sb2dnZXIucHlgIHwKfCBMb2NhbCBkYWVtb24gfCBgbG9jYWxfY2xpZW50L2RhZW1vbi5weWAgfAp8IExvY2FsIFdTIGNsaWVudCB8IGBsb2NhbF9jbGllbnQvd2Vic29ja2V0X2NsaWVudC5weWAgfAp8IEFnZW50cyB8IGBsb2NhbF9jbGllbnQvYWdlbnRzL2FnZW50XyoucHlgIHwKCiMjIFRlc3RpbmcgU3RyYXRlZ3kKCmBiYWNrZW5kL3Rlc3RzL2AgaG9sZHMgMTEwKyB0ZXN0cyBhY3Jvc3M6CgotIGB0ZXN0X21haW4ucHlgLCBgdGVzdF9jb25maWcucHlgLCBgdGVzdF9tb2RlbHMucHlgIOKAlCBiYXNlbGluZSBzbW9rZSB0ZXN0cy4KLSBgdGVzdF9zZWN1cml0eS5weWAg4oCUIEpXVCwgRmVybmV0LCBITUFDLCBwYXNzd29yZCBoYXNoaW5nLCBwbHVzIHRoZQogIFBoYXNlIDEgcmVncmVzc2lvbiB0aGF0IGluaXRfc2VjdXJpdHkgcmVqZWN0cyBwbGFjZWhvbGRlciBrZXlzLgotIGB0ZXN0X2NoYXRfc2FmZXR5LnB5YCDigJQgdGhlIGNvbW1hbmQgdmFsaWRhdG9yIChwYXJhbWV0cml6ZWQgb3ZlcgogIEFMTE9XRUQgLyBORUVEU19BUFBST1ZBTCAvIEJMT0NLRUQgY29tbWFuZHMpLgotIGB0ZXN0X2FwcHJvdmFsX2dhdGV3YXkucHlgIOKAlCByZXF1ZXN0IGxpZmVjeWNsZSwgYXBwcm92ZS9yZWplY3QvdGltZW91dC4KLSBgdGVzdF9kZXZpY2VfcmVnaXN0cnkucHlgIOKAlCBwYWlyaW5nICsgdHJ1c3QgcGVyc2lzdGVuY2UgYWNyb3NzIHNpbXVsYXRlZAogIHJlc3RhcnQgKHRoZSBXUyA0MDMgcmVncmVzc2lvbikuCi0gYHRlc3RfbWVtb3J5X2VuZ2luZS5weWAg4oCUIENocm9tYURCIHJvdW5kLXRyaXAgd2l0aCBhIHRtcCBwZXJzaXN0IGRpci4KLSBgdGVzdF9zY2hlZHVsZXIucHlgIOKAlCBpbnRlcnZhbCBhbmQgY3JvbiBzY2hlZHVsaW5nLCBjYW5jZWwsIGpvYl9jb3VudC4KLSBgdGVzdF9hZ2VudHMucHlgIOKAlCBwYXJhbWV0cml6ZWQgdGVzdHMgZm9yIHNlY3VyaXR5LCBwbGFubmVyLCByZXBhaXIsCiAgdGVzdGluZyBhZ2VudHMuCi0gYHRlc3Rfb3JjaGVzdHJhdG9yLnB5YCwgYHRlc3RfcmVhY3RfbG9vcC5weWAsIGB0ZXN0X2NvbW1hbmRfaW50ZXJwcmV0ZXIucHlgCiAg4oCUIG9yaWdpbmFsIHRlc3RzLCB1bmNoYW5nZWQuCgpgY29uZnRlc3QucHlgIHNldHMgZGV0ZXJtaW5pc3RpYyBib290c3RyYXAgc2VjcmV0cyBpbiB0aGUgZW52aXJvbm1lbnQgYmVmb3JlCmFueSB0ZXN0IGltcG9ydHMgdGhlIGFwcCwgYW5kIGF1dG91c2UtaW5pdGlhbGl6ZXMgdGhlIHNlY3VyaXR5IG1vZHVsZS4KCiMjIEtub3duIExpbWl0YXRpb25zCgotIFRoZSBzdGF0aWMgYGZyb250ZW5kL2luZGV4Lmh0bWxgIHVzZXMgYGlubmVySFRNTGAgb24gTExNIG91dHB1dCAoWFNTIHJpc2spLgotIGBzcmMvYCBjb250YWlucyBhIHBhcmFsbGVsIFR5cGVTY3JpcHQgZGFlbW9uIHRoYXQgaXMgTk9UIHdpcmVkIGluLgotIEF1ZGlvL3ZpZGVvL3NjcmVlbnNob3Qgc3Vic3lzdGVtcyBkZWdyYWRlIGdyYWNlZnVsbHkgd2hlbiB0aGVpciBuYXRpdmUKICBkZXBlbmRlbmNpZXMgYXJlIG1pc3NpbmcgKHNvdW5kZGV2aWNlLCBtc3MsIG9wZW5jdikuCi0gVGhlIERvY2tlciBjb250YWluZXIgY2Fubm90IHVzZSBhdWRpby9zY3JlZW5zaG90L21pY3JvcGhvbmUgc3Vic3lzdGVtcyDigJQKICB0aG9zZSBydW4gaW4gdGhlIGxvY2FsIGNsaWVudCBkYWVtb24gb24gdGhlIGhvc3QuCg==
+# Architecture
+
+This document describes how JARVIS OMEGA is wired together at the module
+level. It's intended for contributors who need to know where to plug a new
+feature in.
+
+## High-Level Diagram
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                       Frontend dashboard                          │
+│                  (static HTML at frontend/index.html)             │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ WS /ws/ui  (unauthenticated, local)
+                               ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                          FastAPI backend                          │
+│                                                                   │
+│  ┌────────────┐  ┌─────────────┐  ┌────────────┐  ┌───────────┐  │
+│  │ routers/   │  │ services/   │  │ approval_  │  │ device_   │  │
+│  │ chat,mem,… │→ │ llm, tts,…  │  │ gateway    │  │ registry  │  │
+│  └────────────┘  └─────────────┘  └────────────┘  └───────────┘  │
+│         │              │              ▲                ▲          │
+│         ▼              ▼              │                │          │
+│  ┌────────────┐  ┌─────────────┐     │                │          │
+│  │ command_   │  │ memory_     │     │                │          │
+│  │ safety     │  │ engine      │     │                │          │
+│  └────────────┘  └─────────────┘     │                │          │
+│         │                              │                │          │
+│         ▼                              │                │          │
+│  ┌──────────────────────────────────────────────────┐ │          │
+│  │ _dispatch_and_wait — the ONLY shell-execution    │ │          │
+│  │ site in the system. Every command flows here.    │─┘          │
+│  └──────────────────────────────────────────────────┘            │
+│                              │                                    │
+│  event_bus ─────────────────┐│                                    │
+│  scheduler (APScheduler)    ││                                    │
+│  health_monitor             ▼│                                    │
+│  ws_manager ◄────────────────┘                                    │
+└──────────────────────────────┬───────────────────────────────────┘
+                               │ WS /ws/{device_id} (JWT-verified)
+                               ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                       Local client daemon                         │
+│                                                                   │
+│  daemon.py boots in dependency order:                             │
+│    1. state_manager      loads config/client_config.json          │
+│    2. websocket_client   persistent WS to backend                 │
+│    3. health_reporter    pushes CPU/mem stats                     │
+│    4. clipboard_manager  cross-device clipboard sync              │
+│    5. filesystem_watcher workspace change events                  │
+│    6. microphone_listener VAD + STT                               │
+│    7. wakeword_detector  "jarvis" hotword                         │
+│    8. task_executor      receives EXECUTE_TASK messages           │
+│                                                                   │
+│  agents/ contains 15 specialized agents loaded dynamically by     │
+│  the orchestrator via importlib.import_module().                  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+## Boot Order
+
+`backend/main.py:lifespan` does the following on startup:
+
+1. `settings.ensure_directories()` — create storage/logs/memory/cache.
+2. `settings.validate_security_settings()` — fail fast on missing secrets.
+3. `init_security(...)` — populate JWT signing key + Fernet key.
+4. Wire up event-bus dependencies between ws_manager, device_registry,
+   approval_gateway, task_manager, health_monitor.
+5. Subscribe task-creation and approval-event handlers to the event bus.
+6. `device_registry.initialize()` — load `storage/devices.json` and log
+   the trust snapshot (makes the WebSocket 403 case observable).
+7. `memory_engine.initialize()` — open ChromaDB persistent client.
+8. `project_graph.initialize()` — load project graph.
+9. Register components in health_monitor.
+10. Start background services: scheduler, health_monitor, memory_indexer,
+    heartbeat loop.
+11. Ready.
+
+## The Two WebSocket Endpoints
+
+| Endpoint | Auth | Purpose |
+|----------|------|---------|
+| `WS /ws/ui` | None (local LAN only) | Frontend dashboard — proactive reports, approval requests, system status. |
+| `WS /ws/{device_id}?token=…` | JWT verified + device_registry.is_trusted | Local client daemon — bidirectional command/result channel. |
+
+UI clients are tracked in `_ui_clients` in `main.py`. Devices are tracked in
+`ws_manager._connections`. The approval gateway broadcasts to BOTH — to
+devices via `ws_manager.broadcast` and to UI via the
+`handle_approval_event` event-bus subscriber.
+
+## Agent Hierarchy
+
+All 15 agents share a common skeleton:
+
+```python
+class AgentX:
+    agent_id = "agent_x"
+    agent_type = AgentType.X
+
+    async def execute_task(self, task: TaskDefinition) -> TaskResult:
+        action = task.payload.get("action", "<default>")
+        # dispatch on action...
+```
+
+The orchestrator (`local_client/agents/agent_orchestrator.py`) decomposes a
+goal into subtasks (via `agent_planner`), fans them out to the appropriate
+agents, retries failures, and on permanent failure invokes `agent_repair`
+for diagnosis.
+
+### Agent roster
+
+| Agent | Phase 4 status |
+|-------|----------------|
+| `agent_orchestrator` | Original (unchanged) |
+| `agent_planner` | **Real LLM-driven decomposition** with template fallback |
+| `agent_security` | **Real regex-based secret scanner** (AWS/OpenRouter/GitHub/Slack/Stripe/PEM/etc.) |
+| `agent_memory` | **Real ChromaDB archival/pruning** + log cleanup |
+| `agent_vision` | **Real Qwen 2.5 VL OCR** via OpenRouter |
+| `agent_repair` | **Structured traceback parser** + heuristic fix proposals |
+| `agent_testing` | **Structured pytest result parser** |
+| `agent_code` | Original |
+| `agent_os` | Original |
+| `agent_browser` | Original (Playwright) |
+| `agent_video` | Original (OpenCV) |
+| `agent_deployment` | Original |
+| `agent_monitor` | Original |
+| `agent_document` | Original |
+| `agent_research` | Original |
+
+## Command Execution Flow
+
+This is the load-bearing path for the whole system. Read it carefully.
+
+```
+User message
+   │
+   ▼
+router_chat.process_chat
+   │
+   ├─► command_interpreter.interpret(message)  ─► [(description, cmd), ...]
+   │       for each: _dispatch_and_wait(cmd)
+   │
+   └─► run_tool_loop(message, history, results)
+          │
+          ├─► llm_service.get_response(...)
+          │       may emit <run_os_command>…</run_os_command> tags
+          │
+          └─► _dispatch_and_wait(cmd)  ← this is the ONLY shell-exec site
+                  │
+                  ├─► command_safety.validate(cmd)
+                  │       ├─ ALLOWED       → proceed
+                  │       ├─ NEEDS_APPROVAL → approval_gateway.request + wait
+                  │       └─ BLOCKED       → return early, log, no exec
+                  │
+                  └─► subprocess.Popen(["cmd","/c",cmd], shell=False)
+                          (or ["/bin/sh","-c",cmd] on POSIX)
+```
+
+Three independent safety layers stack:
+
+1. Pattern tables in `shared/constants.py`.
+2. Validator in `backend/services/command_safety.py`.
+3. Human approval in `backend/approval_gateway.py`.
+
+## Financial Ledger System (Phase 1)
+
+The system maintains a double-entry style canonical financial ledger in `ledger_entries` within `storage/business.db`.
+- **Data Model**: Records `entry_type` (`credit`/`debit`), `amount`, `currency`, `business_id`, `category`, `source_event`, `reference_id`, `details`, and `timestamp`.
+- **Reconciliation**: Automatically reconciles historical revenue from `orders` and `invoices` alongside `audit_log` entries on first run.
+
+## Decision Governance Layer (Phase 2)
+
+A unified decision governance gateway in `backend/governance.py` evaluates major autonomous decisions before execution using four reviewer roles:
+1. **Red-Team Reviewer**: Validates logical assumptions and overconfidence claims.
+2. **Compliance Reviewer**: Enforces regulatory limits (WhatsApp rate limits, CAN-SPAM opt-outs, FTC disclosures, CBJ advisories).
+3. **Financial Reviewer**: Validates expenditure against portfolio balance and daily/per-action budget caps.
+4. **Risk/Brand Reviewer**: Blocks reputational threats and toxic brand keywords.
+
+Evaluation Rules:
+- **Consensus Rule**: Requires unanimous (4/4) approval for new business launches, ad spend, and dangerous shell actions.
+- **Majority Rule**: Requires 3/4 approval for lower-stakes strategy changes.
+
+## Memory Engine
+
+ChromaDB-backed vector store. Every `MemoryCategory` is a separate
+collection. The memory_indexer runs in the background and indexes new
+memory entries for semantic search.
+
+```
+MemoryEntry ──► memory_engine.store()
+                      │
+                      ▼
+              ChromaDB collection (one per MemoryCategory)
+                      │
+                      ▼
+              memory_engine.query(MemoryQuery) ─► List[MemoryEntry]
+                      │
+                      ▼
+              llm_service._format_memory_context(MemoryContext)
+                      │
+                      ▼
+              injected into the LLM system context
+```
+
+## Tool Registry (Phase 8 — in progress)
+
+The current `<run_os_command>` tag-based tool interface is being replaced
+with a proper function-calling substrate. When complete:
+
+- `backend/tools/registry.py` holds a `@tool` decorator and a process-wide
+  `ToolRegistry`.
+- Every tool declares a JSON schema for its arguments and a `RiskTier`.
+- The LLM is invoked with the full list of tool schemas (native
+  function-calling on OpenRouter/OpenAI).
+- `backend/tools/executor.py` dispatches tool calls, enforces the risk tier,
+  and remembers per-session approval decisions.
+- Existing 15 agents become plugins under `plugins/`.
+
+Capability tiers:
+
+| Tier | Example tools | Approval rule |
+|------|---------------|---------------|
+| 0 — Observe | `files.read`, `files.search`, `web.search` | Always allowed |
+| 1 — Reversible | `files.write` in workspace, `git.commit` | Allowed + logged |
+| 2 — System | `shell.run` (install), `process.kill`, `app.open` | Ask once per tool |
+| 3 — Destructive | `files.delete`, `format.drive`, `net.modify` | Always ask |
+| 4 — External | `email.send`, `slack.post`, `payment.send` | Always ask + 2FA |
+
+## What lives where
+
+| Concern | File / dir |
+|---------|-----------|
+| FastAPI app + lifespan | `backend/main.py` |
+| REST routers | `backend/routers/router_*.py` |
+| LLM (OpenRouter) | `backend/services/llm_service.py` |
+| Memory (ChromaDB) | `backend/memory_engine.py` |
+| Device pairing + trust | `backend/device_registry.py` |
+| Approval flow | `backend/approval_gateway.py` |
+| Command validator | `backend/services/command_safety.py` |
+| WS hub (devices) | `backend/websocket_manager.py` |
+| WS hub (UI) | `backend/main.py:_ui_clients` |
+| Cron / interval jobs | `backend/scheduler.py` |
+| Pydantic models | `shared/models.py` |
+| Enums + pattern tables | `shared/constants.py` |
+| JWT / Fernet / signatures | `shared/security.py` |
+| Structured logging | `shared/logger.py` |
+| Local daemon | `local_client/daemon.py` |
+| Local WS client | `local_client/websocket_client.py` |
+| Agents | `local_client/agents/agent_*.py` |
+
+## Testing Strategy
+
+`backend/tests/` holds 110+ tests across:
+
+- `test_main.py`, `test_config.py`, `test_models.py` — baseline smoke tests.
+- `test_security.py` — JWT, Fernet, HMAC, password hashing, plus the
+  Phase 1 regression that init_security rejects placeholder keys.
+- `test_chat_safety.py` — the command validator (parametrized over
+  ALLOWED / NEEDS_APPROVAL / BLOCKED commands).
+- `test_approval_gateway.py` — request lifecycle, approve/reject/timeout.
+- `test_device_registry.py` — pairing + trust persistence across simulated
+  restart (the WS 403 regression).
+- `test_memory_engine.py` — ChromaDB round-trip with a tmp persist dir.
+- `test_scheduler.py` — interval and cron scheduling, cancel, job_count.
+- `test_agents.py` — parametrized tests for security, planner, repair,
+  testing agents.
+- `test_orchestrator.py`, `test_react_loop.py`, `test_command_interpreter.py`
+  — original tests, unchanged.
+
+`conftest.py` sets deterministic bootstrap secrets in the environment before
+any test imports the app, and autouse-initializes the security module.
+
+## Known Limitations
+
+- The static `frontend/index.html` uses `innerHTML` on LLM output (XSS risk).
+- `src/` contains a parallel TypeScript daemon that is NOT wired in.
+- Audio/video/screenshot subsystems degrade gracefully when their native
+  dependencies are missing (sounddevice, mss, opencv).
+- The Docker container cannot use audio/screenshot/microphone subsystems —
+  those run in the local client daemon on the host.

@@ -1,1 +1,274 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgRGVjaXNpb24gR292ZXJuYW5jZSBMYXllciAoUGhhc2UgMikKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoiIiIKRGVjaXNpb24gR292ZXJuYW5jZSBMYXllciB3aXRoIHZldG8gcG93ZXIgYWNyb3NzIGZvdXIgcGx1Z2dhYmxlIHJldmlld2VyIHJvbGVzOgogIDEuIFJlZC1UZWFtIHJldmlld2VyIOKAlCBsb2dpY2FsIGdhcHMsIGFzc3VtcHRpb25zLCBvdmVybG9va2VkIHJpc2tzCiAgMi4gQ29tcGxpYW5jZSByZXZpZXdlciDigJQgYW50aS1zcGFtLCBXaGF0c0FwcCBUb1MsIEZUQyBkaXNjbG9zdXJlcywgSm9yZGFuIHJlZ3VsYXRpb25zCiAgMy4gRmluYW5jaWFsIHJldmlld2VyIOKAlCBjaGVja3MgYWdhaW5zdCBjYW5vbmljYWwgRmluYW5jaWFsIExlZGdlciAmIGJ1ZGdldCBjYXBzCiAgNC4gUmlzay9CcmFuZCByZXZpZXdlciDigJQgcmVwdXRhdGlvbmFsL2JyYW5kIHJpc2ssIG1hcmtldCBmaXQsIGJhY2tsYXNoCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KZnJvbSB0eXBpbmcgaW1wb3J0IEFueSwgRGljdCwgTGlzdApmcm9tIHB5ZGFudGljIGltcG9ydCBCYXNlTW9kZWwsIEZpZWxkCgpmcm9tIGJhY2tlbmQuY29uZmlnIGltcG9ydCBzZXR0aW5ncwpmcm9tIGJhY2tlbmQubGVkZ2VyIGltcG9ydCBsZWRnZXIKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJnb3Zlcm5hbmNlIikKCgpjbGFzcyBSZXZpZXdSZXN1bHQoQmFzZU1vZGVsKToKICAgIGFwcHJvdmVkOiBib29sCiAgICByb2xlOiBzdHIKICAgIHJlYXNvbjogc3RyCiAgICByaXNrX3Njb3JlOiBmbG9hdCA9IDAuMCAgIyAwLjAgKHNhZmUpIHRvIDEuMCAoZXh0cmVtZSByaXNrKQoKCmNsYXNzIERlY2lzaW9uVmV0byhCYXNlTW9kZWwpOgogICAgZGVjaXNpb25fdHlwZTogc3RyCiAgICBhY3Rpb246IHN0cgogICAgcnVsZV9hcHBsaWVkOiBzdHIgICMgJ2NvbnNlbnN1cycgfCAnbWFqb3JpdHknCiAgICB2ZXRvZWRfYnk6IExpc3Rbc3RyXQogICAgdmV0b19yZWFzb25zOiBMaXN0W0RpY3Rbc3RyLCBzdHJdXQogICAgZGV0YWlsczogRGljdFtzdHIsIEFueV0gPSBGaWVsZChkZWZhdWx0X2ZhY3Rvcnk9ZGljdCkKCgpjbGFzcyBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdChCYXNlTW9kZWwpOgogICAgZGVjaXNpb25fdHlwZTogc3RyICAjICduZXdfYnVzaW5lc3MnLCAnYWRfc3BlbmQnLCAnZW50ZXJfbWFya2V0JywgJ3N0cmF0ZWd5X2NoYW5nZScsICdkYW5nZXJvdXNfY29tbWFuZCcKICAgIGFjdGlvbjogc3RyCiAgICBhbW91bnRfdXNkOiBmbG9hdCA9IDAuMAogICAgY2hhbm5lbDogc3RyID0gIiIKICAgIGp1cmlzZGljdGlvbjogc3RyID0gIkpPIgogICAgdGFyZ2V0X21hcmtldDogc3RyID0gIiIKICAgIGRldGFpbHM6IERpY3Rbc3RyLCBBbnldID0gRmllbGQoZGVmYXVsdF9mYWN0b3J5PWRpY3QpCgoKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQojIFBsdWdnYWJsZSBSZXZpZXdlcnMKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKY2xhc3MgUmVkVGVhbVJldmlld2VyOgogICAgIiIiUmV2aWV3cyBkZWNpc2lvbiBmb3IgbG9naWNhbCBnYXBzLCBvdmVyY29uZmlkZW5jZSwgYW5kIHVuc3RhdGVkIGFzc3VtcHRpb25zLiIiIgoKICAgIGFzeW5jIGRlZiByZXZpZXcoc2VsZiwgcmVxOiBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdCkgLT4gUmV2aWV3UmVzdWx0OgogICAgICAgIGFjdGlvbl9sb3dlciA9IHJlcS5hY3Rpb24ubG93ZXIoKQogICAgICAgIGlmICJndWFyYW50ZWVkIHByb2ZpdCIgaW4gYWN0aW9uX2xvd2VyIG9yICIxMDAlIHN1Y2Nlc3MiIGluIGFjdGlvbl9sb3dlcjoKICAgICAgICAgICAgcmV0dXJuIFJldmlld1Jlc3VsdCgKICAgICAgICAgICAgICAgIGFwcHJvdmVkPUZhbHNlLAogICAgICAgICAgICAgICAgcm9sZT0icmVkX3RlYW0iLAogICAgICAgICAgICAgICAgcmVhc29uPSJSZWQtVGVhbSBWZXRvOiBVbnJlYWxpc3RpYyBvdmVyY29uZmlkZW5jZSBjbGFpbSBpbiBkZWNpc2lvbiBzdHJhdGVneS4iLAogICAgICAgICAgICAgICAgcmlza19zY29yZT0wLjksCiAgICAgICAgICAgICkKICAgICAgICBpZiByZXEuZGVjaXNpb25fdHlwZSA9PSAiZW50ZXJfbWFya2V0IiBhbmQgbm90IHJlcS50YXJnZXRfbWFya2V0OgogICAgICAgICAgICByZXR1cm4gUmV2aWV3UmVzdWx0KAogICAgICAgICAgICAgICAgYXBwcm92ZWQ9RmFsc2UsCiAgICAgICAgICAgICAgICByb2xlPSJyZWRfdGVhbSIsCiAgICAgICAgICAgICAgICByZWFzb249IlJlZC1UZWFtIFZldG86IE1hcmtldCBlbnRyeSBwcm9wb3NlZCB3aXRob3V0IGRlZmluZWQgdGFyZ2V0IG1hcmtldCBwYXJhbWV0ZXIuIiwKICAgICAgICAgICAgICAgIHJpc2tfc2NvcmU9MC44LAogICAgICAgICAgICApCiAgICAgICAgcmV0dXJuIFJldmlld1Jlc3VsdChhcHByb3ZlZD1UcnVlLCByb2xlPSJyZWRfdGVhbSIsIHJlYXNvbj0iTG9naWNhbCBhc3N1bXB0aW9ucyB2YWxpZC4iLCByaXNrX3Njb3JlPTAuMSkKCgpjbGFzcyBDb21wbGlhbmNlUmV2aWV3ZXI6CiAgICAiIiJDaGVja3MgYWN0aW9uIGFnYWluc3QgcmVndWxhdG9yeSBsYXdzLCBUb1MgbGltaXRzLCBhbmQgZmluYW5jaWFsIHJ1bGVzLiIiIgoKICAgIGFzeW5jIGRlZiByZXZpZXcoc2VsZiwgcmVxOiBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdCkgLT4gUmV2aWV3UmVzdWx0OgogICAgICAgIGFjdGlvbl9sb3dlciA9IHJlcS5hY3Rpb24ubG93ZXIoKQogICAgICAgIGNoYW5uZWxfbG93ZXIgPSByZXEuY2hhbm5lbC5sb3dlcigpCgogICAgICAgICMgV2hhdHNBcHAgVG9TIGxpbWl0cwogICAgICAgIGlmIGNoYW5uZWxfbG93ZXIgPT0gIndoYXRzYXBwIiBhbmQgcmVxLmRldGFpbHMuZ2V0KCJicm9hZGNhc3RfY291bnQiLCAwKSA+IDEwMDA6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgICAgICBhcHByb3ZlZD1GYWxzZSwKICAgICAgICAgICAgICAgIHJvbGU9ImNvbXBsaWFuY2UiLAogICAgICAgICAgICAgICAgcmVhc29uPSJDb21wbGlhbmNlIFZldG86IFdoYXRzQXBwIGJyb2FkY2FzdCBzaXplIGV4Y2VlZHMgZGFpbHkgVG9TIHNhZmUgcmF0ZSBsaW1pdCAoMTAwMCkuIiwKICAgICAgICAgICAgICAgIHJpc2tfc2NvcmU9MC45NSwKICAgICAgICAgICAgKQoKICAgICAgICAjIEFudGktc3BhbSAvIGNvbGQgZW1haWwgbGF3cyAoQ0FOLVNQQU0gLyBHRFBSKQogICAgICAgIGlmICJjb2xkX2VtYWlsIiBpbiBhY3Rpb25fbG93ZXIgYW5kIG5vdCByZXEuZGV0YWlscy5nZXQoIm9wdF9vdXRfbGluayIsIFRydWUpOgogICAgICAgICAgICByZXR1cm4gUmV2aWV3UmVzdWx0KAogICAgICAgICAgICAgICAgYXBwcm92ZWQ9RmFsc2UsCiAgICAgICAgICAgICAgICByb2xlPSJjb21wbGlhbmNlIiwKICAgICAgICAgICAgICAgIHJlYXNvbj0iQ29tcGxpYW5jZSBWZXRvOiBDb2xkIGVtYWlsIGNhbXBhaWduIG1pc3NpbmcgbWFuZGF0b3J5IG9wdC1vdXQvdW5zdWJzY3JpYmUgaGVhZGVyLiIsCiAgICAgICAgICAgICAgICByaXNrX3Njb3JlPTAuOSwKICAgICAgICAgICAgKQoKICAgICAgICAjIEZUQyBhZmZpbGlhdGUgZGlzY2xvc3VyZQogICAgICAgIGlmICJhZmZpbGlhdGUiIGluIGFjdGlvbl9sb3dlciBhbmQgbm90IHJlcS5kZXRhaWxzLmdldCgiaGFzX2Z0Y19kaXNjbG9zdXJlIiwgVHJ1ZSk6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgICAgICBhcHByb3ZlZD1GYWxzZSwKICAgICAgICAgICAgICAgIHJvbGU9ImNvbXBsaWFuY2UiLAogICAgICAgICAgICAgICAgcmVhc29uPSJDb21wbGlhbmNlIFZldG86IEFmZmlsaWF0ZSBwcm9tb3Rpb25hbCBtYXRlcmlhbCBsYWNrcyBGVEMgcmVxdWlyZWQgZGlzY2xvc3VyZS4iLAogICAgICAgICAgICAgICAgcmlza19zY29yZT0wLjg1LAogICAgICAgICAgICApCgogICAgICAgICMgSm9yZGFuIHRyYWRpbmcgLyBmaW5hbmNpYWwgcmVndWxhdGlvbgogICAgICAgIGlmIHJlcS5qdXJpc2RpY3Rpb24udXBwZXIoKSA9PSAiSk8iIGFuZCAiY3J5cHRvX2xldmVyYWdlIiBpbiBhY3Rpb25fbG93ZXI6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgICAgICBhcHByb3ZlZD1GYWxzZSwKICAgICAgICAgICAgICAgIHJvbGU9ImNvbXBsaWFuY2UiLAogICAgICAgICAgICAgICAgcmVhc29uPSJDb21wbGlhbmNlIFZldG86IEhpZ2gtbGV2ZXJhZ2UgY3J5cHRvIHRyYWRpbmcgdmlvbGF0ZXMgbG9jYWwgSm9yZGFuIENCSiBmaW5hbmNpYWwgYWR2aXNvcmllcy4iLAogICAgICAgICAgICAgICAgcmlza19zY29yZT0wLjk1LAogICAgICAgICAgICApCgogICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoYXBwcm92ZWQ9VHJ1ZSwgcm9sZT0iY29tcGxpYW5jZSIsIHJlYXNvbj0iUmVndWxhdG9yeSBjaGVja3MgcGFzc2VkLiIsIHJpc2tfc2NvcmU9MC4xKQoKCmNsYXNzIEZpbmFuY2lhbFJldmlld2VyOgogICAgIiIiQ2hlY2tzIGFjdGlvbiBhZ2FpbnN0IHJlYWwgRmluYW5jaWFsIExlZGdlciBiYWxhbmNlLCBzcGVuZCB0cmVuZHMsIGFuZCBkYWlseSBjYXBzLiIiIgoKICAgIGFzeW5jIGRlZiByZXZpZXcoc2VsZiwgcmVxOiBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdCkgLT4gUmV2aWV3UmVzdWx0OgogICAgICAgIGFtb3VudCA9IHJlcS5hbW91bnRfdXNkCiAgICAgICAgaWYgYW1vdW50IDw9IDA6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoYXBwcm92ZWQ9VHJ1ZSwgcm9sZT0iZmluYW5jaWFsIiwgcmVhc29uPSJObyBmaW5hbmNpYWwgb3V0bGF5IHJlcXVpcmVkLiIsIHJpc2tfc2NvcmU9MC4wKQoKICAgICAgICAjIENoZWNrIGxlZGdlciBiYWxhbmNlCiAgICAgICAgcG9ydGZvbGlvX2JhbCA9IGxlZGdlci5nZXRfcG9ydGZvbGlvX2JhbGFuY2UoKQogICAgICAgIG5ldF9iYWwgPSBwb3J0Zm9saW9fYmFsWyJuZXRfYmFsYW5jZSJdCgogICAgICAgICMgQ2hlY2sgYWdhaW5zdCBkYWlseSBjYXBzCiAgICAgICAgYWRfY2FwID0gZ2V0YXR0cihzZXR0aW5ncywgImFkX3NwZW5kX2RhaWx5X2NhcF91c2QiLCA1MC4wKQogICAgICAgIGFjdGlvbl9jYXAgPSBnZXRhdHRyKHNldHRpbmdzLCAicGF5bWVudF9wZXJfYWN0aW9uX2NhcF91c2QiLCA1MC4wKQoKICAgICAgICBpZiByZXEuZGVjaXNpb25fdHlwZSA9PSAiYWRfc3BlbmQiIGFuZCBhbW91bnQgPiBhZF9jYXA6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgICAgICBhcHByb3ZlZD1GYWxzZSwKICAgICAgICAgICAgICAgIHJvbGU9ImZpbmFuY2lhbCIsCiAgICAgICAgICAgICAgICByZWFzb249ZiJGaW5hbmNpYWwgVmV0bzogUHJvcG9zZWQgYWQgc3BlbmQgKCR7YW1vdW50Oi4yZn0pIGV4Y2VlZHMgY29uZmlndXJlZCBkYWlseSBjYXAgKCR7YWRfY2FwOi4yZn0pLiIsCiAgICAgICAgICAgICAgICByaXNrX3Njb3JlPTAuODUsCiAgICAgICAgICAgICkKCiAgICAgICAgaWYgYW1vdW50ID4gYWN0aW9uX2NhcCBhbmQgYWN0aW9uX2NhcCA+IDA6CiAgICAgICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgICAgICBhcHByb3ZlZD1GYWxzZSwKICAgICAgICAgICAgICAgIHJvbGU9ImZpbmFuY2lhbCIsCiAgICAgICAgICAgICAgICByZWFzb249ZiJGaW5hbmNpYWwgVmV0bzogUHJvcG9zZWQgZXhwZW5kaXR1cmUgKCR7YW1vdW50Oi4yZn0pIGV4Y2VlZHMgcGVyLWFjdGlvbiBjYXAgKCR7YWN0aW9uX2NhcDouMmZ9KS4iLAogICAgICAgICAgICAgICAgcmlza19zY29yZT0wLjg1LAogICAgICAgICAgICApCgogICAgICAgIHJldHVybiBSZXZpZXdSZXN1bHQoCiAgICAgICAgICAgIGFwcHJvdmVkPVRydWUsCiAgICAgICAgICAgIHJvbGU9ImZpbmFuY2lhbCIsCiAgICAgICAgICAgIHJlYXNvbj1mIkZpbmFuY2lhbCBjaGVjayBwYXNzZWQuIFBvcnRmb2xpbyBuZXQgYmFsYW5jZTogJHtuZXRfYmFsOi4yZn0uIiwKICAgICAgICAgICAgcmlza19zY29yZT0wLjIsCiAgICAgICAgKQoKCmNsYXNzIFJpc2tCcmFuZFJldmlld2VyOgogICAgIiIiRXZhbHVhdGVzIHJlcHV0YXRpb25hbC9icmFuZCByaXNrLCBtYXJrZXQgZml0LCBhbmQgcHVibGljIGJhY2tsYXNoIHBvdGVudGlhbC4iIiIKCiAgICBhc3luYyBkZWYgcmV2aWV3KHNlbGYsIHJlcTogR292ZXJuYW5jZVJldmlld1JlcXVlc3QpIC0+IFJldmlld1Jlc3VsdDoKICAgICAgICBhY3Rpb25fbG93ZXIgPSByZXEuYWN0aW9uLmxvd2VyKCkKICAgICAgICBkZXRhaWxzX3N0ciA9IGpzb24uZHVtcHMocmVxLmRldGFpbHMpLmxvd2VyKCkKCiAgICAgICAgdG94aWNfa2V5d29yZHMgPSBbIm9mZmVuc2l2ZSIsICJzY2FtIiwgImNsaWNrYmFpdF9mcmF1ZCIsICJpbXBlcnNvbmF0ZSJdCiAgICAgICAgZm9yIGt3IGluIHRveGljX2tleXdvcmRzOgogICAgICAgICAgICBpZiBrdyBpbiBhY3Rpb25fbG93ZXIgb3Iga3cgaW4gZGV0YWlsc19zdHI6CiAgICAgICAgICAgICAgICByZXR1cm4gUmV2aWV3UmVzdWx0KAogICAgICAgICAgICAgICAgICAgIGFwcHJvdmVkPUZhbHNlLAogICAgICAgICAgICAgICAgICAgIHJvbGU9InJpc2tfYnJhbmQiLAogICAgICAgICAgICAgICAgICAgIHJlYXNvbj1mIlJpc2svQnJhbmQgVmV0bzogQWN0aW9uIGNvbnRhaW5zIGhpZ2gtcmlzayBicmFuZCB0ZXJtICd7a3d9Jy4iLAogICAgICAgICAgICAgICAgICAgIHJpc2tfc2NvcmU9MC45NSwKICAgICAgICAgICAgICAgICkKCiAgICAgICAgcmV0dXJuIFJldmlld1Jlc3VsdChhcHByb3ZlZD1UcnVlLCByb2xlPSJyaXNrX2JyYW5kIiwgcmVhc29uPSJCcmFuZCAmIHJlcHV0YXRpb25hbCByaXNrIGFjY2VwdGFibGUuIiwgcmlza19zY29yZT0wLjEpCgoKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQojIEdvdmVybmFuY2UgTGF5ZXIgRW5naW5lCiMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCmNsYXNzIEdvdmVybmFuY2VMYXllcjoKICAgICIiIgogICAgQ2VudHJhbCBEZWNpc2lvbiBHb3Zlcm5hbmNlIEVuZ2luZSBjb21iaW5pbmcgYWxsIDQgcmV2aWV3ZXIgcm9sZXMuCiAgICAiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZikgLT4gTm9uZToKICAgICAgICBzZWxmLnJlZF90ZWFtID0gUmVkVGVhbVJldmlld2VyKCkKICAgICAgICBzZWxmLmNvbXBsaWFuY2UgPSBDb21wbGlhbmNlUmV2aWV3ZXIoKQogICAgICAgIHNlbGYuZmluYW5jaWFsID0gRmluYW5jaWFsUmV2aWV3ZXIoKQogICAgICAgIHNlbGYucmlza19icmFuZCA9IFJpc2tCcmFuZFJldmlld2VyKCkKCiAgICBhc3luYyBkZWYgZXZhbHVhdGVfZGVjaXNpb24oc2VsZiwgcmVxOiBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdCkgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiCiAgICAgICAgRXZhbHVhdGVzIGEgZGVjaXNpb24gdXNpbmcgY29uc2Vuc3VzICg0LzQpIG9yIG1ham9yaXR5ICgzLzQpIHJ1bGUuCiAgICAgICAgIiIiCiAgICAgICAgIyBEZXRlcm1pbmUgcnVsZTogY29uc2Vuc3VzIGZvciBsYXVuY2hlcywgc3BlbmQsIGFuZCBtYXJrZXRpbmcgYnJvYWRjYXN0cywgbWFqb3JpdHkgZm9yIG1pbm9yIHN0cmF0ZWd5CiAgICAgICAgZGVmYXVsdF9ydWxlID0gImNvbnNlbnN1cyIgaWYgcmVxLmRlY2lzaW9uX3R5cGUgaW4gKCJuZXdfYnVzaW5lc3MiLCAiYWRfc3BlbmQiLCAiZGFuZ2Vyb3VzX2NvbW1hbmQiLCAibWFya2V0aW5nIiwgInN0cmF0ZWd5X2NoYW5nZSIpIGVsc2UgIm1ham9yaXR5IgogICAgICAgIHJ1bGUgPSByZXEuZGV0YWlscy5nZXQoInJ1bGVfb3ZlcnJpZGUiKSBvciBkZWZhdWx0X3J1bGUKCiAgICAgICAgIyBDb2xsZWN0IHJldmlld3MgZnJvbSBhbGwgNCByZXZpZXdlcnMKICAgICAgICByZXZpZXdzOiBMaXN0W1Jldmlld1Jlc3VsdF0gPSBbCiAgICAgICAgICAgIGF3YWl0IHNlbGYucmVkX3RlYW0ucmV2aWV3KHJlcSksCiAgICAgICAgICAgIGF3YWl0IHNlbGYuY29tcGxpYW5jZS5yZXZpZXcocmVxKSwKICAgICAgICAgICAgYXdhaXQgc2VsZi5maW5hbmNpYWwucmV2aWV3KHJlcSksCiAgICAgICAgICAgIGF3YWl0IHNlbGYucmlza19icmFuZC5yZXZpZXcocmVxKSwKICAgICAgICBdCgogICAgICAgIGFwcHJvdmFscyA9IFtyIGZvciByIGluIHJldmlld3MgaWYgci5hcHByb3ZlZF0KICAgICAgICB2ZXRvZXMgPSBbciBmb3IgciBpbiByZXZpZXdzIGlmIG5vdCByLmFwcHJvdmVkXQoKICAgICAgICAjIFJ1bGUgZXZhbHVhdGlvbgogICAgICAgIGFwcHJvdmVkID0gRmFsc2UKICAgICAgICBpZiBydWxlID09ICJjb25zZW5zdXMiOgogICAgICAgICAgICBhcHByb3ZlZCA9IGxlbih2ZXRvZXMpID09IDAKICAgICAgICBlbGlmIHJ1bGUgPT0gIm1ham9yaXR5IjoKICAgICAgICAgICAgYXBwcm92ZWQgPSBsZW4oYXBwcm92YWxzKSA+PSAzCiAgICAgICAgZWxzZToKICAgICAgICAgICAgYXBwcm92ZWQgPSBsZW4odmV0b2VzKSA9PSAwICAjIEZhbGxiYWNrIHRvIGNvbnNlbnN1cwoKICAgICAgICBsb2dfZGF0YSA9IHsKICAgICAgICAgICAgImRlY2lzaW9uX3R5cGUiOiByZXEuZGVjaXNpb25fdHlwZSwKICAgICAgICAgICAgImFjdGlvbiI6IHJlcS5hY3Rpb24sCiAgICAgICAgICAgICJydWxlIjogcnVsZSwKICAgICAgICAgICAgImFwcHJvdmVkIjogYXBwcm92ZWQsCiAgICAgICAgICAgICJhcHByb3ZhbHNfY291bnQiOiBsZW4oYXBwcm92YWxzKSwKICAgICAgICAgICAgInZldG9lc19jb3VudCI6IGxlbih2ZXRvZXMpLAogICAgICAgIH0KCiAgICAgICAgaWYgYXBwcm92ZWQ6CiAgICAgICAgICAgIGxvZy5pbmZvKCJnb3Zlcm5hbmNlX2RlY2lzaW9uX2FwcHJvdmVkIiwgKipsb2dfZGF0YSkKICAgICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgICAgICJhcHByb3ZlZCI6IFRydWUsCiAgICAgICAgICAgICAgICAicnVsZSI6IHJ1bGUsCiAgICAgICAgICAgICAgICAicmV2aWV3cyI6IFtyLm1vZGVsX2R1bXAoKSBmb3IgciBpbiByZXZpZXdzXSwKICAgICAgICAgICAgfQoKICAgICAgICAjIExvZyBzdHJ1Y3R1cmVkIHZldG8KICAgICAgICB2ZXRvX3JlY29yZCA9IERlY2lzaW9uVmV0bygKICAgICAgICAgICAgZGVjaXNpb25fdHlwZT1yZXEuZGVjaXNpb25fdHlwZSwKICAgICAgICAgICAgYWN0aW9uPXJlcS5hY3Rpb24sCiAgICAgICAgICAgIHJ1bGVfYXBwbGllZD1ydWxlLAogICAgICAgICAgICB2ZXRvZWRfYnk9W3Yucm9sZSBmb3IgdiBpbiB2ZXRvZXNdLAogICAgICAgICAgICB2ZXRvX3JlYXNvbnM9W3sicm9sZSI6IHYucm9sZSwgInJlYXNvbiI6IHYucmVhc29ufSBmb3IgdiBpbiB2ZXRvZXNdLAogICAgICAgICAgICBkZXRhaWxzPXJlcS5kZXRhaWxzLAogICAgICAgICkKICAgICAgICBsb2cud2FybmluZygiZ292ZXJuYW5jZV9kZWNpc2lvbl92ZXRvZWQiLCB2ZXRvPXZldG9fcmVjb3JkLm1vZGVsX2R1bXAoKSkKCiAgICAgICAgIyBBdWRpdCB2ZXRvIGluIGJ1c2luZXNzX2RiCiAgICAgICAgdHJ5OgogICAgICAgICAgICBmcm9tIGJhY2tlbmQuYnVzaW5lc3NfZGIgaW1wb3J0IGJ1c2luZXNzX2RiCiAgICAgICAgICAgIGJ1c2luZXNzX2RiLmF1ZGl0KAogICAgICAgICAgICAgICAgY2F0ZWdvcnk9ImdvdmVybmFuY2VfdmV0byIsCiAgICAgICAgICAgICAgICBhY3Rpb249cmVxLmFjdGlvbiwKICAgICAgICAgICAgICAgIHRhcmdldD1yZXEuZGVjaXNpb25fdHlwZSwKICAgICAgICAgICAgICAgIGRldGFpbHM9dmV0b19yZWNvcmQubW9kZWxfZHVtcCgpLAogICAgICAgICAgICApCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cud2FybmluZygiZmFpbGVkX3RvX2F1ZGl0X2dvdmVybmFuY2VfdmV0byIsIGVycm9yPXN0cihlKSkKCiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgImFwcHJvdmVkIjogRmFsc2UsCiAgICAgICAgICAgICJydWxlIjogcnVsZSwKICAgICAgICAgICAgInZldG8iOiB2ZXRvX3JlY29yZC5tb2RlbF9kdW1wKCksCiAgICAgICAgICAgICJyZXZpZXdzIjogW3IubW9kZWxfZHVtcCgpIGZvciByIGluIHJldmlld3NdLAogICAgICAgIH0KCgpnb3Zlcm5hbmNlX2xheWVyID0gR292ZXJuYW5jZUxheWVyKCkK
+# ====================================================================
+# JARVIS OMEGA — Decision Governance Layer (Phase 2)
+# ====================================================================
+"""
+Decision Governance Layer with veto power across four pluggable reviewer roles:
+  1. Red-Team reviewer — logical gaps, assumptions, overlooked risks
+  2. Compliance reviewer — anti-spam, WhatsApp ToS, FTC disclosures, Jordan regulations
+  3. Financial reviewer — checks against canonical Financial Ledger & budget caps
+  4. Risk/Brand reviewer — reputational/brand risk, market fit, backlash
+"""
+
+from __future__ import annotations
+
+import json
+from typing import Any, Dict, List
+from pydantic import BaseModel, Field
+
+from backend.config import settings
+from backend.ledger import ledger
+from shared.logger import get_logger
+
+log = get_logger("governance")
+
+
+class ReviewResult(BaseModel):
+    approved: bool
+    role: str
+    reason: str
+    risk_score: float = 0.0  # 0.0 (safe) to 1.0 (extreme risk)
+
+
+class DecisionVeto(BaseModel):
+    decision_type: str
+    action: str
+    rule_applied: str  # 'consensus' | 'majority'
+    vetoed_by: List[str]
+    veto_reasons: List[Dict[str, str]]
+    details: Dict[str, Any] = Field(default_factory=dict)
+
+
+class GovernanceReviewRequest(BaseModel):
+    decision_type: str  # 'new_business', 'ad_spend', 'enter_market', 'strategy_change', 'dangerous_command'
+    action: str
+    amount_usd: float = 0.0
+    channel: str = ""
+    jurisdiction: str = "JO"
+    target_market: str = ""
+    details: Dict[str, Any] = Field(default_factory=dict)
+
+
+# --------------------------------------------------------------------
+# Pluggable Reviewers
+# --------------------------------------------------------------------
+
+class RedTeamReviewer:
+    """Reviews decision for logical gaps, overconfidence, and unstated assumptions."""
+
+    async def review(self, req: GovernanceReviewRequest) -> ReviewResult:
+        action_lower = req.action.lower()
+        if "guaranteed profit" in action_lower or "100% success" in action_lower:
+            return ReviewResult(
+                approved=False,
+                role="red_team",
+                reason="Red-Team Veto: Unrealistic overconfidence claim in decision strategy.",
+                risk_score=0.9,
+            )
+        if req.decision_type == "enter_market" and not req.target_market:
+            return ReviewResult(
+                approved=False,
+                role="red_team",
+                reason="Red-Team Veto: Market entry proposed without defined target market parameter.",
+                risk_score=0.8,
+            )
+        return ReviewResult(approved=True, role="red_team", reason="Logical assumptions valid.", risk_score=0.1)
+
+
+class ComplianceReviewer:
+    """Checks action against regulatory laws, ToS limits, and financial rules."""
+
+    async def review(self, req: GovernanceReviewRequest) -> ReviewResult:
+        action_lower = req.action.lower()
+        channel_lower = req.channel.lower()
+
+        # WhatsApp ToS limits
+        if channel_lower == "whatsapp" and req.details.get("broadcast_count", 0) > 1000:
+            return ReviewResult(
+                approved=False,
+                role="compliance",
+                reason="Compliance Veto: WhatsApp broadcast size exceeds daily ToS safe rate limit (1000).",
+                risk_score=0.95,
+            )
+
+        # Anti-spam / cold email laws (CAN-SPAM / GDPR)
+        if "cold_email" in action_lower and not req.details.get("opt_out_link", True):
+            return ReviewResult(
+                approved=False,
+                role="compliance",
+                reason="Compliance Veto: Cold email campaign missing mandatory opt-out/unsubscribe header.",
+                risk_score=0.9,
+            )
+
+        # FTC affiliate disclosure
+        if "affiliate" in action_lower and not req.details.get("has_ftc_disclosure", True):
+            return ReviewResult(
+                approved=False,
+                role="compliance",
+                reason="Compliance Veto: Affiliate promotional material lacks FTC required disclosure.",
+                risk_score=0.85,
+            )
+
+        # Jordan trading / financial regulation
+        if req.jurisdiction.upper() == "JO" and "crypto_leverage" in action_lower:
+            return ReviewResult(
+                approved=False,
+                role="compliance",
+                reason="Compliance Veto: High-leverage crypto trading violates local Jordan CBJ financial advisories.",
+                risk_score=0.95,
+            )
+
+        return ReviewResult(approved=True, role="compliance", reason="Regulatory checks passed.", risk_score=0.1)
+
+
+class FinancialReviewer:
+    """Checks action against real Financial Ledger balance, spend trends, and daily caps."""
+
+    async def review(self, req: GovernanceReviewRequest) -> ReviewResult:
+        amount = req.amount_usd
+        if amount <= 0:
+            return ReviewResult(approved=True, role="financial", reason="No financial outlay required.", risk_score=0.0)
+
+        # Check ledger balance
+        portfolio_bal = ledger.get_portfolio_balance()
+        net_bal = portfolio_bal["net_balance"]
+
+        # Check against daily caps
+        ad_cap = getattr(settings, "ad_spend_daily_cap_usd", 50.0)
+        action_cap = getattr(settings, "payment_per_action_cap_usd", 50.0)
+
+        if req.decision_type == "ad_spend" and amount > ad_cap:
+            return ReviewResult(
+                approved=False,
+                role="financial",
+                reason=f"Financial Veto: Proposed ad spend (${amount:.2f}) exceeds configured daily cap (${ad_cap:.2f}).",
+                risk_score=0.85,
+            )
+
+        if amount > action_cap and action_cap > 0:
+            return ReviewResult(
+                approved=False,
+                role="financial",
+                reason=f"Financial Veto: Proposed expenditure (${amount:.2f}) exceeds per-action cap (${action_cap:.2f}).",
+                risk_score=0.85,
+            )
+
+        return ReviewResult(
+            approved=True,
+            role="financial",
+            reason=f"Financial check passed. Portfolio net balance: ${net_bal:.2f}.",
+            risk_score=0.2,
+        )
+
+
+class RiskBrandReviewer:
+    """Evaluates reputational/brand risk, market fit, and public backlash potential."""
+
+    async def review(self, req: GovernanceReviewRequest) -> ReviewResult:
+        action_lower = req.action.lower()
+        details_str = json.dumps(req.details).lower()
+
+        toxic_keywords = ["offensive", "scam", "clickbait_fraud", "impersonate"]
+        for kw in toxic_keywords:
+            if kw in action_lower or kw in details_str:
+                return ReviewResult(
+                    approved=False,
+                    role="risk_brand",
+                    reason=f"Risk/Brand Veto: Action contains high-risk brand term '{kw}'.",
+                    risk_score=0.95,
+                )
+
+        return ReviewResult(approved=True, role="risk_brand", reason="Brand & reputational risk acceptable.", risk_score=0.1)
+
+
+# --------------------------------------------------------------------
+# Governance Layer Engine
+# --------------------------------------------------------------------
+
+class GovernanceLayer:
+    """
+    Central Decision Governance Engine combining all 4 reviewer roles.
+    """
+
+    def __init__(self) -> None:
+        self.red_team = RedTeamReviewer()
+        self.compliance = ComplianceReviewer()
+        self.financial = FinancialReviewer()
+        self.risk_brand = RiskBrandReviewer()
+
+    async def evaluate_decision(self, req: GovernanceReviewRequest) -> Dict[str, Any]:
+        """
+        Evaluates a decision using consensus (4/4) or majority (3/4) rule.
+        """
+        # Determine rule: consensus for launches, spend, and marketing broadcasts, majority for minor strategy
+        default_rule = "consensus" if req.decision_type in ("new_business", "ad_spend", "dangerous_command", "marketing", "strategy_change") else "majority"
+        rule = req.details.get("rule_override") or default_rule
+
+        # Collect reviews from all 4 reviewers
+        reviews: List[ReviewResult] = [
+            await self.red_team.review(req),
+            await self.compliance.review(req),
+            await self.financial.review(req),
+            await self.risk_brand.review(req),
+        ]
+
+        approvals = [r for r in reviews if r.approved]
+        vetoes = [r for r in reviews if not r.approved]
+
+        # Rule evaluation
+        approved = False
+        if rule == "consensus":
+            approved = len(vetoes) == 0
+        elif rule == "majority":
+            approved = len(approvals) >= 3
+        else:
+            approved = len(vetoes) == 0  # Fallback to consensus
+
+        log_data = {
+            "decision_type": req.decision_type,
+            "action": req.action,
+            "rule": rule,
+            "approved": approved,
+            "approvals_count": len(approvals),
+            "vetoes_count": len(vetoes),
+        }
+
+        if approved:
+            log.info("governance_decision_approved", **log_data)
+            return {
+                "approved": True,
+                "rule": rule,
+                "reviews": [r.model_dump() for r in reviews],
+            }
+
+        # Log structured veto
+        veto_record = DecisionVeto(
+            decision_type=req.decision_type,
+            action=req.action,
+            rule_applied=rule,
+            vetoed_by=[v.role for v in vetoes],
+            veto_reasons=[{"role": v.role, "reason": v.reason} for v in vetoes],
+            details=req.details,
+        )
+        log.warning("governance_decision_vetoed", veto=veto_record.model_dump())
+
+        # Audit veto in business_db
+        try:
+            from backend.business_db import business_db
+            business_db.audit(
+                category="governance_veto",
+                action=req.action,
+                target=req.decision_type,
+                details=veto_record.model_dump(),
+            )
+        except Exception as e:
+            log.warning("failed_to_audit_governance_veto", error=str(e))
+
+        return {
+            "approved": False,
+            "rule": rule,
+            "veto": veto_record.model_dump(),
+            "reviews": [r.model_dump() for r in reviews],
+        }
+
+
+governance_layer = GovernanceLayer()

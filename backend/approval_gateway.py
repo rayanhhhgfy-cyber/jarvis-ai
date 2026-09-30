@@ -1,1 +1,208 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgQXBwcm92YWwgR2F0ZXdheQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpIdW1hbiBBcHByb3ZhbCBHYXRld2F5OiByaXNrIGFzc2Vzc21lbnQsIGFwcHJvdmFsIHJlcXVlc3QgY3JlYXRpb24sCm5vdGlmaWNhdGlvbiB0byBTaXIsIGFuZCBhcHByb3ZlL3JlamVjdCBmbG93LiBObyBjcml0aWNhbCBhY3Rpb24KZXhlY3V0ZXMgYmVmb3JlIFNpcidzIGV4cGxpY2l0IGFwcHJvdmFsLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBhc3luY2lvCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIENhbGxhYmxlLCBDb3JvdXRpbmUsIERpY3QsIExpc3QsIE9wdGlvbmFsCgpmcm9tIHNoYXJlZC5jb25zdGFudHMgaW1wb3J0IERBTkdFUk9VU19BQ1RJT05TLCBFdmVudFR5cGUsIFJpc2tMZXZlbApmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKZnJvbSBzaGFyZWQubW9kZWxzIGltcG9ydCBBcHByb3ZhbFJlcXVlc3QKCmxvZyA9IGdldF9sb2dnZXIoImFwcHJvdmFsX2dhdGV3YXkiKQoKCmNsYXNzIEFwcHJvdmFsR2F0ZXdheToKICAgICIiIgogICAgQ29udHJvbHMgZGFuZ2Vyb3VzIGFjdGlvbiBleGVjdXRpb24uCiAgICBBbGwgY3JpdGljYWwgb3BlcmF0aW9ucyBtdXN0IHBhc3MgdGhyb3VnaCBoZXJlLgogICAgIiIiCgogICAgZGVmIF9faW5pdF9fKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgc2VsZi5fcGVuZGluZzogRGljdFtzdHIsIEFwcHJvdmFsUmVxdWVzdF0gPSB7fQogICAgICAgIHNlbGYuX2hpc3Rvcnk6IExpc3RbQXBwcm92YWxSZXF1ZXN0XSA9IFtdCiAgICAgICAgc2VsZi5fZXZlbnRfYnVzID0gTm9uZQogICAgICAgIHNlbGYuX3dzX21hbmFnZXIgPSBOb25lCiAgICAgICAgc2VsZi5fd2FpdGVyczogRGljdFtzdHIsIGFzeW5jaW8uRXZlbnRdID0ge30KCiAgICBkZWYgc2V0X2V2ZW50X2J1cyhzZWxmLCBldmVudF9idXM6IEFueSkgLT4gTm9uZToKICAgICAgICBzZWxmLl9ldmVudF9idXMgPSBldmVudF9idXMKCiAgICBkZWYgc2V0X3dzX21hbmFnZXIoc2VsZiwgd3NfbWFuYWdlcjogQW55KSAtPiBOb25lOgogICAgICAgIHNlbGYuX3dzX21hbmFnZXIgPSB3c19tYW5hZ2VyCgogICAgZGVmIGlzX2Rhbmdlcm91cyhzZWxmLCBhY3Rpb246IHN0cikgLT4gYm9vbDoKICAgICAgICAiIiJDaGVjayBpZiBhbiBhY3Rpb24gcmVxdWlyZXMgYXBwcm92YWwuIiIiCiAgICAgICAgcmV0dXJuIGFjdGlvbiBpbiBEQU5HRVJPVVNfQUNUSU9OUwoKICAgIGFzeW5jIGRlZiByZXF1ZXN0X2FwcHJvdmFsKHNlbGYsIHJlcXVlc3Q6IEFwcHJvdmFsUmVxdWVzdCkgLT4gc3RyOgogICAgICAgICIiIgogICAgICAgIFN1Ym1pdCBhbiBhcHByb3ZhbCByZXF1ZXN0LiBSZXR1cm5zIHRoZSBhcHByb3ZhbF9pZC4KICAgICAgICBUaGUgcmVxdWVzdGluZyBhZ2VudCBtdXN0IHdhaXQgZm9yIFNpcidzIHJlc3BvbnNlLgogICAgICAgICIiIgogICAgICAgIHNlbGYuX3BlbmRpbmdbcmVxdWVzdC5hcHByb3ZhbF9pZF0gPSByZXF1ZXN0CiAgICAgICAgc2VsZi5fd2FpdGVyc1tyZXF1ZXN0LmFwcHJvdmFsX2lkXSA9IGFzeW5jaW8uRXZlbnQoKQoKICAgICAgICAjIFJvdXRlIGhpZ2gtcmlzayBkZWNpc2lvbnMgdGhyb3VnaCBHb3Zlcm5hbmNlIExheWVyIHByZS1jaGVjawogICAgICAgIGlmIHJlcXVlc3Qucmlza19sZXZlbCBpbiAoUmlza0xldmVsLkhJR0gsIFJpc2tMZXZlbC5DUklUSUNBTCk6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGZyb20gYmFja2VuZC5nb3Zlcm5hbmNlIGltcG9ydCBnb3Zlcm5hbmNlX2xheWVyLCBHb3Zlcm5hbmNlUmV2aWV3UmVxdWVzdAogICAgICAgICAgICAgICAgZ292X3JlcSA9IEdvdmVybmFuY2VSZXZpZXdSZXF1ZXN0KAogICAgICAgICAgICAgICAgICAgIGRlY2lzaW9uX3R5cGU9ImRhbmdlcm91c19jb21tYW5kIiwKICAgICAgICAgICAgICAgICAgICBhY3Rpb249cmVxdWVzdC5hY3Rpb24sCiAgICAgICAgICAgICAgICAgICAgZGV0YWlscz17InJlYXNvbiI6IHJlcXVlc3QucmVhc29uLCAicmVzb3VyY2VzIjogcmVxdWVzdC5hZmZlY3RlZF9yZXNvdXJjZXN9LAogICAgICAgICAgICAgICAgKQogICAgICAgICAgICAgICAgZXZhbF9yZXMgPSBhd2FpdCBnb3Zlcm5hbmNlX2xheWVyLmV2YWx1YXRlX2RlY2lzaW9uKGdvdl9yZXEpCiAgICAgICAgICAgICAgICBpZiBub3QgZXZhbF9yZXMuZ2V0KCJhcHByb3ZlZCIpOgogICAgICAgICAgICAgICAgICAgIGxvZy53YXJuaW5nKAogICAgICAgICAgICAgICAgICAgICAgICAiYXBwcm92YWxfcmVxdWVzdF92ZXRvZWRfYnlfZ292ZXJuYW5jZSIsCiAgICAgICAgICAgICAgICAgICAgICAgIGFwcHJvdmFsX2lkPXJlcXVlc3QuYXBwcm92YWxfaWQsCiAgICAgICAgICAgICAgICAgICAgICAgIHZldG89ZXZhbF9yZXMuZ2V0KCJ2ZXRvIiksCiAgICAgICAgICAgICAgICAgICAgKQogICAgICAgICAgICAgICAgICAgIHJlcXVlc3QuYXBwcm92ZWQgPSBGYWxzZQogICAgICAgICAgICAgICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYXQgPSBkYXRldGltZS51dGNub3coKQogICAgICAgICAgICAgICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYnkgPSAiR292ZXJuYW5jZUxheWVyIgogICAgICAgICAgICAgICAgICAgICMgQXV0by1yZWplY3QgaW4gZ2F0ZXdheSBpZiB2ZXRvZWQgYnkgZ292ZXJuYW5jZQogICAgICAgICAgICAgICAgICAgIHdhaXRlciA9IHNlbGYuX3dhaXRlcnMuZ2V0KHJlcXVlc3QuYXBwcm92YWxfaWQpCiAgICAgICAgICAgICAgICAgICAgaWYgd2FpdGVyOgogICAgICAgICAgICAgICAgICAgICAgICB3YWl0ZXIuc2V0KCkKICAgICAgICAgICAgICAgICAgICBzZWxmLl9oaXN0b3J5LmFwcGVuZChyZXF1ZXN0KQogICAgICAgICAgICAgICAgICAgIHNlbGYuX3BlbmRpbmcucG9wKHJlcXVlc3QuYXBwcm92YWxfaWQsIE5vbmUpCiAgICAgICAgICAgICAgICAgICAgcmV0dXJuIHJlcXVlc3QuYXBwcm92YWxfaWQKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBnb3ZfZXJyOgogICAgICAgICAgICAgICAgbG9nLndhcm5pbmcoImdvdmVybmFuY2VfcHJlX2NoZWNrX2ZhaWxlZCIsIGVycm9yPXN0cihnb3ZfZXJyKSkKCiAgICAgICAgbG9nLndhcm5pbmcoCiAgICAgICAgICAgICJhcHByb3ZhbF9yZXF1ZXN0ZWQiLAogICAgICAgICAgICBhcHByb3ZhbF9pZD1yZXF1ZXN0LmFwcHJvdmFsX2lkLAogICAgICAgICAgICBhY3Rpb249cmVxdWVzdC5hY3Rpb24sCiAgICAgICAgICAgIHJpc2tfbGV2ZWw9cmVxdWVzdC5yaXNrX2xldmVsLnZhbHVlLAogICAgICAgICAgICByZWFzb249cmVxdWVzdC5yZWFzb24sCiAgICAgICAgKQoKICAgICAgICAjIE5vdGlmeSBTaXIgdmlhIGV2ZW50IGJ1cyBhbmQgV2ViU29ja2V0CiAgICAgICAgaWYgc2VsZi5fZXZlbnRfYnVzOgogICAgICAgICAgICBhd2FpdCBzZWxmLl9ldmVudF9idXMucHVibGlzaCgKICAgICAgICAgICAgICAgIEV2ZW50VHlwZS5BUFBST1ZBTF9SRVFVRVNURUQsCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgImFwcHJvdmFsX2lkIjogcmVxdWVzdC5hcHByb3ZhbF9pZCwKICAgICAgICAgICAgICAgICAgICAiYWN0aW9uIjogcmVxdWVzdC5hY3Rpb24sCiAgICAgICAgICAgICAgICAgICAgInJlYXNvbiI6IHJlcXVlc3QucmVhc29uLAogICAgICAgICAgICAgICAgICAgICJyaXNrX2xldmVsIjogcmVxdWVzdC5yaXNrX2xldmVsLnZhbHVlLAogICAgICAgICAgICAgICAgICAgICJhZmZlY3RlZF9yZXNvdXJjZXMiOiByZXF1ZXN0LmFmZmVjdGVkX3Jlc291cmNlcywKICAgICAgICAgICAgICAgICAgICAiZXhwZWN0ZWRfcmVzdWx0IjogcmVxdWVzdC5leHBlY3RlZF9yZXN1bHQsCiAgICAgICAgICAgICAgICAgICAgInVuZG9fcG9zc2libGUiOiByZXF1ZXN0LnVuZG9fcG9zc2libGUsCiAgICAgICAgICAgICAgICAgICAgInJlcXVlc3RpbmdfYWdlbnQiOiByZXF1ZXN0LnJlcXVlc3RpbmdfYWdlbnQsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICApCgogICAgICAgIGlmIHNlbGYuX3dzX21hbmFnZXI6CiAgICAgICAgICAgIGF3YWl0IHNlbGYuX3dzX21hbmFnZXIuYnJvYWRjYXN0KHsKICAgICAgICAgICAgICAgICJ0eXBlIjogImFwcHJvdmFsX3JlcXVlc3QiLAogICAgICAgICAgICAgICAgInBheWxvYWQiOiByZXF1ZXN0Lm1vZGVsX2R1bXAobW9kZT0ianNvbiIpLAogICAgICAgICAgICB9KQoKICAgICAgICByZXR1cm4gcmVxdWVzdC5hcHByb3ZhbF9pZAoKICAgIGFzeW5jIGRlZiB3YWl0X2Zvcl9hcHByb3ZhbChzZWxmLCBhcHByb3ZhbF9pZDogc3RyLCB0aW1lb3V0OiBmbG9hdCA9IDMwMC4wKSAtPiBib29sOgogICAgICAgICIiIgogICAgICAgIEJsb2NrIHVudGlsIFNpciBhcHByb3ZlcyBvciByZWplY3RzLCBvciB0aW1lb3V0LgogICAgICAgIFJldHVybnMgVHJ1ZSBpZiBhcHByb3ZlZCwgRmFsc2Ugb3RoZXJ3aXNlLgoKICAgICAgICBMb29rcyB1cCB0aGUgdmVyZGljdCBpbiBgYF9oaXN0b3J5YGAgKHdoZXJlIGBgYXBwcm92ZWBgL2BgcmVqZWN0YGAKICAgICAgICBtb3ZlIHRoZSByZXF1ZXN0KSBzbyB0aGUgcG9zdC1wb3AgcmFjZSBpcyBjbG9zZWQ6IHByZXZpb3VzbHkgdGhlIHdhaXQKICAgICAgICB3b3VsZCByZXR1cm4gRmFsc2UgYmVjYXVzZSBhcHByb3ZlKCkgcmVtb3ZlZCB0aGUgcmVxdWVzdCBmcm9tCiAgICAgICAgYGBfcGVuZGluZ2BgIGJlZm9yZSB0aGUgd2FpdGVyIHdva2UgdXAuCiAgICAgICAgIiIiCiAgICAgICAgd2FpdGVyID0gc2VsZi5fd2FpdGVycy5nZXQoYXBwcm92YWxfaWQpCiAgICAgICAgaWYgbm90IHdhaXRlcjoKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgICAgIHRyeToKICAgICAgICAgICAgYXdhaXQgYXN5bmNpby53YWl0X2Zvcih3YWl0ZXIud2FpdCgpLCB0aW1lb3V0PXRpbWVvdXQpCiAgICAgICAgZXhjZXB0IGFzeW5jaW8uVGltZW91dEVycm9yOgogICAgICAgICAgICBsb2cud2FybmluZygiYXBwcm92YWxfdGltZW91dCIsIGFwcHJvdmFsX2lkPWFwcHJvdmFsX2lkKQogICAgICAgICAgICBhd2FpdCBzZWxmLnJlamVjdChhcHByb3ZhbF9pZCwgcmVhc29uPSJUaW1lb3V0IOKAlCBubyByZXNwb25zZSBmcm9tIFNpciIpCiAgICAgICAgICAgIHJldHVybiBGYWxzZQoKICAgICAgICAjIExvb2sgaW4gaGlzdG9yeSBmaXJzdCAocG9zdC1kZWNpc2lvbiksIGZhbGwgYmFjayB0byBwZW5kaW5nIChyYXJlIHJhY2UpLgogICAgICAgIGZvciByZXEgaW4gc2VsZi5faGlzdG9yeToKICAgICAgICAgICAgaWYgcmVxLmFwcHJvdmFsX2lkID09IGFwcHJvdmFsX2lkOgogICAgICAgICAgICAgICAgcmV0dXJuIGJvb2wocmVxLmFwcHJvdmVkKQogICAgICAgIHJlcXVlc3QgPSBzZWxmLl9wZW5kaW5nLmdldChhcHByb3ZhbF9pZCkKICAgICAgICByZXR1cm4gYm9vbChyZXF1ZXN0LmFwcHJvdmVkKSBpZiByZXF1ZXN0IGVsc2UgRmFsc2UKCiAgICBhc3luYyBkZWYgYXBwcm92ZShzZWxmLCBhcHByb3ZhbF9pZDogc3RyKSAtPiBib29sOgogICAgICAgICIiIlNpciBhcHByb3ZlcyBhIHBlbmRpbmcgcmVxdWVzdC4iIiIKICAgICAgICByZXF1ZXN0ID0gc2VsZi5fcGVuZGluZy5nZXQoYXBwcm92YWxfaWQpCiAgICAgICAgaWYgbm90IHJlcXVlc3Q6CiAgICAgICAgICAgIHJldHVybiBGYWxzZQoKICAgICAgICByZXF1ZXN0LmFwcHJvdmVkID0gVHJ1ZQogICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYXQgPSBkYXRldGltZS51dGNub3coKQogICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYnkgPSAiU2lyIgoKICAgICAgICAjIFNpZ25hbCB0aGUgd2FpdGluZyBhZ2VudAogICAgICAgIHdhaXRlciA9IHNlbGYuX3dhaXRlcnMuZ2V0KGFwcHJvdmFsX2lkKQogICAgICAgIGlmIHdhaXRlcjoKICAgICAgICAgICAgd2FpdGVyLnNldCgpCgogICAgICAgIHNlbGYuX2hpc3RvcnkuYXBwZW5kKHJlcXVlc3QpCiAgICAgICAgc2VsZi5fcGVuZGluZy5wb3AoYXBwcm92YWxfaWQsIE5vbmUpCgogICAgICAgIGxvZy5pbmZvKCJhcHByb3ZhbF9ncmFudGVkIiwgYXBwcm92YWxfaWQ9YXBwcm92YWxfaWQsIGFjdGlvbj1yZXF1ZXN0LmFjdGlvbikKCiAgICAgICAgaWYgc2VsZi5fZXZlbnRfYnVzOgogICAgICAgICAgICBhd2FpdCBzZWxmLl9ldmVudF9idXMucHVibGlzaCgKICAgICAgICAgICAgICAgIEV2ZW50VHlwZS5BUFBST1ZBTF9HUkFOVEVELAogICAgICAgICAgICAgICAgeyJhcHByb3ZhbF9pZCI6IGFwcHJvdmFsX2lkLCAiYWN0aW9uIjogcmVxdWVzdC5hY3Rpb259LAogICAgICAgICAgICApCgogICAgICAgIHJldHVybiBUcnVlCgogICAgYXN5bmMgZGVmIHJlamVjdChzZWxmLCBhcHByb3ZhbF9pZDogc3RyLCByZWFzb246IHN0ciA9ICIiKSAtPiBib29sOgogICAgICAgICIiIlNpciByZWplY3RzIGEgcGVuZGluZyByZXF1ZXN0LiIiIgogICAgICAgIHJlcXVlc3QgPSBzZWxmLl9wZW5kaW5nLmdldChhcHByb3ZhbF9pZCkKICAgICAgICBpZiBub3QgcmVxdWVzdDoKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgICAgIHJlcXVlc3QuYXBwcm92ZWQgPSBGYWxzZQogICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYXQgPSBkYXRldGltZS51dGNub3coKQogICAgICAgIHJlcXVlc3QuYXBwcm92ZWRfYnkgPSAiU2lyIgoKICAgICAgICB3YWl0ZXIgPSBzZWxmLl93YWl0ZXJzLmdldChhcHByb3ZhbF9pZCkKICAgICAgICBpZiB3YWl0ZXI6CiAgICAgICAgICAgIHdhaXRlci5zZXQoKQoKICAgICAgICBzZWxmLl9oaXN0b3J5LmFwcGVuZChyZXF1ZXN0KQogICAgICAgIHNlbGYuX3BlbmRpbmcucG9wKGFwcHJvdmFsX2lkLCBOb25lKQoKICAgICAgICBsb2cuaW5mbygiYXBwcm92YWxfZGVuaWVkIiwgYXBwcm92YWxfaWQ9YXBwcm92YWxfaWQsIHJlYXNvbj1yZWFzb24pCgogICAgICAgIGlmIHNlbGYuX2V2ZW50X2J1czoKICAgICAgICAgICAgYXdhaXQgc2VsZi5fZXZlbnRfYnVzLnB1Ymxpc2goCiAgICAgICAgICAgICAgICBFdmVudFR5cGUuQVBQUk9WQUxfREVOSUVELAogICAgICAgICAgICAgICAgeyJhcHByb3ZhbF9pZCI6IGFwcHJvdmFsX2lkLCAiYWN0aW9uIjogcmVxdWVzdC5hY3Rpb24sICJyZWFzb24iOiByZWFzb259LAogICAgICAgICAgICApCgogICAgICAgIHJldHVybiBUcnVlCgogICAgZGVmIGdldF9wZW5kaW5nKHNlbGYpIC0+IExpc3RbQXBwcm92YWxSZXF1ZXN0XToKICAgICAgICAiIiJHZXQgYWxsIHBlbmRpbmcgYXBwcm92YWwgcmVxdWVzdHMuIiIiCiAgICAgICAgcmV0dXJuIGxpc3Qoc2VsZi5fcGVuZGluZy52YWx1ZXMoKSkKCiAgICBkZWYgZ2V0X2hpc3Rvcnkoc2VsZiwgbGltaXQ6IGludCA9IDUwKSAtPiBMaXN0W0FwcHJvdmFsUmVxdWVzdF06CiAgICAgICAgIiIiR2V0IGFwcHJvdmFsIGhpc3RvcnkuIiIiCiAgICAgICAgcmV0dXJuIHNlbGYuX2hpc3RvcnlbLWxpbWl0Ol0KCgojIEdsb2JhbCBhcHByb3ZhbCBnYXRld2F5IGluc3RhbmNlCmFwcHJvdmFsX2dhdGV3YXkgPSBBcHByb3ZhbEdhdGV3YXkoKQo=
+# ====================================================================
+# JARVIS OMEGA — Approval Gateway
+# ====================================================================
+"""
+Human Approval Gateway: risk assessment, approval request creation,
+notification to Sir, and approve/reject flow. No critical action
+executes before Sir's explicit approval.
+"""
+
+from __future__ import annotations
+
+import asyncio
+from datetime import datetime
+from typing import Any, Callable, Coroutine, Dict, List, Optional
+
+from shared.constants import DANGEROUS_ACTIONS, EventType, RiskLevel
+from shared.logger import get_logger
+from shared.models import ApprovalRequest
+
+log = get_logger("approval_gateway")
+
+
+class ApprovalGateway:
+    """
+    Controls dangerous action execution.
+    All critical operations must pass through here.
+    """
+
+    def __init__(self) -> None:
+        self._pending: Dict[str, ApprovalRequest] = {}
+        self._history: List[ApprovalRequest] = []
+        self._event_bus = None
+        self._ws_manager = None
+        self._waiters: Dict[str, asyncio.Event] = {}
+
+    def set_event_bus(self, event_bus: Any) -> None:
+        self._event_bus = event_bus
+
+    def set_ws_manager(self, ws_manager: Any) -> None:
+        self._ws_manager = ws_manager
+
+    def is_dangerous(self, action: str) -> bool:
+        """Check if an action requires approval."""
+        return action in DANGEROUS_ACTIONS
+
+    async def request_approval(self, request: ApprovalRequest) -> str:
+        """
+        Submit an approval request. Returns the approval_id.
+        The requesting agent must wait for Sir's response.
+        """
+        self._pending[request.approval_id] = request
+        self._waiters[request.approval_id] = asyncio.Event()
+
+        # Route high-risk decisions through Governance Layer pre-check
+        if request.risk_level in (RiskLevel.HIGH, RiskLevel.CRITICAL):
+            try:
+                from backend.governance import governance_layer, GovernanceReviewRequest
+                gov_req = GovernanceReviewRequest(
+                    decision_type="dangerous_command",
+                    action=request.action,
+                    details={"reason": request.reason, "resources": request.affected_resources},
+                )
+                eval_res = await governance_layer.evaluate_decision(gov_req)
+                if not eval_res.get("approved"):
+                    log.warning(
+                        "approval_request_vetoed_by_governance",
+                        approval_id=request.approval_id,
+                        veto=eval_res.get("veto"),
+                    )
+                    request.approved = False
+                    request.approved_at = datetime.utcnow()
+                    request.approved_by = "GovernanceLayer"
+                    # Auto-reject in gateway if vetoed by governance
+                    waiter = self._waiters.get(request.approval_id)
+                    if waiter:
+                        waiter.set()
+                    self._history.append(request)
+                    self._pending.pop(request.approval_id, None)
+                    return request.approval_id
+            except Exception as gov_err:
+                log.warning("governance_pre_check_failed", error=str(gov_err))
+
+        log.warning(
+            "approval_requested",
+            approval_id=request.approval_id,
+            action=request.action,
+            risk_level=request.risk_level.value,
+            reason=request.reason,
+        )
+
+        # Notify Sir via event bus and WebSocket
+        if self._event_bus:
+            await self._event_bus.publish(
+                EventType.APPROVAL_REQUESTED,
+                {
+                    "approval_id": request.approval_id,
+                    "action": request.action,
+                    "reason": request.reason,
+                    "risk_level": request.risk_level.value,
+                    "affected_resources": request.affected_resources,
+                    "expected_result": request.expected_result,
+                    "undo_possible": request.undo_possible,
+                    "requesting_agent": request.requesting_agent,
+                },
+            )
+
+        if self._ws_manager:
+            await self._ws_manager.broadcast({
+                "type": "approval_request",
+                "payload": request.model_dump(mode="json"),
+            })
+
+        return request.approval_id
+
+    async def wait_for_approval(self, approval_id: str, timeout: float = 300.0) -> bool:
+        """
+        Block until Sir approves or rejects, or timeout.
+        Returns True if approved, False otherwise.
+
+        Looks up the verdict in ``_history`` (where ``approve``/``reject``
+        move the request) so the post-pop race is closed: previously the wait
+        would return False because approve() removed the request from
+        ``_pending`` before the waiter woke up.
+        """
+        waiter = self._waiters.get(approval_id)
+        if not waiter:
+            return False
+
+        try:
+            await asyncio.wait_for(waiter.wait(), timeout=timeout)
+        except asyncio.TimeoutError:
+            log.warning("approval_timeout", approval_id=approval_id)
+            await self.reject(approval_id, reason="Timeout — no response from Sir")
+            return False
+
+        # Look in history first (post-decision), fall back to pending (rare race).
+        for req in self._history:
+            if req.approval_id == approval_id:
+                return bool(req.approved)
+        request = self._pending.get(approval_id)
+        return bool(request.approved) if request else False
+
+    async def approve(self, approval_id: str) -> bool:
+        """Sir approves a pending request."""
+        request = self._pending.get(approval_id)
+        if not request:
+            return False
+
+        request.approved = True
+        request.approved_at = datetime.utcnow()
+        request.approved_by = "Sir"
+
+        # Signal the waiting agent
+        waiter = self._waiters.get(approval_id)
+        if waiter:
+            waiter.set()
+
+        self._history.append(request)
+        self._pending.pop(approval_id, None)
+
+        log.info("approval_granted", approval_id=approval_id, action=request.action)
+
+        if self._event_bus:
+            await self._event_bus.publish(
+                EventType.APPROVAL_GRANTED,
+                {"approval_id": approval_id, "action": request.action},
+            )
+
+        return True
+
+    async def reject(self, approval_id: str, reason: str = "") -> bool:
+        """Sir rejects a pending request."""
+        request = self._pending.get(approval_id)
+        if not request:
+            return False
+
+        request.approved = False
+        request.approved_at = datetime.utcnow()
+        request.approved_by = "Sir"
+
+        waiter = self._waiters.get(approval_id)
+        if waiter:
+            waiter.set()
+
+        self._history.append(request)
+        self._pending.pop(approval_id, None)
+
+        log.info("approval_denied", approval_id=approval_id, reason=reason)
+
+        if self._event_bus:
+            await self._event_bus.publish(
+                EventType.APPROVAL_DENIED,
+                {"approval_id": approval_id, "action": request.action, "reason": reason},
+            )
+
+        return True
+
+    def get_pending(self) -> List[ApprovalRequest]:
+        """Get all pending approval requests."""
+        return list(self._pending.values())
+
+    def get_history(self, limit: int = 50) -> List[ApprovalRequest]:
+        """Get approval history."""
+        return self._history[-limit:]
+
+
+# Global approval gateway instance
+approval_gateway = ApprovalGateway()
