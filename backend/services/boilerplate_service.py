@@ -1,1 +1,455 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgU2FhUyBCb2lsZXJwbGF0ZSBHZW5lcmF0b3IgU2VydmljZQojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiIiIgpCb2lsZXJwbGF0ZSBHZW5lcmF0b3IgU2VydmljZS4gSGFuZGxlcyBwcm9tcHQgcGFyc2luZywgY29kZSBnZW5lcmF0aW9uLApsb2NhbCBkZXYgc2VydmVyIGxhdW5jaGluZywgR2l0SHViIHJlcG9zaXRvcnkgY3JlYXRpb24sIGFuZCBWZXJjZWwgZGVwbG95bWVudHMuCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KaW1wb3J0IGpzb24KaW1wb3J0IG9zCmltcG9ydCByZQppbXBvcnQgc3VicHJvY2VzcwppbXBvcnQgdXVpZApmcm9tIGRhdGV0aW1lIGltcG9ydCBkYXRldGltZQpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKZnJvbSB0eXBpbmcgaW1wb3J0IEFueSwgRGljdCwgTGlzdCwgT3B0aW9uYWwKCmltcG9ydCBodHRweAoKZnJvbSBiYWNrZW5kLmNvbmZpZyBpbXBvcnQgc2V0dGluZ3MKZnJvbSBiYWNrZW5kLnNlcnZpY2VzLmxsbV9zZXJ2aWNlIGltcG9ydCBsbG1fc2VydmljZQpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoImJvaWxlcnBsYXRlX3NlcnZpY2UiKQoKIyBNYXAgb2YgcnVubmluZyBkZXYgc2VydmVyczogcHJvamVjdF9pZCAtPiBzdWJwcm9jZXNzLlBvcGVuClJVTk5JTkdfU0VSVkVSUzogRGljdFtzdHIsIHN1YnByb2Nlc3MuUG9wZW5dID0ge30KIyBMb2cgc3RyZWFtczogcHJvamVjdF9pZCAtPiBMaXN0W3N0cl0KU0VSVkVSX0xPR1M6IERpY3Rbc3RyLCBMaXN0W3N0cl1dID0ge30KCgpjbGFzcyBCb2lsZXJwbGF0ZVNlcnZpY2U6CiAgICAiIiIKICAgIE9yY2hlc3RyYXRlcyB0aGUgZW50aXJlIGJvaWxlcnBsYXRlIGJ1aWxkLWFuZC1kZXBsb3kgcGlwZWxpbmUuCiAgICAiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZikgLT4gTm9uZToKICAgICAgICBzZWxmLmdpdGh1Yl90b2tlbiA9IG9zLmVudmlyb24uZ2V0KCJHSVRIVUJfVE9LRU4iKQogICAgICAgIHNlbGYudmVyY2VsX3Rva2VuID0gb3MuZW52aXJvbi5nZXQoIlZFUkNFTF9UT0tFTiIpCiAgICAgICAgc2VsZi52ZXJjZWxfdGVhbV9pZCA9IG9zLmVudmlyb24uZ2V0KCJWRVJDRUxfVEVBTV9JRCIpCgogICAgYXN5bmMgZGVmIGdlbmVyYXRlX3Byb2plY3Qoc2VsZiwgcHJvbXB0OiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIgogICAgICAgIFBhcnNlcyBwcm9tcHQsIHNlbGVjdHMgZnJhbWV3b3JrLCBnZW5lcmF0ZXMgZmlsZXMgdmlhIExMTSwKICAgICAgICBhbmQgc2F2ZXMgdGhlbSBpbiB0aGUgd29ya3NwYWNlLgogICAgICAgICIiIgogICAgICAgIHByb2plY3RfaWQgPSBmImJ1aWxkX3t1dWlkLnV1aWQ0KCkuaGV4WzoxMl19IgogICAgICAgIGxvZy5pbmZvKCJib2lsZXJwbGF0ZV9nZW5lcmF0aW9uX3N0YXJ0ZWQiLCBwcm9qZWN0X2lkPXByb2plY3RfaWQsIHByb21wdD1wcm9tcHRbOjEwMF0pCgogICAgICAgIHN5c3RlbV9pbnN0cnVjdGlvbnMgPSAoCiAgICAgICAgICAgICJZb3UgYXJlIGFuIGV4cGVydCBmdWxsLXN0YWNrIEFJIGVuZ2luZWVyLiBUaGUgdXNlciB3YW50cyB0byBnZW5lcmF0ZSBhIGNvbXBsZXRlIGJvaWxlcnBsYXRlICIKICAgICAgICAgICAgInByb2plY3QgYmFzZWQgb24gdGhlaXIgcHJvbXB0LiBZb3UgbXVzdCBnZW5lcmF0ZSBhbGwgZmlsZXMgbmVlZGVkIGZvciBhIGZ1bGx5IGZ1bmN0aW9uYWwgc2tlbGV0b24uICIKICAgICAgICAgICAgIkZvcm1hdCB5b3VyIHJlc3BvbnNlIE9OTFkgYXMgYSBzaW5nbGUgSlNPTiBvYmplY3Qgd2l0aCB0aGUgZm9sbG93aW5nIHNjaGVtYTpcbiIKICAgICAgICAgICAgIntcbiIKICAgICAgICAgICAgIiAgXCJmcmFtZXdvcmtcIjogXCJuZXh0anNcIiB8IFwidml0ZVwiIHwgXCJmYXN0YXBpXCIgfCBcImV4cHJlc3NcIixcbiIKICAgICAgICAgICAgIiAgXCJzdHlsaW5nXCI6IFwidGFpbHdpbmRcIiB8IFwiY3NzXCIsXG4iCiAgICAgICAgICAgICIgIFwiZGF0YWJhc2VcIjogXCJzdXBhYmFzZVwiIHwgXCJzcWxpdGVcIiB8IFwicG9zdGdyZXNcIiB8IFwibm9uZVwiLFxuIgogICAgICAgICAgICAiICBcImF1dGhcIjogXCJjbGVya1wiIHwgXCJzdXBhYmFzZVwiIHwgXCJub25lXCIsXG4iCiAgICAgICAgICAgICIgIFwiZGVzY3JpcHRpb25cIjogXCJzaG9ydCBkZXNjcmlwdGlvblwiLFxuIgogICAgICAgICAgICAiICBcImZpbGVzXCI6IHtcbiIKICAgICAgICAgICAgIiAgICAgXCJyZWxhdGl2ZS9maWxlL3BhdGgudHN4XCI6IFwiZmlsZSBjb250ZW50IHN0cmluZy4uLlwiXG4iCiAgICAgICAgICAgICIgIH1cbiIKICAgICAgICAgICAgIn1cbiIKICAgICAgICAgICAgIkVuc3VyZSB0aGF0IGZpbGVzIGxpa2UgcGFja2FnZS5qc29uLCB0YWlsd2luZC5jb25maWcuanMsIG5leHQuY29uZmlnLmpzIChvciB2aXRlLmNvbmZpZy50cyksICIKICAgICAgICAgICAgInRzY29uZmlnLmpzb24sIGFuZCBzb3VyY2UgcGFnZXMvY29tcG9uZW50cyBhcmUgY29tcGxldGUgYW5kIHN5bnRhY3RpY2FsbHkgY29ycmVjdC4gIgogICAgICAgICAgICAiUmV0dXJuIE9OTFkgdGhlIHJhdyBKU09OLiBObyBtYXJrZG93biBiYWNrdGlja3MsIG5vIG1hcmtkb3duIGZvcm1hdHRpbmcsIG5vIGV4cGxhbmF0aW9ucy4iCiAgICAgICAgKQoKICAgICAgICB1c2VyX21zZyA9IGYiR2VuZXJhdGUgYSBwcm9qZWN0IHNrZWxldG9uIGZvcjogJ3twcm9tcHR9JyIKICAgICAgICAKICAgICAgICByZXNwb25zZSA9IGF3YWl0IGxsbV9zZXJ2aWNlLmdldF9yZXNwb25zZSgKICAgICAgICAgICAgdXNlcl9tZXNzYWdlPXVzZXJfbXNnLAogICAgICAgICAgICBpbmplY3RfbWVtb3J5PUZhbHNlLAogICAgICAgICAgICBzeXN0ZW1faW5zdHJ1Y3Rpb25zPXN5c3RlbV9pbnN0cnVjdGlvbnMKICAgICAgICApCgogICAgICAgICMgUGFyc2UgSlNPTgogICAgICAgIGNsZWFuX2pzb24gPSByZXNwb25zZS5zdHJpcCgpCiAgICAgICAgaWYgY2xlYW5fanNvbi5zdGFydHN3aXRoKCJgYGAiKToKICAgICAgICAgICAgY2xlYW5fanNvbiA9IHJlLnN1YihyIl5gYGAoPzpqc29uKT9cbiIsICIiLCBjbGVhbl9qc29uKQogICAgICAgICAgICBjbGVhbl9qc29uID0gcmUuc3ViKHIiXG5gYGAkIiwgIiIsIGNsZWFuX2pzb24pCiAgICAgICAgY2xlYW5fanNvbiA9IGNsZWFuX2pzb24uc3RyaXAoKQoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHByb2plY3RfZGF0YSA9IGpzb24ubG9hZHMoY2xlYW5fanNvbikKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigiYm9pbGVycGxhdGVfanNvbl9wYXJzZV9mYWlsZWQiLCByYXdfcmVzcG9uc2U9cmVzcG9uc2UsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKAogICAgICAgICAgICAgICAgIkxMTSBkaWQgbm90IHJldHVybiBwYXJzZWFibGUgcHJvamVjdCBKU09OOyByZWZ1c2luZyB0byAiCiAgICAgICAgICAgICAgICAic2NhZmZvbGQgZnJvbSBhIG1vY2sgdGVtcGxhdGUuIgogICAgICAgICAgICApCgogICAgICAgICMgV3JpdGUgZmlsZXMgdG8gd29ya3NwYWNlCiAgICAgICAgYnVpbGRfZGlyID0gUGF0aChzZXR0aW5ncy53b3Jrc3BhY2VfZGlyKSAvICJidWlsZHMiIC8gcHJvamVjdF9pZAogICAgICAgIGJ1aWxkX2Rpci5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCgogICAgICAgIGZpbGVzID0gcHJvamVjdF9kYXRhLmdldCgiZmlsZXMiLCB7fSkKICAgICAgICBmb3IgZmlsZXBhdGgsIGNvbnRlbnQgaW4gZmlsZXMuaXRlbXMoKToKICAgICAgICAgICAgZmlsZV9wYXRoID0gYnVpbGRfZGlyIC8gZmlsZXBhdGgKICAgICAgICAgICAgZmlsZV9wYXRoLnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgICAgIGZpbGVfcGF0aC53cml0ZV90ZXh0KGNvbnRlbnQsIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgICAgIGxvZy5pbmZvKCJ3cm90ZV9ib2lsZXJwbGF0ZV9maWxlIiwgZmlsZXBhdGg9ZmlsZXBhdGgpCgogICAgICAgICMgV3JpdGUgbWV0YWRhdGEgZmlsZSBmb3IgbGF0ZXIgcmVmZXJlbmNlCiAgICAgICAgbWV0YSA9IHsKICAgICAgICAgICAgInByb2plY3RfaWQiOiBwcm9qZWN0X2lkLAogICAgICAgICAgICAicHJvbXB0IjogcHJvbXB0LAogICAgICAgICAgICAiZnJhbWV3b3JrIjogcHJvamVjdF9kYXRhLmdldCgiZnJhbWV3b3JrIiwgIm5leHRqcyIpLAogICAgICAgICAgICAic3R5bGluZyI6IHByb2plY3RfZGF0YS5nZXQoInN0eWxpbmciLCAidGFpbHdpbmQiKSwKICAgICAgICAgICAgImRhdGFiYXNlIjogcHJvamVjdF9kYXRhLmdldCgiZGF0YWJhc2UiLCAibm9uZSIpLAogICAgICAgICAgICAiYXV0aCI6IHByb2plY3RfZGF0YS5nZXQoImF1dGgiLCAibm9uZSIpLAogICAgICAgICAgICAiZGVzY3JpcHRpb24iOiBwcm9qZWN0X2RhdGEuZ2V0KCJkZXNjcmlwdGlvbiIsICIiKSwKICAgICAgICAgICAgImNyZWF0ZWRfYXQiOiBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKSwKICAgICAgICAgICAgInN0YXR1cyI6ICJnZW5lcmF0ZWQiLAogICAgICAgICAgICAiZmlsZXMiOiBsaXN0KGZpbGVzLmtleXMoKSkKICAgICAgICB9CiAgICAgICAgKGJ1aWxkX2RpciAvICIuamFydmlzX21ldGEuanNvbiIpLndyaXRlX3RleHQoanNvbi5kdW1wcyhtZXRhLCBpbmRlbnQ9MiksIGVuY29kaW5nPSJ1dGYtOCIpCgogICAgICAgIHJldHVybiBtZXRhCgogICAgYXN5bmMgZGVmIGdldF9wcm9qZWN0X2ZpbGVzKHNlbGYsIHByb2plY3RfaWQ6IHN0cikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiUmVhZHMgZmlsZSB0cmVlIGFuZCBjb250ZW50cyBvZiBhIHByb2plY3QuIiIiCiAgICAgICAgYnVpbGRfZGlyID0gUGF0aChzZXR0aW5ncy53b3Jrc3BhY2VfZGlyKSAvICJidWlsZHMiIC8gcHJvamVjdF9pZAogICAgICAgIGlmIG5vdCBidWlsZF9kaXIuZXhpc3RzKCk6CiAgICAgICAgICAgIHJhaXNlIEZpbGVOb3RGb3VuZEVycm9yKCJQcm9qZWN0IGJ1aWxkIG5vdCBmb3VuZCIpCgogICAgICAgIGZpbGVfdHJlZSA9IFtdCiAgICAgICAgZmlsZV9jb250ZW50cyA9IHt9CgogICAgICAgIGZvciBwIGluIGJ1aWxkX2Rpci5yZ2xvYigiKiIpOgogICAgICAgICAgICBpZiBwLmlzX2ZpbGUoKSBhbmQgbm90IHAubmFtZS5zdGFydHN3aXRoKCIuIikgYW5kICJub2RlX21vZHVsZXMiIG5vdCBpbiBwLnBhcnRzOgogICAgICAgICAgICAgICAgcmVsX3BhdGggPSBzdHIocC5yZWxhdGl2ZV90byhidWlsZF9kaXIpKS5yZXBsYWNlKCJcXCIsICIvIikKICAgICAgICAgICAgICAgIGZpbGVfdHJlZS5hcHBlbmQocmVsX3BhdGgpCiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgZmlsZV9jb250ZW50c1tyZWxfcGF0aF0gPSBwLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQogICAgICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgICAgICAgICBmaWxlX2NvbnRlbnRzW3JlbF9wYXRoXSA9ICJbQmluYXJ5IGZpbGVdIgoKICAgICAgICAjIFJlYWQgbWV0YQogICAgICAgIG1ldGEgPSB7fQogICAgICAgIG1ldGFfZmlsZSA9IGJ1aWxkX2RpciAvICIuamFydmlzX21ldGEuanNvbiIKICAgICAgICBpZiBtZXRhX2ZpbGUuZXhpc3RzKCk6CiAgICAgICAgICAgIG1ldGEgPSBqc29uLmxvYWRzKG1ldGFfZmlsZS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikpCgogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICJtZXRhIjogbWV0YSwKICAgICAgICAgICAgImZpbGVfdHJlZSI6IGZpbGVfdHJlZSwKICAgICAgICAgICAgImZpbGVzIjogZmlsZV9jb250ZW50cwogICAgICAgIH0KCiAgICBhc3luYyBkZWYgc2F2ZV9wcm9qZWN0X2ZpbGUoc2VsZiwgcHJvamVjdF9pZDogc3RyLCBmaWxlcGF0aDogc3RyLCBjb250ZW50OiBzdHIpIC0+IGJvb2w6CiAgICAgICAgIiIiU2F2ZXMgbWFudWFsIGVkaXRzIGZyb20gTW9uYWNvIGVkaXRvci4iIiIKICAgICAgICBidWlsZF9kaXIgPSBQYXRoKHNldHRpbmdzLndvcmtzcGFjZV9kaXIpIC8gImJ1aWxkcyIgLyBwcm9qZWN0X2lkCiAgICAgICAgaWYgbm90IGJ1aWxkX2Rpci5leGlzdHMoKToKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCiAgICAgICAgCiAgICAgICAgdGFyZ2V0X2ZpbGUgPSBidWlsZF9kaXIgLyBmaWxlcGF0aAogICAgICAgICMgR3VhcmQgcGF0aCB0cmF2ZXJzYWwKICAgICAgICBpZiBub3Qgc3RyKHRhcmdldF9maWxlLnJlc29sdmUoKSkuc3RhcnRzd2l0aChzdHIoYnVpbGRfZGlyLnJlc29sdmUoKSkpOgogICAgICAgICAgICByZXR1cm4gRmFsc2UKICAgICAgICAgICAgCiAgICAgICAgdGFyZ2V0X2ZpbGUucGFyZW50Lm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICB0YXJnZXRfZmlsZS53cml0ZV90ZXh0KGNvbnRlbnQsIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgbG9nLmluZm8oInNhdmVkX3Byb2plY3RfZmlsZV9lZGl0IiwgcHJvamVjdF9pZD1wcm9qZWN0X2lkLCBmaWxlcGF0aD1maWxlcGF0aCkKICAgICAgICByZXR1cm4gVHJ1ZQoKICAgIGFzeW5jIGRlZiBydW5fbG9jYWxfZGV2KHNlbGYsIHByb2plY3RfaWQ6IHN0cikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiTGF1bmNoZXMgcHJvamVjdCdzIGRldiBzZXJ2ZXIgaW4gdGhlIGJhY2tncm91bmQuIiIiCiAgICAgICAgYnVpbGRfZGlyID0gUGF0aChzZXR0aW5ncy53b3Jrc3BhY2VfZGlyKSAvICJidWlsZHMiIC8gcHJvamVjdF9pZAogICAgICAgIGlmIG5vdCBidWlsZF9kaXIuZXhpc3RzKCk6CiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgIm1lc3NhZ2UiOiAiUHJvamVjdCBidWlsZCBub3QgZm91bmQifQoKICAgICAgICAjIENoZWNrIGlmIGFscmVhZHkgcnVubmluZwogICAgICAgIGlmIHByb2plY3RfaWQgaW4gUlVOTklOR19TRVJWRVJTOgogICAgICAgICAgICBwcm9jID0gUlVOTklOR19TRVJWRVJTW3Byb2plY3RfaWRdCiAgICAgICAgICAgIGlmIHByb2MucG9sbCgpIGlzIE5vbmU6CiAgICAgICAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICAgICAgICAgICJzdWNjZXNzIjogVHJ1ZSwKICAgICAgICAgICAgICAgICAgICAicG9ydCI6IDMwMDAsCiAgICAgICAgICAgICAgICAgICAgInVybCI6ICJodHRwOi8vbG9jYWxob3N0OjMwMDAiLAogICAgICAgICAgICAgICAgICAgICJwaWQiOiBwcm9jLnBpZCwKICAgICAgICAgICAgICAgICAgICAibWVzc2FnZSI6ICJTZXJ2ZXIgYWxyZWFkeSBydW5uaW5nIgogICAgICAgICAgICAgICAgfQoKICAgICAgICBsb2cuaW5mbygic3RhcnRpbmdfbG9jYWxfZGV2X3NlcnZlciIsIHByb2plY3RfaWQ9cHJvamVjdF9pZCkKICAgICAgICAKICAgICAgICAjIENsZWFuIGxvZ3MKICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXSA9IFtdCgogICAgICAgIGlzX25vZGUgPSAoYnVpbGRfZGlyIC8gInBhY2thZ2UuanNvbiIpLmV4aXN0cygpCiAgICAgICAgaXNfcHl0aG9uID0gKGJ1aWxkX2RpciAvICJyZXF1aXJlbWVudHMudHh0IikuZXhpc3RzKCkgb3IgKGJ1aWxkX2RpciAvICJtYWluLnB5IikuZXhpc3RzKCkKCiAgICAgICAgdHJ5OgogICAgICAgICAgICBpZiBpc19ub2RlOgogICAgICAgICAgICAgICAgIyAxLiBSdW4gbnBtIGluc3RhbGwgKG5vbi1ibG9ja2luZyBsb2cgY2FwdHVyZSkKICAgICAgICAgICAgICAgIGxvZy5pbmZvKCJydW5uaW5nX25wbV9pbnN0YWxsIiwgcHJvamVjdF9pZD1wcm9qZWN0X2lkKQogICAgICAgICAgICAgICAgU0VSVkVSX0xPR1NbcHJvamVjdF9pZF0uYXBwZW5kKCJbSkFSVklTXSBSdW5uaW5nIG5wbSBpbnN0YWxsLi4uXG4iKQogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBpbnN0YWxsX3Byb2MgPSBhd2FpdCBhc3luY2lvLmNyZWF0ZV9zdWJwcm9jZXNzX2V4ZWMoCiAgICAgICAgICAgICAgICAgICAgIm5wbSIsICJpbnN0YWxsIiwKICAgICAgICAgICAgICAgICAgICBjd2Q9c3RyKGJ1aWxkX2RpciksCiAgICAgICAgICAgICAgICAgICAgc3Rkb3V0PWFzeW5jaW8uc3VicHJvY2Vzcy5QSVBFLAogICAgICAgICAgICAgICAgICAgIHN0ZGVycj1hc3luY2lvLnN1YnByb2Nlc3MuUElQRSwKICAgICAgICAgICAgICAgICAgICBzaGVsbD1UcnVlCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICBzdGRvdXQsIHN0ZGVyciA9IGF3YWl0IGluc3RhbGxfcHJvYy5jb21tdW5pY2F0ZSgpCiAgICAgICAgICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXS5hcHBlbmQoc3Rkb3V0LmRlY29kZSgpKQogICAgICAgICAgICAgICAgaWYgaW5zdGFsbF9wcm9jLnJldHVybmNvZGUgIT0gMDoKICAgICAgICAgICAgICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXS5hcHBlbmQoc3RkZXJyLmRlY29kZSgpKQogICAgICAgICAgICAgICAgICAgIGxvZy5lcnJvcigibnBtX2luc3RhbGxfZmFpbGVkIiwgcHJvamVjdF9pZD1wcm9qZWN0X2lkKQoKICAgICAgICAgICAgICAgICMgMi4gUnVuIG5wbSBydW4gZGV2IGluIGJhY2tncm91bmQKICAgICAgICAgICAgICAgIFNFUlZFUl9MT0dTW3Byb2plY3RfaWRdLmFwcGVuZCgiW0pBUlZJU10gU3RhcnRpbmcgZGV2IHNlcnZlci4uLlxuIikKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgIyBXZSB1c2Ugc3VicHJvY2Vzcy5Qb3BlbiBzbyBpdCBwZXJzaXN0cyBpbiBweXRob24gYmFja2dyb3VuZAogICAgICAgICAgICAgICAgcHJvYyA9IHN1YnByb2Nlc3MuUG9wZW4oCiAgICAgICAgICAgICAgICAgICAgIm5wbSBydW4gZGV2IiwKICAgICAgICAgICAgICAgICAgICBjd2Q9c3RyKGJ1aWxkX2RpciksCiAgICAgICAgICAgICAgICAgICAgc3Rkb3V0PXN1YnByb2Nlc3MuUElQRSwKICAgICAgICAgICAgICAgICAgICBzdGRlcnI9c3VicHJvY2Vzcy5TVERPVVQsCiAgICAgICAgICAgICAgICAgICAgdGV4dD1UcnVlLAogICAgICAgICAgICAgICAgICAgIHNoZWxsPVRydWUKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgZWxpZiBpc19weXRob246CiAgICAgICAgICAgICAgICAjIDEuIFJ1biBwaXAgaW5zdGFsbAogICAgICAgICAgICAgICAgU0VSVkVSX0xPR1NbcHJvamVjdF9pZF0uYXBwZW5kKCJbSkFSVklTXSBSdW5uaW5nIHBpcCBpbnN0YWxsLi4uXG4iKQogICAgICAgICAgICAgICAgaW5zdGFsbF9wcm9jID0gYXdhaXQgYXN5bmNpby5jcmVhdGVfc3VicHJvY2Vzc19leGVjKAogICAgICAgICAgICAgICAgICAgICJwaXAiLCAiaW5zdGFsbCIsICItciIsICJyZXF1aXJlbWVudHMudHh0IiwKICAgICAgICAgICAgICAgICAgICBjd2Q9c3RyKGJ1aWxkX2RpciksCiAgICAgICAgICAgICAgICAgICAgc3Rkb3V0PWFzeW5jaW8uc3VicHJvY2Vzcy5QSVBFLAogICAgICAgICAgICAgICAgICAgIHN0ZGVycj1hc3luY2lvLnN1YnByb2Nlc3MuUElQRSwKICAgICAgICAgICAgICAgICAgICBzaGVsbD1UcnVlCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICBzdGRvdXQsIHN0ZGVyciA9IGF3YWl0IGluc3RhbGxfcHJvYy5jb21tdW5pY2F0ZSgpCiAgICAgICAgICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXS5hcHBlbmQoc3Rkb3V0LmRlY29kZSgpKQoKICAgICAgICAgICAgICAgICMgMi4gUnVuIHV2aWNvcm4vcHl0aG9uCiAgICAgICAgICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXS5hcHBlbmQoIltKQVJWSVNdIFN0YXJ0aW5nIHB5dGhvbiBzZXJ2ZXIuLi5cbiIpCiAgICAgICAgICAgICAgICBwcm9jID0gc3VicHJvY2Vzcy5Qb3BlbigKICAgICAgICAgICAgICAgICAgICAidXZpY29ybiBtYWluOmFwcCAtLXJlbG9hZCAtLXBvcnQgODA4MCIsCiAgICAgICAgICAgICAgICAgICAgY3dkPXN0cihidWlsZF9kaXIpLAogICAgICAgICAgICAgICAgICAgIHN0ZG91dD1zdWJwcm9jZXNzLlBJUEUsCiAgICAgICAgICAgICAgICAgICAgc3RkZXJyPXN1YnByb2Nlc3MuU1RET1VULAogICAgICAgICAgICAgICAgICAgIHRleHQ9VHJ1ZSwKICAgICAgICAgICAgICAgICAgICBzaGVsbD1UcnVlCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJtZXNzYWdlIjogIlVua25vd24gcHJvamVjdCBzdHJ1Y3R1cmUsIG5vIHBhY2thZ2UuanNvbiBvciBtYWluLnB5IGZvdW5kIn0KCiAgICAgICAgICAgIFJVTk5JTkdfU0VSVkVSU1twcm9qZWN0X2lkXSA9IHByb2MKCiAgICAgICAgICAgICMgU3RhcnQgcmVhZGluZyBsb2dzIGluIGJhY2tncm91bmQgdGhyZWFkCiAgICAgICAgICAgIGFzeW5jaW8uY3JlYXRlX3Rhc2soc2VsZi5fc3RyZWFtX2xvZ3NfdGFzayhwcm9qZWN0X2lkLCBwcm9jKSkKCiAgICAgICAgICAgIHBvcnQgPSAzMDAwIGlmIGlzX25vZGUgZWxzZSA4MDgwCiAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAic3VjY2VzcyI6IFRydWUsCiAgICAgICAgICAgICAgICAicG9ydCI6IHBvcnQsCiAgICAgICAgICAgICAgICAidXJsIjogZiJodHRwOi8vbG9jYWxob3N0Ontwb3J0fSIsCiAgICAgICAgICAgICAgICAicGlkIjogcHJvYy5waWQsCiAgICAgICAgICAgICAgICAibWVzc2FnZSI6ICJEZXYgc2VydmVyIHN0YXJ0ZWQgc3VjY2Vzc2Z1bGx5IgogICAgICAgICAgICB9CiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoImxvY2FsX2Rldl9zZXJ2ZXJfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJtZXNzYWdlIjogZiJGYWlsZWQgdG8gc3RhcnQgbG9jYWwgZGV2OiB7c3RyKGUpfSJ9CgogICAgYXN5bmMgZGVmIF9zdHJlYW1fbG9nc190YXNrKHNlbGYsIHByb2plY3RfaWQ6IHN0ciwgcHJvYzogc3VicHJvY2Vzcy5Qb3BlbikgLT4gTm9uZToKICAgICAgICAiIiJSZWFkcyBzdGRvdXQgZnJvbSBydW5uaW5nIHN1YnByb2Nlc3MgYW5kIHN0b3JlcyBpbiBsb2cgYnVmZmVyLiIiIgogICAgICAgIGxvb3AgPSBhc3luY2lvLmdldF9ydW5uaW5nX2xvb3AoKQogICAgICAgIHdoaWxlIHByb2MucG9sbCgpIGlzIE5vbmU6CiAgICAgICAgICAgICMgUnVuIGJsb2NraW5nIHJlYWQgaW4gZXhlY3V0b3IKICAgICAgICAgICAgbGluZSA9IGF3YWl0IGxvb3AucnVuX2luX2V4ZWN1dG9yKE5vbmUsIHByb2Muc3Rkb3V0LnJlYWRsaW5lKQogICAgICAgICAgICBpZiBub3QgbGluZToKICAgICAgICAgICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMC4xKQogICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgU0VSVkVSX0xPR1Muc2V0ZGVmYXVsdChwcm9qZWN0X2lkLCBbXSkuYXBwZW5kKGxpbmUpCiAgICAgICAgICAgICMgQ2FwIGxvZ3MKICAgICAgICAgICAgaWYgbGVuKFNFUlZFUl9MT0dTW3Byb2plY3RfaWRdKSA+IDEwMDA6CiAgICAgICAgICAgICAgICBTRVJWRVJfTE9HU1twcm9qZWN0X2lkXSA9IFNFUlZFUl9MT0dTW3Byb2plY3RfaWRdWy0xMDAwOl0KICAgICAgICAKICAgICAgICAjIFJlYWQgZmluYWwgbG9ncwogICAgICAgIHJlbWFpbmluZyA9IHByb2Muc3Rkb3V0LnJlYWQoKQogICAgICAgIGlmIHJlbWFpbmluZzoKICAgICAgICAgICAgU0VSVkVSX0xPR1Muc2V0ZGVmYXVsdChwcm9qZWN0X2lkLCBbXSkuYXBwZW5kKHJlbWFpbmluZykKCiAgICBkZWYgZ2V0X3NlcnZlcl9sb2dzKHNlbGYsIHByb2plY3RfaWQ6IHN0cikgLT4gTGlzdFtzdHJdOgogICAgICAgICIiIlJldHJpZXZlIHNlcnZlciBzdGRvdXQgbG9nIGhpc3RvcnkuIiIiCiAgICAgICAgcmV0dXJuIFNFUlZFUl9MT0dTLmdldChwcm9qZWN0X2lkLCBbXSkKCiAgICBhc3luYyBkZWYgcHVzaF90b19naXRodWIoc2VsZiwgcHJvamVjdF9pZDogc3RyLCByZXBvX25hbWU6IHN0cikgLT4gc3RyOgogICAgICAgICIiIkNyZWF0ZXMgR2l0SHViIHJlcG9zaXRvcnkgYW5kIHB1c2hlcyBwcm9qZWN0IGNvZGUuIiIiCiAgICAgICAgYnVpbGRfZGlyID0gUGF0aChzZXR0aW5ncy53b3Jrc3BhY2VfZGlyKSAvICJidWlsZHMiIC8gcHJvamVjdF9pZAogICAgICAgIGlmIG5vdCBidWlsZF9kaXIuZXhpc3RzKCk6CiAgICAgICAgICAgIHJhaXNlIEZpbGVOb3RGb3VuZEVycm9yKCJQcm9qZWN0IGJ1aWxkIG5vdCBmb3VuZCIpCgogICAgICAgIGlmIG5vdCBzZWxmLmdpdGh1Yl90b2tlbjoKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKAogICAgICAgICAgICAgICAgIkdJVEhVQl9UT0tFTiBpcyBub3QgY29uZmlndXJlZC4gU2V0IGl0IGluIHRoZSBlbnZpcm9ubWVudDsgIgogICAgICAgICAgICAgICAgInJlZnVzaW5nIHRvIHJldHVybiBhIGZha2UgcmVwb3NpdG9yeSBVUkwuIgogICAgICAgICAgICApCgogICAgICAgICMgR2V0IGdpdGh1YiB1c2VybmFtZQogICAgICAgIGhlYWRlcnMgPSB7CiAgICAgICAgICAgICJBdXRob3JpemF0aW9uIjogZiJCZWFyZXIge3NlbGYuZ2l0aHViX3Rva2VufSIsCiAgICAgICAgICAgICJBY2NlcHQiOiAiYXBwbGljYXRpb24vdm5kLmdpdGh1Yitqc29uIgogICAgICAgIH0KICAgICAgICAKICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KCkgYXMgY2xpZW50OgogICAgICAgICAgICB1c2VyX3Jlc3AgPSBhd2FpdCBjbGllbnQuZ2V0KCJodHRwczovL2FwaS5naXRodWIuY29tL3VzZXIiLCBoZWFkZXJzPWhlYWRlcnMpCiAgICAgICAgICAgIGlmIHVzZXJfcmVzcC5zdGF0dXNfY29kZSAhPSAyMDA6CiAgICAgICAgICAgICAgICByYWlzZSBFeGNlcHRpb24oZiJGYWlsZWQgdG8gZmV0Y2ggR2l0SHViIHVzZXI6IHt1c2VyX3Jlc3AudGV4dH0iKQogICAgICAgICAgICB1c2VybmFtZSA9IHVzZXJfcmVzcC5qc29uKClbImxvZ2luIl0KCiAgICAgICAgICAgICMgQ3JlYXRlIFJlcG9zaXRvcnkKICAgICAgICAgICAgY3JlYXRlX3VybCA9ICJodHRwczovL2FwaS5naXRodWIuY29tL3VzZXIvcmVwb3MiCiAgICAgICAgICAgIHBheWxvYWQgPSB7CiAgICAgICAgICAgICAgICAibmFtZSI6IHJlcG9fbmFtZSwKICAgICAgICAgICAgICAgICJkZXNjcmlwdGlvbiI6ICJCb2lsZXJwbGF0ZSBnZW5lcmF0ZWQgYnkgSkFSVklTIE9NRUdBIiwKICAgICAgICAgICAgICAgICJwcml2YXRlIjogRmFsc2UKICAgICAgICAgICAgfQogICAgICAgICAgICBjcmVhdGVfcmVzcCA9IGF3YWl0IGNsaWVudC5wb3N0KGNyZWF0ZV91cmwsIGhlYWRlcnM9aGVhZGVycywganNvbj1wYXlsb2FkKQogICAgICAgICAgICBpZiBjcmVhdGVfcmVzcC5zdGF0dXNfY29kZSBub3QgaW4gKDIwMCwgMjAxKToKICAgICAgICAgICAgICAgICMgQ2hlY2sgaWYgcmVwbyBhbHJlYWR5IGV4aXN0cywgaWYgc28gcmV1c2UgaXQKICAgICAgICAgICAgICAgIGlmICJhbHJlYWR5IGV4aXN0cyIgbm90IGluIGNyZWF0ZV9yZXNwLnRleHQ6CiAgICAgICAgICAgICAgICAgICAgcmFpc2UgRXhjZXB0aW9uKGYiR2l0SHViIHJlcG8gY3JlYXRpb24gZmFpbGVkOiB7Y3JlYXRlX3Jlc3AudGV4dH0iKQoKICAgICAgICAjIEdpdCBpbml0IGFuZCBwdXNoCiAgICAgICAgZGVmIHJ1bl9naXQoYXJnczogbGlzdFtzdHJdKToKICAgICAgICAgICAgc3VicHJvY2Vzcy5ydW4oWyJnaXQiXSArIGFyZ3MsIGN3ZD1zdHIoYnVpbGRfZGlyKSwgY2hlY2s9VHJ1ZSwgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSwgdGV4dD1UcnVlKQoKICAgICAgICB0cnk6CiAgICAgICAgICAgICMgUHJlcGFyZSAuZ2l0aWdub3JlCiAgICAgICAgICAgIGdpdGlnbm9yZSA9IGJ1aWxkX2RpciAvICIuZ2l0aWdub3JlIgogICAgICAgICAgICBpZiBub3QgZ2l0aWdub3JlLmV4aXN0cygpOgogICAgICAgICAgICAgICAgZ2l0aWdub3JlLndyaXRlX3RleHQoIm5vZGVfbW9kdWxlcy9cbi5lbnZcbi5lbnYubG9jYWxcbi5uZXh0L1xuYnVpbGQvXG5kaXN0L1xuIiwgZW5jb2Rpbmc9InV0Zi04IikKCiAgICAgICAgICAgIHJ1bl9naXQoWyJpbml0Il0pCiAgICAgICAgICAgICMgQ2hlY2sgYnJhbmNoIG5hbWUsIGRlZmF1bHQgdG8gbWFpbgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBydW5fZ2l0KFsiY2hlY2tvdXQiLCAiLWIiLCAibWFpbiJdKQogICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICAgICAgcGFzcwogICAgICAgICAgICBydW5fZ2l0KFsiYWRkIiwgIi4iXSkKICAgICAgICAgICAgcnVuX2dpdChbImNvbW1pdCIsICItbSIsICJJbml0aWFsIGNvbW1pdCBmcm9tIEouQS5SLlYuSS5TLiBPTUVHQSJdKQogICAgICAgICAgICAKICAgICAgICAgICAgIyBSZW1vdmUgcmVtb3RlIGlmIGV4aXN0cwogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBydW5fZ2l0KFsicmVtb3RlIiwgInJlbW92ZSIsICJvcmlnaW4iXSkKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgICAgIHBhc3MKCiAgICAgICAgICAgIHJlbW90ZV91cmwgPSBmImh0dHBzOi8ve3NlbGYuZ2l0aHViX3Rva2VufUBnaXRodWIuY29tL3t1c2VybmFtZX0ve3JlcG9fbmFtZX0uZ2l0IgogICAgICAgICAgICBydW5fZ2l0KFsicmVtb3RlIiwgImFkZCIsICJvcmlnaW4iLCByZW1vdGVfdXJsXSkKICAgICAgICAgICAgcnVuX2dpdChbInB1c2giLCAiLXUiLCAib3JpZ2luIiwgIm1haW4iLCAiLS1mb3JjZSJdKQoKICAgICAgICAgICAgbG9nLmluZm8oImdpdGh1Yl9wdXNoX2NvbXBsZXRlZCIsIHJlcG89ZiJnaXRodWIuY29tL3t1c2VybmFtZX0ve3JlcG9fbmFtZX0iKQogICAgICAgICAgICByZXR1cm4gZiJodHRwczovL2dpdGh1Yi5jb20ve3VzZXJuYW1lfS97cmVwb19uYW1lfSIKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigiZ2l0X3B1c2hfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQogICAgICAgICAgICByYWlzZQoKICAgIGFzeW5jIGRlZiBkZXBsb3lfdG9fdmVyY2VsKHNlbGYsIHByb2plY3RfaWQ6IHN0ciwgcmVwb191cmw6IHN0cikgLT4gc3RyOgogICAgICAgICIiIkRlcGxveXMgdGhlIHJlcG9zaXRvcnkgdG8gVmVyY2VsIHZpYSBWZXJjZWwgUHJvamVjdCBBUEkuIiIiCiAgICAgICAgaWYgbm90IHNlbGYudmVyY2VsX3Rva2VuOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoCiAgICAgICAgICAgICAgICAiVkVSQ0VMX1RPS0VOIGlzIG5vdCBjb25maWd1cmVkLiBTZXQgaXQgaW4gdGhlIGVudmlyb25tZW50OyAiCiAgICAgICAgICAgICAgICAicmVmdXNpbmcgdG8gcmV0dXJuIGEgZmFrZSBkZXBsb3ltZW50IFVSTC4iCiAgICAgICAgICAgICkKCiAgICAgICAgIyBFeHRyYWN0IG93bmVyL3JlcG8KICAgICAgICBtYXRjaCA9IHJlLnNlYXJjaChyImdpdGh1YlwuY29tLyhbXi9dKykvKFteLy5dKykiLCByZXBvX3VybCkKICAgICAgICBpZiBub3QgbWF0Y2g6CiAgICAgICAgICAgIHJhaXNlIEV4Y2VwdGlvbigiSW52YWxpZCBHaXRIdWIgcmVwb3NpdG9yeSBVUkwiKQogICAgICAgIG93bmVyLCByZXBvID0gbWF0Y2guZ3JvdXAoMSksIG1hdGNoLmdyb3VwKDIpCgogICAgICAgIGhlYWRlcnMgPSB7IkF1dGhvcml6YXRpb24iOiBmIkJlYXJlciB7c2VsZi52ZXJjZWxfdG9rZW59In0KICAgICAgICAKICAgICAgICAjIEFkZCB0ZWFtIHBhcmFtZXRlciBpZiBhdmFpbGFibGUKICAgICAgICBwYXJhbXMgPSB7fQogICAgICAgIGlmIHNlbGYudmVyY2VsX3RlYW1faWQ6CiAgICAgICAgICAgIHBhcmFtc1sidGVhbUlkIl0gPSBzZWxmLnZlcmNlbF90ZWFtX2lkCgogICAgICAgICMgMS4gQ3JlYXRlIHByb2plY3QgbGlua2VkIHRvIEdpdGh1YiByZXBvCiAgICAgICAgYXN5bmMgd2l0aCBodHRweC5Bc3luY0NsaWVudCgpIGFzIGNsaWVudDoKICAgICAgICAgICAgcHJval91cmwgPSAiaHR0cHM6Ly9hcGkudmVyY2VsLmNvbS92OS9wcm9qZWN0cyIKICAgICAgICAgICAgcHJval9wYXlsb2FkID0gewogICAgICAgICAgICAgICAgIm5hbWUiOiByZXBvLmxvd2VyKCksCiAgICAgICAgICAgICAgICAiZnJhbWV3b3JrIjogIm5leHRqcyIsCiAgICAgICAgICAgICAgICAiZ2l0UmVwb3NpdG9yeSI6IHsKICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJnaXRodWIiLAogICAgICAgICAgICAgICAgICAgICJyZXBvIjogZiJ7b3duZXJ9L3tyZXBvfSIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgICAgICBwcm9qX3Jlc3AgPSBhd2FpdCBjbGllbnQucG9zdChwcm9qX3VybCwgaGVhZGVycz1oZWFkZXJzLCBwYXJhbXM9cGFyYW1zLCBqc29uPXByb2pfcGF5bG9hZCkKICAgICAgICAgICAgaWYgcHJval9yZXNwLnN0YXR1c19jb2RlIG5vdCBpbiAoMjAwLCAyMDEpIGFuZCAiYWxyZWFkeV9leGlzdHMiIG5vdCBpbiBwcm9qX3Jlc3AudGV4dDoKICAgICAgICAgICAgICAgIHJhaXNlIEV4Y2VwdGlvbihmIkZhaWxlZCB0byBsaW5rIHByb2plY3Qgb24gVmVyY2VsOiB7cHJval9yZXNwLnRleHR9IikKCiAgICAgICAgICAgICMgMi4gVHJpZ2dlciBkZXBsb3ltZW50CiAgICAgICAgICAgIGRlcGxveV91cmwgPSAiaHR0cHM6Ly9hcGkudmVyY2VsLmNvbS92MTMvZGVwbG95bWVudHMiCiAgICAgICAgICAgIGRlcGxveV9wYXlsb2FkID0gewogICAgICAgICAgICAgICAgIm5hbWUiOiByZXBvLmxvd2VyKCksCiAgICAgICAgICAgICAgICAiZ2l0U291cmNlIjogewogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImdpdGh1YiIsCiAgICAgICAgICAgICAgICAgICAgInJlZiI6ICJtYWluIiwKICAgICAgICAgICAgICAgICAgICAicmVwb0lkIjogcHJval9yZXNwLmpzb24oKS5nZXQoImxpbmsiLCB7fSkuZ2V0KCJyZXBvSWQiKSBvciAwCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgZGVwbG95X3Jlc3AgPSBhd2FpdCBjbGllbnQucG9zdChkZXBsb3lfdXJsLCBoZWFkZXJzPWhlYWRlcnMsIHBhcmFtcz1wYXJhbXMsIGpzb249ZGVwbG95X3BheWxvYWQpCiAgICAgICAgICAgIGlmIGRlcGxveV9yZXNwLnN0YXR1c19jb2RlIG5vdCBpbiAoMjAwLCAyMDEpOgogICAgICAgICAgICAgICAgcmFpc2UgRXhjZXB0aW9uKGYiRmFpbGVkIHRvIHRyaWdnZXIgVmVyY2VsIGRlcGxveW1lbnQ6IHtkZXBsb3lfcmVzcC50ZXh0fSIpCgogICAgICAgICAgICBkZXBsb3lfZGF0YSA9IGRlcGxveV9yZXNwLmpzb24oKQogICAgICAgICAgICBkZXBsb3lfaWQgPSBkZXBsb3lfZGF0YVsiaWQiXQogICAgICAgICAgICAKICAgICAgICAgICAgIyAzLiBNb25pdG9yCiAgICAgICAgICAgIGxvZy5pbmZvKCJ2ZXJjZWxfZGVwbG95bWVudF90cmlnZ2VyZWQiLCBkZXBsb3ltZW50X2lkPWRlcGxveV9pZCkKICAgICAgICAgICAgcmVzdWx0ID0gYXdhaXQgc2VsZi5fcG9sbF92ZXJjZWxfZGVwbG95bWVudChkZXBsb3lfaWQpCiAgICAgICAgICAgIGlmIHJlc3VsdFsic3RhdHVzIl0gPT0gIlJFQURZIjoKICAgICAgICAgICAgICAgIHJldHVybiByZXN1bHRbInVybCJdCiAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICByYWlzZSBFeGNlcHRpb24oCiAgICAgICAgICAgICAgICAgICAgZiJWZXJjZWwgZGVwbG95bWVudCB7ZGVwbG95X2lkfSBmYWlsZWQgd2l0aCBzdGF0dXMgIgogICAgICAgICAgICAgICAgICAgIGYiJ3tyZXN1bHRbJ3N0YXR1cyddfScuIEF1dG9tYXRpYyBidWlsZC1lcnJvciByZXBhaXIgaXMgbm90ICIKICAgICAgICAgICAgICAgICAgICAiYXZhaWxhYmxlIGluIHRoaXMgYnVpbGQg4oCUIGNoZWNrIHRoZSBWZXJjZWwgZGFzaGJvYXJkIGJ1aWxkICIKICAgICAgICAgICAgICAgICAgICAibG9ncywgZml4IHRoZSBlcnJvcnMsIGFuZCByZWRlcGxveS4iCiAgICAgICAgICAgICAgICApCgogICAgYXN5bmMgZGVmIF9wb2xsX3ZlcmNlbF9kZXBsb3ltZW50KHNlbGYsIGRlcGxveW1lbnRfaWQ6IHN0cikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiUG9sbHMgVmVyY2VsIGRlcGxveW1lbnQgc3RhdHVzLiIiIgogICAgICAgIGhlYWRlcnMgPSB7IkF1dGhvcml6YXRpb24iOiBmIkJlYXJlciB7c2VsZi52ZXJjZWxfdG9rZW59In0KICAgICAgICB1cmwgPSBmImh0dHBzOi8vYXBpLnZlcmNlbC5jb20vdjEzL2RlcGxveW1lbnRzL3tkZXBsb3ltZW50X2lkfSIKICAgICAgICAKICAgICAgICAjIFBvbGwgZm9yIG1heGltdW0gNSBtaW51dGVzCiAgICAgICAgZm9yIF8gaW4gcmFuZ2UoMzApOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KCkgYXMgY2xpZW50OgogICAgICAgICAgICAgICAgICAgIHJlc3AgPSBhd2FpdCBjbGllbnQuZ2V0KHVybCwgaGVhZGVycz1oZWFkZXJzKQogICAgICAgICAgICAgICAgICAgIGlmIHJlc3Auc3RhdHVzX2NvZGUgPT0gMjAwOgogICAgICAgICAgICAgICAgICAgICAgICBkYXRhID0gcmVzcC5qc29uKCkKICAgICAgICAgICAgICAgICAgICAgICAgc3RhdHVzID0gZGF0YS5nZXQoInN0YXR1cyIpCiAgICAgICAgICAgICAgICAgICAgICAgIGlmIHN0YXR1cyBpbiAoIlJFQURZIiwgIkVSUk9SIiwgIkNBTkNFTEVEIik6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJzdGF0dXMiOiBzdGF0dXMsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInVybCI6IGYiaHR0cHM6Ly97ZGF0YS5nZXQoJ3VybCcpfSIgaWYgZGF0YS5nZXQoJ3VybCcpIGVsc2UgTm9uZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgbG9nLmVycm9yKCJ2ZXJjZWxfcG9sbF9lcnJvciIsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgYXdhaXQgYXN5bmNpby5zbGVlcCgxMCkKICAgICAgICAgICAgCiAgICAgICAgcmV0dXJuIHsic3RhdHVzIjogIlRJTUVPVVQiLCAidXJsIjogTm9uZX0KCmJvaWxlcnBsYXRlX3NlcnZpY2UgPSBCb2lsZXJwbGF0ZVNlcnZpY2UoKQo=
+# ====================================================================
+# JARVIS OMEGA — SaaS Boilerplate Generator Service
+# ====================================================================
+"""
+Boilerplate Generator Service. Handles prompt parsing, code generation,
+local dev server launching, GitHub repository creation, and Vercel deployments.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import os
+import re
+import subprocess
+import uuid
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import httpx
+
+from backend.config import settings
+from backend.services.llm_service import llm_service
+from shared.logger import get_logger
+
+log = get_logger("boilerplate_service")
+
+# Map of running dev servers: project_id -> subprocess.Popen
+RUNNING_SERVERS: Dict[str, subprocess.Popen] = {}
+# Log streams: project_id -> List[str]
+SERVER_LOGS: Dict[str, List[str]] = {}
+
+
+class BoilerplateService:
+    """
+    Orchestrates the entire boilerplate build-and-deploy pipeline.
+    """
+
+    def __init__(self) -> None:
+        self.github_token = os.environ.get("GITHUB_TOKEN")
+        self.vercel_token = os.environ.get("VERCEL_TOKEN")
+        self.vercel_team_id = os.environ.get("VERCEL_TEAM_ID")
+
+    async def generate_project(self, prompt: str) -> Dict[str, Any]:
+        """
+        Parses prompt, selects framework, generates files via LLM,
+        and saves them in the workspace.
+        """
+        project_id = f"build_{uuid.uuid4().hex[:12]}"
+        log.info("boilerplate_generation_started", project_id=project_id, prompt=prompt[:100])
+
+        system_instructions = (
+            "You are an expert full-stack AI engineer. The user wants to generate a complete boilerplate "
+            "project based on their prompt. You must generate all files needed for a fully functional skeleton. "
+            "Format your response ONLY as a single JSON object with the following schema:\n"
+            "{\n"
+            "  \"framework\": \"nextjs\" | \"vite\" | \"fastapi\" | \"express\",\n"
+            "  \"styling\": \"tailwind\" | \"css\",\n"
+            "  \"database\": \"supabase\" | \"sqlite\" | \"postgres\" | \"none\",\n"
+            "  \"auth\": \"clerk\" | \"supabase\" | \"none\",\n"
+            "  \"description\": \"short description\",\n"
+            "  \"files\": {\n"
+            "     \"relative/file/path.tsx\": \"file content string...\"\n"
+            "  }\n"
+            "}\n"
+            "Ensure that files like package.json, tailwind.config.js, next.config.js (or vite.config.ts), "
+            "tsconfig.json, and source pages/components are complete and syntactically correct. "
+            "Return ONLY the raw JSON. No markdown backticks, no markdown formatting, no explanations."
+        )
+
+        user_msg = f"Generate a project skeleton for: '{prompt}'"
+        
+        response = await llm_service.get_response(
+            user_message=user_msg,
+            inject_memory=False,
+            system_instructions=system_instructions
+        )
+
+        # Parse JSON
+        clean_json = response.strip()
+        if clean_json.startswith("```"):
+            clean_json = re.sub(r"^```(?:json)?\n", "", clean_json)
+            clean_json = re.sub(r"\n```$", "", clean_json)
+        clean_json = clean_json.strip()
+
+        try:
+            project_data = json.loads(clean_json)
+        except Exception as e:
+            log.error("boilerplate_json_parse_failed", raw_response=response, error=str(e))
+            raise RuntimeError(
+                "LLM did not return parseable project JSON; refusing to "
+                "scaffold from a mock template."
+            )
+
+        # Write files to workspace
+        build_dir = Path(settings.workspace_dir) / "builds" / project_id
+        build_dir.mkdir(parents=True, exist_ok=True)
+
+        files = project_data.get("files", {})
+        for filepath, content in files.items():
+            file_path = build_dir / filepath
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            file_path.write_text(content, encoding="utf-8")
+            log.info("wrote_boilerplate_file", filepath=filepath)
+
+        # Write metadata file for later reference
+        meta = {
+            "project_id": project_id,
+            "prompt": prompt,
+            "framework": project_data.get("framework", "nextjs"),
+            "styling": project_data.get("styling", "tailwind"),
+            "database": project_data.get("database", "none"),
+            "auth": project_data.get("auth", "none"),
+            "description": project_data.get("description", ""),
+            "created_at": datetime.utcnow().isoformat(),
+            "status": "generated",
+            "files": list(files.keys())
+        }
+        (build_dir / ".jarvis_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
+        return meta
+
+    async def get_project_files(self, project_id: str) -> Dict[str, Any]:
+        """Reads file tree and contents of a project."""
+        build_dir = Path(settings.workspace_dir) / "builds" / project_id
+        if not build_dir.exists():
+            raise FileNotFoundError("Project build not found")
+
+        file_tree = []
+        file_contents = {}
+
+        for p in build_dir.rglob("*"):
+            if p.is_file() and not p.name.startswith(".") and "node_modules" not in p.parts:
+                rel_path = str(p.relative_to(build_dir)).replace("\\", "/")
+                file_tree.append(rel_path)
+                try:
+                    file_contents[rel_path] = p.read_text(encoding="utf-8")
+                except Exception:
+                    file_contents[rel_path] = "[Binary file]"
+
+        # Read meta
+        meta = {}
+        meta_file = build_dir / ".jarvis_meta.json"
+        if meta_file.exists():
+            meta = json.loads(meta_file.read_text(encoding="utf-8"))
+
+        return {
+            "meta": meta,
+            "file_tree": file_tree,
+            "files": file_contents
+        }
+
+    async def save_project_file(self, project_id: str, filepath: str, content: str) -> bool:
+        """Saves manual edits from Monaco editor."""
+        build_dir = Path(settings.workspace_dir) / "builds" / project_id
+        if not build_dir.exists():
+            return False
+        
+        target_file = build_dir / filepath
+        # Guard path traversal
+        if not str(target_file.resolve()).startswith(str(build_dir.resolve())):
+            return False
+            
+        target_file.parent.mkdir(parents=True, exist_ok=True)
+        target_file.write_text(content, encoding="utf-8")
+        log.info("saved_project_file_edit", project_id=project_id, filepath=filepath)
+        return True
+
+    async def run_local_dev(self, project_id: str) -> Dict[str, Any]:
+        """Launches project's dev server in the background."""
+        build_dir = Path(settings.workspace_dir) / "builds" / project_id
+        if not build_dir.exists():
+            return {"success": False, "message": "Project build not found"}
+
+        # Check if already running
+        if project_id in RUNNING_SERVERS:
+            proc = RUNNING_SERVERS[project_id]
+            if proc.poll() is None:
+                return {
+                    "success": True,
+                    "port": 3000,
+                    "url": "http://localhost:3000",
+                    "pid": proc.pid,
+                    "message": "Server already running"
+                }
+
+        log.info("starting_local_dev_server", project_id=project_id)
+        
+        # Clean logs
+        SERVER_LOGS[project_id] = []
+
+        is_node = (build_dir / "package.json").exists()
+        is_python = (build_dir / "requirements.txt").exists() or (build_dir / "main.py").exists()
+
+        try:
+            if is_node:
+                # 1. Run npm install (non-blocking log capture)
+                log.info("running_npm_install", project_id=project_id)
+                SERVER_LOGS[project_id].append("[JARVIS] Running npm install...\n")
+                
+                install_proc = await asyncio.create_subprocess_exec(
+                    "npm", "install",
+                    cwd=str(build_dir),
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                    shell=True
+                )
+                stdout, stderr = await install_proc.communicate()
+                SERVER_LOGS[project_id].append(stdout.decode())
+                if install_proc.returncode != 0:
+                    SERVER_LOGS[project_id].append(stderr.decode())
+                    log.error("npm_install_failed", project_id=project_id)
+
+                # 2. Run npm run dev in background
+                SERVER_LOGS[project_id].append("[JARVIS] Starting dev server...\n")
+                
+                # We use subprocess.Popen so it persists in python background
+                proc = subprocess.Popen(
+                    "npm run dev",
+                    cwd=str(build_dir),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    shell=True
+                )
+            elif is_python:
+                # 1. Run pip install
+                SERVER_LOGS[project_id].append("[JARVIS] Running pip install...\n")
+                install_proc = await asyncio.create_subprocess_exec(
+                    "pip", "install", "-r", "requirements.txt",
+                    cwd=str(build_dir),
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                    shell=True
+                )
+                stdout, stderr = await install_proc.communicate()
+                SERVER_LOGS[project_id].append(stdout.decode())
+
+                # 2. Run uvicorn/python
+                SERVER_LOGS[project_id].append("[JARVIS] Starting python server...\n")
+                proc = subprocess.Popen(
+                    "uvicorn main:app --reload --port 8080",
+                    cwd=str(build_dir),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    shell=True
+                )
+            else:
+                return {"success": False, "message": "Unknown project structure, no package.json or main.py found"}
+
+            RUNNING_SERVERS[project_id] = proc
+
+            # Start reading logs in background thread
+            asyncio.create_task(self._stream_logs_task(project_id, proc))
+
+            port = 3000 if is_node else 8080
+            return {
+                "success": True,
+                "port": port,
+                "url": f"http://localhost:{port}",
+                "pid": proc.pid,
+                "message": "Dev server started successfully"
+            }
+        except Exception as e:
+            log.error("local_dev_server_failed", error=str(e))
+            return {"success": False, "message": f"Failed to start local dev: {str(e)}"}
+
+    async def _stream_logs_task(self, project_id: str, proc: subprocess.Popen) -> None:
+        """Reads stdout from running subprocess and stores in log buffer."""
+        loop = asyncio.get_running_loop()
+        while proc.poll() is None:
+            # Run blocking read in executor
+            line = await loop.run_in_executor(None, proc.stdout.readline)
+            if not line:
+                await asyncio.sleep(0.1)
+                continue
+            SERVER_LOGS.setdefault(project_id, []).append(line)
+            # Cap logs
+            if len(SERVER_LOGS[project_id]) > 1000:
+                SERVER_LOGS[project_id] = SERVER_LOGS[project_id][-1000:]
+        
+        # Read final logs
+        remaining = proc.stdout.read()
+        if remaining:
+            SERVER_LOGS.setdefault(project_id, []).append(remaining)
+
+    def get_server_logs(self, project_id: str) -> List[str]:
+        """Retrieve server stdout log history."""
+        return SERVER_LOGS.get(project_id, [])
+
+    async def push_to_github(self, project_id: str, repo_name: str) -> str:
+        """Creates GitHub repository and pushes project code."""
+        build_dir = Path(settings.workspace_dir) / "builds" / project_id
+        if not build_dir.exists():
+            raise FileNotFoundError("Project build not found")
+
+        if not self.github_token:
+            raise RuntimeError(
+                "GITHUB_TOKEN is not configured. Set it in the environment; "
+                "refusing to return a fake repository URL."
+            )
+
+        # Get github username
+        headers = {
+            "Authorization": f"Bearer {self.github_token}",
+            "Accept": "application/vnd.github+json"
+        }
+        
+        async with httpx.AsyncClient() as client:
+            user_resp = await client.get("https://api.github.com/user", headers=headers)
+            if user_resp.status_code != 200:
+                raise Exception(f"Failed to fetch GitHub user: {user_resp.text}")
+            username = user_resp.json()["login"]
+
+            # Create Repository
+            create_url = "https://api.github.com/user/repos"
+            payload = {
+                "name": repo_name,
+                "description": "Boilerplate generated by JARVIS OMEGA",
+                "private": False
+            }
+            create_resp = await client.post(create_url, headers=headers, json=payload)
+            if create_resp.status_code not in (200, 201):
+                # Check if repo already exists, if so reuse it
+                if "already exists" not in create_resp.text:
+                    raise Exception(f"GitHub repo creation failed: {create_resp.text}")
+
+        # Git init and push
+        def run_git(args: list[str]):
+            subprocess.run(["git"] + args, cwd=str(build_dir), check=True, capture_output=True, text=True)
+
+        try:
+            # Prepare .gitignore
+            gitignore = build_dir / ".gitignore"
+            if not gitignore.exists():
+                gitignore.write_text("node_modules/\n.env\n.env.local\n.next/\nbuild/\ndist/\n", encoding="utf-8")
+
+            run_git(["init"])
+            # Check branch name, default to main
+            try:
+                run_git(["checkout", "-b", "main"])
+            except Exception:
+                pass
+            run_git(["add", "."])
+            run_git(["commit", "-m", "Initial commit from J.A.R.V.I.S. OMEGA"])
+            
+            # Remove remote if exists
+            try:
+                run_git(["remote", "remove", "origin"])
+            except Exception:
+                pass
+
+            remote_url = f"https://{self.github_token}@github.com/{username}/{repo_name}.git"
+            run_git(["remote", "add", "origin", remote_url])
+            run_git(["push", "-u", "origin", "main", "--force"])
+
+            log.info("github_push_completed", repo=f"github.com/{username}/{repo_name}")
+            return f"https://github.com/{username}/{repo_name}"
+        except Exception as e:
+            log.error("git_push_failed", error=str(e))
+            raise
+
+    async def deploy_to_vercel(self, project_id: str, repo_url: str) -> str:
+        """Deploys the repository to Vercel via Vercel Project API."""
+        if not self.vercel_token:
+            raise RuntimeError(
+                "VERCEL_TOKEN is not configured. Set it in the environment; "
+                "refusing to return a fake deployment URL."
+            )
+
+        # Extract owner/repo
+        match = re.search(r"github\.com/([^/]+)/([^/.]+)", repo_url)
+        if not match:
+            raise Exception("Invalid GitHub repository URL")
+        owner, repo = match.group(1), match.group(2)
+
+        headers = {"Authorization": f"Bearer {self.vercel_token}"}
+        
+        # Add team parameter if available
+        params = {}
+        if self.vercel_team_id:
+            params["teamId"] = self.vercel_team_id
+
+        # 1. Create project linked to Github repo
+        async with httpx.AsyncClient() as client:
+            proj_url = "https://api.vercel.com/v9/projects"
+            proj_payload = {
+                "name": repo.lower(),
+                "framework": "nextjs",
+                "gitRepository": {
+                    "type": "github",
+                    "repo": f"{owner}/{repo}"
+                }
+            }
+            proj_resp = await client.post(proj_url, headers=headers, params=params, json=proj_payload)
+            if proj_resp.status_code not in (200, 201) and "already_exists" not in proj_resp.text:
+                raise Exception(f"Failed to link project on Vercel: {proj_resp.text}")
+
+            # 2. Trigger deployment
+            deploy_url = "https://api.vercel.com/v13/deployments"
+            deploy_payload = {
+                "name": repo.lower(),
+                "gitSource": {
+                    "type": "github",
+                    "ref": "main",
+                    "repoId": proj_resp.json().get("link", {}).get("repoId") or 0
+                }
+            }
+            deploy_resp = await client.post(deploy_url, headers=headers, params=params, json=deploy_payload)
+            if deploy_resp.status_code not in (200, 201):
+                raise Exception(f"Failed to trigger Vercel deployment: {deploy_resp.text}")
+
+            deploy_data = deploy_resp.json()
+            deploy_id = deploy_data["id"]
+            
+            # 3. Monitor
+            log.info("vercel_deployment_triggered", deployment_id=deploy_id)
+            result = await self._poll_vercel_deployment(deploy_id)
+            if result["status"] == "READY":
+                return result["url"]
+            else:
+                raise Exception(
+                    f"Vercel deployment {deploy_id} failed with status "
+                    f"'{result['status']}'. Automatic build-error repair is not "
+                    "available in this build — check the Vercel dashboard build "
+                    "logs, fix the errors, and redeploy."
+                )
+
+    async def _poll_vercel_deployment(self, deployment_id: str) -> Dict[str, Any]:
+        """Polls Vercel deployment status."""
+        headers = {"Authorization": f"Bearer {self.vercel_token}"}
+        url = f"https://api.vercel.com/v13/deployments/{deployment_id}"
+        
+        # Poll for maximum 5 minutes
+        for _ in range(30):
+            try:
+                async with httpx.AsyncClient() as client:
+                    resp = await client.get(url, headers=headers)
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        status = data.get("status")
+                        if status in ("READY", "ERROR", "CANCELED"):
+                            return {
+                                "status": status,
+                                "url": f"https://{data.get('url')}" if data.get('url') else None,
+                            }
+            except Exception as e:
+                log.error("vercel_poll_error", error=str(e))
+            await asyncio.sleep(10)
+            
+        return {"status": "TIMEOUT", "url": None}
+
+boilerplate_service = BoilerplateService()

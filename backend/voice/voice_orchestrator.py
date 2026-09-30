@@ -1,1 +1,49 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KZnJvbSB0eXBpbmcgaW1wb3J0IE9wdGlvbmFsLCBDYWxsYWJsZQoKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCmZyb20gYmFja2VuZC5zZXJ2aWNlcy50dHNfc2VydmljZSBpbXBvcnQgdHRzX3NlcnZpY2UKCmxvZyA9IGdldF9sb2dnZXIoInZvaWNlX29yY2hlc3RyYXRvciIpCgoKY2xhc3MgVm9pY2VPcmNoZXN0cmF0b3I6CiAgICAiIiIKICAgIE1hbmFnZXMgdGhlIGZ1bGwgdm9pY2UgcGlwZWxpbmU6CiAgICB3YWtlIHdvcmQgZGV0ZWN0aW9uIC0+IFNUVCAtPiBMTE0gLT4gVFRTIC0+IHBsYXliYWNrCiAgICAiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZikgLT4gTm9uZToKICAgICAgICBzZWxmLl9zdHRfY2FsbGJhY2s6IE9wdGlvbmFsW0NhbGxhYmxlXSA9IE5vbmUKICAgICAgICBzZWxmLl90dHNfZW5hYmxlZDogYm9vbCA9IFRydWUKCiAgICBkZWYgc2V0X3N0dF9jYWxsYmFjayhzZWxmLCBjYWxsYmFjazogQ2FsbGFibGUpIC0+IE5vbmU6CiAgICAgICAgc2VsZi5fc3R0X2NhbGxiYWNrID0gY2FsbGJhY2sKCiAgICBhc3luYyBkZWYgcHJvY2Vzc192b2ljZV9pbnB1dChzZWxmLCBhdWRpb19ieXRlczogYnl0ZXMsIHNhbXBsZV9yYXRlOiBpbnQgPSAxNjAwMCkgLT4gT3B0aW9uYWxbc3RyXToKICAgICAgICBpZiBub3Qgc2VsZi5fc3R0X2NhbGxiYWNrOgogICAgICAgICAgICBsb2cud2FybmluZygibm9fc3R0X2NhbGxiYWNrX3JlZ2lzdGVyZWQiKQogICAgICAgICAgICByZXR1cm4gTm9uZQogICAgICAgIHRyeToKICAgICAgICAgICAgdGV4dCA9IGF3YWl0IHNlbGYuX3N0dF9jYWxsYmFjayhhdWRpb19ieXRlcywgc2FtcGxlX3JhdGUpCiAgICAgICAgICAgIGxvZy5pbmZvKCJ2b2ljZV9pbnB1dF90cmFuc2NyaWJlZCIsIHRleHRfbGVuPWxlbih0ZXh0KSBpZiB0ZXh0IGVsc2UgMCkKICAgICAgICAgICAgcmV0dXJuIHRleHQKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZy5lcnJvcigidm9pY2VfaW5wdXRfZmFpbGVkIiwgZXJyb3I9c3RyKGUpKQogICAgICAgICAgICByZXR1cm4gTm9uZQoKICAgIGFzeW5jIGRlZiBzcGVhayhzZWxmLCB0ZXh0OiBzdHIsIHZvaWNlOiBzdHIgPSAiamFydmlzIikgLT4gYnl0ZXM6CiAgICAgICAgaWYgbm90IHNlbGYuX3R0c19lbmFibGVkOgogICAgICAgICAgICByZXR1cm4gYiIiCiAgICAgICAgcmV0dXJuIGF3YWl0IHR0c19zZXJ2aWNlLmdlbmVyYXRlX3NwZWVjaCh0ZXh0LCB2b2ljZT12b2ljZSkKCiAgICBkZWYgZW5hYmxlX3R0cyhzZWxmKSAtPiBOb25lOgogICAgICAgIHNlbGYuX3R0c19lbmFibGVkID0gVHJ1ZQoKICAgIGRlZiBkaXNhYmxlX3R0cyhzZWxmKSAtPiBOb25lOgogICAgICAgIHNlbGYuX3R0c19lbmFibGVkID0gRmFsc2UKCgp2b2ljZV9vcmNoZXN0cmF0b3IgPSBWb2ljZU9yY2hlc3RyYXRvcigpCg==
+from __future__ import annotations
+
+import asyncio
+from typing import Optional, Callable
+
+from shared.logger import get_logger
+from backend.services.tts_service import tts_service
+
+log = get_logger("voice_orchestrator")
+
+
+class VoiceOrchestrator:
+    """
+    Manages the full voice pipeline:
+    wake word detection -> STT -> LLM -> TTS -> playback
+    """
+
+    def __init__(self) -> None:
+        self._stt_callback: Optional[Callable] = None
+        self._tts_enabled: bool = True
+
+    def set_stt_callback(self, callback: Callable) -> None:
+        self._stt_callback = callback
+
+    async def process_voice_input(self, audio_bytes: bytes, sample_rate: int = 16000) -> Optional[str]:
+        if not self._stt_callback:
+            log.warning("no_stt_callback_registered")
+            return None
+        try:
+            text = await self._stt_callback(audio_bytes, sample_rate)
+            log.info("voice_input_transcribed", text_len=len(text) if text else 0)
+            return text
+        except Exception as e:
+            log.error("voice_input_failed", error=str(e))
+            return None
+
+    async def speak(self, text: str, voice: str = "jarvis") -> bytes:
+        if not self._tts_enabled:
+            return b""
+        return await tts_service.generate_speech(text, voice=voice)
+
+    def enable_tts(self) -> None:
+        self._tts_enabled = True
+
+    def disable_tts(self) -> None:
+        self._tts_enabled = False
+
+
+voice_orchestrator = VoiceOrchestrator()

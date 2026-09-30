@@ -1,1 +1,98 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFzeW5jaW8KZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUKZnJvbSB0eXBpbmcgaW1wb3J0IE9wdGlvbmFsLCBEaWN0LCBBbnkKCmZyb20gc2hhcmVkLmxvZ2dlciBpbXBvcnQgZ2V0X2xvZ2dlcgpmcm9tIGJhY2tlbmQuc2VydmljZXMubGxtX3NlcnZpY2UgaW1wb3J0IGxsbV9zZXJ2aWNlCmZyb20gYmFja2VuZC5zZXJ2aWNlcy53ZWJfc2VhcmNoX3NlcnZpY2UgaW1wb3J0IHdlYl9zZWFyY2hfc2VydmljZQpmcm9tIGJhY2tlbmQuc2NoZWR1bGVyIGltcG9ydCBzY2hlZHVsZXIKCmxvZyA9IGdldF9sb2dnZXIoIm5pZ2h0X3NoaWZ0IikKClRPUElDUyA9IFsKICAgICJsYXRlc3QgQUkgYW5kIG1hY2hpbmUgbGVhcm5pbmcgYnJlYWt0aHJvdWdocyB0aGlzIHdlZWsiLAogICAgIm5ldyBzb2Z0d2FyZSBlbmdpbmVlcmluZyB0b29scyBhbmQgZnJhbWV3b3JrcyIsCiAgICAiY3liZXJzZWN1cml0eSB0aHJlYXRzIGFuZCB2dWxuZXJhYmlsaXRpZXMiLAogICAgImNsb3VkIGNvbXB1dGluZyBhZHZhbmNlbWVudHMgKEFXUy9HQ1AvQXp1cmUpIiwKICAgICJvcGVuIHNvdXJjZSBwcm9qZWN0IHJlbGVhc2VzIGFuZCB1cGRhdGVzIiwKXQoKCmNsYXNzIE5pZ2h0U2hpZnQ6CiAgICAiIiIKICAgIEF1dG9ub21vdXMgUmVzZWFyY2hlciAoTmlnaHQgU2hpZnQpLgogICAgUnVucyBzY2hlZHVsZWQgZGVlcC1kaXZlcyBpbnRvIHRlY2ggbmV3cyBhbmQgZG9jdW1lbnRhdGlvbiwKICAgIGNvbXBpbGluZyBjb25jaXNlIGRhaWx5IGJyaWVmaW5ncyBmb3IgU2lyLgogICAgIiIiCgogICAgZGVmIF9faW5pdF9fKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgc2VsZi5fYnJpZWZpbmdfY2FjaGU6IERpY3Rbc3RyLCBBbnldID0ge30KICAgICAgICBzZWxmLl9sYXN0X2JyaWVmaW5nOiBPcHRpb25hbFtzdHJdID0gTm9uZQoKICAgIGFzeW5jIGRlZiByZWdpc3Rlcl9zY2hlZHVsZXMoc2VsZikgLT4gTm9uZToKICAgICAgICBzY2hlZHVsZXIuc2NoZWR1bGVfY3JvbigKICAgICAgICAgICAgIm5pZ2h0X3NoaWZ0X2RhaWx5IiwKICAgICAgICAgICAgc2VsZi5nZW5lcmF0ZV9kYWlseV9icmllZmluZywKICAgICAgICAgICAgIjAgNiAqICogKiIsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uPSJHZW5lcmF0ZSBkYWlseSB0ZWNoIGJyaWVmaW5nIiwKICAgICAgICApCiAgICAgICAgc2NoZWR1bGVyLnNjaGVkdWxlX2ludGVydmFsKAogICAgICAgICAgICAibmlnaHRfc2hpZnRfaG91cmx5IiwKICAgICAgICAgICAgc2VsZi5faG91cmx5X3NjYW4sCiAgICAgICAgICAgIGhvdXJzPTEsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uPSJIb3VybHkgdGVjaCBuZXdzIHNjYW4iLAogICAgICAgICkKICAgICAgICBsb2cuaW5mbygibmlnaHRfc2hpZnRfc2NoZWR1bGVzX3JlZ2lzdGVyZWQiKQoKICAgIGFzeW5jIGRlZiBfaG91cmx5X3NjYW4oc2VsZikgLT4gTm9uZToKICAgICAgICBsb2cuaW5mbygibmlnaHRfc2hpZnRfaG91cmx5X3NjYW4iKQogICAgICAgIGZvciB0b3BpYyBpbiBUT1BJQ1M6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIHJlc3VsdHMgPSBhd2FpdCB3ZWJfc2VhcmNoX3NlcnZpY2Uuc2VhcmNoKHRvcGljLCBtYXhfcmVzdWx0cz0zKQogICAgICAgICAgICAgICAgaWYgcmVzdWx0czoKICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygibmlnaHRfc2hpZnRfZmluZGluZ3MiLCB0b3BpYz10b3BpY1s6NDBdLCByZXN1bHRzPWxlbihyZXN1bHRzKSkKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgbG9nLmVycm9yKCJuaWdodF9zaGlmdF9zY2FuX2Vycm9yIiwgdG9waWM9dG9waWNbOjQwXSwgZXJyb3I9c3RyKGUpKQogICAgICAgICAgICBhd2FpdCBhc3luY2lvLnNsZWVwKDUpCgogICAgYXN5bmMgZGVmIGdlbmVyYXRlX2RhaWx5X2JyaWVmaW5nKHNlbGYpIC0+IHN0cjoKICAgICAgICBsb2cuaW5mbygibmlnaHRfc2hpZnRfZ2VuZXJhdGluZ19icmllZmluZyIpCiAgICAgICAgYWxsX2ZpbmRpbmdzID0gW10KICAgICAgICBmb3IgdG9waWMgaW4gVE9QSUNTOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICByZXN1bHRzID0gYXdhaXQgd2ViX3NlYXJjaF9zZXJ2aWNlLnNlYXJjaF9hbmRfc3VtbWFyaXplKHRvcGljKQogICAgICAgICAgICAgICAgaWYgcmVzdWx0czoKICAgICAgICAgICAgICAgICAgICBhbGxfZmluZGluZ3MuYXBwZW5kKGYiPT09IHt0b3BpY30gPT09XG57cmVzdWx0c30iKQogICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgICAgICBsb2cuZXJyb3IoImJyaWVmaW5nX3NlYXJjaF9lcnJvciIsIHRvcGljPXRvcGljWzo0MF0sIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgYXdhaXQgYXN5bmNpby5zbGVlcCgzKQoKICAgICAgICBjb21iaW5lZCA9ICJcblxuIi5qb2luKGFsbF9maW5kaW5ncykgaWYgYWxsX2ZpbmRpbmdzIGVsc2UgIk5vIHNpZ25pZmljYW50IGZpbmRpbmdzIHRvZGF5LiIKCiAgICAgICAgYnJpZWYgPSBhd2FpdCBsbG1fc2VydmljZS5nZXRfcmVzcG9uc2UoCiAgICAgICAgICAgIHVzZXJfbWVzc2FnZT0oCiAgICAgICAgICAgICAgICAiQ29tcGlsZSBhIGNvbmNpc2UgZGFpbHkgYnJpZWZpbmcgZnJvbSB0aGUgc2VhcmNoIHJlc3VsdHMgYmVsb3cuICIKICAgICAgICAgICAgICAgICJGb3JtYXQ6IEV4ZWN1dGl2ZSBTdW1tYXJ5ICgzIGJ1bGxldHMpLCBLZXkgRGV2ZWxvcG1lbnRzICg1IGl0ZW1zKSwgIgogICAgICAgICAgICAgICAgIkFjdGlvbiBJdGVtcyAod2hhdCBTaXIgc2hvdWxkIGtub3cpLiBCZSBwcm9mZXNzaW9uYWwgYW5kIGRpcmVjdC4iCiAgICAgICAgICAgICAgICBmIlxuXG5TZWFyY2ggUmVzdWx0czpcbntjb21iaW5lZH0iCiAgICAgICAgICAgICksCiAgICAgICAgICAgIGluamVjdF9tZW1vcnk9RmFsc2UsCiAgICAgICAgICAgIHN5c3RlbV9pbnN0cnVjdGlvbnM9KAogICAgICAgICAgICAgICAgIllvdSBhcmUgSkFSVklTLiBHZW5lcmF0ZSBhIGNyaXNwLCBwcm9mZXNzaW9uYWwgZGFpbHkgdGVjaCBicmllZmluZyAiCiAgICAgICAgICAgICAgICAiZm9yIFNpci4gTm8gZmx1ZmYsIG5vIHJvbGVwbGF5LiBKdXN0IHRoZSBmYWN0cy4iCiAgICAgICAgICAgICksCiAgICAgICAgKQoKICAgICAgICBzZWxmLl9sYXN0X2JyaWVmaW5nID0gYnJpZWYKICAgICAgICBzZWxmLl9icmllZmluZ19jYWNoZVtkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKV0gPSBicmllZgoKICAgICAgICBsb2cuaW5mbygibmlnaHRfc2hpZnRfYnJpZWZpbmdfZ2VuZXJhdGVkIiwgbGVuZ3RoPWxlbihicmllZikpCiAgICAgICAgcmV0dXJuIGJyaWVmCgogICAgZGVmIGdldF9sYXN0X2JyaWVmaW5nKHNlbGYpIC0+IE9wdGlvbmFsW3N0cl06CiAgICAgICAgcmV0dXJuIHNlbGYuX2xhc3RfYnJpZWZpbmcKCgpuaWdodF9zaGlmdCA9IE5pZ2h0U2hpZnQoKQo=
+from __future__ import annotations
+
+import asyncio
+from datetime import datetime
+from typing import Optional, Dict, Any
+
+from shared.logger import get_logger
+from backend.services.llm_service import llm_service
+from backend.services.web_search_service import web_search_service
+from backend.scheduler import scheduler
+
+log = get_logger("night_shift")
+
+TOPICS = [
+    "latest AI and machine learning breakthroughs this week",
+    "new software engineering tools and frameworks",
+    "cybersecurity threats and vulnerabilities",
+    "cloud computing advancements (AWS/GCP/Azure)",
+    "open source project releases and updates",
+]
+
+
+class NightShift:
+    """
+    Autonomous Researcher (Night Shift).
+    Runs scheduled deep-dives into tech news and documentation,
+    compiling concise daily briefings for Sir.
+    """
+
+    def __init__(self) -> None:
+        self._briefing_cache: Dict[str, Any] = {}
+        self._last_briefing: Optional[str] = None
+
+    async def register_schedules(self) -> None:
+        scheduler.schedule_cron(
+            "night_shift_daily",
+            self.generate_daily_briefing,
+            "0 6 * * *",
+            description="Generate daily tech briefing",
+        )
+        scheduler.schedule_interval(
+            "night_shift_hourly",
+            self._hourly_scan,
+            hours=1,
+            description="Hourly tech news scan",
+        )
+        log.info("night_shift_schedules_registered")
+
+    async def _hourly_scan(self) -> None:
+        log.info("night_shift_hourly_scan")
+        for topic in TOPICS:
+            try:
+                results = await web_search_service.search(topic, max_results=3)
+                if results:
+                    log.info("night_shift_findings", topic=topic[:40], results=len(results))
+            except Exception as e:
+                log.error("night_shift_scan_error", topic=topic[:40], error=str(e))
+            await asyncio.sleep(5)
+
+    async def generate_daily_briefing(self) -> str:
+        log.info("night_shift_generating_briefing")
+        all_findings = []
+        for topic in TOPICS:
+            try:
+                results = await web_search_service.search_and_summarize(topic)
+                if results:
+                    all_findings.append(f"=== {topic} ===\n{results}")
+            except Exception as e:
+                log.error("briefing_search_error", topic=topic[:40], error=str(e))
+            await asyncio.sleep(3)
+
+        combined = "\n\n".join(all_findings) if all_findings else "No significant findings today."
+
+        brief = await llm_service.get_response(
+            user_message=(
+                "Compile a concise daily briefing from the search results below. "
+                "Format: Executive Summary (3 bullets), Key Developments (5 items), "
+                "Action Items (what Sir should know). Be professional and direct."
+                f"\n\nSearch Results:\n{combined}"
+            ),
+            inject_memory=False,
+            system_instructions=(
+                "You are JARVIS. Generate a crisp, professional daily tech briefing "
+                "for Sir. No fluff, no roleplay. Just the facts."
+            ),
+        )
+
+        self._last_briefing = brief
+        self._briefing_cache[datetime.utcnow().isoformat()] = brief
+
+        log.info("night_shift_briefing_generated", length=len(brief))
+        return brief
+
+    def get_last_briefing(self) -> Optional[str]:
+        return self._last_briefing
+
+
+night_shift = NightShift()

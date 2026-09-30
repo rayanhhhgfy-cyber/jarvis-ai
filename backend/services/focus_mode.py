@@ -1,1 +1,426 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIEpBUlZJUyBPTUVHQSDigJQgRm9jdXMgTW9kZSBTZXJ2aWNlCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIiIiCkZvY3VzIE1vZGUgU2VydmljZS4KS2VlcHMgdHJhY2sgb2YgRE5EIHN0YXR1cywgcXVldWVzIGluY29taW5nIG1lc3NhZ2VzLApnZW5lcmF0ZXMgY29udmVyc2F0aW9uYWwgYXV0by1yZXBsaWVzIHZpYSBMTE0sIGFuZApzdW1tYXJpemVzIG1pc3NlZCBtZXNzYWdlcyB3aGVuIEZvY3VzIE1vZGUgaXMgZGVhY3RpdmF0ZWQuCgpTdXBwb3J0cyBBcmFiaWMgYXV0by1yZXBseSBvbiBJbnN0YWdyYW0gRE1zIGR1cmluZyBmb2N1cyBtb2RlLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBhc3luY2lvCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lZGVsdGEsIHRpbWV6b25lCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsLCBTZXQKCmZyb20gYmFja2VuZC5jb25maWcgaW1wb3J0IHNldHRpbmdzCmZyb20gYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZSBpbXBvcnQgbGxtX3NlcnZpY2UKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJmb2N1c19tb2RlIikKCiMgVXJnZW5jeSBrZXl3b3JkIHNldHMgKEFyYWJpYyArIEVuZ2xpc2gpCkFSQUJJQ19VUkdFTlQgPSB7Iti52KfYrNmEIiwgIti32KfYsdimIiwgItmF2YfZhSIsICLYttix2YjYsdmKIiwgItiu2LfYsSIsICLZhdiz2KfYudiv2KkiLCAi2KfZhtiq2KjYp9mHIiwgItin2LPYqti52KzYp9mEIiwgItit2LHYrCIsICLZgdmI2LHZiiIsICLYrdix2YrZgiIsICLYs9ix2YLYqSIsICLYpdi12KfYqNipIiwgItmF2LPYqti52KzZhCIsICIgdXJnZW50bHkiLCAiaGVscCJ9CkVOR0xJU0hfVVJHRU5UID0geyJ1cmdlbnQiLCAiZW1lcmdlbmN5IiwgImltcG9ydGFudCIsICJjcml0aWNhbCIsICJoZWxwIiwgImFzYXAiLCAiaW1tZWRpYXRlIiwgImF0dGVudGlvbiIsICJkYW5nZXIiLCAiZmlyZSIsICJyb2JiZXJ5IiwgImluanVyeSIsICJhY2NpZGVudCIsICI5MTEiLCAiZW1lcmdlbmN5In0KCgpjbGFzcyBGb2N1c01vZGVTZXJ2aWNlOgogICAgZGVmIF9faW5pdF9fKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgc2VsZi5fYWN0aXZlOiBib29sID0gRmFsc2UKICAgICAgICBzZWxmLl9mb2N1c19ub3RlOiBzdHIgPSAiIgogICAgICAgIHNlbGYuX2V4cGlyZXNfYXQ6IE9wdGlvbmFsW2RhdGV0aW1lXSA9IE5vbmUKICAgICAgICBzZWxmLl9hdXRvX3JlcGx5X2VuYWJsZWQ6IGJvb2wgPSBUcnVlCiAgICAgICAgc2VsZi5fbGFuZ3VhZ2U6IHN0ciA9ICJhcmFiaWMiCiAgICAgICAgc2VsZi5fcXVldWVkX21lc3NhZ2VzOiBMaXN0W0RpY3Rbc3RyLCBBbnldXSA9IFtdCiAgICAgICAgc2VsZi5fZXhjbHVkZWRfY29udGFjdHM6IFNldFtzdHJdID0gc2V0KCkKICAgICAgICBzZWxmLl9pbnN0YWdyYW1fcG9sbF90YXNrOiBPcHRpb25hbFthc3luY2lvLlRhc2tdID0gTm9uZQogICAgICAgICMgdGhyZWFkX2lkIC0+IHsidXNlcl9pZHMiOiBbLi4uXSwgInVzZXJzIjogWy4uLl19CiAgICAgICAgc2VsZi5fcmVwbGllZF90aHJlYWRzOiBEaWN0W3N0ciwgRGljdFtzdHIsIEFueV1dID0ge30KICAgICAgICBzZWxmLl90aHJlYWRfcmVwbHlfY291bnQ6IERpY3Rbc3RyLCBpbnRdID0ge30KCiAgICBkZWYgYWN0aXZhdGUoc2VsZiwgbm90ZTogc3RyLCBkdXJhdGlvbl9taW51dGVzOiBPcHRpb25hbFtpbnRdID0gTm9uZSwgYXV0b19yZXBseTogYm9vbCA9IFRydWUsIGxhbmd1YWdlOiBzdHIgPSAiYXJhYmljIikgLT4gTm9uZToKICAgICAgICAiIiJBY3RpdmF0ZSBGb2N1cyBNb2RlIHdpdGggYSBjdXN0b20gbm90ZSwgb3B0aW9uYWwgZHVyYXRpb24sIGFuZCBsYW5ndWFnZS4iIiIKICAgICAgICBzZWxmLl9hY3RpdmUgPSBUcnVlCiAgICAgICAgc2VsZi5fZm9jdXNfbm90ZSA9IG5vdGUKICAgICAgICBzZWxmLl9hdXRvX3JlcGx5X2VuYWJsZWQgPSBhdXRvX3JlcGx5CiAgICAgICAgc2VsZi5fbGFuZ3VhZ2UgPSBsYW5ndWFnZSBpZiBsYW5ndWFnZSBpbiAoImFyYWJpYyIsICJlbmdsaXNoIikgZWxzZSAiYXJhYmljIgogICAgICAgIHNlbGYuX3F1ZXVlZF9tZXNzYWdlcyA9IFtdCgogICAgICAgIGlmIGR1cmF0aW9uX21pbnV0ZXM6CiAgICAgICAgICAgIHNlbGYuX2V4cGlyZXNfYXQgPSBkYXRldGltZS5ub3codGltZXpvbmUudXRjKSArIHRpbWVkZWx0YShtaW51dGVzPWR1cmF0aW9uX21pbnV0ZXMpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgc2VsZi5fZXhwaXJlc19hdCA9IE5vbmUKCiAgICAgICAgbG9nLmluZm8oImZvY3VzX21vZGVfYWN0aXZhdGVkIiwgbm90ZT1ub3RlLCBkdXJhdGlvbj1kdXJhdGlvbl9taW51dGVzLCBhdXRvX3JlcGx5PWF1dG9fcmVwbHksIGxhbmd1YWdlPXNlbGYuX2xhbmd1YWdlKQoKICAgICAgICAjIEluc3RhZ3JhbSBETSBwb2xsaW5nIGlzIG9wdC1pbiAoVG9TIHJpc2sgdmlhIHByaXZhdGUgQVBJKSBhbmQgb2ZmIGJ5IGRlZmF1bHQuCiAgICAgICAgaWYgYXV0b19yZXBseSBhbmQgZ2V0YXR0cihzZXR0aW5ncywgImZvY3VzX21vZGVfaW5zdGFncmFtX2VuYWJsZWQiLCBGYWxzZSk6CiAgICAgICAgICAgIHNlbGYuX3JlcXVpcmVfaW5zdGFncmFtX3NlcnZpY2UoKSAgIyBmYWlsIGxvdWRseSBpZiB1bmF2YWlsYWJsZQogICAgICAgICAgICBzZWxmLl9zdGFydF9pbnN0YWdyYW1fcG9sbGluZygpCiAgICAgICAgZWxpZiBhdXRvX3JlcGx5OgogICAgICAgICAgICBsb2cuaW5mbygiZm9jdXNfaW5zdGFncmFtX3BvbGxpbmdfZGlzYWJsZWQiLAogICAgICAgICAgICAgICAgICAgICBoaW50PSJTZXQgRk9DVVNfTU9ERV9JTlNUQUdSQU1fRU5BQkxFRD10cnVlIHRvIGVuYWJsZSIpCgogICAgQHN0YXRpY21ldGhvZAogICAgZGVmIF9yZXF1aXJlX2luc3RhZ3JhbV9zZXJ2aWNlKCk6CiAgICAgICAgIiIiSW1wb3J0IHRoZSBJbnN0YWdyYW0gRE0gc2VydmljZSBvciByYWlzZSBhIGNsZWFyIGVycm9yLgoKICAgICAgICBUaGUgaW5zdGFncmFtX3NlcnZpY2UgbW9kdWxlIHdhcyBub3QgY2FycmllZCBvdmVyIGludG8gdGhpcyBidWlsZCwKICAgICAgICBzbyBJbnN0YWdyYW0gYXV0by1yZXBseSBjYW4ndCBydW4uIEZhaWwgbG91ZGx5IGluc3RlYWQgb2YgY3Jhc2hpbmcKICAgICAgICB3aXRoIGFuIEltcG9ydEVycm9yIGRlZXAgaW4gYSBiYWNrZ3JvdW5kIHRhc2suCiAgICAgICAgIiIiCiAgICAgICAgdHJ5OgogICAgICAgICAgICBmcm9tIGJhY2tlbmQuc2VydmljZXMuaW5zdGFncmFtX3NlcnZpY2UgaW1wb3J0IGluc3RhZ3JhbV9zZXJ2aWNlCiAgICAgICAgZXhjZXB0IEltcG9ydEVycm9yIGFzIGU6CiAgICAgICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigKICAgICAgICAgICAgICAgICJJbnN0YWdyYW0gYXV0by1yZXBseSBpcyBlbmFibGVkIChGT0NVU19NT0RFX0lOU1RBR1JBTV9FTkFCTEVEPXRydWUpICIKICAgICAgICAgICAgICAgICJidXQgYmFja2VuZC5zZXJ2aWNlcy5pbnN0YWdyYW1fc2VydmljZSBpcyBub3QgYXZhaWxhYmxlIGluIHRoaXMgIgogICAgICAgICAgICAgICAgImJ1aWxkLiBEaXNhYmxlIHRoZSBmbGFnIG9yIGFkZCB0aGUgSW5zdGFncmFtIERNIHNlcnZpY2UuIgogICAgICAgICAgICApIGZyb20gZQogICAgICAgIHJldHVybiBpbnN0YWdyYW1fc2VydmljZQoKICAgIGRlZiBkZWFjdGl2YXRlKHNlbGYpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIkRlYWN0aXZhdGUgRm9jdXMgTW9kZSBhbmQgcmV0dXJuIGEgc3VtbWFyeSBvZiBxdWV1ZWQgbWVzc2FnZXMuIiIiCiAgICAgICAgaWYgbm90IHNlbGYuX2FjdGl2ZToKICAgICAgICAgICAgcmV0dXJuIHsiYWN0aXZlIjogRmFsc2UsICJzdW1tYXJ5IjogIkZvY3VzIE1vZGUgd2FzIG5vdCBhY3RpdmUuIn0KCiAgICAgICAgc2VsZi5fc3RvcF9pbnN0YWdyYW1fcG9sbGluZygpCiAgICAgICAgc2VsZi5fYWN0aXZlID0gRmFsc2UKICAgICAgICBzZWxmLl9leHBpcmVzX2F0ID0gTm9uZQogICAgICAgIHF1ZXVlZCA9IGxpc3Qoc2VsZi5fcXVldWVkX21lc3NhZ2VzKQogICAgICAgIHNlbGYuX3F1ZXVlZF9tZXNzYWdlcyA9IFtdCgogICAgICAgICMgTm90aWZ5IGFsbCB0aHJlYWRzIHRoYXQgcmVjZWl2ZWQgYXV0by1yZXBsaWVzIHRoYXQgU2lyIGlzIGJhY2sKICAgICAgICBzZWxmLl9ub3RpZnlfcmVwbGllZF90aHJlYWRzKCkKCiAgICAgICAgbG9nLmluZm8oImZvY3VzX21vZGVfZGVhY3RpdmF0ZWQiLCBxdWV1ZWRfY291bnQ9bGVuKHF1ZXVlZCkpCgogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICJhY3RpdmUiOiBGYWxzZSwKICAgICAgICAgICAgInF1ZXVlZF9jb3VudCI6IGxlbihxdWV1ZWQpLAogICAgICAgICAgICAicXVldWVkX21lc3NhZ2VzIjogcXVldWVkLAogICAgICAgIH0KCiAgICBkZWYgX25vdGlmeV9yZXBsaWVkX3RocmVhZHMoc2VsZikgLT4gTm9uZToKICAgICAgICAiIiJTZW5kICdTaXIgaXMgYmFjaycgdGV4dCArIHZvaWNlIG1lc3NhZ2UgdG8gZXZlcnkgdGhyZWFkIHRoYXQgZ290IGF1dG8tcmVwbGllZC4iIiIKICAgICAgICBpZiBub3QgZ2V0YXR0cihzZXR0aW5ncywgImZvY3VzX21vZGVfaW5zdGFncmFtX2VuYWJsZWQiLCBGYWxzZSk6CiAgICAgICAgICAgIHJldHVybgogICAgICAgIGluc3RhZ3JhbV9zZXJ2aWNlID0gc2VsZi5fcmVxdWlyZV9pbnN0YWdyYW1fc2VydmljZSgpCiAgICAgICAgaWYgbm90IGluc3RhZ3JhbV9zZXJ2aWNlLmF2YWlsYWJsZToKICAgICAgICAgICAgcmV0dXJuCiAgICAgICAgaWYgbm90IHNlbGYuX3JlcGxpZWRfdGhyZWFkczoKICAgICAgICAgICAgcmV0dXJuCgogICAgICAgIGxvZy5pbmZvKCJmb2N1c19ub3RpZnlpbmdfcmVwbGllZF90aHJlYWRzIiwgY291bnQ9bGVuKHNlbGYuX3JlcGxpZWRfdGhyZWFkcykpCiAgICAgICAgZm9yIHRpZCwgaW5mbyBpbiBzZWxmLl9yZXBsaWVkX3RocmVhZHMuaXRlbXMoKToKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgdXNlcl9pZHMgPSBpbmZvLmdldCgidXNlcl9pZHMiLCBbXSkKICAgICAgICAgICAgICAgIHVzZXJzID0gaW5mby5nZXQoInVzZXJzIiwgW10pCiAgICAgICAgICAgICAgICB0YXJnZXRfaWQgPSAodXNlcl9pZHMgb3IgW05vbmVdKVswXSBvciAodXNlcnMgb3IgW05vbmVdKVswXQogICAgICAgICAgICAgICAgaWYgbm90IHRhcmdldF9pZDoKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgIGlmIHNlbGYuX2xhbmd1YWdlID09ICJhcmFiaWMiOgogICAgICAgICAgICAgICAgICAgIHRleHQgPSAi2KfZhtiq2YfYqiDZgdiq2LHYqSDYp9mE2KrYsdmD2YrYsi4g2KfZhNiz2YrYryDYs9mK2KrZiNin2LXZhCDZhdi52YMg2YLYsdmK2KjYp9mLLiDYtNmD2LHYp9mLINmE2LXYqNix2YMuIgogICAgICAgICAgICAgICAgICAgIHZvaWNlID0gItin2YbYqtmH2Kog2YHYqtix2Kkg2KfZhNiq2LHZg9mK2LIuINin2YTYs9mK2K8g2LPZitiq2YjYp9i12YQg2YXYudmDINmC2LHZitio2KfZiy4iCiAgICAgICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgICAgIHRleHQgPSAiU2lyJ3MgZm9jdXMgc2Vzc2lvbiBoYXMgZW5kZWQuIEhlIHdpbGwgY29udGFjdCB5b3Ugc2hvcnRseS4gVGhhbmsgeW91IGZvciB5b3VyIHBhdGllbmNlLiIKICAgICAgICAgICAgICAgICAgICB2b2ljZSA9ICJTaXIncyBmb2N1cyBzZXNzaW9uIGhhcyBlbmRlZC4gSGUgd2lsbCBjb250YWN0IHlvdSBzaG9ydGx5LiIKCiAgICAgICAgICAgICAgICBpbnN0YWdyYW1fc2VydmljZS5zZW5kX2RtKHRhcmdldF9pZCwgdGV4dCkKICAgICAgICAgICAgICAgICMgQWxzbyBzZW5kIHZvaWNlIG1lc3NhZ2UKICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICBpbnN0YWdyYW1fc2VydmljZS5zZW5kX3ZvaWNlX21lc3NhZ2UoCiAgICAgICAgICAgICAgICAgICAgICAgIFt1aWQgZm9yIHVpZCBpbiB1c2VyX2lkcyBpZiBzdHIodWlkKS5pc2RpZ2l0KCldLAogICAgICAgICAgICAgICAgICAgICAgICB2b2ljZSwKICAgICAgICAgICAgICAgICAgICAgICAgbGFuZz0iYXIiIGlmIHNlbGYuX2xhbmd1YWdlID09ICJhcmFiaWMiIGVsc2UgImVuIiwKICAgICAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICAgICAgICAgIGxvZy53YXJuaW5nKCJmb2N1c19lbmRfdm9pY2VfZmFpbGVkIiwgdGhyZWFkPXRpZFs6OF0pCgogICAgICAgICAgICAgICAgbG9nLmluZm8oImZvY3VzX2VuZF9ub3RpZmllZF90aHJlYWQiLCB0aHJlYWQ9dGlkWzo4XSwgdG89dXNlcnMpCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy53YXJuaW5nKCJmb2N1c19lbmRfbm90aWZ5X2ZhaWxlZCIsIHRocmVhZD10aWRbOjhdLCBlcnJvcj1zdHIoZSkpCgogICAgICAgIHNlbGYuX3JlcGxpZWRfdGhyZWFkcy5jbGVhcigpCgogICAgZGVmIGlzX2FjdGl2ZShzZWxmKSAtPiBib29sOgogICAgICAgICIiIkNoZWNrIGlmIEZvY3VzIE1vZGUgaXMgY3VycmVudGx5IGFjdGl2ZSwgaGFuZGxpbmcgYXV0by1leHBpcnkuIiIiCiAgICAgICAgaWYgbm90IHNlbGYuX2FjdGl2ZToKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgICAgIGlmIHNlbGYuX2V4cGlyZXNfYXQgYW5kIGRhdGV0aW1lLm5vdyh0aW1lem9uZS51dGMpID4gc2VsZi5fZXhwaXJlc19hdDoKICAgICAgICAgICAgbG9nLmluZm8oImZvY3VzX21vZGVfZXhwaXJlZF9hdXRvbWF0aWNhbGx5IikKICAgICAgICAgICAgc2VsZi5kZWFjdGl2YXRlKCkKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgICAgIHJldHVybiBUcnVlCgogICAgZGVmIGdldF9zdGF0dXMoc2VsZikgLT4gRGljdFtzdHIsIEFueV06CiAgICAgICAgIiIiR2V0IGN1cnJlbnQgc3RhdHVzIG9mIEZvY3VzIE1vZGUuIiIiCiAgICAgICAgYWN0aXZlID0gc2VsZi5pc19hY3RpdmUoKQogICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICJhY3RpdmUiOiBhY3RpdmUsCiAgICAgICAgICAgICJmb2N1c19ub3RlIjogc2VsZi5fZm9jdXNfbm90ZSBpZiBhY3RpdmUgZWxzZSAiIiwKICAgICAgICAgICAgImV4cGlyZXNfYXQiOiBzZWxmLl9leHBpcmVzX2F0Lmlzb2Zvcm1hdCgpIGlmIChhY3RpdmUgYW5kIHNlbGYuX2V4cGlyZXNfYXQpIGVsc2UgTm9uZSwKICAgICAgICAgICAgInRpbWVfcmVtYWluaW5nX3NlY29uZHMiOiBtYXgoMCwgKHNlbGYuX2V4cGlyZXNfYXQgLSBkYXRldGltZS5ub3codGltZXpvbmUudXRjKSkudG90YWxfc2Vjb25kcygpKSBpZiAoYWN0aXZlIGFuZCBzZWxmLl9leHBpcmVzX2F0KSBlbHNlIE5vbmUsCiAgICAgICAgICAgICJhdXRvX3JlcGx5X2VuYWJsZWQiOiBzZWxmLl9hdXRvX3JlcGx5X2VuYWJsZWQsCiAgICAgICAgICAgICJsYW5ndWFnZSI6IHNlbGYuX2xhbmd1YWdlIGlmIGFjdGl2ZSBlbHNlICJhcmFiaWMiLAogICAgICAgICAgICAicXVldWVkX2NvdW50IjogbGVuKHNlbGYuX3F1ZXVlZF9tZXNzYWdlcykgaWYgYWN0aXZlIGVsc2UgMCwKICAgICAgICAgICAgImV4Y2x1ZGVkX2NvbnRhY3RzIjogbGlzdChzZWxmLl9leGNsdWRlZF9jb250YWN0cyksCiAgICAgICAgfQoKICAgIGRlZiBhZGRfZXhjbHVkZV9jb250YWN0KHNlbGYsIGNvbnRhY3RfaWQ6IHN0cikgLT4gTm9uZToKICAgICAgICAiIiJFeGNsdWRlIGEgY29udGFjdCBjaGF0IElEIGZyb20gRE5EIGF1dG8tcmVwbGllcy4iIiIKICAgICAgICBzZWxmLl9leGNsdWRlZF9jb250YWN0cy5hZGQoc3RyKGNvbnRhY3RfaWQpKQoKICAgIGRlZiByZW1vdmVfZXhjbHVkZV9jb250YWN0KHNlbGYsIGNvbnRhY3RfaWQ6IHN0cikgLT4gTm9uZToKICAgICAgICAiIiJSZW1vdmUgYSBjb250YWN0IGZyb20gRE5EIGV4Y2x1c2lvbi4iIiIKICAgICAgICBzZWxmLl9leGNsdWRlZF9jb250YWN0cy5kaXNjYXJkKHN0cihjb250YWN0X2lkKSkKCiAgICBkZWYgaXNfZXhjbHVkZWQoc2VsZiwgY29udGFjdF9pZDogc3RyKSAtPiBib29sOgogICAgICAgICIiIkNoZWNrIGlmIGEgY29udGFjdCBjaGF0IElEIGlzIGV4Y2x1ZGVkIGZyb20gRm9jdXMgRE5ELiIiIgogICAgICAgIHJldHVybiBzdHIoY29udGFjdF9pZCkgaW4gc2VsZi5fZXhjbHVkZWRfY29udGFjdHMKCiAgICBkZWYgcXVldWVfbWVzc2FnZShzZWxmLCBzZW5kZXI6IHN0ciwgcGxhdGZvcm06IHN0ciwgdGV4dDogc3RyLCB1cmdlbnQ6IGJvb2wgPSBGYWxzZSkgLT4gTm9uZToKICAgICAgICAiIiJMb2cgYSBtZXNzYWdlIHJlY2VpdmVkIHdoaWxlIGZvY3VzIG1vZGUgaXMgYWN0aXZlLiIiIgogICAgICAgIGlmIG5vdCBzZWxmLmlzX2FjdGl2ZSgpOgogICAgICAgICAgICByZXR1cm4KCiAgICAgICAgbXNnX2VudHJ5ID0gewogICAgICAgICAgICAic2VuZGVyIjogc2VuZGVyLAogICAgICAgICAgICAicGxhdGZvcm0iOiBwbGF0Zm9ybSwKICAgICAgICAgICAgInRleHQiOiB0ZXh0LAogICAgICAgICAgICAidXJnZW50IjogdXJnZW50LAogICAgICAgICAgICAicmVjZWl2ZWRfYXQiOiBkYXRldGltZS51dGNub3coKS5pc29mb3JtYXQoKSwKICAgICAgICB9CiAgICAgICAgc2VsZi5fcXVldWVkX21lc3NhZ2VzLmFwcGVuZChtc2dfZW50cnkpCgogICAgYXN5bmMgZGVmIF9pc191cmdlbnQoc2VsZiwgdGV4dDogc3RyKSAtPiBib29sOgogICAgICAgICIiIkh5YnJpZCB1cmdlbmN5IGRldGVjdGlvbjoga2V5d29yZCBzY2FuIGZpcnN0LCB0aGVuIExMTSB2ZXJpZmljYXRpb24uIiIiCiAgICAgICAgdGV4dF9sb3dlciA9IHRleHQubG93ZXIoKQogICAgICAgIGZvciBrdyBpbiBBUkFCSUNfVVJHRU5UIHwgRU5HTElTSF9VUkdFTlQ6CiAgICAgICAgICAgIGlmIGt3IGluIHRleHRfbG93ZXIgb3Iga3cgaW4gdGV4dDoKICAgICAgICAgICAgICAgIGJyZWFrCiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgICAgIHZlcmlmeV9wcm9tcHQgPSAoCiAgICAgICAgICAgICJDbGFzc2lmeSBpZiB0aGUgZm9sbG93aW5nIG1lc3NhZ2UgaXMgdHJ1bHkgdXJnZW50L2VtZXJnZW5jeSAiCiAgICAgICAgICAgICIoc29tZXRoaW5nIHRoYXQgbmVlZHMgaW1tZWRpYXRlIGh1bWFuIGF0dGVudGlvbikuICIKICAgICAgICAgICAgIlJlcGx5IE9OTFkgd2l0aCAneWVzJyBvciAnbm8nLlxuIgogICAgICAgICAgICBmIk1lc3NhZ2U6IHt0ZXh0fSIKICAgICAgICApCiAgICAgICAgdHJ5OgogICAgICAgICAgICByZXNwID0gYXdhaXQgbGxtX3NlcnZpY2UuZ2V0X3Jlc3BvbnNlKAogICAgICAgICAgICAgICAgdXNlcl9tZXNzYWdlPXZlcmlmeV9wcm9tcHQsCiAgICAgICAgICAgICAgICBzeXN0ZW1faW5zdHJ1Y3Rpb25zPSJZb3UgYXJlIGEgY2xhc3NpZmljYXRpb24gYXNzaXN0YW50LiBSZXBseSBvbmx5ICd5ZXMnIG9yICdubycuIiwKICAgICAgICAgICAgICAgIGluamVjdF9tZW1vcnk9RmFsc2UsCiAgICAgICAgICAgICkKICAgICAgICAgICAgcmV0dXJuIHJlc3Auc3RyaXAoKS5sb3dlcigpLnN0YXJ0c3dpdGgoInllcyIpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgcmV0dXJuIEZhbHNlCgogICAgIyBDdXJhdGVkIHByb2Zlc3Npb25hbCBhdXRvLXJlcGx5IHBvb2xzIOKAlCBubyBMTE0gY3JlYXRpdml0eSB0byBhdm9pZCBub25zZW5zZQogICAgX0FSQUJJQ19JTlRST1MgPSBbCiAgICAgICAgItmF2LHYrdio2KfZiyEg2KPZhtinINis2KfYsdmB2YrYs9iMINin2YTZhdiz2KfYudivINin2YTYtNiu2LXZiiDZhNmE2LPZitivLiDYs9mK2K/ZiiDZhdi02LrZiNmEINit2KfZhNmK2KfZiyDYqNin2YTYqtix2YPZitiyINi52YTZiSDYudmF2YTZh9iMINmI2KPZhtinINij2LHYryDYqNiv2YTYp9mLINi52YbZhyDZhNmF2LPYp9i52K/YqtmDLiAiLAogICAgICAgICLYo9mH2YTYp9mLISDYo9mG2Kcg2KzYp9ix2YHZitiz2Iwg2YXYs9in2LnYryDYp9mE2LPZitivINin2YTYotmE2YouINin2YTYs9mK2K8g2YHZiiDZiNi22Lkg2KfZhNiq2LHZg9mK2LIg2K3Yp9mE2YrYp9mL2Iwg2YjYo9mG2Kcg2YfZhtinINmE2YXYs9in2LnYr9iq2YMg2YbZitin2KjYqSDYudmG2YcuICIsCiAgICAgICAgItin2YTYs9mE2KfZhSDYudmE2YrZg9mFISDYo9mG2Kcg2KzYp9ix2YHZitiz2Iwg2KfZhNmF2LPYp9i52K8g2KfZhNiw2YPZiiDZhNmE2LPZitivLiDYp9mE2LPZitivINmF2LTYutmI2YQg2K3Yp9mE2YrYp9mL2Iwg2YjYo9mG2Kcg2KPYqtmI2YTZiSDYp9mE2LHYryDZhtmK2KfYqNipINi52YbZhy4gIiwKICAgIF0KICAgIF9BUkFCSUNfU1VCU0VRVUVOVCA9IFsKICAgICAgICAi2LPYo9iu2KjYsSDYp9mE2LPZitivINio2LHYs9in2YTYqtmDINi52YbYr9mF2Kcg2YrYqtmB2LHYui4g2LTZg9ix2KfZiyDZhNi12KjYsdmDLiIsCiAgICAgICAgItiq2YUg2KfYs9iq2YTYp9mFINix2LPYp9mE2KrZgy4g2LPYo9io2YTYuiDYp9mE2LPZitivINio2YfYpyDZgdmI2LEg2KfZhtiq2YfYp9ihINmB2KrYsdipINiq2LHZg9mK2LLZhy4iLAogICAgICAgICLYtNmD2LHYp9mLINmE2KrZiNin2LXZhNmDLiDYs9mK2KrZhSDYpdio2YTYp9i6INin2YTYs9mK2K8g2KjYsdiz2KfZhNiq2YMg2YHZiiDYo9mC2LHYqCDZiNmC2KouIiwKICAgICAgICAi2KPYtNmD2LHZgyDYudmE2Ykg2LHYs9in2YTYqtmDLiDYs9ij2YbZgtmE2YfYpyDZhNmE2LPZitivINit2KfZhNmF2Kcg2YrZhtiq2YfZiiDZhdmGINi52YXZhNmHLiIsCiAgICBdCiAgICBfRU5HTElTSF9JTlRST1MgPSBbCiAgICAgICAgIkhpISBJJ20gSkFSVklTLCBTaXIncyBBSSBhc3Npc3RhbnQuIEhlJ3MgY3VycmVudGx5IGluIEZvY3VzIE1vZGUsIHNvIEknbSByZXNwb25kaW5nIG9uIGhpcyBiZWhhbGYuICIsCiAgICAgICAgIkhlbGxvISBJJ20gSkFSVklTLiBTaXIgaXMgY3VycmVudGx5IGZvY3VzaW5nIGFuZCBoYXMgYXNrZWQgbWUgdG8gaGFuZGxlIG1lc3NhZ2VzLiAiLAogICAgXQogICAgX0VOR0xJU0hfU1VCU0VRVUVOVCA9IFsKICAgICAgICAiSSdsbCBtYWtlIHN1cmUgU2lyIGdldHMgeW91ciBtZXNzYWdlIHdoZW4gaGUncyBhdmFpbGFibGUuIFRoYW5rIHlvdSBmb3IgeW91ciBwYXRpZW5jZS4iLAogICAgICAgICJNZXNzYWdlIHJlY2VpdmVkLiBJJ2xsIG5vdGlmeSBTaXIgYXMgc29vbiBhcyBoaXMgZm9jdXMgc2Vzc2lvbiBlbmRzLiIsCiAgICAgICAgIlRoYW5rIHlvdSBmb3IgeW91ciBtZXNzYWdlLiBJJ2xsIHJlbGF5IGl0IHRvIFNpciB3aGVuIGhlJ3MgZnJlZS4iLAogICAgXQoKICAgIGRlZiBfcGlja19wb29sKHNlbGYsIHBvb2w6IGxpc3Rbc3RyXSkgLT4gc3RyOgogICAgICAgIGltcG9ydCByYW5kb20KICAgICAgICByZXR1cm4gcmFuZG9tLmNob2ljZShwb29sKQoKICAgIGFzeW5jIGRlZiBnZXRfYXV0b19yZXBseShzZWxmLCBzZW5kZXI6IHN0ciwgaW5jb21pbmdfbWVzc2FnZTogc3RyLCBmaXJzdF9yZXBseTogYm9vbCA9IEZhbHNlKSAtPiBPcHRpb25hbFtzdHJdOgogICAgICAgICIiIkdlbmVyYXRlIGFuIGF1dG8tcmVwbHkuIFVzZXMgaGFyZGNvZGVkIHByb2Zlc3Npb25hbCBwb29scyDigJQgbm8gTExNLiIiIgogICAgICAgIGlmIG5vdCBzZWxmLmlzX2FjdGl2ZSgpIG9yIG5vdCBzZWxmLl9hdXRvX3JlcGx5X2VuYWJsZWQ6CiAgICAgICAgICAgIHJldHVybiBOb25lCgogICAgICAgIGlmIGZpcnN0X3JlcGx5OgogICAgICAgICAgICBpZiBzZWxmLl9sYW5ndWFnZSA9PSAiYXJhYmljIjoKICAgICAgICAgICAgICAgIGludHJvID0gc2VsZi5fcGlja19wb29sKHNlbGYuX0FSQUJJQ19JTlRST1MpCiAgICAgICAgICAgICAgICBib2R5ID0gItiz2KPYrtio2LEg2KfZhNiz2YrYryDYqNix2LPYp9mE2KrZgyDYudmG2K/ZhdinINmK2KrZgdix2LouIgogICAgICAgICAgICAgICAgcmV0dXJuIGludHJvICsgYm9keQogICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgaW50cm8gPSBzZWxmLl9waWNrX3Bvb2woc2VsZi5fRU5HTElTSF9JTlRST1MpCiAgICAgICAgICAgICAgICBib2R5ID0gIkknbGwgbGV0IFNpciBrbm93IGFib3V0IHlvdXIgbWVzc2FnZSB3aGVuIGhlJ3MgZnJlZS4iCiAgICAgICAgICAgICAgICByZXR1cm4gaW50cm8gKyBib2R5CiAgICAgICAgZWxzZToKICAgICAgICAgICAgaWYgc2VsZi5fbGFuZ3VhZ2UgPT0gImFyYWJpYyI6CiAgICAgICAgICAgICAgICByZXR1cm4gc2VsZi5fcGlja19wb29sKHNlbGYuX0FSQUJJQ19TVUJTRVFVRU5UKQogICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgcmV0dXJuIHNlbGYuX3BpY2tfcG9vbChzZWxmLl9FTkdMSVNIX1NVQlNFUVVFTlQpCgogICAgYXN5bmMgZGVmIGdlbmVyYXRlX3F1ZXVlZF9zdW1tYXJ5KHNlbGYpIC0+IHN0cjoKICAgICAgICAiIiJHZW5lcmF0ZSBhbiBMTE0gc3VtbWFyeSBvZiBhbGwgbWlzc2VkIG1lc3NhZ2VzIGR1cmluZyB0aGUgZm9jdXMgc2Vzc2lvbi4iIiIKICAgICAgICBpZiBub3Qgc2VsZi5fcXVldWVkX21lc3NhZ2VzOgogICAgICAgICAgICByZXR1cm4gItmE2YUg2KrYsdivINij2Yog2LHYs9in2KbZhCDYrtmE2KfZhCDZgdiq2LHYqSDYp9mE2KrYsdmD2YrYstiMINiz2YrYr9mKLiIgaWYgc2VsZi5fbGFuZ3VhZ2UgPT0gImFyYWJpYyIgZWxzZSAiTm8gbWVzc2FnZXMgd2VyZSBxdWV1ZWQgZHVyaW5nIHRoaXMgRm9jdXMgc2Vzc2lvbiwgU2lyLiIKCiAgICAgICAgbGFuZ19pbnN0cnVjdGlvbiA9ICgKICAgICAgICAgICAgItmC2YUg2KjYqtmE2K7Ziti1INin2YTYsdiz2KfYptmEINin2YTYqtin2YTZitipINin2YTYqtmKINmB2KfYqtiq2Ycg2K7ZhNin2YQg2YHYqtix2Kkg2KfZhNiq2LHZg9mK2LIuICIKICAgICAgICAgICAgItin2KzZhdi52YfYpyDYrdiz2Kgg2KfZhNmF2LHYs9mEINij2Ygg2KfZhNmF2YbYtdip2Iwg2YjYp9iw2YPYsSDYo9mKINi02YrYoSDYudin2KzZhC4g2KjYp9mE2YTYutipINin2YTYudix2KjZitipLiIKICAgICAgICAgICAgaWYgc2VsZi5fbGFuZ3VhZ2UgPT0gImFyYWJpYyIgZWxzZQogICAgICAgICAgICAiU3VtbWFyaXplIHRoZSBmb2xsb3dpbmcgbWVzc2FnZXMgU2lyIG1pc3NlZCB3aGlsZSBmb2N1c2luZy4gIgogICAgICAgICAgICAiR3JvdXAgYnkgc2VuZGVyL3BsYXRmb3JtLCBub3RlIHVyZ2VudCBpdGVtcy4iCiAgICAgICAgKQoKICAgICAgICBtZXNzYWdlc190ZXh0ID0gIiIKICAgICAgICBmb3IgaSwgbSBpbiBlbnVtZXJhdGUoc2VsZi5fcXVldWVkX21lc3NhZ2VzLCAxKToKICAgICAgICAgICAgdXJnZW50X3RhZyA9ICIgW1VSR0VOVF0iIGlmIG0uZ2V0KCJ1cmdlbnQiKSBlbHNlICIiCiAgICAgICAgICAgIG1lc3NhZ2VzX3RleHQgKz0gZiJbe2l9XXt1cmdlbnRfdGFnfSB7bVsnc2VuZGVyJ119ICh7bVsncGxhdGZvcm0nXX0pOiB7bVsndGV4dCddfVxuIgoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHN1bW1hcnkgPSBhd2FpdCBsbG1fc2VydmljZS5nZXRfcmVzcG9uc2UoCiAgICAgICAgICAgICAgICB1c2VyX21lc3NhZ2U9bWVzc2FnZXNfdGV4dCwKICAgICAgICAgICAgICAgIHN5c3RlbV9pbnN0cnVjdGlvbnM9KAogICAgICAgICAgICAgICAgICAgIGYiWW91IGFyZSBKQVJWSVMuIFNpciBoYXMganVzdCBmaW5pc2hlZCBhIEZvY3VzIHNlc3Npb24uIHtsYW5nX2luc3RydWN0aW9ufVxuIgogICAgICAgICAgICAgICAgICAgICJLZWVwIGl0IGNsZWFuIGFuZCByZWFkYWJsZS4iCiAgICAgICAgICAgICAgICApLAogICAgICAgICAgICAgICAgaW5qZWN0X21lbW9yeT1GYWxzZSwKICAgICAgICAgICAgKQogICAgICAgICAgICByZXR1cm4gc3VtbWFyeS5zdHJpcCgpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoImZhaWxlZF90b19zdW1tYXJpemVfZm9jdXNfcXVldWUiLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgICAgIHNlbmRlcnMgPSBsaXN0KHNldChtWyJzZW5kZXIiXSBmb3IgbSBpbiBzZWxmLl9xdWV1ZWRfbWVzc2FnZXMpKQogICAgICAgICAgICByZXR1cm4gZiLYs9mK2K/ZitiMINmB2KfYqtiq2YMge2xlbihzZWxmLl9xdWV1ZWRfbWVzc2FnZXMpfSDYsdiz2KfZhNipINmF2YY6IHsnLCAnLmpvaW4oc2VuZGVycyl9IgoKICAgICMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAgICAjIEluc3RhZ3JhbSBETSBwb2xsaW5nIGZvciBhdXRvLXJlcGx5CiAgICAjIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKICAgIGRlZiBfc3RhcnRfaW5zdGFncmFtX3BvbGxpbmcoc2VsZikgLT4gTm9uZToKICAgICAgICAiIiJTdGFydCBiYWNrZ3JvdW5kIHRhc2sgdGhhdCBwb2xscyBJbnN0YWdyYW0gRE1zIGR1cmluZyBmb2N1cyBtb2RlLiIiIgogICAgICAgIGlmIHNlbGYuX2luc3RhZ3JhbV9wb2xsX3Rhc2sgYW5kIG5vdCBzZWxmLl9pbnN0YWdyYW1fcG9sbF90YXNrLmRvbmUoKToKICAgICAgICAgICAgcmV0dXJuCiAgICAgICAgc2VsZi5faW5zdGFncmFtX3BvbGxfdGFzayA9IGFzeW5jaW8uY3JlYXRlX3Rhc2soc2VsZi5faW5zdGFncmFtX3BvbGxfbG9vcCgpKQoKICAgIGRlZiBfc3RvcF9pbnN0YWdyYW1fcG9sbGluZyhzZWxmKSAtPiBOb25lOgogICAgICAgICIiIlN0b3AgdGhlIEluc3RhZ3JhbSBETSBwb2xsaW5nIHRhc2suIiIiCiAgICAgICAgaWYgc2VsZi5faW5zdGFncmFtX3BvbGxfdGFzayBhbmQgbm90IHNlbGYuX2luc3RhZ3JhbV9wb2xsX3Rhc2suZG9uZSgpOgogICAgICAgICAgICBzZWxmLl9pbnN0YWdyYW1fcG9sbF90YXNrLmNhbmNlbCgpCiAgICAgICAgICAgIHNlbGYuX2luc3RhZ3JhbV9wb2xsX3Rhc2sgPSBOb25lCgogICAgYXN5bmMgZGVmIF9pbnN0YWdyYW1fcG9sbF9sb29wKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgIiIiUG9sbCBJbnN0YWdyYW0gaW5ib3ggZXZlcnkgMTBzLCBkZXRlY3QgdXJnZW5jeSwgcmVwbHkgd2l0aCBpbnRybyBvbiBmaXJzdCBjb250YWN0LiIiIgogICAgICAgIGluc3RhZ3JhbV9zZXJ2aWNlID0gc2VsZi5fcmVxdWlyZV9pbnN0YWdyYW1fc2VydmljZSgpCgogICAgICAgIHRocmVhZF9sYXN0X21zZzogZGljdFtzdHIsIHN0cl0gPSB7fQoKICAgICAgICB3aGlsZSBzZWxmLl9hY3RpdmUgYW5kIHNlbGYuX2F1dG9fcmVwbHlfZW5hYmxlZDoKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgaWYgbm90IGluc3RhZ3JhbV9zZXJ2aWNlLmF2YWlsYWJsZToKICAgICAgICAgICAgICAgICAgICBhd2FpdCBhc3luY2lvLnNsZWVwKDEwKQogICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAgICAgICAgICAgaW5ib3ggPSBpbnN0YWdyYW1fc2VydmljZS5yZWFkX2luYm94KGxpbWl0PTEwKQogICAgICAgICAgICAgICAgaWYgbm90IGluYm94LmdldCgic3VjY2VzcyIpOgogICAgICAgICAgICAgICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMTApCiAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICAgICAgICAgICAgICBjb252b3MgPSBpbmJveC5nZXQoImNvbnZlcnNhdGlvbnMiLCBbXSkKICAgICAgICAgICAgICAgIGZvciBjIGluIGNvbnZvczoKICAgICAgICAgICAgICAgICAgICB0aWQgPSBjLmdldCgidGhyZWFkX2lkIiwgIiIpCiAgICAgICAgICAgICAgICAgICAgaWYgbm90IHRpZDoKICAgICAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICAgICAgICAgICAgICAgICAgdXNlcnMgPSBjLmdldCgidXNlcnMiKSBvciBbXQogICAgICAgICAgICAgICAgICAgIHVzZXJuYW1lID0gdXNlcnNbMF0gaWYgdXNlcnMgZWxzZSAiIgogICAgICAgICAgICAgICAgICAgIGlmIG5vdCB1c2VybmFtZToKICAgICAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICAgICAgICAgICAgICAgICAgIyBQcmVmZXIgbnVtZXJpYyB1c2VyX2lkIG92ZXIgdXNlcm5hbWUgZm9yIHNlbmRfZG0KICAgICAgICAgICAgICAgICAgICBzZW5kZXJfaWQgPSAoYy5nZXQoInVzZXJfaWRzIikgb3IgW05vbmVdKVswXSBvciB1c2VybmFtZQoKICAgICAgICAgICAgICAgICAgICBsYXN0X21zZyA9IChjLmdldCgibGFzdF9tZXNzYWdlIikgb3IgIiIpLnN0cmlwKCkKICAgICAgICAgICAgICAgICAgICBpZiBub3QgbGFzdF9tc2c6CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAgICAgICAgICAgICAgICMgU2tpcCBpZiB0aGUgbGFzdCBtZXNzYWdlIHdhcyBzZW50IGJ5IG1lIChub3QgYW4gaW5jb21pbmcgRE0pCiAgICAgICAgICAgICAgICAgICAgaWYgYy5nZXQoImlzX2Zyb21fbWUiLCBGYWxzZSk6CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAgICAgICAgICAgICAgIHByZXZfbXNnID0gdGhyZWFkX2xhc3RfbXNnLmdldCh0aWQsICIiKQoKICAgICAgICAgICAgICAgICAgICBpZiBsYXN0X21zZyA9PSBwcmV2X21zZzoKICAgICAgICAgICAgICAgICAgICAgICAgIyBBbHJlYWR5IHNlZW4gdGhpcyBtZXNzYWdlIOKAlCBza2lwCiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCgogICAgICAgICAgICAgICAgICAgICMgTmV3IG9yIGZpcnN0LXNlZW4gbWVzc2FnZQogICAgICAgICAgICAgICAgICAgIHRocmVhZF9sYXN0X21zZ1t0aWRdID0gbGFzdF9tc2cKICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygiaW5zdGFncmFtX2ZvY3VzX25ld19kbSIsIGZyb21fdXNlcj11c2VybmFtZSwgbXNnPWxhc3RfbXNnKQoKICAgICAgICAgICAgICAgICAgICAjIC0tLS0gVXJnZW5jeSBjaGVjayAoaHlicmlkOiBrZXl3b3JkICsgTExNKSAtLS0tCiAgICAgICAgICAgICAgICAgICAgdXJnZW50ID0gYXdhaXQgc2VsZi5faXNfdXJnZW50KGxhc3RfbXNnKQogICAgICAgICAgICAgICAgICAgIGlmIHVyZ2VudDoKICAgICAgICAgICAgICAgICAgICAgICAgc2VsZi5xdWV1ZV9tZXNzYWdlKHVzZXJuYW1lLCAiSW5zdGFncmFtIiwgbGFzdF9tc2csIHVyZ2VudD1UcnVlKQogICAgICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygiaW5zdGFncmFtX2ZvY3VzX3VyZ2VudF9kZXRlY3RlZCIsIGZyb21fdXNlcj11c2VybmFtZSwgbXNnPWxhc3RfbXNnKQogICAgICAgICAgICAgICAgICAgICAgICAjIFBpbmcgU2lyIHZpYSBXZWJTb2NrZXQKICAgICAgICAgICAgICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgICAgICAgICAgICAgZnJvbSBiYWNrZW5kLm1haW4gaW1wb3J0IGJyb2FkY2FzdF90b191aQogICAgICAgICAgICAgICAgICAgICAgICAgICAgYXdhaXQgYnJvYWRjYXN0X3RvX3VpKHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ1cmdlbnRfbWVzc2FnZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgInBheWxvYWQiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJwbGF0Zm9ybSI6ICJJbnN0YWdyYW0iLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiZnJvbSI6IHVzZXJuYW1lLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAibWVzc2FnZSI6IGxhc3RfbXNnLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAidGltZXN0YW1wIjogZGF0ZXRpbWUudXRjbm93KCkuaXNvZm9ybWF0KCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0pCiAgICAgICAgICAgICAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBsb2cud2FybmluZygiaW5zdGFncmFtX2ZvY3VzX3VyZ2VudF9icm9hZGNhc3RfZmFpbGVkIikKICAgICAgICAgICAgICAgICAgICAgICAgY29udGludWUgICMgc2tpcCBhdXRvLXJlcGx5IGZvciB1cmdlbnQgbWVzc2FnZXMKCiAgICAgICAgICAgICAgICAgICAgIyAtLS0tIE5vcm1hbCBhdXRvLXJlcGx5IChtYXggMiBwZXIgdGhyZWFkIHRvIGF2b2lkIHNwYW0pIC0tLS0KICAgICAgICAgICAgICAgICAgICBzZWxmLnF1ZXVlX21lc3NhZ2UodXNlcm5hbWUsICJJbnN0YWdyYW0iLCBsYXN0X21zZykKCiAgICAgICAgICAgICAgICAgICAgcmVwbHlfY291bnQgPSBzZWxmLl90aHJlYWRfcmVwbHlfY291bnQuZ2V0KHRpZCwgMCkKICAgICAgICAgICAgICAgICAgICBpZiByZXBseV9jb3VudCA+PSAyOgogICAgICAgICAgICAgICAgICAgICAgICAjIEFscmVhZHkgc2VudCAyIHJlcGxpZXMgdG8gdGhpcyB0aHJlYWQg4oCUIGp1c3QgcXVldWUgc2lsZW50bHkKICAgICAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICAgICAgICAgICAgICAgICAgZmlyc3RfcmVwbHkgPSB0aWQgbm90IGluIHNlbGYuX3JlcGxpZWRfdGhyZWFkcwogICAgICAgICAgICAgICAgICAgIHJlcGx5ID0gYXdhaXQgc2VsZi5nZXRfYXV0b19yZXBseSh1c2VybmFtZSwgbGFzdF9tc2csIGZpcnN0X3JlcGx5PWZpcnN0X3JlcGx5KQogICAgICAgICAgICAgICAgICAgIGlmIHJlcGx5OgogICAgICAgICAgICAgICAgICAgICAgICByZXN1bHQgPSBpbnN0YWdyYW1fc2VydmljZS5zZW5kX2RtKHNlbmRlcl9pZCwgcmVwbHkpCiAgICAgICAgICAgICAgICAgICAgICAgIGlmIHJlc3VsdC5nZXQoInN1Y2Nlc3MiKToKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNlbGYuX3JlcGxpZWRfdGhyZWFkc1t0aWRdID0geyJ1c2VyX2lkcyI6IGMuZ2V0KCJ1c2VyX2lkcyIsIFtdKSwgInVzZXJzIjogYy5nZXQoInVzZXJzIiwgW10pfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgc2VsZi5fdGhyZWFkX3JlcGx5X2NvdW50W3RpZF0gPSBzZWxmLl90aHJlYWRfcmVwbHlfY291bnQuZ2V0KHRpZCwgMCkgKyAxCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBsb2cuaW5mbygiaW5zdGFncmFtX2ZvY3VzX2F1dG9fcmVwbGllZCIsIHRvX3VzZXI9dXNlcm5hbWUsIGZpcnN0X3JlcGx5PWZpcnN0X3JlcGx5KQogICAgICAgICAgICAgICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgICAgICAgICAgICAgbG9nLndhcm5pbmcoImluc3RhZ3JhbV9mb2N1c19hdXRvX3JlcGx5X2ZhaWxlZCIsIHRvX3VzZXI9dXNlcm5hbWUsIGVycm9yPXJlc3VsdC5nZXQoImVycm9yIikpCgogICAgICAgICAgICAgICAgaWYgbGVuKHRocmVhZF9sYXN0X21zZykgPiAxMDA6CiAgICAgICAgICAgICAgICAgICAga2V5cyA9IGxpc3QodGhyZWFkX2xhc3RfbXNnLmtleXMoKSlbLTEwMDpdCiAgICAgICAgICAgICAgICAgICAgdGhyZWFkX2xhc3RfbXNnID0ge2s6IHRocmVhZF9sYXN0X21zZ1trXSBmb3IgayBpbiBrZXlzfQogICAgICAgICAgICAgICAgICAgIHNlbGYuX3JlcGxpZWRfdGhyZWFkcyA9IHtrOiB2IGZvciBrLCB2IGluIHNlbGYuX3JlcGxpZWRfdGhyZWFkcy5pdGVtcygpIGlmIGsgaW4ga2V5c30KICAgICAgICAgICAgICAgICAgICBzZWxmLl90aHJlYWRfcmVwbHlfY291bnQgPSB7azogdiBmb3IgaywgdiBpbiBzZWxmLl90aHJlYWRfcmVwbHlfY291bnQuaXRlbXMoKSBpZiBrIGluIGtleXN9CgogICAgICAgICAgICBleGNlcHQgYXN5bmNpby5DYW5jZWxsZWRFcnJvcjoKICAgICAgICAgICAgICAgIGJyZWFrCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgICAgIGxvZy53YXJuaW5nKCJpbnN0YWdyYW1fcG9sbF9lcnJvciIsIGVycm9yPXN0cihlKSkKCiAgICAgICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMTApCgoKIyBTaW5nbGV0b24KZm9jdXNfbW9kZV9zZXJ2aWNlID0gRm9jdXNNb2RlU2VydmljZSgpCg==
+# ====================================================================
+# JARVIS OMEGA — Focus Mode Service
+# ====================================================================
+"""
+Focus Mode Service.
+Keeps track of DND status, queues incoming messages,
+generates conversational auto-replies via LLM, and
+summarizes missed messages when Focus Mode is deactivated.
+
+Supports Arabic auto-reply on Instagram DMs during focus mode.
+"""
+
+from __future__ import annotations
+
+import asyncio
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Optional, Set
+
+from backend.config import settings
+from backend.services.llm_service import llm_service
+from shared.logger import get_logger
+
+log = get_logger("focus_mode")
+
+# Urgency keyword sets (Arabic + English)
+ARABIC_URGENT = {"عاجل", "طارئ", "مهم", "ضروري", "خطر", "مساعدة", "انتباه", "استعجال", "حرج", "فوري", "حريق", "سرقة", "إصابة", "مستعجل", " urgently", "help"}
+ENGLISH_URGENT = {"urgent", "emergency", "important", "critical", "help", "asap", "immediate", "attention", "danger", "fire", "robbery", "injury", "accident", "911", "emergency"}
+
+
+class FocusModeService:
+    def __init__(self) -> None:
+        self._active: bool = False
+        self._focus_note: str = ""
+        self._expires_at: Optional[datetime] = None
+        self._auto_reply_enabled: bool = True
+        self._language: str = "arabic"
+        self._queued_messages: List[Dict[str, Any]] = []
+        self._excluded_contacts: Set[str] = set()
+        self._instagram_poll_task: Optional[asyncio.Task] = None
+        # thread_id -> {"user_ids": [...], "users": [...]}
+        self._replied_threads: Dict[str, Dict[str, Any]] = {}
+        self._thread_reply_count: Dict[str, int] = {}
+
+    def activate(self, note: str, duration_minutes: Optional[int] = None, auto_reply: bool = True, language: str = "arabic") -> None:
+        """Activate Focus Mode with a custom note, optional duration, and language."""
+        self._active = True
+        self._focus_note = note
+        self._auto_reply_enabled = auto_reply
+        self._language = language if language in ("arabic", "english") else "arabic"
+        self._queued_messages = []
+
+        if duration_minutes:
+            self._expires_at = datetime.now(timezone.utc) + timedelta(minutes=duration_minutes)
+        else:
+            self._expires_at = None
+
+        log.info("focus_mode_activated", note=note, duration=duration_minutes, auto_reply=auto_reply, language=self._language)
+
+        # Instagram DM polling is opt-in (ToS risk via private API) and off by default.
+        if auto_reply and getattr(settings, "focus_mode_instagram_enabled", False):
+            self._require_instagram_service()  # fail loudly if unavailable
+            self._start_instagram_polling()
+        elif auto_reply:
+            log.info("focus_instagram_polling_disabled",
+                     hint="Set FOCUS_MODE_INSTAGRAM_ENABLED=true to enable")
+
+    @staticmethod
+    def _require_instagram_service():
+        """Import the Instagram DM service or raise a clear error.
+
+        The instagram_service module was not carried over into this build,
+        so Instagram auto-reply can't run. Fail loudly instead of crashing
+        with an ImportError deep in a background task.
+        """
+        try:
+            from backend.services.instagram_service import instagram_service
+        except ImportError as e:
+            raise RuntimeError(
+                "Instagram auto-reply is enabled (FOCUS_MODE_INSTAGRAM_ENABLED=true) "
+                "but backend.services.instagram_service is not available in this "
+                "build. Disable the flag or add the Instagram DM service."
+            ) from e
+        return instagram_service
+
+    def deactivate(self) -> Dict[str, Any]:
+        """Deactivate Focus Mode and return a summary of queued messages."""
+        if not self._active:
+            return {"active": False, "summary": "Focus Mode was not active."}
+
+        self._stop_instagram_polling()
+        self._active = False
+        self._expires_at = None
+        queued = list(self._queued_messages)
+        self._queued_messages = []
+
+        # Notify all threads that received auto-replies that Sir is back
+        self._notify_replied_threads()
+
+        log.info("focus_mode_deactivated", queued_count=len(queued))
+
+        return {
+            "active": False,
+            "queued_count": len(queued),
+            "queued_messages": queued,
+        }
+
+    def _notify_replied_threads(self) -> None:
+        """Send 'Sir is back' text + voice message to every thread that got auto-replied."""
+        if not getattr(settings, "focus_mode_instagram_enabled", False):
+            return
+        instagram_service = self._require_instagram_service()
+        if not instagram_service.available:
+            return
+        if not self._replied_threads:
+            return
+
+        log.info("focus_notifying_replied_threads", count=len(self._replied_threads))
+        for tid, info in self._replied_threads.items():
+            try:
+                user_ids = info.get("user_ids", [])
+                users = info.get("users", [])
+                target_id = (user_ids or [None])[0] or (users or [None])[0]
+                if not target_id:
+                    continue
+
+                if self._language == "arabic":
+                    text = "انتهت فترة التركيز. السيد سيتواصل معك قريباً. شكراً لصبرك."
+                    voice = "انتهت فترة التركيز. السيد سيتواصل معك قريباً."
+                else:
+                    text = "Sir's focus session has ended. He will contact you shortly. Thank you for your patience."
+                    voice = "Sir's focus session has ended. He will contact you shortly."
+
+                instagram_service.send_dm(target_id, text)
+                # Also send voice message
+                try:
+                    instagram_service.send_voice_message(
+                        [uid for uid in user_ids if str(uid).isdigit()],
+                        voice,
+                        lang="ar" if self._language == "arabic" else "en",
+                    )
+                except Exception:
+                    log.warning("focus_end_voice_failed", thread=tid[:8])
+
+                log.info("focus_end_notified_thread", thread=tid[:8], to=users)
+            except Exception as e:
+                log.warning("focus_end_notify_failed", thread=tid[:8], error=str(e))
+
+        self._replied_threads.clear()
+
+    def is_active(self) -> bool:
+        """Check if Focus Mode is currently active, handling auto-expiry."""
+        if not self._active:
+            return False
+
+        if self._expires_at and datetime.now(timezone.utc) > self._expires_at:
+            log.info("focus_mode_expired_automatically")
+            self.deactivate()
+            return False
+
+        return True
+
+    def get_status(self) -> Dict[str, Any]:
+        """Get current status of Focus Mode."""
+        active = self.is_active()
+        return {
+            "active": active,
+            "focus_note": self._focus_note if active else "",
+            "expires_at": self._expires_at.isoformat() if (active and self._expires_at) else None,
+            "time_remaining_seconds": max(0, (self._expires_at - datetime.now(timezone.utc)).total_seconds()) if (active and self._expires_at) else None,
+            "auto_reply_enabled": self._auto_reply_enabled,
+            "language": self._language if active else "arabic",
+            "queued_count": len(self._queued_messages) if active else 0,
+            "excluded_contacts": list(self._excluded_contacts),
+        }
+
+    def add_exclude_contact(self, contact_id: str) -> None:
+        """Exclude a contact chat ID from DND auto-replies."""
+        self._excluded_contacts.add(str(contact_id))
+
+    def remove_exclude_contact(self, contact_id: str) -> None:
+        """Remove a contact from DND exclusion."""
+        self._excluded_contacts.discard(str(contact_id))
+
+    def is_excluded(self, contact_id: str) -> bool:
+        """Check if a contact chat ID is excluded from Focus DND."""
+        return str(contact_id) in self._excluded_contacts
+
+    def queue_message(self, sender: str, platform: str, text: str, urgent: bool = False) -> None:
+        """Log a message received while focus mode is active."""
+        if not self.is_active():
+            return
+
+        msg_entry = {
+            "sender": sender,
+            "platform": platform,
+            "text": text,
+            "urgent": urgent,
+            "received_at": datetime.utcnow().isoformat(),
+        }
+        self._queued_messages.append(msg_entry)
+
+    async def _is_urgent(self, text: str) -> bool:
+        """Hybrid urgency detection: keyword scan first, then LLM verification."""
+        text_lower = text.lower()
+        for kw in ARABIC_URGENT | ENGLISH_URGENT:
+            if kw in text_lower or kw in text:
+                break
+        else:
+            return False
+
+        verify_prompt = (
+            "Classify if the following message is truly urgent/emergency "
+            "(something that needs immediate human attention). "
+            "Reply ONLY with 'yes' or 'no'.\n"
+            f"Message: {text}"
+        )
+        try:
+            resp = await llm_service.get_response(
+                user_message=verify_prompt,
+                system_instructions="You are a classification assistant. Reply only 'yes' or 'no'.",
+                inject_memory=False,
+            )
+            return resp.strip().lower().startswith("yes")
+        except Exception:
+            return False
+
+    # Curated professional auto-reply pools — no LLM creativity to avoid nonsense
+    _ARABIC_INTROS = [
+        "مرحباً! أنا جارفيس، المساعد الشخصي للسيد. سيدي مشغول حالياً بالتركيز على عمله، وأنا أرد بدلاً عنه لمساعدتك. ",
+        "أهلاً! أنا جارفيس، مساعد السيد الآلي. السيد في وضع التركيز حالياً، وأنا هنا لمساعدتك نيابة عنه. ",
+        "السلام عليكم! أنا جارفيس، المساعد الذكي للسيد. السيد مشغول حالياً، وأنا أتولى الرد نيابة عنه. ",
+    ]
+    _ARABIC_SUBSEQUENT = [
+        "سأخبر السيد برسالتك عندما يتفرغ. شكراً لصبرك.",
+        "تم استلام رسالتك. سأبلغ السيد بها فور انتهاء فترة تركيزه.",
+        "شكراً لتواصلك. سيتم إبلاغ السيد برسالتك في أقرب وقت.",
+        "أشكرك على رسالتك. سأنقلها للسيد حالما ينتهي من عمله.",
+    ]
+    _ENGLISH_INTROS = [
+        "Hi! I'm JARVIS, Sir's AI assistant. He's currently in Focus Mode, so I'm responding on his behalf. ",
+        "Hello! I'm JARVIS. Sir is currently focusing and has asked me to handle messages. ",
+    ]
+    _ENGLISH_SUBSEQUENT = [
+        "I'll make sure Sir gets your message when he's available. Thank you for your patience.",
+        "Message received. I'll notify Sir as soon as his focus session ends.",
+        "Thank you for your message. I'll relay it to Sir when he's free.",
+    ]
+
+    def _pick_pool(self, pool: list[str]) -> str:
+        import random
+        return random.choice(pool)
+
+    async def get_auto_reply(self, sender: str, incoming_message: str, first_reply: bool = False) -> Optional[str]:
+        """Generate an auto-reply. Uses hardcoded professional pools — no LLM."""
+        if not self.is_active() or not self._auto_reply_enabled:
+            return None
+
+        if first_reply:
+            if self._language == "arabic":
+                intro = self._pick_pool(self._ARABIC_INTROS)
+                body = "سأخبر السيد برسالتك عندما يتفرغ."
+                return intro + body
+            else:
+                intro = self._pick_pool(self._ENGLISH_INTROS)
+                body = "I'll let Sir know about your message when he's free."
+                return intro + body
+        else:
+            if self._language == "arabic":
+                return self._pick_pool(self._ARABIC_SUBSEQUENT)
+            else:
+                return self._pick_pool(self._ENGLISH_SUBSEQUENT)
+
+    async def generate_queued_summary(self) -> str:
+        """Generate an LLM summary of all missed messages during the focus session."""
+        if not self._queued_messages:
+            return "لم ترد أي رسائل خلال فترة التركيز، سيدي." if self._language == "arabic" else "No messages were queued during this Focus session, Sir."
+
+        lang_instruction = (
+            "قم بتلخيص الرسائل التالية التي فاتته خلال فترة التركيز. "
+            "اجمعها حسب المرسل أو المنصة، واذكر أي شيء عاجل. باللغة العربية."
+            if self._language == "arabic" else
+            "Summarize the following messages Sir missed while focusing. "
+            "Group by sender/platform, note urgent items."
+        )
+
+        messages_text = ""
+        for i, m in enumerate(self._queued_messages, 1):
+            urgent_tag = " [URGENT]" if m.get("urgent") else ""
+            messages_text += f"[{i}]{urgent_tag} {m['sender']} ({m['platform']}): {m['text']}\n"
+
+        try:
+            summary = await llm_service.get_response(
+                user_message=messages_text,
+                system_instructions=(
+                    f"You are JARVIS. Sir has just finished a Focus session. {lang_instruction}\n"
+                    "Keep it clean and readable."
+                ),
+                inject_memory=False,
+            )
+            return summary.strip()
+        except Exception as e:
+            log.error("failed_to_summarize_focus_queue", error=str(e))
+            senders = list(set(m["sender"] for m in self._queued_messages))
+            return f"سيدي، فاتتك {len(self._queued_messages)} رسالة من: {', '.join(senders)}"
+
+    # ------------------------------------------------------------------
+    # Instagram DM polling for auto-reply
+    # ------------------------------------------------------------------
+
+    def _start_instagram_polling(self) -> None:
+        """Start background task that polls Instagram DMs during focus mode."""
+        if self._instagram_poll_task and not self._instagram_poll_task.done():
+            return
+        self._instagram_poll_task = asyncio.create_task(self._instagram_poll_loop())
+
+    def _stop_instagram_polling(self) -> None:
+        """Stop the Instagram DM polling task."""
+        if self._instagram_poll_task and not self._instagram_poll_task.done():
+            self._instagram_poll_task.cancel()
+            self._instagram_poll_task = None
+
+    async def _instagram_poll_loop(self) -> None:
+        """Poll Instagram inbox every 10s, detect urgency, reply with intro on first contact."""
+        instagram_service = self._require_instagram_service()
+
+        thread_last_msg: dict[str, str] = {}
+
+        while self._active and self._auto_reply_enabled:
+            try:
+                if not instagram_service.available:
+                    await asyncio.sleep(10)
+                    continue
+
+                inbox = instagram_service.read_inbox(limit=10)
+                if not inbox.get("success"):
+                    await asyncio.sleep(10)
+                    continue
+
+                convos = inbox.get("conversations", [])
+                for c in convos:
+                    tid = c.get("thread_id", "")
+                    if not tid:
+                        continue
+
+                    users = c.get("users") or []
+                    username = users[0] if users else ""
+                    if not username:
+                        continue
+
+                    # Prefer numeric user_id over username for send_dm
+                    sender_id = (c.get("user_ids") or [None])[0] or username
+
+                    last_msg = (c.get("last_message") or "").strip()
+                    if not last_msg:
+                        continue
+
+                    # Skip if the last message was sent by me (not an incoming DM)
+                    if c.get("is_from_me", False):
+                        continue
+
+                    prev_msg = thread_last_msg.get(tid, "")
+
+                    if last_msg == prev_msg:
+                        # Already seen this message — skip
+                        continue
+
+                    # New or first-seen message
+                    thread_last_msg[tid] = last_msg
+                    log.info("instagram_focus_new_dm", from_user=username, msg=last_msg)
+
+                    # ---- Urgency check (hybrid: keyword + LLM) ----
+                    urgent = await self._is_urgent(last_msg)
+                    if urgent:
+                        self.queue_message(username, "Instagram", last_msg, urgent=True)
+                        log.info("instagram_focus_urgent_detected", from_user=username, msg=last_msg)
+                        # Ping Sir via WebSocket
+                        try:
+                            from backend.main import broadcast_to_ui
+                            await broadcast_to_ui({
+                                "type": "urgent_message",
+                                "payload": {
+                                    "platform": "Instagram",
+                                    "from": username,
+                                    "message": last_msg,
+                                    "timestamp": datetime.utcnow().isoformat(),
+                                },
+                            })
+                        except Exception:
+                            log.warning("instagram_focus_urgent_broadcast_failed")
+                        continue  # skip auto-reply for urgent messages
+
+                    # ---- Normal auto-reply (max 2 per thread to avoid spam) ----
+                    self.queue_message(username, "Instagram", last_msg)
+
+                    reply_count = self._thread_reply_count.get(tid, 0)
+                    if reply_count >= 2:
+                        # Already sent 2 replies to this thread — just queue silently
+                        continue
+
+                    first_reply = tid not in self._replied_threads
+                    reply = await self.get_auto_reply(username, last_msg, first_reply=first_reply)
+                    if reply:
+                        result = instagram_service.send_dm(sender_id, reply)
+                        if result.get("success"):
+                            self._replied_threads[tid] = {"user_ids": c.get("user_ids", []), "users": c.get("users", [])}
+                            self._thread_reply_count[tid] = self._thread_reply_count.get(tid, 0) + 1
+                            log.info("instagram_focus_auto_replied", to_user=username, first_reply=first_reply)
+                        else:
+                            log.warning("instagram_focus_auto_reply_failed", to_user=username, error=result.get("error"))
+
+                if len(thread_last_msg) > 100:
+                    keys = list(thread_last_msg.keys())[-100:]
+                    thread_last_msg = {k: thread_last_msg[k] for k in keys}
+                    self._replied_threads = {k: v for k, v in self._replied_threads.items() if k in keys}
+                    self._thread_reply_count = {k: v for k, v in self._thread_reply_count.items() if k in keys}
+
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                log.warning("instagram_poll_error", error=str(e))
+
+            await asyncio.sleep(10)
+
+
+# Singleton
+focus_mode_service = FocusModeService()

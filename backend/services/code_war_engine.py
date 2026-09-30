@@ -1,1 +1,121 @@
-IiIiCkNvZGVXYXIgRW5naW5lIOKAlCBCdWlsZGVyIHZzIFJlZFRlYW0gMy1wYXNzIGV2YWx1YXRpb24gdmlhIE9wZW5Sb3V0ZXIuCgojIHBpcCBpbnN0YWxsOiBodHRweAoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmZyb20gZGF0YWNsYXNzZXMgaW1wb3J0IGRhdGFjbGFzcywgZmllbGQKZnJvbSB0eXBpbmcgaW1wb3J0IEFueSwgRGljdCwgTGlzdAoKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJjb2RlX3dhcl9lbmdpbmUiKQoKCkBkYXRhY2xhc3MKY2xhc3MgQ29kZVdhclJlc3VsdDoKICAgIHBhc3NfbmFtZTogc3RyCiAgICBzY29yZTogaW50CiAgICBmZWVkYmFjazogc3RyCiAgICBlcnJvcnM6IExpc3Rbc3RyXSA9IGZpZWxkKGRlZmF1bHRfZmFjdG9yeT1saXN0KQoKCmNsYXNzIENvZGVXYXJFbmdpbmU6CiAgICAiIiIKICAgIFRocmVlLXBhc3MgYXV0b21hdGVkIGNvZGUgcmV2aWV3OgogICAgMS4gQnVpbGRlciDigJQgZnVuY3Rpb25hbCBjb3JyZWN0bmVzcywgc3R5bGUsIGVkZ2UgY2FzZXMKICAgIDIuIFJlZFRlYW0g4oCUIHNlY3VyaXR5LCBwZXJmb3JtYW5jZSwgaW5qZWN0aW9uIHZlY3RvcnMKICAgIDMuIFJlZmVyZWUg4oCUIHdlaWdodGVkIGZpbmFsIHNjb3JlIGFuZCB2ZXJkaWN0CiAgICAiIiIKCiAgICBCVUlMREVSX1BST01QVCA9ICIiIllvdSBhcmUgYSBzZW5pb3IgY29kZSByZXZpZXdlciAoQnVpbGRlcikuIEV2YWx1YXRlIHRoZSBmb2xsb3dpbmcgY29kZSBvbjoKLSBGdW5jdGlvbmFsIGNvcnJlY3RuZXNzCi0gQ29kZSBzdHlsZSBhbmQgcmVhZGFiaWxpdHkKLSBFZGdlIGNhc2UgaGFuZGxpbmcKLSBJbnB1dCB2YWxpZGF0aW9uCgpSZXR1cm4gYSBKU09OIG9iamVjdCB3aXRoOgotICJzY29yZSI6IGludGVnZXIgMC0xMDAKLSAiZmVlZGJhY2siOiBjb25jaXNlIGZlZWRiYWNrIHN0cmluZwotICJlcnJvcnMiOiBsaXN0IG9mIHNwZWNpZmljIGlzc3VlcyAoZW1wdHkgaWYgbm9uZSkKCkNvZGU6Cntjb2RlfSIiIgoKICAgIFJFRFRFQU1fUFJPTVBUID0gIiIiWW91IGFyZSBhIHJlZC10ZWFtIHNlY3VyaXR5IGF1ZGl0b3IgKFJlZFRlYW0pLiBBbmFseXplIHRoZSBmb2xsb3dpbmcgY29kZSBmb3I6Ci0gU1FMIGluamVjdGlvbiwgWFNTLCBjb21tYW5kIGluamVjdGlvbgotIEluc2VjdXJlIGRlc2VyaWFsaXphdGlvbgotIEhhcmRjb2RlZCBzZWNyZXRzCi0gUmFjZSBjb25kaXRpb25zIG9yIFRPQ1RPVQotIFJhdGUgbGltaXRpbmcgLyBEb1MgcmlzawoKUmV0dXJuIGEgSlNPTiBvYmplY3Qgd2l0aDoKLSAic2NvcmUiOiBpbnRlZ2VyIDAtMTAwICgxMDAgPSBubyBmaW5kaW5ncykKLSAiZmVlZGJhY2siOiBjb25jaXNlIHNlY3VyaXR5IGFzc2Vzc21lbnQKLSAiZXJyb3JzIjogbGlzdCBvZiBzcGVjaWZpYyB2dWxuZXJhYmlsaXRpZXMgKGVtcHR5IGlmIG5vbmUpCgpDb2RlOgp7Y29kZX0iIiIKCiAgICBSRUZFUkVFX1BST01QVCA9ICIiIllvdSBhcmUgdGhlIGZpbmFsIHJlZmVyZWUuIFRoZSBCdWlsZGVyIHNjb3JlZCB7YnVpbGRlcl9zY29yZX0gYW5kIGZvdW5kOiB7YnVpbGRlcl9lcnJvcnN9ClRoZSBSZWRUZWFtIHNjb3JlZCB7cmVkdGVhbV9zY29yZX0gYW5kIGZvdW5kOiB7cmVkdGVhbV9lcnJvcnN9CgpSZXR1cm4gYSBKU09OIG9iamVjdCB3aXRoOgotICJzY29yZSI6IGludGVnZXIgMC0xMDAgKHdlaWdodGVkOiAwLjYgKiBidWlsZGVyICsgMC40ICogcmVkdGVhbSwgbWludXMgcGVuYWx0eSkKLSAiZmVlZGJhY2siOiBmaW5hbCB2ZXJkaWN0Ci0gImVycm9ycyI6IGNvbWJpbmVkIHVuaXF1ZSBlcnJvcnMKLSAidmVyZGljdCI6ICJQQVNTIiBpZiBzY29yZSA+PSA3MCBlbHNlICJGQUlMIgoiIiIKCiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgcGFzcwoKICAgIGFzeW5jIGRlZiBldmFsdWF0ZShzZWxmLCBjb2RlOiBzdHIpIC0+IENvZGVXYXJSZXN1bHQ6CiAgICAgICAgIiIiUnVuIDMtcGFzcyBldmFsdWF0aW9uIGFuZCByZXR1cm4gZmluYWwgcmVzdWx0LiIiIgogICAgICAgIGJ1aWxkZXIgPSBhd2FpdCBzZWxmLl9xdWVyeV9sbG0oc2VsZi5CVUlMREVSX1BST01QVC5mb3JtYXQoY29kZT1jb2RlWzozMDAwXSkpCiAgICAgICAgcmVkdGVhbSA9IGF3YWl0IHNlbGYuX3F1ZXJ5X2xsbShzZWxmLlJFRFRFQU1fUFJPTVBULmZvcm1hdChjb2RlPWNvZGVbOjMwMDBdKSkKICAgICAgICByZWZlcmVlID0gYXdhaXQgc2VsZi5fcXVlcnlfbGxtKHNlbGYuUkVGRVJFRV9QUk9NUFQuZm9ybWF0KAogICAgICAgICAgICBidWlsZGVyX3Njb3JlPWJ1aWxkZXIuZ2V0KCJzY29yZSIsIDApLAogICAgICAgICAgICBidWlsZGVyX2Vycm9ycz1idWlsZGVyLmdldCgiZXJyb3JzIiwgW10pLAogICAgICAgICAgICByZWR0ZWFtX3Njb3JlPXJlZHRlYW0uZ2V0KCJzY29yZSIsIDApLAogICAgICAgICAgICByZWR0ZWFtX2Vycm9ycz1yZWR0ZWFtLmdldCgiZXJyb3JzIiwgW10pLAogICAgICAgICkpCgogICAgICAgIHJldHVybiBDb2RlV2FyUmVzdWx0KAogICAgICAgICAgICBwYXNzX25hbWU9IkNvZGVXYXIiLAogICAgICAgICAgICBzY29yZT1yZWZlcmVlLmdldCgic2NvcmUiLCAwKSwKICAgICAgICAgICAgZmVlZGJhY2s9cmVmZXJlZS5nZXQoImZlZWRiYWNrIiwgIiIpLAogICAgICAgICAgICBlcnJvcnM9cmVmZXJlZS5nZXQoImVycm9ycyIsIFtdKSwKICAgICAgICApCgogICAgYXN5bmMgZGVmIF9xdWVyeV9sbG0oc2VsZiwgcHJvbXB0OiBzdHIpIC0+IERpY3Rbc3RyLCBBbnldOgogICAgICAgICIiIkNhbGwgT3BlblJvdXRlciBMTE0gYW5kIHBhcnNlIEpTT04gcmVzcG9uc2UuIiIiCiAgICAgICAgdHJ5OgogICAgICAgICAgICBmcm9tIGJhY2tlbmQuc2VydmljZXMubGxtX3NlcnZpY2UgaW1wb3J0IGxsbV9zZXJ2aWNlCiAgICAgICAgICAgIHJlc3BvbnNlID0gYXdhaXQgbGxtX3NlcnZpY2UuZ2V0X3Jlc3BvbnNlKHVzZXJfbWVzc2FnZT1wcm9tcHQsIGluamVjdF9tZW1vcnk9RmFsc2UpCiAgICAgICAgICAgIGltcG9ydCBqc29uCiAgICAgICAgICAgICMgRXh0cmFjdCBKU09OIGZyb20gcmVzcG9uc2UKICAgICAgICAgICAgdGV4dCA9IHJlc3BvbnNlLnN0cmlwKCkKICAgICAgICAgICAgaWYgImBgYGpzb24iIGluIHRleHQ6CiAgICAgICAgICAgICAgICB0ZXh0ID0gdGV4dC5zcGxpdCgiYGBganNvbiIpWzFdLnNwbGl0KCJgYGAiKVswXS5zdHJpcCgpCiAgICAgICAgICAgIGVsaWYgImBgYCIgaW4gdGV4dDoKICAgICAgICAgICAgICAgIHRleHQgPSB0ZXh0LnNwbGl0KCJgYGAiKVsxXS5zcGxpdCgiYGBgIilbMF0uc3RyaXAoKQogICAgICAgICAgICByZXR1cm4ganNvbi5sb2Fkcyh0ZXh0KQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgbG9nLmVycm9yKCJjb2Rld2FyX2xsbV9mYWlsZWQiLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgICAgIHJldHVybiB7InNjb3JlIjogMCwgImZlZWRiYWNrIjogZiJMTE0gZXJyb3I6IHtlfSIsICJlcnJvcnMiOiBbc3RyKGUpXX0KCgpjb2RlX3dhcl9lbmdpbmUgPSBDb2RlV2FyRW5naW5lKCkKCgojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIyBVU0FHRSBFWEFNUExFCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIC0tLQojIGZyb20gYmFja2VuZC5zZXJ2aWNlcy5jb2RlX3dhcl9lbmdpbmUgaW1wb3J0IGNvZGVfd2FyX2VuZ2luZQojIHJlc3VsdCA9IGF3YWl0IGNvZGVfd2FyX2VuZ2luZS5ldmFsdWF0ZSgiZGVmIGZvbygpOlxuICAgIHJldHVybiAxIikKIyBwcmludChyZXN1bHQpCiMgLS0tCg==
+"""
+CodeWar Engine — Builder vs RedTeam 3-pass evaluation via OpenRouter.
+
+# pip install: httpx
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
+
+from shared.logger import get_logger
+
+log = get_logger("code_war_engine")
+
+
+@dataclass
+class CodeWarResult:
+    pass_name: str
+    score: int
+    feedback: str
+    errors: List[str] = field(default_factory=list)
+
+
+class CodeWarEngine:
+    """
+    Three-pass automated code review:
+    1. Builder — functional correctness, style, edge cases
+    2. RedTeam — security, performance, injection vectors
+    3. Referee — weighted final score and verdict
+    """
+
+    BUILDER_PROMPT = """You are a senior code reviewer (Builder). Evaluate the following code on:
+- Functional correctness
+- Code style and readability
+- Edge case handling
+- Input validation
+
+Return a JSON object with:
+- "score": integer 0-100
+- "feedback": concise feedback string
+- "errors": list of specific issues (empty if none)
+
+Code:
+{code}"""
+
+    REDTEAM_PROMPT = """You are a red-team security auditor (RedTeam). Analyze the following code for:
+- SQL injection, XSS, command injection
+- Insecure deserialization
+- Hardcoded secrets
+- Race conditions or TOCTOU
+- Rate limiting / DoS risk
+
+Return a JSON object with:
+- "score": integer 0-100 (100 = no findings)
+- "feedback": concise security assessment
+- "errors": list of specific vulnerabilities (empty if none)
+
+Code:
+{code}"""
+
+    REFEREE_PROMPT = """You are the final referee. The Builder scored {builder_score} and found: {builder_errors}
+The RedTeam scored {redteam_score} and found: {redteam_errors}
+
+Return a JSON object with:
+- "score": integer 0-100 (weighted: 0.6 * builder + 0.4 * redteam, minus penalty)
+- "feedback": final verdict
+- "errors": combined unique errors
+- "verdict": "PASS" if score >= 70 else "FAIL"
+"""
+
+    def __init__(self):
+        pass
+
+    async def evaluate(self, code: str) -> CodeWarResult:
+        """Run 3-pass evaluation and return final result."""
+        builder = await self._query_llm(self.BUILDER_PROMPT.format(code=code[:3000]))
+        redteam = await self._query_llm(self.REDTEAM_PROMPT.format(code=code[:3000]))
+        referee = await self._query_llm(self.REFEREE_PROMPT.format(
+            builder_score=builder.get("score", 0),
+            builder_errors=builder.get("errors", []),
+            redteam_score=redteam.get("score", 0),
+            redteam_errors=redteam.get("errors", []),
+        ))
+
+        return CodeWarResult(
+            pass_name="CodeWar",
+            score=referee.get("score", 0),
+            feedback=referee.get("feedback", ""),
+            errors=referee.get("errors", []),
+        )
+
+    async def _query_llm(self, prompt: str) -> Dict[str, Any]:
+        """Call OpenRouter LLM and parse JSON response."""
+        try:
+            from backend.services.llm_service import llm_service
+            response = await llm_service.get_response(user_message=prompt, inject_memory=False)
+            import json
+            # Extract JSON from response
+            text = response.strip()
+            if "```json" in text:
+                text = text.split("```json")[1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[1].split("```")[0].strip()
+            return json.loads(text)
+        except Exception as e:
+            log.error("codewar_llm_failed", error=str(e))
+            return {"score": 0, "feedback": f"LLM error: {e}", "errors": [str(e)]}
+
+
+code_war_engine = CodeWarEngine()
+
+
+# =========================================================================
+# USAGE EXAMPLE
+# =========================================================================
+# ---
+# from backend.services.code_war_engine import code_war_engine
+# result = await code_war_engine.evaluate("def foo():\n    return 1")
+# print(result)
+# ---

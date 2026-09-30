@@ -1,1 +1,126 @@
-IiIiCkZpbGUgZG93bmxvYWQgc2VydmljZSDigJQgZG93bmxvYWRzIGZpbGVzIGZyb20gVVJMcyBhbmQgc2F2ZXMgdGhlbSB0byBsb2NhbCBzdG9yYWdlLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBtaW1ldHlwZXMKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIE9wdGlvbmFsCmZyb20gdXJsbGliLnBhcnNlIGltcG9ydCB1cmxwYXJzZQoKaW1wb3J0IGh0dHB4Cgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoImZpbGVfZG93bmxvYWRfc2VydmljZSIpCgpfRE9XTkxPQURfRElSID0gUGF0aC5ob21lKCkgLyAiRG93bmxvYWRzIgoKCmNsYXNzIEZpbGVEb3dubG9hZFNlcnZpY2U6CgogICAgYXN5bmMgZGVmIGRvd25sb2FkKAogICAgICAgIHNlbGYsCiAgICAgICAgdXJsOiBzdHIsCiAgICAgICAgc2F2ZV9kaXI6IE9wdGlvbmFsW3N0cl0gPSBOb25lLAogICAgICAgIGZpbGVuYW1lOiBPcHRpb25hbFtzdHJdID0gTm9uZSwKICAgICAgICBtYXhfc2l6ZV9tYjogaW50ID0gNTAwLAogICAgKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiIKICAgICAgICBEb3dubG9hZCBhIGZpbGUgZnJvbSBhIFVSTCBhbmQgc2F2ZSBpdCB0byBkaXNrLgoKICAgICAgICBBcmdzOgogICAgICAgICAgICB1cmw6IFRoZSBVUkwgdG8gZG93bmxvYWQgZnJvbQogICAgICAgICAgICBzYXZlX2RpcjogRGlyZWN0b3J5IHRvIHNhdmUgdGhlIGZpbGUgKGRlZmF1bHQ6IERvd25sb2FkcykKICAgICAgICAgICAgZmlsZW5hbWU6IEN1c3RvbSBmaWxlbmFtZSAoZGVmYXVsdDogaW5mZXJyZWQgZnJvbSBVUkwpCiAgICAgICAgICAgIG1heF9zaXplX21iOiBNYXhpbXVtIGZpbGUgc2l6ZSBpbiBNQgoKICAgICAgICBSZXR1cm5zOgogICAgICAgICAgICB7c3VjY2VzcywgZmlsZXBhdGgsIGZpbGVuYW1lLCBzaXplX2J5dGVzLCBtaW1lX3R5cGUsIGVycm9yfQogICAgICAgICIiIgogICAgICAgIGlmIG5vdCB1cmwuc3RhcnRzd2l0aCgoImh0dHA6Ly8iLCAiaHR0cHM6Ly8iKSk6CiAgICAgICAgICAgIHVybCA9ICJodHRwczovLyIgKyB1cmwKCiAgICAgICAgc2F2ZV9wYXRoID0gUGF0aChzYXZlX2RpciBvciBfRE9XTkxPQURfRElSKQogICAgICAgIHNhdmVfcGF0aC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCgogICAgICAgIGlmIG5vdCBmaWxlbmFtZToKICAgICAgICAgICAgZmlsZW5hbWUgPSBzZWxmLl9pbmZlcl9maWxlbmFtZSh1cmwpCgogICAgICAgICMgU0VDVVJJVFk6IHN0cmlwIGFueSBkaXJlY3RvcnkgY29tcG9uZW50cyB0byBwcmV2ZW50IHBhdGggdHJhdmVyc2FsLgogICAgICAgIGZpbGVuYW1lID0gUGF0aChmaWxlbmFtZSkubmFtZQogICAgICAgIGRlc3QgPSBzYXZlX3BhdGggLyBmaWxlbmFtZQogICAgICAgIG1heF9ieXRlcyA9IG1heF9zaXplX21iICogMTAyNCAqIDEwMjQKCiAgICAgICAgdHJ5OgogICAgICAgICAgICBhc3luYyB3aXRoIGh0dHB4LkFzeW5jQ2xpZW50KGZvbGxvd19yZWRpcmVjdHM9VHJ1ZSwgdGltZW91dD0xMjAuMCkgYXMgY2xpZW50OgogICAgICAgICAgICAgICAgYXN5bmMgd2l0aCBjbGllbnQuc3RyZWFtKCJHRVQiLCB1cmwsIGhlYWRlcnM9ewogICAgICAgICAgICAgICAgICAgICJVc2VyLUFnZW50IjogIk1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiIKICAgICAgICAgICAgICAgIH0pIGFzIHJlc3A6CiAgICAgICAgICAgICAgICAgICAgcmVzcC5yYWlzZV9mb3Jfc3RhdHVzKCkKCiAgICAgICAgICAgICAgICAgICAgY29udGVudF9sZW5ndGggPSByZXNwLmhlYWRlcnMuZ2V0KCJjb250ZW50LWxlbmd0aCIpCiAgICAgICAgICAgICAgICAgICAgaWYgY29udGVudF9sZW5ndGggYW5kIGludChjb250ZW50X2xlbmd0aCkgPiBtYXhfYnl0ZXM6CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAic3VjY2VzcyI6IEZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgImVycm9yIjogZiJGaWxlIHRvbyBsYXJnZToge2ludChjb250ZW50X2xlbmd0aCkgLy8gMTAyNCAvLyAxMDI0fU1CID4ge21heF9zaXplX21ifU1CIGxpbWl0IiwKICAgICAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBtaW1lX3R5cGUgPSByZXNwLmhlYWRlcnMuZ2V0KCJjb250ZW50LXR5cGUiLCAiYXBwbGljYXRpb24vb2N0ZXQtc3RyZWFtIikKICAgICAgICAgICAgICAgICAgICBleHQgPSBzZWxmLl9ndWVzc19leHRlbnNpb24obWltZV90eXBlLCBmaWxlbmFtZSkKCiAgICAgICAgICAgICAgICAgICAgaWYgbm90IGZpbGVuYW1lLmVuZHN3aXRoKGV4dCk6CiAgICAgICAgICAgICAgICAgICAgICAgIGZpbGVuYW1lICs9IGV4dAogICAgICAgICAgICAgICAgICAgICAgICBkZXN0ID0gc2F2ZV9wYXRoIC8gZmlsZW5hbWUKCiAgICAgICAgICAgICAgICAgICAgZG93bmxvYWRlZCA9IDAKICAgICAgICAgICAgICAgICAgICB3aXRoIG9wZW4oZGVzdCwgIndiIikgYXMgZjoKICAgICAgICAgICAgICAgICAgICAgICAgYXN5bmMgZm9yIGNodW5rIGluIHJlc3AuYWl0ZXJfYnl0ZXMoODE5Mik6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkb3dubG9hZGVkICs9IGxlbihjaHVuaykKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIGRvd25sb2FkZWQgPiBtYXhfYnl0ZXM6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGVzdC51bmxpbmsobWlzc2luZ19vaz1UcnVlKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJzdWNjZXNzIjogRmFsc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJlcnJvciI6IGYiRG93bmxvYWQgZXhjZWVkZWQge21heF9zaXplX21ifU1CIGxpbWl0IiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBmLndyaXRlKGNodW5rKQoKICAgICAgICAgICAgbG9nLmluZm8oImZpbGVfZG93bmxvYWRlZCIsIHVybD11cmwsIHBhdGg9c3RyKGRlc3QpLCBzaXplPWRvd25sb2FkZWQsIG1pbWU9bWltZV90eXBlKQogICAgICAgICAgICByZXR1cm4gewogICAgICAgICAgICAgICAgInN1Y2Nlc3MiOiBUcnVlLAogICAgICAgICAgICAgICAgImZpbGVwYXRoIjogc3RyKGRlc3QpLAogICAgICAgICAgICAgICAgImZpbGVuYW1lIjogZmlsZW5hbWUsCiAgICAgICAgICAgICAgICAic2l6ZV9ieXRlcyI6IGRvd25sb2FkZWQsCiAgICAgICAgICAgICAgICAibWltZV90eXBlIjogbWltZV90eXBlLAogICAgICAgICAgICB9CgogICAgICAgIGV4Y2VwdCBodHRweC5IVFRQU3RhdHVzRXJyb3IgYXMgZToKICAgICAgICAgICAgbG9nLmVycm9yKCJkb3dubG9hZF9odHRwX2Vycm9yIiwgdXJsPXVybCwgc3RhdHVzPWUucmVzcG9uc2Uuc3RhdHVzX2NvZGUpCiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogZiJIVFRQIHtlLnJlc3BvbnNlLnN0YXR1c19jb2RlfToge2UucmVzcG9uc2UucmVhc29uX3BocmFzZX0ifQogICAgICAgIGV4Y2VwdCBodHRweC5UaW1lb3V0RXhjZXB0aW9uOgogICAgICAgICAgICBsb2cuZXJyb3IoImRvd25sb2FkX3RpbWVvdXQiLCB1cmw9dXJsKQogICAgICAgICAgICByZXR1cm4geyJzdWNjZXNzIjogRmFsc2UsICJlcnJvciI6ICJEb3dubG9hZCB0aW1lZCBvdXQifQogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgbG9nLmVycm9yKCJkb3dubG9hZF9mYWlsZWQiLCB1cmw9dXJsLCBlcnJvcj1zdHIoZSkpCiAgICAgICAgICAgIHJldHVybiB7InN1Y2Nlc3MiOiBGYWxzZSwgImVycm9yIjogc3RyKGUpfQoKICAgIGRlZiBfaW5mZXJfZmlsZW5hbWUoc2VsZiwgdXJsOiBzdHIpIC0+IHN0cjoKICAgICAgICAiIiJFeHRyYWN0IGEgZmlsZW5hbWUgZnJvbSBhIFVSTC4iIiIKICAgICAgICBwYXRoID0gdXJscGFyc2UodXJsKS5wYXRoCiAgICAgICAgbmFtZSA9IFBhdGgocGF0aCkubmFtZQogICAgICAgIGlmIG5vdCBuYW1lIG9yIG5hbWUgPT0gIi8iOgogICAgICAgICAgICByZXR1cm4gImRvd25sb2FkIgogICAgICAgICMgUmVtb3ZlIHF1ZXJ5IHBhcmFtcwogICAgICAgIG5hbWUgPSBuYW1lLnNwbGl0KCI/IilbMF0KICAgICAgICByZXR1cm4gbmFtZQoKICAgIGRlZiBfZ3Vlc3NfZXh0ZW5zaW9uKHNlbGYsIG1pbWVfdHlwZTogc3RyLCBmaWxlbmFtZTogc3RyKSAtPiBzdHI6CiAgICAgICAgIiIiR3Vlc3MgZmlsZSBleHRlbnNpb24gZnJvbSBNSU1FIHR5cGUgaWYgZmlsZW5hbWUgZG9lc24ndCBhbHJlYWR5IGhhdmUgb25lLiIiIgogICAgICAgIGlmICIuIiBpbiBmaWxlbmFtZToKICAgICAgICAgICAgcmV0dXJuICIiCiAgICAgICAgZXh0ID0gbWltZXR5cGVzLmd1ZXNzX2V4dGVuc2lvbihtaW1lX3R5cGUuc3BsaXQoIjsiKVswXS5zdHJpcCgpKQogICAgICAgIHJldHVybiBleHQgb3IgIi5iaW4iCgoKZmlsZV9kb3dubG9hZF9zZXJ2aWNlID0gRmlsZURvd25sb2FkU2VydmljZSgpCg==
+"""
+File download service — downloads files from URLs and saves them to local storage.
+"""
+
+from __future__ import annotations
+
+import mimetypes
+from pathlib import Path
+from typing import Any, Dict, Optional
+from urllib.parse import urlparse
+
+import httpx
+
+from shared.logger import get_logger
+
+log = get_logger("file_download_service")
+
+_DOWNLOAD_DIR = Path.home() / "Downloads"
+
+
+class FileDownloadService:
+
+    async def download(
+        self,
+        url: str,
+        save_dir: Optional[str] = None,
+        filename: Optional[str] = None,
+        max_size_mb: int = 500,
+    ) -> Dict[str, Any]:
+        """
+        Download a file from a URL and save it to disk.
+
+        Args:
+            url: The URL to download from
+            save_dir: Directory to save the file (default: Downloads)
+            filename: Custom filename (default: inferred from URL)
+            max_size_mb: Maximum file size in MB
+
+        Returns:
+            {success, filepath, filename, size_bytes, mime_type, error}
+        """
+        if not url.startswith(("http://", "https://")):
+            url = "https://" + url
+
+        save_path = Path(save_dir or _DOWNLOAD_DIR)
+        save_path.mkdir(parents=True, exist_ok=True)
+
+        if not filename:
+            filename = self._infer_filename(url)
+
+        # SECURITY: strip any directory components to prevent path traversal.
+        filename = Path(filename).name
+        dest = save_path / filename
+        max_bytes = max_size_mb * 1024 * 1024
+
+        try:
+            async with httpx.AsyncClient(follow_redirects=True, timeout=120.0) as client:
+                async with client.stream("GET", url, headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+                }) as resp:
+                    resp.raise_for_status()
+
+                    content_length = resp.headers.get("content-length")
+                    if content_length and int(content_length) > max_bytes:
+                        return {
+                            "success": False,
+                            "error": f"File too large: {int(content_length) // 1024 // 1024}MB > {max_size_mb}MB limit",
+                        }
+
+                    mime_type = resp.headers.get("content-type", "application/octet-stream")
+                    ext = self._guess_extension(mime_type, filename)
+
+                    if not filename.endswith(ext):
+                        filename += ext
+                        dest = save_path / filename
+
+                    downloaded = 0
+                    with open(dest, "wb") as f:
+                        async for chunk in resp.aiter_bytes(8192):
+                            downloaded += len(chunk)
+                            if downloaded > max_bytes:
+                                dest.unlink(missing_ok=True)
+                                return {
+                                    "success": False,
+                                    "error": f"Download exceeded {max_size_mb}MB limit",
+                                }
+                            f.write(chunk)
+
+            log.info("file_downloaded", url=url, path=str(dest), size=downloaded, mime=mime_type)
+            return {
+                "success": True,
+                "filepath": str(dest),
+                "filename": filename,
+                "size_bytes": downloaded,
+                "mime_type": mime_type,
+            }
+
+        except httpx.HTTPStatusError as e:
+            log.error("download_http_error", url=url, status=e.response.status_code)
+            return {"success": False, "error": f"HTTP {e.response.status_code}: {e.response.reason_phrase}"}
+        except httpx.TimeoutException:
+            log.error("download_timeout", url=url)
+            return {"success": False, "error": "Download timed out"}
+        except Exception as e:
+            log.error("download_failed", url=url, error=str(e))
+            return {"success": False, "error": str(e)}
+
+    def _infer_filename(self, url: str) -> str:
+        """Extract a filename from a URL."""
+        path = urlparse(url).path
+        name = Path(path).name
+        if not name or name == "/":
+            return "download"
+        # Remove query params
+        name = name.split("?")[0]
+        return name
+
+    def _guess_extension(self, mime_type: str, filename: str) -> str:
+        """Guess file extension from MIME type if filename doesn't already have one."""
+        if "." in filename:
+            return ""
+        ext = mimetypes.guess_extension(mime_type.split(";")[0].strip())
+        return ext or ".bin"
+
+
+file_download_service = FileDownloadService()

@@ -1,1 +1,123 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KaW1wb3J0IG9zCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lZGVsdGEKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBMaXN0LCBEaWN0LCBBbnksIE9wdGlvbmFsCgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKZnJvbSBzaGFyZWQuY29uc3RhbnRzIGltcG9ydCBUYXNrU3RhdHVzCmZyb20gc2hhcmVkLm1vZGVscyBpbXBvcnQgVGFza0RlZmluaXRpb24sIE1lbW9yeUVudHJ5LCBNZW1vcnlRdWVyeQpmcm9tIHNoYXJlZC5jb25zdGFudHMgaW1wb3J0IE1lbW9yeUNhdGVnb3J5CmZyb20gYmFja2VuZC5zZXJ2aWNlcy5sbG1fc2VydmljZSBpbXBvcnQgbGxtX3NlcnZpY2UKZnJvbSBiYWNrZW5kLm1lbW9yeV9lbmdpbmUgaW1wb3J0IG1lbW9yeV9lbmdpbmUKZnJvbSBiYWNrZW5kLnNjaGVkdWxlciBpbXBvcnQgc2NoZWR1bGVyCgpsb2cgPSBnZXRfbG9nZ2VyKCJzZWxmX2ltcHJvdmVtZW50IikKCkxFU1NPTlNfRklMRSA9IFBhdGgoIi4vc3RvcmFnZS9sZXNzb25zLmpzb24iKQoKCmNsYXNzIFNlbGZJbXByb3ZlbWVudExvb3A6CiAgICAiIiIKICAgIFBpbGxhciBYOiBBbmFseXplcyBmYWlsZWQgdGFza3MsIHVzZXIgY29ycmVjdGlvbnMsIGFuZCBwZXJmb3JtYW5jZSBkYXRhCiAgICB0byBkeW5hbWljYWxseSB1cGRhdGUgSkFSVklTJ3MgaW50ZXJuYWwgaW5zdHJ1Y3Rpb25zIGFuZCBiZWNvbWUgc21hcnRlci4KICAgICIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmKSAtPiBOb25lOgogICAgICAgIHNlbGYuX2xlc3NvbnM6IExpc3RbRGljdFtzdHIsIEFueV1dID0gc2VsZi5fbG9hZF9sZXNzb25zKCkKCiAgICBkZWYgX2xvYWRfbGVzc29ucyhzZWxmKSAtPiBMaXN0W0RpY3Rbc3RyLCBBbnldXToKICAgICAgICBpZiBMRVNTT05TX0ZJTEUuZXhpc3RzKCk6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIHJldHVybiBqc29uLmxvYWRzKExFU1NPTlNfRklMRS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikpCiAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICByZXR1cm4gW10KICAgICAgICByZXR1cm4gW10KCiAgICBkZWYgX3NhdmVfbGVzc29ucyhzZWxmKSAtPiBOb25lOgogICAgICAgIExFU1NPTlNfRklMRS5wYXJlbnQubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQogICAgICAgIExFU1NPTlNfRklMRS53cml0ZV90ZXh0KGpzb24uZHVtcHMoc2VsZi5fbGVzc29ucywgaW5kZW50PTIsIGRlZmF1bHQ9c3RyKSwgZW5jb2Rpbmc9InV0Zi04IikKCiAgICBhc3luYyBkZWYgcmVnaXN0ZXJfc2NoZWR1bGVzKHNlbGYpIC0+IE5vbmU6CiAgICAgICAgc2NoZWR1bGVyLnNjaGVkdWxlX2Nyb24oCiAgICAgICAgICAgICJzZWxmX2ltcHJvdmVtZW50X3dlZWtseSIsCiAgICAgICAgICAgIHNlbGYuX3dlZWtseV9hbmFseXNpcywKICAgICAgICAgICAgIjAgMyAqICogMCIsCiAgICAgICAgICAgIGRlc2NyaXB0aW9uPSJXZWVrbHkgc2VsZi1pbXByb3ZlbWVudCBhbmFseXNpcyIsCiAgICAgICAgKQogICAgICAgIGxvZy5pbmZvKCJzZWxmX2ltcHJvdmVtZW50X3NjaGVkdWxlc19yZWdpc3RlcmVkIikKCiAgICBhc3luYyBkZWYgcmVjb3JkX2ZhaWx1cmUoc2VsZiwgdGFzazogVGFza0RlZmluaXRpb24sIGVycm9yOiBzdHIpIC0+IE5vbmU6CiAgICAgICAgbGVzc29uID0gewogICAgICAgICAgICAidHlwZSI6ICJmYWlsdXJlIiwKICAgICAgICAgICAgInRhc2tfaWQiOiB0YXNrLnRhc2tfaWQsCiAgICAgICAgICAgICJ0aXRsZSI6IHRhc2sudGl0bGUsCiAgICAgICAgICAgICJhZ2VudF90eXBlIjogdGFzay5hZ2VudF90eXBlLnZhbHVlLAogICAgICAgICAgICAiZXJyb3IiOiBlcnJvcls6NTAwXSwKICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGV0aW1lLnV0Y25vdygpLmlzb2Zvcm1hdCgpLAogICAgICAgIH0KICAgICAgICBzZWxmLl9sZXNzb25zLmFwcGVuZChsZXNzb24pCiAgICAgICAgc2VsZi5fc2F2ZV9sZXNzb25zKCkKICAgICAgICBsb2cuaW5mbygiZmFpbHVyZV9yZWNvcmRlZCIsIHRhc2tfaWQ9dGFzay50YXNrX2lkKQoKICAgIGFzeW5jIGRlZiByZWNvcmRfY29ycmVjdGlvbihzZWxmLCB1c2VyX21lc3NhZ2U6IHN0ciwgY29ycmVjdGlvbjogc3RyKSAtPiBOb25lOgogICAgICAgIGxlc3NvbiA9IHsKICAgICAgICAgICAgInR5cGUiOiAiY29ycmVjdGlvbiIsCiAgICAgICAgICAgICJ1c2VyX3NhaWQiOiB1c2VyX21lc3NhZ2UsCiAgICAgICAgICAgICJjb3JyZWN0aW9uIjogY29ycmVjdGlvbiwKICAgICAgICAgICAgInRpbWVzdGFtcCI6IGRhdGV0aW1lLnV0Y25vdygpLmlzb2Zvcm1hdCgpLAogICAgICAgIH0KICAgICAgICBzZWxmLl9sZXNzb25zLmFwcGVuZChsZXNzb24pCiAgICAgICAgc2VsZi5fc2F2ZV9sZXNzb25zKCkKICAgICAgICBsb2cuaW5mbygiY29ycmVjdGlvbl9yZWNvcmRlZCIsIHVzZXJfbWVzc2FnZT11c2VyX21lc3NhZ2VbOjEwMF0pCgogICAgYXN5bmMgZGVmIGdlbmVyYXRlX2luc2lnaHRzKHNlbGYpIC0+IHN0cjoKICAgICAgICBpZiBub3Qgc2VsZi5fbGVzc29uczoKICAgICAgICAgICAgcmV0dXJuICJObyBsZXNzb25zIHJlY29yZGVkIHlldC4iCgogICAgICAgIHJlY2VudCA9IHNlbGYuX2xlc3NvbnNbLTIwOl0KICAgICAgICBsZXNzb25zX3RleHQgPSAiXG4iLmpvaW4oCiAgICAgICAgICAgIGYiLSBbe2xbJ3R5cGUnXX1dIHtsLmdldCgndGl0bGUnLCBsLmdldCgndXNlcl9zYWlkJywgJ04vQScpKX06IHtsLmdldCgnZXJyb3InLCBsLmdldCgnY29ycmVjdGlvbicsICcnKSlbOjIwMF19IgogICAgICAgICAgICBmb3IgbCBpbiByZWNlbnQKICAgICAgICApCgogICAgICAgIGluc2lnaHQgPSBhd2FpdCBsbG1fc2VydmljZS5nZXRfcmVzcG9uc2UoCiAgICAgICAgICAgIHVzZXJfbWVzc2FnZT0oCiAgICAgICAgICAgICAgICAiQW5hbHl6ZSB0aGVzZSByZWNlbnQgZmFpbHVyZXMgYW5kIGNvcnJlY3Rpb25zIGZyb20gbXkgb3BlcmF0aW9uIGxvZy4gIgogICAgICAgICAgICAgICAgIklkZW50aWZ5IHBhdHRlcm5zLCByb290IGNhdXNlcywgYW5kIHN1Z2dlc3Qgc3BlY2lmaWMgaW1wcm92ZW1lbnRzICIKICAgICAgICAgICAgICAgICJ0byBteSBzeXN0ZW0gaW5zdHJ1Y3Rpb25zIG9yIGJlaGF2aW9yLlxuXG4iCiAgICAgICAgICAgICAgICBmIkxlc3NvbnM6XG57bGVzc29uc190ZXh0fSIKICAgICAgICAgICAgKSwKICAgICAgICAgICAgaW5qZWN0X21lbW9yeT1GYWxzZSwKICAgICAgICAgICAgc3lzdGVtX2luc3RydWN0aW9ucz0iWW91IGFyZSBKQVJWSVMncyBzZWxmLWltcHJvdmVtZW50IHN1YnN5c3RlbS4gQmUgYW5hbHl0aWNhbCBhbmQgc3BlY2lmaWMuIiwKICAgICAgICApCiAgICAgICAgcmV0dXJuIGluc2lnaHQKCiAgICBhc3luYyBkZWYgX3dlZWtseV9hbmFseXNpcyhzZWxmKSAtPiBOb25lOgogICAgICAgIGxvZy5pbmZvKCJzZWxmX2ltcHJvdmVtZW50X3dlZWtseV9hbmFseXNpcyIpCiAgICAgICAgaW5zaWdodHMgPSBhd2FpdCBzZWxmLmdlbmVyYXRlX2luc2lnaHRzKCkKCiAgICAgICAgZW50cnkgPSBNZW1vcnlFbnRyeSgKICAgICAgICAgICAgY2F0ZWdvcnk9TWVtb3J5Q2F0ZWdvcnkuREVCVUdHSU5HLAogICAgICAgICAgICBjb250ZW50PWYiV2Vla2x5IHNlbGYtaW1wcm92ZW1lbnQgaW5zaWdodHM6XG57aW5zaWdodHN9IiwKICAgICAgICAgICAgc291cmNlPSJzZWxmX2ltcHJvdmVtZW50IiwKICAgICAgICAgICAgdGFncz1bInNlbGZfaW1wcm92ZW1lbnQiLCAid2Vla2x5IiwgImFuYWx5c2lzIl0sCiAgICAgICAgICAgIG1ldGFkYXRhPXsibGVzc29uX2NvdW50IjogbGVuKHNlbGYuX2xlc3NvbnMpfSwKICAgICAgICApCiAgICAgICAgYXdhaXQgbWVtb3J5X2VuZ2luZS5zdG9yZShlbnRyeSkKICAgICAgICBsb2cuaW5mbygid2Vla2x5X2FuYWx5c2lzX3N0b3JlZCIsIGluc2lnaHRzX2xlbj1sZW4oaW5zaWdodHMpKQoKICAgIGRlZiBnZXRfbGVzc29ucyhzZWxmLCBsaW1pdDogaW50ID0gNTApIC0+IExpc3RbRGljdFtzdHIsIEFueV1dOgogICAgICAgIHJldHVybiBzZWxmLl9sZXNzb25zWy1saW1pdDpdCgogICAgZGVmIGdldF9zdGF0cyhzZWxmKSAtPiBEaWN0W3N0ciwgaW50XToKICAgICAgICByZXR1cm4gewogICAgICAgICAgICAidG90YWxfbGVzc29ucyI6IGxlbihzZWxmLl9sZXNzb25zKSwKICAgICAgICAgICAgImZhaWx1cmVzIjogc3VtKDEgZm9yIGwgaW4gc2VsZi5fbGVzc29ucyBpZiBsWyJ0eXBlIl0gPT0gImZhaWx1cmUiKSwKICAgICAgICAgICAgImNvcnJlY3Rpb25zIjogc3VtKDEgZm9yIGwgaW4gc2VsZi5fbGVzc29ucyBpZiBsWyJ0eXBlIl0gPT0gImNvcnJlY3Rpb24iKSwKICAgICAgICB9CgoKc2VsZl9pbXByb3ZlbWVudCA9IFNlbGZJbXByb3ZlbWVudExvb3AoKQo=
+from __future__ import annotations
+
+import json
+import os
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import List, Dict, Any, Optional
+
+from shared.logger import get_logger
+from shared.constants import TaskStatus
+from shared.models import TaskDefinition, MemoryEntry, MemoryQuery
+from shared.constants import MemoryCategory
+from backend.services.llm_service import llm_service
+from backend.memory_engine import memory_engine
+from backend.scheduler import scheduler
+
+log = get_logger("self_improvement")
+
+LESSONS_FILE = Path("./storage/lessons.json")
+
+
+class SelfImprovementLoop:
+    """
+    Pillar X: Analyzes failed tasks, user corrections, and performance data
+    to dynamically update JARVIS's internal instructions and become smarter.
+    """
+
+    def __init__(self) -> None:
+        self._lessons: List[Dict[str, Any]] = self._load_lessons()
+
+    def _load_lessons(self) -> List[Dict[str, Any]]:
+        if LESSONS_FILE.exists():
+            try:
+                return json.loads(LESSONS_FILE.read_text(encoding="utf-8"))
+            except Exception:
+                return []
+        return []
+
+    def _save_lessons(self) -> None:
+        LESSONS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        LESSONS_FILE.write_text(json.dumps(self._lessons, indent=2, default=str), encoding="utf-8")
+
+    async def register_schedules(self) -> None:
+        scheduler.schedule_cron(
+            "self_improvement_weekly",
+            self._weekly_analysis,
+            "0 3 * * 0",
+            description="Weekly self-improvement analysis",
+        )
+        log.info("self_improvement_schedules_registered")
+
+    async def record_failure(self, task: TaskDefinition, error: str) -> None:
+        lesson = {
+            "type": "failure",
+            "task_id": task.task_id,
+            "title": task.title,
+            "agent_type": task.agent_type.value,
+            "error": error[:500],
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+        self._lessons.append(lesson)
+        self._save_lessons()
+        log.info("failure_recorded", task_id=task.task_id)
+
+    async def record_correction(self, user_message: str, correction: str) -> None:
+        lesson = {
+            "type": "correction",
+            "user_said": user_message,
+            "correction": correction,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+        self._lessons.append(lesson)
+        self._save_lessons()
+        log.info("correction_recorded", user_message=user_message[:100])
+
+    async def generate_insights(self) -> str:
+        if not self._lessons:
+            return "No lessons recorded yet."
+
+        recent = self._lessons[-20:]
+        lessons_text = "\n".join(
+            f"- [{l['type']}] {l.get('title', l.get('user_said', 'N/A'))}: {l.get('error', l.get('correction', ''))[:200]}"
+            for l in recent
+        )
+
+        insight = await llm_service.get_response(
+            user_message=(
+                "Analyze these recent failures and corrections from my operation log. "
+                "Identify patterns, root causes, and suggest specific improvements "
+                "to my system instructions or behavior.\n\n"
+                f"Lessons:\n{lessons_text}"
+            ),
+            inject_memory=False,
+            system_instructions="You are JARVIS's self-improvement subsystem. Be analytical and specific.",
+        )
+        return insight
+
+    async def _weekly_analysis(self) -> None:
+        log.info("self_improvement_weekly_analysis")
+        insights = await self.generate_insights()
+
+        entry = MemoryEntry(
+            category=MemoryCategory.DEBUGGING,
+            content=f"Weekly self-improvement insights:\n{insights}",
+            source="self_improvement",
+            tags=["self_improvement", "weekly", "analysis"],
+            metadata={"lesson_count": len(self._lessons)},
+        )
+        await memory_engine.store(entry)
+        log.info("weekly_analysis_stored", insights_len=len(insights))
+
+    def get_lessons(self, limit: int = 50) -> List[Dict[str, Any]]:
+        return self._lessons[-limit:]
+
+    def get_stats(self) -> Dict[str, int]:
+        return {
+            "total_lessons": len(self._lessons),
+            "failures": sum(1 for l in self._lessons if l["type"] == "failure"),
+            "corrections": sum(1 for l in self._lessons if l["type"] == "correction"),
+        }
+
+
+self_improvement = SelfImprovementLoop()

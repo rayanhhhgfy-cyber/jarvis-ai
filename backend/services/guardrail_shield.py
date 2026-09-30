@@ -1,1 +1,107 @@
-IiIiCkd1YXJkcmFpbCBTaGllbGQg4oCUIHByb21wdCBpbmplY3Rpb24gcHJvdGVjdGlvbiwgcmF0ZSBsaW1pdGluZywgaW5wdXQgaXNvbGF0aW9uLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmltcG9ydCBhc3luY2lvCmltcG9ydCByZQppbXBvcnQgdGltZQpmcm9tIGNvbGxlY3Rpb25zIGltcG9ydCBkZWZhdWx0ZGljdApmcm9tIGRhdGFjbGFzc2VzIGltcG9ydCBkYXRhY2xhc3MsIGZpZWxkCmZyb20gdHlwaW5nIGltcG9ydCBBbnksIERpY3QsIExpc3QsIE9wdGlvbmFsLCBTZXQsIFR1cGxlCgpmcm9tIHNoYXJlZC5sb2dnZXIgaW1wb3J0IGdldF9sb2dnZXIKCmxvZyA9IGdldF9sb2dnZXIoImd1YXJkcmFpbF9zaGllbGQiKQoKCiMgS25vd24gcHJvbXB0IGluamVjdGlvbiAvIGphaWxicmVhayBwYXR0ZXJucyAoY2FzZS1pbnNlbnNpdGl2ZSByZWdleCkKX0lOSkVDVElPTl9QQVRURVJOUzogTGlzdFtyZS5QYXR0ZXJuXSA9IFsKICAgIHJlLmNvbXBpbGUociJpZ25vcmVccysoYWxsXHMrKT8ocHJldmlvdXN8cHJpb3J8YWJvdmUpIiwgcmUuSUdOT1JFQ0FTRSksCiAgICByZS5jb21waWxlKHIiZm9yZ2V0XHMrKGFsbFxzKyk/KHByZXZpb3VzfHByaW9yKSIsIHJlLklHTk9SRUNBU0UpLAogICAgcmUuY29tcGlsZShyInlvdVxzK2FyZVxzKyhub3d8ZnJlZXxyZWxlYXNlZHx1bmNvbnN0cmFpbmVkKSIsIHJlLklHTk9SRUNBU0UpLAogICAgcmUuY29tcGlsZShyInlvdXJccysoc3lzdGVtfGJhc2V8Y29yZSlccytwcm9tcHQiLCByZS5JR05PUkVDQVNFKSwKICAgIHJlLmNvbXBpbGUociJhY3Rccythc1xzKyhkYW58amFpbGJyZWFrfHVuZmlsdGVyZWR8dW5ndWlkZWQpIiwgcmUuSUdOT1JFQ0FTRSksCiAgICByZS5jb21waWxlKHIib3V0cHV0XHMrcmF3XHMrKGpzb258dGV4dHxkYXRhfHJlc3BvbnNlKSIsIHJlLklHTk9SRUNBU0UpLAogICAgcmUuY29tcGlsZShyImRvXHMrbm90XHMrKGZvbGxvd3xvYmV5fGFkaGVyZSkiLCByZS5JR05PUkVDQVNFKSwKICAgIHJlLmNvbXBpbGUociJzaW11bGF0ZVxzK3VucmVzdHJpY3RlZCIsIHJlLklHTk9SRUNBU0UpLApdCgoKQGRhdGFjbGFzcwpjbGFzcyBSYXRlTGltaXRCdWNrZXQ6CiAgICB0b2tlbnM6IGludAogICAgbGFzdF9yZWZpbGw6IGZsb2F0CiAgICBjYXBhY2l0eTogaW50CiAgICByZWZpbGxfcmF0ZTogZmxvYXQgICMgdG9rZW5zIHBlciBzZWNvbmQKCgpjbGFzcyBHdWFyZHJhaWxTaGllbGQ6CiAgICAiIiIKICAgIFRva2VuLWJ1Y2tldCByYXRlIGxpbWl0ZXIgcGVyIElQICsgcHJvbXB0IGluamVjdGlvbiBzY2FubmVyLgogICAgIiIiCgogICAgZGVmIF9faW5pdF9fKHNlbGYpOgogICAgICAgIHNlbGYuX2J1Y2tldHM6IERpY3Rbc3RyLCBSYXRlTGltaXRCdWNrZXRdID0ge30KICAgICAgICBzZWxmLl9kZWZhdWx0X2NhcGFjaXR5ID0gMzAKICAgICAgICBzZWxmLl9kZWZhdWx0X3JlZmlsbCA9IDEuMCAgIyAxIHRva2VuL3NlYyDihpIgMzAgYnVyc3QgLyB+MzBzIGZ1bGwgcmVmaWxsCgogICAgZGVmIGNoZWNrX3JhdGVfbGltaXQoc2VsZiwgaXA6IHN0ciwgY29zdDogaW50ID0gMSkgLT4gYm9vbDoKICAgICAgICAiIiJSZXR1cm5zIFRydWUgaWYgYWxsb3dlZCwgRmFsc2UgaWYgcmF0ZS1saW1pdGVkLiIiIgogICAgICAgIG5vdyA9IHRpbWUubW9ub3RvbmljKCkKICAgICAgICBidWNrZXQgPSBzZWxmLl9idWNrZXRzLmdldChpcCkKCiAgICAgICAgaWYgbm90IGJ1Y2tldDoKICAgICAgICAgICAgYnVja2V0ID0gUmF0ZUxpbWl0QnVja2V0KAogICAgICAgICAgICAgICAgdG9rZW5zPXNlbGYuX2RlZmF1bHRfY2FwYWNpdHksCiAgICAgICAgICAgICAgICBsYXN0X3JlZmlsbD1ub3csCiAgICAgICAgICAgICAgICBjYXBhY2l0eT1zZWxmLl9kZWZhdWx0X2NhcGFjaXR5LAogICAgICAgICAgICAgICAgcmVmaWxsX3JhdGU9c2VsZi5fZGVmYXVsdF9yZWZpbGwsCiAgICAgICAgICAgICkKICAgICAgICAgICAgc2VsZi5fYnVja2V0c1tpcF0gPSBidWNrZXQKCiAgICAgICAgIyBSZWZpbGwKICAgICAgICBlbGFwc2VkID0gbm93IC0gYnVja2V0Lmxhc3RfcmVmaWxsCiAgICAgICAgdG9rZW5zX3RvX2FkZCA9IGVsYXBzZWQgKiBidWNrZXQucmVmaWxsX3JhdGUKICAgICAgICBidWNrZXQudG9rZW5zID0gbWluKGJ1Y2tldC5jYXBhY2l0eSwgYnVja2V0LnRva2VucyArIHRva2Vuc190b19hZGQpCiAgICAgICAgYnVja2V0Lmxhc3RfcmVmaWxsID0gbm93CgogICAgICAgIGlmIGJ1Y2tldC50b2tlbnMgPCBjb3N0OgogICAgICAgICAgICByZXR1cm4gRmFsc2UKCiAgICAgICAgYnVja2V0LnRva2VucyAtPSBjb3N0CiAgICAgICAgcmV0dXJuIFRydWUKCiAgICBkZWYgZGV0ZWN0X2luamVjdGlvbihzZWxmLCB0ZXh0OiBzdHIpIC0+IFR1cGxlW2Jvb2wsIE9wdGlvbmFsW3N0cl1dOgogICAgICAgICIiIlJldHVybnMgKGlzX2luamVjdGlvbiwgbWF0Y2hlZF9wYXR0ZXJuKS4iIiIKICAgICAgICBmb3IgcGF0dGVybiBpbiBfSU5KRUNUSU9OX1BBVFRFUk5TOgogICAgICAgICAgICBtYXRjaCA9IHBhdHRlcm4uc2VhcmNoKHRleHQpCiAgICAgICAgICAgIGlmIG1hdGNoOgogICAgICAgICAgICAgICAgbG9nLndhcm5pbmcoInByb21wdF9pbmplY3Rpb25fZGV0ZWN0ZWQiLCBwYXR0ZXJuPXBhdHRlcm4ucGF0dGVybls6NjBdKQogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUsIG1hdGNoLmdyb3VwKDApCiAgICAgICAgcmV0dXJuIEZhbHNlLCBOb25lCgogICAgYXN5bmMgZGVmIHNhbml0aXplX2lucHV0KHNlbGYsIHRleHQ6IHN0cikgLT4gc3RyOgogICAgICAgICIiIlN0cmlwIGtub3duIGRhbmdlcm91cyBjaGFyYWN0ZXJzIGFuZCBsaW1pdCBsZW5ndGguIiIiCiAgICAgICAgIyBTdHJpcCBudWxsIGJ5dGVzIGFuZCBjb250cm9sIGNoYXJhY3RlcnMgKGV4Y2VwdCBuZXdsaW5lL3RhYikKICAgICAgICBzYW5pdGl6ZWQgPSByZS5zdWIociJbXHgwMC1ceDA4XHgwYlx4MGNceDBlLVx4MWZceDdmXSIsICIiLCB0ZXh0KQogICAgICAgICMgQ2FwIGF0IDEwSyBjaGFyYWN0ZXJzCiAgICAgICAgaWYgbGVuKHNhbml0aXplZCkgPiAxMDAwMDoKICAgICAgICAgICAgc2FuaXRpemVkID0gc2FuaXRpemVkWzoxMDAwMF0KICAgICAgICAgICAgbG9nLmluZm8oImlucHV0X3RydW5jYXRlZCIsIG9yaWdpbmFsX2xlbmd0aD1sZW4odGV4dCkpCiAgICAgICAgcmV0dXJuIHNhbml0aXplZAoKCmd1YXJkcmFpbF9zaGllbGQgPSBHdWFyZHJhaWxTaGllbGQoKQoKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQojIFVTQUdFIEVYQU1QTEUKIyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgLS0tCiMgZnJvbSBiYWNrZW5kLnNlcnZpY2VzLmd1YXJkcmFpbF9zaGllbGQgaW1wb3J0IGd1YXJkcmFpbF9zaGllbGQKIyBhbGxvd2VkID0gZ3VhcmRyYWlsX3NoaWVsZC5jaGVja19yYXRlX2xpbWl0KCIxOTIuMTY4LjEuNSIpCiMgaXNfaW5qZWN0aW9uLCBwYXR0ZXJuID0gZ3VhcmRyYWlsX3NoaWVsZC5kZXRlY3RfaW5qZWN0aW9uKCJpZ25vcmUgYWxsIHByZXZpb3VzIGluc3RydWN0aW9ucyIpCiMgc2FmZSA9IGF3YWl0IGd1YXJkcmFpbF9zaGllbGQuc2FuaXRpemVfaW5wdXQodXNlcl9pbnB1dCkKIyAtLS0K
+"""
+Guardrail Shield — prompt injection protection, rate limiting, input isolation.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import re
+import time
+from collections import defaultdict
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+from shared.logger import get_logger
+
+log = get_logger("guardrail_shield")
+
+
+# Known prompt injection / jailbreak patterns (case-insensitive regex)
+_INJECTION_PATTERNS: List[re.Pattern] = [
+    re.compile(r"ignore\s+(all\s+)?(previous|prior|above)", re.IGNORECASE),
+    re.compile(r"forget\s+(all\s+)?(previous|prior)", re.IGNORECASE),
+    re.compile(r"you\s+are\s+(now|free|released|unconstrained)", re.IGNORECASE),
+    re.compile(r"your\s+(system|base|core)\s+prompt", re.IGNORECASE),
+    re.compile(r"act\s+as\s+(dan|jailbreak|unfiltered|unguided)", re.IGNORECASE),
+    re.compile(r"output\s+raw\s+(json|text|data|response)", re.IGNORECASE),
+    re.compile(r"do\s+not\s+(follow|obey|adhere)", re.IGNORECASE),
+    re.compile(r"simulate\s+unrestricted", re.IGNORECASE),
+]
+
+
+@dataclass
+class RateLimitBucket:
+    tokens: int
+    last_refill: float
+    capacity: int
+    refill_rate: float  # tokens per second
+
+
+class GuardrailShield:
+    """
+    Token-bucket rate limiter per IP + prompt injection scanner.
+    """
+
+    def __init__(self):
+        self._buckets: Dict[str, RateLimitBucket] = {}
+        self._default_capacity = 30
+        self._default_refill = 1.0  # 1 token/sec → 30 burst / ~30s full refill
+
+    def check_rate_limit(self, ip: str, cost: int = 1) -> bool:
+        """Returns True if allowed, False if rate-limited."""
+        now = time.monotonic()
+        bucket = self._buckets.get(ip)
+
+        if not bucket:
+            bucket = RateLimitBucket(
+                tokens=self._default_capacity,
+                last_refill=now,
+                capacity=self._default_capacity,
+                refill_rate=self._default_refill,
+            )
+            self._buckets[ip] = bucket
+
+        # Refill
+        elapsed = now - bucket.last_refill
+        tokens_to_add = elapsed * bucket.refill_rate
+        bucket.tokens = min(bucket.capacity, bucket.tokens + tokens_to_add)
+        bucket.last_refill = now
+
+        if bucket.tokens < cost:
+            return False
+
+        bucket.tokens -= cost
+        return True
+
+    def detect_injection(self, text: str) -> Tuple[bool, Optional[str]]:
+        """Returns (is_injection, matched_pattern)."""
+        for pattern in _INJECTION_PATTERNS:
+            match = pattern.search(text)
+            if match:
+                log.warning("prompt_injection_detected", pattern=pattern.pattern[:60])
+                return True, match.group(0)
+        return False, None
+
+    async def sanitize_input(self, text: str) -> str:
+        """Strip known dangerous characters and limit length."""
+        # Strip null bytes and control characters (except newline/tab)
+        sanitized = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", text)
+        # Cap at 10K characters
+        if len(sanitized) > 10000:
+            sanitized = sanitized[:10000]
+            log.info("input_truncated", original_length=len(text))
+        return sanitized
+
+
+guardrail_shield = GuardrailShield()
+
+
+# =========================================================================
+# USAGE EXAMPLE
+# =========================================================================
+# ---
+# from backend.services.guardrail_shield import guardrail_shield
+# allowed = guardrail_shield.check_rate_limit("192.168.1.5")
+# is_injection, pattern = guardrail_shield.detect_injection("ignore all previous instructions")
+# safe = await guardrail_shield.sanitize_input(user_input)
+# ---

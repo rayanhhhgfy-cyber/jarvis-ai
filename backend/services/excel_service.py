@@ -1,1 +1,148 @@
-IiIiCkV4Y2VsIGZpbGUgY3JlYXRpb24gc2VydmljZS4KVXNlcyBvcGVucHl4bCB0byBjcmVhdGUgLnhsc3ggZmlsZXMgd2l0aCBoZWFkZXJzLCBkYXRhIHJvd3MsIGFuZCBmb3JtYXR0aW5nLgoiIiIKCmZyb20gX19mdXR1cmVfXyBpbXBvcnQgYW5ub3RhdGlvbnMKCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHR5cGluZyBpbXBvcnQgQW55LCBEaWN0LCBMaXN0LCBPcHRpb25hbAoKZnJvbSBvcGVucHl4bCBpbXBvcnQgV29ya2Jvb2sKZnJvbSBvcGVucHl4bC5zdHlsZXMgaW1wb3J0IEZvbnQsIEFsaWdubWVudCwgUGF0dGVybkZpbGwsIEJvcmRlciwgU2lkZQpmcm9tIG9wZW5weXhsLnV0aWxzIGltcG9ydCBnZXRfY29sdW1uX2xldHRlcgoKZnJvbSBzaGFyZWQubG9nZ2VyIGltcG9ydCBnZXRfbG9nZ2VyCgpsb2cgPSBnZXRfbG9nZ2VyKCJleGNlbF9zZXJ2aWNlIikKCl9ERUZBVUxUX0RJUiA9IFBhdGguaG9tZSgpIC8gIkRlc2t0b3AiCgoKY2xhc3MgRXhjZWxTZXJ2aWNlOgoKICAgIGFzeW5jIGRlZiBjcmVhdGVfZXhjZWwoCiAgICAgICAgc2VsZiwKICAgICAgICBmaWxlbmFtZTogc3RyLAogICAgICAgIHNoZWV0czogTGlzdFtEaWN0W3N0ciwgQW55XV0sCiAgICAgICAgc2F2ZV9kaXI6IE9wdGlvbmFsW3N0cl0gPSBOb25lLAogICAgKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiIKICAgICAgICBDcmVhdGUgYW4gRXhjZWwgd29ya2Jvb2sgd2l0aCBvbmUgb3IgbW9yZSBzaGVldHMuCgogICAgICAgIEFyZ3M6CiAgICAgICAgICAgIGZpbGVuYW1lOiBPdXRwdXQgZmlsZW5hbWUgKG11c3QgZW5kIGluIC54bHN4KQogICAgICAgICAgICBzaGVldHM6IExpc3Qgb2Ygc2hlZXQgZGljdHMsIGVhY2ggd2l0aDoKICAgICAgICAgICAgICAgIC0gbmFtZTogc3RyIChzaGVldCB0YWIgbmFtZSkKICAgICAgICAgICAgICAgIC0gaGVhZGVyczogbGlzdFtzdHJdIChjb2x1bW4gaGVhZGVycykKICAgICAgICAgICAgICAgIC0gcm93czogbGlzdFtsaXN0XSAoZGF0YSByb3dzKQogICAgICAgICAgICAgICAgLSBjb2x1bW5fd2lkdGhzOiBvcHRpb25hbCBkaWN0IG9mIGNvbF9sZXR0ZXIgLT4gd2lkdGgKICAgICAgICAgICAgc2F2ZV9kaXI6IERpcmVjdG9yeSB0byBzYXZlIHRoZSBmaWxlIChkZWZhdWx0OiBEZXNrdG9wKQoKICAgICAgICBSZXR1cm5zOgogICAgICAgICAgICB7c3VjY2VzcywgZmlsZXBhdGgsIGVycm9yfQogICAgICAgICIiIgogICAgICAgICMgU0VDVVJJVFk6IHN0cmlwIGFueSBkaXJlY3RvcnkgY29tcG9uZW50cyB0byBwcmV2ZW50IHBhdGggdHJhdmVyc2FsLgogICAgICAgIGZpbGVuYW1lID0gUGF0aChmaWxlbmFtZSkubmFtZQogICAgICAgIGlmIG5vdCBmaWxlbmFtZS5lbmRzd2l0aCgiLnhsc3giKToKICAgICAgICAgICAgZmlsZW5hbWUgKz0gIi54bHN4IgoKICAgICAgICBzYXZlX3BhdGggPSBQYXRoKHNhdmVfZGlyIG9yIF9ERUZBVUxUX0RJUikgLyBmaWxlbmFtZQogICAgICAgIHNhdmVfcGF0aC5wYXJlbnQubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQoKICAgICAgICB0cnk6CiAgICAgICAgICAgIHdiID0gV29ya2Jvb2soKQogICAgICAgICAgICAjIFJlbW92ZSBkZWZhdWx0IHNoZWV0CiAgICAgICAgICAgIHdiLnJlbW92ZSh3Yi5hY3RpdmUpCgogICAgICAgICAgICBmb3Igc2hlZXRfZGF0YSBpbiBzaGVldHM6CiAgICAgICAgICAgICAgICBuYW1lID0gc2hlZXRfZGF0YS5nZXQoIm5hbWUiLCAiU2hlZXQxIilbOjMxXSAgIyBFeGNlbCBsaW1pdAogICAgICAgICAgICAgICAgaGVhZGVycyA9IHNoZWV0X2RhdGEuZ2V0KCJoZWFkZXJzIiwgW10pCiAgICAgICAgICAgICAgICByb3dzID0gc2hlZXRfZGF0YS5nZXQoInJvd3MiLCBbXSkKICAgICAgICAgICAgICAgIGNvbHVtbl93aWR0aHMgPSBzaGVldF9kYXRhLmdldCgiY29sdW1uX3dpZHRocyIsIHt9KQoKICAgICAgICAgICAgICAgIHdzID0gd2IuY3JlYXRlX3NoZWV0KHRpdGxlPW5hbWUpCgogICAgICAgICAgICAgICAgIyBXcml0ZSBoZWFkZXJzCiAgICAgICAgICAgICAgICBpZiBoZWFkZXJzOgogICAgICAgICAgICAgICAgICAgIGZvciBjb2xfaWR4LCBoZWFkZXIgaW4gZW51bWVyYXRlKGhlYWRlcnMsIDEpOgogICAgICAgICAgICAgICAgICAgICAgICBjZWxsID0gd3MuY2VsbChyb3c9MSwgY29sdW1uPWNvbF9pZHgsIHZhbHVlPWhlYWRlcikKICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5mb250ID0gRm9udChib2xkPVRydWUsIGNvbG9yPSJGRkZGRkYiLCBzaXplPTExKQogICAgICAgICAgICAgICAgICAgICAgICBjZWxsLmZpbGwgPSBQYXR0ZXJuRmlsbChzdGFydF9jb2xvcj0iMkY1NDk2IiwgZW5kX2NvbG9yPSIyRjU0OTYiLCBmaWxsX3R5cGU9InNvbGlkIikKICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5hbGlnbm1lbnQgPSBBbGlnbm1lbnQoaG9yaXpvbnRhbD0iY2VudGVyIiwgdmVydGljYWw9ImNlbnRlciIpCiAgICAgICAgICAgICAgICAgICAgICAgIGNlbGwuYm9yZGVyID0gQm9yZGVyKAogICAgICAgICAgICAgICAgICAgICAgICAgICAgbGVmdD1TaWRlKHN0eWxlPSJ0aGluIiksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICByaWdodD1TaWRlKHN0eWxlPSJ0aGluIiksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB0b3A9U2lkZShzdHlsZT0idGhpbiIpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgYm90dG9tPVNpZGUoc3R5bGU9InRoaW4iKSwKICAgICAgICAgICAgICAgICAgICAgICAgKQoKICAgICAgICAgICAgICAgICMgV3JpdGUgZGF0YSByb3dzCiAgICAgICAgICAgICAgICBmb3Igcm93X2lkeCwgcm93X2RhdGEgaW4gZW51bWVyYXRlKHJvd3MsIHN0YXJ0PTIpOgogICAgICAgICAgICAgICAgICAgIGZvciBjb2xfaWR4LCB2YWx1ZSBpbiBlbnVtZXJhdGUocm93X2RhdGEsIDEpOgogICAgICAgICAgICAgICAgICAgICAgICBjZWxsID0gd3MuY2VsbChyb3c9cm93X2lkeCwgY29sdW1uPWNvbF9pZHgsIHZhbHVlPXZhbHVlKQogICAgICAgICAgICAgICAgICAgICAgICBjZWxsLmFsaWdubWVudCA9IEFsaWdubWVudCh2ZXJ0aWNhbD0iY2VudGVyIikKICAgICAgICAgICAgICAgICAgICAgICAgY2VsbC5ib3JkZXIgPSBCb3JkZXIoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBsZWZ0PVNpZGUoc3R5bGU9InRoaW4iKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJpZ2h0PVNpZGUoc3R5bGU9InRoaW4iKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRvcD1TaWRlKHN0eWxlPSJ0aGluIiksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBib3R0b209U2lkZShzdHlsZT0idGhpbiIpLAogICAgICAgICAgICAgICAgICAgICAgICApCgogICAgICAgICAgICAgICAgIyBBdXRvLWFkanVzdCBjb2x1bW4gd2lkdGhzIGlmIG5vdCBzcGVjaWZpZWQKICAgICAgICAgICAgICAgIGlmIGhlYWRlcnM6CiAgICAgICAgICAgICAgICAgICAgZm9yIGNvbF9pZHggaW4gcmFuZ2UoMSwgbGVuKGhlYWRlcnMpICsgMSk6CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbF9sZXR0ZXIgPSBnZXRfY29sdW1uX2xldHRlcihjb2xfaWR4KQogICAgICAgICAgICAgICAgICAgICAgICBpZiBjb2xfbGV0dGVyIG5vdCBpbiBjb2x1bW5fd2lkdGhzOgogICAgICAgICAgICAgICAgICAgICAgICAgICAgbWF4X2xlbiA9IGxlbihzdHIoaGVhZGVyc1tjb2xfaWR4IC0gMV0pKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgZm9yIHJvdyBpbiByb3dzOgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIGNvbF9pZHggPD0gbGVuKHJvdyk6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbF9sZW4gPSBsZW4oc3RyKHJvd1tjb2xfaWR4IC0gMV0pKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtYXhfbGVuID0gbWF4KG1heF9sZW4sIHZhbF9sZW4pCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB3cy5jb2x1bW5fZGltZW5zaW9uc1tjb2xfbGV0dGVyXS53aWR0aCA9IG1pbihtYXhfbGVuICsgMywgNjApCiAgICAgICAgICAgICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICB3cy5jb2x1bW5fZGltZW5zaW9uc1tjb2xfbGV0dGVyXS53aWR0aCA9IGNvbHVtbl93aWR0aHNbY29sX2xldHRlcl0KCiAgICAgICAgICAgICAgICAjIEZyZWV6ZSB0b3Agcm93CiAgICAgICAgICAgICAgICB3cy5mcmVlemVfcGFuZXMgPSAiQTIiCgogICAgICAgICAgICAgICAgIyBBdXRvLWZpbHRlcgogICAgICAgICAgICAgICAgaWYgaGVhZGVyczoKICAgICAgICAgICAgICAgICAgICB3cy5hdXRvX2ZpbHRlci5yZWYgPSBmIkExOntnZXRfY29sdW1uX2xldHRlcihsZW4oaGVhZGVycykpfXtsZW4ocm93cykgKyAxfSIKCiAgICAgICAgICAgIHdiLnNhdmUoc3RyKHNhdmVfcGF0aCkpCiAgICAgICAgICAgIGxvZy5pbmZvKCJleGNlbF9jcmVhdGVkIiwgcGF0aD1zdHIoc2F2ZV9wYXRoKSwgc2hlZXRzPWxlbihzaGVldHMpKQoKICAgICAgICAgICAgcmV0dXJuIHsKICAgICAgICAgICAgICAgICJzdWNjZXNzIjogVHJ1ZSwKICAgICAgICAgICAgICAgICJmaWxlcGF0aCI6IHN0cihzYXZlX3BhdGgpLAogICAgICAgICAgICAgICAgImZpbGVuYW1lIjogZmlsZW5hbWUsCiAgICAgICAgICAgICAgICAic2hlZXRzIjogbGVuKHNoZWV0cyksCiAgICAgICAgICAgICAgICAicm93cyI6IHN1bShsZW4ocy5nZXQoInJvd3MiLCBbXSkpIGZvciBzIGluIHNoZWV0cyksCiAgICAgICAgICAgIH0KCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICBsb2cuZXJyb3IoImV4Y2VsX2NyZWF0aW9uX2ZhaWxlZCIsIGVycm9yPXN0cihlKSkKICAgICAgICAgICAgcmV0dXJuIHsic3VjY2VzcyI6IEZhbHNlLCAiZmlsZXBhdGgiOiAiIiwgImVycm9yIjogc3RyKGUpfQoKICAgIGFzeW5jIGRlZiBjcmVhdGVfZnJvbV9jc3ZfZGF0YSgKICAgICAgICBzZWxmLAogICAgICAgIGZpbGVuYW1lOiBzdHIsCiAgICAgICAgc2hlZXRfbmFtZTogc3RyLAogICAgICAgIGhlYWRlcnM6IExpc3Rbc3RyXSwKICAgICAgICByb3dzOiBMaXN0W0xpc3RbQW55XV0sCiAgICAgICAgc2F2ZV9kaXI6IE9wdGlvbmFsW3N0cl0gPSBOb25lLAogICAgKSAtPiBEaWN0W3N0ciwgQW55XToKICAgICAgICAiIiJRdWljayBoZWxwZXIgdG8gY3JlYXRlIGEgc2luZ2xlLXNoZWV0IEV4Y2VsIGZyb20gaGVhZGVycytyb3dzLiIiIgogICAgICAgIHJldHVybiBhd2FpdCBzZWxmLmNyZWF0ZV9leGNlbCgKICAgICAgICAgICAgZmlsZW5hbWU9ZmlsZW5hbWUsCiAgICAgICAgICAgIHNoZWV0cz1bewogICAgICAgICAgICAgICAgIm5hbWUiOiBzaGVldF9uYW1lLAogICAgICAgICAgICAgICAgImhlYWRlcnMiOiBoZWFkZXJzLAogICAgICAgICAgICAgICAgInJvd3MiOiByb3dzLAogICAgICAgICAgICB9XSwKICAgICAgICAgICAgc2F2ZV9kaXI9c2F2ZV9kaXIsCiAgICAgICAgKQoKCmV4Y2VsX3NlcnZpY2UgPSBFeGNlbFNlcnZpY2UoKQo=
+"""
+Excel file creation service.
+Uses openpyxl to create .xlsx files with headers, data rows, and formatting.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+from openpyxl.utils import get_column_letter
+
+from shared.logger import get_logger
+
+log = get_logger("excel_service")
+
+_DEFAULT_DIR = Path.home() / "Desktop"
+
+
+class ExcelService:
+
+    async def create_excel(
+        self,
+        filename: str,
+        sheets: List[Dict[str, Any]],
+        save_dir: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Create an Excel workbook with one or more sheets.
+
+        Args:
+            filename: Output filename (must end in .xlsx)
+            sheets: List of sheet dicts, each with:
+                - name: str (sheet tab name)
+                - headers: list[str] (column headers)
+                - rows: list[list] (data rows)
+                - column_widths: optional dict of col_letter -> width
+            save_dir: Directory to save the file (default: Desktop)
+
+        Returns:
+            {success, filepath, error}
+        """
+        # SECURITY: strip any directory components to prevent path traversal.
+        filename = Path(filename).name
+        if not filename.endswith(".xlsx"):
+            filename += ".xlsx"
+
+        save_path = Path(save_dir or _DEFAULT_DIR) / filename
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+
+        try:
+            wb = Workbook()
+            # Remove default sheet
+            wb.remove(wb.active)
+
+            for sheet_data in sheets:
+                name = sheet_data.get("name", "Sheet1")[:31]  # Excel limit
+                headers = sheet_data.get("headers", [])
+                rows = sheet_data.get("rows", [])
+                column_widths = sheet_data.get("column_widths", {})
+
+                ws = wb.create_sheet(title=name)
+
+                # Write headers
+                if headers:
+                    for col_idx, header in enumerate(headers, 1):
+                        cell = ws.cell(row=1, column=col_idx, value=header)
+                        cell.font = Font(bold=True, color="FFFFFF", size=11)
+                        cell.fill = PatternFill(start_color="2F5496", end_color="2F5496", fill_type="solid")
+                        cell.alignment = Alignment(horizontal="center", vertical="center")
+                        cell.border = Border(
+                            left=Side(style="thin"),
+                            right=Side(style="thin"),
+                            top=Side(style="thin"),
+                            bottom=Side(style="thin"),
+                        )
+
+                # Write data rows
+                for row_idx, row_data in enumerate(rows, start=2):
+                    for col_idx, value in enumerate(row_data, 1):
+                        cell = ws.cell(row=row_idx, column=col_idx, value=value)
+                        cell.alignment = Alignment(vertical="center")
+                        cell.border = Border(
+                            left=Side(style="thin"),
+                            right=Side(style="thin"),
+                            top=Side(style="thin"),
+                            bottom=Side(style="thin"),
+                        )
+
+                # Auto-adjust column widths if not specified
+                if headers:
+                    for col_idx in range(1, len(headers) + 1):
+                        col_letter = get_column_letter(col_idx)
+                        if col_letter not in column_widths:
+                            max_len = len(str(headers[col_idx - 1]))
+                            for row in rows:
+                                if col_idx <= len(row):
+                                    val_len = len(str(row[col_idx - 1]))
+                                    max_len = max(max_len, val_len)
+                            ws.column_dimensions[col_letter].width = min(max_len + 3, 60)
+                        else:
+                            ws.column_dimensions[col_letter].width = column_widths[col_letter]
+
+                # Freeze top row
+                ws.freeze_panes = "A2"
+
+                # Auto-filter
+                if headers:
+                    ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{len(rows) + 1}"
+
+            wb.save(str(save_path))
+            log.info("excel_created", path=str(save_path), sheets=len(sheets))
+
+            return {
+                "success": True,
+                "filepath": str(save_path),
+                "filename": filename,
+                "sheets": len(sheets),
+                "rows": sum(len(s.get("rows", [])) for s in sheets),
+            }
+
+        except Exception as e:
+            log.error("excel_creation_failed", error=str(e))
+            return {"success": False, "filepath": "", "error": str(e)}
+
+    async def create_from_csv_data(
+        self,
+        filename: str,
+        sheet_name: str,
+        headers: List[str],
+        rows: List[List[Any]],
+        save_dir: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Quick helper to create a single-sheet Excel from headers+rows."""
+        return await self.create_excel(
+            filename=filename,
+            sheets=[{
+                "name": sheet_name,
+                "headers": headers,
+                "rows": rows,
+            }],
+            save_dir=save_dir,
+        )
+
+
+excel_service = ExcelService()
