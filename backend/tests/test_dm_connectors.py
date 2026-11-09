@@ -15,6 +15,7 @@ was touched.
 from __future__ import annotations
 
 import json
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import httpx
@@ -509,7 +510,7 @@ def _msg(platform, thread_id, sender_id, sender_name, text, message_id, is_group
 
 
 @pytest.mark.asyncio
-async def test_responder_replies_once_then_skips_seen(tmp_vault, tmp_path, monkeypatch):
+async def test_responder_waits_one_minute_then_replies_once(tmp_vault, tmp_path, monkeypatch):
     dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
     responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
     incoming = [
@@ -520,7 +521,10 @@ async def test_responder_replies_once_then_skips_seen(tmp_vault, tmp_path, monke
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None):
+    seen_first_reply = []
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+        seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -533,10 +537,127 @@ async def test_responder_replies_once_then_skips_seen(tmp_vault, tmp_path, monke
         lambda notification: _noop_coro(True),
     )
 
+    # First poll: the message is new, so Jarvis records it and waits out
+    # the one-minute rule instead of replying immediately.
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 0
+    assert fake.sent == []
+    # A second poll inside the minute still waits.
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 0
+    assert fake.sent == []
+    # Once a minute has passed since it was first seen, it replies —
+    # with the intro (first reply in this thread).
+    responder._pending["messenger"]["t1"]["first_seen"] = (
+        datetime.now(UTC) - timedelta(seconds=61)
+    ).isoformat()
     result = await responder.poll_once()
     assert result["messenger"]["replied"] == 1
     assert fake.sent == [("t1", "أهلاً!")]
-    # Second poll: the same message is now seen, so nothing is sent again.
+    assert seen_first_reply == [True]
+    # Third poll: the same message is now seen, so nothing is sent again.
     result2 = await responder.poll_once()
     assert result2["messenger"]["replied"] == 0
     assert len(fake.sent) == 1
+
+
+@pytest.mark.asyncio
+async def test_responder_follow_up_replies_without_wait(tmp_vault, tmp_path, monkeypatch):
+    """Once Jarvis introduced itself, follow-ups keep the back-and-forth going."""
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    fake = _FakeClient(user_id="111111", messages=[
+        _msg("messenger", "t1", "999", "Friend", "مرحبا", "m1"),
+    ])
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    seen_first_reply = []
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+        seen_first_reply.append(first_reply)
+        return {"ok": True, "reply": "أهلاً!", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+
+    # Intro reply (after the minute).
+    await responder.poll_once()
+    responder._pending["messenger"]["t1"]["first_seen"] = (
+        datetime.now(UTC) - timedelta(seconds=61)
+    ).isoformat()
+    await responder.poll_once()
+    assert len(fake.sent) == 1
+    assert seen_first_reply == [True]
+    # The friend writes back: a new message id in the same thread.
+    # Jarvis replies on the next poll, without another minute's wait,
+    # and with the follow-up prompt (no re-introduction).
+    fake._messages = [_msg("messenger", "t1", "999", "Friend", "تمام، شكراً", "m2")]
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 1
+    assert len(fake.sent) == 2
+    assert seen_first_reply == [True, False]
+
+
+@pytest.mark.asyncio
+async def test_responder_stands_down_when_sir_replies(tmp_vault, tmp_path, monkeypatch):
+    """If Sir answers the thread himself inside the minute, Jarvis never replies."""
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    fake = _FakeClient(user_id="111111", messages=[
+        _msg("messenger", "t1", "999", "Friend", "مرحبا", "m1"),
+    ])
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+        return {"ok": True, "reply": "أهلاً!", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+
+    await responder.poll_once()
+    assert responder._pending["messenger"]["t1"]["message_id"] == "m1"
+    # Sir replies himself before the minute is up.
+    fake._messages = [_msg("messenger", "t1", "111111", "Me", "هلا", "m2")]
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 0
+    assert fake.sent == []
+    assert responder._pending.get("messenger", {}).get("t1") is None
+
+
+@pytest.mark.asyncio
+async def test_dm_llm_intro_vs_follow_up_prompt(monkeypatch):
+    """First reply introduces Jarvis + busy; follow-up keeps going, no re-intro."""
+    monkeypatch.setattr("backend.services.dm_llm.settings.groq_api_key", "fake-groq-key")
+    monkeypatch.setattr("backend.services.dm_llm.settings.gemini_api_key", "fake-gemini-key")
+    seen_prompts = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content.decode())
+        seen_prompts.append(body["messages"][0]["content"])
+        return httpx.Response(200, json={
+            "choices": [{"message": {"content": "أهلاً! أنا جارفيس."}}],
+        }, request=request)
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+        first = await generate_dm_reply("messenger", "Friend", "مرحبا", client=client, first_reply=True)
+        follow = await generate_dm_reply("messenger", "Friend", "تمام", client=client, first_reply=False)
+    assert first["ok"] is True and follow["ok"] is True
+    assert "introduce yourself briefly as Jarvis" in seen_prompts[0]
+    assert "busy right now" in seen_prompts[0]
+    assert "make sure Rayyan sees it" in seen_prompts[0]
+    assert "already introduced yourself as Jarvis" in seen_prompts[1]
+    assert "do not introduce yourself again" in seen_prompts[1]

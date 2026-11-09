@@ -9,13 +9,23 @@ Gemini 2.5 Flash fallback) and sends it as Sir.
 Rules, by design:
 * Only runs when ``DM_RESPONDER_ENABLED=true`` in env AND at least one
   connector is connected. Default is OFF.
+* It works on its own, on the server: each poll opens the recent
+  threads, replies, and is done — Sir never has to open Instagram or
+  Messenger himself for Jarvis to answer.
 * Only one-to-one threads (never groups), never replies to Sir's own
   messages, never replies twice to the same message (seen-state file).
+* The one-minute rule: when a friend messages and Sir has not answered
+  within one minute, Jarvis replies. The first reply in a conversation
+  introduces Jarvis, says Sir is busy and cannot respond right now, and
+  invites the friend to tell Jarvis if it is important — Jarvis will
+  make sure Sir sees it. Follow-ups keep the conversation going
+  back-and-forth (no re-introduction) and answer promptly, still
+  stepping aside the moment Sir replies himself.
 * At most 5 replies per platform per poll, so a flood can never turn
   into a spam run.
 * Every failure is logged and surfaced in status; the loop never dies
   silently. A new DM also fires a Web Push notification so Sir knows
-  Jarvis answered.
+  Jarvis answered — that push is how Jarvis reports back to him.
 * Credentials are read from the encrypted connector vault at poll time
   (cookies/session preferred when present, else email+password login).
 """
@@ -41,6 +51,10 @@ from shared.logger import get_logger
 log = get_logger("dm_responder")
 
 _MAX_REPLIES_PER_POLL = 5
+# Give Sir one minute to answer a new message himself before Jarvis
+# steps in. (Polls run every dm_poll_interval_seconds, 60s by default,
+# so the first reply lands roughly 1–2 minutes after their message.)
+_REPLY_DELAY_SECONDS = 60
 _SEEN_FILE = "./storage/dm_seen.json"
 
 
@@ -50,6 +64,12 @@ class DMResponder:
     def __init__(self, seen_path: str = _SEEN_FILE) -> None:
         self._seen_path = Path(seen_path)
         self._seen: dict[str, dict[str, str]] = {}  # platform -> thread_id -> message_id
+        # Messages waiting out the one-minute rule:
+        # platform -> thread_id -> {"message_id", "first_seen" (ISO time)}
+        self._pending: dict[str, dict[str, dict[str, str]]] = {}
+        # Threads where Jarvis already introduced itself:
+        # platform -> thread_id -> True
+        self._introduced: dict[str, dict[str, bool]] = {}
         self._task: asyncio.Task | None = None
         self._running = False
         self._state: dict[str, dict[str, Any]] = {
@@ -160,22 +180,50 @@ class DMResponder:
                 continue
             if not msg.get("text"):
                 continue
+            thread_id = msg["thread_id"]
             if client.user_id and str(msg.get("sender_id")) == str(client.user_id):
-                continue  # never reply to Sir's own messages
-            seen_id = self._seen.get(platform, {}).get(msg["thread_id"])
-            if seen_id == msg["message_id"]:
+                # Sir answered this thread himself — Jarvis stands down.
+                self._clear_pending(platform, thread_id)
                 continue
+            seen_id = self._seen.get(platform, {}).get(thread_id)
+            if seen_id == msg["message_id"]:
+                self._clear_pending(platform, thread_id)
+                continue
+            first_reply = not self._introduced.get(platform, {}).get(thread_id)
+            if first_reply:
+                # The one-minute rule: give Sir a minute to answer a new
+                # message himself. Record when it was first seen and wait;
+                # a newer message restarts the clock.
+                pending = self._pending.get(platform, {}).get(thread_id)
+                if not pending or pending.get("message_id") != msg["message_id"]:
+                    self._pending.setdefault(platform, {})[thread_id] = {
+                        "message_id": msg["message_id"],
+                        "first_seen": datetime.now(UTC).isoformat(),
+                    }
+                    self._persist_state()
+                    continue
+                try:
+                    first_seen = datetime.fromisoformat(pending["first_seen"])
+                except (KeyError, TypeError, ValueError):
+                    first_seen = datetime.now(UTC)
+                waited = (datetime.now(UTC) - first_seen).total_seconds()
+                if waited < _REPLY_DELAY_SECONDS:
+                    continue
             # Generate + send the reply.
-            gen = await generate_dm_reply(platform, msg["sender_name"], msg["text"])
+            gen = await generate_dm_reply(
+                platform, msg["sender_name"], msg["text"], first_reply=first_reply
+            )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))
                 continue
             try:
-                await client.send(msg["thread_id"], gen["reply"])
+                await client.send(thread_id, gen["reply"])
             except Exception as e:
                 log.warning("dm_reply_send_failed", platform=platform, error=str(e))
                 continue
-            self._mark_seen(platform, msg["thread_id"], msg["message_id"])
+            self._mark_seen(platform, thread_id, msg["message_id"])
+            self._introduced.setdefault(platform, {})[thread_id] = True
+            self._clear_pending(platform, thread_id)
             replied += 1
             self._state[platform]["replied"] += 1
             await self._notify_new_dm(platform, msg)
@@ -198,17 +246,39 @@ class DMResponder:
     def _load_seen(self) -> None:
         try:
             if self._seen_path.exists():
-                self._seen = json.loads(self._seen_path.read_text(encoding="utf-8"))
+                data = json.loads(self._seen_path.read_text(encoding="utf-8"))
+                if isinstance(data, dict) and "seen" in data:
+                    self._seen = data.get("seen") or {}
+                    self._pending = data.get("pending") or {}
+                    self._introduced = data.get("introduced") or {}
+                elif isinstance(data, dict):
+                    # Old flat format: the whole file was the seen map.
+                    self._seen = data
         except Exception:
             self._seen = {}
+            self._pending = {}
+            self._introduced = {}
+
+    def _persist_state(self) -> None:
+        try:
+            self._seen_path.parent.mkdir(parents=True, exist_ok=True)
+            self._seen_path.write_text(json.dumps({
+                "seen": self._seen,
+                "pending": self._pending,
+                "introduced": self._introduced,
+            }), encoding="utf-8")
+        except Exception as e:
+            log.warning("dm_seen_persist_failed", error=str(e))
+
+    def _clear_pending(self, platform: str, thread_id: str) -> None:
+        if self._pending.get(platform, {}).pop(thread_id, None) is not None:
+            if not self._pending[platform]:
+                self._pending.pop(platform, None)
+            self._persist_state()
 
     def _mark_seen(self, platform: str, thread_id: str, message_id: str) -> None:
         self._seen.setdefault(platform, {})[thread_id] = message_id
-        try:
-            self._seen_path.parent.mkdir(parents=True, exist_ok=True)
-            self._seen_path.write_text(json.dumps(self._seen), encoding="utf-8")
-        except Exception as e:
-            log.warning("dm_seen_persist_failed", error=str(e))
+        self._persist_state()
 
     async def _notify_new_dm(self, platform: str, msg: dict[str, Any]) -> None:
         """Web Push so Sir knows Jarvis answered a DM."""
