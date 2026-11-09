@@ -1,10 +1,11 @@
 # ====================================================================
-# JARVIS OMEGA — LLM Reasoning Service (MythoMax)
+# JARVIS OMEGA — LLM Reasoning Service (Groq primary, OpenRouter fallback)
 # ====================================================================
 """
-Reasoning engine using MythoMax-L2-13B via OpenRouter. Constructs prompts,
-injects memory context, structures user messages, and streams or blocks
-replies for conversation processing.
+Reasoning engine using Groq Llama 3.3 70B (free tier) as the primary
+provider, with OpenRouter MythoMax as a fallback when an OpenRouter key
+is configured. Constructs prompts, injects memory context, structures
+user messages, and streams or blocks replies for conversation processing.
 
 Now includes web search tool integration for real-time data access.
 """
@@ -24,6 +25,13 @@ from shared.logger import get_logger
 from shared.models import MemoryContext
 
 log = get_logger("llm_service")
+
+# Provider endpoints. Groq is the primary chat provider (free tier, key
+# already in Render as GROQ_API_KEY); OpenRouter stays as a fallback.
+# Same request shape as backend/services/dm_llm.py.
+GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Keywords that suggest the user wants real-time information
 # (English + Arabic — Sir speaks both, and Arabic questions must trigger
@@ -61,8 +69,9 @@ def _needs_web_search(message: str) -> bool:
 
 class LLMService:
     """
-    Core reasoning service for JARVIS OMEGA. Interfaces with OpenRouter MythoMax
-    model, packaging queries with structured historical context and vector memory.
+    Core reasoning service for JARVIS OMEGA. Interfaces with Groq Llama 3.3 70B
+    as the primary provider (OpenRouter MythoMax as fallback), packaging queries
+    with structured historical context and vector memory.
     Now with integrated web search for real-time data.
     """
 
@@ -71,7 +80,10 @@ class LLMService:
     _MAX_ATTEMPTS = 3
 
     def __init__(self) -> None:
-        self._api_url = "https://openrouter.ai/api/v1/chat/completions"
+        # Primary provider (Groq). _api_url is kept as the primary URL so
+        # _post_with_retries defaults to Groq.
+        self._api_url = GROQ_URL
+        self._openrouter_url = OPENROUTER_URL
 
     async def get_response(
         self,
@@ -81,9 +93,9 @@ class LLMService:
         system_instructions: Optional[str] = None,
     ) -> str:
         """
-        Sends query to MythoMax. Constructs prompt injecting memory and context.
-        Performs web search when the query requires real-time data.
-        Returns the assistant's string reply.
+        Sends query to Groq (OpenRouter fallback). Constructs prompt injecting
+        memory and context. Performs web search when the query requires
+        real-time data. Returns the assistant's string reply.
         """
         chat_history = chat_history or []
         
@@ -149,70 +161,119 @@ class LLMService:
         # Add current user prompt
         messages.append({"role": "user", "content": user_message})
 
-        # 5. Call OpenRouter
-        api_key = settings.openrouter_api_key
-        if not api_key:
-            log.warning("openrouter_api_key_missing_mocking_mythomax")
-            return "Sir, I require an OpenRouter API key to activate my full reasoning networks. Please configure my environment with OPENROUTER_API_KEY."
+        # 5. Call Groq (primary), OpenRouter fallback.
+        groq_key = settings.groq_api_key
+        groq_failure: Optional[str] = None
+        if groq_key:
+            groq_headers = {
+                "Authorization": f"Bearer {groq_key}",
+                "Content-Type": "application/json",
+            }
+            groq_payload = {
+                "model": GROQ_MODEL,
+                "messages": messages,
+                "temperature": 0.5,
+                "max_tokens": settings.llm_max_tokens,
+            }
+            ok, reply = await self._post_chat(
+                GROQ_URL, groq_headers, groq_payload, provider="groq"
+            )
+            if ok:
+                return reply
+            groq_failure = reply
+            log.warning("groq_llm_failed_trying_openrouter_fallback")
+        else:
+            log.warning("groq_api_key_missing")
 
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "HTTP-Referer": "https://github.com/rayanhhhgfy-cyber/jarvis-ai",
-            "X-Title": "JARVIS OMEGA Command Station",
-            "Content-Type": "application/json",
-        }
+        openrouter_key = settings.openrouter_api_key
+        if openrouter_key:
+            openrouter_headers = {
+                "Authorization": f"Bearer {openrouter_key}",
+                "HTTP-Referer": "https://github.com/rayanhhhgfy-cyber/jarvis-ai",
+                "X-Title": "JARVIS OMEGA Command Station",
+                "Content-Type": "application/json",
+            }
+            openrouter_payload = {
+                "model": settings.mythomax_model,
+                "messages": messages,
+                "temperature": 0.5,
+                "max_tokens": settings.llm_max_tokens,
+            }
+            return await self._post_with_retries(
+                openrouter_headers,
+                openrouter_payload,
+                url=self._openrouter_url,
+                provider="openrouter",
+            )
 
-        payload = {
-            "model": settings.mythomax_model,
-            "messages": messages,
-            "temperature": 0.5,
-            "max_tokens": settings.llm_max_tokens,
-        }
+        if groq_failure is not None:
+            return groq_failure
+        return "Sir, I require a Groq API key to activate my full reasoning networks. Please configure my environment with GROQ_API_KEY."
 
-        return await self._post_with_retries(headers, payload)
-
-    async def _post_with_retries(self, headers: Dict[str, str], payload: Dict[str, Any]) -> str:
+    async def _post_chat(
+        self,
+        url: str,
+        headers: Dict[str, str],
+        payload: Dict[str, Any],
+        provider: str,
+    ) -> tuple[bool, str]:
         """
-        POST to OpenRouter with bounded exponential backoff on transient
-        failures (timeouts, connection errors, rate limits, 5xx). Always
-        returns a graceful in-character message rather than raising.
+        POST a chat-completions request with bounded exponential backoff on
+        transient failures (timeouts, connection errors, rate limits, 5xx).
+        Returns (True, reply) on success, (False, graceful message) when the
+        provider could not produce a reply. Never raises.
         """
         last_error = "unknown error"
 
         async with httpx.AsyncClient(timeout=90.0) as client:
             for attempt in range(1, self._MAX_ATTEMPTS + 1):
                 try:
-                    response = await client.post(self._api_url, headers=headers, json=payload)
+                    response = await client.post(url, headers=headers, json=payload)
 
                     if response.status_code == 200:
                         result_json = response.json()
                         choices = result_json.get("choices", [])
                         if not choices:
-                            return "Sir, my reasoning nodes returned an empty response."
+                            return False, "Sir, my reasoning nodes returned an empty response."
                         reply = choices[0].get("message", {}).get("content", "").strip()
-                        log.info("llm_response_received", reply_length=len(reply), attempt=attempt)
-                        return reply
+                        log.info("llm_response_received", provider=provider, reply_length=len(reply), attempt=attempt)
+                        return True, reply
 
                     last_error = f"HTTP {response.status_code}"
                     if response.status_code in self._RETRYABLE_STATUS and attempt < self._MAX_ATTEMPTS:
-                        log.warning("openrouter_llm_retryable_error", status_code=response.status_code, attempt=attempt)
+                        log.warning(f"{provider}_llm_retryable_error", status_code=response.status_code, attempt=attempt)
                     else:
-                        log.error("openrouter_llm_error", status_code=response.status_code, body=response.text)
-                        return "Sir, I encountered an error communicating with my reasoning cores."
+                        log.error(f"{provider}_llm_error", status_code=response.status_code, body=response.text)
+                        return False, "Sir, I encountered an error communicating with my reasoning cores."
 
                 except (httpx.TimeoutException, httpx.TransportError) as he:
                     last_error = str(he)
-                    log.warning("openrouter_llm_transient_failure", error=str(he), attempt=attempt)
+                    log.warning(f"{provider}_llm_transient_failure", error=str(he), attempt=attempt)
                 except httpx.HTTPError as he:
-                    log.error("openrouter_llm_http_failed", error=str(he))
-                    return "Sir, my communication gateway encountered an error."
+                    log.error(f"{provider}_llm_http_failed", error=str(he))
+                    return False, "Sir, my communication gateway encountered an error."
 
                 # Backoff before the next attempt (0.5s, 1s, ...)
                 if attempt < self._MAX_ATTEMPTS:
                     await asyncio.sleep(0.5 * (2 ** (attempt - 1)))
 
-        log.error("openrouter_llm_exhausted_retries", error=last_error)
-        return "Sir, my communication gateway timed out after several attempts."
+        log.error(f"{provider}_llm_exhausted_retries", error=last_error)
+        return False, "Sir, my communication gateway timed out after several attempts."
+
+    async def _post_with_retries(
+        self,
+        headers: Dict[str, str],
+        payload: Dict[str, Any],
+        url: Optional[str] = None,
+        provider: str = "groq",
+    ) -> str:
+        """
+        POST with retries, returning just the reply string. Kept for
+        backward compatibility; new code should use _post_chat so a failed
+        primary can fall through to the next provider.
+        """
+        _, reply = await self._post_chat(url or self._api_url, headers, payload, provider)
+        return reply
 
     def _build_default_system_prompt(self) -> str:
         """Construct the default system identity instructions."""
