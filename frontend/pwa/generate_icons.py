@@ -16,6 +16,11 @@ only, so binary assets cannot be pushed through it. Instead:
     (``frontend/vercel.json`` buildCommand) so the icons exist as
     real static files at deploy time.
 
+The live PWA logo is the supplied Jarvis mark (robot head + ring),
+generated once into ``frontend/pwa/icons/``. This script NEVER
+overwrites an icon that already exists — it only fills in a missing
+one — so the Jarvis logo cannot be replaced by the old "J" mark.
+
 Run:  python3 frontend/pwa/generate_icons.py
 """
 
@@ -28,7 +33,14 @@ ICON_SIZES = {"icon-192.png": 192, "icon-512.png": 512, "apple-touch-icon.png": 
 
 
 def render_icon(filename: str, path: Path) -> bool:
-    """Render one icon. Returns True when the file now exists."""
+    """Render one icon. Returns True when the file now exists.
+
+    Never overwrites an existing icon: the live PWA logo is the
+    supplied Jarvis mark, and this fallback must not replace it.
+    """
+    if path.exists():
+        print(f"{filename}: SKIP (already exists, keeping it) ({path})")
+        return True
     try:
         from PIL import Image, ImageDraw, ImageFont
     except ImportError:
