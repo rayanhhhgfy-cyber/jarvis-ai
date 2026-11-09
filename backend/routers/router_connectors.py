@@ -129,6 +129,15 @@ async def connect_connector(connector_id: str, req: ConnectorConnectRequest) -> 
             detail="method must be 'cookies' or 'password'.",
         )
 
+    # A fresh connection must wake the responder: it only starts at boot,
+    # and at boot there may have been no connector yet. start() is a
+    # no-op when disabled or already running, so this is safe to call on
+    # every connect. A failure here must never fail the connect itself.
+    try:
+        await dm_responder.start()
+    except Exception as start_err:
+        log.warning("dm_responder_start_after_connect_failed", error=str(start_err))
+
     return dm_auth.connector_status(connector_id)
 
 
