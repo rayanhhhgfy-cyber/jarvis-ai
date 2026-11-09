@@ -35,6 +35,12 @@ from backend.services.tts_service import tts_service
 from backend.services.memory_service import memory_service
 from backend.services.command_interpreter import command_interpreter
 from backend.services.command_safety import command_safety, SafetyVerdict, VerdictLevel
+from backend.services.system_toggles import (
+    format_state_report,
+    get_state,
+    parse_toggle_request,
+    request_toggle,
+)
 from backend.approval_gateway import approval_gateway
 from backend.task_manager import task_manager
 from backend.config import settings
@@ -359,6 +365,51 @@ async def process_chat(request: ChatRequest):
                 }
         except Exception as gr_err:
             log.warning("guardrail_check_failed", error=str(gr_err))
+
+    # =================================================================
+    # CHAT CONTROL: system toggles ("turn off the DM responder",
+    # "what is on?"). Handled here, before the interpreter / LLM, so a
+    # toggle request never becomes an OS command or LLM chatter.
+    # Toggle changes go through the approval gateway (same pattern as
+    # _dispatch_and_wait for destructive commands) and are applied
+    # only if Sir approves; denial / timeout changes nothing.
+    # =================================================================
+    toggle_intent = parse_toggle_request(request.message)
+    if toggle_intent is not None:
+        session_id = request.conversation_id or "default_session"
+        if toggle_intent["kind"] == "state":
+            toggle_reply = format_state_report(get_state())
+        else:
+            result = await request_toggle(
+                toggle_intent["toggle_id"], toggle_intent["desired"], timeout=300.0
+            )
+            if result.get("applied"):
+                state_word = "ON" if result["enabled"] else "OFF"
+                toggle_reply = (
+                    f"Sir, done — {result['label']} is now {state_word}."
+                    + (f" {result['note']}" if result.get("note") else "")
+                )
+            elif result.get("already"):
+                toggle_reply = f"Sir, {result['reason']}"
+            else:
+                toggle_reply = (
+                    "Sir, I didn't change anything — "
+                    f"{result.get('reason', 'the toggle was not approved.')}"
+                )
+        history_full = _dialogue_histories.setdefault(session_id, [])
+        history_full.append({"role": "user", "content": request.message})
+        history_full.append({"role": "assistant", "content": toggle_reply})
+        max_msgs = settings.dialogue_history_max_turns * 2
+        if len(history_full) > max_msgs:
+            del history_full[: len(history_full) - max_msgs]
+        return {
+            "content": toggle_reply,
+            "conversation_id": session_id,
+            "agents_invoked": [],
+            "tasks_created": [],
+            "memories_stored": [],
+            "audio_base64": "",
+        }
 
     try:
         # =================================================================

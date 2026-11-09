@@ -80,6 +80,18 @@ class NotificationEngine:
         self._history.append(notification)
         await self._persist_history()
 
+        # Chat-controlled mute (backend/services/system_toggles.py):
+        # while muted, pushes are logged in history but never delivered.
+        # Imported lazily to avoid an import cycle with system_toggles.
+        try:
+            from backend.services.system_toggles import is_notifications_muted
+
+            if is_notifications_muted():
+                log.info("push_muted_skipping_delivery", title=notification.title)
+                return False
+        except (ImportError, AttributeError) as mute_err:
+            log.debug("push_mute_check_failed", error=str(mute_err))
+
         devices_to_notify = notification.target_devices or list(self._subscriptions.keys())
         if not devices_to_notify:
             log.debug("no_devices_registered_for_push")

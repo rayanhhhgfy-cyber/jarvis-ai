@@ -58,6 +58,7 @@ from backend.routers.router_downloads import router as router_downloads
 from backend.routers.router_patterns import router as router_patterns
 from backend.routers.router_focus import router as router_focus
 from backend.routers.router_media_generation import router as router_media_generation
+from backend.routers.router_toggles import router as router_toggles
 
 from shared.logger import setup_logging, get_logger, AuditLogger
 from shared.security import init_security, verify_token
@@ -840,6 +841,7 @@ app.include_router(router_hardware)
 app.include_router(router_downloads)
 app.include_router(router_patterns)
 app.include_router(router_focus)
+app.include_router(router_toggles)
 app.include_router(router_media_generation)
 
 
