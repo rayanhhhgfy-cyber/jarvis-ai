@@ -918,3 +918,33 @@ def test_parse_introduce_request_rejects():
     assert _parse_introduce_request("what is the weather") is False
     assert _parse_introduce_request("send a message to Sara") is False
     assert _parse_introduce_request("turn off the dm responder") is False
+
+
+@pytest.mark.asyncio
+async def test_catch_up_marks_existing_threads_seen_without_replying(tmp_path, monkeypatch):
+    """On start, catch-up records all current threads as seen+introduced
+    and sends NOTHING — so a fresh seen-state (wiped on redeploy) never
+    makes the responder introduce itself to the whole old inbox."""
+    import backend.services.dm_responder as dm_resp_mod
+    from backend.services.dm_responder import DMResponder
+
+    threads = [
+        {"thread_id": "t1", "sender_id": "111", "sender_name": "Sara",
+         "text": "hi", "message_id": "m1", "is_group": False},
+        {"thread_id": "t2", "sender_id": "222", "sender_name": "Omar",
+         "text": "hey", "message_id": "m2", "is_group": False},
+    ]
+    client, sent = _fake_dm_client(monkeypatch, threads)
+    monkeypatch.setattr(dm_resp_mod.dm_auth, "load_connector",
+                        lambda p: {"method": "cookies", "data": {"cookies": {"sessionid": "x"}}} if p == "instagram" else None)
+    monkeypatch.setattr(DMResponder, "_build_client", lambda self, p, m, d: client)
+    responder = DMResponder(seen_path=str(tmp_path / "seen.json"))
+    await responder._catch_up()
+    assert sent == []
+    assert responder._seen["instagram"] == {"t1": "m1", "t2": "m2"}
+    assert responder._introduced["instagram"] == {"t1": True, "t2": True}
+    # A later introduce_latest now finds nothing new to introduce to.
+    result = await responder.introduce_latest()
+    assert result["ok"] is False
+    assert result["reason"] == "no_unseen"
+    assert sent == []

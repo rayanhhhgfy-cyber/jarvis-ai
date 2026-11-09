@@ -111,8 +111,42 @@ class DMResponder:
             return
         self._load_seen()
         self._running = True
+        # Catch-up: on a fresh start the seen-state is empty (the disk file
+        # is wiped on every Render redeploy), so every old thread looks
+        # "new" and the responder would introduce itself to the whole
+        # inbox. Mark all current threads as seen WITHOUT replying, so
+        # only messages that arrive AFTER startup get replies.
+        await self._catch_up()
         self._task = asyncio.create_task(self._loop())
         log.info("dm_responder_started", interval=settings.dm_poll_interval_seconds)
+
+    async def _catch_up(self) -> None:
+        """Mark every existing thread as seen + introduced, without replying."""
+        for platform in dm_auth.PLATFORMS:
+            blob = dm_auth.load_connector(platform)
+            if not blob:
+                continue
+            data = blob.get("data") or {}
+            method = blob.get("method")
+            try:
+                client = self._build_client(platform, method, data)
+                if platform == "messenger":
+                    valid = await client.validate()
+                else:
+                    valid = await asyncio.to_thread(client.validate)
+                if not valid:
+                    continue
+                threads = await client.list_recent(limit=10)
+            except Exception as e:
+                log.warning("dm_catch_up_failed", platform=platform, error=str(e))
+                continue
+            for msg in threads or []:
+                if msg.get("is_group"):
+                    continue
+                thread_id = msg["thread_id"]
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._introduced.setdefault(platform, {})[thread_id] = True
+            self._persist_state()
 
     async def stop(self) -> None:
         self._running = False
