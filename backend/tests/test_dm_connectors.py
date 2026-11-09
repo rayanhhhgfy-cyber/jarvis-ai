@@ -783,8 +783,6 @@ def test_instagram_validate_does_not_call_get_timeline_feed(monkeypatch):
     # The fake Client's get_timeline_feed must raise exactly like the real
     # 3.2.8 one does when passed an unexpected kwarg, so the test would
     # fail if validate() still called it with amount=.
-    import types as _types
-
     orig_client = _sys.modules["instagrapi"].Client
 
     class StrictClient(orig_client):
