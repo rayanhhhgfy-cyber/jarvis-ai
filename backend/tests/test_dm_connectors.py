@@ -523,7 +523,7 @@ async def test_responder_waits_one_minute_then_replies_once(tmp_vault, tmp_path,
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -573,7 +573,7 @@ async def test_responder_follow_up_replies_without_wait(tmp_vault, tmp_path, mon
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -615,7 +615,7 @@ async def test_responder_stands_down_when_sir_replies(tmp_vault, tmp_path, monke
     ])
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -948,3 +948,84 @@ async def test_catch_up_marks_existing_threads_seen_without_replying(tmp_path, m
     assert result["ok"] is False
     assert result["reason"] == "no_unseen"
     assert sent == []
+
+
+# --- New behaviours: group chats, web search, important alerts ---
+
+@pytest.mark.asyncio
+async def test_responder_replies_in_group_chat(tmp_vault, tmp_path, monkeypatch):
+    """Group chats are answered too (not skipped): Jarvis addresses the
+    sender by name and keeps it brief. The one-minute rule still applies."""
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [
+        _msg("messenger", "g1", "999", "Friend", "hi everyone", "m1", is_group=True),
+    ]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    seen_is_group = []
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
+        seen_is_group.append(is_group)
+        return {"ok": True, "reply": "Hey Friend, this is Jarvis.", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+
+    # First poll: new group message, waits out the minute.
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 0
+    assert fake.sent == []
+    # Fast-forward past the minute: the group message gets a reply.
+    responder._pending["messenger"]["g1"]["first_seen"] = (
+        datetime.now(UTC) - timedelta(seconds=61)
+    ).isoformat()
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 1
+    assert len(fake.sent) == 1
+    assert fake.sent[0][0] == "g1"
+    assert seen_is_group == [True]
+
+
+def test_is_important_detection():
+    """_is_important flags English + Arabic importance markers."""
+    from backend.services.dm_responder import _is_important
+
+    assert _is_important("this is important, please tell Rayyan")
+    assert _is_important("URGENT: call me back")
+    assert _is_important("هذا مهم جدا")
+    assert _is_important("ضروري ترد علي")
+    assert _is_important("عاجل!")
+    assert not _is_important("hi, how are you?")
+    assert not _is_important("مرحبا كيفك")
+    assert not _is_important("")
+
+
+def test_looks_like_web_question():
+    """_looks_like_web_question flags live-info questions only."""
+    from backend.services.dm_llm import _looks_like_web_question
+
+    assert _looks_like_web_question("what is the weather in Amman today?")
+    assert _looks_like_web_question("who won the match last night?")
+    assert _looks_like_web_question("ما هو الطقس اليوم؟")
+    assert _looks_like_web_question("ابحث عن سعر الذهب")
+    assert not _looks_like_web_question("hi, how are you?")
+    assert not _looks_like_web_question("مرحبا كيفك")
+    assert not _looks_like_web_question("thanks, talk later")
+
+
+@pytest.mark.asyncio
+async def test_maybe_web_context_skips_plain_chat(monkeypatch):
+    """Plain chat never triggers a web search (no network call)."""
+    from backend.services.dm_llm import _maybe_web_context
+
+    assert await _maybe_web_context("hi, how are you?") == ""
+    assert await _maybe_web_context("مرحبا كيفك") == ""

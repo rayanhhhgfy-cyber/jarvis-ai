@@ -12,7 +12,7 @@ Rules, by design:
 * It works on its own, on the server: each poll opens the recent
   threads, replies, and is done — Sir never has to open Instagram or
   Messenger himself for Jarvis to answer.
-* Only one-to-one threads (never groups), never replies to Sir's own
+* One-to-one threads AND group chats. Never replies to Sir's own
   messages, never replies twice to the same message (seen-state file).
 * The one-minute rule: when a friend messages and Sir has not answered
   within one minute, Jarvis replies. The first reply in a conversation
@@ -56,6 +56,19 @@ _MAX_REPLIES_PER_POLL = 5
 # so the first reply lands roughly 1–2 minutes after their message.)
 _REPLY_DELAY_SECONDS = 60
 _SEEN_FILE = "./storage/dm_seen.json"
+
+# Words that mark a message as important — when someone says it is
+# important, Sir gets a louder alert (the push title says so).
+_IMPORTANT_MARKERS = (
+    "important", "urgent", "asap", "emergency", "critical",
+    "مهم", "ضروري", "عاجل", "طارئ", "مهم جدا", "مهم جداً",
+)
+
+
+def _is_important(text: str) -> bool:
+    """True when the sender says the message is important/urgent."""
+    lowered = (text or "").lower()
+    return any(marker in lowered for marker in _IMPORTANT_MARKERS)
 
 
 class DMResponder:
@@ -141,8 +154,6 @@ class DMResponder:
                 log.warning("dm_catch_up_failed", platform=platform, error=str(e))
                 continue
             for msg in threads or []:
-                if msg.get("is_group"):
-                    continue
                 thread_id = msg["thread_id"]
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._introduced.setdefault(platform, {})[thread_id] = True
@@ -237,8 +248,6 @@ class DMResponder:
                 session_error = session_error or {"platform": platform, "error": str(e)}
                 continue
             for msg in threads or []:
-                if msg.get("is_group"):
-                    continue
                 if not msg.get("text"):
                     continue
                 thread_id = msg["thread_id"]
@@ -247,7 +256,11 @@ class DMResponder:
                 if self._introduced.get(platform, {}).get(thread_id):
                     continue  # Already introduced — not a first reply.
                 gen = await generate_dm_reply(
-                    platform, msg["sender_name"], msg["text"], first_reply=True
+                    platform,
+                    msg["sender_name"],
+                    msg["text"],
+                    first_reply=True,
+                    is_group=bool(msg.get("is_group")),
                 )
                 if not gen.get("ok"):
                     return {"ok": False, "reason": "gen_failed", "error": gen.get("error")}
@@ -260,7 +273,9 @@ class DMResponder:
                 self._clear_pending(platform, thread_id)
                 self._persist_state()
                 self._state[platform]["replied"] += 1
-                await self._notify_new_dm(platform, msg)
+                await self._notify_new_dm(
+                    platform, msg, important=_is_important(msg.get("text") or "")
+                )
                 return {
                     "ok": True,
                     "platform": platform,
@@ -293,8 +308,6 @@ class DMResponder:
         for msg in threads:
             if replied >= _MAX_REPLIES_PER_POLL:
                 break
-            if msg.get("is_group"):
-                continue
             if not msg.get("text"):
                 continue
             thread_id = msg["thread_id"]
@@ -328,7 +341,11 @@ class DMResponder:
                     continue
             # Generate + send the reply.
             gen = await generate_dm_reply(
-                platform, msg["sender_name"], msg["text"], first_reply=first_reply
+                platform,
+                msg["sender_name"],
+                msg["text"],
+                first_reply=first_reply,
+                is_group=bool(msg.get("is_group")),
             )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))
@@ -343,7 +360,9 @@ class DMResponder:
             self._clear_pending(platform, thread_id)
             replied += 1
             self._state[platform]["replied"] += 1
-            await self._notify_new_dm(platform, msg)
+            await self._notify_new_dm(
+                platform, msg, important=_is_important(msg.get("text") or "")
+            )
         return {"ok": True, "threads_seen": len(threads), "replied": replied}
 
     def _build_client(self, platform: str, method: str | None, data: dict[str, Any]):
@@ -400,18 +419,33 @@ class DMResponder:
         self._seen.setdefault(platform, {})[thread_id] = message_id
         self._persist_state()
 
-    async def _notify_new_dm(self, platform: str, msg: dict[str, Any]) -> None:
-        """Web Push so Sir knows Jarvis answered a DM."""
+    async def _notify_new_dm(
+        self, platform: str, msg: dict[str, Any], important: bool = False
+    ) -> None:
+        """Web Push so Sir knows Jarvis answered a DM.
+
+        When the sender said the message is important, the push title
+        says so loudly, so Sir sees it first.
+        """
         try:
             from backend.notification_engine import notification_engine
             from shared.models import Notification
 
             name = dm_auth.PLATFORMS[platform]["name"]
+            title = (
+                f"JARVIS — رسالة مهمة من {name} ⚠️"
+                if important
+                else f"JARVIS — رد على رسالة {name}"
+            )
             await notification_engine.send_notification(Notification(
-                title=f"JARVIS — رد على رسالة {name}",
+                title=title,
                 body=f"{msg.get('sender_name', '')}: {(msg.get('text') or '')[:80]}",
                 category="dm_reply",
-                data={"platform": platform, "thread_id": msg.get("thread_id", "")},
+                data={
+                    "platform": platform,
+                    "thread_id": msg.get("thread_id", ""),
+                    "important": important,
+                },
             ))
         except Exception as e:
             log.debug("dm_push_notify_failed", error=str(e))

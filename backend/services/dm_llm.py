@@ -45,7 +45,7 @@ GEMINI_URL = (
 
 _SYSTEM_PROMPT_FIRST = (
     "You are Jarvis, the personal assistant of Rayyan Aljamal, replying "
-    "to a direct message from a friend of Rayyan's. This is the first "
+    "to a message from a friend of Rayyan's. This is the first "
     "time you are replying in this conversation, so introduce yourself "
     "briefly as Jarvis. Tell them Rayyan is busy right now and cannot "
     "respond at this time. If what they have is important, invite them "
@@ -59,7 +59,7 @@ _SYSTEM_PROMPT_FIRST = (
 
 _SYSTEM_PROMPT_FOLLOW_UP = (
     "You are Jarvis, the personal assistant of Rayyan Aljamal, "
-    "continuing a direct-message conversation with a friend of Rayyan's. "
+    "continuing a conversation with a friend of Rayyan's. "
     "You have already introduced yourself as Jarvis in this "
     "conversation, so do not introduce yourself again. Keep the "
     "conversation going naturally: answer their questions as best you "
@@ -73,17 +73,67 @@ _SYSTEM_PROMPT_FOLLOW_UP = (
     "money, meetings or dates."
 )
 
+_GROUP_NOTE = (
+    " This is a group chat, not a one-to-one DM. Address the person who "
+    "wrote by name when you reply, and keep it brief so you do not "
+    "dominate the group."
+)
+
+_WEB_TRIGGERS = (
+    "weather", "طقس", "news", "أخبار", "search", "ابحث", "google",
+    "what is", "who is", "who won", "what happened", "when is", "where is", "what are",
+    "ما هو", "ما هي", "من هو", "من هي", "متى", "أين",
+    "latest", "current", "price", "سعر", "score", "نتيجة",
+)
+
+
+def _looks_like_web_question(text: str) -> bool:
+    """True when the message is asking for live/external information."""
+    lowered = (text or "").lower()
+    return any(trigger in lowered for trigger in _WEB_TRIGGERS)
+
+
+async def _maybe_web_context(incoming_text: str) -> str:
+    """Search the web for a question that needs live info.
+
+    Returns a short context block, or "" when the message is not a web
+    question or the search fails. Never raises.
+    """
+    if not _looks_like_web_question(incoming_text):
+        return ""
+    try:
+        from backend.services.web_search_service import web_search_service
+
+        summary = await web_search_service.search_and_summarize(incoming_text)
+        if not summary or "No web search results" in summary:
+            return ""
+        # Keep it short: the DM reply itself is capped at 150 tokens.
+        return summary[:1500]
+    except Exception as e:
+        log.debug("dm_web_search_failed", error=str(e))
+        return ""
+
 
 def _messages(
-    sender_name: str, incoming_text: str, first_reply: bool = True
+    sender_name: str,
+    incoming_text: str,
+    first_reply: bool = True,
+    is_group: bool = False,
+    web_context: str = "",
 ) -> list[dict[str, str]]:
     prompt = _SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP
+    if is_group:
+        prompt += _GROUP_NOTE
+    user_text = f"DM from {sender_name}: {incoming_text}\n\nWrite the reply only."
+    if web_context:
+        user_text = (
+            f"{web_context}\n\n"
+            f"Use the web results above to answer when they are relevant. "
+            f"DM from {sender_name}: {incoming_text}\n\nWrite the reply only."
+        )
     return [
         {"role": "system", "content": prompt},
-        {
-            "role": "user",
-            "content": f"DM from {sender_name}: {incoming_text}\n\nWrite the reply only.",
-        },
+        {"role": "user", "content": user_text},
     ]
 
 
@@ -92,6 +142,8 @@ async def _groq_reply(
     incoming_text: str,
     client: httpx.AsyncClient,
     first_reply: bool = True,
+    is_group: bool = False,
+    web_context: str = "",
 ) -> str | None:
     api_key = settings.groq_api_key
     if not api_key:
@@ -106,7 +158,9 @@ async def _groq_reply(
             },
             json={
                 "model": GROQ_MODEL,
-                "messages": _messages(sender_name, incoming_text, first_reply),
+                "messages": _messages(
+                    sender_name, incoming_text, first_reply, is_group, web_context
+                ),
                 "temperature": 0.7,
                 "max_tokens": 150,
             },
@@ -130,16 +184,27 @@ async def _gemini_reply(
     incoming_text: str,
     client: httpx.AsyncClient,
     first_reply: bool = True,
+    is_group: bool = False,
+    web_context: str = "",
 ) -> str | None:
     api_key = settings.gemini_api_key
     if not api_key:
         log.debug("dm_gemini_no_key")
         return None
+    base_prompt = _SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP
+    if is_group:
+        base_prompt += _GROUP_NOTE
     prompt = (
-        f"{_SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP}"
+        f"{base_prompt}"
         f"\n\nDM from {sender_name}: {incoming_text}\n\n"
         "Write the reply only."
     )
+    if web_context:
+        prompt = (
+            f"{web_context}\n\n"
+            f"Use the web results above to answer when they are relevant. "
+            f"{prompt}"
+        )
     try:
         resp = await client.post(
             GEMINI_URL,
@@ -167,6 +232,7 @@ async def generate_dm_reply(
     incoming_text: str,
     client: httpx.AsyncClient | None = None,
     first_reply: bool = True,
+    is_group: bool = False,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -177,17 +243,26 @@ async def generate_dm_reply(
     transport); otherwise a fresh client is created per call.
     ``first_reply`` selects the intro prompt (Jarvis introduces itself,
     Rayyan is busy) versus the follow-up prompt (keep the conversation
-    going without re-introducing).
+    going without re-introducing). ``is_group`` marks a group chat so
+    the reply addresses the sender by name and stays brief. When the
+    message asks for live/external information, a web search runs first
+    and its results are given to the LLM so it answers from real data,
+    never invented facts.
     """
     own_client = client is None
     if own_client:
         client = httpx.AsyncClient(timeout=30.0)
     assert client is not None
     try:
-        reply = await _groq_reply(sender_name, incoming_text, client, first_reply)
+        web_context = await _maybe_web_context(incoming_text)
+        reply = await _groq_reply(
+            sender_name, incoming_text, client, first_reply, is_group, web_context
+        )
         if reply:
             return {"ok": True, "reply": reply, "model": "groq"}
-        reply = await _gemini_reply(sender_name, incoming_text, client, first_reply)
+        reply = await _gemini_reply(
+            sender_name, incoming_text, client, first_reply, is_group, web_context
+        )
         if reply:
             return {"ok": True, "reply": reply, "model": "gemini"}
         return {
