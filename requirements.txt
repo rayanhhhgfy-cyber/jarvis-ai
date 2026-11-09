@@ -95,7 +95,7 @@ moviepy==2.1.2                # media_local + youtube: slideshow + video assembl
 # --- Phase 13: Agency scale + Arabic + Trading + YouTube ---
 ccxt==4.4.18                  # trading: crypto exchange API
 pandas==2.2.3                 # trading: data
-pandas-ta==0.3.14b1           # trading: technical indicators
+pandas-ta==0.4.71b0           # trading: technical indicators
 beautifulsoup4==4.12.3        # seo/realestate_jo: HTML parsing
 google-api-python-client==2.158.0   # youtube: Data API v3
 google-auth-oauthlib==1.2.1         # youtube: OAuth
