@@ -234,10 +234,13 @@ class DMResponder:
         if platform == "messenger":
             cookies = data.get("cookies") or {}
             return MessengerClient(cookies=cookies)
-        # Instagram: cookies/session preferred, else password login happens
-        # lazily inside the client when a session is absent.
+        # Instagram: full instagrapi settings (from a password login) are
+        # preferred — set_settings() restores the whole session. Cookies
+        # alone fall back to login_by_sessionid(), which Instagram rejects
+        # for browser/web sessions on the private API.
         cookies = data.get("cookies") or {}
-        return InstagramClient(session_cookies=cookies)
+        settings = data.get("settings") or {}
+        return InstagramClient(session_cookies=cookies, settings=settings)
 
     # ------------------------------------------------------------------
     # Seen-state + notifications

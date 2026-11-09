@@ -107,7 +107,7 @@ async def connect_connector(connector_id: str, req: ConnectorConnectRequest) -> 
                 detail="Enter both the email/username and the password.",
             )
         try:
-            session_cookies = await dm_auth.login_with_password(
+            login_result = await dm_auth.login_with_password(
                 connector_id, req.email.strip(), req.password
             )
         except dm_auth.LoginChallenge as e:
@@ -116,11 +116,23 @@ async def connect_connector(connector_id: str, req: ConnectorConnectRequest) -> 
             raise HTTPException(status_code=503, detail=str(e))
         except dm_auth.LoginFailed as e:
             raise HTTPException(status_code=502, detail=str(e))
-        dm_auth.save_connector(connector_id, "password", {
-            "email": req.email.strip(),
-            "password": req.password,
-            "cookies": session_cookies,
-        })
+        if connector_id == "instagram":
+            # Instagram returns {"cookies", "settings"}: the full
+            # instagrapi settings are what the responder restores with
+            # set_settings() on every poll (a bare browser sessionid is
+            # rejected by Instagram's private API).
+            dm_auth.save_connector(connector_id, "password", {
+                "email": req.email.strip(),
+                "password": req.password,
+                "cookies": login_result.get("cookies") or {},
+                "settings": login_result.get("settings") or {},
+            })
+        else:
+            dm_auth.save_connector(connector_id, "password", {
+                "email": req.email.strip(),
+                "password": req.password,
+                "cookies": login_result,
+            })
         log.info("connector_connected", platform=connector_id, method="password")
 
     else:

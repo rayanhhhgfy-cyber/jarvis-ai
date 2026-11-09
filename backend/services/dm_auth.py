@@ -443,8 +443,17 @@ async def _messenger_password_login(
         raise LoginFailed("Login did not produce a session (no c_user cookie).")
 
 
-def _instagram_password_login(username: str, password: str) -> dict[str, str]:
-    """Log in to Instagram with username+password via instagrapi (sync)."""
+def _instagram_password_login(username: str, password: str) -> dict[str, Any]:
+    """Log in to Instagram with username+password via instagrapi (sync).
+
+    Returns both the session cookies AND the full instagrapi settings
+    (``dump_settings()``). The settings — device UUIDs, auth data, cookies —
+    are what the responder must restore with ``set_settings()`` on every
+    poll. A bare browser ``sessionid`` is NOT enough: Instagram rejects a
+    browser/web session for the private mobile API with ``login_required``
+    (instagrapi's own docs: prefer ``login() -> dump_settings() ->
+    set_settings()`` over ``login_by_sessionid()`` for long-lived use).
+    """
     try:
         from instagrapi import Client
         from instagrapi.exceptions import (
@@ -476,7 +485,11 @@ def _instagram_password_login(username: str, password: str) -> dict[str, str]:
         session = {}
     if "sessionid" not in session:
         raise LoginFailed("Instagram login did not produce a session.")
-    return session
+    try:
+        settings = cl.dump_settings()
+    except Exception:
+        settings = {}
+    return {"cookies": session, "settings": settings}
 
 
 async def login_with_password(
@@ -484,8 +497,15 @@ async def login_with_password(
     email: str,
     password: str,
     transport: httpx.AsyncHTTPTransport | None = None,
-) -> dict[str, str]:
-    """Log in with email+password; returns the session cookies dict."""
+) -> dict[str, Any]:
+    """Log in with email+password.
+
+    Messenger returns the session cookies dict. Instagram returns
+    ``{"cookies": {...}, "settings": {...}}`` — the full instagrapi
+    settings from ``dump_settings()``, which the responder restores with
+    ``set_settings()`` on every poll (a bare browser sessionid is rejected
+    by Instagram's private API).
+    """
     if platform == "messenger":
         return await _messenger_password_login(email, password, transport=transport)
     if platform == "instagram":

@@ -661,3 +661,110 @@ async def test_dm_llm_intro_vs_follow_up_prompt(monkeypatch):
     assert "make sure Rayyan sees it" in seen_prompts[0]
     assert "already introduced yourself as Jarvis" in seen_prompts[1]
     assert "do not introduce yourself again" in seen_prompts[1]
+
+
+# --------------------------------------------------------------------
+# Instagram full-settings session (instagrapi documented flow)
+# --------------------------------------------------------------------
+# A browser/web sessionid is rejected by Instagram's private mobile API
+# with login_required, so the responder must restore the FULL session
+# (dump_settings -> set_settings) from a password login instead of
+# relying on login_by_sessionid(). These tests use a fake instagrapi
+# module injected into sys.modules (the real library is not installed
+# in the test venv); all values are fake.
+
+import sys as _sys
+import types as _types
+from typing import Any
+
+
+def _fake_instagrapi(monkeypatch):
+    """Inject a fake instagrapi module; returns the recorded calls."""
+    calls: dict[str, Any] = {"set_settings": [], "login_by_sessionid": [], "login": []}
+
+    class FakeClient:
+        def __init__(self):
+            self.private = _types.SimpleNamespace(
+                cookies={"sessionid": "fake-session", "ds_user_id": "51500959582",
+                         "csrftoken": "fake-csrf", "mid": "fake-mid", "ig_did": "fake-did"}
+            )
+
+        def set_settings(self, settings):
+            calls["set_settings"].append(settings)
+
+        def login_by_sessionid(self, sessionid):
+            calls["login_by_sessionid"].append(sessionid)
+
+        def login(self, username, password):
+            calls["login"].append((username, password))
+
+        def dump_settings(self):
+            return {"uuids": {"uuid": "fake-uuid"}, "authorization_data": {"sessionid": "fake-session"}}
+
+        def get_timeline_feed(self, amount=1):
+            return []
+
+        def account_info(self):
+            return _types.SimpleNamespace(pk=51500959582)
+
+    fake_mod = _types.ModuleType("instagrapi")
+    fake_mod.Client = FakeClient
+    fake_exc = _types.ModuleType("instagrapi.exceptions")
+
+    class _Err(Exception):
+        pass
+
+    fake_exc.BadPassword = _Err
+    fake_exc.ChallengeRequired = _Err
+    fake_exc.TwoFactorRequired = _Err
+    fake_mod.exceptions = fake_exc
+    monkeypatch.setitem(_sys.modules, "instagrapi", fake_mod)
+    monkeypatch.setitem(_sys.modules, "instagrapi.exceptions", fake_exc)
+    return calls
+
+
+def test_instagram_client_prefers_full_settings(monkeypatch):
+    """With full settings, the client restores via set_settings, never login_by_sessionid."""
+    from backend.services.dm_clients import InstagramClient
+
+    calls = _fake_instagrapi(monkeypatch)
+    settings = {"uuids": {"uuid": "fake-uuid"}, "authorization_data": {"sessionid": "fake-session"}}
+    client = InstagramClient(session_cookies={"sessionid": "fake-session"}, settings=settings)
+    client._require_client()
+    assert calls["set_settings"] == [settings]
+    assert calls["login_by_sessionid"] == []
+    assert client.validate() is True
+
+
+def test_instagram_client_cookies_only_falls_back_to_sessionid(monkeypatch):
+    """Without settings, the client still falls back to login_by_sessionid."""
+    from backend.services.dm_clients import InstagramClient
+
+    calls = _fake_instagrapi(monkeypatch)
+    client = InstagramClient(session_cookies={"sessionid": "fake-session"})
+    client._require_client()
+    assert calls["login_by_sessionid"] == ["fake-session"]
+    assert calls["set_settings"] == []
+
+
+def test_instagram_password_login_returns_settings(monkeypatch):
+    """A password login returns both cookies AND the full dump_settings()."""
+    calls = _fake_instagrapi(monkeypatch)
+    result = dm_auth._instagram_password_login("fake-user", "fake-pass")
+    assert calls["login"] == [("fake-user", "fake-pass")]
+    assert result["cookies"]["sessionid"] == "fake-session"
+    assert result["settings"]["uuids"]["uuid"] == "fake-uuid"
+
+
+def test_responder_build_client_passes_settings(monkeypatch):
+    """The responder hands the stored settings to the Instagram client."""
+    from backend.services.dm_clients import InstagramClient
+
+    responder = DMResponder()
+    settings = {"uuids": {"uuid": "fake-uuid"}}
+    client = responder._build_client(
+        "instagram", "password",
+        {"cookies": {"sessionid": "fake-session"}, "settings": settings},
+    )
+    assert isinstance(client, InstagramClient)
+    assert client._settings == settings

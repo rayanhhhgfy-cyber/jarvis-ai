@@ -246,10 +246,24 @@ class MessengerClient:
 # --------------------------------------------------------------------
 
 class InstagramClient:
-    """Instagram DMs as Sir, via instagrapi (official mobile-app API)."""
+    """Instagram DMs as Sir, via instagrapi (official mobile-app API).
 
-    def __init__(self, session_cookies: dict[str, str] | None = None) -> None:
+    Session restore prefers the full instagrapi settings (from
+    ``dump_settings()`` after a password login) via ``set_settings()``.
+    A bare browser ``sessionid`` is NOT enough: Instagram rejects a
+    browser/web session for the private mobile API with ``login_required``
+    (instagrapi's own docs). ``login_by_sessionid()`` is kept only as a
+    fallback for cookies-only connections, which are unreliable for the
+    private API.
+    """
+
+    def __init__(
+        self,
+        session_cookies: dict[str, str] | None = None,
+        settings: dict[str, Any] | None = None,
+    ) -> None:
         self._session_cookies = dict(session_cookies or {})
+        self._settings = dict(settings or {})
         self._cl = None  # instagrapi.Client, created lazily
         self.user_id: str | None = self._session_cookies.get("ds_user_id")
 
@@ -264,22 +278,34 @@ class InstagramClient:
             ) from e
         if self._cl is None:
             self._cl = Client()
-            if self._session_cookies.get("sessionid"):
+            if self._settings:
+                # Full session restore (device UUIDs + auth + cookies):
+                # the documented long-lived flow.
+                try:
+                    self._cl.set_settings(self._settings)
+                except Exception as e:
+                    raise DMClientError(f"Instagram session restore failed: {e}") from e
+            elif self._session_cookies.get("sessionid"):
                 try:
                     self._cl.login_by_sessionid(self._session_cookies["sessionid"])
                 except Exception as e:
                     raise DMClientError(f"Instagram session login failed: {e}") from e
         return self._cl
 
-    def login_with_password(self, username: str, password: str) -> dict[str, str]:
-        """Blocking login; returns fresh session cookies for storage."""
+    def login_with_password(self, username: str, password: str) -> dict[str, Any]:
+        """Blocking login; returns fresh session cookies + full settings."""
         cl = self._require_client()
         cl.login(username, password)
-        return {
+        cookies = {
             k: v
             for k, v in cl.private.cookies.items()
             if k in ("sessionid", "ds_user_id", "csrftoken", "mid", "ig_did")
         }
+        try:
+            settings = cl.dump_settings()
+        except Exception:
+            settings = {}
+        return {"cookies": cookies, "settings": settings}
 
     def validate(self) -> bool:
         try:
