@@ -6,7 +6,7 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 python-dotenv==1.1.0
-pydantic==2.11.1
+pydantic==2.12.5
 pydantic-settings==2.9.1
 python-multipart==0.0.20
 
@@ -42,7 +42,7 @@ numpy==2.2.6
 webrtcvad==2.0.10
 
 # --- Vision & Video ---
-Pillow==10.4.0
+Pillow==13.0.0
 opencv-python-headless==4.11.0.86
 mss==9.0.2
 
@@ -71,7 +71,7 @@ structlog==25.1.0
 
 # --- Utilities ---
 uuid6==2024.7.10
-orjson==3.10.15
+orjson==3.13.0
 
 # --- Testing ---
 pytest==8.1.1
@@ -90,7 +90,7 @@ feedparser==6.0.12            # web/podcast: RSS + Atom parsing
 icalendar==7.2.2              # calendar_local: ICS read/write
 qrcode==8.2                   # media_free: QR code generation
 pyzbar==0.1.9                 # media_free: QR code reading (requires zbar system library)
-moviepy==2.1.2                # media_local + youtube: slideshow + video assembly
+                # media_local + youtube: slideshow + video assembly
 
 # --- Phase 13: Agency scale + Arabic + Trading + YouTube ---
 ccxt==4.4.18                  # trading: crypto exchange API
