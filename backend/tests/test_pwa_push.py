@@ -25,8 +25,8 @@ def test_manifest_served_with_correct_content():
     assert manifest["name"] == "J.A.R.V.I.S. OMEGA"
     assert manifest["short_name"] == "JARVIS"
     assert manifest["display"] == "standalone"
-    assert manifest["theme_color"] == "#00d4ff"
-    assert manifest["background_color"] == "#0a0a1a"
+    assert manifest["theme_color"] == "#0b0d14"
+    assert manifest["background_color"] == "#0b0d14"
     assert manifest["start_url"] == "/"
     sizes = {icon["sizes"] for icon in manifest["icons"]}
     assert "192x192" in sizes

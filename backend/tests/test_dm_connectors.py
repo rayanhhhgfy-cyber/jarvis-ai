@@ -155,6 +155,36 @@ def test_parse_cookies_invalid_json_names_the_problem():
         dm_auth.parse_cookies('[{"name": "only-name"}]')
 
 
+def test_parse_cookies_malformed_json_salvages_pairs():
+    # A paste with a broken quote (e.g. a missing quote on a domain line)
+    # still yields every name/value pair instead of a hard error.
+    raw = json.dumps([
+        {"name": "c_user", "value": "111", "domain": ".instagram.com",
+         "path": "/", "secure": True, "httpOnly": True},
+        {"name": "xs", "value": "abc", "domain": ".instagram.com"},
+        {"name": "sessionid", "value": "s1", "domain": ".instagram.com"},
+    ], indent=2)
+    broken = raw.replace('"domain": ".instagram.com",', 'domain": ".instagram.com",', 1)
+    assert dm_auth.parse_cookies(broken) == {
+        "c_user": "111", "xs": "abc", "sessionid": "s1",
+    }
+
+
+def test_parse_cookies_truncated_json_salvages_complete_pairs():
+    # A paste cut off mid-file yields the pairs that are complete.
+    raw = json.dumps([
+        {"name": "c_user", "value": "111"},
+        {"name": "xs", "value": "abc"},
+        {"name": "sessionid", "value": "s1"},
+    ], indent=2)
+    assert dm_auth.parse_cookies(raw.split('"sessionid"')[0]) == {
+        "c_user": "111", "xs": "abc",
+    }
+    # Pure garbage with no name/value pairs still raises.
+    with pytest.raises(ValueError, match="JSON"):
+        dm_auth.parse_cookies('[{not json at all')
+
+
 # --------------------------------------------------------------------
 # Vault round-trip (encrypted at rest)
 # --------------------------------------------------------------------

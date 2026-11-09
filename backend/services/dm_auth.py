@@ -147,6 +147,47 @@ def _json_cookie_entries(data: Any) -> list[dict[str, Any]]:
     return []
 
 
+def _decode_quoted(raw_value: str) -> str | None:
+    """Decode the inside of a JSON string (unescaping), or None if invalid."""
+    try:
+        return json.loads(f'"{raw_value}"')
+    except json.JSONDecodeError:
+        log.debug("salvage_skip_bad_token")
+        return None
+
+
+def _salvage_json_cookie_pairs(text: str) -> list[dict[str, Any]]:
+    """Best-effort rescue of name/value pairs from malformed JSON exports.
+
+    Finds ``"name": "..."`` / ``"value": "..."`` pairs in document order
+    so a paste with a missing quote, a stray character, or a truncated
+    line still yields the cookies instead of a hard error. Only used
+    when strict ``json.loads`` already failed, so it can only turn an
+    error into a best-effort success.
+    """
+    name_re = re.compile(r'"name"\s*:\s*"((?:[^"\\]|\\.)*)"')
+    value_re = re.compile(r'"value"\s*:\s*"((?:[^"\\]|\\.)*)"')
+    tokens: list[tuple[int, str, str]] = []
+    for m in name_re.finditer(text):
+        decoded = _decode_quoted(m.group(1))
+        if decoded is not None:
+            tokens.append((m.start(), "name", decoded))
+    for m in value_re.finditer(text):
+        decoded = _decode_quoted(m.group(1))
+        if decoded is not None:
+            tokens.append((m.start(), "value", decoded))
+    tokens.sort()
+    entries: list[dict[str, Any]] = []
+    pending_name: str | None = None
+    for _, kind, val in tokens:
+        if kind == "name":
+            pending_name = val
+        elif kind == "value" and pending_name:
+            entries.append(_cookie_entry(pending_name, val))
+            pending_name = None
+    return entries
+
+
 def parse_cookie_entries(raw: str) -> list[dict[str, Any]]:
     """
     Parse pasted cookies into a list of entries, in source order.
@@ -180,6 +221,11 @@ def parse_cookie_entries(raw: str) -> list[dict[str, Any]]:
         try:
             data = json.loads(raw)
         except Exception as e:
+            # A paste with a missing quote, stray character, or truncated
+            # line still yields its name/value pairs instead of an error.
+            salvaged = _salvage_json_cookie_pairs(raw)
+            if salvaged:
+                return salvaged
             raise ValueError(
                 "Cookies look like JSON but could not be parsed: "
                 f"{e}. Make sure the pasted text is complete JSON."
