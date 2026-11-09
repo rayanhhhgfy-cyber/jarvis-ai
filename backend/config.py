@@ -73,6 +73,13 @@ class Settings(BaseSettings):
     dm_responder_enabled: bool = False
     # How often the DM responder polls each connected account (seconds).
     dm_poll_interval_seconds: int = 60
+    # ---- Turso (persistent vault backing) ----
+    # When BOTH are set, the connector vault also persists to a Turso
+    # (libsql) table, so credentials survive Render redeploys — Render's
+    # disk is ephemeral and wipes ./storage on every deploy. Empty =
+    # local file only (no behaviour change).
+    turso_database_url: str = ""
+    turso_auth_token: str = ""
     # ---- VAPID Push ----
     vapid_public_key: str = ""
     vapid_private_key: str = ""

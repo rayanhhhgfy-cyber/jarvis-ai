@@ -55,7 +55,14 @@ PLATFORMS: dict[str, dict[str, str]] = {
 
 # A second vault instance (same Fernet key, separate file) so connector
 # secrets never appear in the Settings router's credential listings.
-connector_vault = CredentialsVault(storage_path="./storage/connectors.json")
+# Backed by Turso (table "vault_entries") when TURSO_DATABASE_URL +
+# TURSO_AUTH_TOKEN are set, so the cookies survive Render redeploys —
+# Render's disk is ephemeral and wipes ./storage on every deploy.
+# The local file stays as a cache either way.
+connector_vault = CredentialsVault(
+    storage_path="./storage/connectors.json",
+    turso_table="vault_entries",
+)
 
 
 def init_connector_vault(storage_path: str | None = None) -> None:
