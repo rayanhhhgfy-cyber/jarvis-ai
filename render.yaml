@@ -1,0 +1,33 @@
+# ====================================================================
+# JARVIS OMEGA — Render deployment (free tier)
+# ====================================================================
+# Deploy from the repo root on Render (Blueprint). See
+# docs/render-dm-responder.md for the full walkthrough, env vars and
+# the honest warnings (ToS risk, ephemeral disk, free-tier limits).
+services:
+  - type: web
+    name: jarvis-ai
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: BACKEND_SECRET_KEY
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_CLAIMS_EMAIL
+        value: sir@jarvis-omega.local
+      - key: DM_RESPONDER_ENABLED
+        value: "false"
+      - key: DM_POLL_INTERVAL_SECONDS
+        value: "60"
