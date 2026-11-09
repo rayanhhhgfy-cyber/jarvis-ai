@@ -38,7 +38,7 @@ pywebpush==2.0.1
 # --- Audio ---
 sounddevice==0.5.1
 soundfile==0.13.1
-numpy==2.2.3
+numpy==2.2.6
 webrtcvad==2.0.10
 
 # --- Vision & Video ---
@@ -94,7 +94,7 @@ moviepy==2.1.2                # media_local + youtube: slideshow + video assembl
 
 # --- Phase 13: Agency scale + Arabic + Trading + YouTube ---
 ccxt==4.4.18                  # trading: crypto exchange API
-pandas==2.2.3                 # trading: data
+pandas==2.3.2                 # trading: data
 pandas-ta==0.4.71b0           # trading: technical indicators
 beautifulsoup4==4.12.3        # seo/realestate_jo: HTML parsing
 google-api-python-client==2.158.0   # youtube: Data API v3
