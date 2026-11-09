@@ -41,6 +41,7 @@ from backend.services.system_toggles import (
     parse_toggle_request,
     request_toggle,
 )
+from backend.services.dm_responder import dm_responder
 from backend.approval_gateway import approval_gateway
 from backend.task_manager import task_manager
 from backend.config import settings
@@ -90,6 +91,26 @@ def _already_handled(cmd: str, prior: List[dict]) -> bool:
         or cr["command"].lower() in normalized
         for cr in prior
     )
+
+
+def _parse_introduce_request(message: str) -> bool:
+    """True when Sir asks Jarvis to introduce itself to the last person
+    who messaged him (English or Arabic). Must name both the introduction
+    AND the last messager — a bare "introduce yourself" does not match.
+    """
+    text = (message or "").lower()
+    if (
+        "introduce" in text
+        and ("yourself" in text or "your self" in text)
+        and any(w in text for w in ("last", "messag", "who", "that texted", "dm"))
+    ):
+        return True
+    # Arabic: عرّف بنفسك / قدّم نفسك لآخر من راسلني.
+    if ("عرف" in text or "قدم نفسك" in text or "قدّم نفسك" in text) and any(
+        w in text for w in ("آخر", "اخر", "راسل", "بعت", "رسالة", "رسايل")
+    ):
+        return True
+    return False
 
 
 async def run_tool_loop(
@@ -404,6 +425,51 @@ async def process_chat(request: ChatRequest):
             del history_full[: len(history_full) - max_msgs]
         return {
             "content": toggle_reply,
+            "conversation_id": session_id,
+            "agents_invoked": [],
+            "tasks_created": [],
+            "memories_stored": [],
+            "audio_base64": "",
+        }
+
+    # =================================================================
+    # DM INTRODUCE: "introduce yourself to the last person who messaged
+    # me" (English + Arabic). Handled here, before the interpreter / LLM,
+    # so the request triggers the responder instead of becoming LLM
+    # chatter. This is the one DM the chat CAN send: it asks the
+    # responder to introduce Jarvis to the most recent unseen thread.
+    # =================================================================
+    if _parse_introduce_request(request.message):
+        session_id = request.conversation_id or "default_session"
+        result = await dm_responder.introduce_latest()
+        if result.get("ok"):
+            introduce_reply = (
+                f"Sir, done — I've introduced myself to {result['sender_name']} "
+                f"on {result['platform']}."
+            )
+        elif result.get("reason") == "no_unseen":
+            introduce_reply = (
+                "Sir, there's no one new to introduce myself to — "
+                "no unseen messages right now."
+            )
+        elif result.get("reason") == "no_connector":
+            introduce_reply = (
+                "Sir, no account is connected — connect Instagram or "
+                "Messenger in the Connectors tab first."
+            )
+        else:
+            introduce_reply = (
+                "Sir, I couldn't introduce myself — "
+                f"{result.get('error', 'the session needs reconnecting in the Connectors tab.')}"
+            )
+        history_full = _dialogue_histories.setdefault(session_id, [])
+        history_full.append({"role": "user", "content": request.message})
+        history_full.append({"role": "assistant", "content": introduce_reply})
+        max_msgs = settings.dialogue_history_max_turns * 2
+        if len(history_full) > max_msgs:
+            del history_full[: len(history_full) - max_msgs]
+        return {
+            "content": introduce_reply,
             "conversation_id": session_id,
             "agents_invoked": [],
             "tasks_created": [],

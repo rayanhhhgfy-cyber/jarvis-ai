@@ -156,6 +156,89 @@ class DMResponder:
             self._state[platform]["last_poll"] = datetime.now(UTC).isoformat()
         return results
 
+    async def introduce_latest(self) -> dict[str, Any]:
+        """Send the first-reply introduction to the most recent unseen DM.
+
+        Used when Sir asks the dashboard chat to introduce Jarvis to the
+        last person who messaged him. Skips the one-minute wait (Sir
+        explicitly asked), but still only targets a thread where the last
+        message is from the other person, is not a group, and Jarvis has
+        not introduced itself yet. Marks the thread seen + introduced so
+        the poll loop does not send a duplicate introduction.
+        """
+        any_connected = False
+        session_error: dict[str, Any] | None = None
+        for platform in dm_auth.PLATFORMS:
+            blob = dm_auth.load_connector(platform)
+            if not blob:
+                continue
+            any_connected = True
+            data = blob.get("data") or {}
+            method = blob.get("method")
+            try:
+                client = self._build_client(platform, method, data)
+            except Exception as e:
+                log.warning("dm_introduce_client_failed", platform=platform, error=str(e))
+                session_error = session_error or {"platform": platform, "error": str(e)}
+                continue
+            try:
+                if platform == "messenger":
+                    valid = await client.validate()
+                else:
+                    valid = await asyncio.to_thread(client.validate)
+            except Exception as e:
+                log.warning("dm_introduce_validate_failed", platform=platform, error=str(e))
+                session_error = session_error or {"platform": platform, "error": str(e)}
+                continue
+            if not valid:
+                session_error = session_error or {
+                    "platform": platform,
+                    "error": f"{platform} session expired — reconnect in the Connectors tab.",
+                }
+                continue
+            try:
+                threads = await client.list_recent(limit=5)
+            except Exception as e:
+                log.warning("dm_introduce_list_failed", platform=platform, error=str(e))
+                session_error = session_error or {"platform": platform, "error": str(e)}
+                continue
+            for msg in threads or []:
+                if msg.get("is_group"):
+                    continue
+                if not msg.get("text"):
+                    continue
+                thread_id = msg["thread_id"]
+                if client.user_id and str(msg.get("sender_id")) == str(client.user_id):
+                    continue  # Sir answered this thread himself.
+                if self._introduced.get(platform, {}).get(thread_id):
+                    continue  # Already introduced — not a first reply.
+                gen = await generate_dm_reply(
+                    platform, msg["sender_name"], msg["text"], first_reply=True
+                )
+                if not gen.get("ok"):
+                    return {"ok": False, "reason": "gen_failed", "error": gen.get("error")}
+                try:
+                    await client.send(thread_id, gen["reply"])
+                except Exception as e:
+                    return {"ok": False, "reason": "send_failed", "error": str(e)}
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._introduced.setdefault(platform, {})[thread_id] = True
+                self._clear_pending(platform, thread_id)
+                self._persist_state()
+                self._state[platform]["replied"] += 1
+                await self._notify_new_dm(platform, msg)
+                return {
+                    "ok": True,
+                    "platform": platform,
+                    "sender_name": msg["sender_name"],
+                    "thread_id": thread_id,
+                }
+        if session_error:
+            return {"ok": False, "reason": "session_expired", **session_error}
+        if not any_connected:
+            return {"ok": False, "reason": "no_connector"}
+        return {"ok": False, "reason": "no_unseen"}
+
     async def _poll_platform(self, platform: str) -> dict[str, Any]:
         blob = dm_auth.load_connector(platform)
         if not blob:

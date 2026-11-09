@@ -800,3 +800,121 @@ def test_instagram_validate_does_not_call_get_timeline_feed(monkeypatch):
     assert client.validate() is True
     # login_by_sessionid ran (session restore), get_timeline_feed(amount=) never did.
     assert calls["login_by_sessionid"] == ["fake-session"]
+
+
+# --------------------------------------------------------------------
+# DM introduce: chat-triggered introduction to the last unseen thread
+# --------------------------------------------------------------------
+
+def _fake_dm_client(monkeypatch, threads, user_id="999"):
+    """A fake platform client for introduce_latest tests."""
+    sent: list[tuple[str, str]] = []
+
+    class FakeClient:
+        def __init__(self):
+            self.user_id = user_id
+
+        def validate(self):
+            return True
+
+        async def list_recent(self, limit=10):
+            return list(threads)
+
+        async def send(self, thread_id, text):
+            sent.append((thread_id, text))
+            return {"ok": True, "message_id": "m-sent"}
+
+    return FakeClient(), sent
+
+
+@pytest.mark.asyncio
+async def test_introduce_latest_sends_to_most_recent_unseen(tmp_path, monkeypatch):
+    """introduce_latest sends the first-reply intro to the newest unseen thread."""
+    import backend.services.dm_responder as dm_resp_mod
+    from backend.services.dm_responder import DMResponder
+
+    threads = [
+        {"thread_id": "t-new", "sender_id": "111", "sender_name": "Sara",
+         "text": "hi", "message_id": "m-new", "is_group": False},
+        {"thread_id": "t-old", "sender_id": "222", "sender_name": "Omar",
+         "text": "hey", "message_id": "m-old", "is_group": False},
+    ]
+    client, sent = _fake_dm_client(monkeypatch, threads)
+    monkeypatch.setattr(dm_resp_mod.dm_auth, "load_connector",
+                        lambda p: {"method": "cookies", "data": {"cookies": {"sessionid": "x"}}} if p == "instagram" else None)
+    monkeypatch.setattr(DMResponder, "_build_client", lambda self, p, m, d: client)
+    async def _fake_gen(*a, **k):
+        return {"ok": True, "reply": "Hi, I'm Jarvis."}
+
+    monkeypatch.setattr(dm_resp_mod, "generate_dm_reply", _fake_gen)
+    # The module-level generate_dm_reply import in dm_responder is the one
+    # introduce_latest calls; patch it on the module.
+    responder = DMResponder(seen_path=str(tmp_path / "seen.json"))
+    result = await responder.introduce_latest()
+    assert result["ok"] is True
+    assert result["platform"] == "instagram"
+    assert result["sender_name"] == "Sara"
+    assert result["thread_id"] == "t-new"
+    assert sent == [("t-new", "Hi, I'm Jarvis.")]
+    # Marked introduced so the poll loop will not duplicate it.
+    assert responder._introduced["instagram"]["t-new"] is True
+
+
+@pytest.mark.asyncio
+async def test_introduce_latest_skips_own_and_introduced(tmp_path, monkeypatch):
+    """Threads Sir answered himself or already introduced are skipped."""
+    import backend.services.dm_responder as dm_resp_mod
+    from backend.services.dm_responder import DMResponder
+
+    threads = [
+        {"thread_id": "t-mine", "sender_id": "999", "sender_name": "Rayyan",
+         "text": "ok", "message_id": "m-mine", "is_group": False},
+        {"thread_id": "t-done", "sender_id": "333", "sender_name": "Lina",
+         "text": "hi", "message_id": "m-done", "is_group": False},
+    ]
+    client, sent = _fake_dm_client(monkeypatch, threads)
+    monkeypatch.setattr(dm_resp_mod.dm_auth, "load_connector",
+                        lambda p: {"method": "cookies", "data": {"cookies": {"sessionid": "x"}}} if p == "instagram" else None)
+    monkeypatch.setattr(DMResponder, "_build_client", lambda self, p, m, d: client)
+    async def _fake_gen(*a, **k):
+        return {"ok": True, "reply": "Hi, I'm Jarvis."}
+
+    monkeypatch.setattr(dm_resp_mod, "generate_dm_reply", _fake_gen)
+    responder = DMResponder(seen_path=str(tmp_path / "seen.json"))
+    responder._introduced = {"instagram": {"t-done": True}}
+    result = await responder.introduce_latest()
+    assert result["ok"] is False
+    assert result["reason"] == "no_unseen"
+    assert sent == []
+
+
+@pytest.mark.asyncio
+async def test_introduce_latest_no_connector(tmp_path, monkeypatch):
+    """No connected account -> no_connector, nothing sent."""
+    import backend.services.dm_responder as dm_resp_mod
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_resp_mod.dm_auth, "load_connector", lambda p: None)
+    responder = DMResponder(seen_path=str(tmp_path / "seen.json"))
+    result = await responder.introduce_latest()
+    assert result == {"ok": False, "reason": "no_connector"}
+
+
+def test_parse_introduce_request_matches():
+    from backend.routers.router_chat import _parse_introduce_request
+
+    assert _parse_introduce_request(
+        "Introduce your self to the last one that messaged me and I haven't seen his message"
+    ) is True
+    assert _parse_introduce_request("introduce yourself to the last person who messaged me") is True
+    assert _parse_introduce_request("عرف بنفسك لآخر شخص راسلني") is True
+    assert _parse_introduce_request("قدم نفسك لآخر واحد بعتلي رسالة") is True
+
+
+def test_parse_introduce_request_rejects():
+    from backend.routers.router_chat import _parse_introduce_request
+
+    assert _parse_introduce_request("introduce yourself") is False
+    assert _parse_introduce_request("what is the weather") is False
+    assert _parse_introduce_request("send a message to Sara") is False
+    assert _parse_introduce_request("turn off the dm responder") is False
