@@ -768,3 +768,37 @@ def test_responder_build_client_passes_settings(monkeypatch):
     )
     assert isinstance(client, InstagramClient)
     assert client._settings == settings
+
+
+def test_instagram_validate_does_not_call_get_timeline_feed(monkeypatch):
+    """Regression: validate() must not call get_timeline_feed(amount=...).
+
+    instagrapi 3.2.8's get_timeline_feed takes no `amount` kwarg, so the
+    old call raised TypeError on every poll and validate() wrongly
+    reported the session as expired (the login itself succeeded).
+    account_info() alone is the session check.
+    """
+    calls = _fake_instagrapi(monkeypatch)
+
+    # The fake Client's get_timeline_feed must raise exactly like the real
+    # 3.2.8 one does when passed an unexpected kwarg, so the test would
+    # fail if validate() still called it with amount=.
+    import types as _types
+
+    orig_client = _sys.modules["instagrapi"].Client
+
+    class StrictClient(orig_client):
+        def get_timeline_feed(self, *args, **kwargs):
+            if "amount" in kwargs:
+                raise TypeError(
+                    "get_timeline_feed() got an unexpected keyword argument 'amount'"
+                )
+            return super().get_timeline_feed(*args, **kwargs)
+
+    _sys.modules["instagrapi"].Client = StrictClient
+    from backend.services.dm_clients import InstagramClient
+
+    client = InstagramClient(session_cookies={"sessionid": "fake-session"})
+    assert client.validate() is True
+    # login_by_sessionid ran (session restore), get_timeline_feed(amount=) never did.
+    assert calls["login_by_sessionid"] == ["fake-session"]

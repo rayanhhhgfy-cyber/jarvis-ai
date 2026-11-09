@@ -308,9 +308,15 @@ class InstagramClient:
         return {"cookies": cookies, "settings": settings}
 
     def validate(self) -> bool:
+        # NOTE: do NOT call get_timeline_feed(amount=...) here — instagrapi
+        # 3.2.8's get_timeline_feed takes no `amount` kwarg (it takes
+        # reason/max_id/seen_posts/feed_view_info), so passing amount=
+        # raises TypeError and validate() wrongly reports the session as
+        # expired. account_info() alone is the real session check: it
+        # fetches the authenticated user's info and raises if the session
+        # is invalid.
         try:
             cl = self._require_client()
-            cl.get_timeline_feed(amount=1)
             info = cl.account_info()
             if info and getattr(info, "pk", None):
                 self.user_id = str(info.pk)
