@@ -933,6 +933,23 @@ async def serve_service_worker():
     )
 
 
+@app.get("/config.js", tags=["PWA"])
+async def serve_frontend_config():
+    """Frontend config (backend base URL override for split deploys).
+
+    Served with no-cache so a changed Render URL reaches phones fast.
+    The file itself only ever holds a URL (never a secret).
+    """
+    path = Path(__file__).parent.parent / "frontend" / "config.js"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="config.js not found")
+    return FileResponse(
+        path,
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache"},
+    )
+
+
 @app.get("/icons/{filename}", tags=["PWA"])
 async def serve_pwa_icon(filename: str):
     """PWA icons (allowlist only — no arbitrary file access).

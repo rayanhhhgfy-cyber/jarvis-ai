@@ -1,0 +1,1 @@
+{"$schema":"https://openapi.vercel.sh/vercel.json","buildCommand":"python3 pwa/generate_icons.py","rewrites":[{"destination":"/pwa/manifest.json","source":"/manifest.json"},{"destination":"/pwa/sw.js","source":"/sw.js"},{"destination":"/pwa/icons/:file","source":"/icons/:file"}]}

@@ -299,14 +299,19 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
   </div>
 </div>
 
+<script src="/config.js"></script>
 <script>
-// Same-origin when served by the backend (Render / local), localhost only
-// for file:// previews. This is what makes the PWA work on iPhone.
-const API = (window.location.protocol === 'file:')
+// Backend base URL. window.JARVIS_API_URL is set by frontend/config.js
+// (loaded just above). Empty = same-origin (backend serves the dashboard
+// on Render / local). The Vercel split deploy sets config.js to the
+// Render backend URL, e.g. window.JARVIS_API_URL =
+// "https://jarvis-ai.onrender.com"; — the WebSocket then follows the
+// same host (http -> ws, https -> wss). This is what makes the PWA work
+// on iPhone in both layouts.
+const API = (window.JARVIS_API_URL || ((window.location.protocol === 'file:')
   ? 'http://localhost:8000'
-  : window.location.origin;
-const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://')
-  + window.location.host + '/ws/ui';
+  : window.location.origin)).replace(/\/$/, '');
+const WS_URL = API.replace(/^http/, 'ws') + '/ws/ui';
 let allTools = [];
 let ws = null;
 

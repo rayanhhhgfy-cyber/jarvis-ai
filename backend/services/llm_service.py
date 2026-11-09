@@ -26,6 +26,8 @@ from shared.models import MemoryContext
 log = get_logger("llm_service")
 
 # Keywords that suggest the user wants real-time information
+# (English + Arabic — Sir speaks both, and Arabic questions must trigger
+# search just like English ones).
 WEB_SEARCH_TRIGGERS = [
     "weather", "temperature", "forecast",
     "news", "latest", "today", "current",
@@ -37,6 +39,14 @@ WEB_SEARCH_TRIGGERS = [
     "define", "meaning of",
     "release date", "update",
     "trending", "popular",
+    # Arabic triggers
+    "طقس", "درجة الحرارة", "توقع",
+    "أخبار", "اخبار", "آخر", "الأخير", "جديد", "اليوم", "الحالي",
+    "سعر", "أسعار", "اسعار", "سهم", "بيتكوين",
+    "نتيجة", "مباراة",
+    "ابحث", "بحث", "ما هو", "ما هي", "من هو", "أين", "اين", "متى",
+    "كيفية", "كيف يمكن", "كيف أ", "كم", "ما معنى", "معنى",
+    "موعد", "تحديث", "رائج",
 ]
 
 
@@ -114,10 +124,13 @@ class LLMService:
             
             log.info("web_search_triggered", query=search_query)
             try:
-                web_context = await web_search_service.search_and_summarize(search_query)
+                # Search, then Scrapling-fetch the top results and inject
+                # the fetched Markdown as context.
+                web_context = await web_search_service.search_fetch_and_summarize(search_query)
                 sys_prompt += f"\n\n{web_context}"
                 sys_prompt += (
-                    "\n\n[INSTRUCTION] You have been given live web search results above. "
+                    "\n\n[INSTRUCTION] You have been given live web search results and "
+                    "fetched page content above. "
                     "Use them to provide an accurate, real-time answer. "
                     "Cite sources when relevant. Do NOT say you cannot access the internet. "
                     "Do NOT generate placeholder text like '[weather report]' or '[insert location]'. "

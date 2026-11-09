@@ -43,15 +43,19 @@ one always-on free service.
 
 ## 4. Push notifications (VAPID keys)
 
-Generate a key pair once, on any machine with Python + pywebpush:
+You never generate or touch the VAPID keys. **Muse generates the key
+pair once at deploy time** (Python + pywebpush) and sets
+`VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` in the Render dashboard
+itself. The values never appear in chat, in screenshots, or in the
+repo — only the variable names live in `render.yaml` / `.env.example`.
 
-```bash
-pip install pywebpush
-python -c "from py_vapid import Vapid; v = Vapid(); v.generate_keys(); print('PUBLIC:', v.public_key.decode()); print('PRIVATE:', v.private_key.decode())"
-```
+This is the exact same mechanism as future-thinkers notifications:
+VAPID web push, same shape as its `push_routes.py` (subscribe /
+unsubscribe / vapid-public-key), its `push.js` (service-worker
+subscription) and its `sw.js` (push handler). Same behaviour, same
+iPhone flow — nothing new to learn.
 
-Paste the two values into `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` in
-Render (names only — never commit them). Then, on your iPhone:
+Then, on your iPhone:
 
 1. Open the dashboard in Safari, **Share → Add to Home Screen**.
 2. Open it from the Home Screen (this is what makes it a PWA).
@@ -61,6 +65,29 @@ Render (names only — never commit them). Then, on your iPhone:
 **iOS rule (Apple, not us):** web push on iPhone only works from a PWA
 that was added to the Home Screen, on iOS 16.4 or later. In Safari
 without adding it, the enable button will fail plainly.
+
+## 4b. Split deploy — frontend on Vercel, backend on Render
+
+The dashboard can also run split: static frontend on Vercel, FastAPI
+backend on Render.
+
+1. Deploy the backend to Render first (Blueprint, §1) and note its URL,
+   e.g. `https://jarvis-ai.onrender.com`.
+2. In `frontend/config.js`, set the one line the Vercel deploy must change:
+   `window.JARVIS_API_URL = "https://jarvis-ai.onrender.com";`
+   (no trailing slash). Empty means same-origin (Render all-in-one).
+   The WebSocket follows the same host automatically (https → wss).
+3. Deploy the frontend to Vercel with root directory `frontend`.
+   `frontend/vercel.json` rewrites `/manifest.json`, `/sw.js` and
+   `/icons/*` to the files under `frontend/pwa/`, and its build
+   command runs `pwa/generate_icons.py` so the PWA icons exist as
+   real static files (the repo carries no binary assets — the push
+   path is UTF-8 only; the backend runtime generator stays as the
+   fallback on Render).
+4. On Render, set `BACKEND_CORS_ORIGINS` to a JSON list including the
+   Vercel URL, e.g. `["https://jarvis-frontend.vercel.app"]`
+   (use the real Vercel project URL). Without this, the Vercel
+   frontend's API calls are rejected by the backend's CORS check.
 
 ## 5. Connect Messenger + Instagram (the Connectors tab)
 

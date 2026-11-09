@@ -20,6 +20,11 @@ htmlcov/
 .coverage
 coverage.xml
 
+# PWA icons are generated, never committed (binary assets cannot ride
+# the UTF-8-only GitHub push path): Render generates them on first
+# request, Vercel generates them at build time (generate_icons.py).
+frontend/pwa/icons/
+
 # Storage
 storage/
 logs/

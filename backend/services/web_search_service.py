@@ -2,13 +2,17 @@
 # JARVIS OMEGA — Web Search Service
 # ====================================================================
 """
-Provides real-time web search capability using DuckDuckGo Lite (no API key).
-JARVIS can use this to answer weather, news, sports, stocks, and general
-knowledge questions with live data instead of hallucinating.
+Provides real-time web search capability.
+
+Primary engine: the ``ddgs`` library (DuckDuckGo, keyless, free, no API
+key). Falls back to DuckDuckGo Lite HTML scraping when ddgs is
+unavailable or raises, so search keeps working offline of the library.
+Returns structured results with titles, snippets, and URLs.
 """
 
 from __future__ import annotations
 
+import asyncio
 import re
 from typing import List, Dict, Optional
 
@@ -19,11 +23,75 @@ from shared.logger import get_logger
 log = get_logger("web_search")
 
 
+def _search_ddgs_sync(query: str, max_results: int) -> List[Dict[str, str]]:
+    """Blocking ddgs call (runs in a thread via asyncio.to_thread).
+
+    Tries backends in order and returns the first non-empty result set.
+    The "auto" backend picks randomly and can land on backends that are
+    unreachable from a given network (DNS/stream errors), so explicit
+    ordered attempts are more reliable. Raises if every backend fails.
+    """
+    from ddgs import DDGS
+
+    last_error: Exception | None = None
+    for backend in ("duckduckgo", "bing", "brave", "google"):
+        try:
+            with DDGS(timeout=15) as ddgs:
+                rows = list(ddgs.text(query, max_results=max_results, backend=backend))
+            results: List[Dict[str, str]] = []
+            for row in rows:
+                title = (row.get("title") or "").strip()
+                url = (row.get("href") or "").strip()
+                snippet = (row.get("body") or "").strip()
+                if title and url:
+                    results.append({"title": title, "snippet": snippet, "url": url})
+            if results:
+                return results
+        except Exception as e:  # noqa: BLE001 - try the next backend
+            last_error = e
+            log.warning("web_search_ddgs_backend_failed", backend=backend, error=str(e))
+            continue
+    if last_error is not None:
+        raise last_error
+    return []
+
+
+def _fetch_scrapling_sync(url: str, max_chars: int) -> Dict[str, object]:
+    """Blocking Scrapling fetch (runs in a thread via asyncio.to_thread).
+
+    Fetcher.get + page.markdown(main_content_only=True) returns clean
+    Markdown with scripts/styles/hidden content stripped. Raises on
+    network errors or non-200 status so the caller can skip the page.
+    """
+    from scrapling.fetchers import Fetcher
+
+    page = Fetcher.get(url, timeout=30)
+    status = getattr(page, "status", 200)
+    if status != 200:
+        raise RuntimeError(f"HTTP {status}")
+    markdown = page.markdown(main_content_only=True) or ""
+    text = re.sub(r"\n{3,}", "\n\n", markdown).strip()
+    truncated = len(text) > max_chars
+    title = ""
+    title_match = re.search(r"^#\s+(.+)$", text, re.MULTILINE)
+    if title_match:
+        title = title_match.group(1).strip()
+    return {
+        "ok": True,
+        "url": url,
+        "final_url": str(getattr(page, "url", url)),
+        "title": title,
+        "text": text[:max_chars],
+        "chars": min(len(text), max_chars),
+        "truncated": truncated,
+    }
+
+
 class WebSearchService:
     """
-    Searches the web via DuckDuckGo Lite HTML scraping.
-    No API key required. Returns structured results with titles,
-    snippets, and URLs.
+    Searches the web via ddgs (DuckDuckGo, keyless) with a DuckDuckGo
+    Lite HTML fallback. No API key required. Returns structured results
+    with titles, snippets, and URLs.
     """
 
     def __init__(self) -> None:
@@ -67,9 +135,21 @@ class WebSearchService:
         """
         Perform a web search and return a list of result dicts:
         [{"title": ..., "snippet": ..., "url": ...}, ...]
+
+        Tries ddgs first; on any failure (library missing, network/DNS
+        error, empty results) falls back to DuckDuckGo Lite HTML scraping.
         """
         log.info("web_search_start", query=query)
         results: List[Dict[str, str]] = []
+
+        try:
+            results = await asyncio.to_thread(_search_ddgs_sync, query, max_results)
+            if results:
+                log.info("web_search_results", engine="ddgs", count=len(results))
+                return results
+            log.warning("web_search_ddgs_empty_falling_back", query=query)
+        except Exception as e:
+            log.warning("web_search_ddgs_failed_falling_back", error=str(e))
 
         try:
             async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
@@ -85,7 +165,7 @@ class WebSearchService:
 
                 html = resp.text
                 results = self._parse_lite_html(html, max_results)
-                log.info("web_search_results", count=len(results))
+                log.info("web_search_results", engine="lite-html", count=len(results))
 
         except Exception as e:
             log.error("web_search_failed", error=str(e))
@@ -123,6 +203,67 @@ class WebSearchService:
                 lines.append(f"Content: {r['snippet']}")
             if r.get("url"):
                 lines.append(f"Source: {r['url']}")
+
+        return "\n".join(lines)
+
+    async def fetch_page(self, url: str, max_chars: int = 12000) -> Dict[str, object]:
+        """
+        Fetch a page with Scrapling and return its readable Markdown.
+
+        Fetcher.get + page.markdown(main_content_only=True): scripts,
+        styles and hidden content are stripped by the library. Returns
+        {"ok", "url", "final_url", "title", "text", "chars", "truncated"}
+        (or {"ok": False, "error": ...} on failure — never raises).
+        """
+        try:
+            result = await asyncio.to_thread(_fetch_scrapling_sync, url, max_chars)
+            log.info("web_fetch_page_ok", url=url, chars=result["chars"])
+            return result
+        except Exception as e:
+            log.warning("web_fetch_page_failed", url=url, error=str(e))
+            return {
+                "ok": False, "url": url, "final_url": url,
+                "title": "", "text": "", "chars": 0, "truncated": False,
+                "error": str(e),
+            }
+
+    async def search_fetch_and_summarize(
+        self, query: str, max_results: int = 5, fetch_top: int = 3
+    ) -> str:
+        """
+        Search, then Scrapling-fetch the top ``fetch_top`` results and
+        return a combined context block (search snippets + fetched page
+        Markdown) for the LLM. Pages that fail to fetch are skipped,
+        never fatal.
+        """
+        results = await self.search(query, max_results=max_results)
+        if not results:
+            return "No web search results found for this query."
+
+        lines = [f"[WEB SEARCH RESULTS for: '{query}']"]
+        for i, r in enumerate(results, 1):
+            lines.append(f"\n--- Result {i} ---")
+            if r.get("title"):
+                lines.append(f"Title: {r['title']}")
+            if r.get("snippet"):
+                lines.append(f"Content: {r['snippet']}")
+            if r.get("url"):
+                lines.append(f"Source: {r['url']}")
+
+        lines.append("\n[FETCHED PAGES — full readable text]")
+        fetched_any = False
+        for r in results[:fetch_top]:
+            url = r.get("url") or ""
+            if not url.startswith(("http://", "https://")):
+                continue
+            page = await self.fetch_page(url)
+            if not page.get("ok") or not page.get("text"):
+                continue
+            fetched_any = True
+            lines.append(f"\n--- Page: {page.get('title') or url} ({url}) ---")
+            lines.append(str(page["text"]))
+        if not fetched_any:
+            lines.append("(no pages could be fetched; answer from the snippets above)")
 
         return "\n".join(lines)
 

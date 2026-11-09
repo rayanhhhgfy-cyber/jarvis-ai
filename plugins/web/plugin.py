@@ -318,6 +318,82 @@ async def web_hackernews(category: str = "top", limit: int = 10) -> Dict[str, An
         return {"ok": False, "error": str(e)}
 
 
+# --------------------------------------------------------------------
+# Web search (DuckDuckGo via ddgs — keyless, no API key)
+# --------------------------------------------------------------------
+
+@tool(
+    name="web.search",
+    description=(
+        "Search the live web and return results as {title, snippet, url}. "
+        "Use for current information: news, weather, prices, scores, release "
+        "dates, or any question whose answer changes over time. Keyless "
+        "DuckDuckGo via the ddgs library, with a Lite-HTML fallback."
+    ),
+    parameters={
+        "type": "object",
+        "properties": {
+            "query": {"type": "string", "description": "Search query, any language."},
+            "max_results": {"type": "integer", "default": 5, "minimum": 1, "maximum": 10},
+        },
+        "required": ["query"],
+    },
+    risk_tier=RiskTier.TIER_0_OBSERVE,
+    category="web",
+)
+async def web_search(query: str, max_results: int = 5) -> Dict[str, Any]:
+    try:
+        from backend.services.web_search_service import web_search_service
+
+        results = await web_search_service.search(query, max_results=max_results)
+        return {"ok": True, "query": query, "count": len(results), "results": results}
+    except Exception as e:
+        return {"ok": False, "query": query, "error": str(e)}
+
+
+@tool(
+    name="web.scrape",
+    description=(
+        "Fetch a web page and return its readable text as clean Markdown "
+        "(Scrapling Fetcher.get + page.markdown()). Use after web.search to "
+        "read a result page in full instead of answering from snippets. "
+        "Keyless, no API key needed."
+    ),
+    parameters={
+        "type": "object",
+        "properties": {
+            "url": {"type": "string", "description": "Full http(s) URL of the page to fetch."},
+            "max_chars": {"type": "integer", "default": 12000, "minimum": 1000, "maximum": 50000},
+        },
+        "required": ["url"],
+    },
+    risk_tier=RiskTier.TIER_0_OBSERVE,
+    category="web",
+)
+async def web_scrape(url: str, max_chars: int = 12000) -> Dict[str, Any]:
+    if not url.startswith(("http://", "https://")):
+        return {"ok": False, "url": url, "error": "Provide a valid http(s) URL."}
+    max_chars = max(1000, min(max_chars, 50000))
+    try:
+        from backend.services.web_search_service import WebSearchService
+
+        service = WebSearchService()
+        page = await service.fetch_page(url, max_chars=max_chars)
+        if not page.get("ok") or not page.get("text"):
+            return {"ok": False, "url": url, "error": str(page.get("error", "no content"))}
+        return {
+            "ok": True,
+            "url": url,
+            "final_url": page.get("final_url") or url,
+            "title": page.get("title") or "",
+            "chars": page.get("chars") or 0,
+            "truncated": bool(page.get("truncated")),
+            "text": page.get("text") or "",
+        }
+    except Exception as e:
+        return {"ok": False, "url": url, "error": str(e)}
+
+
 PLUGIN_NAME = "web"
-PLUGIN_VERSION = "1.0.0"
-PLUGIN_DESCRIPTION = "Free web tools: URL fetch, article extraction, Wikipedia, arXiv, RSS, Hacker News."
+PLUGIN_VERSION = "1.2.0"
+PLUGIN_DESCRIPTION = "Free web tools: URL fetch, article extraction, Wikipedia, arXiv, RSS, Hacker News, live web search, Scrapling page fetch."

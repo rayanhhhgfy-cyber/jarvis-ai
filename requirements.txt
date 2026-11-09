@@ -77,6 +77,9 @@ orjson==3.10.15
 pytest==8.1.1
 pytest-asyncio==0.23.6
 
+# --- Web Search (DuckDuckGo via ddgs, keyless) ---
+ddgs==9.16.1                 # web search: keyless DuckDuckGo (ddgs library)
+
 # --- Phase 10: Free-tier plugins ---
 # Each is optional at import time (plugins degrade gracefully if missing)
 # but listed here so a fresh install gets full functionality.
@@ -109,3 +112,4 @@ instagrapi==3.2.8              # instagram: private API client (login, DMs)
 # Was imported unguarded but missing from this file, so the bridge failed on
 # a clean install. Pinned to the latest release verified on PyPI (22.8).
 python-telegram-bot==22.8      # telegram: bot API (Application, handlers)
+scrapling[fetchers,rag]==0.5.1
