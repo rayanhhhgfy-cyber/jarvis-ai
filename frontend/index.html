@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- PWA: installable on iPhone (add to Home Screen) -->
-<meta name="theme-color" content="#00d4ff">
+<meta name="theme-color" content="#0b0d14">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,157 +13,222 @@
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <title>J.A.R.V.I.S. OMEGA — لوحة التحكم</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Unslopped with the unslop skill by @heydamir (CC BY 4.0) -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
---bg:#0a0a1a;--panel:rgba(15,15,35,0.9);--border:rgba(0,212,255,0.2);
---cyan:#00d4ff;--green:#00ff88;--orange:#ff8800;--red:#ff4466;--purple:#aa44ff;
---text:#e0e8ff;--text-dim:#6677aa;--font:'Tajawal',sans-serif;
---font-display:'Orbitron',sans-serif;
+  --bg:#0b0d14; --surface:#11141c; --raised:#1a1e28;
+  --hairline:rgba(238,240,245,0.08);
+  --text:#eef0f5; --text-2:#a3a9b8; --text-3:#7a8296;
+  --accent:#d9a441; --accent-ink:#191307;
+  --green:#4cc38a; --red:#e5484d;
+  --font:'Tajawal',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(0.22,1,0.36,1);
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden}
-canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;opacity:0.3}
-.app{max-width:1600px;margin:0 auto;padding:16px}
-/* Header */
-.header{text-align:center;padding:24px 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
-.header h1{font-family:var(--font-display);font-size:2.5rem;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.header p{color:var(--text-dim);font-size:1.1rem}
-.header .stats{display:flex;justify-content:center;gap:32px;margin-top:16px;flex-wrap:wrap}
-.header .stat{text-align:center}
-.header .stat .num{font-size:2rem;font-weight:900;color:var(--cyan)}
-.header .stat .label{font-size:0.8rem;color:var(--text-dim)}
-/* Chat */
-.chat-box{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
-.chat-box h2{font-size:1.2rem;margin-bottom:12px;color:var(--cyan)}
-.chat-messages{max-height:300px;overflow-y:auto;margin-bottom:12px}
-.chat-msg{padding:8px 12px;margin:4px 0;border-radius:8px;font-size:0.95rem}
-.chat-msg.user{background:rgba(0,212,255,0.1);border-right:3px solid var(--cyan)}
-.chat-msg.bot{background:rgba(170,68,255,0.08);border-right:3px solid var(--purple)}
-.chat-input{display:flex;gap:8px}
-.chat-input input{flex:1;padding:12px 16px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:1rem}
-.chat-input button{padding:12px 24px;background:linear-gradient(90deg,var(--cyan),var(--purple));border:none;border-radius:8px;color:white;font-weight:700;cursor:pointer;font-family:var(--font);transition:0.3s}
-.chat-input button:hover{opacity:0.85;transform:translateY(-1px)}
-/* Search */
-.search-bar{width:100%;padding:14px 20px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:var(--font);font-size:1rem;margin-bottom:16px}
-.search-bar:focus{outline:none;border-color:var(--cyan)}
-/* Grid */
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:16px}
-.category-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;transition:0.3s}
-.category-card:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,212,255,0.1)}
-.category-card h3{font-size:1.1rem;color:var(--cyan);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.category-card .cat-count{background:rgba(0,212,255,0.15);padding:2px 10px;border-radius:12px;font-size:0.8rem;color:var(--cyan)}
-.tool-list{list-style:none}
-.tool-item{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;cursor:pointer;transition:0.2s;display:flex;align-items:flex-start;gap:6px}
-.tool-item:hover{color:var(--cyan);padding-right:4px}
-.tool-item .tier-badge{font-size:0.65rem;padding:1px 6px;border-radius:6px;white-space:nowrap}
-.tier-0{background:rgba(0,255,136,0.15);color:var(--green)}
-.tier-1{background:rgba(0,212,255,0.15);color:var(--cyan)}
-.tier-2{background:rgba(255,136,0,0.15);color:var(--orange)}
-.tier-3{background:rgba(255,68,102,0.15);color:var(--red)}
-.tier-4{background:rgba(255,68,102,0.25);color:var(--red)}
-.tool-desc{color:var(--text-dim);font-size:0.78rem;margin-top:2px}
+html{scrollbar-color:var(--raised) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.5;overflow-x:hidden}
+::selection{background:rgba(217,164,65,0.28)}
+:focus-visible{outline:2px solid rgba(217,164,65,0.6);outline-offset:2px}
+button{font-family:var(--font)}
+svg{display:block;flex:none}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.app{max-width:1200px;margin:0 auto;padding:0 32px 96px;animation:enter 400ms var(--ease) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Top bar */
+.topbar{height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--hairline);position:sticky;top:0;background:var(--bg);z-index:50}
+.wordmark{font-family:var(--mono);font-size:16px;font-weight:500;letter-spacing:0.02em}
+.wordmark span{color:var(--text-3);font-weight:400}
+.status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2)}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.status.off .dot{background:var(--red)}
+.status .host{font-family:var(--mono);font-size:12px;color:var(--text-3)}
+
+/* Header stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:24px 0;border-bottom:1px solid var(--hairline)}
+.stat .label{font-size:12px;color:var(--text-3);margin-bottom:4px}
+.stat .num{font-family:var(--mono);font-size:28px;line-height:1.2;font-weight:500;font-variant-numeric:tabular-nums}
+
 /* Vitals */
-.vitals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
-.vital-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
-.vital-card .val{font-size:1.8rem;font-weight:700;color:var(--cyan)}
-.vital-card .lbl{font-size:0.8rem;color:var(--text-dim);margin-top:4px}
-/* Autopilot button */
-.autopilot-btn{position:fixed;bottom:24px;left:24px;padding:16px 32px;background:linear-gradient(135deg,var(--green),var(--cyan));border:none;border-radius:50px;color:#000;font-weight:900;font-size:1.1rem;cursor:pointer;font-family:var(--font);box-shadow:0 4px 30px rgba(0,255,136,0.3);z-index:100;transition:0.3s}
-.autopilot-btn:hover{transform:scale(1.05)}
-.autopilot-btn.paused{background:linear-gradient(135deg,var(--orange),var(--red))}
-/* Modal */
-.modal-overlay{display:none;position:fixed;top:0;right:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;justify-content:center;align-items:center}
-.modal-overlay.active{display:flex}
-.modal{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto}
-.modal h2{color:var(--cyan);margin-bottom:12px}
-.modal pre{background:rgba(0,0,0,0.4);padding:12px;border-radius:8px;font-size:0.85rem;overflow-x:auto;color:var(--green)}
-.modal .close{float:right;cursor:pointer;font-size:1.5rem;color:var(--text-dim)}
-.modal .close:hover{color:var(--red)}
-/* Responsive */
-@media(max-width:768px){.header h1{font-size:1.8rem}.header .stats{gap:16px}.tools-grid{grid-template-columns:1fr}.autopilot-btn{font-size:0.9rem;padding:12px 24px}}
-/* Loader */
-.loader{text-align:center;padding:40px;color:var(--text-dim)}
-.spinner{display:inline-block;width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+.vitals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
+.vital-card{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:20px}
+.vital-card .lbl{font-size:13px;color:var(--text-2);margin-bottom:8px}
+.vital-card .val{font-family:var(--mono);font-size:28px;line-height:1.2;font-weight:500;font-variant-numeric:tabular-nums}
+
 /* Tabs */
-.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
-.tab{padding:10px 20px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:var(--font);color:var(--text-dim);transition:0.3s;font-size:0.9rem}
-.tab.active{background:rgba(0,212,255,0.15);color:var(--cyan);border-color:var(--cyan)}
-.tab:hover{color:var(--cyan)}
+.tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--hairline);overflow-x:auto}
+.tab{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-2);cursor:pointer;font-size:14px;font-weight:500;white-space:nowrap;transition:color 150ms var(--ease),border-color 150ms var(--ease)}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--text);border-bottom-color:var(--accent)}
+.tab svg{color:var(--text-3)}
+.tab.active svg{color:var(--accent)}
+
+/* Search */
+.search-wrap{position:relative;margin-bottom:16px}
+.search-wrap svg{position:absolute;top:50%;right:16px;transform:translateY(-50%);color:var(--text-3);pointer-events:none}
+.search-bar{width:100%;height:48px;padding:0 48px 0 16px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:15px;transition:border-color 150ms var(--ease)}
+.search-bar::placeholder{color:var(--text-3)}
+.search-bar:focus{outline:none;border-color:var(--accent)}
+
+/* Cards and tools */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.category-card{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:20px}
+.category-card h3{font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.category-card h3 svg{color:var(--text-3)}
+.category-card h3 .cat-count{margin-inline-start:auto;font-family:var(--mono);font-size:12px;color:var(--text-3);font-weight:400;font-variant-numeric:tabular-nums}
+.tool-list{list-style:none}
+.tool-item{display:flex;align-items:flex-start;gap:8px;padding:8px;margin:0 -8px;border-radius:8px;font-size:14px;cursor:pointer;transition:background-color 150ms var(--ease)}
+.tool-item:hover{background:var(--raised)}
+.tool-item svg{color:var(--text-3);margin-top:3px}
+.tool-item .tier{font-family:var(--mono);font-size:12px;color:var(--text-3);width:24px;flex:none;padding-top:2px;font-variant-numeric:tabular-nums}
+.tool-item .tool-name{color:var(--text)}
+.tool-desc{color:var(--text-2);font-size:13px;margin-top:2px}
+
+/* Chat */
+.chat-box{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:20px}
+.chat-box h2{font-size:15px;font-weight:500;margin-bottom:16px}
+.chat-messages{min-height:320px;max-height:60vh;overflow-y:auto;margin-bottom:16px}
+.chat-msg{padding:12px 0;font-size:15px;line-height:1.6}
+.chat-msg + .chat-msg{border-top:1px solid var(--hairline)}
+.chat-msg::before{display:block;font-family:var(--mono);font-size:12px;color:var(--text-3);margin-bottom:4px}
+.chat-msg.bot::before{content:"Jarvis"}
+.chat-msg.user::before{content:"أنت"}
+.chat-msg.bot{background:var(--raised);border-radius:12px;padding:12px 16px;border-top:none;margin:8px 0}
+.chat-msg.bot + .chat-msg.bot{margin-top:8px}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;height:48px;padding:0 16px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:15px;transition:border-color 150ms var(--ease)}
+.chat-input input::placeholder{color:var(--text-3)}
+.chat-input input:focus{outline:none;border-color:var(--accent)}
+.btn-send{height:48px;padding:0 20px;background:var(--accent);border:none;border-radius:10px;color:var(--accent-ink);font-weight:500;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 150ms var(--ease)}
+.btn-send:hover{opacity:0.88}
+.btn-send:active{transform:scale(0.98)}
+.mic-btn{width:48px;height:48px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color 150ms var(--ease),border-color 150ms var(--ease)}
+.mic-btn:hover{color:var(--text)}
+.mic-btn.recording{color:var(--red);border-color:var(--red)}
+
+/* Buttons */
+.btn{height:40px;padding:0 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity 150ms var(--ease),background-color 150ms var(--ease)}
+.btn-connect{background:var(--accent);border:none;color:var(--accent-ink)}
+.btn-connect:hover{opacity:0.88}
+.btn-disconnect{background:none;color:var(--red);border:1px solid rgba(229,72,77,0.4)}
+.btn-disconnect:hover{background:rgba(229,72,77,0.08)}
+.btn-ghost{background:var(--raised);color:var(--text);border:1px solid var(--hairline)}
+.btn-ghost:hover{background:#222634}
+
 /* Connectors */
-.connector-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
-.connector-card h3{font-size:1.2rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--text-dim)}
-.status-dot.on{background:var(--green);box-shadow:0 0 8px var(--green)}
+.connector-card{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;padding:20px}
+.connector-card h3{font-size:15px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.connector-card h3 svg{color:var(--text-3)}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text-3);flex:none}
+.status-dot.on{background:var(--green)}
 .status-dot.off{background:var(--red)}
-.connector-card p{color:var(--text-dim);font-size:0.9rem;margin-bottom:12px}
-.btn{padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:700;margin-left:8px}
-.btn-connect{background:linear-gradient(90deg,var(--cyan),var(--purple));color:#fff}
-.btn-disconnect{background:rgba(255,68,102,0.15);color:var(--red);border:1px solid var(--red)}
-.btn-ghost{background:rgba(0,212,255,0.1);color:var(--cyan);border:1px solid var(--border)}
-.conn-form label{display:block;margin:10px 0 4px;color:var(--text-dim);font-size:0.9rem}
-.conn-form input,.conn-form textarea{width:100%;padding:10px 12px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font)}
-.conn-form textarea{min-height:90px;direction:ltr;text-align:left}
-.mode-tabs{display:flex;gap:6px;margin:12px 0}
-.mode-tab{flex:1;padding:8px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;color:var(--text-dim);font-size:0.9rem}
-.mode-tab.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.1)}
-.conn-note{font-size:0.8rem;color:var(--text-dim);margin-top:12px;line-height:1.6}
-.mic-btn{padding:12px 16px;background:rgba(0,212,255,0.1);border:1px solid var(--border);border-radius:8px;color:var(--cyan);cursor:pointer;font-size:1.1rem}
-.mic-btn.recording{background:rgba(255,68,102,0.25);border-color:var(--red);color:var(--red)}
+.connector-card p{color:var(--text-2);font-size:14px;margin-bottom:16px}
+.stack{margin-top:16px}
+.conn-note{font-size:13px;color:var(--text-3);margin-top:16px;line-height:1.6}
+.conn-form label{display:block;margin:16px 0 8px;color:var(--text-2);font-size:13px}
+.conn-form input,.conn-form textarea{width:100%;height:44px;padding:0 12px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:15px;transition:border-color 150ms var(--ease)}
+.conn-form input:focus,.conn-form textarea:focus{outline:none;border-color:var(--accent)}
+.conn-form textarea{height:auto;min-height:96px;padding:12px;direction:ltr;text-align:left;font-family:var(--mono);font-size:13px;line-height:1.6}
+.mode-tabs{display:flex;gap:8px;margin:16px 0 4px}
+.mode-tab{flex:1;height:40px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--hairline);border-radius:10px;cursor:pointer;color:var(--text-2);font-size:14px;background:none;transition:color 150ms var(--ease),border-color 150ms var(--ease),background-color 150ms var(--ease)}
+.mode-tab:hover{color:var(--text)}
+.mode-tab.active{border-color:var(--accent);color:var(--text);background:var(--raised)}
+
+/* Autopilot */
+.autopilot-btn{position:fixed;bottom:24px;left:24px;height:48px;padding:0 20px;background:var(--text);border:none;border-radius:12px;color:var(--bg);font-weight:500;font-size:15px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,0.35);transition:opacity 150ms var(--ease)}
+.autopilot-btn:hover{opacity:0.9}
+.autopilot-btn:active{transform:scale(0.98)}
+.autopilot-btn.paused{background:var(--raised);color:var(--accent);border:1px solid rgba(217,164,65,0.4);box-shadow:none}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;top:0;right:0;width:100%;height:100%;background:rgba(0,0,0,0.72);z-index:200;justify-content:center;align-items:center;padding:16px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--surface);border:1px solid var(--hairline);border-radius:20px;padding:24px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto}
+.modal h2{font-size:16px;font-weight:500;margin-bottom:16px}
+.modal pre{background:var(--raised);padding:12px;border-radius:8px;font-size:13px;font-family:var(--mono);line-height:1.6;overflow-x:auto;color:var(--green);white-space:pre-wrap;word-break:break-word}
+.modal .close{float:left;cursor:pointer;font-size:24px;line-height:1;color:var(--text-3);background:none;border:none;padding:4px}
+.modal .close:hover{color:var(--text)}
+
+/* Loader */
+.loader{text-align:center;padding:40px;color:var(--text-3);font-size:14px}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--hairline);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Section spacing */
+.section{margin-top:24px}
+.section + .section{margin-top:16px}
+
+/* Responsive */
+@media(max-width:768px){
+  .app{padding:0 16px 96px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:16px;padding:20px 0}
+  .stat .num{font-size:24px}
+  .vital-card .val{font-size:24px}
+  .tools-grid{grid-template-columns:1fr}
+  .status .host{display:none}
+  .autopilot-btn{left:16px;bottom:16px}
+  .chat-messages{min-height:280px}
+}
 </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
 <div class="app">
-  <!-- Header -->
-  <div class="header">
-    <h1>J.A.R.V.I.S. OMEGA</h1>
-    <p>المنفيذ الرقمي الدائم — Permanent Digital Executive Assistant</p>
-    <div class="stats">
-      <div class="stat"><div class="num" id="toolCount">—</div><div class="label">أداة (Tools)</div></div>
-      <div class="stat"><div class="num" id="catCount">—</div><div class="label">فئة (Categories)</div></div>
-      <div class="stat"><div class="num" id="connCount">0</div><div class="label">اتصالات (Connections)</div></div>
-      <div class="stat"><div class="num" id="taskCount">0</div><div class="label">مهام (Tasks)</div></div>
-    </div>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="wordmark">J.A.R.V.I.S.<span> OMEGA</span></div>
+    <div class="status" id="wsStatus"><span class="dot"></span><span id="wsStatusText">متصل</span><span class="host" id="apiHost"></span></div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="label">أداة</div><div class="num" id="toolCount">—</div></div>
+    <div class="stat"><div class="label">فئة</div><div class="num" id="catCount">—</div></div>
+    <div class="stat"><div class="label">اتصالات</div><div class="num" id="connCount">0</div></div>
+    <div class="stat"><div class="label">مهام</div><div class="num" id="taskCount">0</div></div>
   </div>
 
   <!-- Vitals -->
   <div class="vitals" id="vitals">
-    <div class="vital-card"><div class="val" id="cpuVal">—</div><div class="lbl">المعالج CPU</div></div>
-    <div class="vital-card"><div class="val" id="memVal">—</div><div class="lbl">الذاكرة RAM</div></div>
-    <div class="vital-card"><div class="val" id="diskVal">—</div><div class="lbl">القرص Disk</div></div>
-    <div class="vital-card"><div class="val" id="healthVal">—</div><div class="lbl">الحالة Health</div></div>
+    <div class="vital-card"><div class="lbl">المعالج</div><div class="val" id="cpuVal">—</div></div>
+    <div class="vital-card"><div class="lbl">الذاكرة</div><div class="val" id="memVal">—</div></div>
+    <div class="vital-card"><div class="lbl">القرص</div><div class="val" id="diskVal">—</div></div>
+    <div class="vital-card"><div class="lbl">الحالة</div><div class="val" id="healthVal">—</div></div>
   </div>
 
   <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('tools')">🛠️ الأدوات (Tools)</div>
-    <div class="tab" onclick="switchTab('chat')">💬 المحادثة (Chat)</div>
-    <div class="tab" onclick="switchTab('business')">📊 الأعمال (Business)</div>
-    <div class="tab" onclick="switchTab('sales')">💰 المبيعات (Sales)</div>
-    <div class="tab" onclick="switchTab('connectors')">🔗 الموصلات (Connectors)</div>
-  </div>
+  <nav class="tabs" aria-label="الأقسام">
+    <button class="tab active" onclick="switchTab('tools')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>الأدوات</button>
+    <button class="tab" onclick="switchTab('chat')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>المحادثة</button>
+    <button class="tab" onclick="switchTab('business')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>الأعمال</button>
+    <button class="tab" onclick="switchTab('sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>المبيعات</button>
+    <button class="tab" onclick="switchTab('connectors')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>الموصلات</button>
+  </nav>
 
   <!-- Tools Tab -->
   <div id="tab-tools">
-    <input type="text" class="search-bar" id="searchTools" placeholder="ابحث في 555 أداة... (Search 555 tools...)" oninput="filterTools()">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" class="search-bar" id="searchTools" placeholder="ابحث في الأدوات" oninput="filterTools()">
+    </div>
     <div class="tools-grid" id="toolsGrid">
-      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الأدوات...</p></div>
+      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الأدوات</p></div>
     </div>
   </div>
 
   <!-- Chat Tab -->
   <div id="tab-chat" style="display:none">
     <div class="chat-box">
-      <h2>💬 محادثة مع JARVIS</h2>
+      <h2>محادثة مع Jarvis</h2>
       <div class="chat-messages" id="chatMessages">
-        <div class="chat-msg bot">مرحباً سيدي! أنا JARVIS، جاهز لخدمتك. كيف يمكنني مساعدتك؟</div>
+        <div class="chat-msg bot">مرحباً سيدي، أنا Jarvis، جاهز لخدمتك. كيف يمكنني مساعدتك؟</div>
       </div>
       <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="اكتب رسالتك... (Type your message...)" onkeypress="if(event.key==='Enter')sendChat()">
-        <button class="mic-btn" id="micBtn" title="تحدث" onclick="toggleVoiceInput()">🎤</button>
-        <button onclick="sendChat()">إرسال</button>
+        <input type="text" id="chatInput" placeholder="اكتب رسالتك" onkeypress="if(event.key==='Enter')sendChat()">
+        <button class="mic-btn" id="micBtn" title="تحدث" onclick="toggleVoiceInput()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></button>
+        <button class="btn-send" onclick="sendChat()">إرسال<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
       </div>
     </div>
   </div>
@@ -171,38 +236,38 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
   <!-- Business Tab -->
   <div id="tab-business" style="display:none">
     <div class="vitals">
-      <div class="vital-card"><div class="val" id="bizCount">0</div><div class="lbl">أعمال نشطة</div></div>
-      <div class="vital-card"><div class="val" id="revenueVal">0 د.أ</div><div class="lbl">الإيرادات</div></div>
-      <div class="vital-card"><div class="val" id="dealsCount">0</div><div class="lbl">صفقات مغلقة</div></div>
-      <div class="vital-card"><div class="val" id="postsCount">0</div><div class="lbl">منشورات</div></div>
+      <div class="vital-card"><div class="lbl">أعمال نشطة</div><div class="val" id="bizCount">0</div></div>
+      <div class="vital-card"><div class="lbl">الإيرادات</div><div class="val" id="revenueVal">0 د.أ</div></div>
+      <div class="vital-card"><div class="lbl">صفقات مغلقة</div><div class="val" id="dealsCount">0</div></div>
+      <div class="vital-card"><div class="lbl">منشورات</div><div class="val" id="postsCount">0</div></div>
     </div>
     <div class="tools-grid">
       <div class="category-card">
-        <h3>🚀 إجراءات سريعة</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>إجراءات سريعة</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('bi.dashboard')">📊 لوحة معلومات الأعمال</div>
-          <div class="tool-item" onclick="invokeTool('portfolio.dashboard')">🏢 محفظة الأعمال</div>
-          <div class="tool-item" onclick="invokeTool('payouts.where_is_my_money')">💰 أين أموالي؟</div>
-          <div class="tool-item" onclick="invokeTool('budget.get')">💳 حد الميزانية</div>
-          <div class="tool-item" onclick="invokeTool('diagnostics.full')">🔍 تشخيص النظام</div>
+          <div class="tool-item" onclick="invokeTool('bi.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>لوحة معلومات الأعمال</span></div>
+          <div class="tool-item" onclick="invokeTool('portfolio.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>محفظة الأعمال</span></div>
+          <div class="tool-item" onclick="invokeTool('payouts.where_is_my_money')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg><span>أين أموالي؟</span></div>
+          <div class="tool-item" onclick="invokeTool('budget.get')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span>حد الميزانية</span></div>
+          <div class="tool-item" onclick="invokeTool('diagnostics.full')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>تشخيص النظام</span></div>
         </div>
       </div>
       <div class="category-card">
-        <h3>🏪 بناء الأعمال</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>بناء الأعمال</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('agency.build_multi_product',{'niche':'test'})">🏗️ بناء 7 منتجات</div>
-          <div class="tool-item" onclick="invokeTool('agency.mass_lead_gen',{'niche':'restaurants'})')">🎯 50 عميل محتمل</div>
-          <div class="tool-item" onclick="invokeTool('agency.run_continuous',{'activate':true})">♾️ الوضع المستمر</div>
-          <div class="tool-item" onclick="invokeTool('agency.weekly_report')">📋 التقرير الأسبوعي</div>
+          <div class="tool-item" onclick="invokeTool('agency.build_multi_product',{'niche':'test'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg><span>بناء 7 منتجات</span></div>
+          <div class="tool-item" onclick="invokeTool('agency.mass_lead_gen',{'niche':'restaurants'})')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>50 عميل محتمل</span></div>
+          <div class="tool-item" onclick="invokeTool('agency.run_continuous',{'activate':true})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>الوضع المستمر</span></div>
+          <div class="tool-item" onclick="invokeTool('agency.weekly_report')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span>التقرير الأسبوعي</span></div>
         </div>
       </div>
       <div class="category-card">
-        <h3>📡 التسويق</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>التسويق</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('marketing.create_content',{'topic':'النجاح'})">✍️ إنشاء محتوى</div>
-          <div class="tool-item" onclick="invokeTool('marketing.list_posts')">📋 المنشورات</div>
-          <div class="tool-item" onclick="invokeTool('repurpose.from_text',{'source_content':'الذكاء الاصطناعي'})">♻️ إعادة تدوير المحتوى</div>
-          <div class="tool-item" onclick="invokeTool('linkedin.post_write',{'topic':'الريادة'})">💼 منشور لينكدإن</div>
+          <div class="tool-item" onclick="invokeTool('marketing.create_content',{'topic':'النجاح'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>إنشاء محتوى</span></div>
+          <div class="tool-item" onclick="invokeTool('marketing.list_posts')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span>المنشورات</span></div>
+          <div class="tool-item" onclick="invokeTool('repurpose.from_text',{'source_content':'الذكاء الاصطناعي'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>إعادة تدوير المحتوى</span></div>
+          <div class="tool-item" onclick="invokeTool('linkedin.post_write',{'topic':'الريادة'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>منشور لينكدإن</span></div>
         </div>
       </div>
     </div>
@@ -212,73 +277,74 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
   <div id="tab-sales" style="display:none">
     <div class="tools-grid">
       <div class="category-card">
-        <h3>🤖 المبيعات الذاتية</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>المبيعات الذاتية</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('sales.dashboard')">📊 لوحة المبيعات</div>
-          <div class="tool-item" onclick="invokeTool('sales.list_conversations')">💬 المحادثات</div>
-          <div class="tool-item" onclick="invokeTool('sales.run_loop')">🔄 دورة بيع جديدة</div>
-          <div class="tool-item" onclick="invokeTool('sales.pause')">⏸️ إيقاف المبيعات</div>
-          <div class="tool-item" onclick="invokeTool('sales.resume')">▶️ استئناف المبيعات</div>
+          <div class="tool-item" onclick="invokeTool('sales.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>لوحة المبيعات</span></div>
+          <div class="tool-item" onclick="invokeTool('sales.list_conversations')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>المحادثات</span></div>
+          <div class="tool-item" onclick="invokeTool('sales.run_loop')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>دورة بيع جديدة</span></div>
+          <div class="tool-item" onclick="invokeTool('sales.pause')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg><span>إيقاف المبيعات</span></div>
+          <div class="tool-item" onclick="invokeTool('sales.resume')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg><span>استئناف المبيعات</span></div>
         </div>
       </div>
       <div class="category-card">
-        <h3>💎 الدفع</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>الدفع</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('local_payment.zain_cash_qr',{'amount_jod':50})">📱 QR زين كاش</div>
-          <div class="tool-item" onclick="invokeTool('payouts.track_all')">📊 تتبع المدفوعات</div>
-          <div class="tool-item" onclick="invokeTool('payouts.revenue_history')">📈 تاريخ الإيرادات</div>
-          <div class="tool-item" onclick="invokeTool('lemonsqueezy.list_sales')">🍋 مبيعات Lemon Squeezy</div>
+          <div class="tool-item" onclick="invokeTool('local_payment.zain_cash_qr',{'amount_jod':50})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M21 14v.01"/><path d="M14 21v.01"/><path d="M18 18v.01"/></svg><span>QR زين كاش</span></div>
+          <div class="tool-item" onclick="invokeTool('payouts.track_all')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><span>تتبع المدفوعات</span></div>
+          <div class="tool-item" onclick="invokeTool('payouts.revenue_history')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>تاريخ الإيرادات</span></div>
+          <div class="tool-item" onclick="invokeTool('lemonsqueezy.list_sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span>مبيعات Lemon Squeezy</span></div>
         </div>
       </div>
       <div class="category-card">
-        <h3>🕌 أدوات إسلامية</h3>
+        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>أدوات إسلامية</h3>
         <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('islamic.prayer_times')">⏰ أوقات الصلاة</div>
-          <div class="tool-item" onclick="invokeTool('islamic.hijri_date')">📅 التاريخ الهجري</div>
-          <div class="tool-item" onclick="invokeTool('islamic.zakat_calculator',{'cash_jod':5000})">🤲 حاسبة الزكاة</div>
-          <div class="tool-item" onclick="invokeTool('islamic.qibla',{'latitude':31.95,'longitude':35.91})">🧭 اتجاه القبلة</div>
-          <div class="tool-item" onclick="invokeTool('islamic.events_calendar')">📅 المناسبات</div>
+          <div class="tool-item" onclick="invokeTool('islamic.prayer_times')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>أوقات الصلاة</span></div>
+          <div class="tool-item" onclick="invokeTool('islamic.hijri_date')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span>التاريخ الهجري</span></div>
+          <div class="tool-item" onclick="invokeTool('islamic.zakat_calculator',{'cash_jod':5000})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M16 14v4"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/></svg><span>حاسبة الزكاة</span></div>
+          <div class="tool-item" onclick="invokeTool('islamic.qibla',{'latitude':31.95,'longitude':35.91})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span>اتجاه القبلة</span></div>
+          <div class="tool-item" onclick="invokeTool('islamic.events_calendar')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span>المناسبات</span></div>
         </div>
       </div>
     </div>
   </div>
+
   <!-- Connectors Tab -->
   <div id="tab-connectors" style="display:none">
     <div class="tools-grid" id="connectorsGrid">
-      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الموصلات...</p></div>
+      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الموصلات</p></div>
     </div>
-    <div class="category-card" style="margin-top:12px">
-      <h3>🔔 إشعارات الجوال (Push Notifications)</h3>
-      <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:12px">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد JARVIS على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
-      <button class="btn btn-connect" onclick="enableNotifications()">🔔 تفعيل الإشعارات</button>
-      <button class="btn btn-ghost" onclick="sendTestPush()">📣 إرسال إشعار تجريبي</button>
-      <span id="pushStatus" style="color:var(--text-dim);font-size:0.85rem;margin-right:8px"></span>
+    <div class="category-card stack">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>إشعارات الجوال</h3>
+      <p style="color:var(--text-2);font-size:14px;margin-bottom:16px">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد Jarvis على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
+      <button class="btn btn-connect" onclick="enableNotifications()">تفعيل الإشعارات</button>
+      <button class="btn btn-ghost" onclick="sendTestPush()">إرسال إشعار تجريبي</button>
+      <span id="pushStatus" style="color:var(--text-2);font-size:13px;margin-right:8px"></span>
     </div>
-    <p class="conn-note">⚠️ تنبيه: الرد التلقائي على رسائلك الشخصية في ماسنجر وإنستغرام يخالف قواعد المنصتين، وقد يتم قفل الحساب أو حظره. JARVIS يرد فقط على المحادثات الفردية، وبحد أقصى 5 ردود في كل جولة فحص.</p>
+    <p class="conn-note">تنبيه: الرد التلقائي على رسائلك الشخصية في ماسنجر وإنستغرام يخالف قواعد المنصتين، وقد يتم قفل الحساب أو حظره. Jarvis يرد فقط على المحادثات الفردية، وبحد أقصى 5 ردود في كل جولة فحص.</p>
   </div>
 </div>
 
 <!-- Autopilot Button -->
-<button class="autopilot-btn" id="autopilotBtn" onclick="toggleAutopilot()">🚀 ابدأ كل شيء</button>
+<button class="autopilot-btn" id="autopilotBtn" onclick="toggleAutopilot()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>ابدأ كل شيء</button>
 
 <!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
+    <button class="close" onclick="closeModal()" aria-label="إغلاق">&times;</button>
     <h2 id="modalTitle"></h2>
-    <pre id="modalContent">جاري التحميل...</pre>
+    <pre id="modalContent">جاري التحميل</pre>
   </div>
 </div>
 
 <!-- Connect Modal -->
 <div class="modal-overlay" id="connectOverlay" onclick="if(event.target===this)closeConnectModal()">
   <div class="modal">
-    <span class="close" onclick="closeConnectModal()">&times;</span>
-    <h2 id="connectTitle">🔗 ربط حساب</h2>
+    <button class="close" onclick="closeConnectModal()" aria-label="إغلاق">&times;</button>
+    <h2 id="connectTitle">ربط حساب</h2>
     <div class="conn-form">
       <div class="mode-tabs">
-        <div class="mode-tab active" id="modeTabPassword" onclick="setConnectMode('password')">📧 إيميل وكلمة مرور</div>
-        <div class="mode-tab" id="modeTabCookies" onclick="setConnectMode('cookies')">🍪 كوكيز</div>
+        <button class="mode-tab active" id="modeTabPassword" onclick="setConnectMode('password')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>إيميل وكلمة مرور</button>
+        <button class="mode-tab" id="modeTabCookies" onclick="setConnectMode('cookies')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 2-2 2"/><path d="m12.5 9.5a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78z"/><path d="m15.5 7.5 3 3"/><path d="M22 7l-3-3"/><path d="m19 4 3 3"/></svg>كوكيز</button>
       </div>
       <div id="connectPasswordFields">
         <label>الإيميل / اسم المستخدم</label>
@@ -292,8 +358,8 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
       </div>
       <p class="conn-note">بياناتك تُحفظ مشفّرة على الخادم فقط، ولا تظهر أبداً في أي واجهة. يمكنك قطع الاتصال في أي وقت من هنا.</p>
       <div style="margin-top:16px">
-        <button class="btn btn-connect" onclick="submitConnect()">✅ ربط الحساب</button>
-        <span id="connectStatus" style="color:var(--text-dim);font-size:0.85rem;margin-right:8px"></span>
+        <button class="btn btn-connect" onclick="submitConnect()">ربط الحساب</button>
+        <span id="connectStatus" style="color:var(--text-2);font-size:13px;margin-right:8px"></span>
       </div>
     </div>
   </div>
@@ -315,8 +381,21 @@ const WS_URL = API.replace(/^http/, 'ws') + '/ws/ui';
 let allTools = [];
 let ws = null;
 
+// === Inline line icons (lucide-style, 16px, stroke 1.5) ===
+const ICONS = {
+  message: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  camera: '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+  zap: '<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
+  pause: '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>'
+};
+function icon(name, size) {
+  size = size || 16;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+}
+
 // === Initialize ===
 async function init() {
+  document.getElementById('apiHost').textContent = API.replace(/^https?:\/\//, '');
   await loadTools();
   await loadVitals();
   await loadConnectors();
@@ -330,7 +409,7 @@ async function loadTools() {
     const resp = await fetch(API + '/api/settings/tools');
     allTools = await resp.json();
     document.getElementById('toolCount').textContent = allTools.length;
-    
+
     // Group by category
     const categories = {};
     allTools.forEach(t => {
@@ -338,7 +417,7 @@ async function loadTools() {
       categories[t.category].push(t);
     });
     document.getElementById('catCount').textContent = Object.keys(categories).length;
-    
+
     renderTools(categories);
   } catch (e) {
     document.getElementById('toolsGrid').innerHTML = '<div class="loader"><p>تعذر الاتصال بالخادم. تأكد أن الباكند يعمل.</p></div>';
@@ -349,27 +428,24 @@ async function loadTools() {
 function renderTools(categories) {
   const grid = document.getElementById('toolsGrid');
   grid.innerHTML = '';
-  
+
   // Sort categories by tool count (most tools first)
   const sortedCats = Object.entries(categories).sort((a,b) => b[1].length - a[1].length);
-  
+
   sortedCats.forEach(([cat, tools]) => {
     const card = document.createElement('div');
     card.className = 'category-card';
     card.dataset.category = cat;
-    
-    const tierEmoji = {tier_0_observe:'👁️',tier_1_reversible:'✏️',tier_2_system:'⚙️',tier_3_destructive:'⚠️',tier_4_external:'🌐'};
-    
+
     let toolsHtml = '';
     tools.forEach(t => {
-      const tierClass = 'tier-' + (t.risk_tier || '').split('_')[1];
-      const tierNum = (t.risk_tier || '').replace('tier_','').replace('_',' ');
+      const tierNum = (t.risk_tier || '').split('_')[1];
       toolsHtml += `<div class="tool-item" onclick="invokeTool('${t.name}')">
-        <span class="tier-badge ${tierClass}">T${(t.risk_tier||'').split('_')[1]}</span>
-        <div><div>${t.name}</div><div class="tool-desc">${(t.description||'').substring(0,80)}</div></div>
+        <span class="tier">T${tierNum}</span>
+        <div><div class="tool-name">${t.name}</div><div class="tool-desc">${(t.description||'').substring(0,80)}</div></div>
       </div>`;
     });
-    
+
     card.innerHTML = `<h3>${cat} <span class="cat-count">${tools.length}</span></h3><div class="tool-list">${toolsHtml}</div>`;
     grid.appendChild(card);
   });
@@ -394,10 +470,10 @@ function filterTools() {
 
 // === Invoke a tool ===
 async function invokeTool(name, args = {}) {
-  document.getElementById('modalTitle').textContent = '⚙️ ' + name;
-  document.getElementById('modalContent').textContent = 'جاري التنفيذ...';
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalContent').textContent = 'جاري التنفيذ';
   document.getElementById('modalOverlay').classList.add('active');
-  
+
   try {
     const resp = await fetch(API + '/api/settings/tools/invoke', {
       method: 'POST',
@@ -417,7 +493,7 @@ function closeModal() { document.getElementById('modalOverlay').classList.remove
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display = 'none');
-  event.target.classList.add('active');
+  event.currentTarget.classList.add('active');
   document.getElementById('tab-' + tab).style.display = '';
   if (tab === 'business') loadBusinessStats();
 }
@@ -432,7 +508,7 @@ async function loadVitals() {
     document.getElementById('diskVal').textContent = Math.round(v.disk_percent) + '%';
     document.getElementById('healthVal').textContent = v.health_state;
   } catch {}
-  
+
   try {
     const resp = await fetch(API + '/health');
     const h = await resp.json();
@@ -463,11 +539,11 @@ async function sendChat() {
   const msg = input.value.trim();
   if (!msg) return;
   input.value = '';
-  
+
   const msgs = document.getElementById('chatMessages');
   msgs.innerHTML += `<div class="chat-msg user">${msg}</div>`;
   msgs.scrollTop = msgs.scrollHeight;
-  
+
   try {
     const resp = await fetch(API + '/api/chat', {
       method: 'POST', headers: {'Content-Type':'application/json'},
@@ -496,19 +572,24 @@ async function toggleAutopilot() {
   if (btn.classList.contains('paused')) {
     await invokeTool('autopilot.activate', {confirm: true});
     btn.classList.remove('paused');
-    btn.textContent = '⏸️ إيقاف مؤقت';
+    btn.innerHTML = icon('pause') + 'إيقاف مؤقت';
   } else {
     await invokeTool('autopilot.pause', {});
     btn.classList.add('paused');
-    btn.textContent = '🚀 ابدأ كل شيء';
+    btn.innerHTML = icon('zap') + 'ابدأ كل شيء';
   }
 }
 
 // === WebSocket ===
+function setWsStatus(connected) {
+  const el = document.getElementById('wsStatus');
+  el.classList.toggle('off', !connected);
+  document.getElementById('wsStatusText').textContent = connected ? 'متصل' : 'غير متصل';
+}
 function connectWS() {
   try {
     ws = new WebSocket(WS_URL);
-    ws.onopen = () => console.log('WS connected');
+    ws.onopen = () => { setWsStatus(true); console.log('WS connected'); };
     ws.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data);
@@ -519,7 +600,7 @@ function connectWS() {
         }
       } catch {}
     };
-    ws.onclose = () => setTimeout(connectWS, 5000);
+    ws.onclose = () => { setWsStatus(false); setTimeout(connectWS, 5000); };
   } catch {}
 }
 
@@ -545,11 +626,13 @@ async function loadConnectors() {
       const card = document.createElement('div');
       card.className = 'connector-card';
       const on = c.connected;
-      card.innerHTML = `<h3><span class="status-dot ${on ? 'on' : 'off'}"></span> ${c.id === 'messenger' ? '💬 ماسنجر' : '📸 إنستغرام'}</h3>
-        <p>${on ? 'متصل' + (c.auth_method ? ' — عبر ' + (c.auth_method === 'cookies' ? 'كوكيز' : 'إيميل وكلمة مرور') : '') : 'غير متصل — اربط حسابك ليرد JARVIS على رسائلك'}</p>
+      const ic = c.id === 'messenger' ? icon('message') : icon('camera');
+      const label = c.id === 'messenger' ? 'ماسنجر' : 'إنستغرام';
+      card.innerHTML = `<h3><span class="status-dot ${on ? 'on' : 'off'}"></span> ${ic} ${label}</h3>
+        <p>${on ? 'متصل' + (c.auth_method ? ' — عبر ' + (c.auth_method === 'cookies' ? 'كوكيز' : 'إيميل وكلمة مرور') : '') : 'غير متصل — اربط حسابك ليرد Jarvis على رسائلك'}</p>
         ${on
           ? `<button class="btn btn-disconnect" onclick="disconnectConnector('${c.id}')">قطع الاتصال</button>`
-          : `<button class="btn btn-connect" onclick="openConnectModal('${c.id}')">🔗 ربط الحساب</button>`}`;
+          : `<button class="btn btn-connect" onclick="openConnectModal('${c.id}')">ربط الحساب</button>`}`;
       grid.appendChild(card);
     });
   } catch (e) {
@@ -559,7 +642,7 @@ async function loadConnectors() {
 
 function openConnectModal(id) {
   currentConnector = id;
-  document.getElementById('connectTitle').textContent = '🔗 ربط حساب ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام');
+  document.getElementById('connectTitle').textContent = 'ربط حساب ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام');
   document.getElementById('connectStatus').textContent = '';
   document.getElementById('connEmail').value = '';
   document.getElementById('connPassword').value = '';
@@ -577,7 +660,7 @@ function setConnectMode(mode) {
 }
 async function submitConnect() {
   const statusEl = document.getElementById('connectStatus');
-  statusEl.textContent = 'جاري التحقق من تسجيل الدخول...';
+  statusEl.textContent = 'جاري التحقق من تسجيل الدخول';
   const body = connectMode === 'cookies'
     ? { method: 'cookies', cookies: document.getElementById('connCookies').value }
     : { method: 'password', email: document.getElementById('connEmail').value, password: document.getElementById('connPassword').value };
@@ -588,10 +671,10 @@ async function submitConnect() {
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.detail || 'فشل الربط');
-    statusEl.textContent = '✅ تم الربط بنجاح';
+    statusEl.textContent = 'تم الربط بنجاح';
     setTimeout(() => { closeConnectModal(); loadConnectors(); }, 800);
   } catch (e) {
-    statusEl.textContent = '❌ ' + e.message;
+    statusEl.textContent = e.message;
   }
 }
 async function disconnectConnector(id) {
@@ -618,15 +701,15 @@ async function enableNotifications() {
   const statusEl = document.getElementById('pushStatus');
   try {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      statusEl.textContent = '❌ هذا المتصفح لا يدعم إشعارات الويب. على iOS أضف التطبيق للشاشة الرئيسية أولاً.';
+      statusEl.textContent = 'هذا المتصفح لا يدعم إشعارات الويب. على iOS أضف التطبيق للشاشة الرئيسية أولاً.';
       return;
     }
     const perm = await Notification.requestPermission();
-    if (perm !== 'granted') { statusEl.textContent = '❌ لم يتم منح إذن الإشعارات.'; return; }
+    if (perm !== 'granted') { statusEl.textContent = 'لم يتم منح إذن الإشعارات.'; return; }
     const reg = await navigator.serviceWorker.ready;
     const keyResp = await fetch(API + '/api/notifications/vapid-public-key');
     const keyData = await keyResp.json();
-    if (!keyData.configured) { statusEl.textContent = '❌ مفاتيح VAPID غير مضبوطة على الخادم.'; return; }
+    if (!keyData.configured) { statusEl.textContent = 'مفاتيح VAPID غير مضبوطة على الخادم.'; return; }
     const sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(keyData.public_key)
@@ -636,9 +719,9 @@ async function enableNotifications() {
       body: JSON.stringify({ device_id: getDeviceId(), subscription: sub.toJSON() })
     });
     if (!resp.ok) throw new Error('فشل حفظ الاشتراك');
-    statusEl.textContent = '✅ الإشعارات مفعّلة على هذا الجهاز';
+    statusEl.textContent = 'الإشعارات مفعّلة على هذا الجهاز';
   } catch (e) {
-    statusEl.textContent = '❌ ' + e.message;
+    statusEl.textContent = e.message;
   }
 }
 async function sendTestPush() {
@@ -646,11 +729,11 @@ async function sendTestPush() {
   try {
     const resp = await fetch(API + '/api/notifications/send', {
       method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ title: 'JARVIS — إشعار تجريبي', body: 'إذا وصلك هذا الإشعار، فالإشعارات تعمل ✅', category: 'test' })
+      body: JSON.stringify({ title: 'JARVIS — إشعار تجريبي', body: 'إذا وصلك هذا الإشعار، فالإشعارات تعمل', category: 'test' })
     });
     const data = await resp.json();
-    statusEl.textContent = resp.ok ? (data.sent ? '✅ تم إرسال الإشعار التجريبي' : '⚠️ لا توجد أجهزة مسجلة بعد — فعّل الإشعارات أولاً') : '❌ ' + (data.detail || 'فشل الإرسال');
-  } catch (e) { statusEl.textContent = '❌ ' + e.message; }
+    statusEl.textContent = resp.ok ? (data.sent ? 'تم إرسال الإشعار التجريبي' : 'لا توجد أجهزة مسجلة بعد — فعّل الإشعارات أولاً') : (data.detail || 'فشل الإرسال');
+  } catch (e) { statusEl.textContent = e.message; }
 }
 
 // === Service Worker ===
@@ -700,62 +783,6 @@ async function toggleVoiceInput() {
     alert('تعذر الوصول إلى الميكروفون: ' + e.message);
   }
 }
-
-// === Background Canvas Animation ===
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.size = Math.random() * 2 + 0.5;
-    this.opacity = Math.random() * 0.5 + 0.2;
-  }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
-    ctx.fill();
-  }
-}
-
-for (let i = 0; i < 80; i++) particles.push(new Particle());
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  // Draw connections
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 120) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(0, 212, 255, ${0.1 * (1 - dist/120)})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animate);
-}
-animate();
 
 // === Auto-refresh vitals ===
 setInterval(loadVitals, 30000);

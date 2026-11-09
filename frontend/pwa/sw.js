@@ -7,9 +7,10 @@
    - Tapping a notification focuses/opens the dashboard.
    ==================================================================== */
 
-const CACHE_NAME = "jarvis-omega-v1";
+const CACHE_NAME = "jarvis-omega-v2";
 const SHELL = [
   "/",
+  "/config.js",
   "/manifest.json",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
