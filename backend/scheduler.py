@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from typing import Any, Callable, Dict, List, Optional
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.base import STATE_STOPPED
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
@@ -33,13 +34,41 @@ class TaskScheduler:
         self._jobs: Dict[str, Dict[str, Any]] = {}
 
     async def start(self) -> None:
-        """Start the scheduler."""
+        """Start the scheduler. Idempotent and restart-safe.
+
+        AsyncIOScheduler captures the running event loop on its FIRST
+        start only and never re-captures it. After a shutdown the stored
+        loop may be closed (e.g. a TestClient portal closed it), so a
+        second start() would schedule work on a dead loop and raise
+        ``RuntimeError: Event loop is closed``. Clear the stored loop
+        when it is not the current one so start() re-captures it.
+        """
+        if self._scheduler.running:
+            return
+        loop = asyncio.get_running_loop()
+        stored = self._scheduler._eventloop
+        if stored is not None and stored is not loop:
+            self._scheduler._eventloop = None
         self._scheduler.start()
         log.info("scheduler_started")
 
     async def stop(self) -> None:
-        """Stop the scheduler gracefully."""
+        """Stop the scheduler gracefully.
+
+        AsyncIOScheduler.shutdown() is dispatched via call_soon_threadsafe
+        and returns at once — the real shutdown happens on the loop
+        afterwards. Wait until the scheduler actually reports stopped
+        (bounded, so shutdown can never hang).
+        """
+        if not self._scheduler.running:
+            return
         self._scheduler.shutdown(wait=True)
+        for _ in range(100):
+            if self._scheduler.state == STATE_STOPPED:
+                break
+            await asyncio.sleep(0.02)
+        else:
+            log.warning("scheduler_stop_timed_out")
         log.info("scheduler_stopped")
 
     def schedule_once(

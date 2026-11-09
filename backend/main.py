@@ -12,11 +12,12 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Dict, Any, List
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Depends, Query, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 
 from backend.config import settings
 from backend.event_bus import event_bus
@@ -47,6 +48,8 @@ from backend.routers import (
     router_agents,
     router_projects,
     router_settings,
+    router_connectors,
+    router_notifications,
 )
 # New routers from this change set (imported from their modules so they stay
 # reachable even before backend/routers/__init__.py re-exports them).
@@ -213,6 +216,20 @@ async def handle_ws_task_result(event_payload: Dict[str, Any]) -> None:
                 })
                 log.info("proactive_report_sent", task_id=task_id)
 
+        # ---- WEB PUSH: task finished (reaches Sir even with no dashboard open) ----
+        if task_def:
+            try:
+                from backend.notification_engine import notification_engine
+                from shared.models import Notification as _PushNotification
+                await notification_engine.send_notification(_PushNotification(
+                    title="JARVIS — مهمة اكتملت",
+                    body=f"{task_def.title}: {task_result.status.value}",
+                    category="task_finished",
+                    data={"task_id": task_id},
+                ))
+            except Exception as push_err:
+                log.debug("task_finished_push_failed", error=str(push_err))
+
     except Exception as e:
         log.error("failed_to_process_task_result", task_id=task_id, error=str(e))
 
@@ -326,6 +343,28 @@ async def lifespan(app: FastAPI):
         log.info("credentials_vault_initialized", entries=len(credentials_vault.list_keys()))
     except Exception as cv_err:
         log.warning("credentials_vault_init_failed", error=str(cv_err))
+
+    # 4a2. DM Connectors vault + Web Push engine + DM responder.
+    # Each is failure-isolated so a broken piece never blocks startup.
+    try:
+        from backend.services.dm_auth import init_connector_vault
+        init_connector_vault()
+        log.info("connector_vault_initialized")
+    except Exception as conn_err:
+        log.warning("connector_vault_init_failed", error=str(conn_err))
+
+    try:
+        from backend.notification_engine import notification_engine
+        await notification_engine.initialize()
+        log.info("notification_engine_initialized")
+    except Exception as notif_err:
+        log.warning("notification_engine_init_failed", error=str(notif_err))
+
+    try:
+        from backend.services.dm_responder import dm_responder
+        await dm_responder.start()
+    except Exception as dm_err:
+        log.warning("dm_responder_start_failed", error=str(dm_err))
 
     try:
         tool_executor.set_approval_gateway(approval_gateway)
@@ -734,6 +773,12 @@ async def lifespan(app: FastAPI):
     # ---- Shutdown Lifecycle ----
     log.info("jarvis_omega_backend_shutting_down")
 
+    try:
+        from backend.services.dm_responder import dm_responder
+        await dm_responder.stop()
+    except Exception:
+        pass
+
     if _heartbeat_task:
         _heartbeat_task.cancel()
         try:
@@ -789,6 +834,8 @@ app.include_router(router_memory)
 app.include_router(router_agents)
 app.include_router(router_projects)
 app.include_router(router_settings)
+app.include_router(router_connectors)
+app.include_router(router_notifications)
 app.include_router(router_hardware)
 app.include_router(router_downloads)
 app.include_router(router_patterns)
@@ -808,6 +855,99 @@ async def serve_dashboard():
     if index_path.exists():
         return HTMLResponse(content=index_path.read_text(encoding="utf-8"))
     raise HTTPException(status_code=404, detail="index.html not found")
+
+
+# ---- PWA static files (manifest, service worker, icons) ----
+# The service worker MUST be served from the root (scope "/") so it can
+# control the whole app; the manifest likewise. Icons live under /icons/.
+_PWA_DIR = Path(__file__).parent.parent / "frontend" / "pwa"
+_PWA_ICONS = {"icon-192.png", "icon-512.png", "apple-touch-icon.png"}
+_PWA_ICON_SIZES = {"icon-192.png": 192, "icon-512.png": 512, "apple-touch-icon.png": 180}
+
+
+def _generate_pwa_icon(filename: str, path: Path) -> bool:
+    """Render a PWA icon deterministically with PIL.
+
+    The repo stores no binary assets (the GitHub push path is UTF-8
+    only), so icons are generated on first request and cached on disk.
+    Same mark every time: dark gradient, cyan ring + purple arc, bold
+    "J" in the cyan/purple theme. Returns True when the file now exists.
+    """
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        return False
+    size = _PWA_ICON_SIZES[filename]
+    img = Image.new("RGB", (size, size), (10, 10, 26))
+    draw = ImageDraw.Draw(img)
+    # Vertical dark gradient (deep navy -> purple-black).
+    for y in range(size):
+        t = y / max(size - 1, 1)
+        draw.line([(0, y), (size, y)], fill=(
+            int(10 + (26 - 10) * t),
+            int(10 + (16 - 10) * t),
+            int(26 + (48 - 26) * t),
+        ))
+    pad = size // 12
+    # Cyan ring.
+    draw.ellipse([pad, pad, size - pad, size - pad], outline=(0, 212, 255), width=max(2, size // 48))
+    # Purple arc (upper right).
+    draw.arc([pad, pad, size - pad, size - pad], start=-80, end=40, fill=(168, 85, 247), width=max(3, size // 32))
+    # Bold "J".
+    try:
+        font = ImageFont.truetype(
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+            size=int(size * 0.55),
+        )
+    except (OSError, IOError):
+        font = ImageFont.load_default()
+    draw.text((size / 2, size / 2), "J", fill=(0, 212, 255), font=font, anchor="mm")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(path, format="PNG")
+    except OSError as save_err:
+        log.warning("pwa_icon_generate_failed", error=str(save_err))
+        return False
+    return path.exists()
+
+
+@app.get("/manifest.json", tags=["PWA"])
+async def serve_manifest():
+    """PWA manifest (name, icons, theme) for installability."""
+    path = _PWA_DIR / "manifest.json"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="manifest.json not found")
+    return FileResponse(path, media_type="application/manifest+json")
+
+
+@app.get("/sw.js", tags=["PWA"])
+async def serve_service_worker():
+    """Service worker — served with no-cache so updates reach phones fast."""
+    path = _PWA_DIR / "sw.js"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="sw.js not found")
+    return FileResponse(
+        path,
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache"},
+    )
+
+
+@app.get("/icons/{filename}", tags=["PWA"])
+async def serve_pwa_icon(filename: str):
+    """PWA icons (allowlist only — no arbitrary file access).
+
+    Icons are generated on first request (see _generate_pwa_icon) and
+    cached on disk, so the repo carries no binary assets.
+    """
+    if filename not in _PWA_ICONS:
+        raise HTTPException(status_code=404, detail="icon not found")
+    path = _PWA_DIR / "icons" / filename
+    if not path.exists():
+        _generate_pwa_icon(filename, path)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="icon not found")
+    return FileResponse(path, media_type="image/png")
 
 
 @app.get("/health", response_model=HealthSnapshot, tags=["System"])

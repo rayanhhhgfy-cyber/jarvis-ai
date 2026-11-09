@@ -271,6 +271,61 @@ Capability tiers:
 `conftest.py` sets deterministic bootstrap secrets in the environment before
 any test imports the app, and autouse-initializes the security module.
 
+## DM Connectors, PWA & Web Push
+
+**Connectors tab (Messenger + Instagram auto-reply).** The dashboard has a
+Connectors tab (`frontend/index.html` → `#tab-connectors`). Each platform
+offers two auth modes — email+password or pasted cookies — and Jarvis
+verifies the login *before* storing anything. Credentials live encrypted
+in a separate vault, `storage/connectors.json` (Fernet, own
+`CredentialsVault` instance in `backend/services/dm_auth.py`), never in
+the main credentials vault, never logged, never returned by any API —
+endpoints expose status only (`connected`, `auth_method`, timestamps).
+
+- `backend/routers/router_connectors.py` — `GET /api/connectors`,
+  `GET /api/connectors/{id}/status`, `POST /api/connectors/{id}/connect`,
+  `POST /api/connectors/{id}/disconnect`. Bad or challenged logins return
+  502 / 428 / 503 and store nothing.
+- `backend/services/dm_auth.py` — cookie parsing (header, Netscape
+  cookies.txt, JSON), session probe, Messenger password login (scrapes the
+  login form's own tokens), Instagram password login via `instagrapi`.
+- `backend/services/dm_clients.py` — `MessengerClient` (cookie web client:
+  `fb_dtsg` scrape + `messaging/send` mercury form + graphqlbatch thread
+  list) and `InstagramClient` (`instagrapi` session/password).
+- `backend/services/dm_llm.py` — reply generation: Groq Llama 3.3 70B
+  primary, Gemini 2.5 Flash fallback. Never fabricates a reply; on total
+  LLM failure it reports the error and sends nothing.
+- `backend/services/dm_responder.py` — background poller, only when
+  `DM_RESPONDER_ENABLED=true` and a connector is connected. One-to-one
+  threads only, never replies to Sir's own messages, dedups by seen
+  message id (`storage/dm_seen.json`), max 5 replies per platform per
+  poll, and fires a Web Push per answered DM. Deploy: `render.yaml` +
+  `docs/render-dm-responder.md`. Render free tier has no persistent disk,
+  so the vault file is lost on redeploy/restart and connectors must be
+  re-pasted; keepalive is a 10-minute ping to the existing `/health`.
+
+**PWA (iPhone).** `frontend/index.html` is an installable PWA:
+`frontend/pwa/manifest.json` (name, short name, standalone, cyan/purple
+theme), `frontend/pwa/sw.js` (app-shell cache, network-first `/api/*` and
+`/health`, cached-`/` offline fallback, push + notificationclick
+handlers), icons rendered on first request by `_generate_pwa_icon` in
+`backend/main.py` (PIL, 192 / 512 / 180 apple-touch — the repo carries
+no binary assets because the GitHub push path is UTF-8 only).
+Served by the backend at `/manifest.json`, `/sw.js`, `/icons/{name}`
+(allowlisted filenames only). The chat box talks to the real backend
+(`POST /api/chat`, same-origin API base) and plays the `audio_base64`
+TTS reply; the mic button records via MediaRecorder and transcribes
+through the real `POST /api/audio/transcribe` (Groq Whisper).
+
+**Web Push (VAPID).** `backend/routers/router_notifications.py` —
+`GET /api/notifications/vapid-public-key`, `POST /subscribe`,
+`POST /unsubscribe`, `POST /send`, `GET /history` — backed by the
+existing `backend/notification_engine.py` (pywebpush). VAPID keys come
+from env (`VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY`); without them `/send`
+returns 503. iOS push requires the PWA added to the Home Screen (iOS
+16.4+). Tests: `backend/tests/test_dm_connectors.py`,
+`backend/tests/test_pwa_push.py`.
+
 ## Known Limitations
 
 - The static `frontend/index.html` uses `innerHTML` on LLM output (XSS risk).

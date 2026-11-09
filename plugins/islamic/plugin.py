@@ -369,8 +369,6 @@ _HARAM_INGREDIENTS = {
     "e493": "may be animal — verify", "e494": "may be animal — verify",
     "e495": "may be animal — verify",
     "e542": "edible bone phosphate — animal source",
-    "e631": "often pork/fish — verify",
-    "e635": "often pork/fish — verify",
     "e640": "may be animal — verify",
     "e1518": "glycerol — may be animal — verify",
 }

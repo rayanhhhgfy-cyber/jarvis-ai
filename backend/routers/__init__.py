@@ -12,3 +12,5 @@ from backend.routers.router_memory import router as router_memory
 from backend.routers.router_agents import router as router_agents
 from backend.routers.router_projects import router as router_projects
 from backend.routers.router_settings import router as router_settings
+from backend.routers.router_connectors import router as router_connectors
+from backend.routers.router_notifications import router as router_notifications

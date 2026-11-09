@@ -122,13 +122,9 @@ def validate_command(command: str) -> SafetyVerdict:
     return SafetyVerdict(VerdictLevel.ALLOWED)
 
 
-# Module-level singleton for convenience
-command_safety = command_safety if "command_safety" in globals() else None
-
-
 def get_validator() -> "CommandSafety":
     """Return the process-wide CommandSafety instance."""
-    return CommandSafety()
+    return command_safety
 
 
 class CommandSafety:

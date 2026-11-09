@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- PWA: installable on iPhone (add to Home Screen) -->
+<meta name="theme-color" content="#00d4ff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JARVIS">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <title>J.A.R.V.I.S. OMEGA — لوحة التحكم</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@400;700;900&display=swap">
 <style>
@@ -82,6 +91,26 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
 .tab{padding:10px 20px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font-family:var(--font);color:var(--text-dim);transition:0.3s;font-size:0.9rem}
 .tab.active{background:rgba(0,212,255,0.15);color:var(--cyan);border-color:var(--cyan)}
 .tab:hover{color:var(--cyan)}
+/* Connectors */
+.connector-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.connector-card h3{font-size:1.2rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.status-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--text-dim)}
+.status-dot.on{background:var(--green);box-shadow:0 0 8px var(--green)}
+.status-dot.off{background:var(--red)}
+.connector-card p{color:var(--text-dim);font-size:0.9rem;margin-bottom:12px}
+.btn{padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:700;margin-left:8px}
+.btn-connect{background:linear-gradient(90deg,var(--cyan),var(--purple));color:#fff}
+.btn-disconnect{background:rgba(255,68,102,0.15);color:var(--red);border:1px solid var(--red)}
+.btn-ghost{background:rgba(0,212,255,0.1);color:var(--cyan);border:1px solid var(--border)}
+.conn-form label{display:block;margin:10px 0 4px;color:var(--text-dim);font-size:0.9rem}
+.conn-form input,.conn-form textarea{width:100%;padding:10px 12px;background:rgba(0,0,0,0.4);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font)}
+.conn-form textarea{min-height:90px;direction:ltr;text-align:left}
+.mode-tabs{display:flex;gap:6px;margin:12px 0}
+.mode-tab{flex:1;padding:8px;border:1px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;color:var(--text-dim);font-size:0.9rem}
+.mode-tab.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,0.1)}
+.conn-note{font-size:0.8rem;color:var(--text-dim);margin-top:12px;line-height:1.6}
+.mic-btn{padding:12px 16px;background:rgba(0,212,255,0.1);border:1px solid var(--border);border-radius:8px;color:var(--cyan);cursor:pointer;font-size:1.1rem}
+.mic-btn.recording{background:rgba(255,68,102,0.25);border-color:var(--red);color:var(--red)}
 </style>
 </head>
 <body>
@@ -113,6 +142,7 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
     <div class="tab" onclick="switchTab('chat')">💬 المحادثة (Chat)</div>
     <div class="tab" onclick="switchTab('business')">📊 الأعمال (Business)</div>
     <div class="tab" onclick="switchTab('sales')">💰 المبيعات (Sales)</div>
+    <div class="tab" onclick="switchTab('connectors')">🔗 الموصلات (Connectors)</div>
   </div>
 
   <!-- Tools Tab -->
@@ -132,6 +162,7 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
       </div>
       <div class="chat-input">
         <input type="text" id="chatInput" placeholder="اكتب رسالتك... (Type your message...)" onkeypress="if(event.key==='Enter')sendChat()">
+        <button class="mic-btn" id="micBtn" title="تحدث" onclick="toggleVoiceInput()">🎤</button>
         <button onclick="sendChat()">إرسال</button>
       </div>
     </div>
@@ -211,6 +242,20 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
       </div>
     </div>
   </div>
+  <!-- Connectors Tab -->
+  <div id="tab-connectors" style="display:none">
+    <div class="tools-grid" id="connectorsGrid">
+      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الموصلات...</p></div>
+    </div>
+    <div class="category-card" style="margin-top:12px">
+      <h3>🔔 إشعارات الجوال (Push Notifications)</h3>
+      <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:12px">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد JARVIS على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
+      <button class="btn btn-connect" onclick="enableNotifications()">🔔 تفعيل الإشعارات</button>
+      <button class="btn btn-ghost" onclick="sendTestPush()">📣 إرسال إشعار تجريبي</button>
+      <span id="pushStatus" style="color:var(--text-dim);font-size:0.85rem;margin-right:8px"></span>
+    </div>
+    <p class="conn-note">⚠️ تنبيه: الرد التلقائي على رسائلك الشخصية في ماسنجر وإنستغرام يخالف قواعد المنصتين، وقد يتم قفل الحساب أو حظره. JARVIS يرد فقط على المحادثات الفردية، وبحد أقصى 5 ردود في كل جولة فحص.</p>
+  </div>
 </div>
 
 <!-- Autopilot Button -->
@@ -225,9 +270,43 @@ canvas#bgCanvas{position:fixed;top:0;right:0;width:100%;height:100%;z-index:-1;o
   </div>
 </div>
 
+<!-- Connect Modal -->
+<div class="modal-overlay" id="connectOverlay" onclick="if(event.target===this)closeConnectModal()">
+  <div class="modal">
+    <span class="close" onclick="closeConnectModal()">&times;</span>
+    <h2 id="connectTitle">🔗 ربط حساب</h2>
+    <div class="conn-form">
+      <div class="mode-tabs">
+        <div class="mode-tab active" id="modeTabPassword" onclick="setConnectMode('password')">📧 إيميل وكلمة مرور</div>
+        <div class="mode-tab" id="modeTabCookies" onclick="setConnectMode('cookies')">🍪 كوكيز</div>
+      </div>
+      <div id="connectPasswordFields">
+        <label>الإيميل / اسم المستخدم</label>
+        <input type="text" id="connEmail" placeholder="you@example.com" autocomplete="off">
+        <label>كلمة المرور</label>
+        <input type="password" id="connPassword" placeholder="••••••••" autocomplete="off">
+      </div>
+      <div id="connectCookiesFields" style="display:none">
+        <label>الصق الكوكيز هنا (من متصفح مسجّل دخوله)</label>
+        <textarea id="connCookies" placeholder="c_user=...; xs=...; sessionid=..."></textarea>
+      </div>
+      <p class="conn-note">بياناتك تُحفظ مشفّرة على الخادم فقط، ولا تظهر أبداً في أي واجهة. يمكنك قطع الاتصال في أي وقت من هنا.</p>
+      <div style="margin-top:16px">
+        <button class="btn btn-connect" onclick="submitConnect()">✅ ربط الحساب</button>
+        <span id="connectStatus" style="color:var(--text-dim);font-size:0.85rem;margin-right:8px"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-const API = 'http://localhost:8000';
-const WS_URL = 'ws://localhost:8000/ws/ui';
+// Same-origin when served by the backend (Render / local), localhost only
+// for file:// previews. This is what makes the PWA work on iPhone.
+const API = (window.location.protocol === 'file:')
+  ? 'http://localhost:8000'
+  : window.location.origin;
+const WS_URL = (window.location.protocol === 'https:' ? 'wss://' : 'ws://')
+  + window.location.host + '/ws/ui';
 let allTools = [];
 let ws = null;
 
@@ -235,6 +314,8 @@ let ws = null;
 async function init() {
   await loadTools();
   await loadVitals();
+  await loadConnectors();
+  registerServiceWorker();
   connectWS();
 }
 
@@ -389,6 +470,12 @@ async function sendChat() {
     });
     const data = await resp.json();
     const reply = data.content || 'عذراً سيدي، حدث خطأ.';
+    if (data.audio_base64) {
+      try {
+        const audio = new Audio('data:audio/wav;base64,' + data.audio_base64);
+        audio.play().catch(() => {});
+      } catch {}
+    }
     // Strip command output formatting for cleaner display
     const cleanReply = reply.replace(/<run_os_command>.*?<\/run_os_command>/gs, '').trim();
     msgs.innerHTML += `<div class="chat-msg bot">${cleanReply || reply}</div>`;
@@ -436,6 +523,176 @@ function showApproval(payload) {
     fetch(API + '/api/approvals/' + payload.approval_id + '/approve', {method:'POST'});
   } else {
     fetch(API + '/api/approvals/' + payload.approval_id + '/reject', {method:'POST'});
+  }
+}
+
+// === Connectors ===
+let currentConnector = null;
+let connectMode = 'password';
+
+async function loadConnectors() {
+  try {
+    const resp = await fetch(API + '/api/connectors');
+    const data = await resp.json();
+    const grid = document.getElementById('connectorsGrid');
+    grid.innerHTML = '';
+    (data.connectors || []).forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'connector-card';
+      const on = c.connected;
+      card.innerHTML = `<h3><span class="status-dot ${on ? 'on' : 'off'}"></span> ${c.id === 'messenger' ? '💬 ماسنجر' : '📸 إنستغرام'}</h3>
+        <p>${on ? 'متصل' + (c.auth_method ? ' — عبر ' + (c.auth_method === 'cookies' ? 'كوكيز' : 'إيميل وكلمة مرور') : '') : 'غير متصل — اربط حسابك ليرد JARVIS على رسائلك'}</p>
+        ${on
+          ? `<button class="btn btn-disconnect" onclick="disconnectConnector('${c.id}')">قطع الاتصال</button>`
+          : `<button class="btn btn-connect" onclick="openConnectModal('${c.id}')">🔗 ربط الحساب</button>`}`;
+      grid.appendChild(card);
+    });
+  } catch (e) {
+    document.getElementById('connectorsGrid').innerHTML = '<div class="loader"><p>تعذر تحميل الموصلات. تأكد أن الباكند يعمل.</p></div>';
+  }
+}
+
+function openConnectModal(id) {
+  currentConnector = id;
+  document.getElementById('connectTitle').textContent = '🔗 ربط حساب ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام');
+  document.getElementById('connectStatus').textContent = '';
+  document.getElementById('connEmail').value = '';
+  document.getElementById('connPassword').value = '';
+  document.getElementById('connCookies').value = '';
+  setConnectMode('password');
+  document.getElementById('connectOverlay').classList.add('active');
+}
+function closeConnectModal() { document.getElementById('connectOverlay').classList.remove('active'); }
+function setConnectMode(mode) {
+  connectMode = mode;
+  document.getElementById('modeTabPassword').classList.toggle('active', mode === 'password');
+  document.getElementById('modeTabCookies').classList.toggle('active', mode === 'cookies');
+  document.getElementById('connectPasswordFields').style.display = mode === 'password' ? '' : 'none';
+  document.getElementById('connectCookiesFields').style.display = mode === 'cookies' ? '' : 'none';
+}
+async function submitConnect() {
+  const statusEl = document.getElementById('connectStatus');
+  statusEl.textContent = 'جاري التحقق من تسجيل الدخول...';
+  const body = connectMode === 'cookies'
+    ? { method: 'cookies', cookies: document.getElementById('connCookies').value }
+    : { method: 'password', email: document.getElementById('connEmail').value, password: document.getElementById('connPassword').value };
+  try {
+    const resp = await fetch(API + '/api/connectors/' + currentConnector + '/connect', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.detail || 'فشل الربط');
+    statusEl.textContent = '✅ تم الربط بنجاح';
+    setTimeout(() => { closeConnectModal(); loadConnectors(); }, 800);
+  } catch (e) {
+    statusEl.textContent = '❌ ' + e.message;
+  }
+}
+async function disconnectConnector(id) {
+  if (!confirm('قطع اتصال ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام') + '؟ سيتم حذف بيانات الدخول المحفوظة.')) return;
+  await fetch(API + '/api/connectors/' + id + '/disconnect', { method: 'POST' });
+  loadConnectors();
+}
+
+// === Push Notifications ===
+function getDeviceId() {
+  let id = localStorage.getItem('jarvis_device_id');
+  if (!id) { id = 'pwa-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36); localStorage.setItem('jarvis_device_id', id); }
+  return id;
+}
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+  return outputArray;
+}
+async function enableNotifications() {
+  const statusEl = document.getElementById('pushStatus');
+  try {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      statusEl.textContent = '❌ هذا المتصفح لا يدعم إشعارات الويب. على iOS أضف التطبيق للشاشة الرئيسية أولاً.';
+      return;
+    }
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { statusEl.textContent = '❌ لم يتم منح إذن الإشعارات.'; return; }
+    const reg = await navigator.serviceWorker.ready;
+    const keyResp = await fetch(API + '/api/notifications/vapid-public-key');
+    const keyData = await keyResp.json();
+    if (!keyData.configured) { statusEl.textContent = '❌ مفاتيح VAPID غير مضبوطة على الخادم.'; return; }
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(keyData.public_key)
+    });
+    const resp = await fetch(API + '/api/notifications/subscribe', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ device_id: getDeviceId(), subscription: sub.toJSON() })
+    });
+    if (!resp.ok) throw new Error('فشل حفظ الاشتراك');
+    statusEl.textContent = '✅ الإشعارات مفعّلة على هذا الجهاز';
+  } catch (e) {
+    statusEl.textContent = '❌ ' + e.message;
+  }
+}
+async function sendTestPush() {
+  const statusEl = document.getElementById('pushStatus');
+  try {
+    const resp = await fetch(API + '/api/notifications/send', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ title: 'JARVIS — إشعار تجريبي', body: 'إذا وصلك هذا الإشعار، فالإشعارات تعمل ✅', category: 'test' })
+    });
+    const data = await resp.json();
+    statusEl.textContent = resp.ok ? (data.sent ? '✅ تم إرسال الإشعار التجريبي' : '⚠️ لا توجد أجهزة مسجلة بعد — فعّل الإشعارات أولاً') : '❌ ' + (data.detail || 'فشل الإرسال');
+  } catch (e) { statusEl.textContent = '❌ ' + e.message; }
+}
+
+// === Service Worker ===
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+    navigator.serviceWorker.register('/sw.js').then(
+      () => console.log('SW registered'),
+      (err) => console.log('SW registration failed', err)
+    );
+  }
+}
+
+// === Voice Input (mic → Groq Whisper → chat) ===
+let mediaRecorder = null;
+let audioChunks = [];
+async function toggleVoiceInput() {
+  const btn = document.getElementById('micBtn');
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = (e) => { if (e.data.size) audioChunks.push(e.data); };
+    mediaRecorder.onstop = async () => {
+      btn.classList.remove('recording');
+      stream.getTracks().forEach(t => t.stop());
+      if (!audioChunks.length) return;
+      const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+      const form = new FormData();
+      form.append('file', blob, 'recording.webm');
+      try {
+        const resp = await fetch(API + '/api/audio/transcribe', { method: 'POST', body: form });
+        const data = await resp.json();
+        const text = (data.text || '').trim();
+        if (text) {
+          document.getElementById('chatInput').value = text;
+          sendChat();
+        }
+      } catch (e) { console.log('transcribe failed', e); }
+    };
+    mediaRecorder.start();
+    btn.classList.add('recording');
+  } catch (e) {
+    alert('تعذر الوصول إلى الميكروفون: ' + e.message);
   }
 }
 

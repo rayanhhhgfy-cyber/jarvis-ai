@@ -99,3 +99,13 @@ google-auth-oauthlib==1.2.1         # youtube: OAuth
 google-auth-httplib2==0.2.0         # youtube: auth helper
 pywhatkit==5.4                # whatsapp: unofficial automation
 
+
+# --- DM Connectors (Messenger + Instagram auto-reply) ---
+# Optional at import time: the DM responder degrades gracefully if missing,
+# but Instagram password login + DM polling need it.
+instagrapi==3.2.8              # instagram: private API client (login, DMs)
+
+# --- Telegram bridge (backend/telegram_app/telegram_bridge.py) ---
+# Was imported unguarded but missing from this file, so the bridge failed on
+# a clean install. Pinned to the latest release verified on PyPI (22.8).
+python-telegram-bot==22.8      # telegram: bot API (Application, handlers)

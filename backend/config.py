@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     # ---- API Keys ----
     openrouter_api_key: str = ""
     groq_api_key: str = ""
+    gemini_api_key: str = ""  # Google AI Studio key — DM-reply fallback (free tier)
+    gemini_model: str = "gemini-2.5-flash"
 
     # ---- Model Config ----
     replicate_api_key: str = ""  # Replicate API token for video generation
@@ -65,6 +67,12 @@ class Settings(BaseSettings):
     # Empty = default JARVIS voice.
     persona: str = ""
 
+    # ---- DM Connectors (Messenger + Instagram auto-reply) ----
+    # Off by default: replying to personal DMs automates Sir's own accounts
+    # (against the platforms' rules) and must be a deliberate choice.
+    dm_responder_enabled: bool = False
+    # How often the DM responder polls each connected account (seconds).
+    dm_poll_interval_seconds: int = 60
     # ---- VAPID Push ----
     vapid_public_key: str = ""
     vapid_private_key: str = ""
@@ -200,7 +208,7 @@ class Settings(BaseSettings):
                      "access_token_expire_minutes", "refresh_token_expire_days",
                      "device_token_expire_days", "max_concurrent_agents",
                      "agent_timeout_seconds", "max_retry_count",
-                     "dialogue_history_max_turns", mode="before")
+                     "dialogue_history_max_turns", "dm_poll_interval_seconds", mode="before")
     @classmethod
     def _empty_str_to_zero(cls, v):
         """Tolerate ``KEY=`` (empty string) in .env for integer settings."""
@@ -209,7 +217,7 @@ class Settings(BaseSettings):
         return v
 
     @field_validator("allow_self_modification", "auto_self_heal",
-                     "allow_autonomous_business", mode="before")
+                     "allow_autonomous_business", "dm_responder_enabled", mode="before")
     @classmethod
     def _empty_str_to_false(cls, v):
         """Tolerate ``KEY=`` (empty) in .env for boolean settings."""
