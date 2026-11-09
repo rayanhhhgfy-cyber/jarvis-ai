@@ -42,7 +42,7 @@ numpy==2.2.3
 webrtcvad==2.0.10
 
 # --- Vision & Video ---
-Pillow==11.1.0
+Pillow==10.4.0
 opencv-python-headless==4.11.0.86
 mss==9.0.2
 
@@ -55,7 +55,7 @@ pypdf==5.4.0
 chardet==5.2.0
 
 # --- Browser Automation ---
-playwright==1.50.0
+playwright==1.62.0
 
 # --- System Monitoring ---
 psutil==6.1.1
