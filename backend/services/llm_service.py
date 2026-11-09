@@ -29,7 +29,7 @@ log = get_logger("llm_service")
 # Provider endpoints. Groq is the primary chat provider (free tier, key
 # already in Render as GROQ_API_KEY); OpenRouter stays as a fallback.
 # Same request shape as backend/services/dm_llm.py.
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = "openai/gpt-oss-120b"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
