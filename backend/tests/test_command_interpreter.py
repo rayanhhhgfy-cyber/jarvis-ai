@@ -86,6 +86,19 @@ def test_kill_process(win, linux):
     assert _one(linux.interpret("close chrome"))[1] == 'pkill -i -f "chrome"'
 
 
+def test_kill_process_needs_command_intent(linux):
+    # "send" contains "end" — casual chat must not build a pkill.
+    # The verb has to lead the request (after an optional please/jarvis).
+    assert linux.interpret("I talked with send anything you want") is None
+    assert linux.interpret("You send it on your own server") is None
+    assert linux.interpret("I quit my job") is None
+    assert linux.interpret("I quite like it") is None
+    # Real close commands still work, with or without a politeness prefix.
+    assert _one(linux.interpret("close chrome"))[1] == 'pkill -i -f "chrome"'
+    assert _one(linux.interpret("please close chrome"))[1] == 'pkill -i -f "chrome"'
+    assert _one(linux.interpret("can you close chrome"))[1] == 'pkill -i -f "chrome"'
+
+
 def test_shutdown_is_os_specific(win, linux, mac):
     assert "shutdown /s" in _one(win.interpret("shut down the computer"))[1]
     assert "shutdown -h" in _one(linux.interpret("shut down the computer"))[1]

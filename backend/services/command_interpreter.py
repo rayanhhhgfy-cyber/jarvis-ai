@@ -492,8 +492,18 @@ class CommandInterpreter:
 
     def _check_process_management(self, msg: str, original: str) -> Optional[Tuple[str, str]]:
         """Detect process kill/list operations."""
-        # Kill/close/stop an app
-        match = re.search(r"(?:kill|close|stop|end|terminate|quit|exit)\s+(?:the\s+)?(.+?)(?:\s+app|\s+process|\s+program|\s+please)?$", msg)
+        # Kill/close/stop an app — only when the verb leads the request
+        # (after an optional please/jarvis/can-you prefix). A bare
+        # substring match is dangerous: "send" contains "end", so casual
+        # chat like "send anything you want" used to build a pkill for
+        # "anything you want". "I quit my job" is not an instruction.
+        lead = re.sub(
+            r"^(?:please\s+|hey\s+jarvis\s+|jarvis\s+|ok\s+jarvis\s+"
+            r"|can\s+you\s+|could\s+you\s+|would\s+you\s+)+",
+            "",
+            msg,
+        )
+        match = re.search(r"^(?:kill|close|stop|end|terminate|quit|exit)\b\s+(?:the\s+)?(.+?)(?:\s+app|\s+process|\s+program|\s+please)?$", lead)
         if match:
             target = match.group(1).strip().rstrip(".")
             if self.is_windows:

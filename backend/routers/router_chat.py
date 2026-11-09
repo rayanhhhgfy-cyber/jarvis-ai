@@ -288,13 +288,13 @@ async def _dispatch_and_wait(cmd: str, description: str, timeout: float = 15.0) 
         stderr = stderr_bytes.decode("utf-8", errors="replace").strip()
         exit_code = proc.returncode or 0
 
-        is_gui = (
-            exit_code != 0 and not stdout and not stderr
-        ) or (
-            exit_code != 0 and (
-                "Input redirection" in stderr
-                or "not supported" in stderr
-            )
+        # A command that fails because it needs a GUI/input is the genuine
+        # GUI indicator (it stays open waiting for a display). A plain
+        # failed command with no output is just a failure — it used to be
+        # misread as a GUI app, so a pkill that matched nothing came back
+        # as a fake "Application launched successfully."
+        is_gui = exit_code != 0 and (
+            "Input redirection" in stderr or "not supported" in stderr
         )
         if is_gui:
             return None
