@@ -82,6 +82,79 @@ def test_parse_cookies_garbage_raises():
         dm_auth.parse_cookies("not cookies at all {{{")
 
 
+def test_parse_cookies_json_array_full_fields():
+    # EditThisCookie / Chrome export shape, with metadata kept.
+    raw = json.dumps([
+        {"name": "c_user", "value": "111", "domain": ".facebook.com",
+         "path": "/", "secure": True, "httpOnly": True, "hostOnly": False,
+         "session": True, "expirationDate": 9999999999, "storeId": "0"},
+        {"name": "xs", "value": "abc", "domain": ".facebook.com",
+         "path": "/", "secure": True, "httpOnly": True},
+        {"name": "sb", "value": "xyz", "host": ".facebook.com"},
+    ])
+    assert dm_auth.parse_cookies(raw) == {"c_user": "111", "xs": "abc", "sb": "xyz"}
+    entries = dm_auth.parse_cookie_entries(raw)
+    assert entries[0]["domain"] == ".facebook.com"
+    assert entries[0]["path"] == "/"
+    assert entries[0]["secure"] is True
+    assert entries[0]["httpOnly"] is True
+    assert entries[2]["domain"] == ".facebook.com"  # "host" alias
+
+
+def test_parse_cookies_json_object_and_wrapper():
+    assert dm_auth.parse_cookies('{"c_user": "111", "xs": "abc"}') == {
+        "c_user": "111", "xs": "abc",
+    }
+    # {"cookies": [...]} wrapper some exporters use.
+    assert dm_auth.parse_cookies(
+        '{"cookies": [{"name": "sessionid", "value": "s1"}]}'
+    ) == {"sessionid": "s1"}
+
+
+def test_parse_cookies_stringified_json():
+    # The paste itself is a JSON string holding JSON (double-encoded).
+    inner = json.dumps([{"name": "c_user", "value": "111"}, {"name": "xs", "value": "abc"}])
+    assert dm_auth.parse_cookies(json.dumps(inner)) == {"c_user": "111", "xs": "abc"}
+    assert dm_auth.parse_cookies(json.dumps('{"sessionid": "s1"}')) == {"sessionid": "s1"}
+
+
+def test_parse_cookies_netscape_httponly_lines():
+    raw = (
+        "# Netscape HTTP Cookie File\n"
+        "#HttpOnly_.facebook.com\tTRUE\t/\tTRUE\t0\tc_user\t111\n"
+        ".facebook.com\tTRUE\t/\tTRUE\t0\txs\tabc\n"
+    )
+    assert dm_auth.parse_cookies(raw) == {"c_user": "111", "xs": "abc"}
+    entries = dm_auth.parse_cookie_entries(raw)
+    assert entries[0]["httpOnly"] is True
+    assert entries[0]["domain"] == ".facebook.com"
+    assert "httpOnly" not in entries[1]
+
+
+def test_parse_cookies_duplicates_last_wins():
+    assert dm_auth.parse_cookies("c_user=1; c_user=2") == {"c_user": "2"}
+    assert dm_auth.parse_cookies(
+        '[{"name": "xs", "value": "old"}, {"name": "xs", "value": "new"}]'
+    ) == {"xs": "new"}
+
+
+def test_parse_cookies_set_cookie_attributes_ignored():
+    # A pasted Set-Cookie line must not turn Path/Domain/Secure into cookies.
+    out = dm_auth.parse_cookies(
+        "c_user=111; Path=/; Domain=.facebook.com; Secure; HttpOnly; SameSite=None"
+    )
+    assert out == {"c_user": "111"}
+
+
+def test_parse_cookies_invalid_json_names_the_problem():
+    with pytest.raises(ValueError, match="JSON"):
+        dm_auth.parse_cookies('{"c_user": "111",}')
+    with pytest.raises(ValueError, match="no usable"):
+        dm_auth.parse_cookies("[]")
+    with pytest.raises(ValueError, match="no usable"):
+        dm_auth.parse_cookies('[{"name": "only-name"}]')
+
+
 # --------------------------------------------------------------------
 # Vault round-trip (encrypted at rest)
 # --------------------------------------------------------------------

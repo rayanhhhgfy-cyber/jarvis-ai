@@ -7,8 +7,10 @@ Credential handling for the DM Connectors feature (Messenger + Instagram).
 Sir pastes EITHER an email+password pair OR a cookies export in the
 dashboard Connectors tab. This module:
 
-* parses pasted cookies (``k=v; ...`` header form, Netscape cookies.txt,
-  or a JSON object / JSON list of ``{"name", "value"}`` pairs),
+* parses pasted cookies in every common format — ``k=v; ...`` header
+  form, Netscape cookies.txt (incl. ``#HttpOnly_`` lines), JSON object /
+  JSON list exports (EditThisCookie / Chrome shapes, with domain, path,
+  secure and httpOnly kept), and double-encoded (stringified) JSON,
 * verifies the login before anything is stored (a lightweight session
   probe for cookies; a real login attempt for email+password),
 * stores the verified credentials ENCRYPTED in a dedicated vault file
@@ -79,67 +81,192 @@ class LoginUnavailable(Exception):
 # Cookie parsing
 # --------------------------------------------------------------------
 
-def parse_cookies(raw: str) -> dict[str, str]:
-    """
-    Parse pasted cookies into a ``{name: value}`` dict.
+# Attribute-only tokens that appear in Set-Cookie strings but are not
+# cookies themselves (e.g. a pasted "c_user=1; Path=/; Secure" line).
+_COOKIE_HEADER_ATTRIBUTES = {
+    "expires", "max-age", "domain", "path", "secure", "httponly", "samesite",
+}
 
-    Accepted forms:
-    * ``name=value; name2=value2`` (browser "Copy as cURL" / document.cookie)
-    * Netscape cookies.txt (tab-separated, ``#`` comments ignored)
-    * JSON object ``{"name": "value"}``
-    * JSON list ``[{"name": "...", "value": "..."}]`` (browser export)
 
-    Raises ValueError when nothing usable is found. Cookie *values* are
-    never logged by this module.
+def _cookie_entry(
+    name: str,
+    value: Any,
+    domain: str | None = None,
+    path: str | None = None,
+    secure: bool = False,
+    http_only: bool = False,
+) -> dict[str, Any]:
+    """One normalized cookie entry (name/value plus metadata when present)."""
+    entry: dict[str, Any] = {"name": str(name), "value": str(value)}
+    if domain:
+        entry["domain"] = str(domain)
+    if path:
+        entry["path"] = str(path)
+    if secure:
+        entry["secure"] = True
+    if http_only:
+        entry["httpOnly"] = True
+    return entry
+
+
+def _json_cookie_entries(data: Any) -> list[dict[str, Any]]:
+    """Normalize a decoded JSON value into cookie entries."""
+    if isinstance(data, dict):
+        # Some exporters wrap the list: {"cookies": [...]}.
+        if isinstance(data.get("cookies"), list):
+            return _json_cookie_entries(data["cookies"])
+        entries: list[dict[str, Any]] = []
+        for key, value in data.items():
+            if value is None or value == "" or isinstance(value, (dict, list)):
+                continue
+            entries.append(_cookie_entry(key, value))
+        return entries
+    if isinstance(data, list):
+        entries = []
+        for item in data:
+            if isinstance(item, dict):
+                name = item.get("name")
+                value = item.get("value")
+                if not name or value is None or value == "":
+                    continue
+                entries.append(_cookie_entry(
+                    name,
+                    value,
+                    domain=item.get("domain") or item.get("host"),
+                    path=item.get("path"),
+                    secure=bool(item.get("secure")),
+                    http_only=bool(item.get("httpOnly") or item.get("http_only")),
+                ))
+            elif isinstance(item, str) and "=" in item:
+                # ["c_user=123", "xs=abc"] — header pairs inside a list.
+                name, _, value = item.partition("=")
+                name, value = name.strip(), value.strip().strip('"')
+                if name and value:
+                    entries.append(_cookie_entry(name, value))
+        return entries
+    return []
+
+
+def parse_cookie_entries(raw: str) -> list[dict[str, Any]]:
     """
-    raw = (raw or "").strip()
+    Parse pasted cookies into a list of entries, in source order.
+
+    Every entry has ``name`` and ``value``; ``domain``, ``path``,
+    ``secure`` and ``httpOnly`` are included when the source carries
+    them. Accepted forms:
+
+    * JSON array of cookie objects — EditThisCookie / Chrome exports,
+      e.g. ``[{"name": "c_user", "value": "123", "domain": ".facebook.com",
+      "path": "/", "secure": true, "httpOnly": true}]`` (``host`` is
+      accepted as a ``domain`` alias).
+    * JSON object — ``{"c_user": "123", "xs": "abc"}`` — or a
+      ``{"cookies": [...]}`` wrapper around either form.
+    * A JSON string holding any of the above (double-encoded paste).
+    * Netscape cookies.txt — tab- or space-separated, ``#`` comments
+      skipped, ``#HttpOnly_`` lines parsed as httpOnly cookies.
+    * Raw Cookie header — ``c_user=123; xs=abc`` (Set-Cookie attributes
+      such as Path/Domain/Secure are ignored).
+
+    Duplicate names are kept in order here; :func:`parse_cookies`
+    keeps the last one. Raises ValueError with a user-facing message
+    when nothing usable is found. Cookie *values* are never logged.
+    """
+    raw = (raw or "").strip().lstrip("\ufeff")
     if not raw:
         raise ValueError("No cookies pasted.")
 
-    # JSON forms first.
-    if raw.startswith(("{", "[")):
+    # --- JSON forms (incl. stringified JSON) ---
+    if raw.startswith(("{", "[", '"')):
         try:
             data = json.loads(raw)
         except Exception as e:
-            raise ValueError(f"Cookies are not valid JSON: {e}")
-        if isinstance(data, dict):
-            out = {str(k): str(v) for k, v in data.items() if v != ""}
-            if not out:
-                raise ValueError("JSON cookies object is empty.")
-            return out
-        if isinstance(data, list):
-            out = {}
-            for item in data:
-                if isinstance(item, dict) and item.get("name") and item.get("value") != "":
-                    out[str(item["name"])] = str(item["value"])
-            if not out:
-                raise ValueError("JSON cookies list has no name/value pairs.")
-            return out
-        raise ValueError("JSON cookies must be an object or a list of name/value pairs.")
+            raise ValueError(
+                "Cookies look like JSON but could not be parsed: "
+                f"{e}. Make sure the pasted text is complete JSON."
+            ) from e
+        if isinstance(data, str):
+            # The paste was a JSON string holding JSON (double-encoded).
+            try:
+                data = json.loads(data)
+            except Exception as e:
+                raise ValueError(
+                    "Cookies look like JSON but could not be parsed: "
+                    f"{e}. Make sure the pasted text is complete JSON."
+                ) from e
+        entries = _json_cookie_entries(data)
+        if entries:
+            return entries
+        if isinstance(data, (dict, list)):
+            raise ValueError(
+                "JSON cookies contained no usable name/value pairs. "
+                'Use an object like {"c_user": "..."} or a list of '
+                '{"name": ..., "value": ...} objects.'
+            )
+        raise ValueError(
+            "JSON cookies must be an object or a list of name/value pairs."
+        )
 
-    # Netscape cookies.txt: 7 tab-separated fields, last two are name/value.
-    cookies: dict[str, str] = {}
+    # --- Line forms: Netscape cookies.txt and/or Cookie headers ---
+    entries: list[dict[str, Any]] = []
     for line in raw.splitlines():
         line = line.strip()
-        if not line or line.startswith("#"):
+        if not line:
             continue
-        if "\t" in line:
-            parts = line.split("\t")
-            if len(parts) >= 7 and parts[5] and parts[6]:
-                cookies[parts[5].strip()] = parts[6].strip()
+        http_only = False
+        if line.startswith("#HttpOnly_"):
+            http_only = True
+            line = line[len("#HttpOnly_"):]
+        elif line.startswith("#"):
             continue
-        # Header form: name=value; name2=value2
+        fields = line.split("\t")
+        if len(fields) < 7:
+            # Some exports separate the fields with spaces, not tabs.
+            fields = line.split()
+        if len(fields) >= 7 and fields[5] and fields[6]:
+            entries.append(_cookie_entry(
+                fields[5].strip(),
+                fields[6].strip(),
+                domain=fields[0].strip() or None,
+                path=fields[2].strip() or None,
+                secure=fields[3].strip().upper() == "TRUE",
+                http_only=http_only,
+            ))
+            continue
+        # Header form: name=value; name2=value2 (one line may hold several).
         for pair in line.split(";"):
             pair = pair.strip()
             if not pair or "=" not in pair:
                 continue
             name, _, value = pair.partition("=")
-            name, value = name.strip(), value.strip()
-            if name and value:
-                cookies[name] = value
-    if not cookies:
-        raise ValueError("Could not parse any cookies from the pasted text.")
-    return cookies
+            name, value = name.strip(), value.strip().strip('"')
+            if not name or not value:
+                continue
+            if name.lower() in _COOKIE_HEADER_ATTRIBUTES:
+                continue
+            entries.append(_cookie_entry(name, value))
+    if not entries:
+        raise ValueError(
+            "Could not parse any cookies from the pasted text. Paste a "
+            "Cookie header (c_user=...; xs=...), a JSON export, or a "
+            "cookies.txt file."
+        )
+    return entries
+
+
+def parse_cookies(raw: str) -> dict[str, str]:
+    """
+    Parse pasted cookies into a ``{name: value}`` dict.
+
+    Accepts every format :func:`parse_cookie_entries` does (JSON array /
+    object, stringified JSON, Netscape cookies.txt with ``#HttpOnly_``
+    lines, raw Cookie header). Duplicate names: the last one wins.
+    Raises ValueError when nothing usable is found. Cookie *values* are
+    never logged by this module.
+    """
+    out: dict[str, str] = {}
+    for entry in parse_cookie_entries(raw):
+        out[entry["name"]] = entry["value"]
+    return out
 
 
 # --------------------------------------------------------------------
