@@ -89,6 +89,10 @@ class DMResponder:
             p: {"last_poll": None, "last_error": None, "replied": 0, "degraded": False}
             for p in dm_auth.PLATFORMS
         }
+        # "While you were away" feed: the last 20 DM replies, newest first.
+        # In-memory only (Render's disk is wiped on every redeploy) — it is
+        # a dashboard convenience, not a record.
+        self._activity: list[dict[str, Any]] = []
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -111,6 +115,29 @@ class DMResponder:
                 for p in dm_auth.PLATFORMS
             },
         }
+
+    def get_activity(self, limit: int = 20) -> list[dict[str, Any]]:
+        """Recent DM replies for the dashboard 'While you were away' feed."""
+        return list(self._activity[: max(1, limit)])
+
+    def _record_activity(
+        self,
+        platform: str,
+        msg: dict[str, Any],
+        reply: str,
+        important: bool,
+    ) -> None:
+        """Prepend one reply to the activity feed (kept to the last 20)."""
+        self._activity.insert(0, {
+            "time": datetime.now(UTC).isoformat(),
+            "platform": platform,
+            "sender_name": msg.get("sender_name", ""),
+            "text": (msg.get("text") or "")[:300],
+            "reply": (reply or "")[:300],
+            "important": important,
+            "is_group": bool(msg.get("is_group")),
+        })
+        del self._activity[20:]
 
     async def start(self) -> None:
         """Start the poll loop (no-op unless enabled + a connector exists)."""
@@ -274,7 +301,8 @@ class DMResponder:
                 self._persist_state()
                 self._state[platform]["replied"] += 1
                 await self._notify_new_dm(
-                    platform, msg, important=_is_important(msg.get("text") or "")
+                    platform, msg, important=_is_important(msg.get("text") or ""),
+                    reply=gen["reply"],
                 )
                 return {
                     "ok": True,
@@ -361,7 +389,8 @@ class DMResponder:
             replied += 1
             self._state[platform]["replied"] += 1
             await self._notify_new_dm(
-                platform, msg, important=_is_important(msg.get("text") or "")
+                platform, msg, important=_is_important(msg.get("text") or ""),
+                reply=gen["reply"],
             )
         return {"ok": True, "threads_seen": len(threads), "replied": replied}
 
@@ -420,35 +449,61 @@ class DMResponder:
         self._persist_state()
 
     async def _notify_new_dm(
-        self, platform: str, msg: dict[str, Any], important: bool = False
+        self, platform: str, msg: dict[str, Any], important: bool = False,
+        reply: str = "",
     ) -> None:
-        """Web Push so Sir knows Jarvis answered a DM.
+        """Tell Sir Jarvis answered a DM — push, Telegram, and the activity feed.
 
-        When the sender said the message is important, the push title
-        says so loudly, so Sir sees it first.
+        The push carries the sender, what they said, AND what Jarvis
+        replied, so Sir sees the whole exchange at a glance. When the
+        sender said the message is important, the push title says so
+        loudly. The same story also goes to Sir on Telegram when it is
+        configured, where he can answer back.
         """
+        self._record_activity(platform, msg, reply, important)
+        name = dm_auth.PLATFORMS[platform]["name"]
+        sender = msg.get("sender_name", "")
+        incoming = (msg.get("text") or "")[:80]
         try:
             from backend.notification_engine import notification_engine
             from shared.models import Notification
 
-            name = dm_auth.PLATFORMS[platform]["name"]
             title = (
                 f"JARVIS — رسالة مهمة من {name} ⚠️"
                 if important
                 else f"JARVIS — رد على رسالة {name}"
             )
+            body = f"{sender}: {incoming}"
+            if reply:
+                body += f"\nJarvis: {reply[:120]}"
             await notification_engine.send_notification(Notification(
                 title=title,
-                body=f"{msg.get('sender_name', '')}: {(msg.get('text') or '')[:80]}",
+                body=body,
                 category="dm_reply",
                 data={
                     "platform": platform,
                     "thread_id": msg.get("thread_id", ""),
                     "important": important,
+                    "reply": reply[:300],
                 },
             ))
         except Exception as e:
             log.debug("dm_push_notify_failed", error=str(e))
+        try:
+            from backend.services.telegram_notifier import send_telegram_message
+
+            group = " (group)" if msg.get("is_group") else ""
+            text = (
+                f"💬 {name}{group} — {sender} wrote:\n"
+                f"{incoming}"
+            )
+            if reply:
+                text += f"\n\nJarvis replied:\n{reply[:300]}"
+            if important:
+                text = "⚠️ IMPORTANT — " + text
+            await send_telegram_message(text)
+        except Exception as e:
+            log.debug("dm_telegram_notify_failed", error=str(e))
 
 
 # Process-wide singleton

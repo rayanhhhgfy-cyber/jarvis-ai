@@ -84,6 +84,16 @@ class Settings(BaseSettings):
     vapid_public_key: str = ""
     vapid_private_key: str = ""
     vapid_claims_email: str = "sir@jarvis-omega.local"
+    # ---- Telegram (Jarvis talks to Sir directly) ----
+    # When BOTH are set, Jarvis also messages Sir on Telegram whenever it
+    # answers a DM, and Sir can reply to the bot to chat with Jarvis.
+    # The token comes from @BotFather; the chat id is Sir's own Telegram
+    # user id (from @userinfobot). Neither is ever returned by the API.
+    telegram_bot_token: str = ""
+    telegram_chat_id: str = ""
+    # Base URL used when registering the Telegram webhook on startup.
+    # Empty = the live Render URL.
+    telegram_webhook_base_url: str = ""
 
     # ---- Paths ----
     storage_dir: str = "./storage"

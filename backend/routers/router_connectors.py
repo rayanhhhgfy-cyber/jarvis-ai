@@ -51,6 +51,12 @@ async def list_connectors() -> dict[str, Any]:
     }
 
 
+@router.get("/dm/activity")
+async def dm_activity(limit: int = 20) -> dict[str, Any]:
+    """Recent DM replies for the dashboard 'While you were away' feed."""
+    return {"activity": dm_responder.get_activity(limit=limit)}
+
+
 @router.get("/{connector_id}/status")
 async def get_connector_status(connector_id: str) -> dict[str, Any]:
     """Status for one connector, plus the responder state for it."""

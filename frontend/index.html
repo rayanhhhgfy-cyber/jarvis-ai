@@ -335,6 +335,11 @@ svg{display:block;flex:none}
       <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الموصلات</p></div>
     </div>
     <div class="category-card stack">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>أثناء غيابك</h3>
+      <p style="color:var(--text-2);font-size:14px;margin-bottom:12px">آخر الرسائل التي رد عليها Jarvis وأنت مشغول — من كتب، ماذا قال، وبماذا رد Jarvis.</p>
+      <div id="dmActivity"><p style="color:var(--text-2);font-size:13px">لا توجد ردود بعد.</p></div>
+    </div>
+    <div class="category-card stack">
       <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>إشعارات الجوال</h3>
       <p style="color:var(--text-2);font-size:14px;margin-bottom:16px">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد Jarvis على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
       <button class="btn btn-connect" onclick="enableNotifications()">تفعيل الإشعارات</button>
@@ -638,6 +643,38 @@ function showApproval(payload) {
 let currentConnector = null;
 let connectMode = 'password';
 
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function loadDmActivity() {
+  const el = document.getElementById('dmActivity');
+  if (!el) return;
+  try {
+    const resp = await fetch(API + '/api/connectors/dm/activity');
+    const data = await resp.json();
+    const items = data.activity || [];
+    if (!items.length) {
+      el.innerHTML = '<p style="color:var(--text-2);font-size:13px">لا توجد ردود بعد.</p>';
+      return;
+    }
+    el.innerHTML = items.map(a => {
+      const when = a.time ? new Date(a.time).toLocaleString('ar-JO', {hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'}) : '';
+      const plat = a.platform === 'messenger' ? 'ماسنجر' : 'إنستغرام';
+      const flag = a.important ? ' <span style="color:#e5484d">⚠️ مهم</span>' : '';
+      const group = a.is_group ? ' (مجموعة)' : '';
+      return `<div style="border-top:1px solid var(--border);padding:10px 0">
+        <div style="font-size:13px;color:var(--text-2)">${escapeHtml(plat)}${escapeHtml(group)} · ${escapeHtml(when)}${flag}</div>
+        <div style="font-weight:600;margin:2px 0">${escapeHtml(a.sender_name)}</div>
+        <div style="font-size:14px">${escapeHtml(a.text)}</div>
+        <div style="font-size:14px;color:var(--text-2);margin-top:4px">Jarvis: ${escapeHtml(a.reply)}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    el.innerHTML = '<p style="color:var(--text-2);font-size:13px">تعذر تحميل النشاط.</p>';
+  }
+}
+
 async function loadConnectors() {
   try {
     const resp = await fetch(API + '/api/connectors');
@@ -657,6 +694,7 @@ async function loadConnectors() {
           : `<button class="btn btn-connect" onclick="openConnectModal('${c.id}')">ربط الحساب</button>`}`;
       grid.appendChild(card);
     });
+    loadDmActivity();
   } catch (e) {
     document.getElementById('connectorsGrid').innerHTML = '<div class="loader"><p>تعذر تحميل الموصلات. تأكد أن الباكند يعمل.</p></div>';
   }

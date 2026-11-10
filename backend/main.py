@@ -59,6 +59,7 @@ from backend.routers.router_patterns import router as router_patterns
 from backend.routers.router_focus import router as router_focus
 from backend.routers.router_media_generation import router as router_media_generation
 from backend.routers.router_toggles import router as router_toggles
+from backend.routers.router_telegram import router as router_telegram
 
 from shared.logger import setup_logging, get_logger, AuditLogger
 from shared.security import init_security, verify_token
@@ -366,6 +367,14 @@ async def lifespan(app: FastAPI):
         await dm_responder.start()
     except Exception as dm_err:
         log.warning("dm_responder_start_failed", error=str(dm_err))
+
+    # Telegram webhook — register on startup when the bot token is set,
+    # so Sir can reply to Jarvis on Telegram without a manual step.
+    try:
+        from backend.services.telegram_notifier import set_telegram_webhook
+        await set_telegram_webhook()
+    except Exception as tg_err:
+        log.warning("telegram_webhook_register_failed", error=str(tg_err))
 
     try:
         tool_executor.set_approval_gateway(approval_gateway)
@@ -843,6 +852,7 @@ app.include_router(router_patterns)
 app.include_router(router_focus)
 app.include_router(router_toggles)
 app.include_router(router_media_generation)
+app.include_router(router_telegram)
 
 
 # ====================================================================
