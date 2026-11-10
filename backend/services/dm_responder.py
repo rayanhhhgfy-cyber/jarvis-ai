@@ -157,6 +157,77 @@ def _is_availability_question(text: str) -> bool:
     return any(marker in lowered for marker in _FREE_MARKERS)
 
 
+def _match_rule(sender_name: str, text: str) -> str | None:
+    """The reply of the first custom auto-reply rule that matches.
+
+    A rule matches when the person is "anyone" or the sender's name
+    contains the rule's person, AND the message contains the rule's
+    topic (case-insensitive substring). Returns the rule's reply, or
+    None when no rule matches.
+    """
+    from backend.services.dm_store import rules as rules_store
+
+    sender = (sender_name or "").lower()
+    lowered = (text or "").lower()
+    for rule in rules_store.all().values():
+        person = (rule.get("person") or "").lower()
+        topic = (rule.get("topic") or "").lower()
+        reply = rule.get("reply") or ""
+        if not topic or not reply:
+            continue
+        person_ok = person in ("anyone", "anybody", "everyone") or (
+            person and (person in sender or sender in person)
+        )
+        if person_ok and topic in lowered:
+            return reply
+    return None
+
+
+# Meeting requests — someone wants to meet Sir in person.
+_MEETING_MARKERS = (
+    "can we meet", "let's meet", "lets meet", "want to meet",
+    "meet up", "meet tomorrow", "meet on", "meet this week",
+    "meet you", "see you in person", "hang out",
+    "نلتقي", "نتقابل", "نلتقى", "نلتقي بكرة", "نلتقي غدا",
+)
+
+
+def _is_meeting_request(text: str) -> bool:
+    """True when the sender asks to meet Sir in person."""
+    lowered = (text or "").lower()
+    return any(marker in lowered for marker in _MEETING_MARKERS)
+
+
+# Titles that always get a formal tone.
+_FORMAL_TITLES = ("mr.", "mrs.", "ms.", "dr.", "teacher", "أستاذ", "استاذ", "معلم", "دكتور")
+
+
+def _contact_tone(sender_name: str) -> str | None:
+    """'formal' or 'casual' for this person, or None (use the default).
+
+    A contact's stored tone wins; otherwise a formal title (Mr., Dr.,
+    teacher, أستاذ) means formal.
+    """
+    from backend.services.dm_store import contacts
+
+    name = (sender_name or "").strip()
+    if not name:
+        return None
+    for stored_name, data in contacts.all().items():
+        if (
+            name.lower() == stored_name.lower()
+            or name.lower() in stored_name.lower()
+            or stored_name.lower() in name.lower()
+        ):
+            tone = (data or {}).get("tone", "")
+            if tone in ("formal", "casual"):
+                return tone
+    lowered = name.lower()
+    if any(title in lowered for title in _FORMAL_TITLES):
+        return "formal"
+    return None
+
+
 # Abusive / harassing words — Jarvis stops replying to these.
 _ABUSIVE_MARKERS = (
     "idiot", "stupid", "shut up", "hate you", "kill yourself",
@@ -886,6 +957,114 @@ class DMResponder:
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._persist_state()
                 continue
+            # Custom auto-reply rules: Sir's own rules win over the LLM.
+            # If a rule matches, its reply goes out as-is.
+            rule_reply = _match_rule(msg.get("sender_name", ""), msg.get("text") or "")
+            if rule_reply:
+                try:
+                    await client.send(thread_id, rule_reply)
+                except Exception as e:
+                    log.warning("dm_rule_send_failed", platform=platform, error=str(e))
+                    continue
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._introduced.setdefault(platform, {})[thread_id] = True
+                self._clear_pending(platform, thread_id)
+                self._persist_state()
+                self._state[platform]["replied"] += 1
+                replied += 1
+                self._record_activity(platform, msg, rule_reply, important=False)
+                continue
+            # Meeting scheduling: someone wants to meet Sir. Ask Sir for
+            # times first (never offer times on his behalf), then send them.
+            if _is_meeting_request(msg.get("text") or ""):
+                from backend.services.dm_store import meetings as meetings_store
+
+                pending = meetings_store.get(thread_id)
+                if not pending:
+                    meetings_store.set(thread_id, {
+                        "platform": platform,
+                        "sender_name": msg.get("sender_name", ""),
+                        "offered": [],
+                        "awaiting_times": True,
+                    })
+                    try:
+                        from backend.services.telegram_notifier import (
+                            send_telegram_message,
+                        )
+
+                        await send_telegram_message(
+                            f"📅 {msg.get('sender_name', '')} wants to meet. "
+                            "What times should I offer them?\n\n"
+                            "Reply with the times (for example 'Friday 5pm or "
+                            "Saturday 10am') and I will send them."
+                        )
+                    except Exception as e:
+                        log.debug("dm_meeting_notify_failed", error=str(e))
+                    self._mark_seen(platform, thread_id, msg["message_id"])
+                    self._persist_state()
+                    continue
+                # They replied after being offered times — did they pick one?
+                if pending.get("offered"):
+                    from backend.services.dm_time import parse_time
+
+                    chosen = parse_time(msg.get("text") or "")
+                    offered = pending.get("offered") or []
+                    if chosen:
+                        chosen_key = chosen.date().isoformat()
+                        for slot in offered:
+                            try:
+                                slot_dt = datetime.fromisoformat(slot)
+                            except (TypeError, ValueError):
+                                continue
+                            if slot_dt.date().isoformat() == chosen_key and (
+                                slot_dt.hour == chosen.hour
+                                or chosen.hour == 0
+                            ):
+                                # Booked: add it to the calendar and confirm.
+                                from backend.services.dm_store import (
+                                    calendar as cal_store,
+                                )
+
+                                cal_store.set(chosen_key, {
+                                    "date": chosen_key,
+                                    "status": "busy",
+                                    "detail": f"Meeting with {msg.get('sender_name', '')}",
+                                })
+                                meetings_store.delete(thread_id)
+                                confirm = (
+                                    f"Done — see you {chosen.strftime('%A %H:%M')}!"
+                                )
+                                try:
+                                    await client.send(thread_id, confirm)
+                                except Exception as e:
+                                    log.warning("dm_meeting_confirm_failed", platform=platform, error=str(e))
+                                    continue
+                                self._mark_seen(platform, thread_id, msg["message_id"])
+                                self._introduced.setdefault(platform, {})[thread_id] = True
+                                self._clear_pending(platform, thread_id)
+                                self._persist_state()
+                                self._state[platform]["replied"] += 1
+                                replied += 1
+                                self._record_activity(platform, msg, confirm, important=False)
+                                try:
+                                    from backend.services.telegram_notifier import (
+                                        send_telegram_message,
+                                    )
+
+                                    await send_telegram_message(
+                                        f"📅 Booked: meeting with "
+                                        f"{msg.get('sender_name', '')} on "
+                                        f"{chosen.strftime('%A %H:%M')}."
+                                    )
+                                except Exception as e:
+                                    log.debug("dm_meeting_booked_notify_failed", error=str(e))
+                                break
+                        else:
+                            # No offered slot matched — fall through to a
+                            # normal reply (the meeting stays pending).
+                            pass
+                        if meetings_store.get(thread_id) is None:
+                            continue
             if first_reply and not is_vip:
                 # The one-minute rule: give Sir a minute to answer a new
                 # message himself. Record when it was first seen and wait;
@@ -921,6 +1100,7 @@ class DMResponder:
                     media_url=msg.get("media_url"),
                     media_type=msg.get("media_type"),
                     contact_notes=_contact_notes(msg.get("sender_name", "")),
+                    tone=_contact_tone(msg.get("sender_name", "")),
                 )
                 if gen.get("ok"):
                     self._pending_drafts[thread_id] = {
@@ -982,6 +1162,7 @@ class DMResponder:
                     first_reply=first_reply,
                     is_group=bool(msg.get("is_group")),
                     contact_notes=_contact_notes(msg.get("sender_name", "")),
+                    tone=_contact_tone(msg.get("sender_name", "")),
                 )
                 if gen.get("ok"):
                     self._pending_drafts[thread_id] = {
@@ -1018,6 +1199,7 @@ class DMResponder:
                 media_url=msg.get("media_url"),
                 media_type=msg.get("media_type"),
                 contact_notes=_contact_notes(msg.get("sender_name", "")),
+                tone=_contact_tone(msg.get("sender_name", "")),
             )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))

@@ -10,7 +10,7 @@ and DM search. All external calls are mocked.
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
+from unittest.mock import AsyncMock, MagicMock
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -262,3 +262,81 @@ def test_handle_busy_free(tmp_path, monkeypatch):
     assert "busy" in reply.lower()
     assert "Friday" in reply
     assert len(dm_store.calendar.all()) == 1
+
+
+# --------------------------------------------------------------------
+# Wave 3: rules, meetings, tone
+# --------------------------------------------------------------------
+
+def test_match_rule(tmp_path, monkeypatch):
+    from backend.services import dm_store
+    from backend.services.dm_responder import _match_rule
+
+    monkeypatch.setattr(dm_store.rules, "_path", tmp_path / "dm_rules.json")
+    monkeypatch.setattr(dm_store.rules, "_loaded", False)
+    monkeypatch.setattr(dm_store.rules, "_data", {})
+    dm_store.rules.set("r1", {
+        "person": "Omar", "topic": "club",
+        "reply": "Here is the club link: https://f-thinkers.vercel.app",
+    })
+    dm_store.rules.set("r2", {
+        "person": "anyone", "topic": "price",
+        "reply": "Check my portfolio for prices.",
+    })
+    assert _match_rule("Omar", "tell me about the club") == (
+        "Here is the club link: https://f-thinkers.vercel.app"
+    )
+    assert _match_rule("Layla", "what is the price?") == "Check my portfolio for prices."
+    assert _match_rule("Layla", "tell me about the club") is None
+    assert _match_rule("Omar", "hello") is None
+
+
+def test_is_meeting_request():
+    from backend.services.dm_responder import _is_meeting_request
+
+    assert _is_meeting_request("can we meet tomorrow?") is True
+    assert _is_meeting_request("let's meet up") is True
+    assert _is_meeting_request("how are you?") is False
+
+
+def test_contact_tone(tmp_path, monkeypatch):
+    from backend.services import dm_store
+    from backend.services.dm_responder import _contact_tone
+
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    dm_store.contacts.set("Omar", {"tone": "casual"})
+    dm_store.contacts.set("Mr. Ahmad", {"tone": "formal"})
+    assert _contact_tone("Omar") == "casual"
+    assert _contact_tone("Mr. Ahmad") == "formal"
+    # A formal title defaults to formal even without a stored tone.
+    assert _contact_tone("Dr. Sara") == "formal"
+    assert _contact_tone("Layla") is None
+
+
+def test_handle_remember_tone(tmp_path, monkeypatch):
+    from backend.routers.router_telegram import _handle_remember
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    reply = _handle_remember("Mr. Ahmad is a teacher")
+    assert "formally" in reply
+    assert dm_store.contacts.get("Mr. Ahmad", {}).get("tone") == "formal"
+    reply = _handle_remember("Omar is a friend")
+    assert "casually" in reply
+    assert dm_store.contacts.get("Omar", {}).get("tone") == "casual"
+
+
+def test_format_offered_times():
+    from backend.routers.router_telegram import _format_offered_times
+
+    one = _format_offered_times(["2026-11-13T17:00:00+03:00"])
+    assert "Friday" in one and "17:00" in one
+    two = _format_offered_times([
+        "2026-11-13T17:00:00+03:00", "2026-11-14T10:00:00+03:00",
+    ])
+    assert "or" in two
+    assert "Friday" in two and "Saturday" in two

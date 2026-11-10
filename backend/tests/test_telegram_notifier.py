@@ -504,3 +504,115 @@ async def test_telegram_webhook_search(monkeypatch):
     assert resp.status_code == 200
     fake_responder.search_dms.assert_awaited_once()
     assert "the book is great" in mock_send.call_args.args[0]
+
+
+# --- Wave 3 webhook intents: rules + meeting times ---
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_add_rule(monkeypatch, tmp_path):
+    """'add a rule: if Omar asks about the club, reply ...' stores a rule."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.rules, "_path", tmp_path / "dm_rules.json")
+    monkeypatch.setattr(dm_store.rules, "_loaded", False)
+    monkeypatch.setattr(dm_store.rules, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "add a rule: if Omar asks about the club, reply here is the link"},
+        })
+    assert resp.status_code == 200
+    all_rules = dm_store.rules.all()
+    assert len(all_rules) == 1
+    rule = next(iter(all_rules.values()))
+    assert rule["person"] == "Omar"
+    assert rule["topic"] == "the club"
+    assert rule["reply"] == "here is the link"
+    assert "Rule added" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_list_and_delete_rule(monkeypatch, tmp_path):
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.rules, "_path", tmp_path / "dm_rules.json")
+    monkeypatch.setattr(dm_store.rules, "_loaded", False)
+    monkeypatch.setattr(dm_store.rules, "_data", {})
+    dm_store.rules.set("rule_1", {"person": "Omar", "topic": "club", "reply": "link"})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "list my rules"},
+        })
+    assert resp.status_code == 200
+    assert "Omar" in mock_send.call_args.args[0]
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "delete rule 1"},
+        })
+    assert resp.status_code == 200
+    assert len(dm_store.rules.all()) == 0
+    assert "Deleted" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_meeting_times(monkeypatch, tmp_path):
+    """When a meeting awaits times, Sir's reply sends them to the person."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.meetings, "_path", tmp_path / "pending_meetings.json")
+    monkeypatch.setattr(dm_store.meetings, "_loaded", False)
+    monkeypatch.setattr(dm_store.meetings, "_data", {})
+    dm_store.meetings.set("t1", {
+        "platform": "messenger", "sender_name": "Omar",
+        "offered": [], "awaiting_times": True,
+    })
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+
+    class _FakeClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send(self, thread_id, text):
+            self.sent.append((thread_id, text))
+            return {"ok": True}
+
+    fake_client = _FakeClient()
+    fake_responder._build_client.return_value = fake_client
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.load_connector",
+              return_value={"method": "cookies", "data": {"cookies": {}}}),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "Friday 5pm or Saturday 10am"},
+        })
+    assert resp.status_code == 200
+    assert len(fake_client.sent) == 1
+    assert "Friday" in fake_client.sent[0][1]
+    assert "Saturday" in fake_client.sent[0][1]
+    meeting = dm_store.meetings.get("t1")
+    assert meeting["awaiting_times"] is False
+    assert len(meeting["offered"]) == 2

@@ -87,6 +87,15 @@ _SEARCH_RE = re.compile(
     r"^(?:find|search)(?:\s+the\s+message)?(?:\s+where\s+(\S+(?:\s+\S+)?)\s+mentioned\s+)?(.+)$",
     re.IGNORECASE,
 )
+# "add a rule: if <person> asks about <topic>, reply <text>".
+_ADD_RULE_RE = re.compile(
+    r"^add\s+a\s+rule:?\s+if\s+(.+?)\s+asks?\s+about\s+(.+?),\s*(?:reply|send|tell them)\s+(.+)$",
+    re.IGNORECASE,
+)
+# "list my rules" / "show my rules".
+_LIST_RULES_RE = re.compile(r"^(?:list|show)\s+(?:my\s+)?rules\s*$", re.IGNORECASE)
+# "delete rule <number>".
+_DELETE_RULE_RE = re.compile(r"^delete\s+rule\s+(\d+)\s*$", re.IGNORECASE)
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -136,6 +145,20 @@ def _handle_remember(fact: str) -> str:
     fact = (fact or "").strip()
     if not fact:
         return "Tell me what to remember — for example 'remember that Omar loves football'."
+    # Tone: "<name> is a teacher" -> formal; "<name> is a friend" -> casual.
+    tone_match = re.match(
+        r"^(\S+(?:\s+\S+)?)\s+is\s+(?:a\s+|my\s+)?(teacher|professor|friend|best friend)\s*$",
+        fact,
+        re.IGNORECASE,
+    )
+    if tone_match:
+        name = tone_match.group(1).strip()
+        role = tone_match.group(2).lower()
+        tone = "formal" if role in ("teacher", "professor") else "casual"
+        data = contacts.get(name, {}) or {}
+        data["tone"] = tone
+        contacts.set(name, data)
+        return f"Noted — I will talk to {name} {'formally' if tone == 'formal' else 'casually'}."
     # Birthday: "<name>'s birthday is <month> <day>" or "<name> birthday <date>".
     bday = re.search(
         r"^(\S+(?:\s+\S+)?)'?s?\s+birthday\s+(?:is\s+)?(\w+)\s+(\d{1,2})",
@@ -199,6 +222,35 @@ def _handle_busy_free(status: str, rest: str) -> str:
     })
     day_name = when.strftime("%A")
     return f"Noted — you are {status.lower()} on {day_name}."
+
+
+def _pending_meeting_awaiting_times() -> dict[str, Any] | None:
+    """The pending meeting that is waiting for Sir to offer times."""
+    from backend.services.dm_store import meetings as meetings_store
+
+    for thread_id, meeting in meetings_store.all().items():
+        if meeting.get("awaiting_times"):
+            return {"thread_id": thread_id, **meeting}
+    return None
+
+
+def _format_offered_times(slots: list[str]) -> str:
+    """Turn parsed time slots into the message sent to the person."""
+    from datetime import datetime
+
+    parts = []
+    for slot in slots:
+        try:
+            dt = datetime.fromisoformat(slot)
+            parts.append(dt.strftime("%A %H:%M"))
+        except (TypeError, ValueError):
+            continue
+    if len(parts) == 1:
+        return f"How about {parts[0]}? Let me know if that works for you."
+    if len(parts) == 2:
+        return f"How about {parts[0]} or {parts[1]}? Let me know which works for you."
+    joined = ", ".join(parts[:-1]) + f", or {parts[-1]}"
+    return f"How about {joined}? Let me know which works for you."
 
 
 @router.get("/status")
@@ -294,6 +346,111 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         "I could not send that reply — the account may need reconnecting."
                     )
+            return {"ok": True}
+
+        # --- Pending meeting (awaiting times from Sir): send the times. ---
+        meeting = _pending_meeting_awaiting_times()
+        if meeting:
+            from backend.services.dm_time import parse_time
+
+            # Rayyan's reply lists the times ("Friday 5pm or Saturday 10am").
+            # Split on " or " / "," and parse each slot.
+            slots: list[str] = []
+            for part in re.split(r"\s+or\s+|,\s*", text):
+                when = parse_time(part)
+                if when:
+                    slots.append(when.astimezone().isoformat())
+            if slots:
+                from backend.services.dm_store import meetings as meetings_store
+
+                thread_id = meeting["thread_id"]
+                meetings_store.set(thread_id, {
+                    "platform": meeting["platform"],
+                    "sender_name": meeting["sender_name"],
+                    "offered": slots,
+                    "awaiting_times": False,
+                })
+                from backend.services.dm_responder import dm_responder as _mr
+
+                # Send the offered times to the person via their DM thread.
+                offered_text = _format_offered_times(slots)
+                blob = None
+                try:
+                    from backend.services import dm_auth as _dma
+
+                    blob = _dma.load_connector(meeting["platform"])
+                except Exception:
+                    blob = None
+                if blob:
+                    data = blob.get("data") or {}
+                    try:
+                        client = _mr._build_client(
+                            meeting["platform"], blob.get("method"), data
+                        )
+                        await client.send(thread_id, offered_text)
+                        await send_telegram_message(
+                            f"Sent the times to {meeting['sender_name']}."
+                        )
+                    except Exception as e:
+                        log.warning("dm_meeting_offer_failed", error=str(e))
+                        await send_telegram_message(
+                            "I could not send the times — the account may need reconnecting."
+                        )
+                else:
+                    await send_telegram_message(
+                        "I could not send the times — no account is connected."
+                    )
+            else:
+                await send_telegram_message(
+                    "I could not understand those times. Try 'Friday 5pm or Saturday 10am'."
+                )
+            return {"ok": True}
+
+        # --- "add a rule: if <person> asks about <topic>, reply <text>". ---
+        add_rule_match = _ADD_RULE_RE.match(text)
+        if add_rule_match:
+            import uuid
+
+            from backend.services.dm_store import rules as rules_store
+            person = add_rule_match.group(1).strip()
+            topic = add_rule_match.group(2).strip()
+            reply_text = add_rule_match.group(3).strip()
+            rule_id = f"rule_{uuid.uuid4().hex[:6]}"
+            rules_store.set(rule_id, {
+                "person": person, "topic": topic, "reply": reply_text,
+            })
+            await send_telegram_message(
+                f"Rule added: if {person} asks about '{topic}', I will reply: {reply_text}"
+            )
+            return {"ok": True}
+
+        # --- "list my rules" / "delete rule <number>". ---
+        if _LIST_RULES_RE.match(text):
+            from backend.services.dm_store import rules as rules_store
+
+            all_rules = rules_store.all()
+            if not all_rules:
+                await send_telegram_message("You have no custom rules yet.")
+            else:
+                lines = ["Your rules:"]
+                for i, rule in enumerate(all_rules.values(), 1):
+                    lines.append(
+                        f"{i}. If {rule.get('person', '')} asks about "
+                        f"'{rule.get('topic', '')}', reply: {rule.get('reply', '')}"
+                    )
+                await send_telegram_message("\n".join(lines))
+            return {"ok": True}
+        delete_rule_match = _DELETE_RULE_RE.match(text)
+        if delete_rule_match:
+            from backend.services.dm_store import rules as rules_store
+
+            idx = int(delete_rule_match.group(1)) - 1
+            keys = list(rules_store.all().keys())
+            if 0 <= idx < len(keys):
+                rules_store.delete(keys[idx])
+                await send_telegram_message(f"Deleted rule {idx + 1}.")
+            else:
+                await send_telegram_message("There is no rule with that number.")
             return {"ok": True}
 
         # --- "unmute <name>" — resume a muted thread. ---

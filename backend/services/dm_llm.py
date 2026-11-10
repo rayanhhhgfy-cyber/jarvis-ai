@@ -280,6 +280,7 @@ async def generate_dm_reply(
     media_url: str | None = None,
     media_type: str | None = None,
     contact_notes: str | None = None,
+    tone: str | None = None,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -338,6 +339,20 @@ async def generate_dm_reply(
                 "notes about them."
             )
             web_context = f"{notes_context}\n\n{web_context}" if web_context else notes_context
+        # Per-person tone: formal for teachers, casual for friends.
+        if tone == "formal":
+            tone_context = (
+                "Reply formally and politely, as if speaking to a teacher. "
+                "Use respectful language and proper greetings. "
+                "Do not use slang or casual shortcuts."
+            )
+            web_context = f"{tone_context}\n\n{web_context}" if web_context else tone_context
+        elif tone == "casual":
+            tone_context = (
+                "Reply casually, like a close friend texting. "
+                "Relaxed, warm, and natural — no stiff or formal language."
+            )
+            web_context = f"{tone_context}\n\n{web_context}" if web_context else tone_context
         reply = await _groq_reply(
             sender_name, incoming_text, client, first_reply, is_group, web_context
         )

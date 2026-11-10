@@ -82,3 +82,7 @@ scheduled_dms = JsonStore("scheduled_dms.json")
 reminders = JsonStore("reminders.json")
 contacts = JsonStore("contacts.json")
 calendar = JsonStore("calendar.json")
+# Custom auto-reply rules: rule_id -> {person, topic, reply}.
+rules = JsonStore("dm_rules.json")
+# Pending meetings: thread_id -> {platform, sender_name, offered, awaiting}.
+meetings = JsonStore("pending_meetings.json")
