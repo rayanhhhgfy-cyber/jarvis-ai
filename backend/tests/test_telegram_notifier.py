@@ -749,6 +749,8 @@ def test_normalize_command_direct_usage_unknown():
     assert _normalize_command("/cancel") == ("direct", "cancel")
     assert _normalize_command("/responder on") == ("direct", "responder")
     assert _normalize_command("/responder") == ("direct", "responder")
+    assert _normalize_command("/connect instagram") == ("direct", "connect")
+    assert _normalize_command("/disconnect instagram") == ("direct", "disconnect")
     assert _normalize_command("/send") == ("usage", "send")
     assert _normalize_command("/addrule Omar money") == ("usage", "addrule")
     assert _normalize_command("/frobnicate x") == ("unknown", "frobnicate")
@@ -769,6 +771,7 @@ async def test_telegram_webhook_start_and_help(monkeypatch):
     assert "/schedule" in text
     assert "/status" in text
     assert "/responder on" in text
+    assert "/connect instagram" in text
     mock_llm.get_response.assert_not_called()
     resp, mock_send, mock_llm = _webhook_post("/help", monkeypatch, fake_responder)
     assert resp.status_code == 200
@@ -1194,3 +1197,315 @@ async def test_telegram_webhook_slash_responder_usage(monkeypatch):
     mock_apply.assert_not_called()
     assert mock_send.call_args.args[0].startswith("Usage: /responder on")
     mock_llm.get_response.assert_not_called()
+
+
+# --- /connect + /disconnect (cookies via Telegram, explicit only) ---
+
+def _clear_pending_connect():
+    """Drop any pending-connect state left by an earlier test."""
+    from backend.routers import router_telegram
+
+    router_telegram._pending_connect.pop("111", None)
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_connect_arms_wait(monkeypatch):
+    """'/connect instagram' asks for the cookies as the next message."""
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    resp, mock_send, mock_llm = _webhook_post(
+        "/connect instagram", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert router_telegram._pending_connect.get("111") == "instagram"
+    assert "cookies" in mock_send.call_args.args[0].lower()
+    mock_llm.get_response.assert_not_called()
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_connect_usage(monkeypatch):
+    """'/connect' with no/bad platform gets usage and arms nothing."""
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    for text in ("/connect", "/connect snapchat"):
+        resp, mock_send, _ = _webhook_post(text, monkeypatch, fake_responder)
+        assert resp.status_code == 200
+        assert mock_send.call_args.args[0].startswith("Usage: /connect instagram")
+        assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_cookies_connect(monkeypatch):
+    """Pasted cookies after /connect verify, store encrypted, wake the loop.
+
+    The cookies never reach the LLM and are never echoed back.
+    """
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.start = AsyncMock()
+    fake_responder.get_status = Mock(return_value={"enabled": True})
+    cookies_text = '[{"name": "sessionid", "value": "SECRET_COOKIE_VALUE"}]'
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.parse_cookies",
+              return_value={"sessionid": "SECRET_COOKIE_VALUE"}) as mock_parse,
+        patch("backend.services.dm_auth.verify_cookies",
+              new=AsyncMock(return_value=True)) as mock_verify,
+        patch("backend.services.dm_auth.save_connector") as mock_save,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        client = _telegram_app()
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/connect instagram"},
+        })
+        assert resp.status_code == 200
+        assert router_telegram._pending_connect.get("111") == "instagram"
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": cookies_text},
+        })
+    assert resp.status_code == 200
+    mock_parse.assert_called_once_with(cookies_text)
+    mock_verify.assert_awaited_once_with(
+        "instagram", {"sessionid": "SECRET_COOKIE_VALUE"})
+    mock_save.assert_called_once_with(
+        "instagram", "cookies", {"cookies": {"sessionid": "SECRET_COOKIE_VALUE"}})
+    fake_responder.start.assert_awaited_once()
+    assert mock_send.call_args.args[0] == (
+        "Connected to Instagram. Jarvis will start replying to your Instagram DMs."
+    )
+    assert "SECRET_COOKIE_VALUE" not in mock_send.call_args.args[0]
+    mock_llm.get_response.assert_not_called()
+    assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_cookies_bad_or_unverified(monkeypatch):
+    """Unparseable or dead cookies store nothing and clear the wait."""
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.start = AsyncMock()
+    fake_responder.get_status = Mock(return_value={"enabled": True})
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.parse_cookies",
+              side_effect=ValueError("no cookies found")) as mock_parse,
+        patch("backend.services.dm_auth.save_connector") as mock_save,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        client = _telegram_app()
+        client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/connect instagram"},
+        })
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "hello not cookies"},
+        })
+    assert resp.status_code == 200
+    mock_parse.assert_called_once()
+    mock_save.assert_not_called()
+    assert "couldn't read" in mock_send.call_args.args[0]
+    assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.parse_cookies",
+              return_value={"sessionid": "stale"}),
+        patch("backend.services.dm_auth.verify_cookies",
+              new=AsyncMock(return_value=False)),
+        patch("backend.services.dm_auth.save_connector") as mock_save,
+    ):
+        client = _telegram_app()
+        client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/connect messenger"},
+        })
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "c_user=1; xs=stale"},
+        })
+    assert resp.status_code == 200
+    mock_save.assert_not_called()
+    assert "didn't log in" in mock_send.call_args.args[0]
+    assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_paste_without_connect_goes_to_chat(monkeypatch):
+    """A cookies-looking paste with no /connect first is just chat — the
+    LLM answers it and no connect is attempted."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.parse_cookies") as mock_parse,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="What is this paste?")
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": '[{"name": "sessionid", "value": "abc"}]'},
+        })
+    assert resp.status_code == 200
+    mock_parse.assert_not_called()
+    mock_llm.get_response.assert_called_once()
+    assert mock_send.call_args.args[0] == "What is this paste?"
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_disconnect(monkeypatch):
+    """'/disconnect instagram' removes the stored credentials — and only
+    this explicit command does."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.delete_connector",
+              return_value=True) as mock_delete,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/disconnect instagram"},
+        })
+    assert resp.status_code == 200
+    mock_delete.assert_called_once_with("instagram")
+    assert mock_send.call_args.args[0] == (
+        "Disconnected Instagram. Jarvis will stop replying to Instagram DMs. "
+        "Reconnect any time with /connect instagram."
+    )
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_disconnect_not_connected(monkeypatch):
+    """'/disconnect messenger' when nothing is connected says so."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.delete_connector",
+              return_value=False),
+    ):
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/disconnect messenger"},
+        })
+    assert resp.status_code == 200
+    assert mock_send.call_args.args[0] == "Messenger isn't connected."
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_disconnect_usage(monkeypatch):
+    """'/disconnect' with no/bad platform gets usage and deletes nothing."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_auth.delete_connector") as mock_delete,
+    ):
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        for text in ("/disconnect", "/disconnect snapchat"):
+            resp = _telegram_app().post("/api/telegram/webhook", json={
+                "message": {"chat": {"id": 111}, "text": text},
+            })
+            assert resp.status_code == 200
+            assert mock_send.call_args.args[0].startswith(
+                "Usage: /disconnect instagram")
+    mock_delete.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_cancel_cancels_pending_connect(monkeypatch, tmp_path):
+    """'/cancel' while a connect is waiting cancels the wait."""
+    from backend.routers import router_telegram
+    from backend.services import dm_store
+
+    _clear_pending_connect()
+    monkeypatch.setattr(dm_store.meetings, "_path", tmp_path / "pending_meetings.json")
+    monkeypatch.setattr(dm_store.meetings, "_loaded", False)
+    monkeypatch.setattr(dm_store.meetings, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.discard_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        client = _telegram_app()
+        client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/connect instagram"},
+        })
+        assert router_telegram._pending_connect.get("111") == "instagram"
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/cancel"},
+        })
+    assert resp.status_code == 200
+    assert mock_send.call_args.args[0] == "Cancelled the Instagram connect."
+    assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_command_cancels_pending_connect(monkeypatch):
+    """Any other command while a connect is waiting cancels the wait and
+    the command itself still runs."""
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_status = Mock(return_value={
+        "enabled": True, "running": False, "platforms": {},
+    })
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+        client = _telegram_app()
+        client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/connect instagram"},
+        })
+        assert router_telegram._pending_connect.get("111") == "instagram"
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/status"},
+        })
+    assert resp.status_code == 200
+    assert "DM responder" in mock_send.call_args.args[0]
+    assert "111" not in router_telegram._pending_connect
+    _clear_pending_connect()

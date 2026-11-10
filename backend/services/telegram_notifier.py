@@ -80,6 +80,10 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/cancel"},
     {"command": "responder", "description": "Turn the DM auto-replies on or off",
      "usage": "/responder on"},
+    {"command": "connect", "description": "Connect Instagram or Messenger with cookies",
+     "usage": "/connect instagram"},
+    {"command": "disconnect", "description": "Disconnect Instagram or Messenger",
+     "usage": "/disconnect instagram"},
 ]
 
 # True once set_telegram_commands() has succeeded at least once on this

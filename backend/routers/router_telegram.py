@@ -117,7 +117,14 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # --------------------------------------------------------------------
 
 # Commands answered directly here (no natural-language equivalent).
-_DIRECT_COMMANDS = {"start", "help", "activity", "status", "cancel", "responder"}
+_DIRECT_COMMANDS = {
+    "start", "help", "activity", "status", "cancel", "responder",
+    "connect", "disconnect",
+}
+
+# Chat id -> platform waiting for cookies after /connect. In-memory only:
+# if the backend restarts mid-flow, Sir just sends /connect again.
+_pending_connect: dict[str, str] = {}
 
 # Command -> natural-language template. "{args}" is the text after the
 # command. These reuse the intent handlers below, so a slash command
@@ -233,12 +240,22 @@ def _status_text(responder: Any) -> str:
     return "\n".join(lines)
 
 
-def _handle_cancel(responder: Any) -> str:
-    """The /cancel reply: drop a pending draft or meeting request."""
+def _handle_cancel(
+    responder: Any, cancelled_connect: str | None = None
+) -> str:
+    """The /cancel reply: drop a pending draft, meeting, or connect wait."""
+    from backend.services import dm_auth
+
+    prefix = ""
+    if cancelled_connect:
+        prefix = (
+            f"Cancelled the {dm_auth.PLATFORMS[cancelled_connect]['name']} connect. "
+        )
     draft = responder.discard_pending_draft()
     if draft:
         return (
-            "Cancelled — I will not send anything to "
+            prefix
+            + "Cancelled — I will not send anything to "
             f"{draft.get('sender_name', 'them')}."
         )
     meeting = _pending_meeting_awaiting_times()
@@ -247,10 +264,96 @@ def _handle_cancel(responder: Any) -> str:
 
         meetings_store.delete(meeting["thread_id"])
         return (
-            "Cancelled the meeting request from "
+            prefix
+            + "Cancelled the meeting request from "
             f"{meeting.get('sender_name', 'them')}."
         )
+    if prefix:
+        return prefix.strip()
     return "Nothing is waiting on you right now."
+
+
+def _handle_connect_command(chat_id: str, text: str) -> str:
+    """The /connect command: start the cookies flow for a platform.
+
+    Only arms the wait — the cookies themselves arrive as Sir's next
+    message and are handled by _handle_cookies_message.
+    """
+    from backend.services import dm_auth
+
+    parts = text.strip().split()
+    arg = parts[1].lower() if len(parts) > 1 else ""
+    if arg not in dm_auth.PLATFORMS:
+        return (
+            "Usage: /connect instagram — or /connect messenger. "
+            "I'll ask for the cookies next."
+        )
+    name = dm_auth.PLATFORMS[arg]["name"]
+    _pending_connect[chat_id] = arg
+    return (
+        f"Send me your {name} cookies now — paste them as your next message. "
+        "I'll check they still log in, then store them encrypted. "
+        "I won't show them back to you, and you can delete the message "
+        "from this chat yourself afterwards."
+    )
+
+
+def _handle_disconnect_command(text: str) -> str:
+    """The /disconnect command: remove a platform's stored credentials.
+
+    This is the ONLY way Jarvis disconnects a platform — nothing in the
+    code disconnects on its own. Only Sir typing this command does it.
+    """
+    from backend.services import dm_auth
+
+    parts = text.strip().split()
+    arg = parts[1].lower() if len(parts) > 1 else ""
+    if arg not in dm_auth.PLATFORMS:
+        return "Usage: /disconnect instagram — or /disconnect messenger."
+    name = dm_auth.PLATFORMS[arg]["name"]
+    if not dm_auth.delete_connector(arg):
+        return f"{name} isn't connected."
+    return (
+        f"Disconnected {name}. Jarvis will stop replying to {name} DMs. "
+        f"Reconnect any time with /connect {arg}."
+    )
+
+
+async def _handle_cookies_message(platform: str, raw: str) -> str:
+    """Connect a platform with the cookies Sir just pasted.
+
+    Same flow as the dashboard Connectors tab: verify the session
+    BEFORE storing anything, store encrypted, then wake the responder.
+    The raw cookies are never logged or echoed back.
+    """
+    from backend.services import dm_auth
+    from backend.services.dm_responder import dm_responder
+
+    name = dm_auth.PLATFORMS[platform]["name"]
+    try:
+        cookies = dm_auth.parse_cookies(raw)
+    except ValueError:
+        return (
+            "I couldn't read those cookies. Paste them exactly as they come "
+            f"from a logged-in browser tab, then send /connect {platform} again."
+        )
+    if not await dm_auth.verify_cookies(platform, cookies):
+        return (
+            "Those cookies didn't log in — they may be expired. Copy fresh "
+            f"cookies from a logged-in {name} tab and send /connect {platform} again."
+        )
+    dm_auth.save_connector(platform, "cookies", {"cookies": cookies})
+    try:
+        await dm_responder.start()
+    except Exception:
+        # The connect itself succeeded; waking the loop is best-effort.
+        pass
+    if not dm_responder.get_status().get("enabled"):
+        return (
+            f"Connected to {name}. The DM responder is off — "
+            "turn it on with /responder on."
+        )
+    return f"Connected to {name}. Jarvis will start replying to your {name} DMs."
 
 
 async def _handle_responder(responder: Any, text: str) -> str:
@@ -541,6 +644,21 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             # Not Sir — ignore silently (the bot is his private line).
             log.debug("telegram_webhook_ignored_stranger", chat_id=chat_id)
             return {"ok": True}
+
+        # --- Pending connect: the next message after /connect is cookies. ---
+        # Handled here, before anything else, so the cookies never reach
+        # the LLM, a draft reply, or any other handler — and they are never
+        # logged or echoed back. A slash command cancels the wait instead.
+        pending_platform = None
+        if text.startswith("/"):
+            pending_platform = _pending_connect.pop(chat_id, None)
+        elif chat_id in _pending_connect:
+            platform = _pending_connect.pop(chat_id)
+            await send_telegram_message(
+                await _handle_cookies_message(platform, text)
+            )
+            return {"ok": True}
+
         from backend.services.dm_responder import dm_responder
 
         # --- Slash commands: answered before drafts and meetings — a
@@ -559,10 +677,20 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 elif value == "status":
                     await send_telegram_message(_status_text(dm_responder))
                 elif value == "cancel":
-                    await send_telegram_message(_handle_cancel(dm_responder))
+                    await send_telegram_message(
+                        _handle_cancel(dm_responder, pending_platform)
+                    )
                 elif value == "responder":
                     await send_telegram_message(
                         await _handle_responder(dm_responder, text)
+                    )
+                elif value == "connect":
+                    await send_telegram_message(
+                        _handle_connect_command(chat_id, text)
+                    )
+                elif value == "disconnect":
+                    await send_telegram_message(
+                        _handle_disconnect_command(text)
                     )
                 return {"ok": True}
             if kind == "usage":
