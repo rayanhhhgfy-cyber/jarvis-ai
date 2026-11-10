@@ -95,26 +95,97 @@ def _split_text(text: str) -> list[str]:
     return chunks
 
 
-async def _synthesize_mp3(text: str) -> Path | None:
-    """edge-tts -> MP3 file. Returns the path, or None on failure."""
+# Microsoft's newer Edge TTS server — same voices as the classic
+# endpoint, used when the classic one answers 403 (it started doing
+# that for many edge-tts apps in 2026, edge-tts #490; no upstream fix).
+_NEW_EDGE_WSS_HOST = "api.msedgeservices.com"
+
+
+async def _edge_tts_save(text: str, out_path: Path, new_server: bool = False) -> bool:
+    """One Edge TTS attempt. Returns True when the MP3 is written.
+
+    With new_server=True the websocket URL is pointed at Microsoft's
+    newer server (api.msedgeservices.com) for the duration of the
+    attempt, then restored — the classic endpoint is the default.
+    """
     try:
         import edge_tts
+        import edge_tts.communicate as _edge_comm
+        from edge_tts import constants as _edge_const
     except ImportError:
         log.warning("dm_voice_no_edge_tts")
-        return None
+        return False
+    patched = False
+    old_url = None
+    try:
+        if new_server:
+            old_url = _edge_comm.WSS_URL
+            _edge_comm.WSS_URL = (
+                f"wss://{_NEW_EDGE_WSS_HOST}/consumer/speech/synthesize/readaloud/edge/v1"
+                f"?TrustedClientToken={_edge_const.TRUSTED_CLIENT_TOKEN}"
+            )
+            patched = True
+        communicate = edge_tts.Communicate(text, _pick_voice(text))
+        await communicate.save(str(out_path))
+        return out_path.exists() and out_path.stat().st_size > 0
+    except Exception as e:
+        log.warning("dm_voice_tts_failed", error=str(e))
+        return False
+    finally:
+        if patched:
+            _edge_comm.WSS_URL = old_url
+
+
+def _gtts_write(text: str, lang: str, out_path: str) -> None:
+    """Blocking gTTS write — always called via asyncio.to_thread."""
+    from gtts import gTTS
+
+    gTTS(text=text, lang=lang).save(out_path)
+
+
+async def _gtts_save(text: str, out_path: Path) -> bool:
+    """Google Translate TTS (free, no key) — the last resort when Edge
+    TTS is blocked. Arabic gets lang 'ar', everything else 'en'."""
+    try:
+        from gtts import gTTS  # noqa: F401  (import check only)
+    except ImportError:
+        log.warning("dm_voice_no_gtts")
+        return False
+    lang = "ar" if _ARABIC_RE.search(text or "") else "en"
+    try:
+        await asyncio.to_thread(_gtts_write, text, lang, str(out_path))
+        return out_path.exists() and out_path.stat().st_size > 0
+    except Exception as e:
+        log.warning("dm_voice_gtts_failed", error=str(e))
+        return False
+
+
+async def _synthesize_mp3(text: str) -> Path | None:
+    """Text -> MP3 file. Returns the path, or None when every engine fails.
+
+    Three layers, in order: Edge TTS on the classic endpoint, Edge TTS
+    on Microsoft's newer server (when the classic one 403s), then
+    Google Translate TTS. A voice reply goes out as long as any one of
+    them works — the caller only falls back to text when all three fail.
+    """
     text = (text or "").strip()
     if not text:
         return None
-    tmp = Path(tempfile.mkdtemp(prefix="jarvis_voice_")) / "reply.mp3"
+    tmpdir = Path(tempfile.mkdtemp(prefix="jarvis_voice_"))
+    tmp = tmpdir / "reply.mp3"
+    if await _edge_tts_save(text, tmp):
+        return tmp
+    if await _edge_tts_save(text, tmp, new_server=True):
+        return tmp
+    if await _gtts_save(text, tmp):
+        return tmp
     try:
-        communicate = edge_tts.Communicate(text, _pick_voice(text))
-        await communicate.save(str(tmp))
-        if tmp.exists() and tmp.stat().st_size > 0:
-            return tmp
-        return None
+        import shutil
+
+        shutil.rmtree(tmpdir, ignore_errors=True)
     except Exception as e:
-        log.warning("dm_voice_tts_failed", error=str(e))
-        return None
+        log.warning("dm_voice_cleanup_failed", error=str(e))
+    return None
 
 
 async def _mp3_to_m4a(mp3_path: Path) -> Path | None:

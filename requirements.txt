@@ -83,7 +83,8 @@ ddgs==9.16.1                 # web search: keyless DuckDuckGo (ddgs library)
 # --- Phase 10: Free-tier plugins ---
 # Each is optional at import time (plugins degrade gracefully if missing)
 # but listed here so a fresh install gets full functionality.
-edge-tts==7.0.2               # voice_local: free neural TTS (Microsoft Edge)
+edge-tts==7.3.1               # voice_local: free neural TTS (Microsoft Edge)
+gtts==2.5.4                    # voice fallback: free Google Translate TTS (no key), AR + EN
 faster-whisper==1.1.1         # voice_local: free local STT (Whisper, CPU)
 trafilatura==2.1.0            # web: article extraction
 feedparser==6.0.12            # web/podcast: RSS + Atom parsing

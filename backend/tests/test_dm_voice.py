@@ -284,3 +284,88 @@ async def test_send_telegram_voice_reply_synth_failure_sends_nothing(tmp_path):
     ):
         assert await send_telegram_voice_reply(_LONG_EN) is False
     assert sent == []
+
+
+# --------------------------------------------------------------------
+# _synthesize_mp3 fallback chain (Edge classic -> Edge new server -> gTTS)
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_edge_tts_save_new_server_patches_and_restores_url(tmp_path):
+    """When the classic endpoint fails, the new-server attempt points
+    the websocket URL at api.msedgeservices.com — and restores it after."""
+    import edge_tts.communicate as edge_comm
+    from pathlib import Path
+
+    import backend.services.dm_voice as dm_voice
+
+    original_url = edge_comm.WSS_URL
+    calls = {"n": 0}
+
+    class FakeCommunicate:
+        def __init__(self, text, voice):
+            self.text = text
+            self.voice = voice
+
+        async def save(self, path):
+            calls["n"] += 1
+            # First attempt (classic) fails, second (new server) succeeds.
+            if calls["n"] == 1:
+                raise RuntimeError("403 Invalid response status")
+            Path(path).write_bytes(b"fake-mp3-new-server")
+
+    with patch("edge_tts.Communicate", FakeCommunicate):
+        out = tmp_path / "reply.mp3"
+        assert await dm_voice._edge_tts_save("hello", out) is False
+        assert await dm_voice._edge_tts_save("hello", out, new_server=True) is True
+    assert out.read_bytes() == b"fake-mp3-new-server"
+    # The global URL is restored after the attempt.
+    assert edge_comm.WSS_URL == original_url
+
+
+@pytest.mark.asyncio
+async def test_synthesize_mp3_falls_back_to_gtts(tmp_path):
+    """When both Edge endpoints fail, gTTS still produces the audio."""
+    import backend.services.dm_voice as dm_voice
+
+    async def fake_gtts_save(text, out_path):
+        out_path.write_bytes(b"fake-gtts-mp3")
+        return True
+
+    with (
+        patch("backend.services.dm_voice._edge_tts_save",
+              new=AsyncMock(return_value=False)),
+        patch("backend.services.dm_voice._gtts_save", new=fake_gtts_save),
+    ):
+        result = await dm_voice._synthesize_mp3("hello there")
+    assert result is not None and result.exists()
+    assert result.read_bytes() == b"fake-gtts-mp3"
+
+
+@pytest.mark.asyncio
+async def test_synthesize_mp3_all_engines_fail_returns_none(tmp_path):
+    """When every engine fails, _synthesize_mp3 returns None (and the
+    temp dir is cleaned up, not orphaned)."""
+    import backend.services.dm_voice as dm_voice
+
+    with (
+        patch("backend.services.dm_voice._edge_tts_save",
+              new=AsyncMock(return_value=False)),
+        patch("backend.services.dm_voice._gtts_save",
+              new=AsyncMock(return_value=False)),
+    ):
+        assert await dm_voice._synthesize_mp3("hello there") is None
+
+
+@pytest.mark.asyncio
+async def test_gtts_save_real_arabic_and_english(tmp_path):
+    """The real gTTS fallback speaks Arabic and English (free, no key).
+    Skipped where the network cannot reach Google Translate."""
+    import backend.services.dm_voice as dm_voice
+
+    en = tmp_path / "en.mp3"
+    ar = tmp_path / "ar.mp3"
+    assert await dm_voice._gtts_save("Hello, how are you today?", en) is True
+    assert en.exists() and en.stat().st_size > 0
+    assert await dm_voice._gtts_save("مرحبا، كيف حالك اليوم؟", ar) is True
+    assert ar.exists() and ar.stat().st_size > 0
