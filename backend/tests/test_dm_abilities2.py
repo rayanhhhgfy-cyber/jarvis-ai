@@ -698,3 +698,33 @@ async def test_take_pending_call_reason_expires(monkeypatch, tmp_path):
         "pending", {"reason": "Old news.", "created_at": time.time() - 3600}
     )
     assert take_pending_call_reason(max_age_seconds=900) is None
+
+
+@pytest.mark.asyncio
+async def test_initiate_call_also_sends_web_push(monkeypatch, tmp_path):
+    """initiate_call rings Sir with a web push as well as Telegram."""
+    from backend.services.dm_responder import initiate_call
+
+    _reset_call_store(monkeypatch, tmp_path)
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        AsyncMock(return_value=True),
+    )
+    sent: list[object] = []
+
+    async def fake_push(notification):
+        sent.append(notification)
+        return True
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        fake_push,
+    )
+    ok = await initiate_call("Instagram — Omar wrote: urgent, call me")
+    assert ok is True
+    assert len(sent) == 1
+    push = sent[0]
+    assert "calling" in push.title.lower()
+    assert "Omar" in push.body
+    assert push.category == "call"
+    assert push.action_url == "https://jarvis-call-smoky.vercel.app/?answer=1"

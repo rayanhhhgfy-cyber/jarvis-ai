@@ -314,7 +314,24 @@ async def initiate_call(reason: str) -> bool:
         f"{clean}\n\n"
         f"Tap to answer: {CALL_APP_URL}"
     )
-    return await send_telegram_message(text)
+    sent = await send_telegram_message(text)
+    # Ring him as a real push notification too — tapping it opens the
+    # call app and answers at once. Broadcast: the dashboard PWA is
+    # already subscribed, and the call app subscribes once installed.
+    # Swiping the notification away is declining — no app opens.
+    try:
+        from backend.notification_engine import notification_engine
+        from shared.models import Notification
+
+        await notification_engine.send_notification(Notification(
+            title="📞 Jarvis is calling you, sir",
+            body=clean,
+            category="call",
+            action_url=f"{CALL_APP_URL}/?answer=1",
+        ))
+    except Exception as e:
+        log.debug("dm_call_push_failed", error=str(e))
+    return sent
 
 
 def take_pending_call_reason(max_age_seconds: int = _CALL_REASON_TTL_SECONDS) -> str | None:
