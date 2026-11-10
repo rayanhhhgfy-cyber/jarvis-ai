@@ -112,6 +112,14 @@ svg{display:block;flex:none}
 .mic-btn:hover{color:var(--text)}
 .mic-btn.recording{color:var(--red);border-color:var(--red)}
 
+/* Voice call */
+.call-btn{width:88px;height:88px;border-radius:50%;background:var(--accent);border:none;color:var(--accent-ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform 150ms var(--ease),background-color 150ms var(--ease)}
+.call-btn:hover{transform:scale(1.05)}
+.call-btn:active{transform:scale(0.97)}
+.call-btn.live{background:var(--red);color:#fff;animation:callPulse 1.6s ease-in-out infinite}
+.call-btn.listening{background:var(--red);color:#fff}
+@keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,0.35)}50%{box-shadow:0 0 0 14px rgba(229,72,77,0)}}
+
 /* Buttons */
 .btn{min-height:44px;padding:0 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity 150ms var(--ease),background-color 150ms var(--ease)}
 .btn-connect{background:var(--accent);border:none;color:var(--accent-ink)}
@@ -223,6 +231,7 @@ svg{display:block;flex:none}
   <nav class="tabs" aria-label="الأقسام">
     <button class="tab active" onclick="switchTab('tools')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>الأدوات</button>
     <button class="tab" onclick="switchTab('chat')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>المحادثة</button>
+    <button class="tab" onclick="switchTab('talk')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>مكالمة</button>
     <button class="tab" onclick="switchTab('business')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>الأعمال</button>
     <button class="tab" onclick="switchTab('sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>المبيعات</button>
     <button class="tab" onclick="switchTab('connectors')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>الموصلات</button>
@@ -251,6 +260,21 @@ svg{display:block;flex:none}
         <button class="mic-btn" id="micBtn" title="تحدث" onclick="toggleVoiceInput()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></button>
         <button class="btn-send" onclick="sendChat()">إرسال<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
       </div>
+    </div>
+  </div>
+
+  <!-- Talk Tab (live voice call) -->
+  <div id="tab-talk" style="display:none">
+    <div class="chat-box" style="text-align:center">
+      <h2>مكالمة مع Jarvis</h2>
+      <p style="color:var(--text-2);font-size:14px;margin-bottom:20px">اضغط زر الاتصال وتحدث معه بصوتك — يرد عليك بصوته</p>
+      <div id="callTimer" style="font-family:var(--mono);font-size:28px;margin-bottom:20px">00:00</div>
+      <button id="callBtn" class="call-btn" onclick="toggleCall()" title="اتصال">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </button>
+      <p id="callStatus" style="color:var(--text-2);font-size:14px;margin-top:16px">غير متصل</p>
+      <button class="btn btn-disconnect" id="endCallBtn" style="display:none;margin-top:12px" onclick="endCall()">إنهاء المكالمة</button>
+      <div class="chat-messages" id="talkMessages" style="text-align:start;margin-top:20px"></div>
     </div>
   </div>
 
@@ -842,6 +866,128 @@ async function toggleVoiceInput() {
   } catch (e) {
     alert('تعذر الوصول إلى الميكروفون: ' + e.message);
   }
+}
+
+// === Voice call (Talk) ===
+let callActive = false;
+let callStream = null;
+let callRecorder = null;
+let callChunks = [];
+let callBusy = false;
+let callStart = 0;
+let callTimerId = null;
+let callPlayer = null;
+
+function callElapsed() {
+  const s = Math.floor((Date.now() - callStart) / 1000);
+  const mm = String(Math.floor(s / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  document.getElementById('callTimer').textContent = mm + ':' + ss;
+}
+
+function callSetStatus(text) {
+  document.getElementById('callStatus').textContent = text;
+}
+
+function callAddMsg(who, text) {
+  const box = document.getElementById('talkMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + (who === 'Jarvis' ? 'bot' : 'user');
+  div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+async function startCallListening() {
+  if (!callActive || callBusy || (callRecorder && callRecorder.state === 'recording')) return;
+  try {
+    if (!callStream) {
+      callStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    }
+    callChunks = [];
+    callRecorder = new MediaRecorder(callStream);
+    callRecorder.ondataavailable = (e) => { if (e.data.size) callChunks.push(e.data); };
+    callRecorder.onstop = async () => {
+      document.getElementById('callBtn').classList.remove('listening');
+      if (!callActive || !callChunks.length) return;
+      const blob = new Blob(callChunks, { type: callRecorder.mimeType || 'audio/webm' });
+      await sendTalkTurn(blob);
+    };
+    callRecorder.start();
+    document.getElementById('callBtn').classList.add('listening');
+    callSetStatus('أستمع إليك — اضغط الزر عند الانتهاء');
+  } catch (e) {
+    callSetStatus('تعذر الوصول إلى الميكروفون: ' + e.message);
+  }
+}
+
+async function sendTalkTurn(blob) {
+  callBusy = true;
+  callSetStatus('جارٍ التفكير...');
+  const form = new FormData();
+  form.append('file', blob, 'recording.webm');
+  try {
+    const resp = await fetch(API + '/api/audio/talk', { method: 'POST', body: form });
+    const data = await resp.json();
+    if (data.transcript) callAddMsg('أنت', data.transcript);
+    if (data.reply) callAddMsg('Jarvis', data.reply);
+    if (data.audio_base64) {
+      callPlayer = new Audio('data:' + (data.audio_mime || 'audio/mpeg') + ';base64,' + data.audio_base64);
+      callSetStatus('Jarvis يتحدث...');
+      callPlayer.onended = () => {
+        callBusy = false;
+        if (callActive) startCallListening();
+      };
+      callPlayer.onerror = () => {
+        callBusy = false;
+        if (callActive) startCallListening();
+      };
+      await callPlayer.play();
+      return;
+    }
+  } catch (e) {
+    console.log('talk turn failed', e);
+    callSetStatus('تعذر الاتصال — حاول مرة أخرى');
+  }
+  callBusy = false;
+  if (callActive) startCallListening();
+}
+
+async function toggleCall() {
+  const btn = document.getElementById('callBtn');
+  if (!callActive) {
+    // Start the call.
+    callActive = true;
+    callStart = Date.now();
+    callTimerId = setInterval(callElapsed, 1000);
+    callElapsed();
+    btn.classList.add('live');
+    document.getElementById('endCallBtn').style.display = '';
+    callSetStatus('جارٍ بدء المكالمة...');
+    await startCallListening();
+    return;
+  }
+  // In a call: toggle recording (tap to talk, tap to send).
+  if (callRecorder && callRecorder.state === 'recording') {
+    callRecorder.stop();
+  } else if (!callBusy) {
+    await startCallListening();
+  }
+}
+
+function endCall() {
+  callActive = false;
+  callBusy = false;
+  if (callRecorder && callRecorder.state === 'recording') {
+    try { callRecorder.stop(); } catch (e) {}
+  }
+  if (callPlayer) { try { callPlayer.pause(); } catch (e) {} callPlayer = null; }
+  if (callStream) { callStream.getTracks().forEach(t => t.stop()); callStream = null; }
+  if (callTimerId) { clearInterval(callTimerId); callTimerId = null; }
+  document.getElementById('callBtn').classList.remove('live', 'listening');
+  document.getElementById('endCallBtn').style.display = 'none';
+  document.getElementById('callTimer').textContent = '00:00';
+  callSetStatus('غير متصل');
 }
 
 // === Auto-refresh vitals ===
