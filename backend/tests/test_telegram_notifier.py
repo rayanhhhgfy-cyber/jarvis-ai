@@ -1939,6 +1939,69 @@ async def test_telegram_webhook_remind_natural_language_clock_anywhere(monkeypat
 
 
 @pytest.mark.asyncio
+@pytest.mark.asyncio
+async def test_telegram_webhook_briefing_command(monkeypatch, tmp_path):
+    """/briefing shows settings, changes time/sections/voice, sends now."""
+    from unittest.mock import AsyncMock, MagicMock
+
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.briefing, "_path", tmp_path / "briefing.json")
+    monkeypatch.setattr(dm_store.briefing, "_loaded", False)
+    monkeypatch.setattr(dm_store.briefing, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.send_morning_briefing = AsyncMock(return_value=True)
+    scheduled = {}
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.scheduler.scheduler.schedule_cron",
+              new=MagicMock(side_effect=lambda **kw: scheduled.update(kw))),
+    ):
+        client = _telegram_app()
+        # Show the settings.
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/briefing"},
+        })
+        assert resp.status_code == 200
+        assert "07:00" in mock_send.call_args.args[0]
+        # Move it to 8am (reschedules the job).
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/briefing 8am"},
+        })
+        assert resp.status_code == 200
+        assert "08:00" in mock_send.call_args.args[0]
+        assert scheduled.get("job_id") == "dm_morning_briefing"
+        assert scheduled.get("cron_expression") == "0 8 * * *"
+        # Drop the news section.
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/briefing news off"},
+        })
+        assert resp.status_code == 200
+        assert "news off" in mock_send.call_args.args[0]
+        # Voice on.
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/briefing voice"},
+        })
+        assert resp.status_code == 200
+        assert "voice note" in mock_send.call_args.args[0]
+        # Plain chat works too ("make my briefing at 9am").
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "make my briefing at 9am"},
+        })
+        assert resp.status_code == 200
+        assert "09:00" in mock_send.call_args.args[0]
+        # Send one right now.
+        resp = client.post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "/briefing now"},
+        })
+        assert resp.status_code == 200
+        fake_responder.send_morning_briefing.assert_awaited()
+
+
 async def test_telegram_webhook_contact_lookup(monkeypatch, tmp_path):
     """'what is Omar's number?' answers from the saved contact card."""
     from backend.services import dm_store

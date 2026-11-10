@@ -1556,6 +1556,10 @@ async def test_send_morning_briefing(tmp_path, monkeypatch):
             "high": 24.0, "low": 12.0, "rain_chance": 0,
         }),
     )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_briefing_news",
+        lambda language="en": _noop_coro([]),
+    )
     today = _dt.now(_AMMAN).date().isoformat()
     monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
     monkeypatch.setattr(dm_store.calendar, "_loaded", False)
@@ -1598,10 +1602,132 @@ async def test_send_morning_briefing_without_weather(tmp_path, monkeypatch):
         "backend.services.dm_responder._fetch_irbid_weather",
         lambda: _noop_coro(None),
     )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_briefing_news",
+        lambda language="en": _noop_coro([]),
+    )
     assert await responder.send_morning_briefing() is True
     assert len(sent) == 1
     assert "Irbid" not in sent[0]
     assert "Good morning" in sent[0]
+
+
+@pytest.mark.asyncio
+async def test_briefing_settings_defaults_and_update(tmp_path, monkeypatch):
+    """Briefing settings default to 07:00/text/English/all sections on."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import (
+        get_briefing_settings,
+        update_briefing_settings,
+    )
+
+    monkeypatch.setattr(dm_store.briefing, "_path", tmp_path / "briefing.json")
+    monkeypatch.setattr(dm_store.briefing, "_loaded", False)
+    monkeypatch.setattr(dm_store.briefing, "_data", {})
+    settings = get_briefing_settings()
+    assert settings["time"] == "07:00"
+    assert settings["voice"] is False
+    assert settings["language"] == "en"
+    assert all(settings["sections"].values())
+    updated = update_briefing_settings({"time": "08:30", "sections": {"news": False}})
+    assert updated["time"] == "08:30"
+    assert updated["sections"]["news"] is False
+    assert updated["sections"]["weather"] is True  # other sections untouched
+    assert get_briefing_settings()["time"] == "08:30"
+
+
+@pytest.mark.asyncio
+async def test_fetch_briefing_news(monkeypatch):
+    """The news fetch returns up to two headlines per group."""
+    from backend.services.dm_responder import _fetch_briefing_news
+    from backend.services.web_search_service import WebSearchService
+
+    async def _fake_search(self, query, max_results=5):
+        if "world" in query:
+            return [
+                {"title": "World headline one", "snippet": "Big thing happened.", "url": "https://x.example/1"},
+                {"title": "World headline two", "snippet": "Another thing.", "url": "https://x.example/2"},
+                {"title": "World headline three", "snippet": "Third.", "url": "https://x.example/3"},
+            ]
+        return [{"title": f"{query} headline", "snippet": "Snippet.", "url": "https://x.example/9"}]
+
+    monkeypatch.setattr(WebSearchService, "search", _fake_search)
+    headlines = await _fetch_briefing_news("en")
+    world = [h for h in headlines if h["group"] == "World"]
+    assert len(world) == 2  # capped at two per group
+    assert world[0]["title"] == "World headline one"
+    assert len({h["group"] for h in headlines}) == 4
+
+
+@pytest.mark.asyncio
+async def test_send_morning_briefing_with_news(tmp_path, monkeypatch):
+    """The briefing includes a news section from the live web search."""
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_irbid_weather",
+        lambda: _noop_coro(None),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_briefing_news",
+        lambda language="en": _noop_coro([
+            {"group": "World", "title": "World headline one", "snippet": "Big thing happened."},
+            {"group": "Jordan", "title": "Jordan headline", "snippet": ""},
+        ]),
+    )
+    assert await responder.send_morning_briefing() is True
+    assert len(sent) == 1
+    assert "Today's news" in sent[0]
+    assert "World headline one" in sent[0]
+    assert "Jordan headline" in sent[0]
+
+
+@pytest.mark.asyncio
+async def test_send_morning_briefing_voice(tmp_path, monkeypatch):
+    """When voice is on, the briefing goes out as a voice note."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder, update_briefing_settings
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent_text = []
+    sent_voice = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(dm_store.briefing, "_path", tmp_path / "briefing.json")
+    monkeypatch.setattr(dm_store.briefing, "_loaded", False)
+    monkeypatch.setattr(dm_store.briefing, "_data", {})
+    update_briefing_settings({"voice": True})
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent_text.append(text) or True),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_voice.send_telegram_voice_reply",
+        lambda text, client=None: _noop_coro(sent_voice.append(text) or True),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_irbid_weather",
+        lambda: _noop_coro(None),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_briefing_news",
+        lambda language="en": _noop_coro([]),
+    )
+    assert await responder.send_morning_briefing() is True
+    assert len(sent_voice) == 1 and "Good morning" in sent_voice[0]
+    assert len(sent_text) == 0
 
 
 @pytest.mark.asyncio

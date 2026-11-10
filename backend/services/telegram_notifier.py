@@ -77,6 +77,8 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/welcomemsg Welcome {name}!"},
     {"command": "activity", "description": "What happened while you were away",
      "usage": "/activity"},
+    {"command": "briefing", "description": "Show or change your morning briefing",
+     "usage": "/briefing"},
     {"command": "status", "description": "Check what's connected and running",
      "usage": "/status"},
     {"command": "cancel", "description": "Cancel a pending draft or meeting",

@@ -88,3 +88,6 @@ rules = JsonStore("dm_rules.json")
 meetings = JsonStore("pending_meetings.json")
 # Jarvis settings Sir sets on Telegram: {birthday_message, group_welcome_message}.
 settings = JsonStore("dm_settings.json")
+# Morning briefing settings Sir sets by chat: {time, voice, language,
+# sections: {weather, news, calendar, birthdays, dms}}.
+briefing = JsonStore("briefing.json")

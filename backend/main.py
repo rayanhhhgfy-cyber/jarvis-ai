@@ -403,21 +403,22 @@ async def lifespan(app: FastAPI):
     except Exception as digest_err:
         log.warning("dm_daily_digest_schedule_failed", error=str(digest_err))
 
-    # Morning briefing — weather, calendar, birthdays, overnight DMs.
+    # Morning briefing — weather, news, calendar, birthdays, overnight DMs.
+    # The time comes from Sir's settings (he changes it by chat); the job
+    # itself is a module-level function so it can be rescheduled.
     try:
-        from backend.services.dm_responder import dm_responder as _briefing_responder
+        from backend.services.dm_responder import (
+            get_briefing_settings,
+            run_morning_briefing_job,
+        )
 
-        async def _dm_morning_briefing_job():
-            try:
-                await _briefing_responder.send_morning_briefing()
-            except Exception as e:
-                log.warning("dm_morning_briefing_job_failed", error=str(e))
-
+        _briefing_time = (get_briefing_settings().get("time") or "07:00").strip()
+        _briefing_hour, _briefing_minute = _briefing_time.split(":")
         scheduler.schedule_cron(
             job_id="dm_morning_briefing",
-            func=_dm_morning_briefing_job,
-            cron_expression="0 7 * * *",
-            description="Send Sir the morning briefing on Telegram at 07:00",
+            func=run_morning_briefing_job,
+            cron_expression=f"{int(_briefing_minute)} {int(_briefing_hour)} * * *",
+            description="Send Sir the morning briefing on Telegram",
         )
     except Exception as briefing_err:
         log.warning("dm_morning_briefing_schedule_failed", error=str(briefing_err))

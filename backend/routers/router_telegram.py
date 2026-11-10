@@ -63,6 +63,10 @@ _TELEGRAM_SYSTEM = (
     "a phone number or Instagram handle in a DM, he saves it to that "
     "person's contact card and tells Rayyan — ask him 'what is Omar's "
     "number?' and he answers from the saved card. "
+    "Rayyan can change his morning briefing just by talking to him - "
+    "the time, which parts it has, voice or text, Arabic or English - "
+    "with /briefing or plain words ('make my briefing at 8am', 'briefing "
+    "without the weather', 'send my briefing as a voice note'). "
     "When you reply to a voice note, your words will be spoken aloud as "
     "a voice note — so never announce that you are sending one. Do not "
     "write '[Voice note]', 'Sending you a voice note', or anything like "
@@ -70,9 +74,9 @@ _TELEGRAM_SYSTEM = (
     "language Rayyan used in his message (Arabic or English). Never "
     "answer in both languages in the same reply. "
     "On Telegram he takes "
-    "22 slash commands: /send /summarize /schedule /remind /busy /free "
+    "23 slash commands: /send /summarize /schedule /remind /busy /free "
     "/remember /search /rules /addrule /delrule /unmute /birthdaymsg "
-    "/welcomemsg /activity /status /cancel /responder /connect "
+    "/welcomemsg /activity /briefing /status /cancel /responder /connect "
     "/disconnect. "
     "Already built — never suggest these as new ideas: reminders, "
     "summaries, voice-to-text, scheduled messages, contact memory, "
@@ -157,7 +161,7 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 
 # Commands answered directly here (no natural-language equivalent).
 _DIRECT_COMMANDS = {
-    "start", "help", "activity", "status", "cancel", "responder",
+    "start", "help", "activity", "briefing", "status", "cancel", "responder",
     "connect", "disconnect",
 }
 
@@ -439,6 +443,117 @@ async def _handle_responder(responder: Any, text: str) -> str:
             return f"DM responder is ON — {detail}"
         return "DM responder is ON."
     return "DM responder is OFF — Jarvis will not auto-reply to DMs."
+
+
+async def _handle_briefing(text: str) -> str:
+    """The /briefing command and 'briefing' chat: show or change the
+    morning briefing settings.
+
+    /briefing — show the current settings. /briefing 8am — move it to
+    08:00 (reschedules the job). /briefing news off — drop a section.
+    /briefing voice — send it as a voice note. /briefing arabic —
+    send it in Arabic. /briefing now — send one right now. The same
+    words work in plain chat ("make my briefing at 8am", "briefing
+    without the weather").
+    """
+    from backend.scheduler import scheduler
+    from backend.services.dm_responder import (
+        _BRIEFING_SECTIONS,
+        get_briefing_settings,
+        run_morning_briefing_job,
+        update_briefing_settings,
+    )
+    from backend.services.dm_time import parse_time
+
+    lowered = (text or "").lower()
+    settings = get_briefing_settings()
+
+    # Language.
+    if "arabic" in lowered or "بالعربي" in lowered or "بالعربية" in lowered:
+        settings = update_briefing_settings({"language": "ar"})
+        return "Your morning briefing will be in Arabic from tomorrow."
+    if "english" in lowered or "بالإنجليزي" in lowered or "بالانجليزي" in lowered:
+        settings = update_briefing_settings({"language": "en"})
+        return "Your morning briefing will be in English from tomorrow."
+
+    # Voice / text.
+    if "voice" in lowered or "voice note" in lowered or "صوت" in lowered:
+        settings = update_briefing_settings({"voice": True})
+        return "Your morning briefing will arrive as a voice note from tomorrow."
+    if re.search(r"\btext\b", lowered) or "كتابة" in lowered:
+        settings = update_briefing_settings({"voice": False})
+        return "Your morning briefing will arrive as text from tomorrow."
+
+    # Sections on/off.
+    section_names = {
+        "weather": ("weather", "الطقس"),
+        "news": ("news", "الأخبار", "الاخبار"),
+        "calendar": ("calendar", "التقويم", "schedule"),
+        "birthdays": ("birthday", "birthdays", "عيد ميلاد"),
+        "dms": ("dm", "dms", "messages", "الرسائل"),
+    }
+    off_words = ("off", "remove", "without", "don't", "dont", "disable", "no ", "hide", "بدون", "أزل", "ازل")
+    on_words = ("on", "add", "include", "enable", "show", "أضف", "اضف")
+    changed: list[str] = []
+    for section, words in section_names.items():
+        if not any(w in lowered for w in words):
+            continue
+        if any(w in lowered for w in off_words):
+            update_briefing_settings({"sections": {section: False}})
+            changed.append(f"{section} off")
+        elif any(w in lowered for w in on_words):
+            update_briefing_settings({"sections": {section: True}})
+            changed.append(f"{section} on")
+    if changed:
+        settings = get_briefing_settings()
+        return "Briefing updated: " + ", ".join(changed) + "."
+
+    # Time — a clock anywhere in the message ("8am", "at 08:00").
+    when = parse_time(text)
+    if when is not None:
+        hour, minute = when.hour, when.minute
+        time_str = f"{hour:02d}:{minute:02d}"
+        update_briefing_settings({"time": time_str})
+        try:
+            scheduler.schedule_cron(
+                job_id="dm_morning_briefing",
+                func=run_morning_briefing_job,
+                cron_expression=f"{minute} {hour} * * *",
+                description="Send Sir the morning briefing on Telegram",
+            )
+        except Exception as e:
+            log.warning("dm_briefing_reschedule_failed", error=str(e))
+            return f"Saved the time ({time_str}) but I could not reschedule — tell me and I will check."
+        return f"Your morning briefing will arrive at {time_str} from tomorrow."
+
+    # "briefing now" / "send me my briefing" — send one right now.
+    # Checked last so "send my briefing as a voice note" sets voice
+    # instead of sending.
+    if re.search(r"\bnow\b", lowered) or (
+        "send" in lowered and "briefing" in lowered
+    ):
+        from backend.services.dm_responder import dm_responder as _br
+
+        await _br.send_morning_briefing()
+        return "Sent your morning briefing."
+
+    # Nothing matched — show the current settings.
+    sections = settings.get("sections") or {}
+    on_list = [s for s in _BRIEFING_SECTIONS if sections.get(s, True)]
+    off_list = [s for s in _BRIEFING_SECTIONS if not sections.get(s, True)]
+    voice = "voice note" if settings.get("voice") else "text"
+    language = "Arabic" if settings.get("language") == "ar" else "English"
+    lines = [
+        f"Your morning briefing — {settings.get('time', '07:00')}, {voice}, {language}.",
+        "On: " + (", ".join(on_list) if on_list else "nothing") + ".",
+    ]
+    if off_list:
+        lines.append("Off: " + ", ".join(off_list) + ".")
+    lines.append(
+        "Change it any time: '/briefing 8am', '/briefing news off', "
+        "'/briefing voice', '/briefing arabic', or '/briefing now'."
+    )
+    return "\n".join(lines)
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -775,6 +890,8 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(_help_text())
                 elif value == "activity":
                     await send_telegram_message(_activity_text(dm_responder))
+                elif value == "briefing":
+                    await send_telegram_message(await _handle_briefing(text))
                 elif value == "status":
                     await send_telegram_message(_status_text(dm_responder))
                 elif value == "cancel":
@@ -1163,6 +1280,11 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 await send_telegram_message(
                     f"I don't have {name}'s {label} saved."
                 )
+            return {"ok": True}
+
+        # --- "briefing ..." in plain chat: show or change the briefing. ---
+        if "briefing" in text.lower() or "النشرة" in text:
+            await send_telegram_message(await _handle_briefing(text))
             return {"ok": True}
 
         # --- Normal chat, with recent DM activity as context (feature 5). ---

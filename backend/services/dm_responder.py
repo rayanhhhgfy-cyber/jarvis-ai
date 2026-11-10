@@ -131,6 +131,144 @@ async def _fetch_irbid_weather(client: Any = None) -> dict[str, Any] | None:
         log.debug("dm_weather_failed", error=str(e))
         return None
 
+
+# Morning briefing settings (Sir changes them by chat). Defaults: 07:00,
+# text (not voice), English, every section on.
+_BRIEFING_DEFAULTS: dict[str, Any] = {
+    "time": "07:00",
+    "voice": False,
+    "language": "en",
+    "sections": {
+        "weather": True,
+        "news": True,
+        "calendar": True,
+        "birthdays": True,
+        "dms": True,
+    },
+}
+_BRIEFING_SECTIONS = ("weather", "news", "calendar", "birthdays", "dms")
+
+# Section labels for the briefing, in the language Sir picked.
+_BRIEFING_LABELS: dict[str, dict[str, str]] = {
+    "en": {
+        "greeting": "Good morning",
+        "weather": "Irbid",
+        "rain_chance": "chance of rain",
+        "busy": "Busy today",
+        "free": "You are free today.",
+        "nothing": "Nothing on your calendar today.",
+        "birthday_today": "birthday is today",
+        "birthday_tomorrow": "birthday is tomorrow",
+        "news": "Today's news",
+        "dms": "Overnight DMs",
+        "needs_you": "need you — check the app.",
+    },
+    "ar": {
+        "greeting": "صباح الخير",
+        "weather": "إربد",
+        "rain_chance": "احتمال هطول المطر",
+        "busy": "مشغول اليوم",
+        "free": "أنت متفرغ اليوم.",
+        "nothing": "لا شيء في تقويمك اليوم.",
+        "birthday_today": "عيد ميلاده اليوم",
+        "birthday_tomorrow": "عيد ميلاده غداً",
+        "news": "أخبار اليوم",
+        "dms": "رسائل الليلة الماضية",
+        "needs_you": "يحتاجونك — افتح التطبيق.",
+    },
+}
+
+
+def get_briefing_settings() -> dict[str, Any]:
+    """The morning briefing settings, defaults filled in."""
+    from backend.services.dm_store import briefing as briefing_store
+
+    stored = briefing_store.all()
+    settings = dict(_BRIEFING_DEFAULTS)
+    sections = dict(_BRIEFING_DEFAULTS["sections"])
+    sections.update((stored.get("sections") or {}))
+    settings.update({k: v for k, v in stored.items() if k != "sections"})
+    settings["sections"] = sections
+    return settings
+
+
+def update_briefing_settings(patch: dict[str, Any]) -> dict[str, Any]:
+    """Merge a patch into the briefing settings and save them."""
+    from backend.services.dm_store import briefing as briefing_store
+
+    current = get_briefing_settings()
+    sections = dict(current["sections"])
+    sections.update((patch.get("sections") or {}))
+    current.update({k: v for k, v in patch.items() if k != "sections"})
+    current["sections"] = sections
+    for key, value in current.items():
+        briefing_store.set(key, value)
+    return current
+
+
+# News queries for the briefing (world, Jordan, tech, sports).
+_BRIEFING_NEWS_QUERIES = {
+    "en": [
+        ("World", "top world news today"),
+        ("Jordan", "Jordan news today"),
+        ("Tech", "technology news today"),
+        ("Sports", "sports news today"),
+    ],
+    "ar": [
+        ("العالم", "أهم أخبار العالم اليوم"),
+        ("الأردن", "أخبار الأردن اليوم"),
+        ("التكنولوجيا", "أخبار التكنولوجيا اليوم"),
+        ("الرياضة", "أخبار الرياضة اليوم"),
+    ],
+}
+
+
+async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
+    """Top news for the morning briefing, from a live web search.
+
+    One query per group (world, Jordan, tech, sports), run together.
+    Returns [{group, title, snippet}] — at most two headlines per group.
+    Empty when the search fails (the briefing still goes out).
+    """
+    import asyncio
+
+    from backend.services.web_search_service import WebSearchService
+
+    queries = _BRIEFING_NEWS_QUERIES.get(language) or _BRIEFING_NEWS_QUERIES["en"]
+    service = WebSearchService()
+    try:
+        results = await asyncio.gather(
+            *(service.search(query, max_results=2) for _, query in queries),
+            return_exceptions=True,
+        )
+    except Exception as e:
+        log.debug("dm_briefing_news_failed", error=str(e))
+        return []
+    headlines: list[dict[str, str]] = []
+    for (group, _), result in zip(queries, results):
+        if isinstance(result, Exception) or not result:
+            continue
+        for row in result[:2]:
+            title = (row.get("title") or "").strip()
+            snippet = (row.get("snippet") or "").strip()
+            if title:
+                headlines.append({"group": group, "title": title, "snippet": snippet})
+    return headlines
+
+
+async def run_morning_briefing_job() -> None:
+    """Scheduler entry point for the morning briefing.
+
+    A module-level function (not a closure in main.py) so the briefing
+    can be rescheduled from anywhere — when Sir changes its time by
+    chat, the router re-registers this same job at the new time.
+    """
+    try:
+        await dm_responder.send_morning_briefing()
+    except Exception as e:
+        log.warning("dm_morning_briefing_job_failed", error=str(e))
+
+
 # Words that mark a message as important — when someone says it is
 # important, Sir gets a louder alert (the push title says so).
 _IMPORTANT_MARKERS = (
@@ -534,106 +672,146 @@ class DMResponder:
             return False
 
     async def send_morning_briefing(self) -> bool:
-        """Send Sir the morning briefing on Telegram (07:00 his time).
+        """Send Sir the morning briefing on Telegram.
 
-        One message with today's weather in Irbid, what is on his
-        Jarvis calendar today, any birthdays today or tomorrow, and the
-        overnight DM highlights (anything important or still waiting
-        for him). Returns True when a briefing was sent. The weather is
-        best-effort — the briefing still goes out without it.
+        What is in it, what time it fires, and whether it arrives as a
+        voice note are all Sir's settings (he changes them by chat).
+        One message: weather in Irbid, the news (live web search, like
+        Muse's morning briefing), his Jarvis calendar, birthdays, and
+        the overnight DM highlights. Returns True when a briefing was
+        sent. The weather and the news are best-effort — the briefing
+        still goes out without them.
         """
         from backend.services.dm_store import calendar as cal_store
         from backend.services.dm_store import contacts
         from backend.services.telegram_notifier import send_telegram_message
 
+        settings = get_briefing_settings()
+        language = settings.get("language") or "en"
+        labels = _BRIEFING_LABELS.get(language) or _BRIEFING_LABELS["en"]
+        sections = settings.get("sections") or {}
         today = datetime.now(_AMMAN).date()
         tomorrow = today + timedelta(days=1)
-        lines = [f"☀️ Good morning — {today.strftime('%A, %B %d')}"]
+        lines = [f"☀️ {labels['greeting']} — {today.strftime('%A, %B %d')}"]
 
         # Weather in Irbid.
-        weather = await _fetch_irbid_weather()
-        if weather and weather.get("temp") is not None:
-            line = f"🌤️ Irbid: {weather['condition']}, {weather['temp']}°C"
-            high, low = weather.get("high"), weather.get("low")
-            if high is not None and low is not None:
-                line += f" (high {high}°C, low {low}°C)"
-            rain = weather.get("rain_chance")
-            if rain:
-                line += f" — {rain}% chance of rain"
-            lines.append(line)
+        if sections.get("weather", True):
+            weather = await _fetch_irbid_weather()
+            if weather and weather.get("temp") is not None:
+                # The condition text comes from the WMO map (English), so
+                # the Arabic briefing shows the temperature only.
+                if language == "ar":
+                    line = f"🌤️ {labels['weather']}: {weather['temp']}°C"
+                else:
+                    line = f"🌤️ {labels['weather']}: {weather['condition']}, {weather['temp']}°C"
+                high, low = weather.get("high"), weather.get("low")
+                if high is not None and low is not None:
+                    line += f" (high {high}°C, low {low}°C)"
+                rain = weather.get("rain_chance")
+                if rain:
+                    line += f" — {rain}% {labels['rain_chance']}"
+                lines.append(line)
+
+        # News (live web search).
+        if sections.get("news", True):
+            headlines = await _fetch_briefing_news(language)
+            if headlines:
+                lines.append("")
+                lines.append(f"📰 {labels['news']}:")
+                last_group = None
+                for item in headlines:
+                    if item["group"] != last_group:
+                        lines.append(f"— {item['group']}")
+                        last_group = item["group"]
+                    text = item["title"]
+                    if item.get("snippet"):
+                        text += f" — {item['snippet'][:120]}"
+                    lines.append(f"• {text}")
 
         # Today's calendar.
-        entry = cal_store.get(today.isoformat())
-        if entry:
-            status = (entry.get("status") or "").lower()
-            detail = (entry.get("detail") or "").strip()
-            start = entry.get("from")
-            end = entry.get("to")
-            window = ""
-            try:
-                if start and end:
-                    window = (
-                        f" {datetime.fromisoformat(start).strftime('%H:%M')}"
-                        f"–{datetime.fromisoformat(end).strftime('%H:%M')}"
-                    )
-                elif start:
-                    window = f" from {datetime.fromisoformat(start).strftime('%H:%M')}"
-            except (TypeError, ValueError):
+        if sections.get("calendar", True):
+            entry = cal_store.get(today.isoformat())
+            if entry:
+                status = (entry.get("status") or "").lower()
+                detail = (entry.get("detail") or "").strip()
+                start = entry.get("from")
+                end = entry.get("to")
                 window = ""
-            if status == "busy":
-                lines.append(f"📅 Busy today{window}" + (f" — {detail}" if detail else ""))
-            elif status == "free":
-                lines.append("📅 You are free today.")
-        else:
-            lines.append("📅 Nothing on your calendar today.")
+                try:
+                    if start and end:
+                        window = (
+                            f" {datetime.fromisoformat(start).strftime('%H:%M')}"
+                            f"–{datetime.fromisoformat(end).strftime('%H:%M')}"
+                        )
+                    elif start:
+                        window = f" from {datetime.fromisoformat(start).strftime('%H:%M')}"
+                except (TypeError, ValueError):
+                    window = ""
+                if status == "busy":
+                    lines.append(f"📅 {labels['busy']}{window}" + (f" — {detail}" if detail else ""))
+                elif status == "free":
+                    lines.append(f"📅 {labels['free']}")
+            else:
+                lines.append(f"📅 {labels['nothing']}")
 
         # Birthdays today / tomorrow.
-        for name, data in contacts.all().items():
-            birthday = (data or {}).get("birthday", "")
-            if not birthday:
-                continue
-            try:
-                month, day = (int(x) for x in birthday.split("-"))
-            except (ValueError, AttributeError):
-                continue
-            for target, label in ((today, "today"), (tomorrow, "tomorrow")):
-                if target.month == month and target.day == day:
-                    lines.append(f"🎂 {name}'s birthday is {label}!")
+        if sections.get("birthdays", True):
+            for name, data in contacts.all().items():
+                birthday = (data or {}).get("birthday", "")
+                if not birthday:
+                    continue
+                try:
+                    month, day = (int(x) for x in birthday.split("-"))
+                except (ValueError, AttributeError):
+                    continue
+                for target, label in (
+                    (today, labels["birthday_today"]),
+                    (tomorrow, labels["birthday_tomorrow"]),
+                ):
+                    if target.month == month and target.day == day:
+                        lines.append(f"🎂 {name}'s {label}!")
 
         # Overnight DM highlights (last 12 hours).
-        try:
-            since = datetime.now(UTC) - timedelta(hours=12)
-            overnight = []
-            for entry in self._activity:
-                try:
-                    when = datetime.fromisoformat(entry.get("time", ""))
-                except (TypeError, ValueError):
-                    continue
-                if when >= since:
-                    overnight.append(entry)
-        except Exception:
-            overnight = []
-        if overnight:
-            lines.append("")
-            lines.append("💬 Overnight DMs:")
-            for entry in reversed(overnight[:5]):
-                flag = " ⚠️" if entry.get("important") else ""
-                lines.append(
-                    f"- {entry.get('sender_name', '')} ({entry.get('platform', '')}){flag}: "
-                    f"{entry.get('text', '')[:60]}"
-                )
-            needs_sir = [
-                e for e in overnight
-                if e.get("important") or (e.get("reply") or "").strip() == ""
-            ]
-            if needs_sir:
-                lines.append(f"👉 {len(needs_sir)} need{'s' if len(needs_sir) == 1 else ''} you — check the app.")
+        if sections.get("dms", True):
+            try:
+                since = datetime.now(UTC) - timedelta(hours=12)
+                overnight = []
+                for entry in self._activity:
+                    try:
+                        when = datetime.fromisoformat(entry.get("time", ""))
+                    except (TypeError, ValueError):
+                        continue
+                    if when >= since:
+                        overnight.append(entry)
+            except Exception:
+                overnight = []
+            if overnight:
+                lines.append("")
+                lines.append(f"💬 {labels['dms']}:")
+                for entry in reversed(overnight[:5]):
+                    flag = " ⚠️" if entry.get("important") else ""
+                    lines.append(
+                        f"- {entry.get('sender_name', '')} ({entry.get('platform', '')}){flag}: "
+                        f"{entry.get('text', '')[:60]}"
+                    )
+                needs_sir = [
+                    e for e in overnight
+                    if e.get("important") or (e.get("reply") or "").strip() == ""
+                ]
+                if needs_sir:
+                    lines.append(f"👉 {len(needs_sir)} {labels['needs_you']}")
 
+        text = "\n".join(lines)
         try:
-            return await send_telegram_message("\n".join(lines))
+            if settings.get("voice"):
+                from backend.services.dm_voice import send_telegram_voice_reply
+
+                return await send_telegram_voice_reply(text)
+            return await send_telegram_message(text)
         except Exception as e:
             log.debug("dm_morning_briefing_failed", error=str(e))
             return False
+
 
     async def _maybe_nudge(
         self, platform: str, thread_id: str, sender_name: str
