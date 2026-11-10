@@ -281,6 +281,7 @@ async def generate_dm_reply(
     media_type: str | None = None,
     contact_notes: str | None = None,
     tone: str | None = None,
+    busy: str | None = None,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -353,6 +354,15 @@ async def generate_dm_reply(
                 "Relaxed, warm, and natural — no stiff or formal language."
             )
             web_context = f"{tone_context}\n\n{web_context}" if web_context else tone_context
+        # Busy right now: Sir told Jarvis he is busy until a time for a
+        # reason. Tell the sender plainly — do not wait to be asked.
+        if busy:
+            busy_context = (
+                f"Rayyan is {busy}. Tell them this plainly in your reply — "
+                "that he is busy and will get back to them once he can. "
+                "Do not ask them to wait; just let them know."
+            )
+            web_context = f"{busy_context}\n\n{web_context}" if web_context else busy_context
         reply = await _groq_reply(
             sender_name, incoming_text, client, first_reply, is_group, web_context
         )

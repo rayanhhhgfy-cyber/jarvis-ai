@@ -497,3 +497,113 @@ async def test_group_welcome_custom_message(tmp_path, monkeypatch):
         {"thread_id": "g1", "members": ["Omar", "Sara"]},
     )
     assert fake.sent[0][1] == "Hey Sara, welcome in!"
+
+
+# --------------------------------------------------------------------
+# Wave 5: busy with reason + missed calls
+# --------------------------------------------------------------------
+
+def test_parse_time_window():
+    from backend.services.dm_time import parse_time_window
+
+    now = datetime(2026, 11, 13, 12, 0, tzinfo=ZoneInfo("Asia/Amman"))  # Friday
+    start, end = parse_time_window("Friday 5pm-8pm", now)
+    assert start.hour == 17 and start.minute == 0
+    assert end.hour == 20 and end.minute == 0
+    assert start.date().isoformat() == "2026-11-13"
+    start, end = parse_time_window("from 5pm to 8pm", now)
+    assert start.hour == 17 and end.hour == 20
+    start, end = parse_time_window("Saturday", now)
+    assert start is not None and end is None
+
+
+def test_handle_busy_free_with_reason(tmp_path, monkeypatch):
+    from backend.routers.router_telegram import _handle_busy_free
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
+    monkeypatch.setattr(dm_store.calendar, "_loaded", False)
+    monkeypatch.setattr(dm_store.calendar, "_data", {})
+    reply = _handle_busy_free(
+        "busy", "Friday 5pm-8pm because I have football practice"
+    )
+    assert "Friday" in reply
+    assert "17:00" in reply and "20:00" in reply
+    assert "football practice" in reply
+    entries = dm_store.calendar.all()
+    assert len(entries) == 1
+    entry = next(iter(entries.values()))
+    assert entry["status"] == "busy"
+    assert entry["detail"] == "I have football practice"
+    assert entry["from"] is not None and entry["to"] is not None
+
+
+def test_busy_now_and_text(tmp_path, monkeypatch):
+    """A busy window covering right now is found; outside it, nothing."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
+    monkeypatch.setattr(dm_store.calendar, "_loaded", False)
+    monkeypatch.setattr(dm_store.calendar, "_data", {})
+    now = datetime.now(UTC)
+    dm_store.calendar.set(now.date().isoformat(), {
+        "date": now.date().isoformat(),
+        "status": "busy",
+        "detail": "football practice",
+        "from": (now - timedelta(hours=1)).isoformat(),
+        "to": (now + timedelta(hours=1)).isoformat(),
+    })
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    entry = responder._busy_now()
+    assert entry is not None
+    assert responder._busy_text(entry) == "busy until " + (
+        now + timedelta(hours=1)
+    ).strftime("%H:%M") + " — football practice"
+    # A window that already ended is not busy now.
+    dm_store.calendar.set(now.date().isoformat(), {
+        "date": now.date().isoformat(),
+        "status": "busy",
+        "detail": "football practice",
+        "from": (now - timedelta(hours=3)).isoformat(),
+        "to": (now - timedelta(hours=1)).isoformat(),
+    })
+    assert responder._busy_now() is None
+
+
+def test_calendar_answer_with_reason(tmp_path, monkeypatch):
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
+    monkeypatch.setattr(dm_store.calendar, "_loaded", False)
+    monkeypatch.setattr(dm_store.calendar, "_data", {})
+    dm_store.calendar.set("2026-11-13", {
+        "date": "2026-11-13",
+        "status": "busy",
+        "detail": "football practice",
+        "from": "2026-11-13T17:00:00+03:00",
+        "to": "2026-11-13T20:00:00+03:00",
+    })
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    answer = responder._calendar_answer("are you free Friday?")
+    assert answer is not None
+    assert "busy" in answer
+    assert "17:00" in answer and "20:00" in answer
+    assert "football practice" in answer
+
+
+def test_instagram_call_detection():
+    from backend.services.dm_clients import _instagram_call
+
+    class _Msg:
+        def __init__(self, item_type, is_sent_by_viewer):
+            self.item_type = item_type
+            self.is_sent_by_viewer = is_sent_by_viewer
+
+    assert _instagram_call(_Msg("video_call", False)) is True
+    assert _instagram_call(_Msg("voice_call", False)) is True
+    # Sir made the call himself — not missed.
+    assert _instagram_call(_Msg("video_call", True)) is False
+    assert _instagram_call(_Msg("text", False)) is False
+

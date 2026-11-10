@@ -574,6 +574,51 @@ class DMResponder:
                 return True
         return False
 
+    def _busy_now(self) -> dict[str, Any] | None:
+        """The busy entry covering right now, or None.
+
+        Sir tells Jarvis on Telegram ("I'm busy Friday 5pm-8pm because
+        I have football practice"). When a DM arrives during that window
+        Jarvis tells the sender why Sir is busy — he does not wait to be
+        asked "are you free?".
+        """
+        from backend.services.dm_store import calendar as cal_store
+
+        now = datetime.now(UTC)
+        today_key = now.date().isoformat()
+        for entry in cal_store.all().values():
+            if entry.get("status") != "busy" or entry.get("date") != today_key:
+                continue
+            start = entry.get("from")
+            end = entry.get("to")
+            try:
+                start_dt = datetime.fromisoformat(start) if start else None
+                end_dt = datetime.fromisoformat(end) if end else None
+            except (TypeError, ValueError):
+                start_dt = end_dt = None
+            if start_dt and now < start_dt:
+                continue
+            if end_dt and now >= end_dt:
+                continue
+            return entry
+        return None
+
+    def _busy_text(self, entry: dict[str, Any] | None) -> str | None:
+        """\"busy until 20:00 — football practice\" for the LLM prompt."""
+        if not entry:
+            return None
+        reason = (entry.get("detail") or "").strip()
+        end = entry.get("to")
+        end_text = ""
+        if end:
+            try:
+                end_text = f" until {datetime.fromisoformat(end).strftime('%H:%M')}"
+            except (TypeError, ValueError):
+                end_text = ""
+        if reason:
+            return f"busy{end_text} — {reason}"
+        return f"busy{end_text}" if end_text else "busy"
+
     def _calendar_answer(self, text: str) -> str | None:
         """Answer an availability question from Sir's Jarvis calendar.
 
@@ -595,10 +640,23 @@ class DMResponder:
         day_key = when.astimezone(UTC).date().isoformat()
         for entry in entries.values():
             if entry.get("date") == day_key:
+                status = entry.get("status", "busy")
+                reason = (entry.get("detail") or "").strip()
+                window = ""
+                start, end = entry.get("from"), entry.get("to")
+                try:
+                    if start and end:
+                        window = (
+                            f" from {datetime.fromisoformat(start).strftime('%H:%M')}"
+                            f" to {datetime.fromisoformat(end).strftime('%H:%M')}"
+                        )
+                    elif start:
+                        window = f" from {datetime.fromisoformat(start).strftime('%H:%M')}"
+                except (TypeError, ValueError):
+                    window = ""
                 return (
-                    f"Rayyan is {entry.get('status', 'busy')} on "
-                    f"{when.strftime('%A')}"
-                    + (f" ({entry.get('detail', '')})" if entry.get("detail") else "")
+                    f"Rayyan is {status} on {when.strftime('%A')}{window}"
+                    + (f" ({reason})" if reason else "")
                     + "."
                 )
         return None
@@ -971,6 +1029,40 @@ class DMResponder:
         for msg in threads:
             if replied >= _MAX_REPLIES_PER_POLL:
                 break
+            # Missed call: someone called on Instagram or Messenger and
+            # Sir did not answer. Jarvis sends the introduction message
+            # instantly — no one-minute wait — and says why Sir is busy
+            # when the calendar knows. A call event has no text, so this
+            # runs before the text/media check below.
+            if msg.get("is_missed_call"):
+                thread_id = msg["thread_id"]
+                if client.user_id and str(msg.get("sender_id")) == str(client.user_id):
+                    continue  # Sir made the call himself.
+                seen_id = self._seen.get(platform, {}).get(thread_id)
+                if seen_id == msg["message_id"]:
+                    continue  # Already handled this call.
+                gen = await generate_dm_reply(
+                    platform,
+                    msg["sender_name"],
+                    "",
+                    first_reply=True,
+                    is_group=False,
+                    busy=self._busy_text(self._busy_now()),
+                )
+                if gen.get("ok"):
+                    try:
+                        await client.send(thread_id, gen["reply"])
+                    except Exception as e:
+                        log.warning("dm_missed_call_send_failed", platform=platform, error=str(e))
+                        continue
+                    self._mark_seen(platform, thread_id, msg["message_id"])
+                    self._introduced.setdefault(platform, {})[thread_id] = True
+                    self._clear_pending(platform, thread_id)
+                    self._persist_state()
+                    self._state[platform]["replied"] += 1
+                    replied += 1
+                    self._record_activity(platform, msg, gen["reply"], important=False)
+                continue
             # A message counts when it has text OR media (photo / voice).
             # Text-less media used to be skipped entirely — now Jarvis
             # sees the photo or hears the voice note and replies.
@@ -1173,6 +1265,7 @@ class DMResponder:
                     media_type=msg.get("media_type"),
                     contact_notes=_contact_notes(msg.get("sender_name", "")),
                     tone=_contact_tone(msg.get("sender_name", "")),
+                    busy=self._busy_text(self._busy_now()),
                 )
                 if gen.get("ok"):
                     self._pending_drafts[thread_id] = {
@@ -1235,6 +1328,7 @@ class DMResponder:
                     is_group=bool(msg.get("is_group")),
                     contact_notes=_contact_notes(msg.get("sender_name", "")),
                     tone=_contact_tone(msg.get("sender_name", "")),
+                    busy=self._busy_text(self._busy_now()),
                 )
                 if gen.get("ok"):
                     self._pending_drafts[thread_id] = {
@@ -1272,6 +1366,7 @@ class DMResponder:
                 media_type=msg.get("media_type"),
                 contact_notes=_contact_notes(msg.get("sender_name", "")),
                 tone=_contact_tone(msg.get("sender_name", "")),
+                busy=self._busy_text(self._busy_now()),
             )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))

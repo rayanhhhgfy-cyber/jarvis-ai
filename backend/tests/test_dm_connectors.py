@@ -501,11 +501,11 @@ class _FakeClient:
         return {"ok": True, "message_id": "sent-1"}
 
 
-def _msg(platform, thread_id, sender_id, sender_name, text, message_id, is_group=False):
+def _msg(platform, thread_id, sender_id, sender_name, text, message_id, is_group=False, is_missed_call=False):
     return {
         "platform": platform, "thread_id": thread_id, "sender_id": sender_id,
         "sender_name": sender_name, "text": text, "message_id": message_id,
-        "is_group": is_group,
+        "is_group": is_group, "is_missed_call": is_missed_call,
     }
 
 
@@ -523,7 +523,7 @@ async def test_responder_waits_one_minute_then_replies_once(tmp_vault, tmp_path,
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -573,7 +573,7 @@ async def test_responder_follow_up_replies_without_wait(tmp_vault, tmp_path, mon
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -615,7 +615,7 @@ async def test_responder_stands_down_when_sir_replies(tmp_vault, tmp_path, monke
     ])
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -966,7 +966,7 @@ async def test_responder_replies_in_group_chat(tmp_vault, tmp_path, monkeypatch)
 
     seen_is_group = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         seen_is_group.append(is_group)
         return {"ok": True, "reply": "Hey Friend, this is Jarvis.", "model": "groq"}
 
@@ -1112,7 +1112,7 @@ async def test_vip_skips_one_minute_wait(tmp_vault, tmp_path, monkeypatch):
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "Hi Mom!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1146,7 +1146,7 @@ async def test_photo_message_is_not_skipped(tmp_vault, tmp_path, monkeypatch):
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
     seen_media = {}
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         seen_media["media_url"] = media_url
         seen_media["media_type"] = media_type
         return {"ok": True, "reply": "Nice photo!", "model": "groq"}
@@ -1180,7 +1180,7 @@ async def test_tricky_message_creates_draft_not_reply(tmp_vault, tmp_path, monke
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "Let me check with Rayyan.", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1334,7 +1334,7 @@ async def test_quiet_hours_sends_morning_reply_once(tmp_vault, tmp_path, monkeyp
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "FULL REPLY", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1362,7 +1362,7 @@ async def test_abusive_message_mutes_thread(tmp_vault, tmp_path, monkeypatch):
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "Hi!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1400,7 +1400,7 @@ async def test_away_question_asks_sir_first(tmp_vault, tmp_path, monkeypatch):
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         return {"ok": True, "reply": "He will be back soon.", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1443,7 +1443,7 @@ async def test_custom_rule_reply_beats_llm(tmp_vault, tmp_path, monkeypatch):
     fake = _FakeClient(user_id="111111", messages=incoming)
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
         raise AssertionError("LLM should not be called when a rule matches")
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -1483,3 +1483,49 @@ async def test_meeting_request_asks_sir_for_times(tmp_vault, tmp_path, monkeypat
     assert len(sent_telegram) == 1
     assert "wants to meet" in sent_telegram[0]
     assert len(dm_store.meetings.all()) == 1
+
+
+@pytest.mark.asyncio
+async def test_missed_call_sends_intro_instantly(tmp_vault, tmp_path, monkeypatch):
+    """A missed call gets the introduction message at once, no wait."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [_msg("messenger", "t1", "999", "Omar", "Missed voice call", "m1",
+                     is_missed_call=True)]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
+        return {"ok": True, "reply": "Hi, this is Jarvis. Rayyan is busy right now."}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Omar")
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 1
+    assert len(fake.sent) == 1
+    assert "Jarvis" in fake.sent[0][1]
+
+
+@pytest.mark.asyncio
+async def test_missed_call_not_sent_twice(tmp_vault, tmp_path, monkeypatch):
+    """A missed call already handled is not re-introduced on the next poll."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [_msg("messenger", "t1", "999", "Omar", "Missed voice call", "m1",
+                     is_missed_call=True)]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
+        return {"ok": True, "reply": "Hi, this is Jarvis."}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Omar")
+    await responder.poll_once()
+    assert len(fake.sent) == 1
+    await responder.poll_once()
+    assert len(fake.sent) == 1  # no second intro for the same call

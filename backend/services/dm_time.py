@@ -117,3 +117,74 @@ def describe_time(when: datetime) -> str:
     if local.date() == today + timedelta(days=1):
         return f"tomorrow at {local.strftime('%H:%M')}"
     return local.strftime("%A %H:%M")
+
+
+# A bare clock: "5pm" / "5:30pm" / "17:00" / "8pm" (with or without "at").
+_CLOCK_RE = re.compile(
+    r"(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b",
+    re.IGNORECASE,
+)
+
+
+def _clock_to_time(hour: int, minute: int, ampm: str | None, fallback_ampm: str | None) -> tuple[int, int]:
+    """Resolve a clock to 24-hour (hour, minute). A clock with no am/pm
+    inherits the other clock's am/pm when there is one."""
+    use_ampm = (ampm or fallback_ampm or "").lower()
+    if use_ampm == "pm" and hour < 12:
+        hour += 12
+    if use_ampm == "am" and hour == 12:
+        hour = 0
+    return hour, minute
+
+
+def parse_time_window(
+    text: str, now: datetime | None = None
+) -> tuple[datetime | None, datetime | None] | None:
+    """Parse a time window like \"Friday 5pm-8pm\" or \"from 5pm to 8pm\".
+
+    Returns (start, end) datetimes, or (start, None) when only a start
+    was given, or None when no day/time could be understood. The day
+    comes from parse_time (weekday / tomorrow / today); the clocks come
+    from the bare-clock matches in the text.
+    """
+    now = now or datetime.now(_AMMAN)
+    lowered = (text or "").lower()
+    day_dt = parse_time(text, now)
+    clocks = []
+    for m in _CLOCK_RE.finditer(text or ""):
+        hour, minute, ampm = int(m.group(1)), int(m.group(2) or 0), m.group(3)
+        has_colon = ":" in m.group(0)
+        if ampm or has_colon:
+            clocks.append((hour, minute, (ampm or "").lower() or None))
+    if not day_dt:
+        # No day word and no "at" clock ("from 5pm to 8pm") — today.
+        if not clocks:
+            return None
+        day_dt = now
+    if not clocks:
+        return (day_dt, None)
+    # The other clock's am/pm is the fallback for a bare clock.
+    other_ampm = next((c[2] for c in clocks if c[2]), None)
+    start_h, start_m = _clock_to_time(clocks[0][0], clocks[0][1], clocks[0][2], other_ampm)
+    start = day_dt.replace(hour=start_h, minute=start_m, second=0, microsecond=0)
+    if len(clocks) < 2:
+        end = None
+    else:
+        end_h, end_m = _clock_to_time(clocks[1][0], clocks[1][1], clocks[1][2], other_ampm)
+        end = day_dt.replace(hour=end_h, minute=end_m, second=0, microsecond=0)
+        if end <= start:
+            # "11pm-2am" crosses midnight.
+            end = end + timedelta(days=1)
+    # "Friday 5pm-8pm" said on a Friday: parse_time pushes a bare weekday
+    # to next week, but when the start is still ahead today, it means today.
+    weekday = next((num for name, num in _WEEKDAYS.items() if name in lowered), None)
+    if (
+        weekday is not None
+        and weekday == now.weekday()
+        and start.date() != now.date()
+        and start - timedelta(days=7) > now
+    ):
+        start = start - timedelta(days=7)
+        if end:
+            end = end - timedelta(days=7)
+    return (start, end)

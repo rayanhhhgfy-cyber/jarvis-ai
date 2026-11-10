@@ -69,11 +69,14 @@ def _new_message(
     media_url: str | None = None,
     media_type: str | None = None,
     members: list[str] | None = None,
+    is_missed_call: bool = False,
 ) -> DMMessage:
     """``media_type`` is "photo" or "voice" when the message carries media
     instead of (or in addition to) text; ``media_url`` is its direct URL.
     ``members`` is the group's member list (names) for group threads —
-    Instagram gives the full list; Messenger gives only the last sender."""
+    Instagram gives the full list; Messenger gives only the last sender.
+    ``is_missed_call`` marks a call the other person made that Sir did
+    not answer — Jarvis sends the introduction message for it."""
     return DMMessage(
         platform=platform,
         thread_id=str(thread_id),
@@ -85,7 +88,25 @@ def _new_message(
         media_url=media_url,
         media_type=media_type,
         members=members or [],
+        is_missed_call=is_missed_call,
     )
+
+
+def _instagram_call(last: Any) -> bool:
+    """True when this message is a call the other person made and Sir
+    did not answer.
+
+    Instagram's API marks call events with item_type "video_call" or
+    "voice_call". ``is_sent_by_viewer`` tells us who called — when it
+    is not Sir, the call came in. instagrapi drops the call's action
+    (missed vs answered), so any incoming call event is treated as a
+    missed call: if Sir actually answered it, the person gets a polite
+    "Rayyan is busy" note, which is a bit early but harmless.
+    """
+    item_type = getattr(last, "item_type", "") or ""
+    if item_type not in ("video_call", "voice_call"):
+        return False
+    return not getattr(last, "is_sent_by_viewer", False)
 
 
 def _instagram_media(last: Any) -> tuple[str | None, str | None]:
@@ -240,17 +261,22 @@ class MessengerClient:
                 thread_id = thread_key.get("thread_fbid") or thread_key.get("other_user_id")
                 sender = (node.get("message_sender") or {}).get("messaging_actor") or {}
                 media_url, media_type = _messenger_media(node)
+                snippet = node.get("snippet", "") or ""
                 out.append(_new_message(
                     platform="messenger",
                     thread_id=thread_id,
                     sender_id=sender.get("id", ""),
                     sender_name=sender.get("name", ""),
-                    text=node.get("snippet", ""),
+                    text=snippet,
                     message_id=node.get("message_id", "") or node.get("id", ""),
                     is_group=(t.get("thread_type") == "GROUP"),
                     media_url=media_url,
                     media_type=media_type,
                     members=[sender.get("name", "")] if sender.get("name") else [],
+                    # A missed call shows as "Missed voice call" /
+                    # "Missed video call" in the snippet. An answered call
+                    # says "call ended" and is NOT treated as missed.
+                    is_missed_call="missed call" in snippet.lower(),
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.
@@ -423,6 +449,7 @@ class InstagramClient:
                         getattr(u, "full_name", "") or getattr(u, "username", "")
                         for u in (getattr(th, "users", []) or [])
                     ],
+                    is_missed_call=_instagram_call(last),
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.

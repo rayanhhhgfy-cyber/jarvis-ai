@@ -203,29 +203,48 @@ def _handle_remember(fact: str) -> str:
 
 
 def _handle_busy_free(status: str, rest: str) -> str:
-    """Record a calendar entry: "I'm busy Friday 5pm-8pm" / "I'm free Saturday".
+    """Record a calendar entry: "I'm busy Friday 5pm-8pm because I have
+    football practice" / "I'm free Saturday".
 
-    Stores {date, status, detail} so Jarvis can answer "are you free?"
-    from the calendar instead of guessing.
+    Stores {date, status, detail (the reason), from, to} so Jarvis can
+    answer "are you free?" — and tell every DMer proactively — from the
+    calendar instead of guessing.
     """
     from backend.services.dm_store import calendar as cal_store
-    from backend.services.dm_time import parse_time
+    from backend.services.dm_time import parse_time_window
 
     rest = (rest or "").strip()
-    when = parse_time(rest)
-    if not when:
+    # The reason: everything after "because".
+    reason = ""
+    when_text = rest
+    because = re.split(r"\s+because\s+", rest, flags=re.IGNORECASE)
+    if len(because) > 1:
+        when_text = because[0].strip()
+        reason = because[1].strip()
+    window = parse_time_window(when_text)
+    if not window:
         return (
-            "I could not understand the day. Try 'I'm busy Friday 5pm-8pm' "
-            "or 'I'm free Saturday'."
+            "I could not understand the day. Try 'I'm busy Friday 5pm-8pm "
+            "because I have football practice' or 'I'm free Saturday'."
         )
-    day_key = when.astimezone().date().isoformat()
+    start, end = window
+    day_key = start.astimezone().date().isoformat()
     cal_store.set(day_key, {
         "date": day_key,
         "status": status.lower(),
-        "detail": rest,
+        "detail": reason,
+        "from": start.astimezone().isoformat() if start else None,
+        "to": end.astimezone().isoformat() if end else None,
+        "raw": rest,
     })
-    day_name = when.strftime("%A")
-    return f"Noted — you are {status.lower()} on {day_name}."
+    day_name = start.strftime("%A")
+    window_text = ""
+    if start and end:
+        window_text = f" from {start.strftime('%H:%M')} to {end.strftime('%H:%M')}"
+    elif start:
+        window_text = f" from {start.strftime('%H:%M')}"
+    reason_text = f" ({reason})" if reason else ""
+    return f"Noted — you are {status.lower()} on {day_name}{window_text}{reason_text}."
 
 
 def _pending_meeting_awaiting_times() -> dict[str, Any] | None:
