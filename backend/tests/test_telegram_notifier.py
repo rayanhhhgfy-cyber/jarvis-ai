@@ -1936,3 +1936,37 @@ async def test_telegram_webhook_remind_natural_language_clock_anywhere(monkeypat
     fake_responder.add_reminder.assert_called_once()
     assert "doctor" in fake_responder.add_reminder.call_args.args[0]
     assert mock_send.call_args.args[0].startswith("Got it")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_contact_lookup(monkeypatch, tmp_path):
+    """'what is Omar's number?' answers from the saved contact card."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    dm_store.contacts.set("Omar", {"phone": "+962788809843", "instagram": "omar.jo"})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "what is Omar's number?"},
+        })
+        assert resp.status_code == 200
+        assert "+962788809843" in mock_send.call_args.args[0]
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "what is Omar's instagram?"},
+        })
+        assert resp.status_code == 200
+        assert "@omar.jo" in mock_send.call_args.args[0]
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "what is Sara's number?"},
+        })
+        assert resp.status_code == 200
+        assert "don't have" in mock_send.call_args.args[0]

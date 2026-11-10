@@ -1529,3 +1529,141 @@ async def test_missed_call_not_sent_twice(tmp_vault, tmp_path, monkeypatch):
     assert len(fake.sent) == 1
     await responder.poll_once()
     assert len(fake.sent) == 1  # no second intro for the same call
+
+
+@pytest.mark.asyncio
+async def test_send_morning_briefing(tmp_path, monkeypatch):
+    """The morning briefing sends weather, calendar, birthdays and DMs."""
+    from datetime import datetime as _dt
+
+    from backend.services import dm_store
+    from backend.services.dm_responder import _AMMAN, DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_irbid_weather",
+        lambda: _noop_coro({
+            "temp": 18.0, "condition": "clear sky", "wind": 10.0,
+            "high": 24.0, "low": 12.0, "rain_chance": 0,
+        }),
+    )
+    today = _dt.now(_AMMAN).date().isoformat()
+    monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
+    monkeypatch.setattr(dm_store.calendar, "_loaded", False)
+    monkeypatch.setattr(dm_store.calendar, "_data", {})
+    dm_store.calendar.set(today, {
+        "date": today, "status": "busy", "detail": "football practice",
+        "from": f"{today}T17:00:00+03:00", "to": f"{today}T20:00:00+03:00",
+    })
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    dm_store.contacts.set("Omar", {"birthday": _dt.now(_AMMAN).strftime("%m-%d")})
+    responder._record_activity(
+        "instagram", {"sender_name": "Layla", "text": "hello"}, "Hi!", False,
+    )
+    assert await responder.send_morning_briefing() is True
+    assert len(sent) == 1
+    assert "Irbid" in sent[0] and "18" in sent[0]
+    assert "Busy today" in sent[0] and "football" in sent[0]
+    assert "Omar" in sent[0] and "birthday" in sent[0].lower()
+    assert "Layla" in sent[0]
+
+
+@pytest.mark.asyncio
+async def test_send_morning_briefing_without_weather(tmp_path, monkeypatch):
+    """The briefing still goes out when the weather fetch fails."""
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    monkeypatch.setattr(
+        "backend.services.dm_responder._fetch_irbid_weather",
+        lambda: _noop_coro(None),
+    )
+    assert await responder.send_morning_briefing() is True
+    assert len(sent) == 1
+    assert "Irbid" not in sent[0]
+    assert "Good morning" in sent[0]
+
+
+@pytest.mark.asyncio
+async def test_save_contact_details_phone(tmp_path, monkeypatch):
+    """A phone number shared in a DM is saved to the contact card."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    saved = await responder._save_contact_details(
+        "Omar", "hey my number is +962 7 8880 9843, call me"
+    )
+    assert saved == ["phone +962788809843"]
+    assert dm_store.contacts.get("Omar", {}).get("phone") == "+962788809843"
+    assert len(sent) == 1 and "Omar" in sent[0]
+    # A repeat is silent — no second note.
+    saved = await responder._save_contact_details(
+        "Omar", "my number is +962 7 8880 9843"
+    )
+    assert saved == []
+    assert len(sent) == 1
+
+
+@pytest.mark.asyncio
+async def test_save_contact_details_instagram_and_ignores_noise(tmp_path, monkeypatch):
+    """An @handle is saved; emails and bare numbers are not."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    saved = await responder._save_contact_details(
+        "Layla", "follow me @layla.jo on instagram"
+    )
+    assert saved == ["instagram @layla.jo"]
+    assert dm_store.contacts.get("Layla", {}).get("instagram") == "layla.jo"
+    # An email address is not a handle, and bare numbers are not phones.
+    saved = await responder._save_contact_details(
+        "Omar", "email me at omar@gmail.com, I have 5 tickets"
+    )
+    assert saved == []
+    assert dm_store.contacts.get("Omar", {}) == {}

@@ -11,6 +11,7 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timedelta
 from typing import Any, Callable, Dict, List, Optional
+from zoneinfo import ZoneInfo
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.base import STATE_STOPPED
@@ -23,6 +24,17 @@ from shared.logger import get_logger
 log = get_logger("scheduler")
 
 
+def _scheduler_timezone() -> ZoneInfo:
+    """All cron jobs fire in Sir's timezone (Asia/Amman).
+
+    The server runs in UTC, so a bare AsyncIOScheduler would fire the
+    20:00 digest at 23:00 his time and the 09:00 birthday check at
+    noon. Pinning the timezone makes every job fire when its
+    description says it does.
+    """
+    return ZoneInfo("Asia/Amman")
+
+
 class TaskScheduler:
     """
     Manages scheduled tasks: one-time, recurring, interval-based,
@@ -30,7 +42,7 @@ class TaskScheduler:
     """
 
     def __init__(self) -> None:
-        self._scheduler = AsyncIOScheduler()
+        self._scheduler = AsyncIOScheduler(timezone=_scheduler_timezone())
         self._jobs: Dict[str, Dict[str, Any]] = {}
 
     async def start(self) -> None:

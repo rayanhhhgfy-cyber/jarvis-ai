@@ -57,7 +57,12 @@ _TELEGRAM_SYSTEM = (
     "and contact memory, sends birthday wishes, mutes spam, follows "
     "custom auto-reply rules, and offers meetings. He also sees the "
     "photos and videos Rayyan sends him here on Telegram, and answers "
-    "questions about what is in them. "
+    "questions about what is in them. Every morning at 07:00 he sends "
+    "Rayyan a briefing on Telegram: today's weather in Irbid, what is on "
+    "his calendar, birthdays, and the overnight DMs. When someone shares "
+    "a phone number or Instagram handle in a DM, he saves it to that "
+    "person's contact card and tells Rayyan — ask him 'what is Omar's "
+    "number?' and he answers from the saved card. "
     "When you reply to a voice note, your words will be spoken aloud as "
     "a voice note — so never announce that you are sending one. Do not "
     "write '[Voice note]', 'Sending you a voice note', or anything like "
@@ -72,7 +77,9 @@ _TELEGRAM_SYSTEM = (
     "Already built — never suggest these as new ideas: reminders, "
     "summaries, voice-to-text, scheduled messages, contact memory, "
     "birthday wishes, spam muting, quiet hours, per-person tone, custom "
-    "rules, meeting scheduling, group welcomes, and the daily digest. "
+    "rules, meeting scheduling, group welcomes, the daily digest, the "
+    "morning briefing, and auto-saving phone numbers and Instagram "
+    "handles from DMs. "
     "What Jarvis cannot do: answer phone calls, disconnect an account on "
     "his own (only Rayyan typing /disconnect does that), or use Instagram "
     "or Messenger without Rayyan connecting the account first. "
@@ -1123,6 +1130,39 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             name = summary_match.group(1)
             summary = await _summarize_conversation(name)
             await send_telegram_message(summary)
+            return {"ok": True}
+
+        # --- "what is <name>'s number / instagram?" — saved contact detail. ---
+        # Deterministic lookup, never the LLM (it must not invent a number).
+        lookup_match = re.search(
+            r"what(?:'s| is)\s+(\S+(?:\s+\S+)?)'?s?\s+(number|phone|instagram|ig)\b",
+            text,
+            re.IGNORECASE,
+        )
+        if lookup_match:
+            from backend.services.dm_store import contacts
+
+            name = lookup_match.group(1).strip()
+            field = lookup_match.group(2).lower()
+            field = "instagram" if field in ("instagram", "ig") else "phone"
+            found = None
+            for stored_name, data in contacts.all().items():
+                if (
+                    name.lower() == stored_name.lower()
+                    or name.lower() in stored_name.lower()
+                    or stored_name.lower() in name.lower()
+                ):
+                    found = (stored_name, (data or {}).get(field))
+                    break
+            if found and found[1]:
+                label = "number" if field == "phone" else "Instagram"
+                display = f"@{found[1]}" if field == "instagram" else found[1]
+                await send_telegram_message(f"{found[0]}'s {label} is {display}.")
+            else:
+                label = "number" if field == "phone" else "Instagram"
+                await send_telegram_message(
+                    f"I don't have {name}'s {label} saved."
+                )
             return {"ok": True}
 
         # --- Normal chat, with recent DM activity as context (feature 5). ---

@@ -34,9 +34,11 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from backend.config import settings
 from backend.services import dm_auth
@@ -56,6 +58,78 @@ _MAX_REPLIES_PER_POLL = 5
 # so the first reply lands roughly 1–2 minutes after their message.)
 _REPLY_DELAY_SECONDS = 60
 _SEEN_FILE = "./storage/dm_seen.json"
+_AMMAN = ZoneInfo("Asia/Amman")
+
+# Irbid, Jordan — for the morning briefing weather.
+_IRBID_LAT, _IRBID_LON = 32.55, 35.85
+# WMO weather codes (Open-Meteo) -> plain words.
+_WEATHER_CODES = {
+    0: "clear sky", 1: "mainly clear", 2: "partly cloudy", 3: "overcast",
+    45: "fog", 48: "fog",
+    51: "light drizzle", 53: "drizzle", 55: "drizzle",
+    56: "freezing drizzle", 57: "freezing drizzle",
+    61: "light rain", 63: "rain", 65: "heavy rain",
+    66: "freezing rain", 67: "freezing rain",
+    71: "light snow", 73: "snow", 75: "heavy snow", 77: "snow grains",
+    80: "light rain showers", 81: "rain showers", 82: "heavy rain showers",
+    85: "snow showers", 86: "snow showers",
+    95: "thunderstorm", 96: "thunderstorm with hail", 99: "thunderstorm with hail",
+}
+
+# A phone number shared in a DM: starts with +, 0, or the Jordan
+# country code 962, and has 9–15 digits. A bare run of digits is not
+# enough (it could be a date, a price, or an order number).
+_PHONE_RE = re.compile(r"(\+?\d[\d\s\-()]{6,15}\d)")
+# An Instagram handle: @name, or instagram.com/name. The @ must not
+# be part of an email address. A trailing .com/.net/... is a domain
+# suffix, not part of the handle — stripped when the match is used.
+_IG_HANDLE_RE = re.compile(
+    r"(?<![\w.@])@([A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*)"
+    r"|instagram\.com/([A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*)",
+    re.IGNORECASE,
+)
+_IG_TLD_SUFFIXES = (".com", ".net", ".org", ".io", ".me", ".co", ".app")
+
+
+async def _fetch_irbid_weather(client: Any = None) -> dict[str, Any] | None:
+    """Today's weather in Irbid from Open-Meteo (free, no key).
+
+    Returns the current temperature, condition, today's high/low and
+    rain chance, or None when the fetch fails. A caller passes its own
+    client in tests; otherwise one is created here.
+    """
+    import httpx
+
+    url = (
+        "https://api.open-meteo.com/v1/forecast"
+        f"?latitude={_IRBID_LAT}&longitude={_IRBID_LON}"
+        "&current=temperature_2m,weather_code,wind_speed_10m"
+        "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+        "&timezone=Asia%2FAmman&forecast_days=1"
+    )
+    try:
+        if client is None:
+            async with httpx.AsyncClient(timeout=10) as c:
+                resp = await c.get(url)
+        else:
+            resp = await client.get(url)
+        if resp.status_code != 200:
+            return None
+        data = resp.json()
+        current = data.get("current") or {}
+        daily = data.get("daily") or {}
+        code = current.get("weather_code")
+        return {
+            "temp": current.get("temperature_2m"),
+            "condition": _WEATHER_CODES.get(code, "changing weather"),
+            "wind": current.get("wind_speed_10m"),
+            "high": (daily.get("temperature_2m_max") or [None])[0],
+            "low": (daily.get("temperature_2m_min") or [None])[0],
+            "rain_chance": (daily.get("precipitation_probability_max") or [None])[0],
+        }
+    except Exception as e:
+        log.debug("dm_weather_failed", error=str(e))
+        return None
 
 # Words that mark a message as important — when someone says it is
 # important, Sir gets a louder alert (the push title says so).
@@ -459,6 +533,108 @@ class DMResponder:
             log.debug("dm_digest_failed", error=str(e))
             return False
 
+    async def send_morning_briefing(self) -> bool:
+        """Send Sir the morning briefing on Telegram (07:00 his time).
+
+        One message with today's weather in Irbid, what is on his
+        Jarvis calendar today, any birthdays today or tomorrow, and the
+        overnight DM highlights (anything important or still waiting
+        for him). Returns True when a briefing was sent. The weather is
+        best-effort — the briefing still goes out without it.
+        """
+        from backend.services.dm_store import calendar as cal_store
+        from backend.services.dm_store import contacts
+        from backend.services.telegram_notifier import send_telegram_message
+
+        today = datetime.now(_AMMAN).date()
+        tomorrow = today + timedelta(days=1)
+        lines = [f"☀️ Good morning — {today.strftime('%A, %B %d')}"]
+
+        # Weather in Irbid.
+        weather = await _fetch_irbid_weather()
+        if weather and weather.get("temp") is not None:
+            line = f"🌤️ Irbid: {weather['condition']}, {weather['temp']}°C"
+            high, low = weather.get("high"), weather.get("low")
+            if high is not None and low is not None:
+                line += f" (high {high}°C, low {low}°C)"
+            rain = weather.get("rain_chance")
+            if rain:
+                line += f" — {rain}% chance of rain"
+            lines.append(line)
+
+        # Today's calendar.
+        entry = cal_store.get(today.isoformat())
+        if entry:
+            status = (entry.get("status") or "").lower()
+            detail = (entry.get("detail") or "").strip()
+            start = entry.get("from")
+            end = entry.get("to")
+            window = ""
+            try:
+                if start and end:
+                    window = (
+                        f" {datetime.fromisoformat(start).strftime('%H:%M')}"
+                        f"–{datetime.fromisoformat(end).strftime('%H:%M')}"
+                    )
+                elif start:
+                    window = f" from {datetime.fromisoformat(start).strftime('%H:%M')}"
+            except (TypeError, ValueError):
+                window = ""
+            if status == "busy":
+                lines.append(f"📅 Busy today{window}" + (f" — {detail}" if detail else ""))
+            elif status == "free":
+                lines.append("📅 You are free today.")
+        else:
+            lines.append("📅 Nothing on your calendar today.")
+
+        # Birthdays today / tomorrow.
+        for name, data in contacts.all().items():
+            birthday = (data or {}).get("birthday", "")
+            if not birthday:
+                continue
+            try:
+                month, day = (int(x) for x in birthday.split("-"))
+            except (ValueError, AttributeError):
+                continue
+            for target, label in ((today, "today"), (tomorrow, "tomorrow")):
+                if target.month == month and target.day == day:
+                    lines.append(f"🎂 {name}'s birthday is {label}!")
+
+        # Overnight DM highlights (last 12 hours).
+        try:
+            since = datetime.now(UTC) - timedelta(hours=12)
+            overnight = []
+            for entry in self._activity:
+                try:
+                    when = datetime.fromisoformat(entry.get("time", ""))
+                except (TypeError, ValueError):
+                    continue
+                if when >= since:
+                    overnight.append(entry)
+        except Exception:
+            overnight = []
+        if overnight:
+            lines.append("")
+            lines.append("💬 Overnight DMs:")
+            for entry in reversed(overnight[:5]):
+                flag = " ⚠️" if entry.get("important") else ""
+                lines.append(
+                    f"- {entry.get('sender_name', '')} ({entry.get('platform', '')}){flag}: "
+                    f"{entry.get('text', '')[:60]}"
+                )
+            needs_sir = [
+                e for e in overnight
+                if e.get("important") or (e.get("reply") or "").strip() == ""
+            ]
+            if needs_sir:
+                lines.append(f"👉 {len(needs_sir)} need{'s' if len(needs_sir) == 1 else ''} you — check the app.")
+
+        try:
+            return await send_telegram_message("\n".join(lines))
+        except Exception as e:
+            log.debug("dm_morning_briefing_failed", error=str(e))
+            return False
+
     async def _maybe_nudge(
         self, platform: str, thread_id: str, sender_name: str
     ) -> None:
@@ -816,6 +992,64 @@ class DMResponder:
                     log.debug("dm_search_failed", error=str(e))
         return results[:10]
 
+    async def _save_contact_details(self, sender_name: str, text: str) -> list[str]:
+        """Save a phone number or Instagram handle a friend shared in a DM.
+
+        The detail goes on their contact card (``contacts`` store) so Sir
+        can ask for it later (\"what is Omar's number?\"). Only a detail
+        that is NEW for that person is saved and reported — repeats are
+        silent. Returns the list of newly saved details, e.g.
+        ``["phone +962 7...", "instagram @..."]``.
+        """
+        from backend.services.dm_store import contacts
+
+        name = (sender_name or "").strip()
+        if not name or not text:
+            return []
+        data = contacts.get(name, {}) or {}
+        saved: list[str] = []
+
+        # Phone number: starts with +, 0, or 962, 9–15 digits.
+        for m in _PHONE_RE.finditer(text):
+            raw = m.group(1)
+            digits = "".join(ch for ch in raw if ch.isdigit())
+            if not (9 <= len(digits) <= 15):
+                continue
+            if not (raw.strip().startswith(("+", "0")) or digits.startswith("962")):
+                continue
+            normalized = "+" + digits if raw.strip().startswith("+") else digits
+            if data.get("phone") == normalized:
+                continue
+            data["phone"] = normalized
+            saved.append(f"phone {normalized}")
+
+        # Instagram handle: @name or instagram.com/name.
+        for m in _IG_HANDLE_RE.finditer(text):
+            handle = m.group(1) or m.group(2) or ""
+            handle = handle.strip(".").lower()
+            for suffix in _IG_TLD_SUFFIXES:
+                if handle.endswith(suffix):
+                    handle = handle[: -len(suffix)]
+                    break
+            if not handle or len(handle) > 30:
+                continue
+            if data.get("instagram") == handle:
+                continue
+            data["instagram"] = handle
+            saved.append(f"instagram @{handle}")
+
+        if saved:
+            contacts.set(name, data)
+            try:
+                from backend.services.telegram_notifier import send_telegram_message
+
+                await send_telegram_message(
+                    f"📇 Saved {name}'s " + ", ".join(saved) + "."
+                )
+            except Exception as e:
+                log.debug("dm_contact_save_notify_failed", error=str(e))
+        return saved
+
     def _record_activity(
         self,
         platform: str,
@@ -1117,6 +1351,13 @@ class DMResponder:
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._persist_state()
                 continue
+            # Save any contact details the sender shared in this message
+            # (a phone number or Instagram handle) to their contact card.
+            # 1:1 threads only — in a group the number might not be theirs.
+            if msg.get("text") and not msg.get("is_group"):
+                await self._save_contact_details(
+                    msg.get("sender_name", ""), msg.get("text") or ""
+                )
             # Quiet hours: Jarvis does not reply late at night. The first
             # message in a thread gets one short "morning" reply; the rest
             # wait silently until morning. VIPs bypass quiet hours.

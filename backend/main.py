@@ -403,6 +403,25 @@ async def lifespan(app: FastAPI):
     except Exception as digest_err:
         log.warning("dm_daily_digest_schedule_failed", error=str(digest_err))
 
+    # Morning briefing — weather, calendar, birthdays, overnight DMs.
+    try:
+        from backend.services.dm_responder import dm_responder as _briefing_responder
+
+        async def _dm_morning_briefing_job():
+            try:
+                await _briefing_responder.send_morning_briefing()
+            except Exception as e:
+                log.warning("dm_morning_briefing_job_failed", error=str(e))
+
+        scheduler.schedule_cron(
+            job_id="dm_morning_briefing",
+            func=_dm_morning_briefing_job,
+            cron_expression="0 7 * * *",
+            description="Send Sir the morning briefing on Telegram at 07:00",
+        )
+    except Exception as briefing_err:
+        log.warning("dm_morning_briefing_schedule_failed", error=str(briefing_err))
+
     # Minute ticker — send due scheduled DMs and due reminders.
     try:
         from backend.services.dm_responder import dm_responder as _ticker_responder
