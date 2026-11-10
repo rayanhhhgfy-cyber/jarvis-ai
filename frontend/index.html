@@ -119,6 +119,8 @@ svg{display:block;flex:none}
 .call-btn.live{background:var(--red);color:#fff;animation:callPulse 1.6s ease-in-out infinite}
 .call-btn.listening{background:var(--red);color:#fff}
 @keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,0.35)}50%{box-shadow:0 0 0 14px rgba(229,72,77,0)}}
+.lang-btn{min-height:36px;padding:0 14px;border-radius:18px;cursor:pointer;font-size:13px;font-weight:500;background:var(--raised);color:var(--text-2);border:1px solid var(--hairline);margin:0 3px}
+.lang-btn.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 
 /* Buttons */
 .btn{min-height:44px;padding:0 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity 150ms var(--ease),background-color 150ms var(--ease)}
@@ -268,6 +270,11 @@ svg{display:block;flex:none}
     <div class="chat-box" style="text-align:center">
       <h2>مكالمة مع Jarvis</h2>
       <p style="color:var(--text-2);font-size:14px;margin-bottom:20px">اضغط زر الاتصال وتحدث معه بصوتك — يرد عليك بصوته</p>
+      <div style="margin-bottom:16px">
+        <button class="lang-btn active" data-lang="" onclick="callSetLang('')">تلقائي</button>
+        <button class="lang-btn" data-lang="en" onclick="callSetLang('en')">English</button>
+        <button class="lang-btn" data-lang="ar" onclick="callSetLang('ar')">العربية</button>
+      </div>
       <div id="callTimer" style="font-family:var(--mono);font-size:28px;margin-bottom:20px">00:00</div>
       <button id="callBtn" class="call-btn" onclick="toggleCall()" title="اتصال">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -869,6 +876,13 @@ async function toggleVoiceInput() {
 }
 
 // === Voice call (Talk) ===
+// A real phone call: tap once to start, then just talk. Jarvis hears
+// when you start speaking and when you stop (voice activity detection),
+// so there is no button to press to send — he answers on his own.
+// The reply is played through the Web Audio API (not an <audio> tag),
+// so the browser's autoplay block and the iPhone silent switch cannot
+// mute it. If the server sends no audio, the browser speaks the reply
+// itself as a fallback.
 let callActive = false;
 let callStream = null;
 let callRecorder = null;
@@ -876,7 +890,17 @@ let callChunks = [];
 let callBusy = false;
 let callStart = 0;
 let callTimerId = null;
-let callPlayer = null;
+let callAudioCtx = null;
+let callAnalyser = null;
+let callVadId = null;
+let callSpeaking = false;
+let callSpeechStart = 0;
+let callLastSpeech = 0;
+let callLang = "";  // "" = auto, "en", "ar"
+const CALL_VAD_THRESHOLD = 0.02;   // mic RMS above this = speaking
+const CALL_SILENCE_MS = 1200;      // quiet this long after speech = done
+const CALL_MIN_SPEECH_MS = 400;    // ignore blips shorter than this
+const CALL_MAX_TURN_MS = 60000;    // safety cap per turn
 
 function callElapsed() {
   const s = Math.floor((Date.now() - callStart) / 1000);
@@ -898,27 +922,130 @@ function callAddMsg(who, text) {
   box.scrollTop = box.scrollHeight;
 }
 
+function callSetLang(lang) {
+  callLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+function ensureCallAudio() {
+  if (!callAudioCtx) {
+    callAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (callAudioCtx.state === 'suspended') {
+    callAudioCtx.resume().catch(() => {});
+  }
+  return callAudioCtx;
+}
+
+function callMicLevel() {
+  if (!callAnalyser) return 0;
+  const data = new Uint8Array(callAnalyser.fftSize);
+  callAnalyser.getByteTimeDomainData(data);
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    const v = (data[i] - 128) / 128;
+    sum += v * v;
+  }
+  return Math.sqrt(sum / data.length);
+}
+
+function callVadTick() {
+  if (!callActive || callBusy) return;
+  if (!callRecorder || callRecorder.state !== 'recording') return;
+  const level = callMicLevel();
+  const now = Date.now();
+  if (level > CALL_VAD_THRESHOLD) {
+    if (!callSpeaking) {
+      callSpeaking = true;
+      callSpeechStart = now;
+      document.getElementById('callBtn').classList.add('listening');
+      callSetStatus('أسمعك...');
+    }
+    callLastSpeech = now;
+    return;
+  }
+  if (!callSpeaking) return;
+  if (now - callLastSpeech >= CALL_SILENCE_MS
+      && now - callSpeechStart >= CALL_MIN_SPEECH_MS) {
+    callSpeaking = false;
+    try { callRecorder.stop(); } catch (e) {}
+    return;
+  }
+  if (now - callSpeechStart >= CALL_MAX_TURN_MS) {
+    callSpeaking = false;
+    try { callRecorder.stop(); } catch (e) {}
+  }
+}
+
 async function startCallListening() {
   if (!callActive || callBusy || (callRecorder && callRecorder.state === 'recording')) return;
   try {
     if (!callStream) {
       callStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      ensureCallAudio();
+      const source = callAudioCtx.createMediaStreamSource(callStream);
+      callAnalyser = callAudioCtx.createAnalyser();
+      callAnalyser.fftSize = 512;
+      source.connect(callAnalyser);
     }
+    ensureCallAudio();
     callChunks = [];
+    callSpeaking = false;
     callRecorder = new MediaRecorder(callStream);
     callRecorder.ondataavailable = (e) => { if (e.data.size) callChunks.push(e.data); };
     callRecorder.onstop = async () => {
       document.getElementById('callBtn').classList.remove('listening');
+      if (callVadId) { clearInterval(callVadId); callVadId = null; }
       if (!callActive || !callChunks.length) return;
       const blob = new Blob(callChunks, { type: callRecorder.mimeType || 'audio/webm' });
       await sendTalkTurn(blob);
     };
     callRecorder.start();
-    document.getElementById('callBtn').classList.add('listening');
-    callSetStatus('أستمع إليك — اضغط الزر عند الانتهاء');
+    callVadId = setInterval(callVadTick, 100);
+    callSetStatus('أستمع إليك — تحدث متى شئت');
   } catch (e) {
     callSetStatus('تعذر الوصول إلى الميكروفون: ' + e.message);
   }
+}
+
+// Play Jarvis's reply out loud. Web Audio API first (not the silent
+// switch, not the autoplay block); the browser's own voice second;
+// resolve() when the sound is done so the call can listen again.
+function playReplyAudio(base64, replyText) {
+  return new Promise((resolve) => {
+    const done = () => resolve();
+    const speakFallback = () => {
+      try {
+        if (!('speechSynthesis' in window) || !replyText) { done(); return; }
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(replyText);
+        const isAr = /[\u0600-\u06FF]/.test(replyText);
+        utter.lang = isAr ? 'ar-SA' : 'en-US';
+        utter.onend = done;
+        utter.onerror = done;
+        window.speechSynthesis.speak(utter);
+        // Safety: never hang the call if the voice never fires onend.
+        setTimeout(done, Math.max(4000, replyText.length * 120));
+      } catch (e) { done(); }
+    };
+    if (!base64) { speakFallback(); return; }
+    try {
+      const ctx = ensureCallAudio();
+      const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+      const buf = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+      ctx.decodeAudioData(buf).then((audioBuf) => {
+        const source = ctx.createBufferSource();
+        source.buffer = audioBuf;
+        source.connect(ctx.destination);
+        source.onended = done;
+        source.start();
+      }).catch(() => speakFallback());
+    } catch (e) {
+      speakFallback();
+    }
+  });
 }
 
 async function sendTalkTurn(blob) {
@@ -926,25 +1053,14 @@ async function sendTalkTurn(blob) {
   callSetStatus('جارٍ التفكير...');
   const form = new FormData();
   form.append('file', blob, 'recording.webm');
+  const url = API + '/api/audio/talk' + (callLang ? ('?language=' + callLang) : '');
   try {
-    const resp = await fetch(API + '/api/audio/talk', { method: 'POST', body: form });
+    const resp = await fetch(url, { method: 'POST', body: form });
     const data = await resp.json();
     if (data.transcript) callAddMsg('أنت', data.transcript);
     if (data.reply) callAddMsg('Jarvis', data.reply);
-    if (data.audio_base64) {
-      callPlayer = new Audio('data:' + (data.audio_mime || 'audio/mpeg') + ';base64,' + data.audio_base64);
-      callSetStatus('Jarvis يتحدث...');
-      callPlayer.onended = () => {
-        callBusy = false;
-        if (callActive) startCallListening();
-      };
-      callPlayer.onerror = () => {
-        callBusy = false;
-        if (callActive) startCallListening();
-      };
-      await callPlayer.play();
-      return;
-    }
+    callSetStatus('Jarvis يتحدث...');
+    await playReplyAudio(data.audio_base64 || '', data.reply || '');
   } catch (e) {
     console.log('talk turn failed', e);
     callSetStatus('تعذر الاتصال — حاول مرة أخرى');
@@ -956,7 +1072,8 @@ async function sendTalkTurn(blob) {
 async function toggleCall() {
   const btn = document.getElementById('callBtn');
   if (!callActive) {
-    // Start the call.
+    // Start the call — unlock audio on this tap, then just talk.
+    ensureCallAudio();
     callActive = true;
     callStart = Date.now();
     callTimerId = setInterval(callElapsed, 1000);
@@ -965,24 +1082,23 @@ async function toggleCall() {
     document.getElementById('endCallBtn').style.display = '';
     callSetStatus('جارٍ بدء المكالمة...');
     await startCallListening();
-    return;
   }
-  // In a call: toggle recording (tap to talk, tap to send).
-  if (callRecorder && callRecorder.state === 'recording') {
-    callRecorder.stop();
-  } else if (!callBusy) {
-    await startCallListening();
-  }
+  // While in a call the big button does nothing — Jarvis hears you
+  // on his own. Use "إنهاء المكالمة" to hang up.
 }
 
 function endCall() {
   callActive = false;
   callBusy = false;
+  callSpeaking = false;
+  if (callVadId) { clearInterval(callVadId); callVadId = null; }
   if (callRecorder && callRecorder.state === 'recording') {
     try { callRecorder.stop(); } catch (e) {}
   }
-  if (callPlayer) { try { callPlayer.pause(); } catch (e) {} callPlayer = null; }
+  try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
   if (callStream) { callStream.getTracks().forEach(t => t.stop()); callStream = null; }
+  if (callAudioCtx) { try { callAudioCtx.close(); } catch (e) {} callAudioCtx = null; }
+  callAnalyser = null;
   if (callTimerId) { clearInterval(callTimerId); callTimerId = null; }
   document.getElementById('callBtn').classList.remove('live', 'listening');
   document.getElementById('endCallBtn').style.display = 'none';

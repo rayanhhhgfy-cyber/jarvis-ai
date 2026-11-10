@@ -85,7 +85,15 @@ _VOICE_TALK_SYSTEM = (
 
 
 @router.post("/talk")
-async def voice_talk(file: UploadFile = File(...)):
+async def voice_talk(
+    file: UploadFile = File(...),
+    language: str | None = Query(
+        None,
+        description="Optional language hint for transcription: 'en' or 'ar'. "
+        "When omitted, Whisper auto-detects — which can mis-hear short "
+        "English as another language.",
+    ),
+):
     """One spoken turn: audio in, Jarvis's spoken reply (MP3) out.
 
     Returns {"ok", "transcript", "reply", "audio_base64", "audio_mime"}.
@@ -112,9 +120,13 @@ async def voice_talk(file: UploadFile = File(...)):
             detail="Empty audio upload.",
         )
 
+    lang_hint = (language or "").strip().lower() or None
+    if lang_hint not in (None, "en", "ar"):
+        lang_hint = None
     transcript = await transcription_service.transcribe_bytes(
         audio_bytes=audio_bytes,
         filename=file.filename or "recording.webm",
+        language=lang_hint,
     )
     transcript = (transcript or "").strip()
 
