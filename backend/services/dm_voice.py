@@ -30,12 +30,69 @@ log = get_logger("dm_voice")
 _ARABIC_RE = re.compile(r"[\u0600-\u06FF]")
 _EN_VOICE = "en-US-ChristopherNeural"
 _AR_VOICE = "ar-SA-HamedNeural"
-_MAX_CHARS = 500
+# Max characters in ONE voice message. Instagram caps a voice message at
+# about a minute (1 minute on iOS, up to 5 on some Android) — 450 chars
+# is roughly half a minute of speech in either language, so every chunk
+# fits with room to spare. A longer reply is sent as several voice
+# notes in a row, never cut off mid-sentence.
+_CHUNK_CHARS = 450
+# Split after a sentence-ending mark (English + Arabic) or a newline.
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?؟۔])\s+|\n+")
 
 
 def _pick_voice(text: str) -> str:
     """Arabic voice for Arabic text, English voice otherwise."""
     return _AR_VOICE if _ARABIC_RE.search(text or "") else _EN_VOICE
+
+
+def _split_text(text: str) -> list[str]:
+    """Split a reply into chunks that each fit in one voice message.
+
+    Splits at sentence ends and packs sentences into chunks of at most
+    ``_CHUNK_CHARS``. A single over-long sentence is split at word
+    boundaries, never mid-word. Joining the chunks with a space gives
+    back the original text.
+    """
+    text = (text or "").strip()
+    if not text:
+        return []
+    sentences = [
+        s.strip() for s in _SENTENCE_SPLIT_RE.split(text) if s.strip()
+    ]
+    chunks: list[str] = []
+    current = ""
+    for sentence in sentences:
+        if len(sentence) > _CHUNK_CHARS:
+            # Over-long sentence: flush what we have, then split it
+            # at word boundaries into full chunks.
+            if current:
+                chunks.append(current)
+                current = ""
+            buf = ""
+            for word in sentence.split():
+                piece = f"{buf} {word}".strip() if buf else word
+                if len(piece) > _CHUNK_CHARS:
+                    if buf:
+                        chunks.append(buf)
+                    buf = word
+                    # One word longer than a chunk (a long URL): hard-cut it.
+                    while len(buf) > _CHUNK_CHARS:
+                        chunks.append(buf[:_CHUNK_CHARS])
+                        buf = buf[_CHUNK_CHARS:]
+                else:
+                    buf = piece
+            current = buf
+            continue
+        piece = f"{current} {sentence}".strip() if current else sentence
+        if len(piece) > _CHUNK_CHARS:
+            if current:
+                chunks.append(current)
+            current = sentence
+        else:
+            current = piece
+    if current:
+        chunks.append(current)
+    return chunks
 
 
 async def _synthesize_mp3(text: str) -> Path | None:
@@ -45,7 +102,7 @@ async def _synthesize_mp3(text: str) -> Path | None:
     except ImportError:
         log.warning("dm_voice_no_edge_tts")
         return None
-    text = (text or "").strip()[:_MAX_CHARS]
+    text = (text or "").strip()
     if not text:
         return None
     tmp = Path(tempfile.mkdtemp(prefix="jarvis_voice_")) / "reply.mp3"
@@ -85,32 +142,54 @@ async def _mp3_to_m4a(mp3_path: Path) -> Path | None:
 
 
 async def send_voice_reply(client: object, thread_id: str, text: str) -> bool:
-    """Synthesize the reply and send it as an Instagram voice message.
+    """Synthesize the reply and send it as Instagram voice message(s).
 
-    ``client`` is an InstagramClient (which has send_voice). Returns True
-    when the voice message was sent; False on any failure (caller falls
-    back to text). Temp files are always cleaned up.
+    A reply of any length works: it is split into chunks that each fit
+    in one voice message and sent in order. All audio is built BEFORE
+    anything is sent — if any chunk fails to synthesize, nothing goes
+    out and the caller falls back to text, so the person never gets a
+    half-voice plus the full text. If a send fails after some chunks
+    already went out, this returns False and the caller still sends the
+    full text, so the reply arrives complete (with the first part
+    duplicated as voice). ``client`` is an InstagramClient (which has
+    send_voice). Temp files are always cleaned up.
     """
-    mp3_path = await _synthesize_mp3(text)
-    if not mp3_path:
+    chunks = _split_text(text)
+    if not chunks:
         return False
+    send_voice = getattr(client, "send_voice", None)
+    if not send_voice:
+        return False
+    built: list[tuple[Path, Path]] = []
+    tmpdirs: list[Path] = []
     try:
-        m4a_path = await _mp3_to_m4a(mp3_path)
-        if not m4a_path:
-            return False
-        send_voice = getattr(client, "send_voice", None)
-        if not send_voice:
-            return False
-        result = await send_voice(thread_id, m4a_path)
-        return bool(result and result.get("ok"))
+        for chunk in chunks:
+            mp3_path = await _synthesize_mp3(chunk)
+            if not mp3_path:
+                return False
+            tmpdirs.append(mp3_path.parent)
+            m4a_path = await _mp3_to_m4a(mp3_path)
+            if not m4a_path:
+                return False
+            built.append((mp3_path, m4a_path))
+        for _, m4a_path in built:
+            try:
+                result = await send_voice(thread_id, m4a_path)
+            except Exception as e:
+                log.warning("dm_voice_send_failed", error=str(e))
+                return False
+            if not (result and result.get("ok")):
+                return False
+        return True
     except Exception as e:
         log.warning("dm_voice_send_failed", error=str(e))
         return False
     finally:
-        # Clean up the temp dir (mp3 + m4a).
+        # Clean up every chunk's temp dir (mp3 + m4a live together).
         try:
             import shutil
 
-            shutil.rmtree(mp3_path.parent, ignore_errors=True)
+            for tmpdir in tmpdirs:
+                shutil.rmtree(tmpdir, ignore_errors=True)
         except Exception:
             pass

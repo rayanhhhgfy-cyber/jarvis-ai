@@ -9,6 +9,7 @@ All HTTP is mocked — no real Groq calls, no real downloads.
 from __future__ import annotations
 
 from types import SimpleNamespace
+from unittest.mock import AsyncMock
 
 import httpx
 import pytest
@@ -124,3 +125,92 @@ async def test_transcribe_audio_ok(monkeypatch):
 async def test_transcribe_audio_no_key(monkeypatch):
     monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "")
     assert await transcribe_audio("https://cdn.example/v.mp3", client=_mock_client(lambda r: httpx.Response(200))) is None
+
+
+# --------------------------------------------------------------------
+# transcribe_audio — long voice notes (stream + split + join)
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_transcribe_audio_long_joins_segments(monkeypatch, tmp_path):
+    """A voice note too big for one download is streamed, split into
+    pieces, transcribed piece by piece, and joined — heard in full."""
+    import backend.services.dm_media as dm_media
+
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+    # Shrink the fast-path cap so a small file takes the long path.
+    monkeypatch.setattr(dm_media, "_MAX_DOWNLOAD_BYTES", 10)
+    transcripts = iter(["part one", "part two"])
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "api.groq.com" in str(request.url):
+            return httpx.Response(200, json={"text": next(transcripts)})
+        return httpx.Response(200, content=b"fake-audio-bytes" * 10)
+
+    async def fake_split(src, tmpdir):
+        seg1 = tmp_path / "seg_001.mp3"
+        seg2 = tmp_path / "seg_002.mp3"
+        seg1.write_bytes(b"fake-segment-one")
+        seg2.write_bytes(b"fake-segment-two")
+        return [seg1, seg2]
+
+    monkeypatch.setattr(dm_media, "_split_audio", fake_split)
+    result = await transcribe_audio(
+        "https://cdn.example/long.mp3", client=_mock_client(handler)
+    )
+    assert result == "part one part two"
+
+
+@pytest.mark.asyncio
+async def test_transcribe_audio_long_split_fails_returns_none(monkeypatch):
+    """When a long voice note cannot be split, transcription returns None
+    (same as before — no crash, no partial transcript)."""
+    import backend.services.dm_media as dm_media
+
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+    monkeypatch.setattr(dm_media, "_MAX_DOWNLOAD_BYTES", 10)
+    monkeypatch.setattr(dm_media, "_split_audio", AsyncMock(return_value=[]))
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, content=b"fake-audio-bytes" * 10)
+
+    assert await transcribe_audio(
+        "https://cdn.example/long.mp3", client=_mock_client(handler)
+    ) is None
+
+
+@pytest.mark.asyncio
+async def test_split_audio_real_ffmpeg(tmp_path, monkeypatch):
+    """The real ffmpeg split works: a 3-second clip cut into 1-second
+    pieces comes back as 3 segments. Skipped where ffmpeg is missing."""
+    import shutil
+    import subprocess
+
+    import backend.services.dm_media as dm_media
+
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg not installed")
+    src = tmp_path / "tone.mp3"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "sine=frequency=440:duration=3",
+         "-c:a", "libmp3lame", "-b:a", "64k", str(src)],
+        check=True,
+    )
+    monkeypatch.setattr(dm_media, "_SEGMENT_SECONDS", 1)
+    segments = await dm_media._split_audio(src, tmp_path)
+    # ffmpeg can emit one extra trailing segment for encoder padding,
+    # so the count is at least 3, not exactly 3.
+    assert len(segments) >= 3
+    assert all(s.exists() and s.stat().st_size > 0 for s in segments)
+
+
+@pytest.mark.asyncio
+async def test_split_audio_no_ffmpeg(monkeypatch, tmp_path):
+    """Without ffmpeg, splitting returns [] (the caller falls back)."""
+    import shutil
+
+    import backend.services.dm_media as dm_media
+
+    monkeypatch.setattr(shutil, "which", lambda _: None)
+    assert await dm_media._split_audio(tmp_path / "voice.bin", tmp_path) == []
