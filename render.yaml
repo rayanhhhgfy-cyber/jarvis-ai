@@ -9,7 +9,9 @@ services:
     name: jarvis-ai
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    # ffmpeg converts TTS MP3 to the .m4a/AAC Instagram voice messages
+    # require. The `;` keeps pip running even if apt is unavailable.
+    buildCommand: apt-get update -qq && apt-get install -y -qq ffmpeg; pip install -r requirements.txt
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:

@@ -425,3 +425,38 @@ class InstagramClient:
         cl = self._require_client()
         result = await asyncio.to_thread(cl.direct_send, text, thread_ids=[str(thread_id)])
         return {"ok": True, "message_id": str(getattr(result, "id", "") or "")}
+
+    async def send_voice(self, thread_id: str, audio_path: Any) -> dict[str, Any]:
+        """Send a voice message (.m4a/AAC) to a thread. Instagram only."""
+        cl = self._require_client()
+        try:
+            tid = int(thread_id)
+        except (TypeError, ValueError):
+            return {"ok": False, "reason": "bad_thread_id"}
+        result = await asyncio.to_thread(
+            cl.direct_send_voice, audio_path, thread_ids=[tid]
+        )
+        return {"ok": True, "message_id": str(getattr(result, "id", "") or "")}
+
+    async def get_thread_messages(
+        self, thread_id: str, amount: int = 20
+    ) -> list[dict[str, Any]]:
+        """Recent messages of one thread (for DM search). Text only."""
+        cl = self._require_client()
+        try:
+            tid = int(thread_id)
+        except (TypeError, ValueError):
+            return []
+        thread = await asyncio.to_thread(cl.direct_thread, tid, amount=amount)
+        out: list[dict[str, Any]] = []
+        for msg in getattr(thread, "messages", None) or []:
+            text = getattr(msg, "text", "") or ""
+            sender = getattr(msg, "user", None)
+            out.append({
+                "text": text,
+                "sender_name": (
+                    getattr(sender, "full_name", "") or getattr(sender, "username", "")
+                ),
+                "message_id": str(getattr(msg, "id", "")),
+            })
+        return out

@@ -57,6 +57,36 @@ _SUMMARIZE_RE = re.compile(
     r"summar\w*\s+(?:.*?\s+)?with\s+(\S+(?:\s+\S+)?)\s*$",
     re.IGNORECASE,
 )
+# "send <name> a message tomorrow at 5pm: <text>" — scheduled DM.
+# The name is one word (send_dm_to_name matches by substring, so
+# "Omar" still finds "Omar Haddad"). The "a message" part is optional.
+_SCHEDULE_RE = re.compile(
+    r"^(?:send|schedule)\s+(?:a\s+message\s+(?:to|for)\s+)?"
+    r"(\S+)\s+(?:a\s+message\s+)?(.+?):\s*(.+)$",
+    re.IGNORECASE,
+)
+# "remind me to <thing> tomorrow at 5pm" — reminder for Sir.
+_REMIND_RE = re.compile(
+    r"^remind me\s+(?:to\s+)?(.+?)\s+(tomorrow|tonight|today|in\s+\d+\s+\w+|at\s+.+|on\s+\w+.*)$",
+    re.IGNORECASE,
+)
+# "remember that <name> <fact>" / "remember <name>'s birthday is <date>".
+_REMEMBER_RE = re.compile(
+    r"^remember\s+(?:that\s+)?(.+)$",
+    re.IGNORECASE,
+)
+# "I'm busy Friday 5pm-8pm" / "I'm free Saturday" — calendar entry.
+_BUSY_RE = re.compile(
+    r"^i'?m\s+(busy|free)\s+(.+)$",
+    re.IGNORECASE,
+)
+# "unmute <name>" — resume a muted thread.
+_UNMUTE_RE = re.compile(r"^unmute\s+(\S+(?:\s+\S+)?)\s*$", re.IGNORECASE)
+# "find the message where <name> mentioned <query>" / "search for <query>".
+_SEARCH_RE = re.compile(
+    r"^(?:find|search)(?:\s+the\s+message)?(?:\s+where\s+(\S+(?:\s+\S+)?)\s+mentioned\s+)?(.+)$",
+    re.IGNORECASE,
+)
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -93,6 +123,82 @@ async def _summarize_conversation(name: str) -> str:
         inject_memory=False,
     )
     return summary or f"I could not summarize the conversation with {name}."
+
+
+def _handle_remember(fact: str) -> str:
+    """Store a fact about a person (contact memory) or a birthday.
+
+    Understands "Omar loves football", "Omar's birthday is March 15",
+    "Layla just started a new job". Returns a confirmation line.
+    """
+    from backend.services.dm_store import contacts
+
+    fact = (fact or "").strip()
+    if not fact:
+        return "Tell me what to remember — for example 'remember that Omar loves football'."
+    # Birthday: "<name>'s birthday is <month> <day>" or "<name> birthday <date>".
+    bday = re.search(
+        r"^(\S+(?:\s+\S+)?)'?s?\s+birthday\s+(?:is\s+)?(\w+)\s+(\d{1,2})",
+        fact,
+        re.IGNORECASE,
+    )
+    if bday:
+        name = bday.group(1).strip()
+        # "Omar's" -> "Omar" (the name group keeps the possessive).
+        name = re.sub(r"'s$", "", name).strip()
+        month_name = bday.group(2).lower()
+        day = int(bday.group(3))
+        months = {
+            "january": 1, "february": 2, "march": 3, "april": 4, "may": 5,
+            "june": 6, "july": 7, "august": 8, "september": 9, "october": 10,
+            "november": 11, "december": 12,
+        }
+        month = months.get(month_name)
+        if month and 1 <= day <= 31:
+            data = contacts.get(name, {}) or {}
+            data["birthday"] = f"{month:02d}-{day:02d}"
+            contacts.set(name, data)
+            return f"Noted — {name}'s birthday is {month_name.title()} {day}. I will remind you."
+        return "I could not understand that date. Try 'Omar's birthday is March 15'."
+    # General fact: "<name> <rest>" — the first 1-2 words are the name.
+    words = fact.split()
+    if len(words) < 2:
+        return "Tell me who it is about — for example 'remember that Omar loves football'."
+    name = words[0]
+    note = " ".join(words[1:])
+    # Two-word names: if the note starts with a lowercase word that looks
+    # like part of a name, keep it simple — the first word is the name.
+    data = contacts.get(name, {}) or {}
+    existing = (data.get("notes") or "")
+    data["notes"] = f"{existing} {note}".strip() if existing else note
+    contacts.set(name, data)
+    return f"Noted about {name} — I will remember that."
+
+
+def _handle_busy_free(status: str, rest: str) -> str:
+    """Record a calendar entry: "I'm busy Friday 5pm-8pm" / "I'm free Saturday".
+
+    Stores {date, status, detail} so Jarvis can answer "are you free?"
+    from the calendar instead of guessing.
+    """
+    from backend.services.dm_store import calendar as cal_store
+    from backend.services.dm_time import parse_time
+
+    rest = (rest or "").strip()
+    when = parse_time(rest)
+    if not when:
+        return (
+            "I could not understand the day. Try 'I'm busy Friday 5pm-8pm' "
+            "or 'I'm free Saturday'."
+        )
+    day_key = when.astimezone().date().isoformat()
+    cal_store.set(day_key, {
+        "date": day_key,
+        "status": status.lower(),
+        "detail": rest,
+    })
+    day_name = when.strftime("%A")
+    return f"Noted — you are {status.lower()} on {day_name}."
 
 
 @router.get("/status")
@@ -188,6 +294,93 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         "I could not send that reply — the account may need reconnecting."
                     )
+            return {"ok": True}
+
+        # --- "unmute <name>" — resume a muted thread. ---
+        unmute_match = _UNMUTE_RE.match(text)
+        if unmute_match:
+            if dm_responder.unmute_thread(unmute_match.group(1)):
+                await send_telegram_message(
+                    f"Unmuted {unmute_match.group(1)} — I will reply to them again."
+                )
+            else:
+                await send_telegram_message(
+                    f"{unmute_match.group(1)} is not muted."
+                )
+            return {"ok": True}
+
+        # --- "remember that <name> <fact>" — contact memory / birthday. ---
+        remember_match = _REMEMBER_RE.match(text)
+        if remember_match:
+            reply = _handle_remember(remember_match.group(1))
+            await send_telegram_message(reply)
+            return {"ok": True}
+
+        # --- "I'm busy/free <day> ..." — Jarvis calendar entry. ---
+        busy_match = _BUSY_RE.match(text)
+        if busy_match:
+            reply = _handle_busy_free(busy_match.group(1), busy_match.group(2))
+            await send_telegram_message(reply)
+            return {"ok": True}
+
+        # --- "remind me to <thing> <time>" — reminder for Sir. ---
+        remind_match = _REMIND_RE.match(text)
+        if remind_match:
+            from backend.services.dm_time import describe_time, parse_time
+
+            when = parse_time(remind_match.group(2))
+            if when:
+                dm_responder.add_reminder(remind_match.group(1), when)
+                await send_telegram_message(
+                    f"Got it — I will remind you to {remind_match.group(1)} "
+                    f"{describe_time(when)}."
+                )
+            else:
+                await send_telegram_message(
+                    "I could not understand the time. Try 'remind me to call "
+                    "Omar tomorrow at 5pm'."
+                )
+            return {"ok": True}
+
+        # --- "send <name> a message <time>: <text>" — scheduled DM. ---
+        schedule_match = _SCHEDULE_RE.match(text)
+        if schedule_match and ":" in text:
+            from backend.services.dm_time import describe_time, parse_time
+
+            name = schedule_match.group(1)
+            when = parse_time(schedule_match.group(2))
+            message_text = schedule_match.group(3)
+            if when and message_text.strip():
+                dm_responder.schedule_dm(name, message_text.strip(), when)
+                await send_telegram_message(
+                    f"Scheduled — I will send that to {name} "
+                    f"{describe_time(when)}."
+                )
+            else:
+                await send_telegram_message(
+                    "I could not understand the time. Try 'send Omar a message "
+                    "tomorrow at 5pm: I will be there'."
+                )
+            return {"ok": True}
+
+        # --- "find/search ... where <name> mentioned <query>" — DM search. ---
+        search_match = _SEARCH_RE.match(text)
+        if search_match and ("find" in text.lower() or "search" in text.lower()):
+            name = search_match.group(1)
+            query = search_match.group(2)
+            results = await dm_responder.search_dms(query, name=name)
+            if results:
+                lines = [f"Found {len(results)} match(es):"]
+                for r in results[:5]:
+                    lines.append(
+                        f"- {r.get('sender_name', '')} ({r.get('platform', '')}): "
+                        f"{r.get('text', '')[:120]}"
+                    )
+                await send_telegram_message("\n".join(lines))
+            else:
+                await send_telegram_message(
+                    f"I could not find '{query}' in your recent DMs."
+                )
             return {"ok": True}
 
         # --- "tell <name> <message>" (feature 6): send a DM for Sir. ---

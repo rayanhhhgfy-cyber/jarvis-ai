@@ -395,6 +395,48 @@ async def lifespan(app: FastAPI):
     except Exception as digest_err:
         log.warning("dm_daily_digest_schedule_failed", error=str(digest_err))
 
+    # Minute ticker — send due scheduled DMs and due reminders.
+    try:
+        from backend.services.dm_responder import dm_responder as _ticker_responder
+
+        async def _dm_minute_ticker_job():
+            try:
+                await _ticker_responder.run_due_scheduled()
+            except Exception as e:
+                log.warning("dm_scheduled_job_failed", error=str(e))
+            try:
+                await _ticker_responder.run_due_reminders()
+            except Exception as e:
+                log.warning("dm_reminder_job_failed", error=str(e))
+
+        scheduler.schedule_cron(
+            job_id="dm_minute_ticker",
+            func=_dm_minute_ticker_job,
+            cron_expression="* * * * *",
+            description="Send due scheduled DMs and reminders every minute",
+        )
+    except Exception as ticker_err:
+        log.warning("dm_minute_ticker_schedule_failed", error=str(ticker_err))
+
+    # Birthday check — every morning at 09:00, remind Sir of birthdays.
+    try:
+        from backend.services.dm_responder import dm_responder as _bday_responder
+
+        async def _dm_birthday_job():
+            try:
+                await _bday_responder.check_birthdays()
+            except Exception as e:
+                log.warning("dm_birthday_job_failed", error=str(e))
+
+        scheduler.schedule_cron(
+            job_id="dm_birthday_check",
+            func=_dm_birthday_job,
+            cron_expression="0 9 * * *",
+            description="Check contact birthdays and remind Sir at 09:00",
+        )
+    except Exception as bday_err:
+        log.warning("dm_birthday_schedule_failed", error=str(bday_err))
+
     try:
         tool_executor.set_approval_gateway(approval_gateway)
         # Load every seed plugin. Each plugin's @tool decorators register

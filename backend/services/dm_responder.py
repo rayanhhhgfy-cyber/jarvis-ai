@@ -34,7 +34,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -88,6 +88,26 @@ def _is_vip(sender_name: str) -> bool:
     return any(vip in name or name in vip for vip in _vip_names())
 
 
+def _contact_notes(sender_name: str) -> str | None:
+    """The facts Sir recorded about this person, or None."""
+    from backend.services.dm_store import contacts
+
+    name = (sender_name or "").strip()
+    if not name:
+        return None
+    # Match by full name or first name, case-insensitive.
+    for stored_name, data in contacts.all().items():
+        if (
+            name.lower() == stored_name.lower()
+            or name.lower() in stored_name.lower()
+            or stored_name.lower() in name.lower()
+        ):
+            notes = (data or {}).get("notes", "")
+            if notes:
+                return notes
+    return None
+
+
 # Words that mark a message as tricky — money, payments, or anything
 # sensitive enough that Jarvis should draft, not auto-reply.
 _TRICKY_MARKERS = (
@@ -102,6 +122,74 @@ def _is_tricky(text: str) -> bool:
     """True when the message is about money or otherwise sensitive."""
     lowered = (text or "").lower()
     return any(marker in lowered for marker in _TRICKY_MARKERS)
+
+
+# Questions about when Sir will be back — Jarvis asks Sir first
+# (he never guesses Sir's schedule).
+_AWAY_MARKERS = (
+    "when will he be back", "when is he back", "when will rayyan be back",
+    "when is rayyan back", "when will he reply", "when will he answer",
+    "when are you back", "when will you be back", "when will you reply",
+    "متى بيرجع", "متى رح يرجع", "متى رح يرد", "متى بيرجع ريان",
+    "وين ريان", "وينه ريان",
+)
+
+
+def _is_away_question(text: str) -> bool:
+    """True when the sender asks when Sir will be back / reply."""
+    lowered = (text or "").lower()
+    return any(marker in lowered for marker in _AWAY_MARKERS)
+
+
+# Questions about whether Sir is free — Jarvis checks his calendar.
+_FREE_MARKERS = (
+    "are you free", "is he free", "is rayyan free", "are you available",
+    "is he available", "free on", "free tomorrow", "free friday",
+    "free saturday", "free sunday", "free monday", "free tuesday",
+    "free wednesday", "free thursday",
+    "فاضي", "متفرغ", "فاضي بكرة", "فاضي اليوم",
+)
+
+
+def _is_availability_question(text: str) -> bool:
+    """True when the sender asks whether Sir is free."""
+    lowered = (text or "").lower()
+    return any(marker in lowered for marker in _FREE_MARKERS)
+
+
+# Abusive / harassing words — Jarvis stops replying to these.
+_ABUSIVE_MARKERS = (
+    "idiot", "stupid", "shut up", "hate you", "kill yourself",
+    "غبي", "احمق", "اخرس", "بكرهك", "كلب", "حمار",
+)
+
+
+def _is_abusive(text: str) -> bool:
+    """True when the message is abusive or harassing."""
+    lowered = (text or "").lower()
+    return any(marker in lowered for marker in _ABUSIVE_MARKERS)
+
+
+def _in_quiet_hours(now: datetime | None = None) -> bool:
+    """True when the current time is inside the configured quiet hours."""
+    now = now or datetime.now(UTC)
+    # Quiet hours are in Sir's timezone (Asia/Amman).
+    from zoneinfo import ZoneInfo
+
+    local = now.astimezone(ZoneInfo("Asia/Amman"))
+    start_s, end_s = settings.dm_quiet_hours_start, settings.dm_quiet_hours_end
+    try:
+        sh, sm = (int(x) for x in start_s.split(":"))
+        eh, em = (int(x) for x in end_s.split(":"))
+    except (ValueError, AttributeError):
+        return False
+    start_minutes = sh * 60 + sm
+    end_minutes = eh * 60 + em
+    now_minutes = local.hour * 60 + local.minute
+    if start_minutes <= end_minutes:
+        return start_minutes <= now_minutes < end_minutes
+    # Overnight window (e.g. 23:00 -> 07:00).
+    return now_minutes >= start_minutes or now_minutes < end_minutes
 
 
 class DMResponder:
@@ -133,6 +221,13 @@ class DMResponder:
         # Drafts for tricky messages: thread_id -> the pending draft.
         # Jarvis does not auto-reply to these; Sir approves on Telegram.
         self._pending_drafts: dict[str, dict[str, Any]] = {}
+        # Spam filter: muted threads (thread_key -> sender name) and the
+        # recent message timestamps per thread for rate detection.
+        self._muted: dict[str, str] = {}
+        self._msg_times: dict[str, list[datetime]] = {}
+        # Quiet hours: threads that already got the "morning" reply
+        # tonight (so he does not repeat it all night).
+        self._quiet_replied: set[str] = set()
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -306,6 +401,212 @@ class DMResponder:
             )
         except Exception as e:
             log.debug("dm_nudge_failed", error=str(e))
+
+    # ------------------------------------------------------------------
+    # Scheduled messages + reminders (Sir asks on Telegram)
+    # ------------------------------------------------------------------
+
+    def schedule_dm(self, name: str, text: str, when: datetime) -> dict[str, Any]:
+        """Queue a DM to be sent at ``when``. Returns the stored entry."""
+        import uuid
+
+        from backend.services.dm_store import scheduled_dms
+
+        entry_id = f"dm_{uuid.uuid4().hex[:8]}"
+        scheduled_dms.set(entry_id, {
+            "name": name, "text": text,
+            "when": when.astimezone(UTC).isoformat(),
+            "created": datetime.now(UTC).isoformat(),
+        })
+        return {"ok": True, "id": entry_id, "when": when}
+
+    async def run_due_scheduled(self) -> int:
+        """Send every scheduled DM whose time has come. Returns count sent."""
+        from backend.services.dm_store import scheduled_dms
+
+        now = datetime.now(UTC)
+        sent = 0
+        for entry_id, entry in scheduled_dms.all().items():
+            try:
+                when = datetime.fromisoformat(entry["when"])
+            except (KeyError, TypeError, ValueError):
+                scheduled_dms.delete(entry_id)
+                continue
+            if when > now:
+                continue
+            result = await self.send_dm_to_name(entry["name"], entry["text"])
+            scheduled_dms.delete(entry_id)
+            if result.get("ok"):
+                sent += 1
+        return sent
+
+    def add_reminder(self, text: str, when: datetime) -> dict[str, Any]:
+        """Queue a Telegram reminder for Sir at ``when``."""
+        import uuid
+
+        from backend.services.dm_store import reminders
+
+        entry_id = f"rem_{uuid.uuid4().hex[:8]}"
+        reminders.set(entry_id, {
+            "text": text,
+            "when": when.astimezone(UTC).isoformat(),
+            "created": datetime.now(UTC).isoformat(),
+        })
+        return {"ok": True, "id": entry_id, "when": when}
+
+    async def run_due_reminders(self) -> int:
+        """Send every due reminder to Sir on Telegram. Returns count sent."""
+        from backend.services.dm_store import reminders
+        from backend.services.telegram_notifier import send_telegram_message
+
+        now = datetime.now(UTC)
+        sent = 0
+        for entry_id, entry in reminders.all().items():
+            try:
+                when = datetime.fromisoformat(entry["when"])
+            except (KeyError, TypeError, ValueError):
+                reminders.delete(entry_id)
+                continue
+            if when > now:
+                continue
+            try:
+                await send_telegram_message(f"⏰ Reminder: {entry['text']}")
+                sent += 1
+            except Exception as e:
+                log.debug("dm_reminder_failed", error=str(e))
+            reminders.delete(entry_id)
+        return sent
+
+    # ------------------------------------------------------------------
+    # Spam filter + quiet hours + calendar + birthdays + search
+    # ------------------------------------------------------------------
+
+    def _is_spamming(self, thread_id: str) -> bool:
+        """True when one thread sent too many messages in the window."""
+        now = datetime.now(UTC)
+        window = timedelta(minutes=max(1, settings.dm_spam_window_minutes))
+        times = self._msg_times.setdefault(thread_id, [])
+        times[:] = [t for t in times if now - t < window]
+        times.append(now)
+        return len(times) > max(1, settings.dm_spam_max_messages)
+
+    def unmute_thread(self, name: str) -> bool:
+        """Unmute a muted thread by sender name. Returns True if unmuted."""
+        needle = (name or "").strip().lower()
+        for key, sender in list(self._muted.items()):
+            if needle in sender.lower() or needle in key.lower():
+                del self._muted[key]
+                return True
+        return False
+
+    def _calendar_answer(self, text: str) -> str | None:
+        """Answer an availability question from Sir's Jarvis calendar.
+
+        The calendar is a simple store Sir fills on Telegram ("I'm busy
+        Friday 5pm-8pm"). Returns the answer text, or None when the
+        calendar has nothing for that day.
+        """
+        from backend.services.dm_store import calendar as cal_store
+
+        entries = cal_store.all()
+        if not entries:
+            return None
+        # Find the day the sender is asking about.
+        from backend.services.dm_time import parse_time
+
+        when = parse_time(text)
+        if not when:
+            return None
+        day_key = when.astimezone(UTC).date().isoformat()
+        for entry in entries.values():
+            if entry.get("date") == day_key:
+                return (
+                    f"Rayyan is {entry.get('status', 'busy')} on "
+                    f"{when.strftime('%A')}"
+                    + (f" ({entry.get('detail', '')})" if entry.get("detail") else "")
+                    + "."
+                )
+        return None
+
+    async def check_birthdays(self) -> int:
+        """Send Sir a Telegram note for any contact birthday today/tomorrow."""
+        from backend.services.dm_store import contacts
+        from backend.services.telegram_notifier import send_telegram_message
+
+        today = datetime.now(UTC).date()
+        tomorrow = today + timedelta(days=1)
+        sent = 0
+        for name, data in contacts.all().items():
+            birthday = (data or {}).get("birthday", "")
+            if not birthday:
+                continue
+            try:
+                month, day = (int(x) for x in birthday.split("-"))
+            except (ValueError, AttributeError):
+                continue
+            for target, label in ((today, "today"), (tomorrow, "tomorrow")):
+                if target.month == month and target.day == day:
+                    try:
+                        await send_telegram_message(
+                            f"🎂 {name}'s birthday is {label}!"
+                            + (" Want me to send them a birthday wish?"
+                               if label == "today" else "")
+                        )
+                        sent += 1
+                    except Exception as e:
+                        log.debug("dm_birthday_failed", error=str(e))
+        return sent
+
+    async def search_dms(
+        self, query: str, name: str | None = None
+    ) -> list[dict[str, Any]]:
+        """Search recent DMs for a word or phrase.
+
+        Searches the activity feed first, then (Instagram only) the
+        thread history of the named person. Returns matches, newest first.
+        """
+        needle = (query or "").strip().lower()
+        if not needle:
+            return []
+        results: list[dict[str, Any]] = []
+        for entry in self.get_activity(limit=20):
+            if name and name.lower() not in (entry.get("sender_name") or "").lower():
+                continue
+            if needle in (entry.get("text") or "").lower() or needle in (
+                entry.get("reply") or ""
+            ).lower():
+                results.append({
+                    "sender_name": entry.get("sender_name", ""),
+                    "platform": entry.get("platform", ""),
+                    "text": entry.get("text", ""),
+                    "reply": entry.get("reply", ""),
+                })
+        if name:
+            # Instagram thread history (deeper than the activity feed).
+            blob = dm_auth.load_connector("instagram")
+            if blob:
+                data = blob.get("data") or {}
+                try:
+                    client = self._build_client("instagram", blob.get("method"), data)
+                    threads = await client.list_recent(limit=10)
+                    for msg in threads or []:
+                        if name.lower() not in (msg.get("sender_name") or "").lower():
+                            continue
+                        get_messages = getattr(client, "get_thread_messages", None)
+                        if not get_messages:
+                            continue
+                        history = await get_messages(msg["thread_id"], amount=20)
+                        for item in history:
+                            if needle in (item.get("text") or "").lower():
+                                results.append({
+                                    "sender_name": item.get("sender_name", ""),
+                                    "platform": "instagram",
+                                    "text": item.get("text", ""),
+                                    "reply": "",
+                                })
+                except Exception as e:
+                    log.debug("dm_search_failed", error=str(e))
+        return results[:10]
 
     def _record_activity(
         self,
@@ -524,6 +825,10 @@ class DMResponder:
                 raise DMClientError("Instagram session expired — reconnect in the Connectors tab.")
 
         threads = await client.list_recent(limit=10)
+        # Morning again: reset the quiet-hours "already replied" set so
+        # tonight's first late message gets its one short reply.
+        if not _in_quiet_hours():
+            self._quiet_replied.clear()
         replied = 0
         for msg in threads:
             if replied >= _MAX_REPLIES_PER_POLL:
@@ -544,6 +849,43 @@ class DMResponder:
                 continue
             first_reply = not self._introduced.get(platform, {}).get(thread_id)
             is_vip = _is_vip(msg.get("sender_name", ""))
+            thread_key = f"{platform}:{thread_id}"
+            # Spam filter: abusive messages or a flood from one thread
+            # mute it — Jarvis stops replying and flags it to Sir.
+            if thread_key in self._muted:
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                continue
+            if _is_abusive(msg.get("text") or "") or self._is_spamming(thread_id):
+                self._muted[thread_key] = msg.get("sender_name", "")
+                try:
+                    from backend.services.telegram_notifier import send_telegram_message
+
+                    await send_telegram_message(
+                        f"🛑 {msg.get('sender_name', '')} has been muted — "
+                        "abusive or spammy messages. I stopped replying. "
+                        f"Say 'unmute {msg.get('sender_name', '')}' to resume."
+                    )
+                except Exception as e:
+                    log.debug("dm_mute_notify_failed", error=str(e))
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._persist_state()
+                continue
+            # Quiet hours: Jarvis does not reply late at night. The first
+            # message in a thread gets one short "morning" reply; the rest
+            # wait silently until morning. VIPs bypass quiet hours.
+            if _in_quiet_hours() and not is_vip:
+                if thread_key not in self._quiet_replied:
+                    self._quiet_replied.add(thread_key)
+                    try:
+                        await client.send(
+                            thread_id,
+                            "It's late — Rayyan will get back to you in the morning.",
+                        )
+                    except Exception as e:
+                        log.debug("dm_quiet_reply_failed", error=str(e))
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._persist_state()
+                continue
             if first_reply and not is_vip:
                 # The one-minute rule: give Sir a minute to answer a new
                 # message himself. Record when it was first seen and wait;
@@ -564,9 +906,12 @@ class DMResponder:
                 waited = (datetime.now(UTC) - first_seen).total_seconds()
                 if waited < _REPLY_DELAY_SECONDS:
                     continue
-            # Tricky message (money / sensitive): do NOT auto-reply.
-            # Draft it and send the draft to Sir on Telegram for approval.
-            if _is_tricky(msg.get("text") or "") and thread_id not in self._pending_drafts:
+            # Away questions ("when will he be back?"): Jarvis asks Sir
+            # first — he never guesses Sir's schedule. Same for money /
+            # sensitive messages: draft it, do NOT auto-reply.
+            is_away = _is_away_question(msg.get("text") or "")
+            is_tricky = _is_tricky(msg.get("text") or "")
+            if (is_away or is_tricky) and thread_id not in self._pending_drafts:
                 gen = await generate_dm_reply(
                     platform,
                     msg["sender_name"],
@@ -575,6 +920,68 @@ class DMResponder:
                     is_group=bool(msg.get("is_group")),
                     media_url=msg.get("media_url"),
                     media_type=msg.get("media_type"),
+                    contact_notes=_contact_notes(msg.get("sender_name", "")),
+                )
+                if gen.get("ok"):
+                    self._pending_drafts[thread_id] = {
+                        "platform": platform,
+                        "thread_id": thread_id,
+                        "message_id": msg["message_id"],
+                        "sender_name": msg.get("sender_name", ""),
+                        "text": msg.get("text") or "",
+                        "draft_reply": gen["reply"],
+                    }
+                    try:
+                        from backend.services.telegram_notifier import (
+                            send_telegram_message,
+                        )
+
+                        if is_away:
+                            await send_telegram_message(
+                                f"❓ {msg.get('sender_name', '')} asked when "
+                                "you will be back. What should I tell them?\n\n"
+                                "Reply with what to say, or 'send' to send "
+                                f"this: {gen['reply']}"
+                            )
+                        else:
+                            await send_telegram_message(
+                                f"⚠️ {msg.get('sender_name', '')} said:\n"
+                                f"{msg.get('text') or ''}\n\n"
+                                f"Draft reply (I did NOT send it):\n{gen['reply']}\n\n"
+                                "Reply 'send' to send it as-is, or type your own "
+                                "reply and I will send that instead."
+                            )
+                    except Exception as e:
+                        log.debug("dm_draft_notify_failed", error=str(e))
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                self._persist_state()
+                continue
+            # Availability questions ("are you free Friday?"): answer from
+            # Sir's Jarvis calendar when it knows; otherwise ask Sir first.
+            if _is_availability_question(msg.get("text") or "") and thread_id not in self._pending_drafts:
+                calendar_answer = self._calendar_answer(msg.get("text") or "")
+                if calendar_answer:
+                    try:
+                        await client.send(thread_id, calendar_answer)
+                    except Exception as e:
+                        log.warning("dm_calendar_send_failed", platform=platform, error=str(e))
+                        continue
+                    self._mark_seen(platform, thread_id, msg["message_id"])
+                    self._introduced.setdefault(platform, {})[thread_id] = True
+                    self._clear_pending(platform, thread_id)
+                    self._persist_state()
+                    self._state[platform]["replied"] += 1
+                    replied += 1
+                    self._record_activity(platform, msg, calendar_answer, important=False)
+                    continue
+                # Calendar does not know — ask Sir what to tell them.
+                gen = await generate_dm_reply(
+                    platform,
+                    msg["sender_name"],
+                    msg["text"],
+                    first_reply=first_reply,
+                    is_group=bool(msg.get("is_group")),
+                    contact_notes=_contact_notes(msg.get("sender_name", "")),
                 )
                 if gen.get("ok"):
                     self._pending_drafts[thread_id] = {
@@ -591,11 +998,10 @@ class DMResponder:
                         )
 
                         await send_telegram_message(
-                            f"⚠️ {msg.get('sender_name', '')} said:\n"
-                            f"{msg.get('text') or ''}\n\n"
-                            f"Draft reply (I did NOT send it):\n{gen['reply']}\n\n"
-                            "Reply 'send' to send it as-is, or type your own "
-                            "reply and I will send that instead."
+                            f"📅 {msg.get('sender_name', '')} asked if you are "
+                            f"free. What should I tell them?\n\n"
+                            "Reply with what to say, or 'send' to send "
+                            f"this: {gen['reply']}"
                         )
                     except Exception as e:
                         log.debug("dm_draft_notify_failed", error=str(e))
@@ -611,15 +1017,27 @@ class DMResponder:
                 is_group=bool(msg.get("is_group")),
                 media_url=msg.get("media_url"),
                 media_type=msg.get("media_type"),
+                contact_notes=_contact_notes(msg.get("sender_name", "")),
             )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))
                 continue
-            try:
-                await client.send(thread_id, gen["reply"])
-            except Exception as e:
-                log.warning("dm_reply_send_failed", platform=platform, error=str(e))
-                continue
+            # Voice reply: when the sender spoke (voice note) or is a VIP,
+            # Jarvis answers with a voice note. Falls back to text on any
+            # failure — a voice reply never breaks a DM reply.
+            sent_as_voice = False
+            if settings.dm_voice_replies and platform == "instagram" and (
+                msg.get("media_type") == "voice" or is_vip
+            ):
+                from backend.services.dm_voice import send_voice_reply
+
+                sent_as_voice = await send_voice_reply(client, thread_id, gen["reply"])
+            if not sent_as_voice:
+                try:
+                    await client.send(thread_id, gen["reply"])
+                except Exception as e:
+                    log.warning("dm_reply_send_failed", platform=platform, error=str(e))
+                    continue
             self._mark_seen(platform, thread_id, msg["message_id"])
             self._introduced.setdefault(platform, {})[thread_id] = True
             self._clear_pending(platform, thread_id)

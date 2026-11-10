@@ -104,6 +104,18 @@ class Settings(BaseSettings):
     groq_whisper_model: str = "whisper-large-v3-turbo"
     # Hours after Jarvis's reply with no answer from Sir before a nudge.
     dm_nudge_after_hours: float = 4.0
+    # Voice replies: when the sender spoke (voice note) or is a VIP,
+    # Jarvis answers with a voice note instead of text. False = text only.
+    dm_voice_replies: bool = True
+    # Quiet hours (HH:MM, 24h, Asia/Amman). Jarvis does not reply in this
+    # window — he tells the sender Sir will get back in the morning.
+    # VIP contacts bypass quiet hours.
+    dm_quiet_hours_start: str = "23:00"
+    dm_quiet_hours_end: str = "07:00"
+    # Spam filter: more than this many messages from one thread inside
+    # the window (minutes) mutes the thread until Sir unmutes it.
+    dm_spam_max_messages: int = 5
+    dm_spam_window_minutes: int = 10
 
     # ---- Paths ----
     storage_dir: str = "./storage"

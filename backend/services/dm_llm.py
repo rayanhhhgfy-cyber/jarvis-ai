@@ -279,6 +279,7 @@ async def generate_dm_reply(
     is_group: bool = False,
     media_url: str | None = None,
     media_type: str | None = None,
+    contact_notes: str | None = None,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -328,6 +329,15 @@ async def generate_dm_reply(
         web_context = await _maybe_web_context(incoming_text)
         if media_context:
             web_context = f"{media_context}\n\n{web_context}" if web_context else media_context
+        # Contact memory: what Sir recorded about this person.
+        if contact_notes:
+            notes_context = (
+                f"What Rayyan told me about {sender_name}: {contact_notes}\n"
+                "Use this to make the reply personal — mention what matters "
+                "to them when it fits naturally. Do not reveal that you have "
+                "notes about them."
+            )
+            web_context = f"{notes_context}\n\n{web_context}" if web_context else notes_context
         reply = await _groq_reply(
             sender_name, incoming_text, client, first_reply, is_group, web_context
         )
