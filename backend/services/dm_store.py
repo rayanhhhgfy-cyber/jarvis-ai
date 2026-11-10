@@ -86,3 +86,5 @@ calendar = JsonStore("calendar.json")
 rules = JsonStore("dm_rules.json")
 # Pending meetings: thread_id -> {platform, sender_name, offered, awaiting}.
 meetings = JsonStore("pending_meetings.json")
+# Jarvis settings Sir sets on Telegram: {birthday_message, group_welcome_message}.
+settings = JsonStore("dm_settings.json")

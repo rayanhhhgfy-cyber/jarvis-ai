@@ -616,3 +616,53 @@ async def test_telegram_webhook_meeting_times(monkeypatch, tmp_path):
     meeting = dm_store.meetings.get("t1")
     assert meeting["awaiting_times"] is False
     assert len(meeting["offered"]) == 2
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_birthday_message(monkeypatch, tmp_path):
+    """'birthday message: ...' stores the custom birthday wish."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.settings, "_path", tmp_path / "dm_settings.json")
+    monkeypatch.setattr(dm_store.settings, "_loaded", False)
+    monkeypatch.setattr(dm_store.settings, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "birthday message: Happy birthday {name}, have a great one!"},
+        })
+    assert resp.status_code == 200
+    assert dm_store.settings.get("birthday_message") == "Happy birthday {name}, have a great one!"
+    assert "Saved" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_welcome_message(monkeypatch, tmp_path):
+    """'group welcome message: ...' stores the custom group greeting."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    monkeypatch.setattr(dm_store.settings, "_path", tmp_path / "dm_settings.json")
+    monkeypatch.setattr(dm_store.settings, "_loaded", False)
+    monkeypatch.setattr(dm_store.settings, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "group welcome message: Hey {name}, welcome in!"},
+        })
+    assert resp.status_code == 200
+    assert dm_store.settings.get("group_welcome_message") == "Hey {name}, welcome in!"
+    assert "Saved" in mock_send.call_args.args[0]

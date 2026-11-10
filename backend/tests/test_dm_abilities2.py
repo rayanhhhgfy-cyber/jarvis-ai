@@ -9,7 +9,7 @@ and DM search. All external calls are mocked.
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from unittest.mock import AsyncMock, MagicMock
 from zoneinfo import ZoneInfo
 
@@ -340,3 +340,160 @@ def test_format_offered_times():
     ])
     assert "or" in two
     assert "Friday" in two and "Saturday" in two
+
+
+# --------------------------------------------------------------------
+# Wave 4: birthday wishes + group welcome
+# --------------------------------------------------------------------
+
+def test_birthday_wish_text_default():
+    from backend.services.dm_responder import DMResponder
+
+    text = DMResponder._birthday_wish_text("Omar")
+    assert "Omar" in text
+    assert "Happy birthday" in text
+
+
+def test_birthday_wish_text_custom(tmp_path, monkeypatch):
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.settings, "_path", tmp_path / "dm_settings.json")
+    monkeypatch.setattr(dm_store.settings, "_loaded", False)
+    monkeypatch.setattr(dm_store.settings, "_data", {})
+    dm_store.settings.set("birthday_message", "Happy birthday {name}, have a great one!")
+    assert DMResponder._birthday_wish_text("Omar") == "Happy birthday Omar, have a great one!"
+
+
+@pytest.mark.asyncio
+async def test_check_birthdays_sends_wish_today(tmp_path, monkeypatch):
+    """On the birthday itself Jarvis sends the wish in the DM + tells Sir."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    today = datetime.now(UTC).date()
+    dm_store.contacts.set("Omar", {"birthday": today.strftime("%m-%d")})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent_wishes = []
+
+    async def fake_send_dm(name, text):
+        sent_wishes.append((name, text))
+        return {"ok": True, "platform": "instagram", "sender_name": name}
+
+    monkeypatch.setattr(responder, "send_dm_to_name", fake_send_dm)
+    sent_telegram = []
+
+    async def fake_telegram(text, client=None):
+        sent_telegram.append(text)
+        return True
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message", fake_telegram
+    )
+    sent = await responder.check_birthdays()
+    assert sent == 1
+    assert len(sent_wishes) == 1
+    assert sent_wishes[0][0] == "Omar"
+    assert "Happy birthday" in sent_wishes[0][1]
+    assert "sent them a birthday wish" in sent_telegram[0]
+
+
+@pytest.mark.asyncio
+async def test_check_birthdays_tomorrow_no_wish(tmp_path, monkeypatch):
+    """A birthday tomorrow gets only the note — no wish sent yet."""
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    tomorrow = datetime.now(UTC).date() + timedelta(days=1)
+    dm_store.contacts.set("Omar", {"birthday": tomorrow.strftime("%m-%d")})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+
+    async def fake_send_dm(name, text):
+        raise AssertionError("no wish should be sent for tomorrow")
+
+    monkeypatch.setattr(responder, "send_dm_to_name", fake_send_dm)
+    sent_telegram = []
+
+    async def fake_telegram(text, client=None):
+        sent_telegram.append(text)
+        return True
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message", fake_telegram
+    )
+    sent = await responder.check_birthdays()
+    assert sent == 1
+    assert "tomorrow" in sent_telegram[0]
+
+
+@pytest.mark.asyncio
+async def test_group_welcome_newcomer(tmp_path, monkeypatch):
+    """A newcomer to a known group gets one welcome; the first sight of
+    a group only learns its members."""
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+
+    class _FakeClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send(self, thread_id, text):
+            self.sent.append((thread_id, text))
+            return {"ok": True}
+
+    fake = _FakeClient()
+    # First sight: learns the members, says nothing.
+    await responder._welcome_newcomers(
+        "instagram", fake,
+        {"thread_id": "g1", "members": ["Omar", "Layla"]},
+    )
+    assert fake.sent == []
+    # A new member appears: welcomed once.
+    await responder._welcome_newcomers(
+        "instagram", fake,
+        {"thread_id": "g1", "members": ["Omar", "Layla", "Sara"]},
+    )
+    assert len(fake.sent) == 1
+    assert "Sara" in fake.sent[0][1]
+    assert "Welcome" in fake.sent[0][1]
+    # Same members again: no repeat.
+    await responder._welcome_newcomers(
+        "instagram", fake,
+        {"thread_id": "g1", "members": ["Omar", "Layla", "Sara"]},
+    )
+    assert len(fake.sent) == 1
+
+
+@pytest.mark.asyncio
+async def test_group_welcome_custom_message(tmp_path, monkeypatch):
+    from backend.services import dm_store
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr(dm_store.settings, "_path", tmp_path / "dm_settings.json")
+    monkeypatch.setattr(dm_store.settings, "_loaded", False)
+    monkeypatch.setattr(dm_store.settings, "_data", {})
+    dm_store.settings.set("group_welcome_message", "Hey {name}, welcome in!")
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    responder._group_members["g1"] = {"Omar"}
+
+    class _FakeClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send(self, thread_id, text):
+            self.sent.append((thread_id, text))
+            return {"ok": True}
+
+    fake = _FakeClient()
+    await responder._welcome_newcomers(
+        "instagram", fake,
+        {"thread_id": "g1", "members": ["Omar", "Sara"]},
+    )
+    assert fake.sent[0][1] == "Hey Sara, welcome in!"

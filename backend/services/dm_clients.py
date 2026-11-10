@@ -68,9 +68,12 @@ def _new_message(
     is_group: bool = False,
     media_url: str | None = None,
     media_type: str | None = None,
+    members: list[str] | None = None,
 ) -> DMMessage:
     """``media_type`` is "photo" or "voice" when the message carries media
-    instead of (or in addition to) text; ``media_url`` is its direct URL."""
+    instead of (or in addition to) text; ``media_url`` is its direct URL.
+    ``members`` is the group's member list (names) for group threads —
+    Instagram gives the full list; Messenger gives only the last sender."""
     return DMMessage(
         platform=platform,
         thread_id=str(thread_id),
@@ -81,6 +84,7 @@ def _new_message(
         is_group=is_group,
         media_url=media_url,
         media_type=media_type,
+        members=members or [],
     )
 
 
@@ -246,6 +250,7 @@ class MessengerClient:
                     is_group=(t.get("thread_type") == "GROUP"),
                     media_url=media_url,
                     media_type=media_type,
+                    members=[sender.get("name", "")] if sender.get("name") else [],
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.
@@ -414,6 +419,10 @@ class InstagramClient:
                     is_group=len(getattr(th, "users", []) or []) > 1,
                     media_url=media_url,
                     media_type=media_type,
+                    members=[
+                        getattr(u, "full_name", "") or getattr(u, "username", "")
+                        for u in (getattr(th, "users", []) or [])
+                    ],
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.

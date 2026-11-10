@@ -299,6 +299,10 @@ class DMResponder:
         # Quiet hours: threads that already got the "morning" reply
         # tonight (so he does not repeat it all night).
         self._quiet_replied: set[str] = set()
+        # Group welcome: members seen per group thread (names). A name that
+        # appears in a group Jarvis already knows is a newcomer — welcome
+        # them once. In-memory only; a redeploy re-learns the groups.
+        self._group_members: dict[str, set[str]] = {}
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -599,8 +603,57 @@ class DMResponder:
                 )
         return None
 
+    async def _welcome_newcomers(
+        self, platform: str, client: Any, msg: dict[str, Any]
+    ) -> None:
+        """Greet newcomers to a group chat (once per person).
+
+        Instagram gives the full member list, so a join is detected even
+        before the newcomer speaks. Messenger only exposes the last
+        sender, so there the welcome fires on their first message in a
+        group Jarvis already knows. The first time Jarvis sees a group
+        he only learns its members — no welcome spam.
+        """
+        thread_id = msg["thread_id"]
+        members = {m for m in (msg.get("members") or []) if m}
+        known = self._group_members.get(thread_id, set())
+        if not known:
+            # First sight of this group: learn the members, say nothing.
+            self._group_members[thread_id] = members
+            return
+        newcomers = members - known
+        self._group_members[thread_id] = known | members
+        if not newcomers:
+            return
+        from backend.services.dm_store import settings as settings_store
+
+        template = settings_store.get("group_welcome_message", "") or (
+            "Welcome to the group, {name}! 👋 This is Rayyan's group — "
+            "feel free to introduce yourself!"
+        )
+        names = " and ".join(sorted(newcomers))
+        try:
+            await client.send(thread_id, template.replace("{name}", names))
+        except Exception as e:
+            log.warning("dm_welcome_failed", platform=platform, error=str(e))
+
+    @staticmethod
+    def _birthday_wish_text(name: str) -> str:
+        """The birthday wish sent to the person (Sir's custom text wins)."""
+        from backend.services.dm_store import settings as settings_store
+
+        template = settings_store.get("birthday_message", "") or (
+            "Happy birthday, {name}! 🎂 Rayyan asked me to wish you a wonderful day!"
+        )
+        return template.replace("{name}", name)
+
     async def check_birthdays(self) -> int:
-        """Send Sir a Telegram note for any contact birthday today/tomorrow."""
+        """Send Sir a Telegram note for any contact birthday today/tomorrow.
+
+        On the day itself Jarvis also sends the birthday wish to the
+        person in their DM (when their chat is found) and tells Sir it
+        went out. Returns the number of Telegram notes sent.
+        """
         from backend.services.dm_store import contacts
         from backend.services.telegram_notifier import send_telegram_message
 
@@ -618,11 +671,25 @@ class DMResponder:
             for target, label in ((today, "today"), (tomorrow, "tomorrow")):
                 if target.month == month and target.day == day:
                     try:
-                        await send_telegram_message(
-                            f"🎂 {name}'s birthday is {label}!"
-                            + (" Want me to send them a birthday wish?"
-                               if label == "today" else "")
-                        )
+                        if label == "today":
+                            wish = await self.send_dm_to_name(
+                                name, self._birthday_wish_text(name)
+                            )
+                            if wish.get("ok"):
+                                await send_telegram_message(
+                                    f"🎂 {name}'s birthday is today — "
+                                    "I sent them a birthday wish! 🎉"
+                                )
+                            else:
+                                await send_telegram_message(
+                                    f"🎂 {name}'s birthday is today! "
+                                    "I could not find their chat, so I did "
+                                    "not send a wish — want to message them yourself?"
+                                )
+                        else:
+                            await send_telegram_message(
+                                f"🎂 {name}'s birthday is tomorrow!"
+                            )
                         sent += 1
                     except Exception as e:
                         log.debug("dm_birthday_failed", error=str(e))
@@ -918,6 +985,11 @@ class DMResponder:
             if seen_id == msg["message_id"]:
                 self._clear_pending(platform, thread_id)
                 continue
+            # Group welcome: a name that appears in a group Jarvis already
+            # knows is a newcomer — greet them once. The first time Jarvis
+            # sees a group he only learns its members (no welcome spam).
+            if msg.get("is_group"):
+                await self._welcome_newcomers(platform, client, msg)
             first_reply = not self._introduced.get(platform, {}).get(thread_id)
             is_vip = _is_vip(msg.get("sender_name", ""))
             thread_key = f"{platform}:{thread_id}"

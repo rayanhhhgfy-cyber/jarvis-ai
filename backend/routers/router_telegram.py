@@ -96,6 +96,10 @@ _ADD_RULE_RE = re.compile(
 _LIST_RULES_RE = re.compile(r"^(?:list|show)\s+(?:my\s+)?rules\s*$", re.IGNORECASE)
 # "delete rule <number>".
 _DELETE_RULE_RE = re.compile(r"^delete\s+rule\s+(\d+)\s*$", re.IGNORECASE)
+# "birthday message: <text>" — the wish Jarvis sends on birthdays.
+_BIRTHDAY_MSG_RE = re.compile(r"^birthday\s+message:\s*(.+)$", re.IGNORECASE)
+# "group welcome message: <text>" — the greeting for newcomers.
+_WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECASE)
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -451,6 +455,30 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 await send_telegram_message(f"Deleted rule {idx + 1}.")
             else:
                 await send_telegram_message("There is no rule with that number.")
+            return {"ok": True}
+
+        # --- Custom messages: birthday wish + group welcome. ---
+        birthday_msg_match = _BIRTHDAY_MSG_RE.match(text)
+        if birthday_msg_match:
+            from backend.services.dm_store import settings as settings_store
+
+            settings_store.set("birthday_message", birthday_msg_match.group(1).strip())
+            await send_telegram_message(
+                "Saved — that is the birthday wish I will send from now on. "
+                "Use {name} where the person's name goes."
+            )
+            return {"ok": True}
+        welcome_msg_match = _WELCOME_MSG_RE.match(text)
+        if welcome_msg_match:
+            from backend.services.dm_store import settings as settings_store
+
+            settings_store.set(
+                "group_welcome_message", welcome_msg_match.group(1).strip()
+            )
+            await send_telegram_message(
+                "Saved — that is the greeting I will send to newcomers in group chats. "
+                "Use {name} where the person's name goes."
+            )
             return {"ok": True}
 
         # --- "unmute <name>" — resume a muted thread. ---
