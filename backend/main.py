@@ -376,6 +376,25 @@ async def lifespan(app: FastAPI):
     except Exception as tg_err:
         log.warning("telegram_webhook_register_failed", error=str(tg_err))
 
+    # Daily DM digest — one Telegram summary each evening at 20:00.
+    try:
+        from backend.services.dm_responder import dm_responder as _digest_responder
+
+        async def _dm_daily_digest_job():
+            try:
+                await _digest_responder.send_daily_digest()
+            except Exception as e:
+                log.warning("dm_daily_digest_job_failed", error=str(e))
+
+        scheduler.schedule_cron(
+            job_id="dm_daily_digest",
+            func=_dm_daily_digest_job,
+            cron_expression="0 20 * * *",
+            description="Send Sir the daily DM digest on Telegram at 20:00",
+        )
+    except Exception as digest_err:
+        log.warning("dm_daily_digest_schedule_failed", error=str(digest_err))
+
     try:
         tool_executor.set_approval_gateway(approval_gateway)
         # Load every seed plugin. Each plugin's @tool decorators register

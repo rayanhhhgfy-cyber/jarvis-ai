@@ -94,6 +94,16 @@ class Settings(BaseSettings):
     # Base URL used when registering the Telegram webhook on startup.
     # Empty = the live Render URL.
     telegram_webhook_base_url: str = ""
+    # ---- DM VIP contacts + media ----
+    # Comma-separated names of the people who matter most. Their DMs
+    # skip the one-minute wait and always get a loud alert.
+    dm_vip_contacts: str = ""
+    # Groq vision model for describing photos sent in DMs (free tier).
+    groq_vision_model: str = "meta-llama/llama-4-scout-17b-16e-instruct"
+    # Groq Whisper model for transcribing voice notes sent in DMs.
+    groq_whisper_model: str = "whisper-large-v3-turbo"
+    # Hours after Jarvis's reply with no answer from Sir before a nudge.
+    dm_nudge_after_hours: float = 4.0
 
     # ---- Paths ----
     storage_dir: str = "./storage"

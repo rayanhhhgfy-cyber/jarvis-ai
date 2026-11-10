@@ -277,6 +277,8 @@ async def generate_dm_reply(
     client: httpx.AsyncClient | None = None,
     first_reply: bool = True,
     is_group: bool = False,
+    media_url: str | None = None,
+    media_type: str | None = None,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -295,14 +297,37 @@ async def generate_dm_reply(
     ``_complete_reply`` first, so a truncated message is trimmed to its
     last complete sentence — and if neither model can produce a complete
     sentence, the DM is left unanswered rather than sending a broken
-    message.
+    message. ``media_url``/``media_type`` carry a photo ("photo") or a
+    voice note ("voice"): a voice note is transcribed first and the
+    transcript becomes the incoming text; a photo is described and the
+    description is given to the LLM so it replies about what is in it.
     """
     own_client = client is None
     if own_client:
         client = httpx.AsyncClient(timeout=30.0)
     assert client is not None
     try:
+        # Voice note: hear it first — the transcript is the message.
+        if media_type == "voice" and media_url:
+            from backend.services.dm_media import transcribe_audio
+
+            transcript = await transcribe_audio(media_url, client)
+            if transcript:
+                incoming_text = transcript
+        # Photo: describe it so the reply is about what is in it.
+        media_context = ""
+        if media_type == "photo" and media_url:
+            from backend.services.dm_media import describe_image
+
+            description = await describe_image(media_url, client)
+            if description:
+                media_context = (
+                    f"The person sent a photo. Description: {description}\n\n"
+                    "Reply about the photo naturally, as if you saw it."
+                )
         web_context = await _maybe_web_context(incoming_text)
+        if media_context:
+            web_context = f"{media_context}\n\n{web_context}" if web_context else media_context
         reply = await _groq_reply(
             sender_name, incoming_text, client, first_reply, is_group, web_context
         )

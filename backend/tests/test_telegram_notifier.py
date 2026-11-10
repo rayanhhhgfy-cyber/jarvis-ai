@@ -8,7 +8,7 @@ richer DM notifications, and the 'While you were away' activity feed.
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
 import httpx
 import pytest
@@ -200,3 +200,165 @@ async def test_telegram_test_endpoint_not_configured(monkeypatch):
     resp = _telegram_app().post("/api/telegram/test")
     assert resp.status_code == 200
     assert resp.json()["ok"] is False
+
+
+# --- New webhook intents: tell / summarize / draft approval / activity ---
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_tell_sends_dm(monkeypatch):
+    """'tell Omar ...' sends a DM for Sir instead of chatting."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+
+    async def _send_side_effect(name, text):
+        # The greedy name regex first tries "Omar I" (not a contact);
+        # the webhook retries with just "Omar".
+        if name == "Omar I":
+            return {"ok": False, "reason": "not_found"}
+        return {"ok": True, "sender_name": "Omar Haddad", "platform": "messenger"}
+
+    fake_responder.send_dm_to_name = AsyncMock(side_effect=_send_side_effect)
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "tell Omar I will be there at 5"},
+        })
+    assert resp.status_code == 200
+    fake_responder.send_dm_to_name.assert_awaited_with(
+        "Omar", "I will be there at 5"
+    )
+    mock_llm.get_response.assert_not_called()
+    mock_send.assert_called_once_with("Sent to Omar Haddad.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_tell_unknown_person(monkeypatch):
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.send_dm_to_name = AsyncMock(return_value={"ok": False, "reason": "not_found"})
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "tell Nobody hello"},
+        })
+    assert resp.status_code == 200
+    mock_send.assert_called_once_with("I could not find a conversation with Nobody.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_summarize(monkeypatch):
+    """'summarize my conversation with Omar' returns a summary."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_activity = Mock(return_value=[
+        {"sender_name": "Omar", "platform": "messenger", "text": "can we meet?",
+         "reply": "Sure, when?", "important": False},
+    ])
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(
+            return_value="Omar asked to meet; you have not set a time yet."
+        )
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "summarize my conversation with Omar"},
+        })
+    assert resp.status_code == 200
+    mock_send.assert_called_once_with("Omar asked to meet; you have not set a time yet.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_draft_approval_sends_draft(monkeypatch):
+    """When a draft is pending, 'send' sends the draft as-is."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = {
+        "thread_id": "t1", "draft_reply": "Let me check with Rayyan.",
+        "sender_name": "Omar",
+    }
+    fake_responder.send_draft_reply = AsyncMock(return_value={
+        "ok": True, "sender_name": "Omar", "platform": "messenger",
+    })
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "send"},
+        })
+    assert resp.status_code == 200
+    fake_responder.send_draft_reply.assert_awaited_once_with(
+        "t1", "Let me check with Rayyan."
+    )
+    mock_llm.get_response.assert_not_called()
+    mock_send.assert_called_once_with("Sent to Omar.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_draft_approval_sends_own_text(monkeypatch):
+    """When a draft is pending, Sir's own text is sent as the reply."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = {
+        "thread_id": "t1", "draft_reply": "Let me check with Rayyan.",
+        "sender_name": "Omar",
+    }
+    fake_responder.send_draft_reply = AsyncMock(return_value={
+        "ok": True, "sender_name": "Omar", "platform": "messenger",
+    })
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "Tell him I will call him tonight"},
+        })
+    assert resp.status_code == 200
+    fake_responder.send_draft_reply.assert_awaited_once_with(
+        "t1", "Tell him I will call him tonight"
+    )
+    mock_send.assert_called_once_with("Sent your reply to Omar.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_includes_dm_activity_context(monkeypatch):
+    """Normal chat includes recent DM activity so Sir can ask about his DMs."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_activity = Mock(return_value=[
+        {"sender_name": "Layla", "platform": "instagram", "text": "the book arrived",
+         "reply": "Great!", "important": False},
+    ])
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)),
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="Layla said the book arrived.")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": "what did Layla say?"},
+        })
+    assert resp.status_code == 200
+    call_kwargs = mock_llm.get_response.await_args.kwargs
+    assert "Layla" in call_kwargs["user_message"]
+    assert "the book arrived" in call_kwargs["user_message"]

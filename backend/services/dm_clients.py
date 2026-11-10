@@ -66,7 +66,11 @@ def _new_message(
     text: str,
     message_id: str,
     is_group: bool = False,
+    media_url: str | None = None,
+    media_type: str | None = None,
 ) -> DMMessage:
+    """``media_type`` is "photo" or "voice" when the message carries media
+    instead of (or in addition to) text; ``media_url`` is its direct URL."""
     return DMMessage(
         platform=platform,
         thread_id=str(thread_id),
@@ -75,7 +79,67 @@ def _new_message(
         text=text or "",
         message_id=str(message_id),
         is_group=is_group,
+        media_url=media_url,
+        media_type=media_type,
     )
+
+
+def _instagram_media(last: Any) -> tuple[str | None, str | None]:
+    """(media_url, media_type) for an instagrapi DirectMessage, else (None, None).
+
+    Photos arrive as item_type "media" with image_versions2 candidates;
+    voice notes as item_type "voice_media" with an audio source URL.
+    Everything is defensive — instagrapi's shape varies by version.
+    """
+    item_type = getattr(last, "item_type", "") or ""
+    if item_type == "media":
+        media = getattr(last, "media", None)
+        versions = getattr(media, "image_versions2", None) if media else None
+        candidates = (versions or {}).get("candidates") if isinstance(versions, dict) else None
+        if candidates:
+            url = (candidates[0] or {}).get("url")
+            if url:
+                return url, "photo"
+        # A video message: fall back to its thumbnail.
+        video_versions = getattr(media, "video_versions", None) if media else None
+        if video_versions:
+            url = (video_versions[0] or {}).get("url")
+            if url:
+                return url, "photo"
+        return None, None
+    if item_type == "voice_media":
+        voice = getattr(last, "voice_media", None)
+        media = getattr(voice, "media", None) if voice else None
+        audio = getattr(media, "audio", None) if media else None
+        if isinstance(audio, dict):
+            url = audio.get("audio_src")
+            if url:
+                return url, "voice"
+        return None, None
+    return None, None
+
+
+def _messenger_media(node: dict[str, Any]) -> tuple[str | None, str | None]:
+    """Best-effort (media_url, media_type) from a Messenger thread-list node.
+
+    The thread list only carries a text snippet, so a photo or voice note
+    usually arrives with no usable URL here — the responder then treats
+    it as a text-less message and replies generically. Returns (None, None)
+    unless the node happens to carry an attachment URL.
+    """
+    attachments = node.get("attachments") or []
+    for att in attachments:
+        if not isinstance(att, dict):
+            continue
+        mime = (att.get("mime_type") or att.get("mimeType") or "").lower()
+        url = att.get("url") or (att.get("image") or {}).get("uri") or ""
+        if not url:
+            continue
+        if mime.startswith("image") or "image" in mime:
+            return url, "photo"
+        if mime.startswith("audio") or "audio" in mime:
+            return url, "voice"
+    return None, None
 
 
 # --------------------------------------------------------------------
@@ -171,6 +235,7 @@ class MessengerClient:
                 thread_key = t.get("thread_key") or {}
                 thread_id = thread_key.get("thread_fbid") or thread_key.get("other_user_id")
                 sender = (node.get("message_sender") or {}).get("messaging_actor") or {}
+                media_url, media_type = _messenger_media(node)
                 out.append(_new_message(
                     platform="messenger",
                     thread_id=thread_id,
@@ -179,6 +244,8 @@ class MessengerClient:
                     text=node.get("snippet", ""),
                     message_id=node.get("message_id", "") or node.get("id", ""),
                     is_group=(t.get("thread_type") == "GROUP"),
+                    media_url=media_url,
+                    media_type=media_type,
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.
@@ -336,6 +403,7 @@ class InstagramClient:
                     continue
                 last = msgs[0]
                 sender = getattr(last, "user", None)
+                media_url, media_type = _instagram_media(last)
                 out.append(_new_message(
                     platform="instagram",
                     thread_id=getattr(th, "id", ""),
@@ -344,6 +412,8 @@ class InstagramClient:
                     text=getattr(last, "text", "") or "",
                     message_id=str(getattr(last, "id", "")),
                     is_group=len(getattr(th, "users", []) or []) > 1,
+                    media_url=media_url,
+                    media_type=media_type,
                 ))
             except Exception as parse_err:
                 # One malformed thread must not kill the whole list.

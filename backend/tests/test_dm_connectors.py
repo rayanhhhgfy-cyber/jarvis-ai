@@ -523,7 +523,7 @@ async def test_responder_waits_one_minute_then_replies_once(tmp_vault, tmp_path,
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -573,7 +573,7 @@ async def test_responder_follow_up_replies_without_wait(tmp_vault, tmp_path, mon
 
     seen_first_reply = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
         seen_first_reply.append(first_reply)
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
@@ -615,7 +615,7 @@ async def test_responder_stands_down_when_sir_replies(tmp_vault, tmp_path, monke
     ])
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
         return {"ok": True, "reply": "أهلاً!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -966,7 +966,7 @@ async def test_responder_replies_in_group_chat(tmp_vault, tmp_path, monkeypatch)
 
     seen_is_group = []
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
         seen_is_group.append(is_group)
         return {"ok": True, "reply": "Hey Friend, this is Jarvis.", "model": "groq"}
 
@@ -1075,3 +1075,244 @@ def test_looks_like_web_question_broadened():
     # Plain chat still does not trigger a search.
     assert not _looks_like_web_question("hi, how are you?")
     assert not _looks_like_web_question("thanks, talk later")
+
+
+# --- VIP contacts, tricky drafts, media, nudges, digest, send-to-name ---
+
+def test_is_vip(monkeypatch):
+    from backend.services.dm_responder import _is_vip
+
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Mom, Dad, Layla")
+    assert _is_vip("Mom") is True
+    assert _is_vip("mom") is True
+    assert _is_vip("Layla Haddad") is True
+    assert _is_vip("Omar") is False
+    assert _is_vip("") is False
+
+
+def test_is_tricky():
+    from backend.services.dm_responder import _is_tricky
+
+    assert _is_tricky("can you send me money?") is True
+    assert _is_tricky("what is the price?") is True
+    assert _is_tricky("كم سعر الذهب؟") is True
+    assert _is_tricky("hi, how are you?") is False
+    assert _is_tricky("") is False
+
+
+@pytest.mark.asyncio
+async def test_vip_skips_one_minute_wait(tmp_vault, tmp_path, monkeypatch):
+    """A VIP's first message is answered immediately, no one-minute wait."""
+    from backend.services.dm_responder import DMResponder
+
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Mom")
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [_msg("messenger", "t1", "999", "Mom", "hello", "m1")]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
+        return {"ok": True, "reply": "Hi Mom!", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 1
+    assert fake.sent == [("t1", "Hi Mom!")]
+
+
+@pytest.mark.asyncio
+async def test_photo_message_is_not_skipped(tmp_vault, tmp_path, monkeypatch):
+    """A photo (no text, has media_url) is processed, not skipped."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [{
+        "platform": "messenger", "thread_id": "t1", "sender_id": "999",
+        "sender_name": "Friend", "text": "", "message_id": "m1",
+        "is_group": False, "media_url": "https://cdn.example/p.jpg",
+        "media_type": "photo",
+    }]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+    seen_media = {}
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
+        seen_media["media_url"] = media_url
+        seen_media["media_type"] = media_type
+        return {"ok": True, "reply": "Nice photo!", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+    # VIP the sender so the one-minute wait does not block the test.
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Friend")
+    result = await responder.poll_once()
+    assert result["messenger"]["replied"] == 1
+    assert fake.sent == [("t1", "Nice photo!")]
+    assert seen_media["media_url"] == "https://cdn.example/p.jpg"
+    assert seen_media["media_type"] == "photo"
+
+
+@pytest.mark.asyncio
+async def test_tricky_message_creates_draft_not_reply(tmp_vault, tmp_path, monkeypatch):
+    """A money message is drafted for Sir, never auto-sent on the platform."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [_msg("messenger", "t1", "999", "Omar", "can you send me money?", "m1")]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None):
+        return {"ok": True, "reply": "Let me check with Rayyan.", "model": "groq"}
+
+    monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+    sent_telegram = []
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent_telegram.append(text) or True),
+    )
+    monkeypatch.setattr("backend.services.dm_responder.settings.dm_vip_contacts", "Omar")
+    result = await responder.poll_once()
+    # Nothing sent on Messenger — the draft went to Sir on Telegram.
+    assert result["messenger"]["replied"] == 0
+    assert fake.sent == []
+    draft = responder.get_pending_draft()
+    assert draft is not None
+    assert draft["sender_name"] == "Omar"
+    assert draft["draft_reply"] == "Let me check with Rayyan."
+    assert len(sent_telegram) == 1
+    assert "Draft reply" in sent_telegram[0]
+
+
+@pytest.mark.asyncio
+async def test_send_draft_reply(tmp_vault, tmp_path, monkeypatch):
+    """Sir's approved draft is sent on the platform and the draft clears."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    responder._pending_drafts["t1"] = {
+        "platform": "messenger", "thread_id": "t1", "message_id": "m1",
+        "sender_name": "Omar", "text": "can you send me money?",
+        "draft_reply": "Let me check with Rayyan.",
+    }
+    fake = _FakeClient(user_id="111111", messages=[])
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+    result = await responder.send_draft_reply("t1", "Let me check with Rayyan.")
+    assert result["ok"] is True
+    assert fake.sent == [("t1", "Let me check with Rayyan.")]
+    assert responder.get_pending_draft() is None
+
+
+@pytest.mark.asyncio
+async def test_send_dm_to_name(tmp_vault, tmp_path, monkeypatch):
+    """Jarvis sends a DM to a person by name when Sir asks on Telegram."""
+    from backend.services.dm_responder import DMResponder
+
+    dm_auth.save_connector("messenger", "cookies", {"cookies": FAKE_COOKIES})
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    incoming = [_msg("messenger", "t1", "999", "Omar Haddad", "hi", "m1")]
+    fake = _FakeClient(user_id="111111", messages=incoming)
+    monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.notification_engine.notification_engine.send_notification",
+        lambda notification: _noop_coro(True),
+    )
+    result = await responder.send_dm_to_name("Omar", "I will be there at 5.")
+    assert result["ok"] is True
+    assert result["sender_name"] == "Omar Haddad"
+    assert fake.sent == [("t1", "I will be there at 5.")]
+    # Unknown name: not found, nothing sent.
+    result = await responder.send_dm_to_name("Nobody", "hello")
+    assert result["ok"] is False
+    assert result["reason"] == "not_found"
+
+
+@pytest.mark.asyncio
+async def test_maybe_nudge_fires_once_after_hours(tmp_path, monkeypatch):
+    """A thread waiting past the nudge window gets one Telegram nudge."""
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    responder._first_reply_at = {
+        "messenger": {"t1": datetime.now(UTC) - timedelta(hours=5)},
+    }
+    sent = []
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+
+    async def _noop_coro(value):
+        return value
+
+    await responder._maybe_nudge("messenger", "t1", "Omar")
+    assert len(sent) == 1
+    assert "still waiting" in sent[0]
+    # Second call: already nudged, no second message.
+    await responder._maybe_nudge("messenger", "t1", "Omar")
+    assert len(sent) == 1
+
+
+@pytest.mark.asyncio
+async def test_send_daily_digest(tmp_path, monkeypatch):
+    """The digest sends a Telegram summary when there is activity."""
+    from backend.services.dm_responder import DMResponder
+
+    responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
+    sent = []
+
+    async def _noop_coro(value):
+        return value
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        lambda text, client=None: _noop_coro(sent.append(text) or True),
+    )
+    # No activity: nothing sent.
+    assert await responder.send_daily_digest() is False
+    assert sent == []
+    responder._record_activity(
+        "instagram", {"sender_name": "Layla", "text": "hello"}, "Hi!", False,
+    )
+    assert await responder.send_daily_digest() is True
+    assert len(sent) == 1
+    assert "Layla" in sent[0]
