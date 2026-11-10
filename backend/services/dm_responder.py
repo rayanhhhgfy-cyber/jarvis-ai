@@ -337,6 +337,18 @@ class DMResponder:
         # Most recently added draft (dicts preserve insertion order).
         return next(reversed(self._pending_drafts.values()))
 
+    def discard_pending_draft(self) -> dict[str, Any] | None:
+        """Drop the most recent pending draft without sending anything.
+
+        Used by the Telegram /cancel command when Sir wants out of a
+        draft approval. Returns the discarded draft, or None if there
+        was nothing pending.
+        """
+        if not self._pending_drafts:
+            return None
+        thread_id = next(reversed(self._pending_drafts.keys()))
+        return self._pending_drafts.pop(thread_id)
+
     async def send_draft_reply(self, thread_id: str, text: str) -> dict[str, Any]:
         """Send Sir's approved (or edited) reply for a pending draft.
 

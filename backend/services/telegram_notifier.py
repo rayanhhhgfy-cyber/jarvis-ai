@@ -34,6 +34,61 @@ log = get_logger("telegram_notifier")
 _TELEGRAM_API = "https://api.telegram.org/bot{token}/{method}"
 _DEFAULT_BASE_URL = "https://jarvis-ai-6c11.onrender.com"
 
+# Every slash command the bot understands, in one place. The router uses
+# this for /help and for translating commands into the natural-language
+# intents the webhook already handles; set_telegram_commands() registers
+# the same list with Telegram so the commands show in the app's menu.
+# Keep descriptions short — Telegram shows them in the command picker.
+TELEGRAM_COMMANDS: list[dict[str, str]] = [
+    {"command": "start", "description": "Start Jarvis and see all commands",
+     "usage": "/start"},
+    {"command": "help", "description": "List every command Jarvis understands",
+     "usage": "/help"},
+    {"command": "send", "description": "Send a DM for you",
+     "usage": "/send Omar I'll be there at 5"},
+    {"command": "summarize", "description": "Summarize a conversation",
+     "usage": "/summarize Omar"},
+    {"command": "schedule", "description": "Schedule a DM for later",
+     "usage": "/schedule Omar tomorrow at 5pm: I'll be there"},
+    {"command": "remind", "description": "Set a reminder for yourself",
+     "usage": "/remind call Omar tomorrow at 5pm"},
+    {"command": "busy", "description": "Tell Jarvis you're busy",
+     "usage": "/busy Friday 5pm-8pm because football practice"},
+    {"command": "free", "description": "Tell Jarvis you're free",
+     "usage": "/free Saturday"},
+    {"command": "remember", "description": "Remember something about someone",
+     "usage": "/remember Omar loves football"},
+    {"command": "search", "description": "Search your DMs",
+     "usage": "/search book"},
+    {"command": "rules", "description": "List your auto-reply rules",
+     "usage": "/rules"},
+    {"command": "addrule", "description": "Add an auto-reply rule",
+     "usage": "/addrule Omar | money | I'll check with Rayyan"},
+    {"command": "delrule", "description": "Delete a rule by number",
+     "usage": "/delrule 2"},
+    {"command": "unmute", "description": "Unmute a muted conversation",
+     "usage": "/unmute Omar"},
+    {"command": "birthdaymsg", "description": "Set the birthday wish Jarvis sends",
+     "usage": "/birthdaymsg Happy birthday {name}!"},
+    {"command": "welcomemsg", "description": "Set the group welcome message",
+     "usage": "/welcomemsg Welcome {name}!"},
+    {"command": "activity", "description": "What happened while you were away",
+     "usage": "/activity"},
+    {"command": "status", "description": "Check what's connected and running",
+     "usage": "/status"},
+    {"command": "cancel", "description": "Cancel a pending draft or meeting",
+     "usage": "/cancel"},
+]
+
+# True once set_telegram_commands() has succeeded at least once on this
+# instance (so /api/telegram/status can report it without the token).
+_commands_registered = False
+
+
+def commands_registered() -> bool:
+    """Whether the command menu has been registered with Telegram."""
+    return _commands_registered
+
 
 def _configured() -> tuple[str, str] | None:
     """(token, chat_id) when Telegram is configured, else None."""
@@ -71,6 +126,48 @@ async def send_telegram_message(
         return bool(resp.json().get("ok"))
     except Exception as e:
         log.warning("telegram_send_error", error=str(e))
+        return False
+    finally:
+        if own_client:
+            await client.aclose()
+
+
+async def set_telegram_commands(
+    client: httpx.AsyncClient | None = None,
+) -> bool:
+    """Register the bot's slash-command menu with Telegram (setMyCommands).
+
+    Sends TELEGRAM_COMMANDS so Sir sees every command in the app's menu
+    with its description. Returns True when Telegram accepted them.
+    Never raises. When the token is unset, returns False.
+    """
+    global _commands_registered
+    token = (settings.telegram_bot_token or "").strip()
+    if not token:
+        log.debug("telegram_commands_no_token")
+        return False
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=15.0)
+    assert client is not None
+    try:
+        resp = await client.post(
+            _TELEGRAM_API.format(token=token, method="setMyCommands"),
+            json={"commands": [
+                {"command": c["command"], "description": c["description"]}
+                for c in TELEGRAM_COMMANDS
+            ]},
+        )
+        if resp.status_code != 200:
+            log.warning("telegram_commands_failed", status_code=resp.status_code)
+            return False
+        ok = bool(resp.json().get("ok"))
+        if ok:
+            _commands_registered = True
+            log.info("telegram_commands_set", count=len(TELEGRAM_COMMANDS))
+        return ok
+    except Exception as e:
+        log.warning("telegram_commands_error", error=str(e))
         return False
     finally:
         if own_client:

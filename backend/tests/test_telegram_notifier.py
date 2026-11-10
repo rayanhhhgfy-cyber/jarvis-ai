@@ -666,3 +666,420 @@ async def test_telegram_webhook_welcome_message(monkeypatch, tmp_path):
     assert resp.status_code == 200
     assert dm_store.settings.get("group_welcome_message") == "Hey {name}, welcome in!"
     assert "Saved" in mock_send.call_args.args[0]
+
+
+# --- Slash commands: /start /help /send ... /activity /status /cancel ---
+
+def _webhook_post(text: str, monkeypatch, fake_responder):
+    """POST one Telegram webhook update from Sir; returns (resp, mock_send)."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    mock_send = AsyncMock(return_value=True)
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=mock_send),
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": text},
+        })
+    return resp, mock_send, mock_llm
+
+
+def test_remind_regex_keeps_tomorrow_at_5pm_together():
+    """'tomorrow at 5pm' is one time expression, not thing + 'at 5pm'."""
+    from backend.routers.router_telegram import _REMIND_RE
+
+    m = _REMIND_RE.match("remind me to call Omar tomorrow at 5pm")
+    assert m is not None
+    assert m.group(1) == "call Omar"
+    assert m.group(2) == "tomorrow at 5pm"
+    m = _REMIND_RE.match("remind me to call Omar tomorrow")
+    assert m.group(1) == "call Omar"
+    assert m.group(2) == "tomorrow"
+    m = _REMIND_RE.match("remind me to call Omar in 30 minutes")
+    assert m.group(1) == "call Omar"
+    assert m.group(2) == "in 30 minutes"
+    m = _REMIND_RE.match("remind me to call Omar at 5pm")
+    assert m.group(1) == "call Omar"
+    assert m.group(2) == "at 5pm"
+
+
+def test_normalize_command_translations():
+    """Each slash command maps to its natural-language sentence."""
+    from backend.routers.router_telegram import _normalize_command
+
+    assert _normalize_command("/send Omar hi") == ("translate", "tell Omar hi")
+    assert _normalize_command("/send@Jarvis_rayyan_bot Omar hi") == (
+        "translate", "tell Omar hi")
+    assert _normalize_command("/summarize Omar") == (
+        "translate", "summarize conversation with Omar")
+    assert _normalize_command("/schedule Omar tomorrow at 5pm: hi") == (
+        "translate", "schedule Omar tomorrow at 5pm: hi")
+    assert _normalize_command("/remind call Omar tomorrow at 5pm") == (
+        "translate", "remind me to call Omar tomorrow at 5pm")
+    assert _normalize_command("/busy Friday 5pm-8pm because practice") == (
+        "translate", "I'm busy Friday 5pm-8pm because practice")
+    assert _normalize_command("/free Saturday") == ("translate", "I'm free Saturday")
+    assert _normalize_command("/remember Omar loves football") == (
+        "translate", "remember Omar loves football")
+    assert _normalize_command("/search book") == ("translate", "search book")
+    assert _normalize_command("/search Omar | book") == (
+        "translate", "find the message where Omar mentioned book")
+    assert _normalize_command("/rules") == ("translate", "list my rules")
+    assert _normalize_command("/addrule Omar | money | I'll check") == (
+        "translate",
+        "add a rule: if Omar asks about money, reply I'll check")
+    assert _normalize_command("/delrule 2") == ("translate", "delete rule 2")
+    assert _normalize_command("/unmute Omar") == ("translate", "unmute Omar")
+    assert _normalize_command("/birthdaymsg Happy birthday {name}!") == (
+        "translate", "birthday message: Happy birthday {name}!")
+    assert _normalize_command("/welcomemsg Welcome {name}!") == (
+        "translate", "group welcome message: Welcome {name}!")
+
+
+def test_normalize_command_direct_usage_unknown():
+    from backend.routers.router_telegram import _normalize_command
+
+    assert _normalize_command("/start") == ("direct", "start")
+    assert _normalize_command("/help") == ("direct", "help")
+    assert _normalize_command("/activity") == ("direct", "activity")
+    assert _normalize_command("/status") == ("direct", "status")
+    assert _normalize_command("/cancel") == ("direct", "cancel")
+    assert _normalize_command("/send") == ("usage", "send")
+    assert _normalize_command("/addrule Omar money") == ("usage", "addrule")
+    assert _normalize_command("/frobnicate x") == ("unknown", "frobnicate")
+    assert _normalize_command("hello") is None
+    assert _normalize_command("tell Omar hi") is None
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_start_and_help(monkeypatch):
+    """'/start' welcomes Sir with the full command list; '/help' lists it."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    resp, mock_send, mock_llm = _webhook_post("/start", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    text = mock_send.call_args.args[0]
+    assert "Hello Sir" in text
+    assert "/send Omar" in text
+    assert "/schedule" in text
+    assert "/status" in text
+    mock_llm.get_response.assert_not_called()
+    resp, mock_send, mock_llm = _webhook_post("/help", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "/remind" in mock_send.call_args.args[0]
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_send(monkeypatch):
+    """'/send Omar hi' sends the DM — same as 'tell Omar hi'."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.send_dm_to_name = AsyncMock(
+        return_value={"ok": True, "sender_name": "Omar", "platform": "messenger"})
+    resp, mock_send, mock_llm = _webhook_post("/send Omar hi", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.send_dm_to_name.assert_awaited_once_with("Omar", "hi")
+    mock_llm.get_response.assert_not_called()
+    assert mock_send.call_args.args[0] == "Sent to Omar."
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_schedule_and_remind(monkeypatch):
+    """'/schedule ...' and '/remind ...' route to the scheduled/reminder stores."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.schedule_dm.return_value = {"ok": True}
+    fake_responder.add_reminder.return_value = {"ok": True}
+    resp, mock_send, _ = _webhook_post(
+        "/schedule Omar tomorrow at 5pm: I will be there", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.schedule_dm.assert_called_once()
+    assert fake_responder.schedule_dm.call_args.args[0] == "Omar"
+    assert fake_responder.schedule_dm.call_args.args[1] == "I will be there"
+    assert "Scheduled" in mock_send.call_args.args[0]
+    resp, mock_send, _ = _webhook_post(
+        "/remind call Omar tomorrow at 5pm", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.add_reminder.assert_called_once()
+    assert fake_responder.add_reminder.call_args.args[0] == "call Omar"
+    assert "remind" in mock_send.call_args.args[0].lower()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_busy_remember(monkeypatch, tmp_path):
+    """'/busy ...' and '/remember ...' write the calendar/contact stores."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
+    monkeypatch.setattr(dm_store.calendar, "_loaded", False)
+    monkeypatch.setattr(dm_store.calendar, "_data", {})
+    monkeypatch.setattr(dm_store.contacts, "_path", tmp_path / "contacts.json")
+    monkeypatch.setattr(dm_store.contacts, "_loaded", False)
+    monkeypatch.setattr(dm_store.contacts, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    resp, mock_send, _ = _webhook_post(
+        "/busy Friday 5pm-8pm", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert len(dm_store.calendar.all()) == 1
+    assert "busy" in mock_send.call_args.args[0].lower()
+    resp, mock_send, _ = _webhook_post(
+        "/remember that Omar loves football", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "football" in dm_store.contacts.get("Omar", {}).get("notes", "")
+    assert "Noted" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_search(monkeypatch):
+    """'/search book' searches all DMs; '/search Omar | book' scopes to Omar."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.search_dms = AsyncMock(return_value=[
+        {"sender_name": "Omar", "platform": "instagram",
+         "text": "the book is great", "reply": "Glad!"},
+    ])
+    resp, mock_send, _ = _webhook_post("/search book", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.search_dms.assert_awaited_once_with("book", name=None)
+    assert "the book is great" in mock_send.call_args.args[0]
+    fake_responder.search_dms.reset_mock()
+    resp, mock_send, _ = _webhook_post("/search Omar | book", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.search_dms.assert_awaited_once_with("book", name="Omar")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_rules(monkeypatch, tmp_path):
+    """'/rules', '/addrule ...' and '/delrule 1' manage auto-reply rules."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.rules, "_path", tmp_path / "dm_rules.json")
+    monkeypatch.setattr(dm_store.rules, "_loaded", False)
+    monkeypatch.setattr(dm_store.rules, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    resp, mock_send, _ = _webhook_post(
+        "/addrule Omar | money | I'll check with Rayyan", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    all_rules = dm_store.rules.all()
+    assert len(all_rules) == 1
+    rule = next(iter(all_rules.values()))
+    assert rule["person"] == "Omar"
+    assert rule["topic"] == "money"
+    assert rule["reply"] == "I'll check with Rayyan"
+    assert "Rule added" in mock_send.call_args.args[0]
+    resp, mock_send, _ = _webhook_post("/rules", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "Omar" in mock_send.call_args.args[0]
+    resp, mock_send, _ = _webhook_post("/delrule 1", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert len(dm_store.rules.all()) == 0
+    assert "Deleted" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_unmute_and_messages(monkeypatch, tmp_path):
+    """'/unmute', '/birthdaymsg' and '/welcomemsg' work as commands."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.settings, "_path", tmp_path / "dm_settings.json")
+    monkeypatch.setattr(dm_store.settings, "_loaded", False)
+    monkeypatch.setattr(dm_store.settings, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.unmute_thread.return_value = True
+    resp, mock_send, _ = _webhook_post("/unmute Omar", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.unmute_thread.assert_called_once_with("Omar")
+    assert "Unmuted" in mock_send.call_args.args[0]
+    resp, mock_send, _ = _webhook_post(
+        "/birthdaymsg Happy birthday {name}!", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert dm_store.settings.get("birthday_message") == "Happy birthday {name}!"
+    resp, mock_send, _ = _webhook_post(
+        "/welcomemsg Welcome {name}!", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert dm_store.settings.get("group_welcome_message") == "Welcome {name}!"
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_activity(monkeypatch):
+    """'/activity' lists recent DM exchanges; empty feed says so plainly."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_activity = Mock(return_value=[
+        {"sender_name": "Layla", "platform": "instagram", "text": "the book arrived",
+         "reply": "Great!", "important": False},
+    ])
+    resp, mock_send, mock_llm = _webhook_post("/activity", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "While you were away" in mock_send.call_args.args[0]
+    assert "Layla" in mock_send.call_args.args[0]
+    mock_llm.get_response.assert_not_called()
+    fake_responder.get_activity = Mock(return_value=[])
+    resp, mock_send, _ = _webhook_post("/activity", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "Nothing new" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_status(monkeypatch):
+    """'/status' reports the responder state and each platform's connection."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_status = Mock(return_value={
+        "enabled": True, "running": True,
+        "platforms": {
+            "instagram": {"connected": False, "replied": 0, "last_error": None},
+            "messenger": {"connected": False, "replied": 3, "last_error": None},
+        },
+    })
+    resp, mock_send, mock_llm = _webhook_post("/status", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    text = mock_send.call_args.args[0]
+    assert "DM responder: on, running" in text
+    assert "instagram: not connected, 0 replies" in text
+    assert "messenger: not connected, 3 replies" in text
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_unknown_and_usage(monkeypatch):
+    """An unknown command gets a pointer to /help; a bare command gets usage."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    resp, mock_send, mock_llm = _webhook_post("/frobnicate x", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "don't know /frobnicate" in mock_send.call_args.args[0]
+    assert "/help" in mock_send.call_args.args[0]
+    mock_llm.get_response.assert_not_called()
+    resp, mock_send, _ = _webhook_post("/send", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert mock_send.call_args.args[0] == "Usage: /send Omar I'll be there at 5"
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_command_bypasses_pending_draft(monkeypatch):
+    """A slash command is an instruction, never a draft reply — even when
+    a tricky-message draft is waiting for Sir's approval."""
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = {
+        "thread_id": "t1", "draft_reply": "Let me check with Rayyan.",
+        "sender_name": "Omar",
+    }
+    fake_responder.send_draft_reply = AsyncMock(return_value={
+        "ok": True, "sender_name": "Omar", "platform": "messenger",
+    })
+    fake_responder.send_dm_to_name = AsyncMock(
+        return_value={"ok": True, "sender_name": "Omar", "platform": "messenger"})
+    resp, mock_send, mock_llm = _webhook_post("/send Omar hi", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    fake_responder.send_draft_reply.assert_not_called()
+    fake_responder.send_dm_to_name.assert_awaited_once_with("Omar", "hi")
+    mock_llm.get_response.assert_not_called()
+    assert mock_send.call_args.args[0] == "Sent to Omar."
+
+
+def test_discard_pending_draft(tmp_path):
+    """discard_pending_draft drops the newest draft and returns it."""
+    responder = DMResponder(seen_path=str(tmp_path / "seen.json"))
+    assert responder.discard_pending_draft() is None
+    responder._pending_drafts = {
+        "t1": {"thread_id": "t1", "sender_name": "Omar"},
+        "t2": {"thread_id": "t2", "sender_name": "Layla"},
+    }
+    dropped = responder.discard_pending_draft()
+    assert dropped["sender_name"] == "Layla"
+    assert list(responder._pending_drafts) == ["t1"]
+    assert responder.discard_pending_draft()["sender_name"] == "Omar"
+    assert responder._pending_drafts == {}
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_cancel(monkeypatch, tmp_path):
+    """'/cancel' drops a pending draft, or a pending meeting, or says so."""
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.meetings, "_path", tmp_path / "pending_meetings.json")
+    monkeypatch.setattr(dm_store.meetings, "_loaded", False)
+    monkeypatch.setattr(dm_store.meetings, "_data", {})
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.discard_pending_draft.return_value = {
+        "thread_id": "t1", "sender_name": "Omar",
+    }
+    resp, mock_send, _ = _webhook_post("/cancel", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "Cancelled" in mock_send.call_args.args[0]
+    assert "Omar" in mock_send.call_args.args[0]
+    fake_responder.discard_pending_draft.return_value = None
+    dm_store.meetings.set("t1", {
+        "platform": "messenger", "sender_name": "Layla",
+        "offered": [], "awaiting_times": True,
+    })
+    resp, mock_send, _ = _webhook_post("/cancel", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "Cancelled the meeting request from Layla" in mock_send.call_args.args[0]
+    assert dm_store.meetings.all() == {}
+    resp, mock_send, _ = _webhook_post("/cancel", monkeypatch, fake_responder)
+    assert resp.status_code == 200
+    assert "Nothing is waiting" in mock_send.call_args.args[0]
+
+
+# --- set_telegram_commands ---
+
+@pytest.mark.asyncio
+async def test_set_telegram_commands_ok(monkeypatch):
+    """setMyCommands posts the full command list to Telegram."""
+    import json
+
+    from backend.services.telegram_notifier import (
+        TELEGRAM_COMMANDS,
+        set_telegram_commands,
+    )
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    captured: dict[str, object] = {}
+
+    def _handler(request: httpx.Request) -> httpx.Response:
+        captured["json"] = json.loads(request.content.decode())
+        return httpx.Response(200, json={"ok": True})
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(_handler))
+    assert await set_telegram_commands(client=client) is True
+    commands = captured["json"]["commands"]
+    assert len(commands) == len(TELEGRAM_COMMANDS)
+    assert commands[0] == {"command": "start", "description": "Start Jarvis and see all commands"}
+    assert {c["command"] for c in commands} == {c["command"] for c in TELEGRAM_COMMANDS}
+    assert all(set(c) == {"command", "description"} for c in commands)
+
+
+@pytest.mark.asyncio
+async def test_set_telegram_commands_no_token(monkeypatch):
+    from backend.services.telegram_notifier import set_telegram_commands
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "")
+    assert await set_telegram_commands(client=_mock_client()) is False
+
+
+@pytest.mark.asyncio
+async def test_set_telegram_commands_http_error(monkeypatch):
+    from backend.services.telegram_notifier import set_telegram_commands
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    assert await set_telegram_commands(client=_mock_client(status=403)) is False
+
+
+def test_telegram_status_reports_commands_registered(monkeypatch):
+    """Status includes commands_registered (False until registration runs)."""
+    monkeypatch.setattr("backend.config.settings.telegram_bot_token", "SECRET_TOKEN_123")
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "999")
+    resp = _telegram_app().get("/api/telegram/status")
+    assert resp.status_code == 200
+    assert "commands_registered" in resp.json()
+    assert "SECRET_TOKEN_123" not in resp.text

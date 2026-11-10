@@ -376,6 +376,14 @@ async def lifespan(app: FastAPI):
     except Exception as tg_err:
         log.warning("telegram_webhook_register_failed", error=str(tg_err))
 
+    # Telegram slash commands — register the command menu on startup too,
+    # so the commands show in the app without a manual step.
+    try:
+        from backend.services.telegram_notifier import set_telegram_commands
+        await set_telegram_commands()
+    except Exception as tg_cmd_err:
+        log.warning("telegram_commands_register_failed", error=str(tg_cmd_err))
+
     # Daily DM digest — one Telegram summary each evening at 20:00.
     try:
         from backend.services.dm_responder import dm_responder as _digest_responder

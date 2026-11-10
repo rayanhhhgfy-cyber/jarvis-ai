@@ -30,7 +30,10 @@ from fastapi import APIRouter, Request
 
 from backend.config import settings
 from backend.services.telegram_notifier import (
+    TELEGRAM_COMMANDS,
+    commands_registered,
     send_telegram_message,
+    set_telegram_commands,
     set_telegram_webhook,
 )
 from shared.logger import get_logger
@@ -66,8 +69,13 @@ _SCHEDULE_RE = re.compile(
     re.IGNORECASE,
 )
 # "remind me to <thing> tomorrow at 5pm" — reminder for Sir.
+# The day+clock combo comes first in the time alternation, so
+# "tomorrow at 5pm" stays one time expression instead of splitting into
+# thing "... tomorrow" + time "at 5pm" (which would fire today).
 _REMIND_RE = re.compile(
-    r"^remind me\s+(?:to\s+)?(.+?)\s+(tomorrow|tonight|today|in\s+\d+\s+\w+|at\s+.+|on\s+\w+.*)$",
+    r"^remind me\s+(?:to\s+)?(.+?)\s+"
+    r"((?:tomorrow|tonight|today)\s+at\s+.+|tomorrow|tonight|today"
+    r"|in\s+\d+\s+\w+|at\s+.+|on\s+\w+.*)$",
     re.IGNORECASE,
 )
 # "remember that <name> <fact>" / "remember <name>'s birthday is <date>".
@@ -100,6 +108,149 @@ _DELETE_RULE_RE = re.compile(r"^delete\s+rule\s+(\d+)\s*$", re.IGNORECASE)
 _BIRTHDAY_MSG_RE = re.compile(r"^birthday\s+message:\s*(.+)$", re.IGNORECASE)
 # "group welcome message: <text>" — the greeting for newcomers.
 _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECASE)
+
+
+# --------------------------------------------------------------------
+# Slash commands (/send, /help, ...). The command list itself lives in
+# telegram_notifier.TELEGRAM_COMMANDS (the single source of truth, also
+# registered with Telegram so the menu shows them).
+# --------------------------------------------------------------------
+
+# Commands answered directly here (no natural-language equivalent).
+_DIRECT_COMMANDS = {"start", "help", "activity", "status", "cancel"}
+
+# Command -> natural-language template. "{args}" is the text after the
+# command. These reuse the intent handlers below, so a slash command
+# behaves exactly like typing the sentence.
+_COMMAND_TRANSLATIONS: dict[str, str] = {
+    "send": "tell {args}",
+    "summarize": "summarize conversation with {args}",
+    "schedule": "schedule {args}",
+    "remind": "remind me to {args}",
+    "busy": "I'm busy {args}",
+    "free": "I'm free {args}",
+    "remember": "remember {args}",
+    "search": "search {args}",
+    "rules": "list my rules",
+    "delrule": "delete rule {args}",
+    "unmute": "unmute {args}",
+    "birthdaymsg": "birthday message: {args}",
+    "welcomemsg": "group welcome message: {args}",
+}
+
+
+def _normalize_command(text: str) -> tuple[str, str] | None:
+    """Turn a Telegram slash command into a webhook action.
+
+    Returns None when the text is not a command. Otherwise returns
+    (kind, value):
+    * ("direct", name) — /start, /help, /activity, /status, /cancel.
+    * ("translate", sentence) — the natural-language form, which runs
+      through the normal intent dispatch below.
+    * ("usage", name) — the command needs arguments; the webhook replies
+      with its usage line.
+    * ("unknown", name) — not a command Jarvis knows.
+    """
+    match = re.match(r"^/([A-Za-z_]+)(?:@[\w_]+)?(?:\s+(.*))?$", text, re.DOTALL)
+    if not match:
+        return None
+    name = match.group(1).lower()
+    args = (match.group(2) or "").strip()
+    if name in _DIRECT_COMMANDS:
+        return ("direct", name)
+    if name == "addrule":
+        parts = [p.strip() for p in args.split("|")]
+        if len(parts) == 3 and all(parts):
+            person, topic, reply_text = parts
+            return (
+                "translate",
+                f"add a rule: if {person} asks about {topic}, reply {reply_text}",
+            )
+        return ("usage", name)
+    if name == "search" and "|" in args:
+        person, query = [p.strip() for p in args.split("|", 1)]
+        if person and query:
+            return ("translate", f"find the message where {person} mentioned {query}")
+        return ("usage", name)
+    template = _COMMAND_TRANSLATIONS.get(name)
+    if template is None:
+        return ("unknown", name)
+    if "{args}" in template and not args:
+        return ("usage", name)
+    return ("translate", template.format(args=args))
+
+
+def _help_text(welcome: bool = False) -> str:
+    """The /start and /help reply: every command with its usage."""
+    lines = []
+    if welcome:
+        lines.append("Hello Sir — this is Jarvis on Telegram. Here is everything I can do:")
+    else:
+        lines.append("Here is everything I can do:")
+    for cmd in TELEGRAM_COMMANDS:
+        if cmd["command"] in ("start", "help"):
+            continue
+        lines.append(f"{cmd['usage']} — {cmd['description']}")
+    lines.append("")
+    lines.append("Or just talk to me — I understand plain messages too.")
+    return "\n".join(lines)
+
+
+def _activity_text(responder: Any) -> str:
+    """The /activity reply: recent DM exchanges, newest first."""
+    activity = responder.get_activity(limit=10)
+    if not activity:
+        return "Nothing new — no DM activity since I last told you."
+    lines = ["While you were away:"]
+    for entry in activity:
+        lines.append(
+            f"- {entry.get('sender_name', '')} ({entry.get('platform', '')}): "
+            f"{entry.get('text', '')[:120]} "
+            f"-> Jarvis: {entry.get('reply', '')[:120]}"
+        )
+    return "\n".join(lines)
+
+
+def _status_text(responder: Any) -> str:
+    """The /status reply: responder state + per-platform connection."""
+    status = responder.get_status()
+    lines = [
+        "DM responder: "
+        + ("on" if status.get("enabled") else "off")
+        + ", "
+        + ("running" if status.get("running") else "not running")
+    ]
+    for platform, info in (status.get("platforms") or {}).items():
+        connected = "connected" if info.get("connected") else "not connected"
+        replied = info.get("replied", 0)
+        line = (
+            f"- {platform}: {connected}, "
+            f"{replied} repl{'y' if replied == 1 else 'ies'}"
+        )
+        if info.get("last_error"):
+            line += f" (last error: {str(info['last_error'])[:80]})"
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def _handle_cancel(responder: Any) -> str:
+    """The /cancel reply: drop a pending draft or meeting request."""
+    draft = responder.discard_pending_draft()
+    if draft:
+        return (
+            "Cancelled — I will not send anything to "
+            f"{draft.get('sender_name', 'them')}."
+        )
+    meeting = _pending_meeting_awaiting_times()
+    if meeting:
+        from backend.services.dm_store import meetings as meetings_store
+
+        meetings_store.delete(meeting["thread_id"])
+        return (
+            "Cancelled the meeting request from "
+            f"{meeting.get('sender_name', 'them')}."
+        )
+    return "Nothing is waiting on you right now."
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -284,6 +435,7 @@ async def telegram_status() -> dict[str, Any]:
         and bool(settings.telegram_chat_id.strip()),
         "bot_token_set": bool(settings.telegram_bot_token.strip()),
         "chat_id_set": bool(settings.telegram_chat_id.strip()),
+        "commands_registered": commands_registered(),
     }
 
 
@@ -298,7 +450,8 @@ async def telegram_setup(request: Request) -> dict[str, Any]:
     if host:
         base_url = f"https://{host}"
     ok = await set_telegram_webhook(base_url=base_url)
-    return {"ok": ok}
+    commands_ok = await set_telegram_commands()
+    return {"ok": ok, "commands_registered": commands_ok}
 
 
 @router.post("/test")
@@ -344,8 +497,43 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             return {"ok": True}
         from backend.services.dm_responder import dm_responder
 
+        # --- Slash commands: answered before drafts and meetings — a
+        # command is an instruction to Jarvis, never a DM reply. ---
+        command = _normalize_command(text)
+        is_command = False
+        if command is not None:
+            kind, value = command
+            if kind == "direct":
+                if value == "start":
+                    await send_telegram_message(_help_text(welcome=True))
+                elif value == "help":
+                    await send_telegram_message(_help_text())
+                elif value == "activity":
+                    await send_telegram_message(_activity_text(dm_responder))
+                elif value == "status":
+                    await send_telegram_message(_status_text(dm_responder))
+                elif value == "cancel":
+                    await send_telegram_message(_handle_cancel(dm_responder))
+                return {"ok": True}
+            if kind == "usage":
+                usage = next(
+                    (c["usage"] for c in TELEGRAM_COMMANDS if c["command"] == value),
+                    f"/{value}",
+                )
+                await send_telegram_message(f"Usage: {usage}")
+                return {"ok": True}
+            if kind == "unknown":
+                await send_telegram_message(
+                    f"I don't know /{value}. Send /help to see every command."
+                )
+                return {"ok": True}
+            # ("translate", ...) — run the rest of the webhook with the
+            # natural-language form of the command.
+            text = value
+            is_command = True
+
         # --- Pending draft (feature 8): Sir approves or replaces it. ---
-        draft = dm_responder.get_pending_draft()
+        draft = dm_responder.get_pending_draft() if not is_command else None
         if draft:
             if text.lower() in ("send", "send it", "yes", "ok", "okay", "ارسل", "أرسل"):
                 result = await dm_responder.send_draft_reply(
@@ -372,7 +560,7 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             return {"ok": True}
 
         # --- Pending meeting (awaiting times from Sir): send the times. ---
-        meeting = _pending_meeting_awaiting_times()
+        meeting = _pending_meeting_awaiting_times() if not is_command else None
         if meeting:
             from backend.services.dm_time import parse_time
 
@@ -571,7 +759,8 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         search_match = _SEARCH_RE.match(text)
         if search_match and ("find" in text.lower() or "search" in text.lower()):
             name = search_match.group(1)
-            query = search_match.group(2)
+            # The bare form ("search book") captures a leading space.
+            query = (search_match.group(2) or "").strip()
             results = await dm_responder.search_dms(query, name=name)
             if results:
                 lines = [f"Found {len(results)} match(es):"]
