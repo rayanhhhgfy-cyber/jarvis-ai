@@ -1509,3 +1509,240 @@ async def test_telegram_webhook_command_cancels_pending_connect(monkeypatch):
     assert "DM responder" in mock_send.call_args.args[0]
     assert "111" not in router_telegram._pending_connect
     _clear_pending_connect()
+
+
+# --------------------------------------------------------------------
+# Telegram voice messages (download + sendVoice)
+# --------------------------------------------------------------------
+
+def _telegram_file_handler(request: httpx.Request) -> httpx.Response:
+    """getFile -> a file path; the file download -> fake OGG bytes."""
+    if "getFile" in str(request.url):
+        return httpx.Response(200, json={
+            "ok": True, "result": {"file_path": "voice/file_1.ogg"},
+        })
+    return httpx.Response(200, content=b"fake-ogg-bytes")
+
+
+@pytest.mark.asyncio
+async def test_download_telegram_voice_ok(monkeypatch):
+    from backend.services.telegram_notifier import download_telegram_voice
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_chat_id", "999")
+    result = await download_telegram_voice(
+        "voice123",
+        client=httpx.AsyncClient(transport=httpx.MockTransport(_telegram_file_handler)),
+    )
+    assert result == b"fake-ogg-bytes"
+
+
+@pytest.mark.asyncio
+async def test_download_telegram_voice_getfile_fails(monkeypatch):
+    from backend.services.telegram_notifier import download_telegram_voice
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_chat_id", "999")
+    assert await download_telegram_voice("voice123", client=_mock_client(status=403)) is None
+
+
+@pytest.mark.asyncio
+async def test_download_telegram_voice_not_configured(monkeypatch):
+    from backend.services.telegram_notifier import download_telegram_voice
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "")
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_chat_id", "")
+    assert await download_telegram_voice(
+        "voice123", client=httpx.AsyncClient(transport=httpx.MockTransport(_telegram_file_handler))
+    ) is None
+
+
+@pytest.mark.asyncio
+async def test_send_telegram_voice_ok(monkeypatch, tmp_path):
+    """sendVoice posts the OGG file as multipart to Telegram."""
+    from backend.services.telegram_notifier import send_telegram_voice
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_chat_id", "999")
+    audio = tmp_path / "voice.ogg"
+    audio.write_bytes(b"fake-ogg-bytes")
+    seen: dict[str, str | bytes] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["content_type"] = request.headers.get("content-type", "")
+        seen["body"] = request.content
+        return httpx.Response(200, json={"ok": True})
+
+    client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
+    assert await send_telegram_voice(str(audio), client=client) is True
+    assert "multipart/form-data" in str(seen["content_type"])
+    assert b"voice.ogg" in bytes(seen["body"])
+
+
+@pytest.mark.asyncio
+async def test_send_telegram_voice_http_error(monkeypatch, tmp_path):
+    from backend.services.telegram_notifier import send_telegram_voice
+
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_bot_token", "tok123")
+    monkeypatch.setattr("backend.services.telegram_notifier.settings.telegram_chat_id", "999")
+    audio = tmp_path / "voice.ogg"
+    audio.write_bytes(b"fake-ogg-bytes")
+    assert await send_telegram_voice(str(audio), client=_mock_client(status=403)) is False
+
+
+# --------------------------------------------------------------------
+# Telegram webhook: voice notes
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_voice_note_is_heard_and_answered_with_voice(monkeypatch):
+    """A voice note to the bot is transcribed, answered, and the reply
+    goes back as voice (not silently ignored)."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.telegram_notifier.download_telegram_voice",
+              new=AsyncMock(return_value=b"fake-ogg")) as mock_dl,
+        patch("backend.services.dm_media.transcribe_audio_bytes",
+              new=AsyncMock(return_value="what do you recommend")),
+        patch("backend.services.dm_voice.send_telegram_voice_reply",
+              new=AsyncMock(return_value=True)) as mock_voice,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="Here is what I recommend.")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "voice": {"file_id": "voice123", "duration": 5}},
+        })
+    assert resp.status_code == 200
+    mock_dl.assert_called_once_with("voice123")
+    mock_llm.get_response.assert_called_once()
+    assert "what do you recommend" in mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_voice.assert_called_once_with("Here is what I recommend.")
+    mock_send.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_voice_note_unheard_falls_back_to_text(monkeypatch):
+    """When a voice note cannot be transcribed, the bot says so in text
+    instead of ignoring it — and never calls the LLM with nothing."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.telegram_notifier.download_telegram_voice",
+              new=AsyncMock(return_value=b"fake-ogg")),
+        patch("backend.services.dm_media.transcribe_audio_bytes",
+              new=AsyncMock(return_value=None)),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="hi")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "voice": {"file_id": "voice123", "duration": 5}},
+        })
+    assert resp.status_code == 200
+    mock_llm.get_response.assert_not_called()
+    mock_send.assert_called_once()
+    assert "could not hear" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_voice_note_from_stranger_ignored(monkeypatch):
+    """A voice note from anyone but Sir is ignored, like text."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.telegram_notifier.download_telegram_voice",
+              new=AsyncMock(return_value=b"fake-ogg")) as mock_dl,
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="hi")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 999},
+                        "voice": {"file_id": "voice123", "duration": 5}},
+        })
+    assert resp.status_code == 200
+    mock_dl.assert_not_called()
+    mock_send.assert_not_called()
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_voice_note_cancels_pending_connect(monkeypatch):
+    """A voice note can never be cookies — while a connect is waiting,
+    it cancels the wait and is answered as a normal message."""
+    from backend.routers import router_telegram
+
+    _clear_pending_connect()
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.get_activity.return_value = []
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)),
+        patch("backend.services.telegram_notifier.download_telegram_voice",
+              new=AsyncMock(return_value=b"fake-ogg")),
+        patch("backend.services.dm_media.transcribe_audio_bytes",
+              new=AsyncMock(return_value="hello jarvis")),
+        patch("backend.services.dm_voice.send_telegram_voice_reply",
+              new=AsyncMock(return_value=True)),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        mock_llm.get_response = AsyncMock(return_value="Hi Sir.")
+        router_telegram._pending_connect["111"] = "instagram"
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "voice": {"file_id": "voice123", "duration": 2}},
+        })
+    assert resp.status_code == 200
+    assert "111" not in router_telegram._pending_connect
+    mock_llm.get_response.assert_called_once()
+    _clear_pending_connect()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_voice_reply_failure_falls_back_to_text(monkeypatch):
+    """If the voice reply fails, the answer still arrives as text."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.telegram_notifier.download_telegram_voice",
+              new=AsyncMock(return_value=b"fake-ogg")),
+        patch("backend.services.dm_media.transcribe_audio_bytes",
+              new=AsyncMock(return_value="hello")),
+        patch("backend.services.dm_voice.send_telegram_voice_reply",
+              new=AsyncMock(return_value=False)),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="Hi Sir.")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "voice": {"file_id": "voice123", "duration": 2}},
+        })
+    assert resp.status_code == 200
+    mock_send.assert_called_once_with("Hi Sir.")
+
+
+# --------------------------------------------------------------------
+# Telegram system prompt: the bot knows what Jarvis really is
+# --------------------------------------------------------------------
+
+def test_telegram_system_prompt_knows_jarvis():
+    """The bot's brain knows Rayyan, the real abilities, and what is
+    already built — so it never suggests a duplicate or invents a place."""
+    from backend.routers.router_telegram import _TELEGRAM_SYSTEM
+
+    assert "Irbid" in _TELEGRAM_SYSTEM
+    assert "Portland" not in _TELEGRAM_SYSTEM
+    assert "Already built" in _TELEGRAM_SYSTEM
+    assert "reminders" in _TELEGRAM_SYSTEM.lower()
+    assert "voice-to-text" in _TELEGRAM_SYSTEM.lower()
+    assert "/responder" in _TELEGRAM_SYSTEM
+    assert "/connect" in _TELEGRAM_SYSTEM
+    assert "phone calls" in _TELEGRAM_SYSTEM.lower()

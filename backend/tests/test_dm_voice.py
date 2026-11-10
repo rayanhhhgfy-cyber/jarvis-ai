@@ -188,3 +188,99 @@ async def test_send_voice_reply_send_failure_returns_false(tmp_path):
     ):
         assert await send_voice_reply(client, "t1", _LONG_EN) is False
     assert len(client.sent) == 2
+
+
+# --------------------------------------------------------------------
+# Telegram voice replies (_mp3_to_ogg + send_telegram_voice_reply)
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_mp3_to_ogg_real_ffmpeg(tmp_path):
+    """The real ffmpeg MP3 -> OGG Opus conversion works (Telegram voice
+    messages need OGG Opus). Skipped where ffmpeg is missing."""
+    import json
+    import shutil
+    import subprocess
+
+    import backend.services.dm_voice as dm_voice
+
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg not installed")
+    src = tmp_path / "tone.mp3"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "sine=frequency=440:duration=2",
+         "-c:a", "libmp3lame", "-b:a", "64k", str(src)],
+        check=True,
+    )
+    ogg = await dm_voice._mp3_to_ogg(src)
+    assert ogg is not None and ogg.exists() and ogg.stat().st_size > 0
+    out = subprocess.run(
+        ["ffprobe", "-v", "quiet", "-print_format", "json",
+         "-show_streams", str(ogg)],
+        capture_output=True, text=True,
+    )
+    assert json.loads(out.stdout)["streams"][0]["codec_name"] == "opus"
+
+
+async def _fake_convert_ogg(mp3_path):
+    return mp3_path.with_suffix(".ogg")
+
+
+@pytest.mark.asyncio
+async def test_send_telegram_voice_reply_long_sends_in_order(tmp_path):
+    """A long reply goes out as several Telegram voice messages, in order."""
+    from backend.services.dm_voice import send_telegram_voice_reply
+
+    chunks = _split_text(_LONG_EN)
+    assert len(chunks) >= 3
+    sent = []
+
+    async def fake_send_telegram_voice(path):
+        sent.append(path)
+        return True
+
+    with (
+        patch("backend.services.dm_voice._synthesize_mp3",
+              new=_fake_synth_factory(tmp_path)),
+        patch("backend.services.dm_voice._mp3_to_ogg", new=_fake_convert_ogg),
+        patch("backend.services.telegram_notifier.send_telegram_voice",
+              new=fake_send_telegram_voice),
+    ):
+        assert await send_telegram_voice_reply(_LONG_EN) is True
+    assert len(sent) == len(chunks)
+    assert all(str(p).endswith(".ogg") for p in sent)
+
+
+@pytest.mark.asyncio
+async def test_send_telegram_voice_reply_synth_failure_sends_nothing(tmp_path):
+    """If any chunk fails to synthesize, NO Telegram voice goes out."""
+    from backend.services.dm_voice import send_telegram_voice_reply
+
+    sent = []
+
+    async def fake_send_telegram_voice(path):
+        sent.append(path)
+        return True
+
+    calls = {"n": 0}
+
+    async def failing_synth(text):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            return None
+        d = tmp_path / f"c{calls['n']}"
+        d.mkdir()
+        p = d / "reply.mp3"
+        p.write_bytes(b"fake-mp3")
+        return p
+
+    assert len(_split_text(_LONG_EN)) >= 2
+    with (
+        patch("backend.services.dm_voice._synthesize_mp3", new=failing_synth),
+        patch("backend.services.dm_voice._mp3_to_ogg", new=_fake_convert_ogg),
+        patch("backend.services.telegram_notifier.send_telegram_voice",
+              new=fake_send_telegram_voice),
+    ):
+        assert await send_telegram_voice_reply(_LONG_EN) is False
+    assert sent == []

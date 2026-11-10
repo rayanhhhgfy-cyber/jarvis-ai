@@ -24,6 +24,9 @@ silent no-op — Telegram is an extra channel, never a hard dependency.
 
 from __future__ import annotations
 
+import asyncio
+from pathlib import Path
+
 import httpx
 
 from backend.config import settings
@@ -132,6 +135,88 @@ async def send_telegram_message(
         return bool(resp.json().get("ok"))
     except Exception as e:
         log.warning("telegram_send_error", error=str(e))
+        return False
+    finally:
+        if own_client:
+            await client.aclose()
+
+
+async def download_telegram_voice(
+    file_id: str, client: httpx.AsyncClient | None = None
+) -> bytes | None:
+    """Download a Telegram voice message's audio bytes.
+
+    Calls getFile for the file path, then downloads the file. Returns
+    None on any failure. Never raises, and never logs the file URL —
+    it carries the bot token, so only status codes are logged.
+    """
+    configured = _configured()
+    if not configured or not file_id:
+        return None
+    token, _chat_id = configured
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=30.0)
+    assert client is not None
+    try:
+        resp = await client.post(
+            _TELEGRAM_API.format(token=token, method="getFile"),
+            json={"file_id": file_id},
+        )
+        if resp.status_code != 200:
+            log.warning("telegram_get_file_failed", status_code=resp.status_code)
+            return None
+        result = resp.json().get("result") or {}
+        file_path = result.get("file_path") or ""
+        if not file_path:
+            log.warning("telegram_get_file_no_path")
+            return None
+        download = await client.get(
+            f"https://api.telegram.org/file/bot{token}/{file_path}"
+        )
+        if download.status_code != 200:
+            log.warning("telegram_file_download_failed", status_code=download.status_code)
+            return None
+        return download.content
+    except Exception:
+        log.warning("telegram_file_download_error")
+        return None
+    finally:
+        if own_client:
+            await client.aclose()
+
+
+async def send_telegram_voice(
+    audio_path: str, client: httpx.AsyncClient | None = None
+) -> bool:
+    """Send one Telegram voice message to Sir from an .ogg Opus file.
+
+    Telegram voice messages must be OGG encoded with OPUS (see
+    dm_voice._mp3_to_ogg). Returns True when Telegram accepted it.
+    Never raises. When Telegram is not configured, returns False.
+    """
+    configured = _configured()
+    if not configured:
+        log.debug("telegram_not_configured")
+        return False
+    token, chat_id = configured
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=30.0)
+    assert client is not None
+    try:
+        data = await asyncio.to_thread(Path(audio_path).read_bytes)
+        resp = await client.post(
+            _TELEGRAM_API.format(token=token, method="sendVoice"),
+            data={"chat_id": chat_id},
+            files={"voice": ("voice.ogg", data, "audio/ogg")},
+        )
+        if resp.status_code != 200:
+            log.warning("telegram_voice_send_failed", status_code=resp.status_code)
+            return False
+        return bool(resp.json().get("ok"))
+    except Exception as e:
+        log.warning("telegram_voice_send_error", error=str(e))
         return False
     finally:
         if own_client:

@@ -141,6 +141,30 @@ async def _mp3_to_m4a(mp3_path: Path) -> Path | None:
         return None
 
 
+async def _mp3_to_ogg(mp3_path: Path) -> Path | None:
+    """ffmpeg MP3 -> OGG Opus (the only format Telegram voice accepts)."""
+    ogg_path = mp3_path.with_suffix(".ogg")
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "ffmpeg", "-y", "-v", "error",
+            "-i", str(mp3_path),
+            "-c:a", "libopus", "-b:a", "64k",
+            str(ogg_path),
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        _, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            log.warning("dm_voice_ffmpeg_failed", error=stderr.decode()[:200])
+            return None
+        if ogg_path.exists() and ogg_path.stat().st_size > 0:
+            return ogg_path
+        return None
+    except Exception as e:
+        log.warning("dm_voice_convert_failed", error=str(e))
+        return None
+
+
 async def send_voice_reply(client: object, thread_id: str, text: str) -> bool:
     """Synthesize the reply and send it as Instagram voice message(s).
 
@@ -193,3 +217,46 @@ async def send_voice_reply(client: object, thread_id: str, text: str) -> bool:
                 shutil.rmtree(tmpdir, ignore_errors=True)
         except Exception:
             pass
+
+
+async def send_telegram_voice_reply(text: str) -> bool:
+    """Synthesize the reply and send it as Telegram voice message(s).
+
+    Same rules as the Instagram voice reply: any length works (split
+    into chunks, sent in order), all audio is built BEFORE anything is
+    sent, and a failure returns False so the caller falls back to text.
+    Telegram voice messages must be OGG Opus, so each chunk is
+    converted with _mp3_to_ogg before sending.
+    """
+    from backend.services.telegram_notifier import send_telegram_voice
+
+    chunks = _split_text(text)
+    if not chunks:
+        return False
+    built: list[Path] = []
+    tmpdirs: list[Path] = []
+    try:
+        for chunk in chunks:
+            mp3_path = await _synthesize_mp3(chunk)
+            if not mp3_path:
+                return False
+            tmpdirs.append(mp3_path.parent)
+            ogg_path = await _mp3_to_ogg(mp3_path)
+            if not ogg_path:
+                return False
+            built.append(ogg_path)
+        for ogg_path in built:
+            if not await send_telegram_voice(str(ogg_path)):
+                return False
+        return True
+    except Exception as e:
+        log.warning("dm_voice_telegram_send_failed", error=str(e))
+        return False
+    finally:
+        try:
+            import shutil
+
+            for tmpdir in tmpdirs:
+                shutil.rmtree(tmpdir, ignore_errors=True)
+        except Exception as e:
+            log.warning("dm_voice_cleanup_failed", error=str(e))

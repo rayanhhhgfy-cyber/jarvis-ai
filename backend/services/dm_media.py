@@ -223,6 +223,30 @@ async def _transcribe_long(
         shutil.rmtree(tmpdir, ignore_errors=True)
 
 
+async def transcribe_audio_bytes(
+    data: bytes, client: httpx.AsyncClient | None = None
+) -> str | None:
+    """Transcribe voice-note bytes already in memory (Telegram voice
+    messages arrive this way — their download URL carries the bot
+    token, so the bytes are fetched first and the URL never reaches
+    this module). Returns text, or None on failure."""
+    api_key = (settings.groq_api_key or "").strip()
+    if not api_key or not data:
+        return None
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=60.0)
+    assert client is not None
+    try:
+        return await _whisper_bytes(data, client)
+    except Exception as e:
+        log.warning("dm_whisper_error", error=str(e))
+        return None
+    finally:
+        if own_client:
+            await client.aclose()
+
+
 async def transcribe_audio(
     audio_url: str, client: httpx.AsyncClient | None = None
 ) -> str | None:

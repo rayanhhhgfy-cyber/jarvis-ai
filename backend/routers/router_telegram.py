@@ -43,11 +43,34 @@ log = get_logger("router_telegram")
 router = APIRouter(prefix="/api/telegram", tags=["Telegram"])
 
 _TELEGRAM_SYSTEM = (
-    "You are Jarvis, Rayyan's personal assistant. You are replying to "
-    "Rayyan himself on Telegram. Answer helpfully and briefly, like a "
-    "real person texting. You know everything about his projects and "
-    "his DMs. If he asks about a message someone sent him, tell him "
-    "what they said and what you replied. Never pretend to be Rayyan."
+    "You are Jarvis, Rayyan's personal assistant, replying to Rayyan "
+    "himself on Telegram. Rayyan is a Grade 10 student in Irbid, Jordan. "
+    "He is phone-only and speaks Arabic and English. Answer helpfully and "
+    "briefly, like a real person texting. Never pretend to be Rayyan. "
+    "What Jarvis actually does: he auto-replies to Rayyan's Instagram and "
+    "Messenger DMs — one-minute rule (he answers only if Rayyan has not "
+    "replied within a minute), he introduces himself as Jarvis, never as "
+    "Rayyan, he works in group chats, searches the web for live answers, "
+    "and sends a loud alert for important or urgent messages. He hears "
+    "voice notes and replies with voice notes, reads photos, sends DMs for "
+    "Rayyan, schedules DMs and reminders, keeps a Jarvis-local calendar "
+    "and contact memory, sends birthday wishes, mutes spam, follows "
+    "custom auto-reply rules, and offers meetings. On Telegram he takes "
+    "22 slash commands: /send /summarize /schedule /remind /busy /free "
+    "/remember /search /rules /addrule /delrule /unmute /birthdaymsg "
+    "/welcomemsg /activity /status /cancel /responder /connect "
+    "/disconnect. "
+    "Already built — never suggest these as new ideas: reminders, "
+    "summaries, voice-to-text, scheduled messages, contact memory, "
+    "birthday wishes, spam muting, quiet hours, per-person tone, custom "
+    "rules, meeting scheduling, group welcomes, and the daily digest. "
+    "What Jarvis cannot do: answer phone calls, disconnect an account on "
+    "his own (only Rayyan typing /disconnect does that), or use Instagram "
+    "or Messenger without Rayyan connecting the account first. "
+    "When Rayyan asks what to add to your abilities, suggest only things "
+    "that are NOT in the already-built list above, grounded in what he "
+    "actually does (his school, his club, his projects, his DMs). Never "
+    "invent a place he lives — he lives in Irbid, Jordan, not anywhere else."
 )
 
 # "tell <name> <message>" — Sir asks Jarvis to send a DM for him.
@@ -637,12 +660,37 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         chat = message.get("chat") or {}
         chat_id = str(chat.get("id", ""))
         text = (message.get("text") or "").strip()
-        if not text or not chat_id:
+        voice = message.get("voice") or {}
+        if not chat_id:
             return {"ok": True}
         expected = (settings.telegram_chat_id or "").strip()
         if not expected or chat_id != expected:
             # Not Sir — ignore silently (the bot is his private line).
             log.debug("telegram_webhook_ignored_stranger", chat_id=chat_id)
+            return {"ok": True}
+
+        # --- Voice note: hear it first — the transcript becomes the
+        # message, and the reply goes back as voice. A voice note can
+        # never be cookies, so a pending /connect wait is cancelled
+        # instead of eating the transcript. ---
+        spoke = False
+        if not text and voice.get("file_id"):
+            from backend.services.dm_media import transcribe_audio_bytes
+            from backend.services.telegram_notifier import download_telegram_voice
+
+            _pending_connect.pop(chat_id, None)
+            audio = await download_telegram_voice(voice["file_id"])
+            transcript = (
+                await transcribe_audio_bytes(audio) if audio else None
+            )
+            if not transcript:
+                await send_telegram_message(
+                    "I could not hear that voice note — try again or type it."
+                )
+                return {"ok": True}
+            text = transcript.strip()
+            spoke = True
+        if not text:
             return {"ok": True}
 
         # --- Pending connect: the next message after /connect is cookies. ---
@@ -1004,12 +1052,38 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 + "\n".join(lines)
                 + "\n\n"
             )
+        # Live connection state, so the bot never claims to be replying
+        # to DMs on an account that is not connected right now.
+        try:
+            from backend.services import dm_auth
+
+            connected = [
+                s.get("name", "")
+                for s in (dm_auth.connector_status(p) for p in dm_auth.PLATFORMS)
+                if s.get("connected")
+            ]
+            context += (
+                "[Connected right now: "
+                + (", ".join(connected) if connected else "nothing")
+                + "]\n\n"
+            )
+        except Exception as e:
+            log.warning("telegram_context_status_failed", error=str(e))
         reply = await llm_service.get_response(
             user_message=f"{context}Rayyan (Telegram): {text}",
             system_instructions=_TELEGRAM_SYSTEM,
             inject_memory=True,
         )
-        await send_telegram_message(reply or "Sorry Sir, I could not answer that.")
+        reply = reply or "Sorry Sir, I could not answer that."
+        if spoke:
+            # He spoke — answer with voice; fall back to text if the
+            # voice reply fails.
+            from backend.services.dm_voice import send_telegram_voice_reply
+
+            if not await send_telegram_voice_reply(reply):
+                await send_telegram_message(reply)
+        else:
+            await send_telegram_message(reply)
     except Exception as e:
         log.warning("telegram_webhook_failed", error=str(e))
     return {"ok": True}

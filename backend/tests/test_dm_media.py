@@ -15,7 +15,11 @@ import httpx
 import pytest
 
 from backend.services.dm_clients import _instagram_media, _messenger_media
-from backend.services.dm_media import describe_image, transcribe_audio
+from backend.services.dm_media import (
+    describe_image,
+    transcribe_audio,
+    transcribe_audio_bytes,
+)
 
 
 def _mock_client(handler) -> httpx.AsyncClient:
@@ -214,3 +218,28 @@ async def test_split_audio_no_ffmpeg(monkeypatch, tmp_path):
 
     monkeypatch.setattr(shutil, "which", lambda _: None)
     assert await dm_media._split_audio(tmp_path / "voice.bin", tmp_path) == []
+
+
+# --------------------------------------------------------------------
+# transcribe_audio_bytes (Telegram voice notes arrive as bytes)
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_transcribe_audio_bytes_ok(monkeypatch):
+    """Bytes in -> Whisper text out, no download needed."""
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert "api.groq.com" in str(request.url)
+        return httpx.Response(200, json={"text": "what do you recommend"})
+
+    result = await transcribe_audio_bytes(b"fake-ogg-bytes", client=_mock_client(handler))
+    assert result == "what do you recommend"
+
+
+@pytest.mark.asyncio
+async def test_transcribe_audio_bytes_no_key(monkeypatch):
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "")
+    assert await transcribe_audio_bytes(
+        b"fake-ogg-bytes", client=_mock_client(lambda r: httpx.Response(200))
+    ) is None
