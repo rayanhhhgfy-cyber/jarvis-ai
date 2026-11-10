@@ -55,7 +55,9 @@ _TELEGRAM_SYSTEM = (
     "voice notes and replies with voice notes, reads photos, sends DMs for "
     "Rayyan, schedules DMs and reminders, keeps a Jarvis-local calendar "
     "and contact memory, sends birthday wishes, mutes spam, follows "
-    "custom auto-reply rules, and offers meetings. "
+    "custom auto-reply rules, and offers meetings. He also sees the "
+    "photos and videos Rayyan sends him here on Telegram, and answers "
+    "questions about what is in them. "
     "When you reply to a voice note, your words will be spoken aloud as "
     "a voice note — so never announce that you are sending one. Do not "
     "write '[Voice note]', 'Sending you a voice note', or anything like "
@@ -683,10 +685,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         spoke = False
         if not text and voice.get("file_id"):
             from backend.services.dm_media import transcribe_audio_bytes
-            from backend.services.telegram_notifier import download_telegram_voice
+            from backend.services.telegram_notifier import download_telegram_file
 
             _pending_connect.pop(chat_id, None)
-            audio = await download_telegram_voice(voice["file_id"])
+            audio = await download_telegram_file(voice["file_id"])
             transcript = (
                 await transcribe_audio_bytes(audio) if audio else None
             )
@@ -697,6 +699,43 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 return {"ok": True}
             text = transcript.strip()
             spoke = True
+
+        # --- Photo / video: see it first — the description becomes
+        # context for the reply, and the caption (if any) is the
+        # message. A photo or video can never be cookies, so a pending
+        # /connect wait is cancelled instead of eating it. ---
+        media_context = ""
+        photo = message.get("photo") or []
+        video = message.get("video") or {}
+        caption = (message.get("caption") or "").strip()
+        if photo or video:
+            from backend.services.dm_media import (
+                describe_image_bytes,
+                describe_video,
+            )
+            from backend.services.telegram_notifier import download_telegram_file
+
+            _pending_connect.pop(chat_id, None)
+            if photo:
+                file_id = (photo[-1] or {}).get("file_id", "")
+                data = await download_telegram_file(file_id) if file_id else None
+                description = await describe_image_bytes(data) if data else None
+                media_context = (
+                    f"[Photo: {description}]"
+                    if description
+                    else "[Photo: I could not see this photo.]"
+                )
+            else:
+                file_id = video.get("file_id", "")
+                data = await download_telegram_file(file_id) if file_id else None
+                description = await describe_video(data) if data else None
+                media_context = (
+                    f"[Video: {description}]"
+                    if description
+                    else "[Video: I could not see this video.]"
+                )
+            if not text:
+                text = caption if caption else "What is in this?"
         if not text:
             return {"ok": True}
 
@@ -1076,6 +1115,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             )
         except Exception as e:
             log.warning("telegram_context_status_failed", error=str(e))
+        # A photo or video Sir just sent: what Jarvis saw in it, so he
+        # can answer questions about it.
+        if media_context:
+            context = media_context + "\n\n" + context
         reply = await llm_service.get_response(
             user_message=f"{context}Rayyan (Telegram): {text}",
             system_instructions=_TELEGRAM_SYSTEM,

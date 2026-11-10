@@ -17,6 +17,8 @@ import pytest
 from backend.services.dm_clients import _instagram_media, _messenger_media
 from backend.services.dm_media import (
     describe_image,
+    describe_image_bytes,
+    describe_video,
     transcribe_audio,
     transcribe_audio_bytes,
 )
@@ -243,3 +245,87 @@ async def test_transcribe_audio_bytes_no_key(monkeypatch):
     assert await transcribe_audio_bytes(
         b"fake-ogg-bytes", client=_mock_client(lambda r: httpx.Response(200))
     ) is None
+
+
+# --------------------------------------------------------------------
+# describe_image_bytes + describe_video (Telegram photos and videos)
+# --------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_describe_image_bytes_ok(monkeypatch):
+    """Photo bytes in -> Groq vision text out, no download needed."""
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert "api.groq.com" in str(request.url)
+        return httpx.Response(200, json={
+            "choices": [{"message": {"content": "A cat sitting on a couch."}}],
+        })
+
+    result = await describe_image_bytes(b"fake-jpeg-bytes", client=_mock_client(handler))
+    assert result == "A cat sitting on a couch."
+
+
+@pytest.mark.asyncio
+async def test_describe_image_bytes_no_key(monkeypatch):
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "")
+    assert await describe_image_bytes(
+        b"fake-jpeg-bytes", client=_mock_client(lambda r: httpx.Response(200))
+    ) is None
+
+
+@pytest.mark.asyncio
+async def test_describe_video_real_ffmpeg(tmp_path, monkeypatch):
+    """A real video is described from frames spread across it (vision
+    mocked — the test proves the frame extraction + joining)."""
+    import shutil
+    import subprocess
+
+    import backend.services.dm_media as dm_media
+
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg not installed")
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+    video = tmp_path / "clip.mp4"
+    subprocess.run(
+        ["ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+         "-i", "testsrc=duration=4:size=128x128:rate=10",
+         "-c:v", "libx264", "-pix_fmt", "yuv420p", str(video)],
+        check=True,
+    )
+    seen = {"n": 0}
+
+    async def fake_vision(data, client):
+        seen["n"] += 1
+        return f"a test frame {seen['n']}"
+
+    monkeypatch.setattr(dm_media, "_vision_bytes", fake_vision)
+    # Pass a mock client: a real httpx client cannot even be created in
+    # this sandbox (the proxy env vars break httpx's URL parsing), and
+    # vision is mocked anyway, so the client is never used for real.
+    result = await describe_video(
+        video.read_bytes(), client=_mock_client(lambda r: httpx.Response(200))
+    )
+    assert result is not None
+    # Four frames spread across a 4-second clip.
+    assert seen["n"] == 4
+    assert "frame 1: a test frame 1" in result
+    assert "frame 4: a test frame 4" in result
+
+
+@pytest.mark.asyncio
+async def test_describe_video_no_ffmpeg(monkeypatch):
+    """Without ffmpeg, a video cannot be described (caller falls back)."""
+    import shutil
+
+    import backend.services.dm_media as dm_media
+
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+    monkeypatch.setattr(shutil, "which", lambda _: None)
+    assert await describe_video(b"fake-video-bytes") is None
+
+
+@pytest.mark.asyncio
+async def test_describe_video_no_key(monkeypatch):
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "")
+    assert await describe_video(b"fake-video-bytes") is None

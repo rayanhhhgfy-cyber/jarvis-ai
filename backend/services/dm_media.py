@@ -7,6 +7,10 @@ Understands the messages that have no text: photos and voice notes.
 * ``describe_image`` — downloads a photo someone sent in a DM and asks
   Groq's vision model for a short description, so Jarvis can reply
   about what is actually in the picture instead of ignoring it.
+* ``describe_image_bytes`` — the same, for photo bytes already in
+  memory (Telegram photos arrive this way).
+* ``describe_video`` — describes a video from a few frames spread
+  across it (ffmpeg), each described with Groq vision.
 * ``transcribe_audio`` — downloads a voice note and transcribes it with
   Groq Whisper, so Jarvis can reply to what was said. A voice note of
   any length works: a short one is transcribed in a single call, and a
@@ -60,24 +64,13 @@ async def _download(url: str, client: httpx.AsyncClient) -> bytes | None:
         return None
 
 
-async def describe_image(
-    image_url: str, client: httpx.AsyncClient | None = None
-) -> str | None:
-    """Describe a photo in one short sentence. Returns None on failure."""
-    api_key = (settings.groq_api_key or "").strip()
-    if not api_key or not image_url:
-        return None
-    own_client = client is None
-    if own_client:
-        client = httpx.AsyncClient(timeout=60.0)
-    assert client is not None
-    try:
-        data = await _download(image_url, client)
-        if not data:
-            return None
-        import base64
+async def _vision_bytes(data: bytes, client: httpx.AsyncClient) -> str | None:
+    """One Groq vision call for image bytes. Returns a short description."""
+    import base64
 
-        b64 = base64.b64encode(data).decode("utf-8")
+    b64 = base64.b64encode(data).decode("utf-8")
+    api_key = (settings.groq_api_key or "").strip()
+    try:
         resp = await client.post(
             _GROQ_CHAT_URL,
             headers={
@@ -116,9 +109,152 @@ async def describe_image(
     except Exception as e:
         log.warning("dm_vision_error", error=str(e))
         return None
+
+
+async def describe_image(
+    image_url: str, client: httpx.AsyncClient | None = None
+) -> str | None:
+    """Describe a photo in one short sentence. Returns None on failure."""
+    api_key = (settings.groq_api_key or "").strip()
+    if not api_key or not image_url:
+        return None
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=60.0)
+    assert client is not None
+    try:
+        data = await _download(image_url, client)
+        if not data:
+            return None
+        return await _vision_bytes(data, client)
+    except Exception as e:
+        log.warning("dm_vision_error", error=str(e))
+        return None
     finally:
         if own_client:
             await client.aclose()
+
+
+async def describe_image_bytes(
+    data: bytes, client: httpx.AsyncClient | None = None
+) -> str | None:
+    """Describe photo bytes already in memory (Telegram photos arrive
+    this way — their download URL carries the bot token, so the bytes
+    are fetched first and the URL never reaches this module)."""
+    api_key = (settings.groq_api_key or "").strip()
+    if not api_key or not data:
+        return None
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=60.0)
+    assert client is not None
+    try:
+        return await _vision_bytes(data, client)
+    except Exception as e:
+        log.warning("dm_vision_error", error=str(e))
+        return None
+    finally:
+        if own_client:
+            await client.aclose()
+
+
+# A video is described from a few frames spread across it — enough to
+# know what happens in it without sending every frame to vision.
+_VIDEO_FRAMES = 4
+
+
+async def _video_duration(video_path: Path) -> float | None:
+    """ffprobe duration in seconds, or None when it cannot be read."""
+    try:
+        import json
+
+        proc = await asyncio.create_subprocess_exec(
+            "ffprobe", "-v", "quiet", "-print_format", "json",
+            "-show_format", str(video_path),
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        out, _ = await proc.communicate()
+        if proc.returncode != 0:
+            return None
+        return float(json.loads(out.decode()).get("format", {}).get("duration", 0) or 0)
+    except Exception as e:
+        log.warning("dm_video_duration_failed", error=str(e))
+        return None
+
+
+async def _extract_frame(video_path: Path, at_seconds: float, out_path: Path) -> bool:
+    """ffmpeg: one JPEG frame at the given time. Returns True on success."""
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "ffmpeg", "-y", "-v", "error",
+            "-ss", f"{at_seconds:.2f}",
+            "-i", str(video_path),
+            "-frames:v", "1", "-q:v", "2",
+            str(out_path),
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        _, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            log.warning("dm_video_frame_failed", error=stderr.decode()[:200])
+            return False
+        return out_path.exists() and out_path.stat().st_size > 0
+    except Exception as e:
+        log.warning("dm_video_frame_failed", error=str(e))
+        return False
+
+
+async def describe_video(
+    data: bytes, client: httpx.AsyncClient | None = None
+) -> str | None:
+    """Describe a video from a few frames spread across it. Returns a
+    short description, or None on failure (ffmpeg missing, unreadable
+    file, vision failed)."""
+    api_key = (settings.groq_api_key or "").strip()
+    if not api_key or not data:
+        return None
+    if not shutil.which("ffmpeg"):
+        return None
+    tmpdir = Path(tempfile.mkdtemp(prefix="jarvis_video_"))
+    try:
+        video_path = tmpdir / "video.mp4"
+        video_path.write_bytes(data)
+        duration = await _video_duration(video_path)
+        if not duration or duration <= 0:
+            return None
+        if duration < 2:
+            times = [duration / 2]
+        else:
+            times = [duration * f for f in (0.1, 0.4, 0.7, 0.95)][: _VIDEO_FRAMES]
+        own_client = client is None
+        if own_client:
+            client = httpx.AsyncClient(timeout=60.0)
+        assert client is not None
+        try:
+            descriptions: list[str] = []
+            for i, at in enumerate(times):
+                frame_path = tmpdir / f"frame_{i}.jpg"
+                if not await _extract_frame(video_path, at, frame_path):
+                    continue
+                desc = await _vision_bytes(frame_path.read_bytes(), client)
+                if desc:
+                    descriptions.append(desc)
+            if not descriptions:
+                return None
+            if len(descriptions) == 1:
+                return descriptions[0]
+            return "; ".join(
+                f"frame {i + 1}: {d}" for i, d in enumerate(descriptions)
+            )
+        finally:
+            if own_client:
+                await client.aclose()
+    except Exception as e:
+        log.warning("dm_video_error", error=str(e))
+        return None
+    finally:
+        shutil.rmtree(tmpdir, ignore_errors=True)
 
 
 async def _whisper_bytes(data: bytes, client: httpx.AsyncClient) -> str | None:

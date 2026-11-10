@@ -141,10 +141,10 @@ async def send_telegram_message(
             await client.aclose()
 
 
-async def download_telegram_voice(
+async def download_telegram_file(
     file_id: str, client: httpx.AsyncClient | None = None
 ) -> bytes | None:
-    """Download a Telegram voice message's audio bytes.
+    """Download a Telegram file's bytes (voice note, photo, video).
 
     Calls getFile for the file path, then downloads the file. Returns
     None on any failure. Never raises, and never logs the file URL —
