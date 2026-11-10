@@ -117,7 +117,7 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # --------------------------------------------------------------------
 
 # Commands answered directly here (no natural-language equivalent).
-_DIRECT_COMMANDS = {"start", "help", "activity", "status", "cancel"}
+_DIRECT_COMMANDS = {"start", "help", "activity", "status", "cancel", "responder"}
 
 # Command -> natural-language template. "{args}" is the text after the
 # command. These reuse the intent handlers below, so a slash command
@@ -251,6 +251,52 @@ def _handle_cancel(responder: Any) -> str:
             f"{meeting.get('sender_name', 'them')}."
         )
     return "Nothing is waiting on you right now."
+
+
+async def _handle_responder(responder: Any, text: str) -> str:
+    """The /responder command: turn the DM auto-replies on or off.
+
+    /responder on | off — applies immediately and reports the state.
+    /responder (no argument) — reports the current state.
+
+    This applies the toggle directly, without the approval gateway, on
+    purpose: the Telegram webhook only answers Sir's own verified chat
+    id, and a slash command is an explicit, unambiguous instruction —
+    unlike the free-form chat text the gateway guards. The change is
+    immediately reversible with the same command, and the reply always
+    states the resulting state.
+    """
+    from backend.services.system_toggles import apply_toggle, get_state
+
+    parts = text.strip().split()
+    arg = parts[1].lower() if len(parts) > 1 else ""
+    state = get_state("dm_responder")
+    current = bool(state.get("enabled"))
+    if arg in ("on", "off"):
+        desired = arg == "on"
+        if desired == current:
+            return (
+                f"DM responder is already {'ON' if current else 'OFF'} — "
+                "nothing changed."
+            )
+        result = await apply_toggle("dm_responder", desired)
+        if desired:
+            note = (result.get("note") or "").strip()
+            if note:
+                return f"DM responder is ON — {note}"
+            return "DM responder is ON."
+        return "DM responder is OFF — Jarvis will not auto-reply to DMs."
+    if arg:
+        return (
+            "Usage: /responder on — or /responder off. "
+            "Send /responder alone to see the current state."
+        )
+    if current:
+        detail = (state.get("detail") or "").strip()
+        if detail:
+            return f"DM responder is ON — {detail}"
+        return "DM responder is ON."
+    return "DM responder is OFF — Jarvis will not auto-reply to DMs."
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -514,6 +560,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(_status_text(dm_responder))
                 elif value == "cancel":
                     await send_telegram_message(_handle_cancel(dm_responder))
+                elif value == "responder":
+                    await send_telegram_message(
+                        await _handle_responder(dm_responder, text)
+                    )
                 return {"ok": True}
             if kind == "usage":
                 usage = next(

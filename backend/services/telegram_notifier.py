@@ -78,6 +78,8 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/status"},
     {"command": "cancel", "description": "Cancel a pending draft or meeting",
      "usage": "/cancel"},
+    {"command": "responder", "description": "Turn the DM auto-replies on or off",
+     "usage": "/responder on"},
 ]
 
 # True once set_telegram_commands() has succeeded at least once on this

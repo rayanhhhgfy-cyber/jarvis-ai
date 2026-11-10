@@ -747,6 +747,8 @@ def test_normalize_command_direct_usage_unknown():
     assert _normalize_command("/activity") == ("direct", "activity")
     assert _normalize_command("/status") == ("direct", "status")
     assert _normalize_command("/cancel") == ("direct", "cancel")
+    assert _normalize_command("/responder on") == ("direct", "responder")
+    assert _normalize_command("/responder") == ("direct", "responder")
     assert _normalize_command("/send") == ("usage", "send")
     assert _normalize_command("/addrule Omar money") == ("usage", "addrule")
     assert _normalize_command("/frobnicate x") == ("unknown", "frobnicate")
@@ -766,6 +768,7 @@ async def test_telegram_webhook_start_and_help(monkeypatch):
     assert "/send Omar" in text
     assert "/schedule" in text
     assert "/status" in text
+    assert "/responder on" in text
     mock_llm.get_response.assert_not_called()
     resp, mock_send, mock_llm = _webhook_post("/help", monkeypatch, fake_responder)
     assert resp.status_code == 200
@@ -1083,3 +1086,111 @@ def test_telegram_status_reports_commands_registered(monkeypatch):
     assert resp.status_code == 200
     assert "commands_registered" in resp.json()
     assert "SECRET_TOKEN_123" not in resp.text
+
+
+# --- /responder on/off ---
+
+def _responder_post(text, monkeypatch, enabled, note=""):
+    """POST a /responder update with mocked toggle state.
+
+    Returns (resp, mock_send, mock_apply). ``enabled`` is the current
+    toggle state; ``note`` is what apply_toggle reports on success.
+    """
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    mock_send = AsyncMock(return_value=True)
+    mock_apply = AsyncMock(return_value={
+        "ok": True, "toggle_id": "dm_responder",
+        "label": "DM responder", "enabled": not enabled, "note": note,
+    })
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=mock_send),
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.system_toggles.get_state",
+              return_value={"enabled": enabled, "detail": note}),
+        patch("backend.services.system_toggles.apply_toggle", new=mock_apply),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="should not be used")
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111}, "text": text},
+        })
+    return resp, mock_send, mock_apply, mock_llm
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_responder_on(monkeypatch):
+    """'/responder on' turns the DM auto-replies on and reports the state."""
+    resp, mock_send, mock_apply, mock_llm = _responder_post(
+        "/responder on", monkeypatch, enabled=False,
+        note="polling (instagram connected)",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_awaited_once_with("dm_responder", True)
+    assert mock_send.call_args.args[0] == (
+        "DM responder is ON — polling (instagram connected)"
+    )
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_responder_off(monkeypatch):
+    """'/responder off' turns the DM auto-replies off."""
+    resp, mock_send, mock_apply, mock_llm = _responder_post(
+        "/responder off", monkeypatch, enabled=True,
+        note="polling (instagram connected)",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_awaited_once_with("dm_responder", False)
+    assert mock_send.call_args.args[0] == (
+        "DM responder is OFF — Jarvis will not auto-reply to DMs."
+    )
+    mock_llm.get_response.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_responder_already(monkeypatch):
+    """'/responder on' when already on changes nothing."""
+    resp, mock_send, mock_apply, _ = _responder_post(
+        "/responder on", monkeypatch, enabled=True,
+        note="polling (instagram connected)",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_not_called()
+    assert "already ON" in mock_send.call_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_responder_state(monkeypatch):
+    """'/responder' alone reports the current state without changing it."""
+    resp, mock_send, mock_apply, _ = _responder_post(
+        "/responder", monkeypatch, enabled=True,
+        note="polling (instagram connected)",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_not_called()
+    assert mock_send.call_args.args[0] == (
+        "DM responder is ON — polling (instagram connected)"
+    )
+    resp, mock_send, mock_apply, _ = _responder_post(
+        "/responder", monkeypatch, enabled=False, note="",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_not_called()
+    assert mock_send.call_args.args[0] == (
+        "DM responder is OFF — Jarvis will not auto-reply to DMs."
+    )
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_slash_responder_usage(monkeypatch):
+    """'/responder banana' gets the usage line, not a toggle change."""
+    resp, mock_send, mock_apply, mock_llm = _responder_post(
+        "/responder banana", monkeypatch, enabled=False, note="",
+    )
+    assert resp.status_code == 200
+    mock_apply.assert_not_called()
+    assert mock_send.call_args.args[0].startswith("Usage: /responder on")
+    mock_llm.get_response.assert_not_called()
