@@ -99,7 +99,12 @@ class Settings(BaseSettings):
     # skip the one-minute wait and always get a loud alert.
     dm_vip_contacts: str = ""
     # Groq vision model for describing photos sent in DMs (free tier).
-    groq_vision_model: str = "meta-llama/llama-4-scout-17b-16e-instruct"
+    # NOTE 2026-11-10: meta-llama/llama-4-scout-17b-16e-instruct was
+    # shut down by Groq 2026-07-17, so every vision call 404'd and the
+    # bot told Sir it could not see any photo. qwen/qwen3.6-27b is
+    # Groq's current (preview) multimodal model — the only vision
+    # option on the free tier. gpt-oss-120b is text-only.
+    groq_vision_model: str = "qwen/qwen3.6-27b"
     # Groq Whisper model for transcribing voice notes sent in DMs.
     groq_whisper_model: str = "whisper-large-v3-turbo"
     # Hours after Jarvis's reply with no answer from Sir before a nudge.

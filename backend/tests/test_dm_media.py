@@ -110,6 +110,41 @@ async def test_describe_image_vision_error(monkeypatch):
     assert await describe_image("https://cdn.example/p.jpg", client=_mock_client(handler)) is None
 
 
+def test_vision_model_is_current():
+    """Regression 2026-11-10: the vision model must be one Groq still
+    serves. meta-llama/llama-4-scout-17b-16e-instruct was shut down
+    2026-07-17, so every vision call 404'd and the bot told Sir it
+    could not see any photo. qwen/qwen3.6-27b is Groq's current
+    (preview) multimodal model."""
+    from backend.config import settings
+
+    assert settings.groq_vision_model == "qwen/qwen3.6-27b"
+    assert "llama-4-scout" not in settings.groq_vision_model
+
+
+@pytest.mark.asyncio
+async def test_describe_image_uses_configured_vision_model(monkeypatch):
+    """The vision request must carry the configured model, not a stale id."""
+    from backend.config import settings
+
+    monkeypatch.setattr("backend.services.dm_media.settings.groq_api_key", "gsk-test")
+    seen: dict = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "api.groq.com" in str(request.url):
+            import json
+
+            seen.update(json.loads(request.content.decode("utf-8")))
+            return httpx.Response(200, json={
+                "choices": [{"message": {"content": "A cat sitting on a couch."}}],
+            })
+        return httpx.Response(200, content=b"\xff\xd8\xff fake-jpeg")
+
+    result = await describe_image("https://cdn.example/p.jpg", client=_mock_client(handler))
+    assert result == "A cat sitting on a couch."
+    assert seen.get("model") == settings.groq_vision_model
+
+
 # --------------------------------------------------------------------
 # transcribe_audio (Groq Whisper, mocked)
 # --------------------------------------------------------------------
