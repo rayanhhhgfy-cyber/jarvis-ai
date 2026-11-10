@@ -1029,3 +1029,49 @@ async def test_maybe_web_context_skips_plain_chat(monkeypatch):
 
     assert await _maybe_web_context("hi, how are you?") == ""
     assert await _maybe_web_context("مرحبا كيفك") == ""
+
+
+# --- Accuracy + completeness (DM reply quality) ---
+
+def test_complete_reply():
+    """_complete_reply never lets a half-finished message through."""
+    from backend.services.dm_llm import _complete_reply
+
+    # Already complete: returned as-is.
+    assert _complete_reply("Hello, this is Jarvis.") == "Hello, this is Jarvis."
+    assert _complete_reply("أهلاً! كيف حالك؟") == "أهلاً! كيف حالك؟"
+    # Cut off mid-sentence: trimmed back to the last complete sentence.
+    assert _complete_reply("Hi, I am Jarvis. Rayyan is busy and") == "Hi, I am Jarvis."
+    assert _complete_reply("مرحبا. أنا جارفيس، وريان مشغول") == "مرحبا."
+    # No complete sentence at all: None (caller falls back / skips).
+    assert _complete_reply("Rayyan is busy and") is None
+    assert _complete_reply("") is None
+    assert _complete_reply("   ") is None
+    # Ellipsis counts as finished.
+    assert _complete_reply("Thinking about it...") == "Thinking about it..."
+
+
+def test_dm_prompts_have_accuracy_rules():
+    """Both DM prompts forbid inventing facts and half-finished messages."""
+    from backend.services.dm_llm import (
+        _SYSTEM_PROMPT_FIRST,
+        _SYSTEM_PROMPT_FOLLOW_UP,
+    )
+
+    for prompt in (_SYSTEM_PROMPT_FIRST, _SYSTEM_PROMPT_FOLLOW_UP):
+        assert "Never invent facts" in prompt
+        assert "Always finish your sentences" in prompt
+        assert "half-finished" in prompt
+
+
+def test_looks_like_web_question_broadened():
+    """The broadened triggers catch more factual questions."""
+    from backend.services.dm_llm import _looks_like_web_question
+
+    assert _looks_like_web_question("how much is the new iPhone?")
+    assert _looks_like_web_question("how many goals did he score?")
+    assert _looks_like_web_question("when did the match start?")
+    assert _looks_like_web_question("كم سعر الذهب اليوم؟")
+    # Plain chat still does not trigger a search.
+    assert not _looks_like_web_question("hi, how are you?")
+    assert not _looks_like_web_question("thanks, talk later")

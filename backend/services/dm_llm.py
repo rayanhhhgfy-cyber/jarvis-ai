@@ -21,7 +21,13 @@ as Rayyan. On the first reply in a conversation it introduces itself,
 says Rayyan is busy and cannot respond right now, and invites the
 person to tell Jarvis if it is important — Jarvis will make sure
 Rayyan sees it. On follow-ups it keeps the conversation going
-naturally without re-introducing itself.
+naturally without re-introducing itself. Accuracy rules: never invent
+facts, dates, prices, names, or scores — if it does not know, it says
+so briefly and lets Rayyan check. Every reply is checked for
+completeness before it is sent: a reply cut off mid-sentence is
+trimmed back to its last complete sentence, and if there is no
+complete sentence at all the other model is tried instead — a broken
+message is never sent.
 """
 
 from __future__ import annotations
@@ -54,7 +60,10 @@ _SYSTEM_PROMPT_FIRST = (
     "English when they write English). Be warm, natural and brief — one "
     "or two short sentences, like a real person texting, never a formal "
     "letter. Do not pretend to be Rayyan. Do not make promises about "
-    "money, meetings or dates."
+    "money, meetings or dates. Never invent facts, dates, prices, names, "
+    "or scores — if you do not know, say so briefly and tell them Rayyan "
+    "will check when he is back. Always finish your sentences; never "
+    "send a half-finished message."
 )
 
 _SYSTEM_PROMPT_FOLLOW_UP = (
@@ -70,7 +79,10 @@ _SYSTEM_PROMPT_FOLLOW_UP = (
     "when they write Arabic, English when they write English). Be warm, "
     "natural and brief — one or two short sentences, like a real person "
     "texting. Do not pretend to be Rayyan. Do not make promises about "
-    "money, meetings or dates."
+    "money, meetings or dates. Never invent facts, dates, prices, names, "
+    "or scores — if you do not know, say so briefly and tell them Rayyan "
+    "will check when he is back. Always finish your sentences; never "
+    "send a half-finished message."
 )
 
 _GROUP_NOTE = (
@@ -82,7 +94,8 @@ _GROUP_NOTE = (
 _WEB_TRIGGERS = (
     "weather", "طقس", "news", "أخبار", "search", "ابحث", "google",
     "what is", "who is", "who won", "what happened", "when is", "where is", "what are",
-    "ما هو", "ما هي", "من هو", "من هي", "متى", "أين",
+    "how much", "how many", "when did", "where did", "did it", "is it",
+    "ما هو", "ما هي", "من هو", "من هي", "متى", "أين", "كم", "ما سعر",
     "latest", "current", "price", "سعر", "score", "نتيجة",
 )
 
@@ -107,11 +120,39 @@ async def _maybe_web_context(incoming_text: str) -> str:
         summary = await web_search_service.search_and_summarize(incoming_text)
         if not summary or "No web search results" in summary:
             return ""
-        # Keep it short: the DM reply itself is capped at 150 tokens.
+        # Keep it short: the DM reply itself is capped at 300 tokens.
         return summary[:1500]
     except Exception as e:
         log.debug("dm_web_search_failed", error=str(e))
         return ""
+
+
+# A reply is complete when it ends with terminal punctuation.
+_TERMINAL_PUNCT = (".", "!", "?", "؟", "。", "…")
+
+
+def _complete_reply(text: str) -> str | None:
+    """Guarantee a reply is never sent half-finished.
+
+    Returns the reply as-is when it ends with terminal punctuation.
+    When the model was cut off mid-sentence (token cap), trims it back
+    to the last complete sentence. Returns None when there is no
+    complete sentence at all, so the caller can fall back to the other
+    model instead of sending a broken message.
+    """
+    cleaned = (text or "").strip()
+    if not cleaned:
+        return None
+    if cleaned.endswith(_TERMINAL_PUNCT):
+        return cleaned
+    # Find the last sentence boundary and cut there.
+    last_end = -1
+    for punct in _TERMINAL_PUNCT:
+        idx = cleaned.rfind(punct)
+        last_end = max(last_end, idx)
+    if last_end <= 0:
+        return None
+    return cleaned[: last_end + 1].strip()
 
 
 def _messages(
@@ -162,7 +203,7 @@ async def _groq_reply(
                     sender_name, incoming_text, first_reply, is_group, web_context
                 ),
                 "temperature": 0.7,
-                "max_tokens": 150,
+                "max_tokens": 300,
             },
             timeout=30.0,
         )
@@ -173,7 +214,7 @@ async def _groq_reply(
         if not choices:
             return None
         text = (choices[0].get("message") or {}).get("content", "").strip()
-        return text or None
+        return _complete_reply(text)
     except Exception as e:
         log.warning("dm_groq_failed", error=str(e))
         return None
@@ -209,7 +250,10 @@ async def _gemini_reply(
         resp = await client.post(
             GEMINI_URL,
             params={"key": api_key},
-            json={"contents": [{"parts": [{"text": prompt}]}]},
+            json={
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {"maxOutputTokens": 300, "temperature": 0.7},
+            },
             timeout=30.0,
         )
         if resp.status_code != 200:
@@ -220,7 +264,7 @@ async def _gemini_reply(
             return None
         parts = (candidates[0].get("content") or {}).get("parts") or []
         text = "".join(p.get("text", "") for p in parts).strip()
-        return text or None
+        return _complete_reply(text)
     except Exception as e:
         log.warning("dm_gemini_failed", error=str(e))
         return None
@@ -247,7 +291,11 @@ async def generate_dm_reply(
     the reply addresses the sender by name and stays brief. When the
     message asks for live/external information, a web search runs first
     and its results are given to the LLM so it answers from real data,
-    never invented facts.
+    never invented facts. Every reply is passed through
+    ``_complete_reply`` first, so a truncated message is trimmed to its
+    last complete sentence — and if neither model can produce a complete
+    sentence, the DM is left unanswered rather than sending a broken
+    message.
     """
     own_client = client is None
     if own_client:
