@@ -11,9 +11,14 @@ from __future__ import annotations
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import httpx
 import pytest
 
 from backend.services.dm_voice import _CHUNK_CHARS, _split_text, send_voice_reply
+
+
+def _mock_client(handler) -> httpx.AsyncClient:
+    return httpx.AsyncClient(transport=httpx.MockTransport(handler))
 
 
 # A realistic long DM reply (~1200 chars, several sentences).
@@ -324,22 +329,23 @@ async def test_edge_tts_save_new_server_patches_and_restores_url(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_synthesize_mp3_falls_back_to_gtts(tmp_path):
-    """When both Edge endpoints fail, gTTS still produces the audio."""
+async def test_synthesize_mp3_falls_back_to_google_tts(tmp_path):
+    """When both Edge endpoints fail, Google Translate TTS still
+    produces the audio."""
     import backend.services.dm_voice as dm_voice
 
-    async def fake_gtts_save(text, out_path):
-        out_path.write_bytes(b"fake-gtts-mp3")
+    async def fake_google_tts_save(text, out_path, client=None):
+        out_path.write_bytes(b"fake-google-tts-mp3")
         return True
 
     with (
         patch("backend.services.dm_voice._edge_tts_save",
               new=AsyncMock(return_value=False)),
-        patch("backend.services.dm_voice._gtts_save", new=fake_gtts_save),
+        patch("backend.services.dm_voice._google_tts_save", new=fake_google_tts_save),
     ):
         result = await dm_voice._synthesize_mp3("hello there")
     assert result is not None and result.exists()
-    assert result.read_bytes() == b"fake-gtts-mp3"
+    assert result.read_bytes() == b"fake-google-tts-mp3"
 
 
 @pytest.mark.asyncio
@@ -351,21 +357,62 @@ async def test_synthesize_mp3_all_engines_fail_returns_none(tmp_path):
     with (
         patch("backend.services.dm_voice._edge_tts_save",
               new=AsyncMock(return_value=False)),
-        patch("backend.services.dm_voice._gtts_save",
+        patch("backend.services.dm_voice._google_tts_save",
               new=AsyncMock(return_value=False)),
     ):
         assert await dm_voice._synthesize_mp3("hello there") is None
 
 
 @pytest.mark.asyncio
-async def test_gtts_save_real_arabic_and_english(tmp_path):
-    """The real gTTS fallback speaks Arabic and English (free, no key).
-    Skipped where the network cannot reach Google Translate."""
+async def test_google_tts_save_chunks_and_picks_language(tmp_path):
+    """Google Translate TTS: a long reply is split into short requests
+    and the audio joined; Arabic gets tl=ar, English gets tl=en.
+    (The real endpoint was verified with curl: valid MP3s for both
+    languages that convert cleanly to OGG — httpx cannot reach it from
+    this sandbox, so the transport is mocked here.)"""
     import backend.services.dm_voice as dm_voice
 
+    seen_langs: list[str] = []
+    seen_chunks: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        query = dict(request.url.params)
+        seen_langs.append(query.get("tl", ""))
+        seen_chunks.append(query.get("q", ""))
+        return httpx.Response(200, content=b"fake-mp3-chunk")
+
+    long_en = (
+        "Hello Rayyan, this is Jarvis speaking to you in English. "
+        "I can answer your messages with real voice notes now."
+    )
     en = tmp_path / "en.mp3"
-    ar = tmp_path / "ar.mp3"
-    assert await dm_voice._gtts_save("Hello, how are you today?", en) is True
+    assert await dm_voice._google_tts_save(
+        long_en, en, client=_mock_client(handler)
+    ) is True
     assert en.exists() and en.stat().st_size > 0
-    assert await dm_voice._gtts_save("مرحبا، كيف حالك اليوم؟", ar) is True
+    # Split into short chunks, all in English, joined back together.
+    assert len(seen_chunks) >= 2
+    assert all(len(c) <= 100 for c in seen_chunks)
+    assert all(lang == "en" for lang in seen_langs)
+    assert en.read_bytes() == b"fake-mp3-chunk" * len(seen_chunks)
+
+    seen_langs.clear()
+    seen_chunks.clear()
+    ar = tmp_path / "ar.mp3"
+    assert await dm_voice._google_tts_save(
+        "مرحبا ريان، كيف حالك اليوم؟", ar, client=_mock_client(handler)
+    ) is True
     assert ar.exists() and ar.stat().st_size > 0
+    assert seen_langs == ["ar"]
+
+
+@pytest.mark.asyncio
+async def test_google_tts_save_http_error_returns_false(tmp_path):
+    """A non-200 from Google Translate TTS fails the whole save."""
+    import backend.services.dm_voice as dm_voice
+
+    out = tmp_path / "out.mp3"
+    assert await dm_voice._google_tts_save(
+        "hello", out, client=_mock_client(lambda r: httpx.Response(403))
+    ) is False
+    assert not out.exists()

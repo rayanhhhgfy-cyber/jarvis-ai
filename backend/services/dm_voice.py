@@ -136,28 +136,80 @@ async def _edge_tts_save(text: str, out_path: Path, new_server: bool = False) ->
             _edge_comm.WSS_URL = old_url
 
 
-def _gtts_write(text: str, lang: str, out_path: str) -> None:
-    """Blocking gTTS write — always called via asyncio.to_thread."""
-    from gtts import gTTS
+def _split_tts_chunks(text: str, limit: int = 100) -> list[str]:
+    """Split text into chunks of at most ~100 chars at word boundaries.
 
-    gTTS(text=text, lang=lang).save(out_path)
+    The Google Translate TTS endpoint only takes short text per
+    request, so a long reply is spoken in several short pieces and the
+    audio is joined back together.
+    """
+    words = text.split()
+    chunks: list[str] = []
+    current = ""
+    for word in words:
+        if current and len(current) + len(word) + 1 > limit:
+            chunks.append(current)
+            current = word
+        else:
+            current = (current + " " + word).strip()
+    if current:
+        chunks.append(current)
+    return chunks
 
 
-async def _gtts_save(text: str, out_path: Path) -> bool:
-    """Google Translate TTS (free, no key) — the last resort when Edge
-    TTS is blocked. Arabic gets lang 'ar', everything else 'en'."""
-    try:
-        from gtts import gTTS  # noqa: F401  (import check only)
-    except ImportError:
-        log.warning("dm_voice_no_gtts")
-        return False
+# Google Translate TTS (free, no key) — the same endpoint the gTTS
+# library calls. Called directly with httpx so the app needs no gtts
+# package (gtts pins click<8.2, which conflicts with scrapling's
+# click>=8.3.0 and broke the Render build).
+_GOOGLE_TTS_URL = "https://translate.google.com/translate_tts"
+_GOOGLE_TTS_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36",
+}
+
+
+async def _google_tts_save(
+    text: str, out_path: Path, client: httpx.AsyncClient | None = None
+) -> bool:
+    """Google Translate TTS -> MP3. Arabic gets lang 'ar', everything
+    else 'en'. Returns True when the MP3 is written."""
+    import urllib.parse
+
     lang = "ar" if _ARABIC_RE.search(text or "") else "en"
+    own_client = client is None
+    if own_client:
+        client = httpx.AsyncClient(timeout=30.0)
+    assert client is not None
     try:
-        await asyncio.to_thread(_gtts_write, text, lang, str(out_path))
+        audio = b""
+        for chunk in _split_tts_chunks(text):
+            resp = await client.get(
+                _GOOGLE_TTS_URL,
+                params={
+                    "ie": "UTF-8",
+                    "client": "tw-ob",
+                    "tl": lang,
+                    "q": chunk,
+                },
+                headers=_GOOGLE_TTS_HEADERS,
+            )
+            if resp.status_code != 200:
+                log.warning(
+                    "dm_voice_google_tts_failed", status_code=resp.status_code
+                )
+                return False
+            audio += resp.content
+        if not audio:
+            return False
+        out_path.write_bytes(audio)
         return out_path.exists() and out_path.stat().st_size > 0
     except Exception as e:
-        log.warning("dm_voice_gtts_failed", error=str(e))
+        log.warning("dm_voice_google_tts_failed", error=str(e))
         return False
+    finally:
+        if own_client:
+            await client.aclose()
 
 
 async def _synthesize_mp3(text: str) -> Path | None:
@@ -165,8 +217,10 @@ async def _synthesize_mp3(text: str) -> Path | None:
 
     Three layers, in order: Edge TTS on the classic endpoint, Edge TTS
     on Microsoft's newer server (when the classic one 403s), then
-    Google Translate TTS. A voice reply goes out as long as any one of
-    them works — the caller only falls back to text when all three fail.
+    Google Translate TTS (called directly with httpx — no gtts package,
+    whose click<8.2 pin conflicts with scrapling's click>=8.3.0 and
+    broke the Render build). A voice reply goes out as long as any one
+    of them works — the caller only falls back to text when all three fail.
     """
     text = (text or "").strip()
     if not text:
@@ -177,7 +231,7 @@ async def _synthesize_mp3(text: str) -> Path | None:
         return tmp
     if await _edge_tts_save(text, tmp, new_server=True):
         return tmp
-    if await _gtts_save(text, tmp):
+    if await _google_tts_save(text, tmp):
         return tmp
     try:
         import shutil
