@@ -630,3 +630,71 @@ def test_parse_time_bare_number_is_not_a_clock():
     """A bare number ('call Omar 5 times') is not a time."""
     now = datetime(2026, 11, 10, 10, 0, tzinfo=_AMMAN)
     assert parse_time("call Omar 5 times", now=now) is None
+
+
+# --------------------------------------------------------------------
+# Outbound call: Jarvis calls Sir when something is important
+# --------------------------------------------------------------------
+
+def _reset_call_store(monkeypatch, tmp_path):
+    from backend.services import dm_store
+
+    monkeypatch.setattr(dm_store.call_request, "_path", tmp_path / "call_request.json")
+    monkeypatch.setattr(dm_store.call_request, "_loaded", False)
+    monkeypatch.setattr(dm_store.call_request, "_data", {})
+
+
+@pytest.mark.asyncio
+async def test_initiate_call_stores_reason_and_rings(monkeypatch, tmp_path):
+    """initiate_call stores the reason and sends the Telegram ring."""
+    from backend.services.dm_responder import initiate_call
+
+    _reset_call_store(monkeypatch, tmp_path)
+    sent: list[str] = []
+
+    async def fake_telegram(text: str) -> bool:
+        sent.append(text)
+        return True
+
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message", fake_telegram
+    )
+    ok = await initiate_call("Instagram — Omar wrote: urgent, call me")
+    assert ok is True
+    assert len(sent) == 1
+    assert "Jarvis is calling" in sent[0]
+    assert "https://jarvis-call-smoky.vercel.app" in sent[0]
+    assert "Omar" in sent[0]
+
+
+@pytest.mark.asyncio
+async def test_take_pending_call_reason_once(monkeypatch, tmp_path):
+    """A pending call reason is consumed exactly once."""
+    from backend.services.dm_responder import (
+        initiate_call,
+        take_pending_call_reason,
+    )
+
+    _reset_call_store(monkeypatch, tmp_path)
+    monkeypatch.setattr(
+        "backend.services.telegram_notifier.send_telegram_message",
+        AsyncMock(return_value=True),
+    )
+    await initiate_call("Something important came up.")
+    assert take_pending_call_reason() == "Something important came up."
+    assert take_pending_call_reason() is None
+
+
+@pytest.mark.asyncio
+async def test_take_pending_call_reason_expires(monkeypatch, tmp_path):
+    """A stale call reason is dropped, never spoken."""
+    import time
+
+    from backend.services import dm_store
+    from backend.services.dm_responder import take_pending_call_reason
+
+    _reset_call_store(monkeypatch, tmp_path)
+    dm_store.call_request.set(
+        "pending", {"reason": "Old news.", "created_at": time.time() - 3600}
+    )
+    assert take_pending_call_reason(max_age_seconds=900) is None

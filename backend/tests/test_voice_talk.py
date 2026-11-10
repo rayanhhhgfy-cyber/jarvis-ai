@@ -138,6 +138,67 @@ async def test_voice_talk_language_hint(tmp_path, monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_voice_talk_call_reason_opens_call(tmp_path, monkeypatch):
+    """A pending call reason reaches the brain so Jarvis opens with it."""
+    import time
+
+    from backend.services import dm_store
+
+    fake_mp3 = tmp_path / "reply.mp3"
+    fake_mp3.write_bytes(b"FAKE-MP3-BYTES")
+    monkeypatch.setattr(dm_store.call_request, "_path", tmp_path / "call_request.json")
+    monkeypatch.setattr(dm_store.call_request, "_loaded", False)
+    monkeypatch.setattr(dm_store.call_request, "_data", {})
+    dm_store.call_request.set(
+        "pending",
+        {"reason": "Instagram — Omar wrote: urgent, call me", "created_at": time.time()},
+    )
+    seen: dict[str, str] = {}
+
+    async def _fake_transcribe(audio_bytes, filename="audio.wav", language=None):
+        return "hello"
+
+    async def _fake_reply(user_message, chat_history=None, inject_memory=True, system_instructions=None):
+        seen["system"] = system_instructions or ""
+        return "Yes sir, Omar needs you urgently."
+
+    async def _fake_tts(text):
+        return fake_mp3
+
+    with (
+        patch(
+            "backend.services.transcription_service.transcription_service.transcribe_bytes",
+            new=_fake_transcribe,
+        ),
+        patch(
+            "backend.services.llm_service.llm_service.get_response",
+            new=_fake_reply,
+        ),
+        patch(
+            "backend.services.dm_voice._synthesize_mp3",
+            new=_fake_tts,
+        ),
+    ):
+        resp = _audio_app().post(
+            "/api/audio/talk",
+            files={"file": ("recording.webm", b"FAKE-WEBM", "audio/webm")},
+        )
+    assert resp.status_code == 200
+    assert "Omar" in seen["system"]
+    assert "You called Rayyan" in seen["system"]
+    # The reason is consumed — a second turn does not repeat it.
+    assert dm_store.call_request.get("pending") is None
+
+
+def test_voice_talk_addresses_sir_only():
+    """The voice prompt calls Rayyan 'sir' and only 'sir'."""
+    from backend.routers.router_audio import _VOICE_TALK_SYSTEM
+
+    assert "'sir' and only 'sir'" in _VOICE_TALK_SYSTEM
+    assert "never by his name" in _VOICE_TALK_SYSTEM
+
+
+@pytest.mark.asyncio
 async def test_voice_talk_empty_audio_rejected():
     """An empty audio upload is a 400, not a silent turn."""
     resp = _audio_app().post(

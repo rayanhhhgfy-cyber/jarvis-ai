@@ -162,7 +162,7 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # Commands answered directly here (no natural-language equivalent).
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
-    "connect", "disconnect",
+    "connect", "disconnect", "call",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -910,6 +910,15 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         _handle_disconnect_command(text)
                     )
+                elif value == "call":
+                    from backend.services.dm_responder import initiate_call
+
+                    reason = text[len("/call"):].strip() or "Testing the call, sir."
+                    ok = await initiate_call(reason)
+                    if not ok:
+                        await send_telegram_message(
+                            "I could not reach Telegram to place the call, sir."
+                        )
                 return {"ok": True}
             if kind == "usage":
                 usage = next(

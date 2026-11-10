@@ -79,7 +79,9 @@ _VOICE_TALK_SYSTEM = (
     "naturally, like a real conversation. Never write '[Voice note]' or "
     "announce anything about voice. Answer in ONE language: the language "
     "Rayyan used (Arabic or English). Never answer in both languages in "
-    "the same reply. If you do not know something, say so — never invent "
+    "the same reply. Address Rayyan as 'sir' and only 'sir' — never by "
+    "his name, never 'boss', never any other title, in any language. "
+    "If you do not know something, say so — never invent "
     "facts, dates, prices, names, or scores."
 )
 
@@ -135,11 +137,24 @@ async def voice_talk(
     else:
         log.info("voice_talk_heard", chars=len(transcript))
         try:
+            # When Jarvis called Sir about something important, open with
+            # it — the reason is consumed here so it is said exactly once.
+            from backend.services.dm_responder import take_pending_call_reason
+
+            call_reason = take_pending_call_reason()
+            system_prompt = _VOICE_TALK_SYSTEM
+            if call_reason:
+                system_prompt += (
+                    "\n\nYou called Rayyan about this: "
+                    f"{call_reason} "
+                    "Open the call by telling him this right away, "
+                    "then listen to what he says."
+                )
             reply = await llm_service.get_response(
                 transcript,
                 chat_history=[],
                 inject_memory=True,
-                system_instructions=_VOICE_TALK_SYSTEM,
+                system_instructions=system_prompt,
             )
         except Exception as e:
             log.error("voice_talk_brain_failed", error=str(e))

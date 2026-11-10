@@ -89,6 +89,8 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/connect instagram"},
     {"command": "disconnect", "description": "Disconnect Instagram or Messenger",
      "usage": "/disconnect instagram"},
+    {"command": "call", "description": "Jarvis calls you — tap the link to answer",
+     "usage": "/call"},
 ]
 
 # True once set_telegram_commands() has succeeded at least once on this

@@ -91,3 +91,6 @@ settings = JsonStore("dm_settings.json")
 # Morning briefing settings Sir sets by chat: {time, voice, language,
 # sections: {weather, news, calendar, birthdays, dms}}.
 briefing = JsonStore("briefing.json")
+# Pending outbound call: Jarvis called Sir about something important.
+# {reason, created_at} — one at a time; the call consumes it.
+call_request = JsonStore("call_request.json")

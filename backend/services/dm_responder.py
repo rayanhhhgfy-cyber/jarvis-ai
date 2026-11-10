@@ -35,6 +35,7 @@ from __future__ import annotations
 import asyncio
 import json
 import re
+import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -281,6 +282,61 @@ def _is_important(text: str) -> bool:
     """True when the sender says the message is important/urgent."""
     lowered = (text or "").lower()
     return any(marker in lowered for marker in _IMPORTANT_MARKERS)
+
+
+# The standalone call app Sir answers on — a separate PWA, same Jarvis.
+CALL_APP_URL = "https://jarvis-call-smoky.vercel.app"
+# A pending call reason expires after this long if Sir never answers.
+_CALL_REASON_TTL_SECONDS = 900
+
+
+async def initiate_call(reason: str) -> bool:
+    """Jarvis calls Sir: store the reason, then ring him on Telegram.
+
+    The Telegram message is the ring — it tells Sir what the call is
+    about and links the call app, where he taps once to answer. The
+    reason is consumed by the first /api/audio/talk turn, so Jarvis
+    opens the call with it. Returns True when the message was sent.
+    """
+    from backend.services import dm_store
+
+    clean = (reason or "").strip()
+    if not clean:
+        clean = "Something important came up."
+    dm_store.call_request.set(
+        "pending",
+        {"reason": clean, "created_at": time.time()},
+    )
+    from backend.services.telegram_notifier import send_telegram_message
+
+    text = (
+        "📞 Jarvis is calling you, sir.\n\n"
+        f"{clean}\n\n"
+        f"Tap to answer: {CALL_APP_URL}"
+    )
+    return await send_telegram_message(text)
+
+
+def take_pending_call_reason(max_age_seconds: int = _CALL_REASON_TTL_SECONDS) -> str | None:
+    """Consume the pending call reason, if one is still fresh.
+
+    Returns the reason, or None when there is none or it expired.
+    Consuming it here means Jarvis opens with it exactly once.
+    """
+    from backend.services import dm_store
+
+    pending = dm_store.call_request.get("pending")
+    if not isinstance(pending, dict):
+        return None
+    dm_store.call_request.delete("pending")
+    try:
+        created = float(pending.get("created_at") or 0)
+    except (TypeError, ValueError):
+        return None
+    if time.time() - created > max_age_seconds:
+        return None
+    reason = (pending.get("reason") or "").strip()
+    return reason or None
 
 
 def _vip_names() -> list[str]:
@@ -1945,6 +2001,13 @@ class DMResponder:
             await send_telegram_message(text)
         except Exception as e:
             log.debug("dm_telegram_notify_failed", error=str(e))
+        if important:
+            try:
+                await initiate_call(
+                    f"{name} — {sender} wrote: {incoming}"
+                )
+            except Exception as e:
+                log.debug("dm_call_initiate_failed", error=str(e))
 
 
 # Process-wide singleton
