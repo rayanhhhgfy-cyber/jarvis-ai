@@ -1006,6 +1006,52 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 )
             return {"ok": True}
 
+        # --- Fallback: "remind me" with a clock anywhere in the message. ---
+        # _REMIND_RE needs the time at the end, so a natural phrasing like
+        # "I have a 4:05 appointment with the doctor, remind me" misses
+        # it — and without this the message falls through to the chat,
+        # which promises a reminder it never sets. Find a clock anywhere
+        # and set the reminder for it.
+        if "remind me" in text.lower():
+            from backend.services.dm_time import _CLOCK_RE, describe_time, parse_time
+
+            clock = None
+            for m in _CLOCK_RE.finditer(text):
+                if ":" in m.group(0) or m.group(3):
+                    clock = m.group(0)
+                    break
+            if clock:
+                when = parse_time(clock)
+                if when:
+                    thing = re.sub(
+                        r"\bremind me\b(?:\s+of it)?",
+                        "",
+                        text,
+                        flags=re.IGNORECASE,
+                    )
+                    thing = re.sub(
+                        r"^\s*(?:hey|hi|hello)\s+",
+                        "",
+                        thing,
+                        flags=re.IGNORECASE,
+                    )
+                    thing = re.sub(
+                        r"^\s*to\s+", "", thing, flags=re.IGNORECASE
+                    )
+                    thing = re.sub(r"\s*please\s*$", "", thing, flags=re.IGNORECASE)
+                    thing = re.sub(r"\s+", " ", thing).strip(" .")
+                    dm_responder.add_reminder(thing or "something", when)
+                    await send_telegram_message(
+                        f"Got it — I will remind you to {thing or 'something'} "
+                        f"{describe_time(when)}."
+                    )
+                else:
+                    await send_telegram_message(
+                        "I could not understand the time. Try 'remind me to call "
+                        "Omar tomorrow at 5pm'."
+                    )
+                return {"ok": True}
+
         # --- "send <name> a message <time>: <text>" — scheduled DM. ---
         schedule_match = _SCHEDULE_RE.match(text)
         if schedule_match and ":" in text:

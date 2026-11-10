@@ -1880,3 +1880,59 @@ async def test_telegram_webhook_photo_unseen_still_answered(monkeypatch):
     user_message = mock_llm.get_response.call_args.kwargs["user_message"]
     assert "I could not see this photo" in user_message
     mock_send.assert_called_once_with("I could not see that photo.")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_remind_clock_anywhere(monkeypatch):
+    """'/remind i have a 4:05 appointment with the doctor' sets a
+    reminder — the clock is in the middle, so _REMIND_RE misses it and
+    without the fallback the chat would promise a reminder it never
+    sets."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.add_reminder.return_value = {"ok": True}
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_time.parse_time") as mock_parse,
+    ):
+        from datetime import datetime as _dt
+        from zoneinfo import ZoneInfo as _ZI
+        mock_parse.return_value = _dt(2026, 11, 10, 16, 5, tzinfo=_ZI("Asia/Amman"))
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "/remind i have a 4:05 appointment with the doctor"},
+        })
+    assert resp.status_code == 200
+    fake_responder.add_reminder.assert_called_once()
+    assert "doctor" in fake_responder.add_reminder.call_args.args[0]
+    assert mock_send.call_args.args[0].startswith("Got it")
+
+
+@pytest.mark.asyncio
+async def test_telegram_webhook_remind_natural_language_clock_anywhere(monkeypatch):
+    """'Hey I have an appointment with the doctor on 4:05 remind me of
+    it please' sets a reminder — the same fallback, plain words."""
+    monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    fake_responder.add_reminder.return_value = {"ok": True}
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+        patch("backend.services.dm_time.parse_time") as mock_parse,
+    ):
+        from datetime import datetime as _dt
+        from zoneinfo import ZoneInfo as _ZI
+        mock_parse.return_value = _dt(2026, 11, 10, 16, 5, tzinfo=_ZI("Asia/Amman"))
+        resp = _telegram_app().post("/api/telegram/webhook", json={
+            "message": {"chat": {"id": 111},
+                        "text": "Hey I have an appointment with the doctor on 4:05 remind me of it please"},
+        })
+    assert resp.status_code == 200
+    fake_responder.add_reminder.assert_called_once()
+    assert "doctor" in fake_responder.add_reminder.call_args.args[0]
+    assert mock_send.call_args.args[0].startswith("Got it")

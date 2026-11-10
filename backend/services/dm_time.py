@@ -34,6 +34,41 @@ _WEEKDAYS = {
 }
 
 
+def _next_clock(hour: int, minute: int, ampm: str | None, now: datetime) -> datetime | None:
+    """The next occurrence of a clock time.
+
+    A bare 12-hour clock (no am/pm) tries this morning, then this
+    afternoon, then tomorrow morning — so '4:05' at 4:04 PM means
+    4:05 PM today, not 4:05 AM tomorrow. A 24-hour clock or one with
+    am/pm rolls to tomorrow when it has passed.
+    """
+    if hour > 23 or minute > 59:
+        return None
+    if ampm:
+        if ampm.lower() == "pm" and hour < 12:
+            hour += 12
+        if ampm.lower() == "am" and hour == 12:
+            hour = 0
+        result = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if result <= now:
+            result = result + timedelta(days=1)
+        return result
+    if hour >= 12:
+        # 24-hour clock (e.g. 17:00).
+        result = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if result <= now:
+            result = result + timedelta(days=1)
+        return result
+    # Bare 12-hour clock: this morning, this afternoon, tomorrow morning.
+    for candidate_hour in (hour, hour + 12):
+        result = now.replace(hour=candidate_hour, minute=minute, second=0, microsecond=0)
+        if result > now:
+            return result
+    return (now + timedelta(days=1)).replace(
+        hour=hour, minute=minute, second=0, microsecond=0
+    )
+
+
 def _apply_clock(base: datetime, hour: int, minute: int, ampm: str | None) -> datetime:
     """Set the clock on a date, handling am/pm. 12-hour times roll
     forward: 'at 5pm' when it is already 6pm means tomorrow."""
@@ -85,11 +120,24 @@ def parse_time(text: str, now: datetime | None = None) -> datetime | None:
             base = now + timedelta(days=days_ahead)
         elif "tomorrow" in lowered or "tonight" in lowered:
             base = now + timedelta(days=1)
-        result = _apply_clock(base, hour, minute, ampm)
-        # A bare "at 5pm" in the past means tomorrow.
-        if result <= now and weekday is None and "tomorrow" not in lowered and "tonight" not in lowered:
-            result = result + timedelta(days=1)
-        return result
+        if weekday is None and "tomorrow" not in lowered and "tonight" not in lowered:
+            # Bare "at <clock>": the next occurrence of that clock time.
+            return _next_clock(hour, minute, ampm, now)
+        return _apply_clock(base, hour, minute, ampm)
+
+    # A bare clock with no "at" ("4:05" / "5pm" / "17:00") — the next
+    # occurrence of that clock time. A bare number is not a clock, so
+    # the match needs a colon or am/pm. A weekday or day word owns the
+    # day, so a clock next to one ("Friday 4:05") is left alone.
+    if weekday is None and not any(w in lowered for w in _DAY_WORDS):
+        for m in _CLOCK_RE.finditer(lowered):
+            if ":" in m.group(0) or m.group(3):
+                hour = int(m.group(1))
+                minute = int(m.group(2) or 0)
+                ampm = m.group(3)
+                result = _next_clock(hour, minute, ampm, now)
+                if result:
+                    return result
 
     # A bare weekday ("Friday") means that day at 18:00.
     if weekday is not None:

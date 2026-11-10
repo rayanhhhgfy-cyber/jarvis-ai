@@ -607,3 +607,26 @@ def test_instagram_call_detection():
     assert _instagram_call(_Msg("video_call", True)) is False
     assert _instagram_call(_Msg("text", False)) is False
 
+
+
+def test_parse_time_bare_clock_next_occurrence():
+    """A bare clock ('4:05') means the NEXT occurrence of that time —
+    this afternoon when it is 4:04 PM, not 4:05 AM tomorrow."""
+    now = datetime(2026, 11, 10, 16, 4, tzinfo=_AMMAN)
+    assert parse_time("4:05", now=now) == datetime(2026, 11, 10, 16, 5, tzinfo=_AMMAN)
+    assert parse_time("at 4:05", now=now) == datetime(2026, 11, 10, 16, 5, tzinfo=_AMMAN)
+    assert parse_time("4:05pm", now=now) == datetime(2026, 11, 10, 16, 5, tzinfo=_AMMAN)
+    # In the morning, the same clock is this morning.
+    morning = datetime(2026, 11, 10, 3, 0, tzinfo=_AMMAN)
+    assert parse_time("4:05", now=morning) == datetime(2026, 11, 10, 4, 5, tzinfo=_AMMAN)
+    # Once both have passed, it rolls to tomorrow morning.
+    evening = datetime(2026, 11, 10, 17, 0, tzinfo=_AMMAN)
+    assert parse_time("4:05", now=evening) == datetime(2026, 11, 11, 4, 5, tzinfo=_AMMAN)
+    # A 24-hour clock still works.
+    assert parse_time("17:00", now=now) == datetime(2026, 11, 10, 17, 0, tzinfo=_AMMAN)
+
+
+def test_parse_time_bare_number_is_not_a_clock():
+    """A bare number ('call Omar 5 times') is not a time."""
+    now = datetime(2026, 11, 10, 10, 0, tzinfo=_AMMAN)
+    assert parse_time("call Omar 5 times", now=now) is None
