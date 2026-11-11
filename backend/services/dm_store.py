@@ -207,6 +207,12 @@ call_request = JsonStore("call_request.json")
 # normalized name -> {name, blocked_at}. Checked before any DM reply
 # (and before a missed-call introduction).
 blocked_users = JsonStore("blocked_users.json")
+# Recent Telegram conversation with Sir (last ~20 turns), so the brain
+# can follow "it" / "that" / "today" in his next message. A list of
+# {"role": "user"|"assistant", "content": ...} under key "messages".
+# NEVER holds cookies, tokens or other secrets — those messages are
+# consumed by the pending-connect handlers before recording.
+telegram_history = JsonStore("telegram_history.json")
 # Telegram webhook update_ids already handled (last ~200). Telegram
 # retries a webhook when the first response is slow; without this the
 # same update is processed twice and Sir gets duplicate replies.

@@ -34,7 +34,7 @@ from backend.config import settings
 from backend.services.telegram_notifier import (
     TELEGRAM_COMMANDS,
     commands_registered,
-    send_telegram_message,
+    send_telegram_message as _send_telegram_message_raw,
     set_telegram_commands,
     set_telegram_webhook,
 )
@@ -43,6 +43,72 @@ from shared.logger import get_logger
 log = get_logger("router_telegram")
 
 router = APIRouter(prefix="/api/telegram", tags=["Telegram"])
+
+# --- Conversation history: so the brain follows "it" / "that" / "today".
+# Every reply Jarvis sends here is recorded, and every message from Sir
+# (after the secret handlers have eaten cookies/tokens) is recorded too.
+# The LLM fallback gets the recent turns as chat_history — without it,
+# "Nope I want it now" meant nothing, and the brain guessed Instagram.
+_MAX_HISTORY_MESSAGES = 40
+
+
+def _looks_like_secret(text: str) -> bool:
+    """True when a message looks like pasted cookies or a token.
+
+    Defense in depth: the pending-connect handlers eat secrets before
+    recording, but a bare paste (no /connect first) must never land in
+    the history either — it would be sent to the LLM on every later
+    message.
+    """
+    lowered = (text or "").lower()
+    if "sessionid" in lowered or "csrftoken" in lowered or "ds_user_id" in lowered:
+        return True
+    stripped = (text or "").strip()
+    if stripped.startswith("[") and stripped.endswith("]"):
+        return True
+    if "#httponly_" in lowered:
+        return True
+    return False
+
+
+def _record_turn(role: str, text: str) -> None:
+    """Append one turn to the Telegram conversation history (best-effort)."""
+    text = (text or "").strip()
+    if not text or _looks_like_secret(text):
+        return
+    try:
+        from backend.services.dm_store import telegram_history as history_store
+
+        messages = history_store.get("messages") or []
+        if not isinstance(messages, list):
+            messages = []
+        messages.append({"role": role, "content": text})
+        history_store.set("messages", messages[-_MAX_HISTORY_MESSAGES:])
+    except (OSError, RuntimeError, ValueError) as e:
+        log.debug("telegram_history_record_failed", error=str(e))
+
+
+def _get_telegram_history() -> list[dict[str, str]]:
+    """The recent Telegram turns, oldest first, for the LLM."""
+    try:
+        from backend.services.dm_store import telegram_history as history_store
+
+        messages = history_store.get("messages") or []
+        if not isinstance(messages, list):
+            return []
+        return [
+            {"role": str(m.get("role", "user")), "content": str(m.get("content", ""))}
+            for m in messages
+            if isinstance(m, dict) and str(m.get("content", "")).strip()
+        ]
+    except (OSError, RuntimeError, ValueError):
+        return []
+
+
+async def send_telegram_message(text: str) -> bool:
+    """Send a Telegram message and record it in the conversation history."""
+    _record_turn("assistant", text)
+    return await _send_telegram_message_raw(text)
 
 _TELEGRAM_SYSTEM = (
     "You are Jarvis, Rayyan's personal assistant, replying to Rayyan "
@@ -2115,6 +2181,11 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             )
             return {"ok": True}
 
+        # --- Record Sir's message (the secret handlers above have
+        # already eaten any cookies/tokens, so this is safe). The
+        # brain needs it to follow "it" / "that" in his next message.
+        _record_turn("user", text)
+
         from backend.services.dm_responder import dm_responder
 
         # --- Slash commands: answered before drafts and meetings — a
@@ -2705,8 +2776,11 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         # can answer questions about it.
         if media_context:
             context = media_context + "\n\n" + context
+        # The recent turns, so the brain knows what "it" / "that" /
+        # "today" means — without this it guessed Instagram.
         reply = await llm_service.get_response(
             user_message=f"{context}Rayyan (Telegram): {text}",
+            chat_history=_get_telegram_history(),
             system_instructions=_TELEGRAM_SYSTEM,
             inject_memory=True,
         )
@@ -2716,7 +2790,9 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             # voice reply fails.
             from backend.services.dm_voice import send_telegram_voice_reply
 
-            if not await send_telegram_voice_reply(reply):
+            if await send_telegram_voice_reply(reply):
+                _record_turn("assistant", reply)
+            else:
                 await send_telegram_message(reply)
         else:
             await send_telegram_message(reply)
