@@ -2,423 +2,458 @@
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <!-- PWA: installable on iPhone (add to Home Screen) -->
-<meta name="theme-color" content="#0b0d14">
+<meta name="theme-color" content="#e4e1d8">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="JARVIS">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-<title>J.A.R.V.I.S. OMEGA — لوحة التحكم</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<!-- Unslopped with the unslop skill by @heydamir (CC BY 4.0) -->
+<title>J.A.R.V.I.S. OMEGA · لوحة التحكم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0b0d14; --surface:#11141c; --raised:#1a1e28;
-  --hairline:rgba(238,240,245,0.08);
-  --text:#eef0f5; --text-2:#a3a9b8; --text-3:#7a8296;
-  --accent:#d9a441; --accent-ink:#191307;
-  --green:#4cc38a; --red:#e5484d;
-  --font:'Tajawal',sans-serif;
+  --bg:#e4e1d8;
+  --panel:#f5f3ec;
+  --panel-2:#e9e6dc;
+  --line:rgba(33,29,20,0.14);
+  --line-strong:rgba(33,29,20,0.30);
+  --ink:#201c13;
+  --ink-2:#5a5344;
+  --ink-3:#8a8270;
+  --accent:#7f6019;
+  --accent-ink:#f8f4e6;
+  --green:#1e6b42;
+  --red:#a23a2a;
+  --font:'IBM Plex Sans Arabic',system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
-  --ease:cubic-bezier(0.22,1,0.36,1);
-  --tap:48px;
+  --ease:cubic-bezier(0.23,1,0.32,1);
+  --dur:160ms;
+  --r-sm:8px; --r:12px; --r-lg:16px;
 }
-html{scrollbar-color:var(--raised) var(--bg);-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
-::selection{background:rgba(217,164,65,0.28)}
-:focus-visible{outline:2px solid rgba(217,164,65,0.6);outline-offset:2px}
+html{scrollbar-color:var(--ink-3) var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+::selection{background:rgba(127,96,25,0.25)}
+:focus-visible{outline:2px solid rgba(127,96,25,0.65);outline-offset:2px}
 button{font-family:var(--font)}
+input,textarea{font-family:var(--font)}
 svg{display:block;flex:none}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* Phone-first shell: 390px is the design width; desktop widens below. */
-.app{max-width:100%;margin:0 auto;padding:0 16px calc(96px + env(safe-area-inset-bottom));animation:enter 400ms var(--ease) both}
-@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* Shell: one entrance animation, bottom dock leaves room below */
+.app{max-width:100%;margin:0 auto;padding:0 16px calc(96px + env(safe-area-inset-bottom));animation:enter 420ms var(--ease) both}
+@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* Top bar */
-.topbar{min-height:56px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--hairline);position:sticky;top:0;background:var(--bg);z-index:50}
-.wordmark{font-family:var(--mono);font-size:15px;font-weight:500;letter-spacing:0.02em;white-space:nowrap}
-.wordmark span{color:var(--text-3);font-weight:400}
-.status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);min-width:0}
-.status .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none}
-.status.off .dot{background:var(--red)}
-.status .host{display:none}
+/* Top bar: wordmark, connection status, autopilot pill */
+.topbar{position:sticky;top:0;z-index:60;min-height:56px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:10px;background:var(--bg);border-bottom:1px solid var(--line)}
+.wordmark{font-family:var(--mono);font-size:14px;font-weight:500;letter-spacing:0.02em;white-space:nowrap}
+.wordmark span{color:var(--ink-3);font-weight:400}
+.top-status{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-2);margin-inline-start:auto;min-width:0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none}
+.top-status.off .dot{background:var(--red)}
+.host{display:none}
+.ap-pill{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border-radius:999px;background:var(--ink);border:1px solid var(--ink);color:#f6f3ea;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease)}
+.ap-pill.paused{background:var(--panel-2);border-color:rgba(127,96,25,0.4);color:var(--accent)}
+.ap-pill:active{transform:scale(0.98)}
 
-/* Header stats: 2 columns on a phone */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:20px 0;border-bottom:1px solid var(--hairline)}
-.stat .label{font-size:12px;color:var(--text-3);margin-bottom:4px}
-.stat .num{font-family:var(--mono);font-size:24px;line-height:1.2;font-weight:500;font-variant-numeric:tabular-nums}
+/* Instruments: vitals lead the home tab */
+.instruments{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0 14px}
+.instr{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px}
+.instr .lbl{font-size:12px;color:var(--ink-3);margin-bottom:6px}
+.instr .val{font-family:var(--mono);font-size:20px;font-weight:500;line-height:1.25;color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere;display:flex;align-items:center;gap:8px}
+.instr .meter{height:3px;background:var(--line);border-radius:2px;margin-top:10px;overflow:hidden}
+.instr .meter i{display:block;height:100%;width:0;background:var(--ink);border-radius:2px;transition:width 250ms var(--ease)}
+.hdot{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:none}
+.hdot.on{background:var(--green)}
+.hdot.off{background:var(--red)}
 
-/* Vitals: 2 columns on a phone */
-.vitals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
-.vital-card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:16px}
-.vital-card .lbl{font-size:13px;color:var(--text-2);margin-bottom:6px}
-.vital-card .val{font-family:var(--mono);font-size:22px;line-height:1.2;font-weight:500;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+/* Counts strip */
+.counts{display:grid;grid-template-columns:repeat(4,1fr);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.count{padding-inline-start:14px;border-inline-start:1px solid var(--line);min-width:0}
+.count:first-child{padding-inline-start:0;border-inline-start:none}
+.count .lbl{font-size:11px;color:var(--ink-3);margin-bottom:2px}
+.count .num{font-family:var(--mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
 
-/* Tabs: full-width scroll row, 48px touch targets */
-.tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--hairline);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{display:flex;align-items:center;gap:8px;min-height:var(--tap);padding:0 14px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-2);cursor:pointer;font-size:14px;font-weight:500;white-space:nowrap;transition:color 150ms var(--ease),border-color 150ms var(--ease)}
-.tab:hover{color:var(--text)}
-.tab.active{color:var(--text);border-bottom-color:var(--accent)}
-.tab svg{color:var(--text-3)}
-.tab.active svg{color:var(--accent)}
+/* Bottom dock: 4 tabs + center call orb */
+.dock{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;align-items:flex-end;justify-content:space-around;background:var(--panel);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.dock-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;min-height:48px;padding:6px 8px;background:none;border:none;color:var(--ink-3);font-size:11px;font-weight:500;cursor:pointer;transition:color var(--dur) var(--ease)}
+.dock-item svg{color:var(--ink-3);transition:color var(--dur) var(--ease)}
+.dock-item.active{color:var(--ink)}
+.dock-item.active svg{color:var(--accent)}
+.dock-orb{width:58px;height:58px;border-radius:50%;background:var(--accent);border:none;color:var(--accent-ink);display:flex;align-items:center;justify-content:center;margin-top:-26px;box-shadow:0 10px 24px rgba(64,48,12,0.28);cursor:pointer;transition:transform var(--dur) var(--ease)}
+.dock-orb:active{transform:scale(0.96)}
 
 /* Search */
-.search-wrap{position:relative;margin-bottom:16px}
-.search-wrap svg{position:absolute;top:50%;right:16px;transform:translateY(-50%);color:var(--text-3);pointer-events:none}
-.search-bar{width:100%;height:52px;padding:0 48px 0 16px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:16px;transition:border-color 150ms var(--ease)}
-.search-bar::placeholder{color:var(--text-3)}
+.search-wrap{position:relative;margin-top:16px}
+.search-wrap>svg{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none}
+.search-bar{width:100%;height:50px;padding-inline:44px 14px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r);color:var(--ink);font-size:16px;transition:border-color var(--dur) var(--ease)}
+.search-bar::placeholder{color:var(--ink-3)}
 .search-bar:focus{outline:none;border-color:var(--accent)}
 
-/* Cards and tools: one column on a phone */
-.tools-grid{display:grid;grid-template-columns:1fr;gap:12px}
-.category-card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:16px}
-.category-card h3{font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.category-card h3 svg{color:var(--text-3)}
-.category-card h3 .cat-count{margin-inline-start:auto;font-family:var(--mono);font-size:12px;color:var(--text-3);font-weight:400;font-variant-numeric:tabular-nums}
-.tool-list{list-style:none}
-.tool-item{display:flex;align-items:flex-start;gap:8px;padding:10px;margin:0 -8px;border-radius:8px;font-size:14px;cursor:pointer;min-height:44px;transition:background-color 150ms var(--ease)}
-.tool-item:hover{background:var(--raised)}
-.tool-item svg{color:var(--text-3);margin-top:3px}
-.tool-item .tier{font-family:var(--mono);font-size:12px;color:var(--text-3);width:24px;flex:none;padding-top:2px;font-variant-numeric:tabular-nums}
-.tool-item .tool-name{color:var(--text)}
-.tool-desc{color:var(--text-2);font-size:13px;margin-top:2px}
+/* Ledger sections and rows */
+.cat{margin-top:26px}
+.cat-head{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
+.cat-head h3{font-size:14px;font-weight:600;color:var(--ink)}
+.cat-count{margin-inline-start:auto;font-family:var(--mono);font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.trow{display:flex;align-items:center;gap:12px;width:calc(100% + 16px);margin:0 -8px;padding:10px 8px;min-height:52px;background:none;border:none;border-bottom:1px solid var(--line);border-radius:var(--r-sm);font-size:14px;color:var(--ink);text-align:start;cursor:pointer;transition:background-color var(--dur) var(--ease)}
+.trow>svg:first-child{color:var(--ink-3)}
+.trow>svg:last-child{color:var(--ink-3)}
+.tier{font-family:var(--mono);font-size:12px;color:var(--ink-3);min-width:2.5ch;font-variant-numeric:tabular-nums}
+.t-main{flex:1;min-width:0}
+.t-name{display:block;font-weight:500}
+.t-desc{display:block;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.biz-grid{display:grid;gap:26px 28px}
+.biz-grid .cat{margin-top:0}
+
+/* Generic panel */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
+.panel h2{font-size:15px;font-weight:600}
+.stack{margin-top:14px}
+.mt8{margin-top:8px}
 
 /* Chat */
-.chat-box{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:16px}
-.chat-box h2{font-size:15px;font-weight:500;margin-bottom:16px}
-.chat-messages{min-height:40dvh;max-height:55dvh;overflow-y:auto;margin-bottom:16px}
-.chat-msg{padding:12px 0;font-size:15px;line-height:1.6;overflow-wrap:anywhere}
-.chat-msg + .chat-msg{border-top:1px solid var(--hairline)}
-.chat-msg::before{display:block;font-family:var(--mono);font-size:12px;color:var(--text-3);margin-bottom:4px}
+.chat-title{margin-bottom:14px}
+.chat-messages{min-height:40dvh;max-height:55dvh;overflow-y:auto;padding:4px 2px;margin-bottom:14px}
+.chat-msg{padding:10px 0;font-size:15px;line-height:1.65;overflow-wrap:anywhere}
+.chat-msg+.chat-msg{border-top:1px solid var(--line)}
+.chat-msg::before{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:4px}
+.chat-msg.bot{background:var(--panel-2);border-radius:12px;padding:12px 14px;border-top:none;margin:10px 0}
+.chat-msg.bot+.chat-msg.bot{margin-top:8px}
 .chat-msg.bot::before{content:"Jarvis"}
 .chat-msg.user::before{content:"أنت"}
-.chat-msg.bot{background:var(--raised);border-radius:12px;padding:12px 16px;border-top:none;margin:8px 0}
-.chat-msg.bot + .chat-msg.bot{margin-top:8px}
 .chat-input{display:flex;gap:8px}
-.chat-input input{flex:1;min-width:0;height:52px;padding:0 16px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:16px;transition:border-color 150ms var(--ease)}
-.chat-input input::placeholder{color:var(--text-3)}
+.chat-input input{flex:1;min-width:0;height:50px;padding:0 14px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:16px;transition:border-color var(--dur) var(--ease)}
+.chat-input input::placeholder{color:var(--ink-3)}
 .chat-input input:focus{outline:none;border-color:var(--accent)}
-.btn-send{height:52px;padding:0 16px;background:var(--accent);border:none;border-radius:10px;color:var(--accent-ink);font-weight:500;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px;flex:none;transition:opacity 150ms var(--ease)}
-.btn-send:hover{opacity:0.88}
+.icon-btn{width:50px;height:50px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.icon-btn.recording{color:var(--red);border-color:var(--red)}
+.btn-send{height:50px;padding:0 16px;background:var(--accent);border:none;border-radius:10px;color:var(--accent-ink);font-weight:600;font-size:15px;cursor:pointer;display:flex;align-items:center;gap:8px;flex:none;transition:opacity var(--dur) var(--ease)}
 .btn-send:active{transform:scale(0.98)}
-.mic-btn{width:52px;height:52px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;transition:color 150ms var(--ease),border-color 150ms var(--ease)}
-.mic-btn:hover{color:var(--text)}
-.mic-btn.recording{color:var(--red);border-color:var(--red)}
 
-/* Voice call */
-.call-btn{width:88px;height:88px;border-radius:50%;background:var(--accent);border:none;color:var(--accent-ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform 150ms var(--ease),background-color 150ms var(--ease)}
-.call-btn:hover{transform:scale(1.05)}
+/* Talk: live voice call */
+.talk-panel{text-align:center}
+.talk-sub{color:var(--ink-2);font-size:14px;margin-top:6px}
+.lang-row{display:inline-flex;gap:6px;margin:16px 0 6px}
+.lang-btn{min-height:38px;padding:0 16px;border-radius:19px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink-2);font-size:13px;font-weight:500;cursor:pointer;transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#callTimer{font-family:var(--mono);font-size:30px;font-weight:500;font-variant-numeric:tabular-nums;margin:10px 0 18px}
+.call-btn{width:88px;height:88px;border-radius:50%;background:var(--accent);border:none;color:var(--accent-ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform var(--dur) var(--ease),background-color var(--dur) var(--ease)}
 .call-btn:active{transform:scale(0.97)}
-.call-btn.live{background:var(--red);color:#fff;animation:callPulse 1.6s ease-in-out infinite}
-.call-btn.listening{background:var(--red);color:#fff}
-@keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,0.35)}50%{box-shadow:0 0 0 14px rgba(229,72,77,0)}}
-.lang-btn{min-height:36px;padding:0 14px;border-radius:18px;cursor:pointer;font-size:13px;font-weight:500;background:var(--raised);color:var(--text-2);border:1px solid var(--hairline);margin:0 3px}
-.lang-btn.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.call-btn.live,.call-btn.listening{background:var(--red);color:#fff}
+.call-btn.live{animation:callPulse 1.6s ease-in-out infinite}
+@keyframes callPulse{0%,100%{box-shadow:0 0 0 0 rgba(162,58,42,0.35)}50%{box-shadow:0 0 0 16px rgba(162,58,42,0)}}
+#callStatus{color:var(--ink-2);font-size:14px;margin-top:14px}
+.talk-log{margin-top:18px;text-align:start;max-height:40dvh;min-height:0}
 
 /* Buttons */
-.btn{min-height:44px;padding:0 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity 150ms var(--ease),background-color 150ms var(--ease)}
-.btn-connect{background:var(--accent);border:none;color:var(--accent-ink)}
-.btn-connect:hover{opacity:0.88}
-.btn-disconnect{background:none;color:var(--red);border:1px solid rgba(229,72,77,0.4)}
-.btn-disconnect:hover{background:rgba(229,72,77,0.08)}
-.btn-ghost{background:var(--raised);color:var(--text);border:1px solid var(--hairline)}
-.btn-ghost:hover{background:#222634}
+.btn{min-height:44px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease),opacity var(--dur) var(--ease)}
+.btn:active{transform:scale(0.98)}
+.btn-connect{background:var(--accent);border:1px solid var(--accent);color:var(--accent-ink)}
+.btn-disconnect{background:none;border:1px solid rgba(162,58,42,0.45);color:var(--red)}
+.btn-ghost{background:var(--panel-2);border:1px solid var(--line);color:var(--ink)}
+.btn-approve{background:var(--green);border:1px solid var(--green);color:#fff}
+.btn-reject{background:none;border:1px solid rgba(162,58,42,0.45);color:var(--red)}
+.btn-yes{background:var(--ink);border:1px solid var(--ink);color:#f6f3ea}
 
 /* Connectors */
-.connector-card{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:16px}
-.connector-card h3{font-size:15px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.connector-card h3 svg{color:var(--text-3)}
-.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text-3);flex:none}
-.status-dot.on{background:var(--green)}
-.status-dot.off{background:var(--red)}
-.connector-card p{color:var(--text-2);font-size:14px;margin-bottom:16px}
-.stack{margin-top:16px}
-.conn-note{font-size:13px;color:var(--text-3);margin-top:16px;line-height:1.6}
-.conn-form label{display:block;margin:16px 0 8px;color:var(--text-2);font-size:13px}
-.conn-form input,.conn-form textarea{width:100%;height:48px;padding:0 12px;background:var(--raised);border:1px solid var(--hairline);border-radius:10px;color:var(--text);font-family:var(--font);font-size:16px;transition:border-color 150ms var(--ease)}
+.conn-grid{display:grid;gap:12px;margin-top:16px}
+.conn-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px}
+.conn-card h3{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600}
+.conn-card h3 svg{color:var(--ink-3)}
+.conn-card p{color:var(--ink-2);font-size:14px;margin-top:6px}
+.conn-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:none}
+.sdot.on{background:var(--green)}
+.sdot.off{background:var(--red)}
+.panel p{color:var(--ink-2);font-size:14px}
+.dm-item{padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.dm-item:first-child{border-top:none;padding-top:4px}
+.dm-meta{font-size:12px;color:var(--ink-3)}
+.dm-sender{font-weight:600;margin-top:2px}
+.dm-reply{color:var(--ink-2);margin-top:2px}
+.dm-flag{display:inline-flex;align-items:center;gap:4px;color:var(--red);font-weight:600}
+.dm-empty{color:var(--ink-2);font-size:13px}
+.push-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.push-status{color:var(--ink-2);font-size:13px}
+.conn-note{font-size:13px;color:var(--ink-3);margin-top:16px;line-height:1.7}
+
+/* Connect form */
+.mode-tabs{display:flex;gap:8px;margin-bottom:4px}
+.mode-tab{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:10px;cursor:pointer;color:var(--ink-2);font-size:14px;font-weight:500;background:none;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease),background-color var(--dur) var(--ease)}
+.mode-tab.active{border-color:var(--accent);color:var(--ink);background:var(--panel-2)}
+.conn-form label{display:block;margin:14px 0 8px;color:var(--ink-2);font-size:13px}
+.conn-form input,.conn-form textarea{width:100%;height:48px;padding:0 12px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:16px;transition:border-color var(--dur) var(--ease)}
 .conn-form input:focus,.conn-form textarea:focus{outline:none;border-color:var(--accent)}
 .conn-form textarea{height:auto;min-height:96px;padding:12px;direction:ltr;text-align:left;font-family:var(--mono);font-size:13px;line-height:1.6}
-.mode-tabs{display:flex;gap:8px;margin:16px 0 4px}
-.mode-tab{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--hairline);border-radius:10px;cursor:pointer;color:var(--text-2);font-size:14px;background:none;transition:color 150ms var(--ease),border-color 150ms var(--ease),background-color 150ms var(--ease)}
-.mode-tab:hover{color:var(--text)}
-.mode-tab.active{border-color:var(--accent);color:var(--text);background:var(--raised)}
+.form-status{color:var(--ink-2);font-size:13px}
 
-/* Autopilot: full-width bar above the home indicator on a phone */
-.autopilot-btn{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:16px;right:16px;height:52px;padding:0 20px;background:var(--text);border:none;border-radius:12px;color:var(--bg);font-weight:500;font-size:15px;cursor:pointer;z-index:100;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,0.35);transition:opacity 150ms var(--ease)}
-.autopilot-btn:hover{opacity:0.9}
-.autopilot-btn:active{transform:scale(0.98)}
-.autopilot-btn.paused{background:var(--raised);color:var(--accent);border:1px solid rgba(217,164,65,0.4);box-shadow:none}
-
-/* Modal: bottom sheet on a phone */
-.modal-overlay{display:none;position:fixed;top:0;right:0;width:100%;height:100%;background:rgba(0,0,0,0.72);z-index:200;justify-content:center;align-items:flex-end;padding:0}
-.modal-overlay.active{display:flex}
-.modal{background:var(--surface);border:1px solid var(--hairline);border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:92dvh;overflow-y:auto}
-.modal h2{font-size:16px;font-weight:500;margin-bottom:16px}
-.modal pre{background:var(--raised);padding:12px;border-radius:8px;font-size:13px;font-family:var(--mono);line-height:1.6;overflow-x:auto;color:var(--green);white-space:pre-wrap;word-break:break-word}
-.modal .close{float:left;cursor:pointer;font-size:24px;line-height:1;color:var(--text-3);background:none;border:none;padding:4px;min-width:44px;min-height:44px}
-.modal .close:hover{color:var(--text)}
+/* Sheets */
+.overlay{position:fixed;inset:0;background:rgba(28,24,16,0.5);z-index:200;display:none;justify-content:center;align-items:flex-end}
+.overlay.active{display:flex}
+.sheet{background:var(--panel);border:1px solid var(--line);border-bottom:none;border-radius:20px 20px 0 0;width:100%;max-height:90dvh;overflow-y:auto;padding:18px 20px calc(20px + env(safe-area-inset-bottom));animation:sheetUp 220ms var(--ease)}
+@keyframes sheetUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.sheet-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sheet-head h2{font-size:16px;font-weight:600;flex:1;min-width:0;overflow-wrap:anywhere}
+.sheet-close{width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel-2);border:1px solid var(--line);border-radius:50%;color:var(--ink-2);cursor:pointer}
+.json-pre{background:var(--panel-2);padding:12px;border-radius:10px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--green);white-space:pre-wrap;word-break:break-word;overflow-x:auto}
+.ap-action{font-family:var(--mono);font-size:13px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow-wrap:anywhere;margin-bottom:10px}
+.ap-reason{font-size:14px;color:var(--ink-2);line-height:1.7;margin-bottom:16px}
+.ap-btns{display:flex;gap:10px}
+.ap-btns .btn{flex:1}
 
 /* Loader */
-.loader{text-align:center;padding:40px;color:var(--text-3);font-size:14px}
-.spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--hairline);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+.loader{text-align:center;padding:40px;color:var(--ink-3);font-size:14px}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:12px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Section spacing */
-.section{margin-top:24px}
-.section + .section{margin-top:16px}
+/* Hover states: gated behind real pointers */
+@media(hover:hover){
+  .trow:hover{background:var(--panel-2)}
+  .dock-item:hover{color:var(--ink)}
+  .dock-item:hover svg{color:var(--ink-2)}
+  .dock-item.active:hover,.dock-item.active:hover svg{color:var(--accent)}
+  .dock-orb:hover{transform:scale(1.05)}
+  .btn-connect:hover,.btn-send:hover,.btn-approve:hover,.btn-yes:hover{opacity:0.9}
+  .btn-disconnect:hover,.btn-reject:hover{background:rgba(162,58,42,0.08)}
+  .btn-ghost:hover{background:#e2dfd5}
+  .icon-btn:hover{color:var(--ink)}
+  .lang-btn:hover,.mode-tab:hover{color:var(--ink)}
+  .sheet-close:hover{color:var(--ink)}
+}
 
-/* Desktop: widen the phone-first layout (min-width, not max-width). */
+/* Desktop: widen the phone-first layout (min-width, not max-width) */
 @media(min-width:769px){
   body{font-size:15px}
-  .app{max-width:1200px;padding:0 32px 96px}
-  .topbar{height:64px}
-  .wordmark{font-size:16px}
-  .status .host{display:inline;font-family:var(--mono);font-size:12px;color:var(--text-3)}
-  .stats{grid-template-columns:repeat(4,1fr);gap:24px;padding:24px 0}
-  .stat .num{font-size:28px}
-  .vitals{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0}
-  .vital-card{border-radius:16px;padding:20px}
-  .vital-card .val{font-size:28px}
-  .tabs{margin-bottom:24px}
-  .tools-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-  .category-card{border-radius:16px;padding:20px}
-  .chat-box{border-radius:16px;padding:20px}
+  .app{max-width:880px;padding:0 32px 120px}
+  .topbar{min-height:64px}
+  .wordmark{font-size:15px}
+  .host{display:inline;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  .instruments{grid-template-columns:repeat(4,1fr)}
+  .instr .val{font-size:22px}
+  .conn-grid{grid-template-columns:repeat(2,1fr)}
   .chat-messages{min-height:320px;max-height:60vh}
-  .chat-input input{height:48px;font-size:15px}
-  .btn-send{height:48px;padding:0 20px}
-  .mic-btn{width:48px;height:48px}
-  .connector-card{border-radius:16px;padding:20px}
-  .autopilot-btn{left:24px;right:auto;bottom:24px;height:48px;width:auto}
-  .modal-overlay{align-items:center;padding:16px}
-  .modal{border-radius:20px;padding:24px;max-width:600px;max-height:80vh}
+  .overlay{align-items:center;padding:16px}
+  .sheet{border:1px solid var(--line);border-radius:16px;max-width:620px;max-height:80vh;padding:24px}
+  .dock{margin-inline:auto;bottom:20px;max-width:540px;border:1px solid var(--line);border-radius:18px;padding:8px 12px;box-shadow:0 12px 32px rgba(28,24,16,0.14)}
+  .ap-pill{min-height:36px;padding:0 14px;font-size:13px}
+}
+@media(max-width:380px){
+  .wordmark span{display:none}
+  .ap-pill{padding:0 10px}
 }
 @media(prefers-reduced-motion:reduce){
   .app{animation:none}
+  .sheet{animation:none}
+  .call-btn.live{animation:none}
   .spinner{animation-duration:2s}
+  .instr .meter i{transition:none}
 }
 </style>
 </head>
 <body>
 <div class="app">
-  <!-- Top bar -->
   <header class="topbar">
     <div class="wordmark">J.A.R.V.I.S.<span> OMEGA</span></div>
-    <div class="status" id="wsStatus"><span class="dot"></span><span id="wsStatusText">متصل</span><span class="host" id="apiHost"></span></div>
+    <div class="top-status" id="wsStatus"><span class="dot"></span><span id="wsStatusText">متصل</span><span class="host" id="apiHost"></span></div>
+    <button class="ap-pill" id="autopilotBtn" type="button"><span id="apIcon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span id="apText">ابدأ كل شيء</span></button>
   </header>
-
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat"><div class="label">أداة</div><div class="num" id="toolCount">—</div></div>
-    <div class="stat"><div class="label">فئة</div><div class="num" id="catCount">—</div></div>
-    <div class="stat"><div class="label">اتصالات</div><div class="num" id="connCount">0</div></div>
-    <div class="stat"><div class="label">مهام</div><div class="num" id="taskCount">0</div></div>
-  </div>
-
-  <!-- Vitals -->
-  <div class="vitals" id="vitals">
-    <div class="vital-card"><div class="lbl">المعالج</div><div class="val" id="cpuVal">—</div></div>
-    <div class="vital-card"><div class="lbl">الذاكرة</div><div class="val" id="memVal">—</div></div>
-    <div class="vital-card"><div class="lbl">القرص</div><div class="val" id="diskVal">—</div></div>
-    <div class="vital-card"><div class="lbl">الحالة</div><div class="val" id="healthVal">—</div></div>
-  </div>
-
-  <!-- Tabs -->
-  <nav class="tabs" aria-label="الأقسام">
-    <button class="tab active" onclick="switchTab('tools')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>الأدوات</button>
-    <button class="tab" onclick="switchTab('chat')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>المحادثة</button>
-    <button class="tab" onclick="switchTab('talk')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>مكالمة</button>
-    <button class="tab" onclick="switchTab('business')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>الأعمال</button>
-    <button class="tab" onclick="switchTab('sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>المبيعات</button>
-    <button class="tab" onclick="switchTab('connectors')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>الموصلات</button>
-  </nav>
-
-  <!-- Tools Tab -->
-  <div id="tab-tools">
+  <main>
+    <!-- Tools tab (home) -->
+  <section id="tab-tools">
+    <div class="instruments">
+      <div class="instr"><div class="lbl">المعالج</div><div class="val"><span id="cpuVal">-</span></div><div class="meter"><i id="cpuBar"></i></div></div>
+      <div class="instr"><div class="lbl">الذاكرة</div><div class="val"><span id="memVal">-</span></div><div class="meter"><i id="memBar"></i></div></div>
+      <div class="instr"><div class="lbl">القرص</div><div class="val"><span id="diskVal">-</span></div><div class="meter"><i id="diskBar"></i></div></div>
+      <div class="instr"><div class="lbl">الحالة</div><div class="val"><span class="hdot" id="healthDot"></span><span id="healthVal">-</span></div></div>
+    </div>
+    <div class="counts">
+      <div class="count"><div class="lbl">أداة</div><div class="num" id="toolCount">-</div></div>
+      <div class="count"><div class="lbl">فئة</div><div class="num" id="catCount">-</div></div>
+      <div class="count"><div class="lbl">اتصالات</div><div class="num" id="connCount">0</div></div>
+      <div class="count"><div class="lbl">مهام</div><div class="num" id="taskCount">0</div></div>
+    </div>
     <div class="search-wrap">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" class="search-bar" id="searchTools" placeholder="ابحث في الأدوات" oninput="filterTools()">
+      <input type="text" class="search-bar" id="searchTools" placeholder="ابحث في الأدوات…">
     </div>
-    <div class="tools-grid" id="toolsGrid">
-      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الأدوات</p></div>
+    <div id="toolsGrid">
+      <div class="loader"><div class="spinner"></div><p>جاري تحميل الأدوات</p></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Chat Tab -->
-  <div id="tab-chat" style="display:none">
-    <div class="chat-box">
-      <h2>محادثة مع Jarvis</h2>
+  <!-- Chat tab -->
+  <section id="tab-chat" hidden>
+    <div class="panel">
+      <h2 class="chat-title">محادثة مع Jarvis</h2>
       <div class="chat-messages" id="chatMessages">
         <div class="chat-msg bot">مرحباً سيدي، أنا Jarvis، جاهز لخدمتك. كيف يمكنني مساعدتك؟</div>
       </div>
       <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="اكتب رسالتك" onkeypress="if(event.key==='Enter')sendChat()">
-        <button class="mic-btn" id="micBtn" title="تحدث" onclick="toggleVoiceInput()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></button>
-        <button class="btn-send" onclick="sendChat()">إرسال<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+        <input type="text" id="chatInput" placeholder="اكتب رسالتك…">
+        <button class="icon-btn" id="micBtn" type="button" title="تحدث" aria-label="إدخال صوتي"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></button>
+        <button class="btn-send" id="sendBtn" type="button">إرسال<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Talk Tab (live voice call) -->
-  <div id="tab-talk" style="display:none">
-    <div class="chat-box" style="text-align:center">
+  <!-- Talk tab (live voice call) -->
+  <section id="tab-talk" hidden>
+    <div class="panel talk-panel">
       <h2>مكالمة مع Jarvis</h2>
-      <p style="color:var(--text-2);font-size:14px;margin-bottom:20px">اضغط زر الاتصال وتحدث معه بصوتك — يرد عليك بصوته</p>
-      <div style="margin-bottom:16px">
-        <button class="lang-btn active" data-lang="" onclick="callSetLang('')">تلقائي</button>
-        <button class="lang-btn" data-lang="en" onclick="callSetLang('en')">English</button>
-        <button class="lang-btn" data-lang="ar" onclick="callSetLang('ar')">العربية</button>
+      <p class="talk-sub">اضغط زر الاتصال وتحدث معه بصوتك، ويرد عليك بصوته.</p>
+      <div class="lang-row">
+        <button class="lang-btn active" data-lang="" type="button">تلقائي</button>
+        <button class="lang-btn" data-lang="en" type="button">English</button>
+        <button class="lang-btn" data-lang="ar" type="button">العربية</button>
       </div>
-      <div id="callTimer" style="font-family:var(--mono);font-size:28px;margin-bottom:20px">00:00</div>
-      <button id="callBtn" class="call-btn" onclick="toggleCall()" title="اتصال">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      </button>
-      <p id="callStatus" style="color:var(--text-2);font-size:14px;margin-top:16px">غير متصل</p>
-      <button class="btn btn-disconnect" id="endCallBtn" style="display:none;margin-top:12px" onclick="endCall()">إنهاء المكالمة</button>
-      <div class="chat-messages" id="talkMessages" style="text-align:start;margin-top:20px"></div>
+      <div id="callTimer" class="mono">00:00</div>
+      <button id="callBtn" class="call-btn" type="button" title="اتصال" aria-label="بدء المكالمة"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+      <p id="callStatus">غير متصل</p>
+      <button id="endCallBtn" class="btn btn-disconnect" type="button" hidden>إنهاء المكالمة</button>
+      <div class="chat-messages talk-log" id="talkMessages"></div>
     </div>
-  </div>
-
-  <!-- Business Tab -->
-  <div id="tab-business" style="display:none">
-    <div class="vitals">
-      <div class="vital-card"><div class="lbl">أعمال نشطة</div><div class="val" id="bizCount">0</div></div>
-      <div class="vital-card"><div class="lbl">الإيرادات</div><div class="val" id="revenueVal">0 د.أ</div></div>
-      <div class="vital-card"><div class="lbl">صفقات مغلقة</div><div class="val" id="dealsCount">0</div></div>
-      <div class="vital-card"><div class="lbl">منشورات</div><div class="val" id="postsCount">0</div></div>
+  </section>
+    <!-- Business tab (actions + sales merged) -->
+  <section id="tab-business" hidden>
+    <div class="instruments">
+      <div class="instr"><div class="lbl">أعمال نشطة</div><div class="val"><span id="bizCount">0</span></div></div>
+      <div class="instr"><div class="lbl">الإيرادات</div><div class="val"><span id="revenueVal">0 د.أ</span></div></div>
+      <div class="instr"><div class="lbl">صفقات مغلقة</div><div class="val"><span id="dealsCount">0</span></div></div>
+      <div class="instr"><div class="lbl">منشورات</div><div class="val"><span id="postsCount">0</span></div></div>
     </div>
-    <div class="tools-grid">
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>إجراءات سريعة</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('bi.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>لوحة معلومات الأعمال</span></div>
-          <div class="tool-item" onclick="invokeTool('portfolio.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>محفظة الأعمال</span></div>
-          <div class="tool-item" onclick="invokeTool('payouts.where_is_my_money')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg><span>أين أموالي؟</span></div>
-          <div class="tool-item" onclick="invokeTool('budget.get')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span>حد الميزانية</span></div>
-          <div class="tool-item" onclick="invokeTool('diagnostics.full')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>تشخيص النظام</span></div>
-        </div>
-      </div>
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>بناء الأعمال</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('agency.build_multi_product',{'niche':'test'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg><span>بناء 7 منتجات</span></div>
-          <div class="tool-item" onclick="invokeTool('agency.mass_lead_gen',{'niche':'restaurants'})')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>50 عميل محتمل</span></div>
-          <div class="tool-item" onclick="invokeTool('agency.run_continuous',{'activate':true})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>الوضع المستمر</span></div>
-          <div class="tool-item" onclick="invokeTool('agency.weekly_report')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span>التقرير الأسبوعي</span></div>
-        </div>
-      </div>
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>التسويق</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('marketing.create_content',{'topic':'النجاح'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>إنشاء محتوى</span></div>
-          <div class="tool-item" onclick="invokeTool('marketing.list_posts')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span>المنشورات</span></div>
-          <div class="tool-item" onclick="invokeTool('repurpose.from_text',{'source_content':'الذكاء الاصطناعي'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>إعادة تدوير المحتوى</span></div>
-          <div class="tool-item" onclick="invokeTool('linkedin.post_write',{'topic':'الريادة'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>منشور لينكدإن</span></div>
-        </div>
-      </div>
+    <div class="biz-grid">
+      <section class="cat">
+        <div class="cat-head"><h3>إجراءات سريعة</h3><span class="cat-count">5</span></div>
+        <button class="trow" type="button" onclick="invokeTool('bi.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span class="t-main"><span class="t-name">لوحة معلومات الأعمال</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('portfolio.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span class="t-main"><span class="t-name">محفظة الأعمال</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('payouts.where_is_my_money')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg><span class="t-main"><span class="t-name">أين أموالي؟</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('budget.get')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span class="t-main"><span class="t-name">حد الميزانية</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('diagnostics.full')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span class="t-main"><span class="t-name">تشخيص النظام</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
+      <section class="cat">
+        <div class="cat-head"><h3>بناء الأعمال</h3><span class="cat-count">4</span></div>
+        <button class="trow" type="button" onclick="invokeTool('agency.build_multi_product',{'niche':'test'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg><span class="t-main"><span class="t-name">بناء 7 منتجات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('agency.mass_lead_gen',{'niche':'restaurants'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="t-main"><span class="t-name">50 عميل محتمل</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('agency.run_continuous',{'activate':true})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="t-main"><span class="t-name">الوضع المستمر</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('agency.weekly_report')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span class="t-main"><span class="t-name">التقرير الأسبوعي</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
+      <section class="cat">
+        <div class="cat-head"><h3>التسويق</h3><span class="cat-count">4</span></div>
+        <button class="trow" type="button" onclick="invokeTool('marketing.create_content',{'topic':'النجاح'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span class="t-main"><span class="t-name">إنشاء محتوى</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('marketing.list_posts')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg><span class="t-main"><span class="t-name">المنشورات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('repurpose.from_text',{'source_content':'الذكاء الاصطناعي'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="t-main"><span class="t-name">إعادة تدوير المحتوى</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('linkedin.post_write',{'topic':'الريادة'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span class="t-main"><span class="t-name">منشور لينكدإن</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
+      <section class="cat">
+        <div class="cat-head"><h3>المبيعات الذاتية</h3><span class="cat-count">5</span></div>
+        <button class="trow" type="button" onclick="invokeTool('sales.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span class="t-main"><span class="t-name">لوحة المبيعات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('sales.list_conversations')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="t-main"><span class="t-name">المحادثات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('sales.run_loop')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="t-main"><span class="t-name">دورة بيع جديدة</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('sales.pause')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg><span class="t-main"><span class="t-name">إيقاف المبيعات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('sales.resume')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg><span class="t-main"><span class="t-name">استئناف المبيعات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
+      <section class="cat">
+        <div class="cat-head"><h3>الدفع</h3><span class="cat-count">4</span></div>
+        <button class="trow" type="button" onclick="invokeTool('local_payment.zain_cash_qr',{'amount_jod':50})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M21 14v.01"/><path d="M14 21v.01"/><path d="M18 18v.01"/></svg><span class="t-main"><span class="t-name">QR زين كاش</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('payouts.track_all')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><span class="t-main"><span class="t-name">تتبع المدفوعات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('payouts.revenue_history')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span class="t-main"><span class="t-name">تاريخ الإيرادات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('lemonsqueezy.list_sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span class="t-main"><span class="t-name">مبيعات Lemon Squeezy</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
+      <section class="cat">
+        <div class="cat-head"><h3>أدوات إسلامية</h3><span class="cat-count">5</span></div>
+        <button class="trow" type="button" onclick="invokeTool('islamic.prayer_times')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="t-main"><span class="t-name">أوقات الصلاة</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('islamic.hijri_date')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span class="t-main"><span class="t-name">التاريخ الهجري</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('islamic.zakat_calculator',{'cash_jod':5000})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M16 14v4"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/></svg><span class="t-main"><span class="t-name">حاسبة الزكاة</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('islamic.qibla',{'latitude':31.95,'longitude':35.91})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span class="t-main"><span class="t-name">اتجاه القبلة</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="trow" type="button" onclick="invokeTool('islamic.events_calendar')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span class="t-main"><span class="t-name">المناسبات</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      </section>
     </div>
-  </div>
-
-  <!-- Sales Tab -->
-  <div id="tab-sales" style="display:none">
-    <div class="tools-grid">
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>المبيعات الذاتية</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('sales.dashboard')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>لوحة المبيعات</span></div>
-          <div class="tool-item" onclick="invokeTool('sales.list_conversations')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>المحادثات</span></div>
-          <div class="tool-item" onclick="invokeTool('sales.run_loop')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>دورة بيع جديدة</span></div>
-          <div class="tool-item" onclick="invokeTool('sales.pause')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg><span>إيقاف المبيعات</span></div>
-          <div class="tool-item" onclick="invokeTool('sales.resume')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg><span>استئناف المبيعات</span></div>
-        </div>
-      </div>
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>الدفع</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('local_payment.zain_cash_qr',{'amount_jod':50})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M21 14v.01"/><path d="M14 21v.01"/><path d="M18 18v.01"/></svg><span>QR زين كاش</span></div>
-          <div class="tool-item" onclick="invokeTool('payouts.track_all')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><span>تتبع المدفوعات</span></div>
-          <div class="tool-item" onclick="invokeTool('payouts.revenue_history')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg><span>تاريخ الإيرادات</span></div>
-          <div class="tool-item" onclick="invokeTool('lemonsqueezy.list_sales')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg><span>مبيعات Lemon Squeezy</span></div>
-        </div>
-      </div>
-      <div class="category-card">
-        <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>أدوات إسلامية</h3>
-        <div class="tool-list">
-          <div class="tool-item" onclick="invokeTool('islamic.prayer_times')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>أوقات الصلاة</span></div>
-          <div class="tool-item" onclick="invokeTool('islamic.hijri_date')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span>التاريخ الهجري</span></div>
-          <div class="tool-item" onclick="invokeTool('islamic.zakat_calculator',{'cash_jod':5000})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><path d="M16 14v4"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/></svg><span>حاسبة الزكاة</span></div>
-          <div class="tool-item" onclick="invokeTool('islamic.qibla',{'latitude':31.95,'longitude':35.91})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span>اتجاه القبلة</span></div>
-          <div class="tool-item" onclick="invokeTool('islamic.events_calendar')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><span>المناسبات</span></div>
-        </div>
-      </div>
+  </section>
+    <!-- Connectors tab -->
+  <section id="tab-connectors" hidden>
+    <div class="conn-grid" id="connectorsGrid">
+      <div class="loader"><div class="spinner"></div><p>جاري تحميل الموصلات</p></div>
     </div>
-  </div>
-
-  <!-- Connectors Tab -->
-  <div id="tab-connectors" style="display:none">
-    <div class="tools-grid" id="connectorsGrid">
-      <div class="loader"><div class="spinner"></div><p style="margin-top:12px">جاري تحميل الموصلات</p></div>
+    <div class="panel stack">
+      <h2>أثناء غيابك</h2>
+      <p class="stack">آخر الرسائل التي رد عليها Jarvis وأنت مشغول: من كتب، ماذا قال، وبماذا رد.</p>
+      <div id="dmActivity" class="stack"><p class="dm-empty">لا توجد ردود بعد.</p></div>
     </div>
-    <div class="category-card stack">
-      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>أثناء غيابك</h3>
-      <p style="color:var(--text-2);font-size:14px;margin-bottom:12px">آخر الرسائل التي رد عليها Jarvis وأنت مشغول — من كتب، ماذا قال، وبماذا رد Jarvis.</p>
-      <div id="dmActivity"><p style="color:var(--text-2);font-size:13px">لا توجد ردود بعد.</p></div>
-    </div>
-    <div class="category-card stack">
-      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>إشعارات الجوال</h3>
-      <p style="color:var(--text-2);font-size:14px;margin-bottom:16px">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد Jarvis على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
-      <button class="btn btn-connect" onclick="enableNotifications()">تفعيل الإشعارات</button>
-      <button class="btn btn-ghost" onclick="sendTestPush()">إرسال إشعار تجريبي</button>
-      <span id="pushStatus" style="color:var(--text-2);font-size:13px;margin-right:8px"></span>
+    <div class="panel stack">
+      <h2>إشعارات الجوال</h2>
+      <p class="stack">فعّل الإشعارات ليصلك تنبيه على آيفونك عندما يرد Jarvis على رسالة أو تنتهي مهمة. على iOS يجب إضافة التطبيق إلى الشاشة الرئيسية أولاً (iOS 16.4+).</p>
+      <div class="push-actions">
+        <button class="btn btn-connect" id="enablePushBtn" type="button">تفعيل الإشعارات</button>
+        <button class="btn btn-ghost" id="testPushBtn" type="button">إرسال إشعار تجريبي</button>
+        <span class="push-status" id="pushStatus"></span>
+      </div>
     </div>
     <p class="conn-note">تنبيه: الرد التلقائي على رسائلك الشخصية في ماسنجر وإنستغرام يخالف قواعد المنصتين، وقد يتم قفل الحساب أو حظره. Jarvis يرد فقط على المحادثات الفردية، وبحد أقصى 5 ردود في كل جولة فحص.</p>
+  </section>
+  </main>
+
+  <!-- Bottom dock: 4 tabs + center call orb -->
+  <nav class="dock" aria-label="الأقسام">
+    <button class="dock-item active" data-tab="tools" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>الأدوات</button>
+    <button class="dock-item" data-tab="chat" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>المحادثة</button>
+    <button class="dock-orb" data-tab="talk" type="button" title="مكالمة" aria-label="مكالمة صوتية"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+    <button class="dock-item" data-tab="business" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>الأعمال</button>
+    <button class="dock-item" data-tab="connectors" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>الموصلات</button>
+  </nav>
+</div>
+
+<!-- Tool result sheet -->
+<div class="overlay" id="modalOverlay">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head"><h2 id="modalTitle" class="mono"></h2><button class="sheet-close" id="modalClose" type="button" aria-label="إغلاق"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    <pre class="json-pre" id="modalContent">جاري التحميل</pre>
   </div>
 </div>
 
-<!-- Autopilot Button -->
-<button class="autopilot-btn" id="autopilotBtn" onclick="toggleAutopilot()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>ابدأ كل شيء</button>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <button class="close" onclick="closeModal()" aria-label="إغلاق">&times;</button>
-    <h2 id="modalTitle"></h2>
-    <pre id="modalContent">جاري التحميل</pre>
-  </div>
-</div>
-
-<!-- Connect Modal -->
-<div class="modal-overlay" id="connectOverlay" onclick="if(event.target===this)closeConnectModal()">
-  <div class="modal">
-    <button class="close" onclick="closeConnectModal()" aria-label="إغلاق">&times;</button>
-    <h2 id="connectTitle">ربط حساب</h2>
+<!-- Connect sheet -->
+<div class="overlay" id="connectOverlay">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head"><h2 id="connectTitle">ربط حساب</h2><button class="sheet-close" id="connectClose" type="button" aria-label="إغلاق"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
     <div class="conn-form">
       <div class="mode-tabs">
-        <button class="mode-tab active" id="modeTabPassword" onclick="setConnectMode('password')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>إيميل وكلمة مرور</button>
-        <button class="mode-tab" id="modeTabCookies" onclick="setConnectMode('cookies')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 2-2 2"/><path d="m12.5 9.5a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78z"/><path d="m15.5 7.5 3 3"/><path d="M22 7l-3-3"/><path d="m19 4 3 3"/></svg>كوكيز</button>
+        <button class="mode-tab active" id="modeTabPassword" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>إيميل وكلمة مرور</button>
+        <button class="mode-tab" id="modeTabCookies" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 2-2 2"/><path d="m12.5 9.5a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78z"/><path d="m15.5 7.5 3 3"/><path d="M22 7l-3-3"/><path d="m19 4 3 3"/></svg>كوكيز</button>
       </div>
       <div id="connectPasswordFields">
-        <label>الإيميل / اسم المستخدم</label>
-        <input type="text" id="connEmail" placeholder="you@example.com" autocomplete="off">
-        <label>كلمة المرور</label>
-        <input type="password" id="connPassword" placeholder="••••••••" autocomplete="off">
+        <label for="connEmail">الإيميل / اسم المستخدم</label>
+        <input type="text" id="connEmail" placeholder="you@example.com" autocomplete="username">
+        <label for="connPassword">كلمة المرور</label>
+        <input type="password" id="connPassword" placeholder="••••••••" autocomplete="current-password">
       </div>
-      <div id="connectCookiesFields" style="display:none">
-        <label>الصق الكوكيز هنا (من متصفح مسجّل دخوله)</label>
+      <div id="connectCookiesFields" hidden>
+        <label for="connCookies">الصق الكوكيز هنا (من متصفح مسجّل دخوله)</label>
         <textarea id="connCookies" placeholder="c_user=...; xs=...; sessionid=..."></textarea>
-        <p class="conn-note" style="margin-top:8px">يقبل كل الصيغ: سطر كوكيز (c_user=...; xs=...)، ملف cookies.txt، أو JSON (مصفوفة أو كائن) من أي إضافة تصدير كوكيز.</p>
+        <p class="conn-note mt8">يقبل كل الصيغ: سطر كوكيز (c_user=...; xs=...)، ملف cookies.txt، أو JSON (مصفوفة أو كائن) من أي إضافة تصدير كوكيز.</p>
       </div>
       <p class="conn-note">بياناتك تُحفظ مشفّرة على الخادم فقط، ولا تظهر أبداً في أي واجهة. يمكنك قطع الاتصال في أي وقت من هنا.</p>
-      <div style="margin-top:16px">
-        <button class="btn btn-connect" onclick="submitConnect()">ربط الحساب</button>
-        <span id="connectStatus" style="color:var(--text-2);font-size:13px;margin-right:8px"></span>
+      <div class="push-actions">
+        <button class="btn btn-connect" id="submitConnectBtn" type="button">ربط الحساب</button>
+        <span class="form-status" id="connectStatus"></span>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approval / confirm sheet (queue) -->
+<div class="overlay" id="approveOverlay">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head"><h2 id="apTitle">طلب موافقة</h2><button class="sheet-close" id="apClose" type="button" aria-label="إغلاق"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+    <div class="ap-action" id="apAction"></div>
+    <p class="ap-reason" id="apReason"></p>
+    <div class="ap-btns">
+      <button class="btn btn-approve" id="apYes" type="button">وافق</button>
+      <button class="btn btn-reject" id="apNo" type="button">أرفض</button>
     </div>
   </div>
 </div>
@@ -429,7 +464,7 @@ svg{display:block;flex:none}
 // (loaded just above). Empty = same-origin (backend serves the dashboard
 // on Render / local). The Vercel split deploy sets config.js to the
 // Render backend URL, e.g. window.JARVIS_API_URL =
-// "https://jarvis-ai.onrender.com"; — the WebSocket then follows the
+// "https://jarvis-ai.onrender.com"; the WebSocket then follows the
 // same host (http -> ws, https -> wss). This is what makes the PWA work
 // on iPhone in both layouts.
 const API = (window.JARVIS_API_URL || ((window.location.protocol === 'file:')
@@ -438,22 +473,36 @@ const API = (window.JARVIS_API_URL || ((window.location.protocol === 'file:')
 const WS_URL = API.replace(/^http/, 'ws') + '/ws/ui';
 let allTools = [];
 let ws = null;
+let currentConnector = null;
+let connectMode = 'password';
 
-// === Inline line icons (lucide-style, 16px, stroke 1.5) ===
-const ICONS = {
+const $ = (id) => document.getElementById(id);
+
+// === Inline line icons (lucide-style, stroke 1.5) ===
+const ICON_PATHS = {
   message: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
   camera: '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
   zap: '<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
-  pause: '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>'
+  pause: '<rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/>',
+  alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  chevLeft: '<path d="m15 18-6-6 6-6"/>'
 };
-function icon(name, size) {
+function ic(name, size) {
   size = size || 16;
-  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+  const t = document.createElement('template');
+  t.innerHTML = '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON_PATHS[name] || '') + '</svg>';
+  return t.content.firstElementChild;
+}
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
 }
 
 // === Initialize ===
 async function init() {
-  document.getElementById('apiHost').textContent = API.replace(/^https?:\/\//, '');
+  $('apiHost').textContent = API.replace(/^https?:\/\//, '');
   await loadTools();
   await loadVitals();
   await loadConnectors();
@@ -466,7 +515,7 @@ async function loadTools() {
   try {
     const resp = await fetch(API + '/api/settings/tools');
     allTools = await resp.json();
-    document.getElementById('toolCount').textContent = allTools.length;
+    $('toolCount').textContent = allTools.length;
 
     // Group by category
     const categories = {};
@@ -474,64 +523,62 @@ async function loadTools() {
       if (!categories[t.category]) categories[t.category] = [];
       categories[t.category].push(t);
     });
-    document.getElementById('catCount').textContent = Object.keys(categories).length;
+    $('catCount').textContent = Object.keys(categories).length;
 
     renderTools(categories);
   } catch (e) {
-    document.getElementById('toolsGrid').innerHTML = '<div class="loader"><p>تعذر الاتصال بالخادم. تأكد أن الباكند يعمل.</p></div>';
+    const grid = $('toolsGrid');
+    grid.replaceChildren(el('div', 'loader', 'تعذر الاتصال بالخادم. تأكد أن الباكند يعمل.'));
   }
 }
 
-// === Render tools grouped by category ===
+// === Render tools grouped by category (most tools first) ===
 function renderTools(categories) {
-  const grid = document.getElementById('toolsGrid');
-  grid.innerHTML = '';
-
-  // Sort categories by tool count (most tools first)
-  const sortedCats = Object.entries(categories).sort((a,b) => b[1].length - a[1].length);
-
+  const grid = $('toolsGrid');
+  grid.replaceChildren();
+  const sortedCats = Object.entries(categories).sort((a, b) => b[1].length - a[1].length);
   sortedCats.forEach(([cat, tools]) => {
-    const card = document.createElement('div');
-    card.className = 'category-card';
-    card.dataset.category = cat;
-
-    let toolsHtml = '';
+    const section = el('section', 'cat');
+    section.dataset.category = cat;
+    const head = el('div', 'cat-head');
+    head.append(el('h3', null, cat), el('span', 'cat-count', String(tools.length)));
+    section.append(head);
     tools.forEach(t => {
-      const tierNum = (t.risk_tier || '').split('_')[1];
-      toolsHtml += `<div class="tool-item" onclick="invokeTool('${t.name}')">
-        <span class="tier">T${tierNum}</span>
-        <div><div class="tool-name">${t.name}</div><div class="tool-desc">${(t.description||'').substring(0,80)}</div></div>
-      </div>`;
+      const tierNum = (t.risk_tier || '').split('_')[1] || '';
+      const row = el('button', 'trow');
+      row.type = 'button';
+      row.append(el('span', 'tier', 'T' + tierNum));
+      const main = el('span', 't-main');
+      main.append(el('span', 't-name', t.name), el('span', 't-desc', (t.description || '').substring(0, 80)));
+      row.append(main, ic('chevLeft'));
+      row.addEventListener('click', () => invokeTool(t.name));
+      section.append(row);
     });
-
-    card.innerHTML = `<h3>${cat} <span class="cat-count">${tools.length}</span></h3><div class="tool-list">${toolsHtml}</div>`;
-    grid.appendChild(card);
+    grid.append(section);
   });
 }
 
 // === Search/filter tools ===
 function filterTools() {
-  const q = document.getElementById('searchTools').value.toLowerCase();
-  const cards = document.querySelectorAll('.category-card');
-  cards.forEach(card => {
-    const cat = card.dataset.category.toLowerCase();
-    const tools = card.querySelectorAll('.tool-item');
+  const q = $('searchTools').value.toLowerCase();
+  document.querySelectorAll('#toolsGrid .cat').forEach(section => {
+    const cat = (section.dataset.category || '').toLowerCase();
     let visible = 0;
-    tools.forEach(t => {
-      const text = t.textContent.toLowerCase();
-      if (text.includes(q) || cat.includes(q)) { t.style.display=''; visible++; }
-      else { t.style.display='none'; }
+    section.querySelectorAll('.trow').forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const show = text.includes(q) || cat.includes(q);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
     });
-    card.style.display = visible > 0 ? '' : 'none';
+    section.style.display = (visible > 0 || !q) ? '' : 'none';
   });
 }
 
 // === Invoke a tool ===
 async function invokeTool(name, args = {}) {
-  document.getElementById('modalTitle').textContent = name;
-  document.getElementById('modalContent').textContent = 'جاري التنفيذ';
-  document.getElementById('modalOverlay').classList.add('active');
-
+  $('modalTitle').textContent = name;
+  $('modalContent').textContent = 'جاري التنفيذ';
+  $('modalOverlay').classList.add('active');
   try {
     const resp = await fetch(API + '/api/settings/tools/invoke', {
       method: 'POST',
@@ -539,20 +586,21 @@ async function invokeTool(name, args = {}) {
       body: JSON.stringify({name: name, arguments: args})
     });
     const data = await resp.json();
-    document.getElementById('modalContent').textContent = JSON.stringify(data.result || data, null, 2);
+    $('modalContent').textContent = JSON.stringify(data.result || data, null, 2);
   } catch (e) {
-    document.getElementById('modalContent').textContent = 'خطأ: ' + e.message;
+    $('modalContent').textContent = 'خطأ: ' + e.message;
   }
 }
-
-function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+function closeModal() { $('modalOverlay').classList.remove('active'); }
 
 // === Tabs ===
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('[id^="tab-"]').forEach(t => t.style.display = 'none');
-  event.currentTarget.classList.add('active');
-  document.getElementById('tab-' + tab).style.display = '';
+  document.querySelectorAll('.dock [data-tab]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  document.querySelectorAll('[id^="tab-"]').forEach(section => {
+    section.hidden = section.id !== 'tab-' + tab;
+  });
   if (tab === 'business') loadBusinessStats();
 }
 
@@ -561,50 +609,53 @@ async function loadVitals() {
   try {
     const resp = await fetch(API + '/api/system/vitals');
     const v = await resp.json();
-    document.getElementById('cpuVal').textContent = Math.round(v.cpu_percent) + '%';
-    document.getElementById('memVal').textContent = Math.round(v.memory_percent) + '%';
-    document.getElementById('diskVal').textContent = Math.round(v.disk_percent) + '%';
-    document.getElementById('healthVal').textContent = v.health_state;
-  } catch {}
-
+    $('cpuVal').textContent = Math.round(v.cpu_percent) + '%';
+    $('memVal').textContent = Math.round(v.memory_percent) + '%';
+    $('diskVal').textContent = Math.round(v.disk_percent) + '%';
+    $('healthVal').textContent = v.health_state;
+    $('cpuBar').style.width = Math.min(100, Math.max(0, Math.round(v.cpu_percent))) + '%';
+    $('memBar').style.width = Math.min(100, Math.max(0, Math.round(v.memory_percent))) + '%';
+    $('diskBar').style.width = Math.min(100, Math.max(0, Math.round(v.disk_percent))) + '%';
+    const healthy = String(v.health_state || '').toLowerCase() === 'healthy';
+    $('healthDot').classList.toggle('on', healthy);
+    $('healthDot').classList.toggle('off', !healthy);
+  } catch (e) {}
   try {
     const resp = await fetch(API + '/health');
     const h = await resp.json();
-    document.getElementById('connCount').textContent = h.active_connections || 0;
-    document.getElementById('taskCount').textContent = h.tasks_in_queue || 0;
-  } catch {}
+    $('connCount').textContent = h.active_connections || 0;
+    $('taskCount').textContent = h.tasks_in_queue || 0;
+  } catch (e) {}
 }
 
 // === Business Stats ===
 async function loadBusinessStats() {
   try {
     const resp = await fetch(API + '/api/settings/tools/invoke', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({name:'bi.dashboard', arguments:{}})
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: 'bi.dashboard', arguments: {}})
     });
     const data = await resp.json();
     const m = data.result?.metrics || {};
-    document.getElementById('bizCount').textContent = m.businesses_total || 0;
-    document.getElementById('revenueVal').textContent = Math.round(m.revenue_jod || 0) + ' د.أ';
-    document.getElementById('dealsCount').textContent = m.deals_closed || 0;
-    document.getElementById('postsCount').textContent = m.posts_published || 0;
-  } catch {}
+    $('bizCount').textContent = m.businesses_total || 0;
+    $('revenueVal').textContent = Math.round(m.revenue_jod || 0) + ' د.أ';
+    $('dealsCount').textContent = m.deals_closed || 0;
+    $('postsCount').textContent = m.posts_published || 0;
+  } catch (e) {}
 }
 
 // === Chat ===
 async function sendChat() {
-  const input = document.getElementById('chatInput');
+  const input = $('chatInput');
   const msg = input.value.trim();
   if (!msg) return;
   input.value = '';
-
-  const msgs = document.getElementById('chatMessages');
-  msgs.innerHTML += `<div class="chat-msg user">${msg}</div>`;
+  const msgs = $('chatMessages');
+  msgs.appendChild(el('div', 'chat-msg user', msg));
   msgs.scrollTop = msgs.scrollHeight;
-
   try {
     const resp = await fetch(API + '/api/chat', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
+      method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({message: msg, include_memory: false, stream: false})
     });
     const data = await resp.json();
@@ -613,36 +664,38 @@ async function sendChat() {
       try {
         const audio = new Audio('data:audio/wav;base64,' + data.audio_base64);
         audio.play().catch(() => {});
-      } catch {}
+      } catch (e) {}
     }
     // Strip command output formatting for cleaner display
-    const cleanReply = reply.replace(/<run_os_command>.*?<\/run_os_command>/gs, '').trim();
-    msgs.innerHTML += `<div class="chat-msg bot">${cleanReply || reply}</div>`;
+    const cleanReply = reply.replace(/<run_os_command>[\s\S]*?<\/run_os_command>/g, '').trim();
+    msgs.appendChild(el('div', 'chat-msg bot', cleanReply || reply));
     msgs.scrollTop = msgs.scrollHeight;
   } catch (e) {
-    msgs.innerHTML += `<div class="chat-msg bot">خطأ في الاتصال: ${e.message}</div>`;
+    msgs.appendChild(el('div', 'chat-msg bot', 'خطأ في الاتصال: ' + e.message));
+    msgs.scrollTop = msgs.scrollHeight;
   }
 }
 
 // === Autopilot ===
 async function toggleAutopilot() {
-  const btn = document.getElementById('autopilotBtn');
+  const btn = $('autopilotBtn');
   if (btn.classList.contains('paused')) {
     await invokeTool('autopilot.activate', {confirm: true});
     btn.classList.remove('paused');
-    btn.innerHTML = icon('pause') + 'إيقاف مؤقت';
+    $('apIcon').replaceChildren(ic('pause', 14));
+    $('apText').textContent = 'إيقاف مؤقت';
   } else {
     await invokeTool('autopilot.pause', {});
     btn.classList.add('paused');
-    btn.innerHTML = icon('zap') + 'ابدأ كل شيء';
+    $('apIcon').replaceChildren(ic('zap', 14));
+    $('apText').textContent = 'ابدأ كل شيء';
   }
 }
 
 // === WebSocket ===
 function setWsStatus(connected) {
-  const el = document.getElementById('wsStatus');
-  el.classList.toggle('off', !connected);
-  document.getElementById('wsStatusText').textContent = connected ? 'متصل' : 'غير متصل';
+  $('wsStatus').classList.toggle('off', !connected);
+  $('wsStatusText').textContent = connected ? 'متصل' : 'غير متصل';
 }
 function connectWS() {
   try {
@@ -656,105 +709,160 @@ function connectWS() {
         } else if (msg.type === 'system_status') {
           // Update connection count
         }
-      } catch {}
+      } catch (e) {}
     };
     ws.onclose = () => { setWsStatus(false); setTimeout(connectWS, 5000); };
-  } catch {}
+  } catch (e) {}
 }
 
+// === Approval / confirm sheet (queue) ===
+let sheetQueue = [];
 function showApproval(payload) {
-  if (confirm(`طلب موافقة: ${payload.action}\nالسبب: ${payload.reason}\n\nوافق؟`)) {
-    fetch(API + '/api/approvals/' + payload.approval_id + '/approve', {method:'POST'});
+  sheetQueue.push({kind: 'approval', payload: payload});
+  showSheet();
+}
+function confirmAction(message, onYes) {
+  sheetQueue.push({kind: 'confirm', message: message, onYes: onYes});
+  showSheet();
+}
+function showSheet() {
+  const overlay = $('approveOverlay');
+  if (overlay.classList.contains('active') || !sheetQueue.length) return;
+  const item = sheetQueue[0];
+  const yes = $('apYes'), no = $('apNo');
+  yes.disabled = false; no.disabled = false;
+  if (item.kind === 'approval') {
+    $('apTitle').textContent = 'طلب موافقة';
+    $('apAction').hidden = false;
+    $('apAction').textContent = item.payload.action || '';
+    $('apReason').textContent = item.payload.reason || '';
+    yes.textContent = 'وافق'; yes.className = 'btn btn-approve';
+    no.textContent = 'أرفض'; no.className = 'btn btn-reject';
   } else {
-    fetch(API + '/api/approvals/' + payload.approval_id + '/reject', {method:'POST'});
+    $('apTitle').textContent = 'تأكيد';
+    $('apAction').hidden = true;
+    $('apAction').textContent = '';
+    $('apReason').textContent = item.message;
+    yes.textContent = 'تأكيد'; yes.className = 'btn btn-yes';
+    no.textContent = 'إلغاء'; no.className = 'btn btn-ghost';
   }
+  overlay.classList.add('active');
+}
+async function resolveSheet(approved) {
+  const overlay = $('approveOverlay');
+  if (!sheetQueue.length) { overlay.classList.remove('active'); return; }
+  const item = sheetQueue[0];
+  $('apYes').disabled = true; $('apNo').disabled = true;
+  try {
+    if (item.kind === 'approval') {
+      const action = approved ? 'approve' : 'reject';
+      await fetch(API + '/api/approvals/' + item.payload.approval_id + '/' + action, {method: 'POST'});
+    } else if (approved && typeof item.onYes === 'function') {
+      await item.onYes();
+    }
+  } catch (e) { console.log('sheet action failed', e); }
+  sheetQueue.shift();
+  if (sheetQueue.length) showSheet();
+  else overlay.classList.remove('active');
 }
 
 // === Connectors ===
-let currentConnector = null;
-let connectMode = 'password';
-
-function escapeHtml(s) {
-  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-async function loadDmActivity() {
-  const el = document.getElementById('dmActivity');
-  if (!el) return;
-  try {
-    const resp = await fetch(API + '/api/connectors/dm/activity');
-    const data = await resp.json();
-    const items = data.activity || [];
-    if (!items.length) {
-      el.innerHTML = '<p style="color:var(--text-2);font-size:13px">لا توجد ردود بعد.</p>';
-      return;
-    }
-    el.innerHTML = items.map(a => {
-      const when = a.time ? new Date(a.time).toLocaleString('ar-JO', {hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'}) : '';
-      const plat = a.platform === 'messenger' ? 'ماسنجر' : 'إنستغرام';
-      const flag = a.important ? ' <span style="color:#e5484d">⚠️ مهم</span>' : '';
-      const group = a.is_group ? ' (مجموعة)' : '';
-      return `<div style="border-top:1px solid var(--border);padding:10px 0">
-        <div style="font-size:13px;color:var(--text-2)">${escapeHtml(plat)}${escapeHtml(group)} · ${escapeHtml(when)}${flag}</div>
-        <div style="font-weight:600;margin:2px 0">${escapeHtml(a.sender_name)}</div>
-        <div style="font-size:14px">${escapeHtml(a.text)}</div>
-        <div style="font-size:14px;color:var(--text-2);margin-top:4px">Jarvis: ${escapeHtml(a.reply)}</div>
-      </div>`;
-    }).join('');
-  } catch (e) {
-    el.innerHTML = '<p style="color:var(--text-2);font-size:13px">تعذر تحميل النشاط.</p>';
-  }
-}
-
 async function loadConnectors() {
   try {
     const resp = await fetch(API + '/api/connectors');
     const data = await resp.json();
-    const grid = document.getElementById('connectorsGrid');
-    grid.innerHTML = '';
+    const grid = $('connectorsGrid');
+    grid.replaceChildren();
     (data.connectors || []).forEach(c => {
-      const card = document.createElement('div');
-      card.className = 'connector-card';
-      const on = c.connected;
-      const ic = c.id === 'messenger' ? icon('message') : icon('camera');
-      const label = c.id === 'messenger' ? 'ماسنجر' : 'إنستغرام';
-      card.innerHTML = `<h3><span class="status-dot ${on ? 'on' : 'off'}"></span> ${ic} ${label}</h3>
-        <p>${on ? 'متصل' + (c.auth_method ? ' — عبر ' + (c.auth_method === 'cookies' ? 'كوكيز' : 'إيميل وكلمة مرور') : '') : 'غير متصل — اربط حسابك ليرد Jarvis على رسائلك'}</p>
-        ${on
-          ? `<button class="btn btn-disconnect" onclick="disconnectConnector('${c.id}')">قطع الاتصال</button>`
-          : `<button class="btn btn-connect" onclick="openConnectModal('${c.id}')">ربط الحساب</button>`}`;
-      grid.appendChild(card);
+      const card = el('div', 'conn-card');
+      const h3 = el('h3');
+      h3.append(el('span', 'sdot ' + (c.connected ? 'on' : 'off')));
+      h3.append(ic(c.id === 'messenger' ? 'message' : 'camera'));
+      h3.append(document.createTextNode(c.id === 'messenger' ? 'ماسنجر' : 'إنستغرام'));
+      const p = el('p');
+      if (c.connected) {
+        p.textContent = 'متصل' + (c.auth_method ? ' عبر ' + (c.auth_method === 'cookies' ? 'كوكيز' : 'إيميل وكلمة مرور') : '');
+      } else {
+        p.textContent = 'غير متصل، اربط حسابك ليرد Jarvis على رسائلك';
+      }
+      const actions = el('div', 'conn-actions');
+      const btn = el('button', 'btn ' + (c.connected ? 'btn-disconnect' : 'btn-connect'), c.connected ? 'قطع الاتصال' : 'ربط الحساب');
+      btn.type = 'button';
+      btn.addEventListener('click', () => {
+        if (c.connected) disconnectConnector(c.id); else openConnectModal(c.id);
+      });
+      actions.append(btn);
+      card.append(h3, p, actions);
+      grid.append(card);
     });
     loadDmActivity();
   } catch (e) {
-    document.getElementById('connectorsGrid').innerHTML = '<div class="loader"><p>تعذر تحميل الموصلات. تأكد أن الباكند يعمل.</p></div>';
+    const grid = $('connectorsGrid');
+    grid.replaceChildren(el('div', 'loader', 'تعذر تحميل الموصلات. تأكد أن الباكند يعمل.'));
+  }
+}
+
+async function loadDmActivity() {
+  const box = $('dmActivity');
+  if (!box) return;
+  try {
+    const resp = await fetch(API + '/api/connectors/dm/activity');
+    const data = await resp.json();
+    const items = data.activity || [];
+    box.replaceChildren();
+    if (!items.length) {
+      box.append(el('p', 'dm-empty', 'لا توجد ردود بعد.'));
+      return;
+    }
+    items.forEach(a => {
+      const item = el('div', 'dm-item');
+      const meta = el('div', 'dm-meta');
+      const plat = a.platform === 'messenger' ? 'ماسنجر' : 'إنستغرام';
+      const group = a.is_group ? ' (مجموعة)' : '';
+      const when = a.time ? new Date(a.time).toLocaleString('ar-JO', {hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'}) : '';
+      meta.append(document.createTextNode(plat + group + ' · ' + when));
+      if (a.important) {
+        const flag = el('span', 'dm-flag', 'مهم');
+        flag.prepend(ic('alert', 12));
+        meta.append(document.createTextNode(' '), flag);
+      }
+      item.append(meta);
+      item.append(el('div', 'dm-sender', a.sender_name ?? ''));
+      item.append(el('div', 'dm-text', a.text ?? ''));
+      item.append(el('div', 'dm-reply', 'Jarvis: ' + (a.reply ?? '')));
+      box.append(item);
+    });
+  } catch (e) {
+    const box = $('dmActivity');
+    box.replaceChildren();
+    box.append(el('p', 'dm-empty', 'تعذر تحميل النشاط.'));
   }
 }
 
 function openConnectModal(id) {
   currentConnector = id;
-  document.getElementById('connectTitle').textContent = 'ربط حساب ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام');
-  document.getElementById('connectStatus').textContent = '';
-  document.getElementById('connEmail').value = '';
-  document.getElementById('connPassword').value = '';
-  document.getElementById('connCookies').value = '';
+  $('connectTitle').textContent = 'ربط حساب ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام');
+  $('connectStatus').textContent = '';
+  $('connEmail').value = '';
+  $('connPassword').value = '';
+  $('connCookies').value = '';
   setConnectMode('password');
-  document.getElementById('connectOverlay').classList.add('active');
+  $('connectOverlay').classList.add('active');
 }
-function closeConnectModal() { document.getElementById('connectOverlay').classList.remove('active'); }
+function closeConnectModal() { $('connectOverlay').classList.remove('active'); }
 function setConnectMode(mode) {
   connectMode = mode;
-  document.getElementById('modeTabPassword').classList.toggle('active', mode === 'password');
-  document.getElementById('modeTabCookies').classList.toggle('active', mode === 'cookies');
-  document.getElementById('connectPasswordFields').style.display = mode === 'password' ? '' : 'none';
-  document.getElementById('connectCookiesFields').style.display = mode === 'cookies' ? '' : 'none';
+  $('modeTabPassword').classList.toggle('active', mode === 'password');
+  $('modeTabCookies').classList.toggle('active', mode === 'cookies');
+  $('connectPasswordFields').hidden = mode !== 'password';
+  $('connectCookiesFields').hidden = mode !== 'cookies';
 }
 async function submitConnect() {
-  const statusEl = document.getElementById('connectStatus');
+  const statusEl = $('connectStatus');
   statusEl.textContent = 'جاري التحقق من تسجيل الدخول';
   const body = connectMode === 'cookies'
-    ? { method: 'cookies', cookies: document.getElementById('connCookies').value }
-    : { method: 'password', email: document.getElementById('connEmail').value, password: document.getElementById('connPassword').value };
+    ? { method: 'cookies', cookies: $('connCookies').value }
+    : { method: 'password', email: $('connEmail').value, password: $('connPassword').value };
   try {
     const resp = await fetch(API + '/api/connectors/' + currentConnector + '/connect', {
       method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -769,9 +877,11 @@ async function submitConnect() {
   }
 }
 async function disconnectConnector(id) {
-  if (!confirm('قطع اتصال ' + (id === 'messenger' ? 'ماسنجر' : 'إنستغرام') + '؟ سيتم حذف بيانات الدخول المحفوظة.')) return;
-  await fetch(API + '/api/connectors/' + id + '/disconnect', { method: 'POST' });
-  loadConnectors();
+  const name = id === 'messenger' ? 'ماسنجر' : 'إنستغرام';
+  confirmAction('قطع اتصال ' + name + '؟ سيتم حذف بيانات الدخول المحفوظة.', async () => {
+    await fetch(API + '/api/connectors/' + id + '/disconnect', { method: 'POST' });
+    loadConnectors();
+  });
 }
 
 // === Push Notifications ===
@@ -789,7 +899,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 async function enableNotifications() {
-  const statusEl = document.getElementById('pushStatus');
+  const statusEl = $('pushStatus');
   try {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
       statusEl.textContent = 'هذا المتصفح لا يدعم إشعارات الويب. على iOS أضف التطبيق للشاشة الرئيسية أولاً.';
@@ -816,14 +926,14 @@ async function enableNotifications() {
   }
 }
 async function sendTestPush() {
-  const statusEl = document.getElementById('pushStatus');
+  const statusEl = $('pushStatus');
   try {
     const resp = await fetch(API + '/api/notifications/send', {
       method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ title: 'JARVIS — إشعار تجريبي', body: 'إذا وصلك هذا الإشعار، فالإشعارات تعمل', category: 'test' })
+      body: JSON.stringify({ title: 'JARVIS · إشعار تجريبي', body: 'إذا وصلك هذا الإشعار، فالإشعارات تعمل', category: 'test' })
     });
     const data = await resp.json();
-    statusEl.textContent = resp.ok ? (data.sent ? 'تم إرسال الإشعار التجريبي' : 'لا توجد أجهزة مسجلة بعد — فعّل الإشعارات أولاً') : (data.detail || 'فشل الإرسال');
+    statusEl.textContent = resp.ok ? (data.sent ? 'تم إرسال الإشعار التجريبي' : 'لا توجد أجهزة مسجلة بعد، فعّل الإشعارات أولاً') : (data.detail || 'فشل الإرسال');
   } catch (e) { statusEl.textContent = e.message; }
 }
 
@@ -837,11 +947,11 @@ function registerServiceWorker() {
   }
 }
 
-// === Voice Input (mic → Groq Whisper → chat) ===
+// === Voice Input (mic → transcribe → chat) ===
 let mediaRecorder = null;
 let audioChunks = [];
 async function toggleVoiceInput() {
-  const btn = document.getElementById('micBtn');
+  const btn = $('micBtn');
   if (mediaRecorder && mediaRecorder.state === 'recording') {
     mediaRecorder.stop();
     return;
@@ -863,7 +973,7 @@ async function toggleVoiceInput() {
         const data = await resp.json();
         const text = (data.text || '').trim();
         if (text) {
-          document.getElementById('chatInput').value = text;
+          $('chatInput').value = text;
           sendChat();
         }
       } catch (e) { console.log('transcribe failed', e); }
@@ -878,7 +988,7 @@ async function toggleVoiceInput() {
 // === Voice call (Talk) ===
 // A real phone call: tap once to start, then just talk. Jarvis hears
 // when you start speaking and when you stop (voice activity detection),
-// so there is no button to press to send — he answers on his own.
+// so there is no button to press to send. He answers on his own.
 // The reply is played through the Web Audio API (not an <audio> tag),
 // so the browser's autoplay block and the iPhone silent switch cannot
 // mute it. If the server sends no audio, the browser speaks the reply
@@ -906,29 +1016,23 @@ function callElapsed() {
   const s = Math.floor((Date.now() - callStart) / 1000);
   const mm = String(Math.floor(s / 60)).padStart(2, '0');
   const ss = String(s % 60).padStart(2, '0');
-  document.getElementById('callTimer').textContent = mm + ':' + ss;
+  $('callTimer').textContent = mm + ':' + ss;
 }
-
 function callSetStatus(text) {
-  document.getElementById('callStatus').textContent = text;
+  $('callStatus').textContent = text;
 }
-
 function callAddMsg(who, text) {
-  const box = document.getElementById('talkMessages');
-  const div = document.createElement('div');
-  div.className = 'chat-msg ' + (who === 'Jarvis' ? 'bot' : 'user');
-  div.textContent = text;
+  const box = $('talkMessages');
+  const div = el('div', 'chat-msg ' + (who === 'Jarvis' ? 'bot' : 'user'), text);
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
 }
-
 function callSetLang(lang) {
   callLang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
 }
-
 function ensureCallAudio() {
   if (!callAudioCtx) {
     callAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -938,7 +1042,6 @@ function ensureCallAudio() {
   }
   return callAudioCtx;
 }
-
 function callMicLevel() {
   if (!callAnalyser) return 0;
   const data = new Uint8Array(callAnalyser.fftSize);
@@ -950,7 +1053,6 @@ function callMicLevel() {
   }
   return Math.sqrt(sum / data.length);
 }
-
 function callVadTick() {
   if (!callActive || callBusy) return;
   if (!callRecorder || callRecorder.state !== 'recording') return;
@@ -960,7 +1062,7 @@ function callVadTick() {
     if (!callSpeaking) {
       callSpeaking = true;
       callSpeechStart = now;
-      document.getElementById('callBtn').classList.add('listening');
+      $('callBtn').classList.add('listening');
       callSetStatus('أسمعك...');
     }
     callLastSpeech = now;
@@ -978,7 +1080,6 @@ function callVadTick() {
     try { callRecorder.stop(); } catch (e) {}
   }
 }
-
 async function startCallListening() {
   if (!callActive || callBusy || (callRecorder && callRecorder.state === 'recording')) return;
   try {
@@ -996,7 +1097,7 @@ async function startCallListening() {
     callRecorder = new MediaRecorder(callStream);
     callRecorder.ondataavailable = (e) => { if (e.data.size) callChunks.push(e.data); };
     callRecorder.onstop = async () => {
-      document.getElementById('callBtn').classList.remove('listening');
+      $('callBtn').classList.remove('listening');
       if (callVadId) { clearInterval(callVadId); callVadId = null; }
       if (!callActive || !callChunks.length) return;
       const blob = new Blob(callChunks, { type: callRecorder.mimeType || 'audio/webm' });
@@ -1004,12 +1105,11 @@ async function startCallListening() {
     };
     callRecorder.start();
     callVadId = setInterval(callVadTick, 100);
-    callSetStatus('أستمع إليك — تحدث متى شئت');
+    callSetStatus('أستمع إليك، تحدث متى شئت');
   } catch (e) {
     callSetStatus('تعذر الوصول إلى الميكروفون: ' + e.message);
   }
 }
-
 // Play Jarvis's reply out loud. Web Audio API first (not the silent
 // switch, not the autoplay block); the browser's own voice second;
 // resolve() when the sound is done so the call can listen again.
@@ -1047,7 +1147,6 @@ function playReplyAudio(base64, replyText) {
     }
   });
 }
-
 async function sendTalkTurn(blob) {
   callBusy = true;
   callSetStatus('جارٍ التفكير...');
@@ -1063,30 +1162,28 @@ async function sendTalkTurn(blob) {
     await playReplyAudio(data.audio_base64 || '', data.reply || '');
   } catch (e) {
     console.log('talk turn failed', e);
-    callSetStatus('تعذر الاتصال — حاول مرة أخرى');
+    callSetStatus('تعذر الاتصال، حاول مرة أخرى');
   }
   callBusy = false;
   if (callActive) startCallListening();
 }
-
 async function toggleCall() {
-  const btn = document.getElementById('callBtn');
+  const btn = $('callBtn');
   if (!callActive) {
-    // Start the call — unlock audio on this tap, then just talk.
+    // Start the call: unlock audio on this tap, then just talk.
     ensureCallAudio();
     callActive = true;
     callStart = Date.now();
     callTimerId = setInterval(callElapsed, 1000);
     callElapsed();
     btn.classList.add('live');
-    document.getElementById('endCallBtn').style.display = '';
+    $('endCallBtn').hidden = false;
     callSetStatus('جارٍ بدء المكالمة...');
     await startCallListening();
   }
-  // While in a call the big button does nothing — Jarvis hears you
+  // While in a call the big button does nothing: Jarvis hears you
   // on his own. Use "إنهاء المكالمة" to hang up.
 }
-
 function endCall() {
   callActive = false;
   callBusy = false;
@@ -1100,11 +1197,39 @@ function endCall() {
   if (callAudioCtx) { try { callAudioCtx.close(); } catch (e) {} callAudioCtx = null; }
   callAnalyser = null;
   if (callTimerId) { clearInterval(callTimerId); callTimerId = null; }
-  document.getElementById('callBtn').classList.remove('live', 'listening');
-  document.getElementById('endCallBtn').style.display = 'none';
-  document.getElementById('callTimer').textContent = '00:00';
+  $('callBtn').classList.remove('live', 'listening');
+  $('endCallBtn').hidden = true;
+  $('callTimer').textContent = '00:00';
   callSetStatus('غير متصل');
 }
+
+// === Event wiring ===
+document.querySelectorAll('.dock [data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => callSetLang(btn.dataset.lang));
+});
+$('modeTabPassword').addEventListener('click', () => setConnectMode('password'));
+$('modeTabCookies').addEventListener('click', () => setConnectMode('cookies'));
+$('searchTools').addEventListener('input', filterTools);
+$('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+$('sendBtn').addEventListener('click', sendChat);
+$('micBtn').addEventListener('click', toggleVoiceInput);
+$('callBtn').addEventListener('click', toggleCall);
+$('endCallBtn').addEventListener('click', endCall);
+$('autopilotBtn').addEventListener('click', toggleAutopilot);
+$('modalClose').addEventListener('click', closeModal);
+$('modalOverlay').addEventListener('click', e => { if (e.target === $('modalOverlay')) closeModal(); });
+$('connectClose').addEventListener('click', closeConnectModal);
+$('connectOverlay').addEventListener('click', e => { if (e.target === $('connectOverlay')) closeConnectModal(); });
+$('submitConnectBtn').addEventListener('click', submitConnect);
+$('enablePushBtn').addEventListener('click', enableNotifications);
+$('testPushBtn').addEventListener('click', sendTestPush);
+$('apYes').addEventListener('click', () => resolveSheet(true));
+$('apNo').addEventListener('click', () => resolveSheet(false));
+$('apClose').addEventListener('click', () => resolveSheet(false));
+$('approveOverlay').addEventListener('click', e => { if (e.target === $('approveOverlay')) resolveSheet(false); });
 
 // === Auto-refresh vitals ===
 setInterval(loadVitals, 30000);
