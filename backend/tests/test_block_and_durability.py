@@ -315,7 +315,7 @@ async def test_blocked_sender_gets_no_reply(tmp_vault, monkeypatch, tmp_path):
     ])
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None, last_reply=None):
         return {"ok": True, "reply": "hi!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)
@@ -348,7 +348,7 @@ async def test_blocked_missed_call_gets_no_introduction(tmp_vault, monkeypatch, 
     ])
     monkeypatch.setattr(responder, "_build_client", lambda platform, method, data: fake)
 
-    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None):
+    async def fake_gen(platform, sender_name, text, client=None, first_reply=True, is_group=False, media_url=None, media_type=None, contact_notes=None, tone=None, busy=None, last_reply=None):
         return {"ok": True, "reply": "hi, this is Jarvis!", "model": "groq"}
 
     monkeypatch.setattr("backend.services.dm_responder.generate_dm_reply", fake_gen)

@@ -322,12 +322,62 @@ def _is_important(text: str) -> bool:
     return any(marker in lowered for marker in _IMPORTANT_MARKERS)
 
 
+def _display_sender(msg: dict[str, Any]) -> str:
+    """Best name for a sender in Sir's alerts.
+
+    The display name when there is one; the @username when the name is
+    missing (Sir's rule: never just "Unknown" — give him the handle).
+    """
+    name = (msg.get("sender_name") or "").strip()
+    if name and name.lower() != "unknown":
+        return name
+    username = (msg.get("sender_username") or "").strip()
+    if username:
+        return f"@{username}"
+    return name or "Unknown"
+
+
+def _normalize_echo_text(text: str) -> str:
+    """Lowercased, punctuation- and space-stripped text for echo checks."""
+    lowered = (text or "").lower()
+    kept = "".join(ch for ch in lowered if ch.isalnum() or ch.isspace())
+    return " ".join(kept.split())
+
+
+def _is_echo(incoming_text: str, last_reply: str | None) -> bool:
+    """True when the sender just echoed Jarvis's last reply back at him.
+
+    A sender who copies Jarvis's own words (or vice versa) starts a
+    loop: Jarvis answers, they paste his answer back, he answers again.
+    When the incoming message IS (nearly) his last reply, there is
+    nothing to answer — skip it silently instead of feeding the loop.
+    Short texts never count: a bare "ok" is not an echo of anything.
+    """
+    if not last_reply:
+        return False
+    incoming = _normalize_echo_text(incoming_text)
+    previous = _normalize_echo_text(last_reply)
+    if len(incoming) < 20 or len(previous) < 20:
+        return False
+    return incoming == previous or incoming in previous or previous in incoming
+
+
 # The standalone call app Sir answers on — a separate PWA, same Jarvis.
 CALL_APP_URL = "https://jarvis-call-smoky.vercel.app"
 # A pending call reason expires after this long if Sir never answers.
 # One hour: long enough to finish what he is doing and tap the
 # notification, short enough that a stale reason never opens a call.
 _CALL_REASON_TTL_SECONDS = 3600
+# An auto-mute lasts this long, then the thread can be answered again.
+# A mute is automatic (the spam filter), not Sir's explicit choice, so
+# it must never silence a real person forever — an hour is enough to
+# stop a flood and short enough that a false mute (a dad echoing a
+# reply) heals itself.
+_MUTE_TTL_SECONDS = 3600
+# After Jarvis rings Sir about one thread, he does not ring again
+# about that thread for this long — the alert still arrives, only the
+# loud call is throttled.
+_CALL_COOLDOWN_SECONDS = 1800
 
 
 async def initiate_call(reason: str) -> bool:
@@ -617,10 +667,16 @@ class DMResponder:
         # Drafts for tricky messages: thread_id -> the pending draft.
         # Jarvis does not auto-reply to these; Sir approves on Telegram.
         self._pending_drafts: dict[str, dict[str, Any]] = {}
-        # Spam filter: muted threads (thread_key -> sender name) and the
-        # recent message timestamps per thread for rate detection.
-        self._muted: dict[str, str] = {}
+        # Spam filter: the recent message timestamps per thread for
+        # rate detection. Mutes themselves live in dm_store (durable),
+        # not here — see _is_muted / _mute_thread below.
         self._msg_times: dict[str, list[datetime]] = {}
+        # Echo guard: Jarvis's last reply per thread, so a sender who
+        # pastes his words back at him does not start a reply loop.
+        self._last_reply: dict[str, str] = {}
+        # Call cooldown: the last time Jarvis rang Sir about each
+        # thread, so one urgent thread rings once per half hour.
+        self._last_call_at: dict[str, float] = {}
         # Quiet hours: threads that already got the "morning" reply
         # tonight (so he does not repeat it all night).
         self._quiet_replied: set[str] = set()
@@ -1061,12 +1117,47 @@ class DMResponder:
         times.append(now)
         return len(times) > max(1, settings.dm_spam_max_messages)
 
+    def _is_muted(self, thread_key: str) -> bool:
+        """True when this thread is auto-muted and the mute is still fresh.
+
+        Mutes live in dm_store (Turso-backed) so a restart or redeploy
+        never silently unmutes a spammer. An expired mute is dropped on
+        sight — a mute is automatic, not Sir's explicit choice, so it
+        must never silence a real person forever.
+        """
+        from backend.services.dm_store import muted_threads as muted_store
+
+        entry = muted_store.get(thread_key)
+        if not entry:
+            return False
+        try:
+            muted_at = datetime.fromisoformat((entry or {}).get("muted_at", ""))
+        except (TypeError, ValueError):
+            muted_store.delete(thread_key)
+            return False
+        if (datetime.now(UTC) - muted_at).total_seconds() > _MUTE_TTL_SECONDS:
+            muted_store.delete(thread_key)
+            return False
+        return True
+
+    def _mute_thread(self, thread_key: str, sender_name: str) -> None:
+        """Auto-mute a thread (spam filter), durably, with a timestamp."""
+        from backend.services.dm_store import muted_threads as muted_store
+
+        muted_store.set(thread_key, {
+            "sender": sender_name,
+            "muted_at": datetime.now(UTC).isoformat(),
+        })
+
     def unmute_thread(self, name: str) -> bool:
         """Unmute a muted thread by sender name. Returns True if unmuted."""
+        from backend.services.dm_store import muted_threads as muted_store
+
         needle = (name or "").strip().lower()
-        for key, sender in list(self._muted.items()):
-            if needle in sender.lower() or needle in key.lower():
-                del self._muted[key]
+        for key, entry in list(muted_store.all().items()):
+            sender = ((entry or {}).get("sender") or key).lower()
+            if needle in sender or needle in key.lower():
+                muted_store.delete(key)
                 return True
         return False
 
@@ -1596,6 +1687,7 @@ class DMResponder:
                     await client.send(thread_id, gen["reply"])
                 except Exception as e:
                     return {"ok": False, "reason": "send_failed", "error": str(e)}
+                self._last_reply[f"{platform}:{thread_id}"] = gen["reply"]
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._introduced.setdefault(platform, {})[thread_id] = True
                 self._clear_pending(platform, thread_id)
@@ -1672,6 +1764,7 @@ class DMResponder:
                     except Exception as e:
                         log.warning("dm_missed_call_send_failed", platform=platform, error=str(e))
                         continue
+                    self._last_reply[f"{platform}:{thread_id}"] = gen["reply"]
                     self._mark_seen(platform, thread_id, msg["message_id"])
                     self._introduced.setdefault(platform, {})[thread_id] = True
                     self._clear_pending(platform, thread_id)
@@ -1704,7 +1797,7 @@ class DMResponder:
             thread_key = f"{platform}:{thread_id}"
             # Spam filter: abusive messages or a flood from one thread
             # mute it — Jarvis stops replying and flags it to Sir.
-            if thread_key in self._muted:
+            if self._is_muted(thread_key):
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 continue
             # Blocked by Sir: never DM this person until further notice.
@@ -1712,15 +1805,23 @@ class DMResponder:
             if self.is_blocked(msg.get("sender_name", "")):
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 continue
+            # Echo guard: the sender pasted Jarvis's own last reply back
+            # at him. There is nothing to answer — replying again only
+            # feeds the loop that got this thread muted last time.
+            if _is_echo(
+                msg.get("text") or "", self._last_reply.get(thread_key)
+            ):
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                continue
             if _is_abusive(msg.get("text") or "") or self._is_spamming(thread_id):
-                self._muted[thread_key] = msg.get("sender_name", "")
+                self._mute_thread(thread_key, msg.get("sender_name", ""))
                 try:
                     from backend.services.telegram_notifier import send_telegram_message
 
                     await send_telegram_message(
-                        f"🛑 {msg.get('sender_name', '')} has been muted — "
+                        f"🛑 {_display_sender(msg)} has been muted — "
                         "abusive or spammy messages. I stopped replying. "
-                        f"Say 'unmute {msg.get('sender_name', '')}' to resume."
+                        f"Say 'unmute {_display_sender(msg)}' to resume."
                     )
                 except Exception as e:
                     log.debug("dm_mute_notify_failed", error=str(e))
@@ -1759,6 +1860,7 @@ class DMResponder:
                 except Exception as e:
                     log.warning("dm_rule_send_failed", platform=platform, error=str(e))
                     continue
+                self._last_reply[thread_key] = rule_reply
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._introduced.setdefault(platform, {})[thread_id] = True
                 self._clear_pending(platform, thread_id)
@@ -1996,6 +2098,7 @@ class DMResponder:
                 contact_notes=_contact_notes(msg.get("sender_name", "")),
                 tone=_contact_tone(msg.get("sender_name", "")),
                 busy=self._busy_text(self._busy_now()),
+                last_reply=self._last_reply.get(thread_key),
             )
             if not gen.get("ok"):
                 log.warning("dm_reply_gen_failed", platform=platform, error=gen.get("error"))
@@ -2016,6 +2119,7 @@ class DMResponder:
                 except Exception as e:
                     log.warning("dm_reply_send_failed", platform=platform, error=str(e))
                     continue
+            self._last_reply[thread_key] = gen["reply"]
             self._mark_seen(platform, thread_id, msg["message_id"])
             self._introduced.setdefault(platform, {})[thread_id] = True
             self._clear_pending(platform, thread_id)
@@ -2026,9 +2130,16 @@ class DMResponder:
             replied += 1
             self._state[platform]["replied"] += 1
             # VIP contacts always get a loud alert, even without the words.
+            # A voice note's alert carries its transcript, so Sir sees
+            # what was said instead of an empty message.
+            notify_msg = dict(msg)
+            if gen.get("transcript"):
+                notify_msg["text"] = f"🎤 {gen['transcript']}"
+            elif gen.get("voice_failed"):
+                notify_msg["text"] = "🎤 voice note (couldn't hear it)"
             await self._notify_new_dm(
-                platform, msg,
-                important=_is_important(msg.get("text") or "") or is_vip,
+                platform, notify_msg,
+                important=_is_important(msg.get("text") or gen.get("transcript") or "") or is_vip,
                 reply=gen["reply"],
             )
         return {"ok": True, "threads_seen": len(threads), "replied": replied}
@@ -2091,34 +2202,66 @@ class DMResponder:
         self, platform: str, msg: dict[str, Any], important: bool = False,
         reply: str = "",
     ) -> None:
-        """Tell Sir Jarvis answered a DM — push, Telegram, and the activity feed.
+        """Tell Sir Jarvis answered a DM — ONE push, ONE Telegram message.
 
-        The push carries the sender, what they said, AND what Jarvis
-        replied, so Sir sees the whole exchange at a glance. When the
-        sender said the message is important, the push title says so
-        loudly. The same story also goes to Sir on Telegram when it is
-        configured, where he can answer back.
+        One DM means one alert, not four. Before this fix an important
+        DM produced two Telegram messages (the alert + "Jarvis is
+        calling you") and two pushes (the DM push + the call push), and
+        every follow-up in the same thread rang again. Now the call is
+        folded into the single alert: the call reason is stored, the
+        Telegram message carries the answer link, and only the call
+        push rings. A thread rings at most once per half hour — later
+        important messages in the same thread still alert, they just
+        do not ring again.
         """
         self._record_activity(platform, msg, reply, important)
         name = dm_auth.PLATFORMS[platform]["name"]
-        sender = msg.get("sender_name", "")
-        incoming = (msg.get("text") or "")[:80]
+        sender = _display_sender(msg)
+        incoming = (msg.get("text") or "")[:500]
+        thread_key = f"{platform}:{msg.get('thread_id', '')}"
+        # Ring this thread only when the cooldown has passed.
+        now = time.time()
+        want_call = bool(important) and (
+            now - self._last_call_at.get(thread_key, 0.0)
+            >= _CALL_COOLDOWN_SECONDS
+        )
+        if want_call:
+            self._last_call_at[thread_key] = now
+            # Store the call reason exactly as initiate_call does, so
+            # the call app opens with it — without sending initiate_call's
+            # own Telegram message and push (they are merged here).
+            from backend.services import dm_store
+
+            dm_store.call_request.set(
+                "pending",
+                {"reason": f"{name} — {sender} wrote: {incoming[:120]}",
+                 "created_at": now},
+            )
         try:
             from backend.notification_engine import notification_engine
             from shared.models import Notification
 
-            title = (
-                f"JARVIS — رسالة مهمة من {name} ⚠️"
-                if important
-                else f"JARVIS — رد على رسالة {name}"
-            )
-            body = f"{sender}: {incoming}"
-            if reply:
-                body += f"\nJarvis: {reply[:120]}"
+            if want_call:
+                title = "📞 Jarvis is calling you, sir"
+                body = f"{name} — {sender} wrote: {incoming[:120]}"
+                category = "call"
+                action_url = f"{CALL_APP_URL}/?answer=1"
+            else:
+                title = (
+                    f"JARVIS — رسالة مهمة من {name} ⚠️"
+                    if important
+                    else f"JARVIS — رد على رسالة {name}"
+                )
+                body = f"{sender}: {incoming[:120]}"
+                if reply:
+                    body += f"\nJarvis: {reply[:120]}"
+                category = "dm_reply"
+                action_url = None
             await notification_engine.send_notification(Notification(
                 title=title,
                 body=body,
-                category="dm_reply",
+                category=category,
+                action_url=action_url,
                 data={
                     "platform": platform,
                     "thread_id": msg.get("thread_id", ""),
@@ -2140,16 +2283,11 @@ class DMResponder:
                 text += f"\n\nJarvis replied:\n{reply[:300]}"
             if important:
                 text = "⚠️ IMPORTANT — " + text
+            if want_call:
+                text += f"\n\n📞 Tap to answer: {CALL_APP_URL}"
             await send_telegram_message(text)
         except Exception as e:
             log.debug("dm_telegram_notify_failed", error=str(e))
-        if important:
-            try:
-                await initiate_call(
-                    f"{name} — {sender} wrote: {incoming}"
-                )
-            except Exception as e:
-                log.debug("dm_call_initiate_failed", error=str(e))
 
 
 # Process-wide singleton

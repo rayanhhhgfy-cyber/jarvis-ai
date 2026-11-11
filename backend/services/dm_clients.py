@@ -70,13 +70,17 @@ def _new_message(
     media_type: str | None = None,
     members: list[str] | None = None,
     is_missed_call: bool = False,
+    sender_username: str | None = None,
 ) -> DMMessage:
     """``media_type`` is "photo" or "voice" when the message carries media
     instead of (or in addition to) text; ``media_url`` is its direct URL.
     ``members`` is the group's member list (names) for group threads —
     Instagram gives the full list; Messenger gives only the last sender.
     ``is_missed_call`` marks a call the other person made that Sir did
-    not answer — Jarvis sends the introduction message for it."""
+    not answer — Jarvis sends the introduction message for it.
+    ``sender_username`` is the handle (Instagram username) — Sir's
+    alerts show it whenever the display name is missing, so a sender
+    is never just "Unknown" to him."""
     return DMMessage(
         platform=platform,
         thread_id=str(thread_id),
@@ -89,6 +93,7 @@ def _new_message(
         media_type=media_type,
         members=members or [],
         is_missed_call=is_missed_call,
+        sender_username=sender_username or "",
     )
 
 
@@ -107,6 +112,49 @@ def _instagram_call(last: Any) -> bool:
     if item_type not in ("video_call", "voice_call"):
         return False
     return not getattr(last, "is_sent_by_viewer", False)
+
+
+def _instagram_sender_name(last: Any, thread_users: list[Any], self_id: str | None) -> str:
+    """Best display name for the sender of an Instagram DM.
+
+    instagrapi usually fills full_name/username on the message's user,
+    but sometimes both are empty — then the thread's other participant
+    (a 1:1 thread lists only them) is the sender, so use their name
+    instead of falling back to "Unknown".
+    """
+    sender = getattr(last, "user", None)
+    name = getattr(sender, "full_name", "") or getattr(sender, "username", "")
+    if name:
+        return name
+    for user in thread_users or []:
+        pk = str(getattr(user, "pk", "") or "")
+        if self_id and pk == str(self_id):
+            continue
+        name = getattr(user, "full_name", "") or getattr(user, "username", "")
+        if name:
+            return name
+    return ""
+
+
+def _instagram_username(last: Any, thread_users: list[Any], self_id: str | None) -> str:
+    """The sender's Instagram handle, for Sir's alerts.
+
+    Same fallback as the display name: the message's user first, then
+    the thread's other participant. A handle is shown whenever the
+    display name is missing, so a sender is never just "Unknown".
+    """
+    sender = getattr(last, "user", None)
+    username = getattr(sender, "username", "") or ""
+    if username:
+        return username
+    for user in thread_users or []:
+        pk = str(getattr(user, "pk", "") or "")
+        if self_id and pk == str(self_id):
+            continue
+        username = getattr(user, "username", "") or ""
+        if username:
+            return username
+    return ""
 
 
 def _instagram_media(last: Any) -> tuple[str | None, str | None]:
@@ -435,11 +483,21 @@ class InstagramClient:
                 last = msgs[0]
                 sender = getattr(last, "user", None)
                 media_url, media_type = _instagram_media(last)
+                thread_users = getattr(th, "users", []) or []
                 out.append(_new_message(
                     platform="instagram",
                     thread_id=getattr(th, "id", ""),
                     sender_id=str(getattr(sender, "pk", "") or ""),
-                    sender_name=getattr(sender, "full_name", "") or getattr(sender, "username", ""),
+                    sender_name=_instagram_sender_name(
+                        last,
+                        thread_users,
+                        getattr(self, "user_id", None),
+                    ),
+                    sender_username=_instagram_username(
+                        last,
+                        thread_users,
+                        getattr(self, "user_id", None),
+                    ),
                     text=getattr(last, "text", "") or "",
                     message_id=str(getattr(last, "id", "")),
                     is_group=len(getattr(th, "users", []) or []) > 1,

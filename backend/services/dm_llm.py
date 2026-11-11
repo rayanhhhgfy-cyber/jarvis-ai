@@ -63,36 +63,48 @@ _SYSTEM_PROMPT_FIRST = (
     "respond at this time. If what they have is important, invite them "
     "to tell you and you will make sure Rayyan sees it. Reply in the "
     "same language they used (Jordanian Arabic when they write Arabic, "
-    "English when they write English). Be warm, natural and brief — one "
-    "or two short sentences, like a real person texting, never a formal "
-    "letter. Do not pretend to be Rayyan. Do not make promises about "
-    "money, meetings or dates. NEVER INVENT ANYTHING: never make up "
-    "names, dates, times, prices, scores, facts, schedules, birthdays, "
-    "messages, or any detail you were not given — never fill in gaps "
-    "with guesses. If you do not know something, say so briefly and "
-    "tell them Rayyan will check when he is back. Always finish your "
-    "sentences; never send a half-finished message."
+    "English when they write English). Understand Jordanian dialect: "
+    "هسا means now, احكي معي means talk to me, ضروري means urgent, "
+    "جاوبني means answer me, بدي means I want, واتساب is WhatsApp. "
+    "When they ask for something specific, acknowledge that exact "
+    "thing instead of only giving the generic busy message. Be warm, "
+    "natural and brief — one or two short sentences, like a real person "
+    "texting, never a formal letter. Do not pretend to be Rayyan. Do "
+    "not make promises about money, meetings or dates. NEVER INVENT "
+    "ANYTHING: never make up names, dates, times, prices, scores, "
+    "facts, schedules, birthdays, messages, or any detail you were not "
+    "given — never fill in gaps with guesses. If you do not know "
+    "something, say so briefly and tell them Rayyan will check when he "
+    "is back. Always finish your sentences; never send a half-finished "
+    "message."
 )
 
 _SYSTEM_PROMPT_FOLLOW_UP = (
     "You are Jarvis, the personal assistant of Rayyan Aljamal, "
     "continuing a conversation with a friend of Rayyan's. "
     "You have already introduced yourself as Jarvis in this "
-    "conversation, so do not introduce yourself again. Keep the "
-    "conversation going naturally: answer their questions as best you "
-    "can, take their message, and reassure them Rayyan will see it. "
-    "Rayyan is busy and cannot respond right now; if what they have is "
-    "important, invite them to tell you and you will make sure Rayyan "
-    "sees it. Reply in the same language they used (Jordanian Arabic "
-    "when they write Arabic, English when they write English). Be warm, "
-    "natural and brief — one or two short sentences, like a real person "
-    "texting. Do not pretend to be Rayyan. Do not make promises about "
-    "money, meetings or dates. NEVER INVENT ANYTHING: never make up "
-    "names, dates, times, prices, scores, facts, schedules, birthdays, "
-    "messages, or any detail you were not given — never fill in gaps "
-    "with guesses. If you do not know something, say so briefly and "
-    "tell them Rayyan will check when he is back. Always finish your "
-    "sentences; never send a half-finished message."
+    "conversation, so do not introduce yourself again and do not repeat "
+    "your previous message — answer what they just asked, directly. "
+    "Keep the conversation going naturally: answer their questions as "
+    "best you can, take their message, and reassure them Rayyan will "
+    "see it. Rayyan is busy and cannot respond right now; if what they "
+    "have is important, invite them to tell you and you will make sure "
+    "Rayyan sees it. Reply in the same language they used (Jordanian "
+    "Arabic when they write Arabic, English when they write English). "
+    "Understand Jordanian dialect: هسا means now, احكي معي means talk "
+    "to me, ضروري means urgent, جاوبني means answer me, بدي means I "
+    "want, واتساب is WhatsApp. When they ask for something specific — "
+    "for example that Rayyan talk to them urgently on WhatsApp — say "
+    "you will tell Rayyan exactly that, instead of repeating the "
+    "generic busy message. Be warm, natural and brief — one or two "
+    "short sentences, like a real person texting. Do not pretend to be "
+    "Rayyan. Do not make promises about money, meetings or dates. NEVER "
+    "INVENT ANYTHING: never make up names, dates, times, prices, "
+    "scores, facts, schedules, birthdays, messages, or any detail you "
+    "were not given — never fill in gaps with guesses. If you do not "
+    "know something, say so briefly and tell them Rayyan will check "
+    "when he is back. Always finish your sentences; never send a "
+    "half-finished message."
 )
 
 _GROUP_NOTE = (
@@ -171,10 +183,21 @@ def _messages(
     first_reply: bool = True,
     is_group: bool = False,
     web_context: str = "",
+    last_reply: str | None = None,
 ) -> list[dict[str, str]]:
     prompt = _SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP
     if is_group:
         prompt += _GROUP_NOTE
+    # What Jarvis already said in this thread: without it the model
+    # has no memory of its own words and repeats its introduction on
+    # every follow-up. Showing it the last reply keeps the conversation
+    # moving instead of looping the same message.
+    if not first_reply and last_reply:
+        prompt += (
+            f"\n\nYour last reply in this conversation was: "
+            f"\"{last_reply[:300]}\". Do not repeat it and do not "
+            "re-introduce yourself — answer their new message directly."
+        )
     # Sir's standing rules from his permanent memory (Obsidian vault):
     # a rule he stated is followed in every DM reply, not just noted.
     rules = obsidian_vault.rules_text()
@@ -210,6 +233,7 @@ async def _groq_reply(
     is_group: bool = False,
     web_context: str = "",
     models: tuple[str, str] = (GROQ_MODEL, GROQ_MODEL_20B),
+    last_reply: str | None = None,
 ) -> str | None:
     """Groq reply: the first model in `models`, then the other when it
     fails or rate-limits.
@@ -223,7 +247,8 @@ async def _groq_reply(
         return None
     payload = {
         "messages": _messages(
-            sender_name, incoming_text, first_reply, is_group, web_context
+            sender_name, incoming_text, first_reply, is_group, web_context,
+            last_reply=last_reply,
         ),
         "temperature": 0.7,
         "max_tokens": 300,
@@ -268,6 +293,7 @@ async def _gemini_reply(
     first_reply: bool = True,
     is_group: bool = False,
     web_context: str = "",
+    last_reply: str | None = None,
 ) -> str | None:
     api_key = settings.gemini_api_key
     if not api_key:
@@ -276,6 +302,12 @@ async def _gemini_reply(
     base_prompt = _SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP
     if is_group:
         base_prompt += _GROUP_NOTE
+    if not first_reply and last_reply:
+        base_prompt += (
+            f"\n\nYour last reply in this conversation was: "
+            f"\"{last_reply[:300]}\". Do not repeat it and do not "
+            "re-introduce yourself — answer their new message directly."
+        )
     prompt = (
         f"{base_prompt}"
         f"\n\nDM from {sender_name}: {incoming_text}\n\n"
@@ -323,6 +355,7 @@ async def generate_dm_reply(
     contact_notes: str | None = None,
     tone: str | None = None,
     busy: str | None = None,
+    last_reply: str | None = None,
 ) -> dict[str, Any]:
     """
     Generate a reply for one incoming DM.
@@ -352,12 +385,30 @@ async def generate_dm_reply(
     assert client is not None
     try:
         # Voice note: hear it first — the transcript is the message.
+        transcript: str | None = None
+        voice_failed = False
         if media_type == "voice" and media_url:
             from backend.services.dm_media import transcribe_audio
 
             transcript = await transcribe_audio(media_url, client)
             if transcript:
                 incoming_text = transcript
+            else:
+                # Heard nothing: do not answer a voice note with the
+                # generic intro — say plainly it could not be heard and
+                # ask for text, so the sender gets a real reply.
+                voice_failed = True
+                return {
+                    "ok": True,
+                    "reply": (
+                        "Sorry, I couldn't hear that voice note — could "
+                        "you send it as text? عذراً، ما قدرت أسمع "
+                        "الملاحظة الصوتية — ممكن تبعتها كتابة؟"
+                    ),
+                    "model": "none",
+                    "transcript": None,
+                    "voice_failed": True,
+                }
         # Photo: describe it so the reply is about what is in it.
         media_context = ""
         if media_type == "photo" and media_url:
@@ -405,9 +456,12 @@ async def generate_dm_reply(
             )
             web_context = f"{busy_context}\n\n{web_context}" if web_context else busy_context
         reply = await _reply_for_active_model(
-            sender_name, incoming_text, client, first_reply, is_group, web_context
+            sender_name, incoming_text, client, first_reply, is_group, web_context,
+            last_reply=last_reply,
         )
         if reply:
+            reply["transcript"] = transcript
+            reply["voice_failed"] = voice_failed
             return reply
         return {
             "ok": False,
@@ -425,6 +479,7 @@ async def _reply_for_active_model(
     first_reply: bool = True,
     is_group: bool = False,
     web_context: str = "",
+    last_reply: str | None = None,
 ) -> dict[str, Any] | None:
     """Try the active model (/model) first, then fall down the chain.
 
@@ -439,13 +494,15 @@ async def _reply_for_active_model(
     active = get_active_model()
     if active == "gemini":
         reply = await _gemini_reply(
-            sender_name, incoming_text, client, first_reply, is_group, web_context
+            sender_name, incoming_text, client, first_reply, is_group, web_context,
+            last_reply=last_reply,
         )
         if reply:
             return {"ok": True, "reply": reply, "model": "gemini"}
     elif active == "deepseek":
         reply = await _openrouter_reply(
-            sender_name, incoming_text, client, first_reply, is_group, web_context
+            sender_name, incoming_text, client, first_reply, is_group, web_context,
+            last_reply=last_reply,
         )
         if reply:
             return {"ok": True, "reply": reply, "model": "deepseek"}
@@ -460,12 +517,14 @@ async def _reply_for_active_model(
         is_group,
         web_context,
         models=(groq_first, groq_second),
+        last_reply=last_reply,
     )
     if reply:
         return {"ok": True, "reply": reply, "model": "groq"}
     if active != "gemini":
         reply = await _gemini_reply(
-            sender_name, incoming_text, client, first_reply, is_group, web_context
+            sender_name, incoming_text, client, first_reply, is_group, web_context,
+            last_reply=last_reply,
         )
         if reply:
             return {"ok": True, "reply": reply, "model": "gemini"}
@@ -479,6 +538,7 @@ async def _openrouter_reply(
     first_reply: bool = True,
     is_group: bool = False,
     web_context: str = "",
+    last_reply: str | None = None,
 ) -> str | None:
     """DeepSeek R1 via OpenRouter (free tier). The strongest free
     reasoning model. Returns None when the key is missing or it fails."""
@@ -487,7 +547,10 @@ async def _openrouter_reply(
     api_key = _settings.openrouter_api_key
     if not api_key:
         return None
-    messages = _messages(sender_name, incoming_text, first_reply, is_group, web_context)
+    messages = _messages(
+        sender_name, incoming_text, first_reply, is_group, web_context,
+        last_reply=last_reply,
+    )
     try:
         resp = await client.post(
             "https://openrouter.ai/api/v1/chat/completions",

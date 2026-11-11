@@ -207,6 +207,10 @@ call_request = JsonStore("call_request.json")
 # normalized name -> {name, blocked_at}. Checked before any DM reply
 # (and before a missed-call introduction).
 blocked_users = JsonStore("blocked_users.json")
+# Spam-mute: threads Jarvis auto-muted for abusive/flood messages.
+# Durable (Turso-backed) so a restart or redeploy never silently
+# unmutes a spammer; entries carry muted_at and expire after an hour.
+muted_threads = JsonStore("muted_threads.json")
 # Recent Telegram conversation with Sir (last ~20 turns), so the brain
 # can follow "it" / "that" / "today" in his next message. A list of
 # {"role": "user"|"assistant", "content": ...} under key "messages".
