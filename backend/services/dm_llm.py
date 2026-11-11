@@ -37,6 +37,7 @@ from typing import Any
 import httpx
 
 from backend.config import settings
+from backend.services.obsidian_vault import vault as obsidian_vault
 from shared.logger import get_logger
 
 log = get_logger("dm_llm")
@@ -170,6 +171,11 @@ def _messages(
     prompt = _SYSTEM_PROMPT_FIRST if first_reply else _SYSTEM_PROMPT_FOLLOW_UP
     if is_group:
         prompt += _GROUP_NOTE
+    # Sir's standing rules from his permanent memory (Obsidian vault):
+    # a rule he stated is followed in every DM reply, not just noted.
+    rules = obsidian_vault.rules_text()
+    if rules:
+        prompt += f"\n\nSir's standing rules (from his permanent memory — follow them):\n{rules}"
     user_text = f"DM from {sender_name}: {incoming_text}\n\nWrite the reply only."
     if web_context:
         user_text = (

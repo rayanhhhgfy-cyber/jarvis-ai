@@ -539,6 +539,21 @@ class LLMService:
         except Exception:
             pass
 
+        # Sir's standing rules from his permanent memory (Obsidian vault):
+        # a rule he stated is followed, not just noted.
+        try:
+            from backend.services.obsidian_vault import vault as obsidian_vault
+
+            vault_rules = obsidian_vault.rules_text()
+            if vault_rules:
+                base += (
+                    "\n\n=== SIR'S STANDING RULES (permanent memory — follow them) ===\n"
+                    + vault_rules
+                    + "\n"
+                )
+        except (OSError, RuntimeError, ValueError) as e:
+            log.warning("obsidian_rules_inject_failed", error=str(e))
+
         return base
 
 

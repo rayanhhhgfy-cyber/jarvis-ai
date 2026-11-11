@@ -167,7 +167,7 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # Commands answered directly here (no natural-language equivalent).
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
-    "connect", "disconnect", "call", "block", "unblock",
+    "connect", "disconnect", "call", "block", "unblock", "rule", "memory",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -352,6 +352,91 @@ def _handle_unblock(responder: Any, name: str) -> str:
     if responder.unblock_user(name):
         return f"Unblocked {name} — I will reply to them again."
     return f"{name} is not blocked."
+
+
+# --- Obsidian vault: Sir's permanent memory. -----------------------
+# A rule Sir states in plain words is saved here and then injected
+# into the brain's system prompt, so it is followed, not just noted.
+
+_RULE_PATTERNS = [
+    # English: "from now on always answer in Arabic"
+    re.compile(r"^from now on[,:]?\s+(.+)$", re.IGNORECASE),
+    re.compile(r"^make it a rule[,:]?\s*(?:that\s+)?(.+)$", re.IGNORECASE),
+    re.compile(r"^as a rule[,:]?\s*(?:that\s+)?(.+)$", re.IGNORECASE),
+    re.compile(r"^always\s+(.+)$", re.IGNORECASE),
+    re.compile(r"^never\s+(.+)$", re.IGNORECASE),
+    # Arabic: "من الآن فصاعداً ..." / "دائماً ..." / "أبداً ..."
+    # The tanwin "اً" can be ALEF+FATHATAN or FATHATAN+ALEF, so the
+    # class takes 0-2 of either.
+    re.compile(r"^من الآن(?:\s+فصاعد[اًا]{0,2})?[،,:]?\s*(.+)$"),
+    re.compile(r"^دائم[اًا]{0,2}\s+(.+)$"),
+    re.compile(r"^أبد[اًا]{0,2}\s+(.+)$"),
+]
+
+
+def _detect_rule(text: str) -> str | None:
+    """A standing rule Sir stated in plain words, or None.
+
+    Catches "from now on ...", "make it a rule ...", "always ...",
+    "never ..." (and the Arabic equivalents). Returns the rule text
+    without the leading phrase. A one-word capture ("never mind")
+    is not a rule.
+    """
+    text = (text or "").strip()
+    if not text:
+        return None
+    for pattern in _RULE_PATTERNS:
+        match = pattern.match(text)
+        if match:
+            rule = match.group(1).strip()
+            if rule and len(rule.split()) >= 2:
+                return rule
+    return None
+
+
+def _handle_rule(text: str) -> str:
+    """The /rule reply: save a standing rule to the permanent memory."""
+    from backend.services.obsidian_vault import vault as obsidian_vault
+
+    text = (text or "").strip()
+    if not text:
+        return (
+            "Usage: /rule always answer me in Arabic — or just tell me "
+            "in plain words, for example 'from now on, always answer in Arabic'."
+        )
+    saved = obsidian_vault.add_rule(text, source="telegram")
+    if saved is None:
+        return "Tell me the rule — for example '/rule always answer me in Arabic'."
+    return f"Saved to my permanent memory as a rule:\n• {saved}\nI will follow it from now on."
+
+
+def _handle_memory(query: str) -> str:
+    """The /memory reply: list or search the permanent memory vault."""
+    from backend.services.obsidian_vault import vault as obsidian_vault
+
+    query = (query or "").strip()
+    if not query:
+        notes = obsidian_vault.list_notes()
+        if not notes:
+            return (
+                "My permanent memory is empty. Tell me a rule "
+                "('/rule ...') or a fact ('remember that ...') to start it."
+            )
+        lines = ["My permanent memory — notes:"]
+        for note in notes:
+            tags = f" [{', '.join(note['tags'])}]" if note["tags"] else ""
+            lines.append(f"• {note['title']}{tags}")
+        lines.append(
+            f"\n{obsidian_vault.note_count()} notes. Search with /memory <words>."
+        )
+        return "\n".join(lines)
+    matches = obsidian_vault.search_notes(query)
+    if not matches:
+        return f"Nothing in my permanent memory mentions '{query}'."
+    lines = [f"Permanent memory — matches for '{query}':"]
+    for match in matches[:10]:
+        lines.append(f"• {match['title']}: {match['snippet']}")
+    return "\n".join(lines)
 
 
 def _handle_connect_command(chat_id: str, text: str) -> str:
@@ -691,6 +776,11 @@ def _handle_remember(fact: str) -> str:
     existing = (data.get("notes") or "")
     data["notes"] = f"{existing} {note}".strip() if existing else note
     contacts.set(name, data)
+    # Also keep it in the permanent memory (Obsidian vault): the
+    # contact store drives DM replies, the vault never deletes.
+    from backend.services.obsidian_vault import vault as obsidian_vault
+
+    obsidian_vault.remember_fact(f"{name} {note}", source="telegram")
     return f"Noted about {name} — I will remember that."
 
 
@@ -983,6 +1073,14 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         _handle_unblock(dm_responder, text[len("/unblock"):].strip())
                     )
+                elif value == "rule":
+                    await send_telegram_message(
+                        _handle_rule(text[len("/rule"):].strip())
+                    )
+                elif value == "memory":
+                    await send_telegram_message(
+                        _handle_memory(text[len("/memory"):].strip())
+                    )
                 return {"ok": True}
             if kind == "usage":
                 usage = next(
@@ -1107,9 +1205,11 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         # --- "list my rules" / "delete rule <number>". ---
         if _LIST_RULES_RE.match(text):
             from backend.services.dm_store import rules as rules_store
+            from backend.services.obsidian_vault import vault as obsidian_vault
 
             all_rules = rules_store.all()
-            if not all_rules:
+            vault_rules = obsidian_vault.list_rules()
+            if not all_rules and not vault_rules:
                 await send_telegram_message("You have no custom rules yet.")
             else:
                 lines = ["Your rules:"]
@@ -1118,6 +1218,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                         f"{i}. If {rule.get('person', '')} asks about "
                         f"'{rule.get('topic', '')}', reply: {rule.get('reply', '')}"
                     )
+                if vault_rules:
+                    lines.append("\nStanding rules (permanent memory):")
+                    for i, rule in enumerate(vault_rules, 1):
+                        lines.append(f"{i}. {rule}")
                 await send_telegram_message("\n".join(lines))
             return {"ok": True}
         delete_rule_match = _DELETE_RULE_RE.match(text)
@@ -1264,6 +1368,16 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                         "Omar tomorrow at 5pm'."
                     )
                 return {"ok": True}
+
+        # --- A standing rule in plain words — save it to the permanent
+        # memory (Obsidian vault) so the brain follows it from now on.
+        # "from now on ...", "make it a rule ...", "always ...",
+        # "never ..." (and the Arabic equivalents). Placed after the
+        # specific handlers above so "remind me ..." still wins.
+        rule_text = _detect_rule(text)
+        if rule_text:
+            await send_telegram_message(_handle_rule(rule_text))
+            return {"ok": True}
 
         # --- "send <name> a message <time>: <text>" — scheduled DM. ---
         schedule_match = _SCHEDULE_RE.match(text)
