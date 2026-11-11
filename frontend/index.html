@@ -2,7 +2,7 @@
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <!-- PWA: installable on iPhone (add to Home Screen) -->
 <meta name="theme-color" content="#e4e1d8">
 <meta name="mobile-web-app-capable" content="yes">
@@ -37,8 +37,8 @@
   --dur:160ms;
   --r-sm:8px; --r:12px; --r-lg:16px;
 }
-html{scrollbar-color:var(--ink-3) var(--bg);-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+html{scrollbar-color:var(--ink-3) var(--bg);-webkit-text-size-adjust:100%;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 ::selection{background:rgba(127,96,25,0.25)}
 :focus-visible{outline:2px solid rgba(127,96,25,0.65);outline-offset:2px}
 button{font-family:var(--font)}
@@ -80,8 +80,8 @@ svg{display:block;flex:none}
 .count .lbl{font-size:11px;color:var(--ink-3);margin-bottom:2px}
 .count .num{font-family:var(--mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
 
-/* Bottom dock: 4 tabs + center call orb */
-.dock{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;align-items:flex-end;justify-content:space-around;background:var(--panel);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+/* Bottom dock: 4 tabs + center call orb — pinned to the viewport bottom */
+.dock{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;align-items:flex-end;justify-content:space-around;background:var(--panel);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));transform:translateZ(0)}
 .dock-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;min-height:48px;padding:6px 8px;background:none;border:none;color:var(--ink-3);font-size:11px;font-weight:500;cursor:pointer;transition:color var(--dur) var(--ease)}
 .dock-item svg{color:var(--ink-3);transition:color var(--dur) var(--ease)}
 .dock-item.active{color:var(--ink)}
@@ -243,9 +243,24 @@ svg{display:block;flex:none}
   .dock{margin-inline:auto;bottom:20px;max-width:540px;border:1px solid var(--line);border-radius:18px;padding:8px 12px;box-shadow:0 12px 32px rgba(28,24,16,0.14)}
   .ap-pill{min-height:36px;padding:0 14px;font-size:13px}
 }
+@media(max-width:480px){
+  /* Counts strip: 4 across is ~80px a column on a phone — go 2x2 */
+  .counts{grid-template-columns:repeat(2,1fr);row-gap:12px}
+  .count:nth-child(odd){padding-inline-start:0;border-inline-start:none}
+}
 @media(max-width:380px){
   .wordmark span{display:none}
   .ap-pill{padding:0 10px}
+  /* Top bar: keep only the status dot, drop the text, so nothing wraps */
+  #wsStatusText{display:none}
+  /* Dock: narrower items + smaller orb so 4 tabs + orb fit a 320px phone */
+  .dock-item{min-width:48px;padding:6px 4px}
+  .dock-orb{width:52px;height:52px;margin-top:-22px}
+  .instr{padding:12px}
+  .instr .val{font-size:18px}
+  /* Chat: icon-only send button so the input gets room to type */
+  .send-label{display:none}
+  .btn-send{padding:0 12px}
 }
 @media(prefers-reduced-motion:reduce){
   .app{animation:none}
@@ -297,7 +312,7 @@ svg{display:block;flex:none}
       <div class="chat-input">
         <input type="text" id="chatInput" placeholder="اكتب رسالتك…">
         <button class="icon-btn" id="micBtn" type="button" title="تحدث" aria-label="إدخال صوتي"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg></button>
-        <button class="btn-send" id="sendBtn" type="button">إرسال<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+        <button class="btn-send" id="sendBtn" type="button"><span class="send-label">إرسال</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
       </div>
     </div>
   </section>
@@ -397,16 +412,17 @@ svg{display:block;flex:none}
     <p class="conn-note">تنبيه: الرد التلقائي على رسائلك الشخصية في ماسنجر وإنستغرام يخالف قواعد المنصتين، وقد يتم قفل الحساب أو حظره. Jarvis يرد فقط على المحادثات الفردية، وبحد أقصى 5 ردود في كل جولة فحص.</p>
   </section>
   </main>
+</div>
 
-  <!-- Bottom dock: 4 tabs + center call orb -->
-  <nav class="dock" aria-label="الأقسام">
+<!-- Bottom dock: 4 tabs + center call orb (outside .app so the entrance
+     animation transform can never unpin it from the viewport bottom) -->
+<nav class="dock" aria-label="الأقسام">
     <button class="dock-item active" data-tab="tools" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>الأدوات</button>
     <button class="dock-item" data-tab="chat" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>المحادثة</button>
     <button class="dock-orb" data-tab="talk" type="button" title="مكالمة" aria-label="مكالمة صوتية"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
     <button class="dock-item" data-tab="business" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>الأعمال</button>
     <button class="dock-item" data-tab="connectors" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>الموصلات</button>
   </nav>
-</div>
 
 <!-- Tool result sheet -->
 <div class="overlay" id="modalOverlay">
