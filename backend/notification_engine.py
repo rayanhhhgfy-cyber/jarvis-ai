@@ -22,6 +22,52 @@ from backend.config import settings
 log = get_logger("notification_engine")
 
 
+# Turso mirror for push subscriptions: Render's disk is ephemeral, so a
+# subscription saved only to ./storage is wiped on every deploy and the
+# next /call goes to zero devices. Turso survives redeploys. The mirror
+# is best-effort (a failure is logged, the local file still holds the
+# write) and uses a short timeout so it never stalls a send.
+_TURSO_TABLE = "push_subscriptions"
+_TURSO_TIMEOUT = 5.0
+# Test hook: tests set this to a mock httpx transport.
+_test_turso_transport: Any | None = None
+_turso_client: Any | None = None
+_turso_attempted = False
+_turso_table_ready = False
+
+
+def _turso_store() -> Any | None:
+    """A Turso store for push subscriptions, or None when unconfigured."""
+    global _turso_client, _turso_attempted
+    if _turso_attempted:
+        return _turso_client
+    _turso_attempted = True
+    try:
+        from backend.services.credentials_vault import _TursoStore
+
+        url = settings.turso_database_url
+        token = settings.turso_auth_token
+        if url and token:
+            _turso_client = _TursoStore(
+                url, token, _TURSO_TABLE,
+                transport=_test_turso_transport,
+                timeout=_TURSO_TIMEOUT,
+            )
+    except (ImportError, ValueError) as e:
+        log.warning("push_turso_unavailable", error=str(e))
+        _turso_client = None
+    return _turso_client
+
+
+def _turso_ensure_table(client: Any) -> None:
+    """Create the subscriptions table once per process."""
+    global _turso_table_ready
+    if _turso_table_ready:
+        return
+    client.ensure_table()
+    _turso_table_ready = True
+
+
 def derive_vapid_public_key(private_key_b64: str) -> str | None:
     """Derive the VAPID public key (base64url uncompressed point) from the private key.
 
@@ -84,6 +130,20 @@ class NotificationEngine:
                 log.info("subscriptions_loaded", count=len(self._subscriptions))
             except Exception as e:
                 log.error("subscriptions_load_error", error=str(e))
+        else:
+            # No local file (fresh deploy wiped it): restore from Turso,
+            # the copy that survives redeploys.
+            restored = self._load_turso()
+            if restored:
+                self._subscriptions = restored
+                log.info("subscriptions_restored_turso", count=len(restored))
+                try:
+                    self._subscriptions_path.parent.mkdir(parents=True, exist_ok=True)
+                    self._subscriptions_path.write_text(
+                        json.dumps(self._subscriptions, indent=2), encoding="utf-8"
+                    )
+                except Exception as e:
+                    log.error("subscriptions_restore_save_failed", error=str(e))
 
         if self._history_path.exists():
             try:
@@ -92,6 +152,39 @@ class NotificationEngine:
                 log.info("notification_history_loaded", count=len(self._history))
             except Exception as e:
                 log.error("notification_history_load_error", error=str(e))
+
+    def _load_turso(self) -> dict[str, Any] | None:
+        """Load subscriptions from Turso, or None when unavailable."""
+        client = _turso_store()
+        if client is None:
+            return None
+        try:
+            _turso_ensure_table(client)
+            return dict(client.load_all())
+        except (RuntimeError, ValueError) as e:
+            log.warning("push_turso_load_failed", error=str(e))
+            return None
+
+    def _sync_turso(self) -> None:
+        """Best-effort mirror of all subscriptions to Turso."""
+        client = _turso_store()
+        if client is None:
+            return
+        try:
+            _turso_ensure_table(client)
+            client.save_all(self._subscriptions)
+        except (RuntimeError, TypeError, ValueError) as e:
+            # Best-effort only: the local file already holds the write,
+            # and the next save re-syncs the full set.
+            log.warning("push_turso_save_failed", error=str(e))
+
+    def subscription_count(self) -> int:
+        """How many devices are currently subscribed."""
+        return len(self._subscriptions)
+
+    def subscription_device_ids(self) -> list[str]:
+        """The device ids currently subscribed."""
+        return list(self._subscriptions.keys())
 
     async def save_subscription(self, device_id: str, subscription_info: Dict[str, Any]) -> None:
         """Register or update a Web Push subscription for a device."""
@@ -102,6 +195,7 @@ class NotificationEngine:
             log.info("subscription_saved", device_id=device_id)
         except Exception as e:
             log.error("subscription_save_failed", device_id=device_id, error=str(e))
+        self._sync_turso()
 
     async def remove_subscription(self, device_id: str) -> None:
         """Remove a Web Push subscription for a device."""
@@ -112,6 +206,7 @@ class NotificationEngine:
                 log.info("subscription_removed", device_id=device_id)
             except Exception as e:
                 log.error("subscription_remove_failed", device_id=device_id, error=str(e))
+            self._sync_turso()
 
     async def send_notification(self, notification: Notification) -> bool:
         """

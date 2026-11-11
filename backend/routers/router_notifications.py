@@ -122,6 +122,30 @@ async def send_push(req: PushSendRequest) -> dict[str, Any]:
     return {"sent": bool(sent)}
 
 
+@router.get("/status")
+async def push_status() -> dict[str, Any]:
+    """One-call diagnostic for push health.
+
+    Returns how many devices are subscribed (and which), plus the
+    VAPID public-key prefix the server is serving, so a failed call
+    can be diagnosed without reading Render logs: zero subscriptions
+    means the device must tap "enable notifications" again; a key
+    prefix that does not match the one the app subscribed with means
+    a key rotation happened after the subscription.
+    """
+    public_key = settings.vapid_public_key or ""
+    if settings.vapid_private_key:
+        derived = derive_vapid_public_key(settings.vapid_private_key)
+        if derived:
+            public_key = derived
+    return {
+        "subscriptions": notification_engine.subscription_count(),
+        "devices": notification_engine.subscription_device_ids(),
+        "public_key_prefix": public_key[:12] if public_key else "",
+        "configured": bool(public_key and settings.vapid_private_key),
+    }
+
+
 @router.get("/history")
 async def push_history(limit: int = 50) -> list[dict[str, Any]]:
     """Recent push notifications Jarvis sent."""

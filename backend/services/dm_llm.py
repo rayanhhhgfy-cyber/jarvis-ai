@@ -42,6 +42,11 @@ from shared.logger import get_logger
 log = get_logger("dm_llm")
 
 GROQ_MODEL = "openai/gpt-oss-120b"
+# Smaller Groq model: same free tier, a higher rate limit. When 120b
+# trips its limit (or errors), the reply is retried on 20b before
+# Gemini is even considered — Gemini's key is unset, so without this
+# a 120b failure meant no reply at all.
+GROQ_MODEL_20B = "openai/gpt-oss-20b"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_URL = (
@@ -186,38 +191,53 @@ async def _groq_reply(
     is_group: bool = False,
     web_context: str = "",
 ) -> str | None:
+    """Groq reply: 120b first, 20b when 120b fails or rate-limits.
+
+    Returns the completed reply text, or None when neither model
+    could produce one (the caller then tries Gemini).
+    """
     api_key = settings.groq_api_key
     if not api_key:
         log.debug("dm_groq_no_key")
         return None
-    try:
-        resp = await client.post(
-            GROQ_URL,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            },
-            json={
-                "model": GROQ_MODEL,
-                "messages": _messages(
-                    sender_name, incoming_text, first_reply, is_group, web_context
-                ),
-                "temperature": 0.7,
-                "max_tokens": 300,
-            },
-            timeout=30.0,
-        )
-        if resp.status_code != 200:
-            log.warning("dm_groq_error", status_code=resp.status_code)
-            return None
-        choices = resp.json().get("choices") or []
-        if not choices:
-            return None
-        text = (choices[0].get("message") or {}).get("content", "").strip()
-        return _complete_reply(text)
-    except Exception as e:
-        log.warning("dm_groq_failed", error=str(e))
-        return None
+    payload = {
+        "messages": _messages(
+            sender_name, incoming_text, first_reply, is_group, web_context
+        ),
+        "temperature": 0.7,
+        "max_tokens": 300,
+    }
+    for model in (GROQ_MODEL, GROQ_MODEL_20B):
+        try:
+            resp = await client.post(
+                GROQ_URL,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={"model": model, **payload},
+                timeout=30.0,
+            )
+            if resp.status_code != 200:
+                log.warning(
+                    "dm_groq_error",
+                    model=model,
+                    status_code=resp.status_code,
+                )
+                continue
+            choices = resp.json().get("choices") or []
+            if not choices:
+                continue
+            text = (choices[0].get("message") or {}).get("content", "").strip()
+            completed = _complete_reply(text)
+            if completed:
+                if model != GROQ_MODEL:
+                    log.info("dm_groq_fell_back_to_20b")
+                return completed
+        except (httpx.HTTPError, ValueError) as e:
+            log.warning("dm_groq_failed", model=model, error=str(e))
+            continue
+    return None
 
 
 async def _gemini_reply(

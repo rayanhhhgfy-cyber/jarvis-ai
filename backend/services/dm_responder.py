@@ -228,8 +228,11 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
     """Top news for the morning briefing, from a live web search.
 
     One query per group (world, Jordan, tech, sports), run together.
-    Returns [{group, title, snippet}] — at most two headlines per group.
-    Empty when the search fails (the briefing still goes out).
+    A group that comes back empty or fails is retried once — the
+    search backends are flaky, and a single transient failure should
+    not cost Sir that group's headlines. Returns [{group, title,
+    snippet}] — at most two headlines per group. Empty when the search
+    fails twice (the briefing still goes out).
     """
     import asyncio
 
@@ -237,9 +240,26 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
 
     queries = _BRIEFING_NEWS_QUERIES.get(language) or _BRIEFING_NEWS_QUERIES["en"]
     service = WebSearchService()
+
+    async def _search_one(query: str) -> list[dict[str, str]]:
+        """One group query, retried once on failure or empty result."""
+        for attempt in (1, 2):
+            try:
+                result = await service.search(query, max_results=2)
+                if result:
+                    return result
+            except Exception as e:
+                log.debug(
+                    "dm_briefing_news_attempt_failed",
+                    query=query, attempt=attempt, error=str(e),
+                )
+            if attempt == 1:
+                await asyncio.sleep(1.0)
+        return []
+
     try:
         results = await asyncio.gather(
-            *(service.search(query, max_results=2) for _, query in queries),
+            *(_search_one(query) for _, query in queries),
             return_exceptions=True,
         )
     except Exception as e:
@@ -248,6 +268,7 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
     headlines: list[dict[str, str]] = []
     for (group, _), result in zip(queries, results):
         if isinstance(result, Exception) or not result:
+            log.warning("dm_briefing_news_group_empty", group=group)
             continue
         for row in result[:2]:
             title = (row.get("title") or "").strip()
@@ -287,7 +308,9 @@ def _is_important(text: str) -> bool:
 # The standalone call app Sir answers on — a separate PWA, same Jarvis.
 CALL_APP_URL = "https://jarvis-call-smoky.vercel.app"
 # A pending call reason expires after this long if Sir never answers.
-_CALL_REASON_TTL_SECONDS = 900
+# One hour: long enough to finish what he is doing and tap the
+# notification, short enough that a stale reason never opens a call.
+_CALL_REASON_TTL_SECONDS = 3600
 
 
 async def initiate_call(reason: str) -> bool:
@@ -1013,6 +1036,64 @@ class DMResponder:
                 return True
         return False
 
+    # -- Blocked users: Sir's "don't DM this person until further
+    # notice". Separate from the spam mute (which is automatic and
+    # per-thread); a block is by person, lasts until Sir unblocks,
+    # and is stored in dm_store so it survives restarts and deploys.
+    # ------------------------------------------------------------------
+
+    def block_user(self, name: str) -> bool:
+        """Block a person by name. Returns True when newly blocked."""
+        from backend.services.dm_store import blocked_users as blocked_store
+
+        display = (name or "").strip()
+        if not display:
+            return False
+        key = display.lower()
+        if blocked_store.get(key):
+            return False
+        blocked_store.set(key, {
+            "name": display,
+            "blocked_at": datetime.now(UTC).isoformat(),
+        })
+        return True
+
+    def unblock_user(self, name: str) -> bool:
+        """Unblock a person by name. Returns True when unblocked."""
+        from backend.services.dm_store import blocked_users as blocked_store
+
+        needle = (name or "").strip().lower()
+        if not needle:
+            return False
+        for key, entry in list(blocked_store.all().items()):
+            stored = (entry or {}).get("name", key)
+            if needle in stored.lower() or needle in key.lower():
+                blocked_store.delete(key)
+                return True
+        return False
+
+    def is_blocked(self, sender_name: str) -> bool:
+        """True when Sir blocked this person (by name, either direction)."""
+        from backend.services.dm_store import blocked_users as blocked_store
+
+        name = (sender_name or "").strip().lower()
+        if not name:
+            return False
+        for key, entry in blocked_store.all().items():
+            stored = ((entry or {}).get("name") or key).lower()
+            if name in stored or stored in name:
+                return True
+        return False
+
+    def list_blocked(self) -> list[str]:
+        """Display names of everyone currently blocked."""
+        from backend.services.dm_store import blocked_users as blocked_store
+
+        return [
+            (entry or {}).get("name") or key
+            for key, entry in blocked_store.all().items()
+        ]
+
     def _busy_now(self) -> dict[str, Any] | None:
         """The busy entry covering right now, or None.
 
@@ -1535,6 +1616,11 @@ class DMResponder:
                 thread_id = msg["thread_id"]
                 if client.user_id and str(msg.get("sender_id")) == str(client.user_id):
                     continue  # Sir made the call himself.
+                if self.is_blocked(msg.get("sender_name", "")):
+                    # Sir said never to DM this person — no introduction
+                    # either, not even for a missed call.
+                    self._mark_seen(platform, thread_id, msg["message_id"])
+                    continue
                 seen_id = self._seen.get(platform, {}).get(thread_id)
                 if seen_id == msg["message_id"]:
                     continue  # Already handled this call.
@@ -1585,6 +1671,11 @@ class DMResponder:
             # Spam filter: abusive messages or a flood from one thread
             # mute it — Jarvis stops replying and flags it to Sir.
             if thread_key in self._muted:
+                self._mark_seen(platform, thread_id, msg["message_id"])
+                continue
+            # Blocked by Sir: never DM this person until further notice.
+            # No reply, no notification, no missed-call introduction.
+            if self.is_blocked(msg.get("sender_name", "")):
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 continue
             if _is_abusive(msg.get("text") or "") or self._is_spamming(thread_id):

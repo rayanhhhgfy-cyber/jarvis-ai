@@ -24,6 +24,7 @@ TELEGRAM_CHAT_ID) — never in chat, files, or the repo.
 from __future__ import annotations
 
 import re
+import time
 from typing import Any
 
 from fastapi import APIRouter, Request
@@ -133,6 +134,10 @@ _BUSY_RE = re.compile(
 )
 # "unmute <name>" — resume a muted thread.
 _UNMUTE_RE = re.compile(r"^unmute\s+(\S+(?:\s+\S+)?)\s*$", re.IGNORECASE)
+# "block <name>" / "unblock <name>" — stop (or resume) Jarvis DMing
+# a person until further notice. "/block" alone lists who is blocked.
+_BLOCK_RE = re.compile(r"^block\s+(\S+(?:\s+\S+)?)?\s*$", re.IGNORECASE)
+_UNBLOCK_RE = re.compile(r"^unblock\s+(\S+(?:\s+\S+)?)\s*$", re.IGNORECASE)
 # "find the message where <name> mentioned <query>" / "search for <query>".
 _SEARCH_RE = re.compile(
     r"^(?:find|search)(?:\s+the\s+message)?(?:\s+where\s+(\S+(?:\s+\S+)?)\s+mentioned\s+)?(.+)$",
@@ -162,7 +167,7 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # Commands answered directly here (no natural-language equivalent).
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
-    "connect", "disconnect", "call",
+    "connect", "disconnect", "call", "block", "unblock",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -314,6 +319,39 @@ def _handle_cancel(
     if prefix:
         return prefix.strip()
     return "Nothing is waiting on you right now."
+
+
+def _handle_block(responder: Any, name: str) -> str:
+    """The /block reply: stop Jarvis DMing someone until further notice.
+
+    With no name, lists who is blocked. With a name, blocks them —
+    no DM reply, no missed-call introduction, no notification — until
+    Sir unblocks them.
+    """
+    name = (name or "").strip()
+    if not name:
+        blocked = responder.list_blocked()
+        if not blocked:
+            return "Nobody is blocked — I reply to everyone."
+        return "Blocked (I will not DM them until you unblock):\n" + "\n".join(
+            f"• {n}" for n in blocked
+        )
+    if responder.block_user(name):
+        return (
+            f"Blocked {name} — I will not DM them until you tell me otherwise. "
+            "Use /unblock to let me reply to them again."
+        )
+    return f"{name} is already blocked."
+
+
+def _handle_unblock(responder: Any, name: str) -> str:
+    """The /unblock reply: let Jarvis DM someone again."""
+    name = (name or "").strip()
+    if not name:
+        return "Usage: /unblock Omar — tell me who to unblock."
+    if responder.unblock_user(name):
+        return f"Unblocked {name} — I will reply to them again."
+    return f"{name} is not blocked."
 
 
 def _handle_connect_command(chat_id: str, text: str) -> str:
@@ -787,6 +825,24 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
     activity included as context so Sir can ask about his DMs.
     """
     try:
+        # --- Duplicate delivery: Telegram retries a webhook when the
+        # first response is slow, and without this the same update is
+        # processed twice — Sir gets two (or three) replies to one
+        # message. Skip any update_id already handled. ---
+        update_id = payload.get("update_id")
+        if update_id is not None:
+            from backend.services.dm_store import seen_updates as seen_store
+
+            seen_key = str(update_id)
+            if seen_store.get(seen_key):
+                log.debug("telegram_webhook_duplicate_update", update_id=seen_key)
+                return {"ok": True}
+            seen_store.set(seen_key, time.time())
+            # Keep only the most recent ~200 update_ids.
+            all_seen = seen_store.all()
+            if len(all_seen) > 200:
+                for old_key in list(all_seen.keys())[:-200]:
+                    seen_store.delete(old_key)
         message = payload.get("message") or {}
         chat = message.get("chat") or {}
         chat_id = str(chat.get("id", ""))
@@ -919,6 +975,14 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                         await send_telegram_message(
                             "I could not reach Telegram to place the call, sir."
                         )
+                elif value == "block":
+                    await send_telegram_message(
+                        _handle_block(dm_responder, text[len("/block"):].strip())
+                    )
+                elif value == "unblock":
+                    await send_telegram_message(
+                        _handle_unblock(dm_responder, text[len("/unblock"):].strip())
+                    )
                 return {"ok": True}
             if kind == "usage":
                 usage = next(
@@ -1104,6 +1168,22 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 await send_telegram_message(
                     f"{unmute_match.group(1)} is not muted."
                 )
+            return {"ok": True}
+
+        # --- "block <name>" / "unblock <name>" — stop (or resume)
+        # Jarvis DMing a person until further notice. "block" alone
+        # lists who is blocked. ---
+        block_match = _BLOCK_RE.match(text)
+        if block_match:
+            await send_telegram_message(
+                _handle_block(dm_responder, block_match.group(1) or "")
+            )
+            return {"ok": True}
+        unblock_match = _UNBLOCK_RE.match(text)
+        if unblock_match:
+            await send_telegram_message(
+                _handle_unblock(dm_responder, unblock_match.group(1))
+            )
             return {"ok": True}
 
         # --- "remember that <name> <fact>" — contact memory / birthday. ---

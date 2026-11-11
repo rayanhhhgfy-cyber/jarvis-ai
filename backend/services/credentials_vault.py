@@ -50,6 +50,7 @@ class _TursoStore:
         auth_token: str,
         table: str,
         transport: httpx.BaseTransport | None = None,
+        timeout: float = 25.0,
     ) -> None:
         if database_url.startswith("libsql://"):
             host = database_url[len("libsql://"):].split("/")[0]
@@ -65,6 +66,9 @@ class _TursoStore:
         self._token = auth_token
         self._table = table.replace('"', '""')
         self._transport = transport
+        # Shorter timeouts for best-effort mirrors (DM stores, push
+        # subscriptions): a slow Turso must never stall a DM reply.
+        self._timeout = timeout
 
     # -- Hrana value codec (text only is all the vault needs) --
 
@@ -98,7 +102,7 @@ class _TursoStore:
         ]
         requests.append({"type": "close"})
         try:
-            with httpx.Client(transport=self._transport, timeout=25.0) as client:
+            with httpx.Client(transport=self._transport, timeout=self._timeout) as client:
                 resp = client.post(
                     self._url,
                     headers={
