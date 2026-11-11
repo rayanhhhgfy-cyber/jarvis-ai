@@ -188,9 +188,26 @@ def get_briefing_settings() -> dict[str, Any]:
     settings = dict(_BRIEFING_DEFAULTS)
     sections = dict(_BRIEFING_DEFAULTS["sections"])
     sections.update((stored.get("sections") or {}))
-    settings.update({k: v for k, v in stored.items() if k != "sections"})
+    # "last_sent" is the stored briefing text, not a setting.
+    settings.update(
+        {k: v for k, v in stored.items() if k not in ("sections", "last_sent")}
+    )
     settings["sections"] = sections
     return settings
+
+
+def get_last_briefing() -> dict[str, Any] | None:
+    """The exact briefing text that last went out (and when), or None.
+
+    This is what "resend it as a voice note" re-sends — the real text,
+    never a regenerated one.
+    """
+    from backend.services.dm_store import briefing as briefing_store
+
+    saved = briefing_store.get("last_sent")
+    if not saved or not isinstance(saved, dict) or not saved.get("text"):
+        return None
+    return saved
 
 
 def update_briefing_settings(patch: dict[str, Any]) -> dict[str, Any]:
@@ -898,6 +915,23 @@ class DMResponder:
                     lines.append(f"👉 {len(needs_sir)} {labels['needs_you']}")
 
         text = "\n".join(lines)
+        # Keep the exact text that went out, so Sir can ask for it again
+        # ("resend it as a voice note") and get THIS briefing — never a
+        # regenerated one. The LLM must not invent a schedule, birthdays
+        # or DMs that were never in the real briefing.
+        try:
+            from backend.services.dm_store import briefing as briefing_store
+
+            briefing_store.set(
+                "last_sent",
+                {
+                    "text": text,
+                    "sent_at": datetime.now(UTC).isoformat(),
+                    "language": language,
+                },
+            )
+        except (OSError, RuntimeError, ValueError) as e:
+            log.debug("dm_briefing_store_failed", error=str(e))
         try:
             if settings.get("voice"):
                 from backend.services.dm_voice import send_telegram_voice_reply

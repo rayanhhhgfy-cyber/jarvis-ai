@@ -1535,6 +1535,18 @@ async def _handle_briefing(text: str) -> str:
         settings = update_briefing_settings({"language": "en"})
         return "Your morning briefing will be in English from tomorrow."
 
+    # "send my briefing as a voice note" — send it NOW as voice, and
+    # keep voice on for tomorrow. Checked BEFORE the plain voice
+    # setting below, which only changes the setting and sends nothing
+    # (that is what frustrated Sir: he asked for it now, and got a
+    # promise about tomorrow instead).
+    if "voice" in lowered and ("send" in lowered or "now" in lowered):
+        update_briefing_settings({"voice": True})
+        from backend.services.dm_responder import dm_responder as _br
+
+        await _br.send_morning_briefing()
+        return "Sent your morning briefing as a voice note."
+
     # Voice / text.
     if "voice" in lowered or "voice note" in lowered or "صوت" in lowered:
         settings = update_briefing_settings({"voice": True})
@@ -1613,6 +1625,77 @@ async def _handle_briefing(text: str) -> str:
         "'/briefing voice', '/briefing arabic', or '/briefing now'."
     )
     return "\n".join(lines)
+
+
+# Phrases that mean "send me the briefing again" — the message has
+# no word "briefing" in it, so the briefing handler never sees it.
+# "it" is the last briefing that went out.
+_RESEND_BRIEFING_PATTERNS = (
+    "resend",
+    "send it",
+    "send me the full",
+    "the full thing",
+    "full thing",
+    "whole thing",
+    "no deletion",
+    "beautiful format",
+    "put it in",
+)
+
+# Words that mean the message is about a DM conversation, not the
+# briefing — the resend handler must never catch those.
+_RESEND_BRIEFING_BLOCKERS = (
+    "instagram", "messenger", "dm", "conversation", "chat",
+)
+
+
+async def _handle_resend_briefing(text: str) -> str | None:
+    """Re-send the last morning briefing, exactly as it went out.
+
+    Returns None when the message is not a resend request (the intent
+    chain continues), "" when it was already sent as a voice note, or
+    the stored briefing text to send as text.
+
+    The stored text is the ONLY source — the LLM is never asked to
+    reproduce the briefing, because it invents a schedule, birthdays
+    and DMs that were never in it.
+    """
+    from datetime import datetime, timedelta, timezone
+
+    from backend.services.dm_responder import get_last_briefing
+
+    lowered = (text or "").lower().strip()
+    if lowered.startswith("/"):
+        return None
+    if any(word in lowered for word in _RESEND_BRIEFING_BLOCKERS):
+        return None
+    bare_voice = lowered.strip(" .!") in ("voice note", "voice note please", "please voice note")
+    if not bare_voice and not any(p in lowered for p in _RESEND_BRIEFING_PATTERNS):
+        return None
+    saved = get_last_briefing()
+    if not saved:
+        return (
+            "I don't have a briefing to resend yet — send /briefing now "
+            "for a fresh one."
+        )
+    try:
+        sent_at = datetime.fromisoformat(saved.get("sent_at", ""))
+        if datetime.now(timezone.utc) - sent_at > timedelta(hours=24):
+            return (
+                "That briefing is more than a day old — send /briefing now "
+                "for a fresh one."
+            )
+    except (TypeError, ValueError):
+        pass
+    briefing_text = saved["text"]
+    if "voice" in lowered or bare_voice:
+        from backend.services.dm_voice import send_telegram_voice_reply
+
+        if await send_telegram_voice_reply(briefing_text):
+            return ""
+        # Voice failed — fall back to the text, so he still gets it.
+        return briefing_text
+    return briefing_text
 
 
 async def _summarize_conversation(name: str) -> str:
@@ -2533,6 +2616,17 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 await send_telegram_message(
                     f"I don't have {name}'s {label} saved."
                 )
+            return {"ok": True}
+
+        # --- "resend it as a voice note" / "the full thing" — re-send
+        # the last briefing exactly as it went out. Before the
+        # "briefing ..." check below (these messages have no word
+        # "briefing" in them) and before the LLM, which would invent
+        # a schedule, birthdays and DMs instead.
+        resend = await _handle_resend_briefing(text)
+        if resend is not None:
+            if resend:
+                await send_telegram_message(resend)
             return {"ok": True}
 
         # --- "briefing ..." in plain chat: show or change the briefing. ---
