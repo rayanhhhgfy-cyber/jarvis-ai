@@ -1778,6 +1778,43 @@ _RESEND_BRIEFING_BLOCKERS = (
 )
 
 
+def _wants_voice_reply(text: str) -> bool:
+    """Does Sir want THIS reply as a voice note?
+
+    He asks in plain words — "answer with a voice note", "in a voice
+    note", "as a voice note" — but the bot only sent voice when HE sent
+    a voice note, so a text request was answered with text (2026-11-11:
+    he asked twice and got the same text reply twice). This catches the
+    request in free chat; the briefing resend handler covers briefing
+    requests, and a voice note meant FOR someone else (a DM) is blocked
+    here so it is not mistaken for a reply request.
+    """
+    lowered = (text or "").lower().strip()
+    if not lowered:
+        return False
+    # A voice note for someone else, not a reply to Sir.
+    if any(word in lowered for word in ("instagram", "messenger", "dm", "conversation")):
+        return False
+    if re.search(r"send\s+\S+\s+a\s+voice", lowered):
+        return False
+    return any(p in lowered for p in _VOICE_REPLY_PATTERNS)
+
+
+_VOICE_REPLY_PATTERNS = (
+    "answer with a voice",
+    "answer in a voice",
+    "reply with a voice",
+    "reply in a voice",
+    "in a voice note",
+    "in a voice message",
+    "as a voice note",
+    "as a voice message",
+    "as voice",
+    "send it as voice",
+    "voice note please",
+)
+
+
 async def _handle_resend_briefing(text: str) -> str | None:
     """Re-send the last morning briefing, exactly as it went out.
 
@@ -2851,9 +2888,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             system_instructions=_TELEGRAM_SYSTEM,
         )
         reply = reply or "Sorry Sir, I could not answer that."
-        if spoke:
-            # He spoke — answer with voice; fall back to text if the
-            # voice reply fails.
+        if spoke or _wants_voice_reply(text):
+            # He spoke, or he asked for a voice note in plain words
+            # ("answer with a voice note", "in a voice note") — answer
+            # with voice; fall back to text if the voice reply fails.
             from backend.services.dm_voice import send_telegram_voice_reply
 
             if await send_telegram_voice_reply(reply):
