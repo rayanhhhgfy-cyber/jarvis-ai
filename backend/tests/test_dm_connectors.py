@@ -1059,7 +1059,8 @@ def test_dm_prompts_have_accuracy_rules():
     )
 
     for prompt in (_SYSTEM_PROMPT_FIRST, _SYSTEM_PROMPT_FOLLOW_UP):
-        assert "Never invent facts" in prompt
+        assert "NEVER INVENT ANYTHING" in prompt
+        assert "never make up" in prompt
         assert "Always finish your sentences" in prompt
         assert "half-finished" in prompt
 

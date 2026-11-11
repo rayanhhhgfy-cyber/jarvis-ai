@@ -182,16 +182,29 @@ def test_vault_append(monkeypatch, tmp_path):
 # --------------------------------------------------------------------
 
 def test_vault_rules(monkeypatch, tmp_path):
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
     _use_tmp_vault(monkeypatch, tmp_path)
-    assert vault.list_rules() == []
-    assert vault.rules_text() == ""
+    assert vault.list_rules() == [STANDING_RULE_NEVER_INVENT]
+    assert vault.rules_text() == f"- {STANDING_RULE_NEVER_INVENT}"
     assert vault.add_rule("always answer in Arabic", source="test") == "always answer in Arabic"
     assert vault.add_rule("never DM Omar", source="test") == "never DM Omar"
-    assert vault.list_rules() == ["always answer in Arabic", "never DM Omar"]
-    assert vault.rules_text() == "- always answer in Arabic\n- never DM Omar"
+    assert vault.list_rules() == [
+        STANDING_RULE_NEVER_INVENT,
+        "always answer in Arabic",
+        "never DM Omar",
+    ]
+    assert vault.rules_text() == (
+        f"- {STANDING_RULE_NEVER_INVENT}\n"
+        "- always answer in Arabic\n- never DM Omar"
+    )
     # An exact duplicate is not added twice.
     assert vault.add_rule("always answer in Arabic", source="test") == "always answer in Arabic"
-    assert vault.list_rules() == ["always answer in Arabic", "never DM Omar"]
+    assert vault.list_rules() == [
+        STANDING_RULE_NEVER_INVENT,
+        "always answer in Arabic",
+        "never DM Omar",
+    ]
     assert vault.add_rule("   ") is None
     assert vault.add_rule("") is None
 
@@ -236,7 +249,12 @@ def test_vault_turso_mirror_and_restore(monkeypatch, tmp_path):
     fresh_store = JsonStore("obsidian_vault.json")
     fresh_store._path = tmp_path / "fresh.json"  # does not exist
     fresh = ObsidianVault(store=fresh_store)
-    assert fresh.list_rules() == ["always answer in Arabic"]
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
+    assert fresh.list_rules() == [
+        STANDING_RULE_NEVER_INVENT,
+        "always answer in Arabic",
+    ]
     assert fresh.get_note("keep-me")["body"] == "permanent"
 
 
@@ -315,7 +333,12 @@ async def test_webhook_rule_command(monkeypatch, tmp_path):
     assert resp.status_code == 200
     assert "always answer in Arabic" in mock_send.call_args.args[0]
     assert "permanent memory" in mock_send.call_args.args[0]
-    assert vault.list_rules() == ["always answer in Arabic"]
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
+    assert vault.list_rules() == [
+        STANDING_RULE_NEVER_INVENT,
+        "always answer in Arabic",
+    ]
     # The new commands are registered in the menu.
     from backend.services.telegram_notifier import TELEGRAM_COMMANDS
 
@@ -353,7 +376,12 @@ async def test_webhook_plain_rule_sentence(monkeypatch, tmp_path):
     ):
         resp = _webhook_post("from now on, always answer in Arabic", update_id=23)
     assert resp.status_code == 200
-    assert vault.list_rules() == ["always answer in Arabic"]
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
+    assert vault.list_rules() == [
+        STANDING_RULE_NEVER_INVENT,
+        "always answer in Arabic",
+    ]
     assert "permanent memory" in mock_send.call_args.args[0]
 
 
@@ -493,3 +521,56 @@ async def test_webhook_plain_correction(monkeypatch, tmp_path):
     assert resp.status_code == 200
     assert vault.list_lessons() == ["you should have asked me first"]
     assert "Lesson learned" in mock_send.call_args.args[0]
+
+
+# --------------------------------------------------------------------
+# Standing rule: never invent anything (2026-11-11)
+# --------------------------------------------------------------------
+
+def test_standing_rule_always_first(monkeypatch, tmp_path):
+    """The never-invent rule is first even in an empty vault."""
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
+    _use_tmp_vault(monkeypatch, tmp_path)
+    assert vault.list_rules() == [STANDING_RULE_NEVER_INVENT]
+    assert "Never invent anything" in vault.rules_text()
+    vault.add_rule("always answer in Arabic", source="test")
+    rules = vault.list_rules()
+    assert rules[0] == STANDING_RULE_NEVER_INVENT
+    assert rules[1] == "always answer in Arabic"
+
+
+def test_standing_rule_not_duplicated(monkeypatch, tmp_path):
+    """Adding the same rule by hand does not duplicate it."""
+    from backend.services.obsidian_vault import STANDING_RULE_NEVER_INVENT
+
+    _use_tmp_vault(monkeypatch, tmp_path)
+    vault.add_rule(STANDING_RULE_NEVER_INVENT, source="test")
+    assert vault.list_rules().count(STANDING_RULE_NEVER_INVENT) == 1
+
+
+def test_dm_prompt_includes_never_invent(monkeypatch, tmp_path):
+    """The DM brain is told never to invent, even with no other rules."""
+    _use_tmp_vault(monkeypatch, tmp_path)
+    messages = _messages("Omar", "hello", first_reply=True)
+    system = messages[0]["content"]
+    assert "NEVER INVENT ANYTHING" in system
+    assert "Never invent anything" in system
+
+
+def test_telegram_system_includes_never_invent():
+    """The Telegram chat prompt carries the never-invent rule."""
+    from backend.routers.router_telegram import _TELEGRAM_SYSTEM
+
+    assert "NEVER INVENT ANYTHING" in _TELEGRAM_SYSTEM
+    assert "say you do not know" in _TELEGRAM_SYSTEM
+
+
+def test_llm_service_prompt_includes_never_invent():
+    """The general chat brain prompt carries the never-invent rule
+    (injected from the vault's standing rules)."""
+    from backend.services.llm_service import llm_service
+
+    prompt = llm_service._build_default_system_prompt()
+    assert "Never invent anything" in prompt
+    assert "say you do not know" in prompt

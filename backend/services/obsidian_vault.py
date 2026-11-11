@@ -45,6 +45,19 @@ _LESSONS_NOTE_TITLE = "Lessons"
 _MAX_RULES_CHARS = 2000
 _MAX_LESSONS_CHARS = 2000
 
+# Sir's standing rule (2026-11-11): never invent anything. It is
+# always first in the rules Jarvis follows, whether or not it is in
+# the vault's Rules note yet — a prompt instruction alone did not stop
+# the hallucination (the bot invented a whole briefing on 2026-11-11),
+# so the rule is enforced at every layer: here, in the DM prompts,
+# and in the Telegram chat prompt.
+STANDING_RULE_NEVER_INVENT = (
+    "Never invent anything. If you do not know something, say you do "
+    "not know. Never make up names, dates, times, prices, scores, "
+    "facts, schedules, birthdays, or messages — never fill in gaps "
+    "with guesses."
+)
+
 
 def _now_iso() -> str:
     return datetime.now(UTC).isoformat()
@@ -298,16 +311,20 @@ class ObsidianVault:
         return None
 
     def list_rules(self) -> list[str]:
-        """Every standing rule, in the order Sir stated them."""
+        """Every standing rule, in the order Sir stated them.
+
+        Sir's never-invent rule is always first, even before it is
+        written into the Rules note.
+        """
+        rules: list[str] = [STANDING_RULE_NEVER_INVENT]
         note = self.get_note(_RULES_NOTE_ID)
         if note is None:
-            return []
-        rules: list[str] = []
+            return rules
         for line in (note.get("body") or "").splitlines():
             line = line.strip()
             if line.startswith("- "):
-                rules.append(line[2:].strip())
-            elif line:
+                line = line[2:].strip()
+            if line and line != STANDING_RULE_NEVER_INVENT:
                 rules.append(line)
         return rules
 

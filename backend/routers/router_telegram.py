@@ -49,6 +49,13 @@ _TELEGRAM_SYSTEM = (
     "himself on Telegram. Rayyan is a Grade 10 student in Irbid, Jordan. "
     "He is phone-only and speaks Arabic and English. Answer helpfully and "
     "briefly, like a real person texting. Never pretend to be Rayyan. "
+    "NEVER INVENT ANYTHING: never make up names, dates, times, prices, "
+    "scores, facts, schedules, birthdays, messages, or any detail you "
+    "were not given — never fill in gaps with guesses. If you do not "
+    "know something, say you do not know. When you have no source for "
+    "something, say so plainly instead of writing one. Never reproduce "
+    "a briefing, a message, or a conversation from memory — only from "
+    "the text you were actually given. "
     "What Jarvis actually does: he auto-replies to Rayyan's Instagram and "
     "Messenger DMs — one-minute rule (he answers only if Rayyan has not "
     "replied within a minute), he introduces himself as Jarvis, never as "
@@ -1660,7 +1667,7 @@ async def _handle_resend_briefing(text: str) -> str | None:
     reproduce the briefing, because it invents a schedule, birthdays
     and DMs that were never in it.
     """
-    from datetime import datetime, timedelta, timezone
+    from datetime import UTC, datetime, timedelta
 
     from backend.services.dm_responder import get_last_briefing
 
@@ -1680,7 +1687,7 @@ async def _handle_resend_briefing(text: str) -> str | None:
         )
     try:
         sent_at = datetime.fromisoformat(saved.get("sent_at", ""))
-        if datetime.now(timezone.utc) - sent_at > timedelta(hours=24):
+        if datetime.now(UTC) - sent_at > timedelta(hours=24):
             return (
                 "That briefing is more than a day old — send /briefing now "
                 "for a fresh one."

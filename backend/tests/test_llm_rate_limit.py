@@ -234,8 +234,10 @@ def test_memory_context_capped():
 def test_system_prompt_trimmed_but_persona_intact():
     """The prompt shrank a lot without losing persona or capabilities."""
     prompt = LLMService()._build_default_system_prompt()
-    assert len(prompt) < 15000  # was 20,600 chars
-    assert len(prompt) // 4 < 3800  # was ~5,150 rough tokens
+    # Was 20,600 chars; the 16,000 cap leaves room for Sir's standing
+    # never-invent rule, injected from the vault (~270 chars).
+    assert len(prompt) < 16000
+    assert len(prompt) // 4 < 4000  # was ~5,150 rough tokens
     for needle in (
         "J.A.R.V.I.S.",
         "NEVER FAKE OUTPUT",
