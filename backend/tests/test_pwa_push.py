@@ -90,6 +90,52 @@ def test_vapid_public_key_endpoint_reports_unconfigured_in_tests():
     assert data["configured"] is False  # no VAPID keys in the test env
 
 
+def _make_vapid_pair() -> tuple[str, str]:
+    """Generate a fresh VAPID keypair (private, public), base64url, no padding."""
+    import base64
+
+    from cryptography.hazmat.primitives.asymmetric import ec
+
+    priv_key = ec.generate_private_key(ec.SECP256R1())
+    priv_num = priv_key.private_numbers().private_value
+    priv_b64 = base64.urlsafe_b64encode(priv_num.to_bytes(32, "big")).decode().rstrip("=")
+    nums = priv_key.public_key().public_numbers()
+    point = b"\x04" + nums.x.to_bytes(32, "big") + nums.y.to_bytes(32, "big")
+    pub_b64 = base64.urlsafe_b64encode(point).decode().rstrip("=")
+    return priv_b64, pub_b64
+
+
+def test_derive_vapid_public_key_matches_generated_pair():
+    from backend.notification_engine import derive_vapid_public_key
+
+    priv_b64, pub_b64 = _make_vapid_pair()
+    assert derive_vapid_public_key(priv_b64) == pub_b64
+
+
+def test_derive_vapid_public_key_rejects_bad_input():
+    from backend.notification_engine import derive_vapid_public_key
+
+    assert derive_vapid_public_key("") is None
+    assert derive_vapid_public_key("not-base64!!!") is None
+    assert derive_vapid_public_key("AAAA") is None  # too short to be a P-256 scalar
+
+
+def test_vapid_public_key_endpoint_serves_derived_key_not_stale_configured(monkeypatch):
+    from backend.config import settings
+
+    priv_b64, pub_b64 = _make_vapid_pair()
+    # Simulate a stale/wrong configured public key (the BadJwtToken bug):
+    # the endpoint must serve the key derived from the private key.
+    monkeypatch.setattr(settings, "vapid_public_key", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    monkeypatch.setattr(settings, "vapid_private_key", priv_b64)
+    with TestClient(app) as client:
+        resp = client.get("/api/notifications/vapid-public-key")
+    assert resp.status_code == 200
+    assert resp.json()["public_key"] == pub_b64
+    assert resp.json()["configured"] is True
+    assert "no-store" in resp.headers.get("cache-control", "")
+
+
 def test_push_subscribe_validation_and_save():
     with TestClient(app) as client:
         bad = client.post("/api/notifications/subscribe", json={

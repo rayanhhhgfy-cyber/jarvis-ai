@@ -22,6 +22,32 @@ from backend.config import settings
 log = get_logger("notification_engine")
 
 
+def derive_vapid_public_key(private_key_b64: str) -> str | None:
+    """Derive the VAPID public key (base64url uncompressed point) from the private key.
+
+    The server signs pushes with the private key, so the public key the
+    app subscribes with MUST be the one matching it. Deriving it here
+    makes a configured-public/private mismatch impossible: the endpoint
+    serves the derived key, never a stale configured copy.
+    """
+    try:
+        import base64
+
+        from cryptography.hazmat.primitives.asymmetric import ec
+
+        raw = base64.urlsafe_b64decode(private_key_b64 + "=" * (-len(private_key_b64) % 4))
+        if len(raw) != 32:
+            return None
+        priv = ec.derive_private_key(int.from_bytes(raw, "big"), ec.SECP256R1())
+        nums = priv.public_key().public_numbers()
+        point = b"\x04" + nums.x.to_bytes(32, "big") + nums.y.to_bytes(32, "big")
+        return base64.urlsafe_b64encode(point).decode().rstrip("=")
+    except (ValueError, TypeError):
+        # Bad base64, wrong length handled above, or scalar out of range.
+        # Callers log the failure (router + engine startup check).
+        return None
+
+
 class NotificationEngine:
     """
     Manages push notification subscriptions, caches notification history,
@@ -36,6 +62,22 @@ class NotificationEngine:
 
     async def initialize(self) -> None:
         """Load subscriptions and notification history from disk."""
+        # VAPID self-check: the public key the app subscribes with must
+        # be the one matching the private key we sign with. Log it once
+        # at startup so a mismatch is visible in the logs, not just as
+        # a BadJwtToken from the push service later.
+        if settings.vapid_private_key:
+            derived = derive_vapid_public_key(settings.vapid_private_key)
+            if derived is None:
+                log.error("vapid_private_key_invalid_cannot_derive_public_key")
+            elif derived != (settings.vapid_public_key or ""):
+                log.warning(
+                    "vapid_public_key_mismatch",
+                    configured_prefix=(settings.vapid_public_key or "")[:12],
+                    derived_prefix=derived[:12],
+                )
+            else:
+                log.info("vapid_keypair_match", public_prefix=derived[:12])
         if self._subscriptions_path.exists():
             try:
                 self._subscriptions = json.loads(self._subscriptions_path.read_text(encoding="utf-8"))

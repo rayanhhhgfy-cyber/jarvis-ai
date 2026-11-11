@@ -19,11 +19,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from pydantic import BaseModel, Field
 
 from backend.config import settings
-from backend.notification_engine import notification_engine
+from backend.notification_engine import derive_vapid_public_key, notification_engine
 from shared.logger import get_logger
 from shared.models import Notification
 
@@ -53,11 +53,32 @@ class PushSendRequest(BaseModel):
 # --------------------------------------------------------------------
 
 @router.get("/vapid-public-key")
-async def get_vapid_public_key() -> dict[str, Any]:
-    """The VAPID public key (safe to expose — it is not a secret)."""
+async def get_vapid_public_key(response: Response) -> dict[str, Any]:
+    """The VAPID public key (safe to expose — it is not a secret).
+
+    Serves the key DERIVED from the configured private key, so the key
+    the app subscribes with always matches the key the server signs
+    with — a stale configured public key can never cause BadJwtToken.
+    Marked no-store: browsers must never cache this response, or a
+    subscription made after a key rotation would be bound to the old key.
+    """
+    response.headers["Cache-Control"] = "no-store"
+    public_key = settings.vapid_public_key or ""
+    if settings.vapid_private_key:
+        derived = derive_vapid_public_key(settings.vapid_private_key)
+        if derived:
+            if derived != public_key:
+                log.warning(
+                    "vapid_public_key_mismatch_serving_derived",
+                    configured_prefix=public_key[:12] if public_key else "",
+                    derived_prefix=derived[:12],
+                )
+            public_key = derived
+        else:
+            log.error("vapid_private_key_invalid_cannot_derive_public_key")
     return {
-        "public_key": settings.vapid_public_key or "",
-        "configured": bool(settings.vapid_public_key and settings.vapid_private_key),
+        "public_key": public_key,
+        "configured": bool(public_key and settings.vapid_private_key),
     }
 
 
