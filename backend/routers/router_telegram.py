@@ -167,7 +167,8 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 # Commands answered directly here (no natural-language equivalent).
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
-    "connect", "disconnect", "call", "block", "unblock", "rule", "memory",
+    "connect", "disconnect", "call", "block", "unblock", "rule", "lesson",
+    "memory",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -437,6 +438,70 @@ def _handle_memory(query: str) -> str:
     for match in matches[:10]:
         lines.append(f"• {match['title']}: {match['snippet']}")
     return "\n".join(lines)
+
+
+# --- Lessons: what Sir corrects, so it is never repeated. -----------
+# A correction in plain words is itself the lesson: "you should have
+# asked me first" is saved as-is and injected into the brain's
+# prompt, so the same mistake is not made twice.
+
+_LESSON_PATTERNS = [
+    # English corrections.
+    re.compile(r"that'?s (wrong|incorrect|not right)", re.IGNORECASE),
+    re.compile(r"that (is|was) (wrong|incorrect|a mistake)", re.IGNORECASE),
+    re.compile(r"you('re| are| were) wrong", re.IGNORECASE),
+    re.compile(r"you got (it|that|this) wrong", re.IGNORECASE),
+    re.compile(r"you did (it|that|this) wrong", re.IGNORECASE),
+    re.compile(r"don'?t do that again", re.IGNORECASE),
+    re.compile(r"don'?t do this again", re.IGNORECASE),
+    re.compile(r"you should (have|not have|ve)", re.IGNORECASE),
+    re.compile(r"next time,?\s+(you|do|don'?t|ask|check|tell|send|remind)", re.IGNORECASE),
+    re.compile(r"you made a mistake", re.IGNORECASE),
+    re.compile(r"wrong answer", re.IGNORECASE),
+    re.compile(r"not like that", re.IGNORECASE),
+    re.compile(r"not that way", re.IGNORECASE),
+    # Arabic corrections.
+    re.compile(r"هذا (خطأ|غلط|ليس صحيح[اًا]?)"),
+    re.compile(r"أخطأت"),
+    re.compile(r"أنت (مخطئ|غلطان)"),
+    re.compile(r"لا تفعل (ذلك|هذا) مرة أخرى"),
+    re.compile(r"كان يجب أن"),
+    re.compile(r"كان عليك أن"),
+    re.compile(r"المرة القادمة"),
+]
+
+
+def _detect_lesson(text: str) -> str | None:
+    """A correction Sir stated — a lesson not to repeat — or None.
+
+    The lesson is the whole message: "you should have asked me
+    first" is itself the thing to remember. A one-word message is
+    never a lesson.
+    """
+    text = (text or "").strip()
+    if not text or len(text.split()) < 2:
+        return None
+    for pattern in _LESSON_PATTERNS:
+        if pattern.search(text):
+            return text
+    return None
+
+
+def _handle_lesson(text: str) -> str:
+    """The /lesson reply: save a lesson to the permanent memory."""
+    from backend.services.obsidian_vault import vault as obsidian_vault
+
+    text = (text or "").strip()
+    if not text:
+        return (
+            "Usage: /lesson don't send the summary before I approve it — "
+            "or just correct me in plain words, for example "
+            "'you should have asked me first'."
+        )
+    saved = obsidian_vault.add_lesson(text, source="telegram")
+    if saved is None:
+        return "Tell me the lesson — for example '/lesson ask me before sending'."
+    return f"Lesson learned — saved to my permanent memory:\n• {saved}\nI will not make that mistake again."
 
 
 def _handle_connect_command(chat_id: str, text: str) -> str:
@@ -1077,6 +1142,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         _handle_rule(text[len("/rule"):].strip())
                     )
+                elif value == "lesson":
+                    await send_telegram_message(
+                        _handle_lesson(text[len("/lesson"):].strip())
+                    )
                 elif value == "memory":
                     await send_telegram_message(
                         _handle_memory(text[len("/memory"):].strip())
@@ -1377,6 +1446,15 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         rule_text = _detect_rule(text)
         if rule_text:
             await send_telegram_message(_handle_rule(rule_text))
+            return {"ok": True}
+
+        # --- A correction in plain words — save it as a lesson so the
+        # same mistake is never repeated. "you should have asked me
+        # first", "that's wrong", "next time ask me". After the rule
+        # detector, so a standing rule wins when both match.
+        lesson_text = _detect_lesson(text)
+        if lesson_text:
+            await send_telegram_message(_handle_lesson(lesson_text))
             return {"ok": True}
 
         # --- "send <name> a message <time>: <text>" — scheduled DM. ---

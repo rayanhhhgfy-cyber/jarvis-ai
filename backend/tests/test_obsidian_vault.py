@@ -399,3 +399,97 @@ def test_remember_also_saves_fact_to_vault(monkeypatch, tmp_path):
     facts = vault.get_note("facts")
     assert facts is not None
     assert "Omar loves football" in facts["body"]
+
+
+# --------------------------------------------------------------------
+# Lessons: mistakes not to repeat
+# --------------------------------------------------------------------
+
+def test_vault_lessons(monkeypatch, tmp_path):
+    _use_tmp_vault(monkeypatch, tmp_path)
+    assert vault.list_lessons() == []
+    assert vault.lessons_text() == ""
+    assert vault.add_lesson("you should have asked me first", source="test") == (
+        "you should have asked me first"
+    )
+    assert vault.add_lesson("don't send the summary before I approve it", source="test")
+    assert vault.list_lessons() == [
+        "you should have asked me first",
+        "don't send the summary before I approve it",
+    ]
+    assert vault.lessons_text() == (
+        "- you should have asked me first\n"
+        "- don't send the summary before I approve it"
+    )
+    # An exact duplicate is not added twice.
+    vault.add_lesson("you should have asked me first", source="test")
+    assert len(vault.list_lessons()) == 2
+    assert vault.add_lesson("   ") is None
+    assert vault.add_lesson("") is None
+
+
+def test_detect_lesson_patterns():
+    from backend.routers.router_telegram import _detect_lesson
+
+    assert _detect_lesson("you should have asked me first") == "you should have asked me first"
+    assert _detect_lesson("that's wrong, the meeting is Friday") == "that's wrong, the meeting is Friday"
+    assert _detect_lesson("you got it wrong") == "you got it wrong"
+    assert _detect_lesson("don't do that again") == "don't do that again"
+    assert _detect_lesson("next time ask me first") == "next time ask me first"
+    assert _detect_lesson("you made a mistake, the price is 12 not 20") == "you made a mistake, the price is 12 not 20"
+    assert _detect_lesson("هذا خطأ، السعر 12 وليس 20") == "هذا خطأ، السعر 12 وليس 20"
+    assert _detect_lesson("كان يجب أن تسألني أولاً") == "كان يجب أن تسألني أولاً"
+    assert _detect_lesson("المرة القادمة اسألني أولاً") == "المرة القادمة اسألني أولاً"
+    # Not lessons.
+    assert _detect_lesson("never mind") is None
+    assert _detect_lesson("hello") is None
+    assert _detect_lesson("wrong") is None  # one word
+    assert _detect_lesson("") is None
+    assert _detect_lesson("remind me to call Omar at 5pm") is None
+    assert _detect_lesson("see you next time") is None
+
+
+def test_dm_prompt_includes_vault_lessons(monkeypatch, tmp_path):
+    _use_tmp_vault(monkeypatch, tmp_path)
+    vault.add_lesson("you should have asked me first", source="test")
+    messages = _messages("Omar", "hello", first_reply=True)
+    system = messages[0]["content"]
+    assert "you should have asked me first" in system
+    assert "Lessons learned" in system
+
+
+@pytest.mark.asyncio
+async def test_webhook_lesson_command(monkeypatch, tmp_path):
+    _prep_webhook(monkeypatch, tmp_path)
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _webhook_post("/lesson don't send the summary before I approve it", update_id=31)
+    assert resp.status_code == 200
+    assert "don't send the summary" in mock_send.call_args.args[0]
+    assert "permanent memory" in mock_send.call_args.args[0]
+    assert vault.list_lessons() == ["don't send the summary before I approve it"]
+    from backend.services.telegram_notifier import TELEGRAM_COMMANDS
+
+    names = [c["command"] for c in TELEGRAM_COMMANDS]
+    assert "lesson" in names
+
+
+@pytest.mark.asyncio
+async def test_webhook_plain_correction(monkeypatch, tmp_path):
+    _prep_webhook(monkeypatch, tmp_path)
+    fake_responder = MagicMock()
+    fake_responder.get_pending_draft.return_value = None
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_send,
+        patch("backend.services.dm_responder.dm_responder", fake_responder),
+    ):
+        resp = _webhook_post("you should have asked me first", update_id=32)
+    assert resp.status_code == 200
+    assert vault.list_lessons() == ["you should have asked me first"]
+    assert "Lesson learned" in mock_send.call_args.args[0]

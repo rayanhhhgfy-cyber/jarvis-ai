@@ -176,6 +176,10 @@ def _messages(
     rules = obsidian_vault.rules_text()
     if rules:
         prompt += f"\n\nSir's standing rules (from his permanent memory — follow them):\n{rules}"
+    # Lessons learned — mistakes Sir corrected, not to be repeated.
+    lessons = obsidian_vault.lessons_text()
+    if lessons:
+        prompt += f"\n\nLessons learned from Sir (mistakes not to repeat):\n{lessons}"
     user_text = f"DM from {sender_name}: {incoming_text}\n\nWrite the reply only."
     if web_context:
         user_text = (

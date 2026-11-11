@@ -551,6 +551,13 @@ class LLMService:
                     + vault_rules
                     + "\n"
                 )
+            vault_lessons = obsidian_vault.lessons_text()
+            if vault_lessons:
+                base += (
+                    "\n\n=== LESSONS LEARNED (mistakes not to repeat) ===\n"
+                    + vault_lessons
+                    + "\n"
+                )
         except (OSError, RuntimeError, ValueError) as e:
             log.warning("obsidian_rules_inject_failed", error=str(e))
 

@@ -77,6 +77,8 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/unblock Omar"},
     {"command": "rule", "description": "Save a standing rule to Jarvis's permanent memory",
      "usage": "/rule always answer me in Arabic"},
+    {"command": "lesson", "description": "Save a lesson so Jarvis never repeats a mistake",
+     "usage": "/lesson don't send the summary before I approve it"},
     {"command": "memory", "description": "Search Jarvis's permanent memory (Obsidian vault)",
      "usage": "/memory [words]"},
     {"command": "birthdaymsg", "description": "Set the birthday wish Jarvis sends",

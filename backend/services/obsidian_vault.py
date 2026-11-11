@@ -40,7 +40,10 @@ _RULES_NOTE_ID = "rules"
 _RULES_NOTE_TITLE = "Rules"
 _FACTS_NOTE_ID = "facts"
 _FACTS_NOTE_TITLE = "Facts"
+_LESSONS_NOTE_ID = "lessons"
+_LESSONS_NOTE_TITLE = "Lessons"
 _MAX_RULES_CHARS = 2000
+_MAX_LESSONS_CHARS = 2000
 
 
 def _now_iso() -> str:
@@ -330,6 +333,54 @@ class ObsidianVault:
             log.info("obsidian_fact_added", fact=text)
             return text
         return None
+
+    # -- lessons ---------------------------------------------------
+
+    def add_lesson(self, text: str, source: str = "telegram") -> str | None:
+        """Save a lesson — a mistake not to repeat — to the Lessons note.
+
+        Lessons are what Sir corrects: "you should have asked first",
+        "that was wrong, do it this way". The brain injects them into
+        its prompt alongside the rules, so the same mistake is not
+        made twice. Returns the lesson, or None.
+        """
+        text = (text or "").strip()
+        if not text:
+            return None
+        vault = self._load_vault()
+        ok = self._append_line(
+            vault,
+            _LESSONS_NOTE_ID,
+            _LESSONS_NOTE_TITLE,
+            ["lesson"],
+            f"- {text}",
+            source,
+        )
+        if ok:
+            log.info("obsidian_lesson_added", lesson=text)
+            return text
+        return None
+
+    def list_lessons(self) -> list[str]:
+        """Every lesson learned, in the order Sir taught them."""
+        note = self.get_note(_LESSONS_NOTE_ID)
+        if note is None:
+            return []
+        lessons: list[str] = []
+        for line in (note.get("body") or "").splitlines():
+            line = line.strip()
+            if line.startswith("- "):
+                lessons.append(line[2:].strip())
+            elif line:
+                lessons.append(line)
+        return lessons
+
+    def lessons_text(self, max_chars: int = _MAX_LESSONS_CHARS) -> str:
+        """Lessons as a Markdown list, ready to inject into a prompt."""
+        lessons = self.list_lessons()
+        if not lessons:
+            return ""
+        return "\n".join(f"- {l}" for l in lessons)[:max_chars]
 
 
 # One vault for the whole backend. The JsonStore underneath mirrors to
