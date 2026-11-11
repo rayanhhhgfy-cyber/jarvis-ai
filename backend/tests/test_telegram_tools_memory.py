@@ -308,19 +308,64 @@ def test_telegram_tools_curated():
 
     tools = telegram_tools()
     names = [t.name for t in tools]
-    assert len(tools) == 11
-    assert all(n.startswith("telegram.") for n in names)
-    assert "telegram.send_dm" in names
-    assert "telegram.set_reminder" in names
-    assert "telegram.send_briefing" in names
-    assert "telegram.web_search" in names
-    # No shell, no code execution, no deleting, no payments.
+    # The 11 core tools are always there; the GitHub/Vercel computer
+    # tools join them only when the registry has them loaded.
+    assert len(tools) >= 11
+    for required in (
+        "telegram.send_dm",
+        "telegram.set_reminder",
+        "telegram.send_briefing",
+        "telegram.web_search",
+    ):
+        assert required in names
+    assert all(n.startswith(("telegram.", "github.", "vercel.")) for n in names)
+    # No shell, no code execution, no deleting, no payments — and no
+    # merging a PR or cancelling a deploy from free chat.
+    assert "github.merge_pr" not in names
+    assert "vercel.cancel_deployment" not in names
     assert not any("shell" in n or "exec" in n or "delete" in n for n in names)
     # Every tool renders an OpenAI schema the model can call.
     for t in tools:
         schema = t.to_openai_schema()
         assert schema["function"]["name"] == t.name
         assert "parameters" in schema["function"]
+
+
+def test_telegram_tools_include_computer_when_registered(monkeypatch):
+    """GitHub + Vercel tools join the set once the registry has them."""
+    from backend.services.telegram_tools import telegram_tools
+    from backend.tools.registry import RiskTier, Tool, get_registry
+
+    async def fake_read(owner: str, repo: str, path: str) -> str:
+        return "file contents"
+
+    async def fake_merge(owner: str, repo: str, number: int) -> str:
+        return "merged"
+
+    registry = get_registry()
+    registry.register(Tool(
+        name="github.read_file",
+        description="Read a file.",
+        func=fake_read,
+        parameters={"type": "object", "properties": {}},
+        risk_tier=RiskTier.TIER_0_OBSERVE,
+        category="github",
+    ))
+    registry.register(Tool(
+        name="github.merge_pr",
+        description="Merge a PR.",
+        func=fake_merge,
+        parameters={"type": "object", "properties": {}},
+        risk_tier=RiskTier.TIER_4_EXTERNAL,
+        category="github_write",
+    ))
+    try:
+        names = [t.name for t in telegram_tools()]
+    finally:
+        registry.unregister("github.read_file")
+        registry.unregister("github.merge_pr")
+    assert "github.read_file" in names
+    assert "github.merge_pr" not in names
 
 
 @pytest.mark.asyncio
@@ -398,3 +443,75 @@ async def test_webhook_free_chat_uses_tool_loop(monkeypatch, tmp_path):
     assert "telegram.send_dm" in tool_names
     assert "telegram.set_reminder" in tool_names
     assert mock_send.call_args.args[0] == "done, sir."
+
+
+# --------------------------------------------------------------------
+# Gemini (the better free brain)
+# --------------------------------------------------------------------
+
+def _gemini_response(text: str):
+    return httpx.Response(
+        200,
+        json={"candidates": [{"content": {"parts": [{"text": text}]}}]},
+    )
+
+
+@pytest.mark.asyncio
+async def test_gemini_reply_uses_free_key(monkeypatch):
+    """Gemini 2.5 Flash answers when its free key is set."""
+    from backend.services.llm_service import llm_service
+
+    monkeypatch.setattr("backend.config.settings.gemini_api_key", "fake-gemini")
+    with patch(
+        "httpx.AsyncClient.post",
+        new=AsyncMock(return_value=_gemini_response("Hello from Gemini, sir.")),
+    ):
+        reply = await llm_service._gemini_reply(
+            [{"role": "system", "content": "You are Jarvis."},
+             {"role": "user", "content": "hello"}]
+        )
+    assert reply == "Hello from Gemini, sir."
+
+
+@pytest.mark.asyncio
+async def test_gemini_reply_none_without_key(monkeypatch):
+    """No key, no Gemini — the caller falls through."""
+    from backend.services.llm_service import llm_service
+
+    monkeypatch.setattr("backend.config.settings.gemini_api_key", "")
+    reply = await llm_service._gemini_reply(
+        [{"role": "user", "content": "hello"}]
+    )
+    assert reply is None
+
+
+@pytest.mark.asyncio
+async def test_get_response_falls_back_to_gemini(monkeypatch):
+    """Groq down + Gemini key set = the Gemini answer, not an error."""
+    from backend.services.llm_service import llm_service
+
+    monkeypatch.setattr("backend.config.settings.groq_api_key", "fake-groq")
+    monkeypatch.setattr("backend.config.settings.gemini_api_key", "fake-gemini")
+    monkeypatch.setattr("backend.config.settings.openrouter_api_key", "")
+    with (
+        patch.object(
+            llm_service, "_post_chat",
+            new=AsyncMock(return_value=(False, "down", False)),
+        ),
+        patch(
+            "httpx.AsyncClient.post",
+            new=AsyncMock(return_value=_gemini_response("Gemini here, sir.")),
+        ),
+        patch(
+            "backend.services.llm_service.web_search_service"
+            ".get_ip_location",
+            new=AsyncMock(return_value=None),
+        ),
+        patch(
+            "backend.services.memory_service.memory_service"
+            ".get_context_for_query",
+            new=AsyncMock(return_value=MagicMock()),
+        ),
+    ):
+        reply = await llm_service.get_response("hello")
+    assert reply == "Gemini here, sir."

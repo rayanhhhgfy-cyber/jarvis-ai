@@ -240,7 +240,7 @@ async def _web_search(query: str) -> str:
 
 def telegram_tools() -> list[Tool]:
     """The curated tools the Telegram brain may call."""
-    return [
+    tools = [
         _tool(
             "telegram.send_dm",
             "Send a DM to a person by name (Instagram or Messenger). Use when Sir asks Jarvis to message someone.",
@@ -333,6 +333,57 @@ def telegram_tools() -> list[Tool]:
             RiskTier.TIER_0_OBSERVE,
         ),
     ]
+    # The computer: Jarvis's own GitHub + Vercel tools, pulled from the
+    # registry so he can read code, edit files and deploy from a chat.
+    # Two are deliberately left out: merging a PR and cancelling a
+    # deploy are too final for free chat — those stay behind the
+    # explicit /github and /vercel commands.
+    tools.extend(_registry_tools(_COMPUTER_TOOL_NAMES))
+    return tools
+
+
+# GitHub + Vercel tools the Telegram brain may call. The names are the
+# registry tool names; anything not registered is skipped silently
+# (e.g. in tests, or before the plugins load).
+_COMPUTER_TOOL_NAMES = [
+    # GitHub reads
+    "github.list_repos",
+    "github.read_file",
+    "github.list_issues",
+    "github.list_prs",
+    "github.list_commits",
+    "github.search_repos",
+    "github.user",
+    # GitHub writes (no merge_pr — too final for free chat)
+    "github.create_issue",
+    "github.comment_issue",
+    "github.create_pr",
+    "github.create_or_update_file",
+    "github.trigger_workflow",
+    # Vercel reads
+    "vercel.list_projects",
+    "vercel.list_deployments",
+    "vercel.get_deployment",
+    "vercel.list_domains",
+    # Vercel writes (no cancel_deployment — too final for free chat)
+    "vercel.redeploy",
+]
+
+
+def _registry_tools(names: list[str]) -> list[Tool]:
+    """Registry tools by name, skipping any that are not registered."""
+    try:
+        from backend.tools.registry import get_registry
+
+        registry = get_registry()
+    except (ImportError, OSError, RuntimeError, ValueError):
+        return []
+    tools: list[Tool] = []
+    for name in names:
+        tool = registry.get(name)
+        if tool is not None and tool.enabled:
+            tools.append(tool)
+    return tools
 
 
 def telegram_tool_schemas() -> list[dict[str, Any]]:

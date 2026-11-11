@@ -306,6 +306,12 @@ class LLMService:
         else:
             log.warning("groq_api_key_missing")
 
+        # Gemini 2.5 Flash (free tier) — the better free brain. It runs
+        # before the OpenRouter fallback and only needs Sir's free key.
+        gemini_reply = await self._gemini_reply(messages)
+        if gemini_reply:
+            return gemini_reply
+
         openrouter_key = settings.openrouter_api_key
         if openrouter_key:
             openrouter_headers = {
@@ -460,6 +466,62 @@ class LLMService:
             chat_history=chat_history,
             system_instructions=system_instructions,
         )
+
+    async def _gemini_reply(self, messages: list[dict[str, Any]]) -> str | None:
+        """Gemini 2.5 Flash via Google AI Studio (free tier, no card).
+
+        The better free brain: stronger than the Groq free models at
+        following instructions and reasoning. It only works once Sir
+        sets GEMINI_API_KEY (a free key from Google AI Studio) — until
+        then this returns None and the caller falls through.
+        The messages are flattened into one prompt (Gemini's native
+        generateContent API), the same way the DM brain does it.
+        """
+        api_key = settings.gemini_api_key
+        if not api_key:
+            return None
+        model = settings.gemini_model or "gemini-2.5-flash"
+        url = (
+            "https://generativelanguage.googleapis.com/v1beta/models/"
+            f"{model}:generateContent"
+        )
+        parts = []
+        for m in messages:
+            role = m.get("role", "user")
+            content = (m.get("content") or "").strip()
+            if not content:
+                continue
+            label = {"system": "Instructions", "user": "Rayyan", "assistant": "Jarvis"}.get(role, role)
+            parts.append(f"{label}: {content}")
+        prompt = "\n\n".join(parts)
+        try:
+            async with httpx.AsyncClient(timeout=60.0, trust_env=False) as client:
+                resp = await client.post(
+                    url,
+                    params={"key": api_key},
+                    json={
+                        "contents": [{"parts": [{"text": prompt}]}],
+                        "generationConfig": {
+                            "maxOutputTokens": settings.llm_max_tokens,
+                            "temperature": 0.5,
+                        },
+                    },
+                )
+        except (httpx.HTTPError, ValueError) as e:
+            log.debug("gemini_request_failed", error=str(e))
+            return None
+        if resp.status_code != 200:
+            log.debug("gemini_bad_status", status=resp.status_code)
+            return None
+        try:
+            candidates = resp.json().get("candidates") or []
+            if not candidates:
+                return None
+            parts_out = (candidates[0].get("content") or {}).get("parts") or []
+            text = "".join(p.get("text", "") for p in parts_out).strip()
+        except (ValueError, KeyError, IndexError, AttributeError):
+            return None
+        return text or None
 
     async def _post_chat(
         self,
