@@ -493,6 +493,8 @@ async def lifespan(app: FastAPI):
             "plugins.podcast.plugin",
             "plugins.notes_todo.plugin",
             "plugins.github_free.plugin",
+            "plugins.github_write.plugin",
+            "plugins.vercel.plugin",
             "plugins.media_local.plugin",
             "plugins.backup_local.plugin",
             # Phase 11 — autonomous marketing agency

@@ -27,6 +27,7 @@ import re
 import time
 from typing import Any
 
+import httpx
 from fastapi import APIRouter, Request
 
 from backend.config import settings
@@ -75,10 +76,10 @@ _TELEGRAM_SYSTEM = (
     "language Rayyan used in his message (Arabic or English). Never "
     "answer in both languages in the same reply. "
     "On Telegram he takes "
-    "23 slash commands: /send /summarize /schedule /remind /busy /free "
+    "31 slash commands: /send /summarize /schedule /remind /busy /free "
     "/remember /search /rules /addrule /delrule /unmute /birthdaymsg "
     "/welcomemsg /activity /briefing /status /cancel /responder /connect "
-    "/disconnect. "
+    "/disconnect /call /block /unblock /rule /lesson /memory /github /vercel. "
     "Already built — never suggest these as new ideas: reminders, "
     "summaries, voice-to-text, scheduled messages, contact memory, "
     "birthday wishes, spam muting, quiet hours, per-person tone, custom "
@@ -168,12 +169,16 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
     "connect", "disconnect", "call", "block", "unblock", "rule", "lesson",
-    "memory",
+    "memory", "github", "vercel",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
 # if the backend restarts mid-flow, Sir just sends /connect again.
 _pending_connect: dict[str, str] = {}
+
+# Chat id -> service waiting for an API token after /connect github or
+# /connect vercel. Same in-memory rule as _pending_connect.
+_pending_token: dict[str, str] = {}
 
 # Command -> natural-language template. "{args}" is the text after the
 # command. These reuse the intent handlers below, so a slash command
@@ -267,7 +272,7 @@ def _activity_text(responder: Any) -> str:
     return "\n".join(lines)
 
 
-def _status_text(responder: Any) -> str:
+async def _status_text(responder: Any) -> str:
     """The /status reply: responder state + per-platform connection."""
     status = responder.get_status()
     lines = [
@@ -286,11 +291,38 @@ def _status_text(responder: Any) -> str:
         if info.get("last_error"):
             line += f" (last error: {str(info['last_error'])[:80]})"
         lines.append(line)
+    # Service connectors (GitHub / Vercel): live-checked, so a revoked
+    # token shows as not connected instead of stale.
+    try:
+        from backend.services import github_connector, vercel_connector
+
+        gh = await github_connector.status()
+        lines.append(
+            "- GitHub: "
+            + (
+                f"connected ({gh.get('login')})"
+                if gh.get("connected")
+                else "not connected"
+            )
+        )
+        vc = await vercel_connector.status()
+        lines.append(
+            "- Vercel: "
+            + (
+                f"connected ({vc.get('username')})"
+                if vc.get("connected")
+                else "not connected"
+            )
+        )
+    except (httpx.HTTPError, OSError, RuntimeError, ValueError) as e:
+        log.warning("telegram_status_connectors_failed", error=str(e))
     return "\n".join(lines)
 
 
 def _handle_cancel(
-    responder: Any, cancelled_connect: str | None = None
+    responder: Any,
+    cancelled_connect: str | None = None,
+    cancelled_token: str | None = None,
 ) -> str:
     """The /cancel reply: drop a pending draft, meeting, or connect wait."""
     from backend.services import dm_auth
@@ -300,6 +332,9 @@ def _handle_cancel(
         prefix = (
             f"Cancelled the {dm_auth.PLATFORMS[cancelled_connect]['name']} connect. "
         )
+    elif cancelled_token:
+        name = "GitHub" if cancelled_token == "github" else "Vercel"
+        prefix = f"Cancelled the {name} connect. "
     draft = responder.discard_pending_draft()
     if draft:
         return (
@@ -505,19 +540,37 @@ def _handle_lesson(text: str) -> str:
 
 
 def _handle_connect_command(chat_id: str, text: str) -> str:
-    """The /connect command: start the cookies flow for a platform.
+    """The /connect command: start the cookies flow for a DM platform,
+    or the token flow for a service connector (GitHub / Vercel).
 
-    Only arms the wait — the cookies themselves arrive as Sir's next
-    message and are handled by _handle_cookies_message.
+    Only arms the wait — the cookies or the token arrive as Sir's next
+    message and are handled before anything else in the webhook.
     """
     from backend.services import dm_auth
 
     parts = text.strip().split()
     arg = parts[1].lower() if len(parts) > 1 else ""
+    if arg in ("github", "vercel"):
+        name = "GitHub" if arg == "github" else "Vercel"
+        _pending_token[chat_id] = arg
+        how = (
+            "a personal access token (GitHub → Settings → Developer settings "
+            "→ Personal access tokens → Tokens (classic), with repo scope)"
+            if arg == "github"
+            else "an API token (Vercel → Account Settings → Tokens → Create)"
+        )
+        return (
+            f"Send me your {name} token now — paste it as your next message. "
+            f"Create {how}. "
+            "I'll check it still works, then store it encrypted. "
+            "I won't show it back to you, and you can delete the message "
+            "from this chat yourself afterwards."
+        )
     if arg not in dm_auth.PLATFORMS:
         return (
-            "Usage: /connect instagram — or /connect messenger. "
-            "I'll ask for the cookies next."
+            "Usage: /connect instagram — /connect messenger — "
+            "/connect github — or /connect vercel. "
+            "I'll ask for the cookies or the token next."
         )
     name = dm_auth.PLATFORMS[arg]["name"]
     _pending_connect[chat_id] = arg
@@ -529,24 +582,240 @@ def _handle_connect_command(chat_id: str, text: str) -> str:
     )
 
 
-def _handle_disconnect_command(text: str) -> str:
-    """The /disconnect command: remove a platform's stored credentials.
+async def _handle_token_message(service: str, raw: str) -> str:
+    """Connect a service (GitHub / Vercel) with the token Sir pasted.
 
-    This is the ONLY way Jarvis disconnects a platform — nothing in the
-    code disconnects on its own. Only Sir typing this command does it.
+    Same trust pattern as cookies: verify the token with a real API
+    call BEFORE storing anything, store encrypted, and never log or
+    echo the token back.
+    """
+    tok = (raw or "").strip()
+    if service == "github":
+        from backend.services import github_connector
+
+        info = await github_connector.verify_token(tok)
+        if info is None:
+            return (
+                "That GitHub token didn't work — it may be expired or lack "
+                "the repo scope. Create a fresh one and send /connect github again."
+            )
+        github_connector.save_token(tok)
+        return (
+            f"Connected to GitHub as {info.get('login')}. "
+            "I can now read and write your repos — try /github repos."
+        )
+    from backend.services import vercel_connector
+
+    info = await vercel_connector.verify_token(tok)
+    if info is None:
+        return (
+            "That Vercel token didn't work — it may be expired. Create a "
+            "fresh one and send /connect vercel again."
+        )
+    vercel_connector.save_token(tok)
+    return (
+        f"Connected to Vercel as {info.get('username')}. "
+        "I can now read and write your projects — try /vercel projects."
+    )
+
+
+def _handle_disconnect_command(text: str) -> str:
+    """The /disconnect command: remove a platform's stored credentials,
+    or a service connector's stored token.
+
+    This is the ONLY way Jarvis disconnects a platform or a connector —
+    nothing in the code disconnects on its own. Only Sir typing this
+    command does it.
     """
     from backend.services import dm_auth
 
     parts = text.strip().split()
     arg = parts[1].lower() if len(parts) > 1 else ""
+    if arg == "github":
+        from backend.services import github_connector
+
+        if not github_connector.delete_token():
+            return "GitHub isn't connected."
+        return (
+            "Disconnected GitHub. Jarvis can no longer read or write "
+            "your repos. Reconnect any time with /connect github."
+        )
+    if arg == "vercel":
+        from backend.services import vercel_connector
+
+        if not vercel_connector.delete_token():
+            return "Vercel isn't connected."
+        return (
+            "Disconnected Vercel. Jarvis can no longer read or write "
+            "your projects. Reconnect any time with /connect vercel."
+        )
     if arg not in dm_auth.PLATFORMS:
-        return "Usage: /disconnect instagram — or /disconnect messenger."
+        return (
+            "Usage: /disconnect instagram — /disconnect messenger — "
+            "/disconnect github — or /disconnect vercel."
+        )
     name = dm_auth.PLATFORMS[arg]["name"]
     if not dm_auth.delete_connector(arg):
         return f"{name} isn't connected."
     return (
         f"Disconnected {name}. Jarvis will stop replying to {name} DMs. "
         f"Reconnect any time with /connect {arg}."
+    )
+
+
+async def _handle_github_command(text: str) -> str:
+    """The /github command: read and write Sir's GitHub.
+
+    /github repos — his repos, most recently updated first.
+    /github issues <owner/repo> — open issues.
+    /github prs <owner/repo> — open pull requests.
+    /github commits <owner/repo> — recent commits.
+    /github issue <owner/repo> | <title> — open a new issue.
+    """
+    from backend.services import github_connector
+
+    if not github_connector.is_connected():
+        return "GitHub isn't connected — send /connect github first."
+    parts = (text or "").strip().split(None, 1)
+    action = (parts[0].lower() if parts else "")
+    rest = parts[1].strip() if len(parts) > 1 else ""
+    if action == "repos":
+        result = await github_connector.list_repos("me", limit=10)
+        if not result.get("ok"):
+            return f"GitHub said no: {result.get('error', 'unknown error')}"
+        repos = result.get("repos") or []
+        if not repos:
+            return "No repos found on your GitHub account."
+        lines = ["Your repos:"]
+        for r in repos:
+            lines.append(
+                f"- {r.get('full_name')} "
+                f"(⭐ {r.get('stars') or 0} · {r.get('language') or '—'})"
+            )
+        return "\n".join(lines)
+    if action in ("issues", "prs", "commits"):
+        owner_repo = rest.split()[0] if rest else ""
+        if "/" not in owner_repo:
+            return f"Usage: /github {action} owner/repo"
+        owner, repo = owner_repo.split("/", 1)
+        if action == "issues":
+            result = await github_connector.list_issues(owner, repo, limit=10)
+            items = result.get("issues") or []
+            label = "issues"
+        elif action == "prs":
+            result = await github_connector.list_prs(owner, repo, limit=10)
+            items = result.get("prs") or []
+            label = "pull requests"
+        else:
+            result = await github_connector.list_commits(owner, repo, limit=10)
+            items = result.get("commits") or []
+            label = "commits"
+        if not result.get("ok"):
+            return f"GitHub said no: {result.get('error', 'unknown error')}"
+        if not items:
+            return f"No open {label} in {owner}/{repo}."
+        lines = [f"{owner}/{repo} — {label}:"]
+        for item in items:
+            if action == "commits":
+                lines.append(
+                    f"- {item.get('sha')} {item.get('message')} "
+                    f"({item.get('author')})"
+                )
+            else:
+                lines.append(f"- #{item.get('number')} {item.get('title')}")
+        return "\n".join(lines)
+    if action == "issue":
+        if "|" not in rest:
+            return "Usage: /github issue owner/repo | title of the issue"
+        owner_repo, title = rest.split("|", 1)
+        owner_repo = owner_repo.strip()
+        title = title.strip()
+        if "/" not in owner_repo or not title:
+            return "Usage: /github issue owner/repo | title of the issue"
+        owner, repo = owner_repo.split("/", 1)
+        result = await github_connector.create_issue(owner, repo, title)
+        if not result.get("ok"):
+            return f"GitHub said no: {result.get('error', 'unknown error')}"
+        return f"Issue #{result.get('number')} opened in {owner}/{repo}."
+    return (
+        "Usage: /github repos — /github issues owner/repo — "
+        "/github prs owner/repo — /github commits owner/repo — "
+        "/github issue owner/repo | title"
+    )
+
+
+async def _handle_vercel_command(text: str) -> str:
+    """The /vercel command: read and write Sir's Vercel.
+
+    /vercel projects — his projects.
+    /vercel deployments [project] — recent deployments.
+    /vercel status <project> — the latest deployment of a project.
+    /vercel redeploy <deployment-id> — redeploy it.
+    """
+    from backend.services import vercel_connector
+
+    if not vercel_connector.is_connected():
+        return "Vercel isn't connected — send /connect vercel first."
+    parts = (text or "").strip().split(None, 1)
+    action = (parts[0].lower() if parts else "")
+    rest = parts[1].strip() if len(parts) > 1 else ""
+    if action == "projects":
+        result = await vercel_connector.list_projects(limit=10)
+        if not result.get("ok"):
+            return f"Vercel said no: {result.get('error', 'unknown error')}"
+        projects = result.get("projects") or []
+        if not projects:
+            return "No projects found on your Vercel account."
+        lines = ["Your Vercel projects:"]
+        for p in projects:
+            lines.append(
+                f"- {p.get('name')} ({p.get('framework') or '—'})"
+            )
+        return "\n".join(lines)
+    if action == "deployments":
+        project = rest.split()[0] if rest else ""
+        result = await vercel_connector.list_deployments(project, limit=10)
+        if not result.get("ok"):
+            return f"Vercel said no: {result.get('error', 'unknown error')}"
+        deployments = result.get("deployments") or []
+        if not deployments:
+            return "No deployments found."
+        lines = ["Recent deployments:"]
+        for d in deployments:
+            lines.append(
+                f"- {d.get('name')} · {d.get('state')} · "
+                f"https://{d.get('url')} · {d.get('id')}"
+            )
+        return "\n".join(lines)
+    if action == "status":
+        project = rest.split()[0] if rest else ""
+        if not project:
+            return "Usage: /vercel status <project-name>"
+        result = await vercel_connector.list_deployments(project, limit=1)
+        if not result.get("ok"):
+            return f"Vercel said no: {result.get('error', 'unknown error')}"
+        deployments = result.get("deployments") or []
+        if not deployments:
+            return f"No deployments found for {project}."
+        d = deployments[0]
+        return (
+            f"{project}: latest deployment is {d.get('state')} — "
+            f"https://{d.get('url')} ({d.get('id')})"
+        )
+    if action == "redeploy":
+        deployment_id = rest.split()[0] if rest else ""
+        if not deployment_id:
+            return "Usage: /vercel redeploy <deployment-id>"
+        result = await vercel_connector.redeploy(deployment_id)
+        if not result.get("ok"):
+            return f"Vercel said no: {result.get('error', 'unknown error')}"
+        return (
+            f"Redeploy started: https://{result.get('url')} "
+            f"({result.get('id')})"
+        )
+    return (
+        "Usage: /vercel projects — /vercel deployments [project] — "
+        "/vercel status <project> — /vercel redeploy <deployment-id>"
     )
 
 
@@ -1021,6 +1290,7 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             from backend.services.telegram_notifier import download_telegram_file
 
             _pending_connect.pop(chat_id, None)
+            _pending_token.pop(chat_id, None)
             audio = await download_telegram_file(voice["file_id"])
             transcript = (
                 await transcribe_audio_bytes(audio) if audio else None
@@ -1049,6 +1319,7 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             from backend.services.telegram_notifier import download_telegram_file
 
             _pending_connect.pop(chat_id, None)
+            _pending_token.pop(chat_id, None)
             if photo:
                 file_id = (photo[-1] or {}).get("file_id", "")
                 data = await download_telegram_file(file_id) if file_id else None
@@ -1072,13 +1343,22 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         if not text:
             return {"ok": True}
 
-        # --- Pending connect: the next message after /connect is cookies. ---
-        # Handled here, before anything else, so the cookies never reach
-        # the LLM, a draft reply, or any other handler — and they are never
-        # logged or echoed back. A slash command cancels the wait instead.
+        # --- Pending connect: the next message after /connect is cookies
+        # (or a token, for GitHub / Vercel). Handled here, before anything
+        # else, so the cookies or token never reach the LLM, a draft reply,
+        # or any other handler — and they are never logged or echoed back.
+        # A slash command cancels the wait instead.
         pending_platform = None
+        pending_token = None
         if text.startswith("/"):
             pending_platform = _pending_connect.pop(chat_id, None)
+            pending_token = _pending_token.pop(chat_id, None)
+        elif chat_id in _pending_token:
+            service = _pending_token.pop(chat_id)
+            await send_telegram_message(
+                await _handle_token_message(service, text)
+            )
+            return {"ok": True}
         elif chat_id in _pending_connect:
             platform = _pending_connect.pop(chat_id)
             await send_telegram_message(
@@ -1104,10 +1384,15 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 elif value == "briefing":
                     await send_telegram_message(await _handle_briefing(text))
                 elif value == "status":
-                    await send_telegram_message(_status_text(dm_responder))
+                    await send_telegram_message(
+                        await _status_text(dm_responder)
+                    )
                 elif value == "cancel":
                     await send_telegram_message(
-                        _handle_cancel(dm_responder, pending_platform)
+                        _handle_cancel(
+                            dm_responder, pending_platform,
+                            cancelled_token=pending_token,
+                        )
                     )
                 elif value == "responder":
                     await send_telegram_message(
@@ -1149,6 +1434,18 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 elif value == "memory":
                     await send_telegram_message(
                         _handle_memory(text[len("/memory"):].strip())
+                    )
+                elif value == "github":
+                    await send_telegram_message(
+                        await _handle_github_command(
+                            text[len("/github"):].strip()
+                        )
+                    )
+                elif value == "vercel":
+                    await send_telegram_message(
+                        await _handle_vercel_command(
+                            text[len("/vercel"):].strip()
+                        )
                     )
                 return {"ok": True}
             if kind == "usage":
