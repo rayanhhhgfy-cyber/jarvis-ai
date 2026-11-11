@@ -268,7 +268,30 @@ class LLMService:
         # Add current user prompt
         messages.append({"role": "user", "content": user_message})
 
-        # 5. Call Groq (primary), OpenRouter fallback.
+        # 5. The active model (set by /model) goes first; the rest of
+        # the chain is the fallback. A model whose key is missing is
+        # skipped and the brain falls through to the next one.
+        from backend.services.model_settings import get_active_model
+
+        active_model = get_active_model()
+        if active_model == "gemini":
+            gemini_first = await self._gemini_reply(messages)
+            if gemini_first:
+                return gemini_first
+        elif active_model == "deepseek":
+            deepseek_first = await self._openrouter_reply(
+                messages, "deepseek/deepseek-r1:free"
+            )
+            if deepseek_first:
+                return deepseek_first
+        primary_groq_model = (
+            GROQ_MODEL_20B if active_model == "groq-20b" else GROQ_MODEL
+        )
+        fallback_groq_model = (
+            GROQ_MODEL if active_model == "groq-20b" else GROQ_MODEL_20B
+        )
+
+        # 6. Call Groq (primary), OpenRouter fallback.
         groq_key = settings.groq_api_key
         groq_failure: Optional[str] = None
         if groq_key:
@@ -277,7 +300,7 @@ class LLMService:
                 "Content-Type": "application/json",
             }
             groq_payload = {
-                "model": GROQ_MODEL,
+                "model": primary_groq_model,
                 "messages": messages,
                 "temperature": 0.5,
                 "max_tokens": settings.llm_max_tokens,
@@ -289,19 +312,19 @@ class LLMService:
                 return reply
             groq_failure = reply
             if rate_limited:
-                # gpt-oss-120b tripped the free-tier TPM limit (or the
-                # request was too large). gpt-oss-20b has a higher free-tier
-                # TPM allowance, so retry the same request on it before
-                # giving up.
-                log.warning("groq_120b_rate_limited_trying_20b")
-                payload_20b = dict(groq_payload)
-                payload_20b["model"] = GROQ_MODEL_20B
-                ok20, reply20, _ = await self._post_chat(
-                    GROQ_URL, groq_headers, payload_20b, provider="groq-20b"
+                # The primary Groq model tripped the free-tier TPM limit
+                # (or the request was too large). The other Groq model
+                # has a higher free-tier TPM allowance, so retry the same
+                # request on it before giving up.
+                log.warning("groq_rate_limited_trying_other_model")
+                payload_other = dict(groq_payload)
+                payload_other["model"] = fallback_groq_model
+                ok_other, reply_other, _ = await self._post_chat(
+                    GROQ_URL, groq_headers, payload_other, provider="groq"
                 )
-                if ok20:
-                    return reply20
-                groq_failure = reply20
+                if ok_other:
+                    return reply_other
+                groq_failure = reply_other
             log.warning("groq_llm_failed_trying_openrouter_fallback")
         else:
             log.warning("groq_api_key_missing")
@@ -394,20 +417,39 @@ class LLMService:
         messages.append({"role": "user", "content": user_message})
 
         groq_key = settings.groq_api_key
-        if not groq_key:
+        # The active model (set by /model). DeepSeek runs the tool loop
+        # on OpenRouter (OpenAI-compatible, supports function calling);
+        # Gemini has no OpenAI-compatible tool loop, so it falls back to
+        # Groq for tool calls while the plain brain uses Gemini.
+        from backend.services.model_settings import get_active_model
+
+        active_model = get_active_model()
+        tool_url = GROQ_URL
+        tool_model = (
+            GROQ_MODEL_20B if active_model == "groq-20b" else GROQ_MODEL
+        )
+        tool_key = groq_key
+        if active_model == "deepseek" and settings.openrouter_api_key:
+            tool_url = self._openrouter_url
+            tool_model = "deepseek/deepseek-r1:free"
+            tool_key = settings.openrouter_api_key
+        if not tool_key:
             return await self.get_response(
                 user_message,
                 chat_history=chat_history,
                 system_instructions=system_instructions,
             )
         headers = {
-            "Authorization": f"Bearer {groq_key}",
+            "Authorization": f"Bearer {tool_key}",
             "Content-Type": "application/json",
         }
+        if tool_url == self._openrouter_url:
+            headers["HTTP-Referer"] = "https://github.com/rayanhhhgfy-cyber/jarvis-ai"
+            headers["X-Title"] = "JARVIS OMEGA Command Station"
         last_text = ""
         for _round in range(max_rounds):
             payload: dict[str, Any] = {
-                "model": GROQ_MODEL,
+                "model": tool_model,
                 "messages": messages,
                 "temperature": 0.5,
                 "max_tokens": settings.llm_max_tokens,
@@ -416,7 +458,7 @@ class LLMService:
             }
             try:
                 async with httpx.AsyncClient(timeout=90.0, trust_env=False) as client:
-                    response = await client.post(GROQ_URL, headers=headers, json=payload)
+                    response = await client.post(tool_url, headers=headers, json=payload)
             except (httpx.HTTPError, ValueError) as e:
                 log.debug("tool_loop_request_failed", error=str(e))
                 break
@@ -519,6 +561,47 @@ class LLMService:
                 return None
             parts_out = (candidates[0].get("content") or {}).get("parts") or []
             text = "".join(p.get("text", "") for p in parts_out).strip()
+        except (ValueError, KeyError, IndexError, AttributeError):
+            return None
+        return text or None
+
+    async def _openrouter_reply(
+        self, messages: list[dict[str, Any]], model: str
+    ) -> str | None:
+        """One OpenRouter call with a chosen model (DeepSeek R1 free,
+        Mythomax, ...). Returns the reply text, or None when the key is
+        missing or the call fails — the caller falls through."""
+        api_key = settings.openrouter_api_key
+        if not api_key:
+            return None
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "HTTP-Referer": "https://github.com/rayanhhhgfy-cyber/jarvis-ai",
+            "X-Title": "JARVIS OMEGA Command Station",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": 0.5,
+            "max_tokens": settings.llm_max_tokens,
+        }
+        try:
+            async with httpx.AsyncClient(timeout=90.0, trust_env=False) as client:
+                resp = await client.post(
+                    self._openrouter_url, headers=headers, json=payload
+                )
+        except (httpx.HTTPError, ValueError) as e:
+            log.debug("openrouter_request_failed", error=str(e))
+            return None
+        if resp.status_code != 200:
+            log.debug("openrouter_bad_status", status=resp.status_code)
+            return None
+        try:
+            choices = resp.json().get("choices", [])
+            if not choices:
+                return None
+            text = (choices[0].get("message", {}).get("content") or "").strip()
         except (ValueError, KeyError, IndexError, AttributeError):
             return None
         return text or None

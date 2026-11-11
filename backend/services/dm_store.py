@@ -217,3 +217,7 @@ telegram_history = JsonStore("telegram_history.json")
 # retries a webhook when the first response is slow; without this the
 # same update is processed twice and Sir gets duplicate replies.
 seen_updates = JsonStore("telegram_updates.json")
+# Which brain model Jarvis is using right now (set by /model). One key,
+# "active": a model id from model_settings.MODELS. Turso-backed, so the
+# choice survives redeploys. Default is "groq-120b".
+model_settings = JsonStore("model_settings.json")

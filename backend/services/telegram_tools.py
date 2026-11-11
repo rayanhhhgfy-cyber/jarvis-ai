@@ -220,6 +220,29 @@ async def _remember_fact(fact: str) -> str:
     return f"Remembered: {saved}" if saved else "Could not save that fact."
 
 
+async def _switch_model(model: str) -> str:
+    """Switch Jarvis's brain to another model (groq-120b, groq-20b, gemini, deepseek)."""
+    from backend.services.model_settings import (
+        MODELS,
+        get_active_model,
+        set_active_model,
+    )
+
+    name = (model or "").strip().lower()
+    if name not in MODELS:
+        for model_id in MODELS:
+            if name and (name in model_id or model_id in name):
+                name = model_id
+                break
+    switched = set_active_model(name)
+    if switched is None:
+        return f"I don't know a model called {model!r}."
+    return (
+        f"Brain switched to {switched} ({MODELS[switched]['label']}). "
+        f"Current model: {get_active_model()}."
+    )
+
+
 async def _web_search(query: str) -> str:
     """Search the web for live information."""
     from backend.services.web_search_service import WebSearchService
@@ -322,6 +345,14 @@ def telegram_tools() -> list[Tool]:
             {"fact": _str_param("The fact, as a short plain sentence.")},
             ["fact"],
             _remember_fact,
+            RiskTier.TIER_1_REVERSIBLE,
+        ),
+        _tool(
+            "telegram.switch_model",
+            "Switch Jarvis's brain to another model: groq-120b, groq-20b, gemini, or deepseek. Use when Sir asks to change models.",
+            {"model": _str_param("The model id: groq-120b, groq-20b, gemini, or deepseek.")},
+            ["model"],
+            _switch_model,
             RiskTier.TIER_1_REVERSIBLE,
         ),
         _tool(

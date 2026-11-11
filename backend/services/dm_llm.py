@@ -209,8 +209,10 @@ async def _groq_reply(
     first_reply: bool = True,
     is_group: bool = False,
     web_context: str = "",
+    models: tuple[str, str] = (GROQ_MODEL, GROQ_MODEL_20B),
 ) -> str | None:
-    """Groq reply: 120b first, 20b when 120b fails or rate-limits.
+    """Groq reply: the first model in `models`, then the other when it
+    fails or rate-limits.
 
     Returns the completed reply text, or None when neither model
     could produce one (the caller then tries Gemini).
@@ -226,7 +228,7 @@ async def _groq_reply(
         "temperature": 0.7,
         "max_tokens": 300,
     }
-    for model in (GROQ_MODEL, GROQ_MODEL_20B):
+    for model in models:
         try:
             resp = await client.post(
                 GROQ_URL,
@@ -402,16 +404,11 @@ async def generate_dm_reply(
                 "Do not ask them to wait; just let them know."
             )
             web_context = f"{busy_context}\n\n{web_context}" if web_context else busy_context
-        reply = await _groq_reply(
+        reply = await _reply_for_active_model(
             sender_name, incoming_text, client, first_reply, is_group, web_context
         )
         if reply:
-            return {"ok": True, "reply": reply, "model": "groq"}
-        reply = await _gemini_reply(
-            sender_name, incoming_text, client, first_reply, is_group, web_context
-        )
-        if reply:
-            return {"ok": True, "reply": reply, "model": "gemini"}
+            return reply
         return {
             "ok": False,
             "error": "No LLM available: set GROQ_API_KEY or GEMINI_API_KEY.",
@@ -419,3 +416,106 @@ async def generate_dm_reply(
     finally:
         if own_client:
             await client.aclose()
+
+
+async def _reply_for_active_model(
+    sender_name: str,
+    incoming_text: str,
+    client: httpx.AsyncClient,
+    first_reply: bool = True,
+    is_group: bool = False,
+    web_context: str = "",
+) -> dict[str, Any] | None:
+    """Try the active model (/model) first, then fall down the chain.
+
+    groq-120b (default): Groq 120b → 20b → Gemini.
+    groq-20b: Groq 20b → 120b → Gemini.
+    gemini: Gemini → Groq 120b → 20b.
+    deepseek: OpenRouter DeepSeek R1 → Groq 120b → 20b → Gemini.
+    A model whose key is missing is skipped silently.
+    """
+    from backend.services.model_settings import get_active_model
+
+    active = get_active_model()
+    if active == "gemini":
+        reply = await _gemini_reply(
+            sender_name, incoming_text, client, first_reply, is_group, web_context
+        )
+        if reply:
+            return {"ok": True, "reply": reply, "model": "gemini"}
+    elif active == "deepseek":
+        reply = await _openrouter_reply(
+            sender_name, incoming_text, client, first_reply, is_group, web_context
+        )
+        if reply:
+            return {"ok": True, "reply": reply, "model": "deepseek"}
+    # Groq, in the order the active model prefers.
+    groq_first = GROQ_MODEL_20B if active == "groq-20b" else GROQ_MODEL
+    groq_second = GROQ_MODEL if active == "groq-20b" else GROQ_MODEL_20B
+    reply = await _groq_reply(
+        sender_name,
+        incoming_text,
+        client,
+        first_reply,
+        is_group,
+        web_context,
+        models=(groq_first, groq_second),
+    )
+    if reply:
+        return {"ok": True, "reply": reply, "model": "groq"}
+    if active != "gemini":
+        reply = await _gemini_reply(
+            sender_name, incoming_text, client, first_reply, is_group, web_context
+        )
+        if reply:
+            return {"ok": True, "reply": reply, "model": "gemini"}
+    return None
+
+
+async def _openrouter_reply(
+    sender_name: str,
+    incoming_text: str,
+    client: httpx.AsyncClient,
+    first_reply: bool = True,
+    is_group: bool = False,
+    web_context: str = "",
+) -> str | None:
+    """DeepSeek R1 via OpenRouter (free tier). The strongest free
+    reasoning model. Returns None when the key is missing or it fails."""
+    from backend.config import settings as _settings
+
+    api_key = _settings.openrouter_api_key
+    if not api_key:
+        return None
+    messages = _messages(sender_name, incoming_text, first_reply, is_group, web_context)
+    try:
+        resp = await client.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "HTTP-Referer": "https://github.com/rayanhhhgfy-cyber/jarvis-ai",
+                "X-Title": "JARVIS OMEGA Command Station",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "deepseek/deepseek-r1:free",
+                "messages": messages,
+                "temperature": 0.7,
+                "max_tokens": 300,
+            },
+            timeout=30.0,
+        )
+    except (httpx.HTTPError, ValueError) as e:
+        log.warning("dm_openrouter_failed", error=str(e))
+        return None
+    if resp.status_code != 200:
+        log.warning("dm_openrouter_error", status_code=resp.status_code)
+        return None
+    try:
+        choices = resp.json().get("choices") or []
+        if not choices:
+            return None
+        text = (choices[0].get("message") or {}).get("content", "").strip()
+    except (ValueError, KeyError, IndexError, AttributeError):
+        return None
+    return _complete_reply(text) or None

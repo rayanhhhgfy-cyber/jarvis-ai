@@ -539,4 +539,5 @@ def test_connector_commands_registered():
     assert "whatsapp" in names
     assert "x" in names
     assert "tiktok" in names
-    assert len(names) == 38
+    assert "model" in names
+    assert len(names) == 39

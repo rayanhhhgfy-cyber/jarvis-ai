@@ -119,6 +119,8 @@ TELEGRAM_COMMANDS: list[dict[str, str]] = [
      "usage": "/tiktok"},
     {"command": "call", "description": "Jarvis calls you — tap the link to answer",
      "usage": "/call"},
+    {"command": "model", "description": "Switch Jarvis's brain: groq-120b, groq-20b, gemini, deepseek",
+     "usage": "/model gemini"},
 ]
 
 # True once set_telegram_commands() has succeeded at least once on this

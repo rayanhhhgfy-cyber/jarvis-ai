@@ -213,6 +213,13 @@ _UNMUTE_RE = re.compile(r"^unmute\s+(\S+(?:\s+\S+)?)\s*$", re.IGNORECASE)
 # a person until further notice. "/block" alone lists who is blocked.
 _BLOCK_RE = re.compile(r"^block\s+(\S+(?:\s+\S+)?)?\s*$", re.IGNORECASE)
 _UNBLOCK_RE = re.compile(r"^unblock\s+(\S+(?:\s+\S+)?)\s*$", re.IGNORECASE)
+# "switch to gemini" / "use deepseek" / "change model to groq-20b" —
+# change Jarvis's brain in plain words, same as /model.
+_MODEL_SWITCH_RE = re.compile(
+    r"^(?:switch|change)(?:\s+the)?\s+(?:model\s+)?to\s+(\S+)\s*$"
+    r"|^use\s+(?:model\s+)?(gemini|deepseek|groq-? ?120b|groq-? ?20b)\s*$",
+    re.IGNORECASE,
+)
 # "find the message where <name> mentioned <query>" / "search for <query>".
 _SEARCH_RE = re.compile(
     r"^(?:find|search)(?:\s+the\s+message)?(?:\s+where\s+(\S+(?:\s+\S+)?)\s+mentioned\s+)?(.+)$",
@@ -244,7 +251,7 @@ _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
     "connect", "disconnect", "call", "block", "unblock", "rule", "lesson",
     "memory", "github", "vercel", "connectors", "gmail", "calendar",
-    "drive", "whatsapp", "x", "tiktok",
+    "drive", "whatsapp", "x", "tiktok", "model",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -1531,6 +1538,48 @@ async def _handle_cookies_message(platform: str, raw: str) -> str:
     return f"Connected to {name}. Jarvis will start replying to your {name} DMs."
 
 
+def _handle_model(arg: str) -> str:
+    """The /model command: switch Jarvis's brain.
+
+    /model — lists the models and the current one.
+    /model <name> — switches to that model (takes effect immediately,
+    no restart). A model whose key is missing is still selectable, but
+    the brain falls through to the next model — the reply says which
+    key is needed when that happens.
+    """
+    from backend.services.model_settings import (
+        MODELS,
+        get_active_model,
+        list_models_text,
+        set_active_model,
+    )
+
+    name = (arg or "").strip().lower()
+    if not name:
+        return list_models_text()
+    # Accept "gemini 2.5 flash" / "deepseek r1" style names too.
+    if name not in MODELS:
+        for model_id in MODELS:
+            if name in model_id or model_id in name:
+                name = model_id
+                break
+    switched = set_active_model(name)
+    if switched is None:
+        return (
+            f"I don't know a model called {arg!r}.\n\n" + list_models_text()
+        )
+    info = MODELS[switched]
+    key_note = ""
+    if switched == "gemini":
+        key_note = " (needs GEMINI_API_KEY — a free key from Google AI Studio)"
+    elif switched == "deepseek":
+        key_note = " (needs OPENROUTER_API_KEY — a free key from openrouter.ai)"
+    return (
+        f"Brain switched to {switched} ({info['label']}){key_note}. "
+        f"Current model: {get_active_model()}."
+    )
+
+
 async def _handle_responder(responder: Any, text: str) -> str:
     """The /responder command: turn the DM auto-replies on or off.
 
@@ -2236,6 +2285,10 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                         await send_telegram_message(
                             "I could not reach Telegram to place the call, sir."
                         )
+                elif value == "model":
+                    await send_telegram_message(
+                        _handle_model(text[len("/model"):].strip())
+                    )
                 elif value == "block":
                     await send_telegram_message(
                         _handle_block(dm_responder, text[len("/block"):].strip())
@@ -2612,6 +2665,15 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         lesson_text = _detect_lesson(text)
         if lesson_text:
             await send_telegram_message(_handle_lesson(lesson_text))
+            return {"ok": True}
+
+        # --- "switch to gemini" / "use deepseek" — change the brain
+        # in plain words, same as /model. After the lesson detector so
+        # a correction wins when both match.
+        model_match = _MODEL_SWITCH_RE.match(text.strip().lower())
+        if model_match:
+            model_name = model_match.group(1) or model_match.group(2) or ""
+            await send_telegram_message(_handle_model(model_name))
             return {"ok": True}
 
         # --- "send <name> a message <time>: <text>" — scheduled DM. ---
