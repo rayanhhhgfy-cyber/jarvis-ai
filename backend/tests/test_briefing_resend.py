@@ -156,9 +156,34 @@ async def test_resend_text_when_no_voice_asked(monkeypatch, tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_resend_without_stored_briefing(monkeypatch, tmp_path):
-    """No briefing stored yet: a clear answer, not a hallucination."""
+async def test_resend_without_stored_briefing_builds_fresh(monkeypatch, tmp_path):
+    """No briefing stored yet: build a fresh one NOW instead of
+    telling Sir to ask again (that is what happened on 2026-11-11)."""
     _prep(monkeypatch, tmp_path, briefing_text=None)
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_text,
+        patch("backend.services.dm_voice.send_telegram_voice_reply",
+              new=AsyncMock(return_value=True)) as mock_voice,
+        patch("backend.services.dm_responder.dm_responder", _responder()),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+        patch(
+            "backend.services.dm_responder.dm_responder.send_morning_briefing",
+            new=AsyncMock(return_value=True),
+        ) as mock_fresh,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="hallucinated")
+        assert _webhook_post("resend it as a voice note", update_id=1).status_code == 200
+    mock_fresh.assert_called_once()
+    mock_voice.assert_not_called()
+    mock_llm.get_response.assert_not_called()
+    mock_text.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_resend_today_the_one_you_gave_me(monkeypatch, tmp_path):
+    """Sir's exact words: 'No I want today the one you gave me today'."""
+    _prep(monkeypatch, tmp_path)
     with (
         patch("backend.routers.router_telegram.send_telegram_message",
               new=AsyncMock(return_value=True)) as mock_text,
@@ -168,10 +193,34 @@ async def test_resend_without_stored_briefing(monkeypatch, tmp_path):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="hallucinated")
-        assert _webhook_post("resend it as a voice note", update_id=1).status_code == 200
-    mock_voice.assert_not_called()
+        assert _webhook_post(
+            "No I want today the one you gave me today", update_id=1,
+        ).status_code == 200
     mock_llm.get_response.assert_not_called()
-    assert "don't have a briefing" in mock_text.call_args.args[0]
+    mock_voice.assert_not_called()
+    mock_text.assert_called_once()
+    assert mock_text.call_args.args[0] == FAKE_BRIEFING
+
+
+@pytest.mark.asyncio
+async def test_resend_want_it_now_uses_voice_setting(monkeypatch, tmp_path):
+    """'Nope I want it now' after '/briefing voice' sends as voice."""
+    _prep(monkeypatch, tmp_path)
+    dm_store.briefing.set("voice", True)
+    with (
+        patch("backend.routers.router_telegram.send_telegram_message",
+              new=AsyncMock(return_value=True)) as mock_text,
+        patch("backend.services.dm_voice.send_telegram_voice_reply",
+              new=AsyncMock(return_value=True)) as mock_voice,
+        patch("backend.services.dm_responder.dm_responder", _responder()),
+        patch("backend.services.llm_service.llm_service") as mock_llm,
+    ):
+        mock_llm.get_response = AsyncMock(return_value="hallucinated")
+        assert _webhook_post("Nope I want it now", update_id=1).status_code == 200
+    mock_llm.get_response.assert_not_called()
+    mock_text.assert_not_called()
+    mock_voice.assert_called_once()
+    assert mock_voice.call_args.args[0] == FAKE_BRIEFING
 
 
 @pytest.mark.asyncio

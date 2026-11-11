@@ -1647,6 +1647,13 @@ _RESEND_BRIEFING_PATTERNS = (
     "no deletion",
     "beautiful format",
     "put it in",
+    # Sir's own words (2026-11-11): "No I want today the one you gave
+    # me today" and "Nope I want it now" — both mean the briefing.
+    "gave me today",
+    "the one you gave me",
+    "one you gave me",
+    "the one you",
+    "want it now",
 )
 
 # Words that mean the message is about a DM conversation, not the
@@ -1669,7 +1676,10 @@ async def _handle_resend_briefing(text: str) -> str | None:
     """
     from datetime import UTC, datetime, timedelta
 
-    from backend.services.dm_responder import get_last_briefing
+    from backend.services.dm_responder import (
+        get_briefing_settings,
+        get_last_briefing,
+    )
 
     lowered = (text or "").lower().strip()
     if lowered.startswith("/"):
@@ -1679,23 +1689,37 @@ async def _handle_resend_briefing(text: str) -> str | None:
     bare_voice = lowered.strip(" .!") in ("voice note", "voice note please", "please voice note")
     if not bare_voice and not any(p in lowered for p in _RESEND_BRIEFING_PATTERNS):
         return None
+    # Voice when he asks for it, or when his briefing is set to voice.
+    wants_voice = (
+        "voice" in lowered
+        or bare_voice
+        or bool(get_briefing_settings().get("voice"))
+    )
     saved = get_last_briefing()
-    if not saved:
-        return (
-            "I don't have a briefing to resend yet — send /briefing now "
-            "for a fresh one."
+    briefing_text: str | None = None
+    if saved:
+        try:
+            sent_at = datetime.fromisoformat(saved.get("sent_at", ""))
+            if datetime.now(UTC) - sent_at <= timedelta(hours=24):
+                briefing_text = saved["text"]
+        except (TypeError, ValueError):
+            briefing_text = saved["text"]
+    if briefing_text is None:
+        # Nothing stored — the briefing went out before this fix existed,
+        # or it is more than a day old. Build a fresh one NOW from real
+        # data instead of telling Sir to ask again (that is what happened
+        # on 2026-11-11: "I don't have a briefing to resend yet").
+        from backend.services.dm_responder import (
+            dm_responder,
+            update_briefing_settings,
         )
-    try:
-        sent_at = datetime.fromisoformat(saved.get("sent_at", ""))
-        if datetime.now(UTC) - sent_at > timedelta(hours=24):
-            return (
-                "That briefing is more than a day old — send /briefing now "
-                "for a fresh one."
-            )
-    except (TypeError, ValueError):
-        pass
-    briefing_text = saved["text"]
-    if "voice" in lowered or bare_voice:
+
+        if wants_voice:
+            update_briefing_settings({"voice": True})
+        if await dm_responder.send_morning_briefing():
+            return ""
+        return "I couldn't build a fresh briefing right now — try /briefing now in a moment."
+    if wants_voice:
         from backend.services.dm_voice import send_telegram_voice_reply
 
         if await send_telegram_voice_reply(briefing_text):
