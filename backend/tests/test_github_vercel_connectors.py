@@ -305,6 +305,12 @@ async def test_vercel_write_without_token_fails(monkeypatch, tmp_path):
 # --------------------------------------------------------------------
 
 def test_connector_tools_registered_with_right_tiers():
+    import importlib
+
+    # Importing the plugin modules registers their tools (importlib, not a
+    # bare import, so ruff cannot strip it as unused).
+    importlib.import_module("plugins.github_write.plugin")
+    importlib.import_module("plugins.vercel.plugin")
 
     registry = get_registry()
     # GitHub writes: external changes, approval gate.
@@ -526,4 +532,11 @@ def test_connector_commands_registered():
     names = [c["command"] for c in TELEGRAM_COMMANDS]
     assert "github" in names
     assert "vercel" in names
-    assert len(names) == 31
+    assert "connectors" in names
+    assert "gmail" in names
+    assert "calendar" in names
+    assert "drive" in names
+    assert "whatsapp" in names
+    assert "x" in names
+    assert "tiktok" in names
+    assert len(names) == 38

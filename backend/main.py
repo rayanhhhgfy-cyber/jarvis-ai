@@ -60,6 +60,7 @@ from backend.routers.router_focus import router as router_focus
 from backend.routers.router_media_generation import router as router_media_generation
 from backend.routers.router_toggles import router as router_toggles
 from backend.routers.router_telegram import router as router_telegram
+from backend.routers.router_oauth import router as router_oauth
 
 from shared.logger import setup_logging, get_logger, AuditLogger
 from shared.security import init_security, verify_token
@@ -495,6 +496,10 @@ async def lifespan(app: FastAPI):
             "plugins.github_free.plugin",
             "plugins.github_write.plugin",
             "plugins.vercel.plugin",
+            "plugins.google.plugin",
+            "plugins.whatsapp_connector.plugin",
+            "plugins.x_connector.plugin",
+            "plugins.tiktok_connector.plugin",
             "plugins.media_local.plugin",
             "plugins.backup_local.plugin",
             # Phase 11 — autonomous marketing agency
@@ -944,6 +949,7 @@ app.include_router(router_focus)
 app.include_router(router_toggles)
 app.include_router(router_media_generation)
 app.include_router(router_telegram)
+app.include_router(router_oauth)
 
 
 # ====================================================================

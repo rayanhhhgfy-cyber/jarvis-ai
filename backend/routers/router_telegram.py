@@ -76,10 +76,11 @@ _TELEGRAM_SYSTEM = (
     "language Rayyan used in his message (Arabic or English). Never "
     "answer in both languages in the same reply. "
     "On Telegram he takes "
-    "31 slash commands: /send /summarize /schedule /remind /busy /free "
+    "38 slash commands: /send /summarize /schedule /remind /busy /free "
     "/remember /search /rules /addrule /delrule /unmute /birthdaymsg "
     "/welcomemsg /activity /briefing /status /cancel /responder /connect "
-    "/disconnect /call /block /unblock /rule /lesson /memory /github /vercel. "
+    "/disconnect /call /block /unblock /rule /lesson /memory /github /vercel "
+    "/connectors /gmail /calendar /drive /whatsapp /x /tiktok. "
     "Already built — never suggest these as new ideas: reminders, "
     "summaries, voice-to-text, scheduled messages, contact memory, "
     "birthday wishes, spam muting, quiet hours, per-person tone, custom "
@@ -169,7 +170,8 @@ _WELCOME_MSG_RE = re.compile(r"^group\s+welcome\s+message:\s*(.+)$", re.IGNORECA
 _DIRECT_COMMANDS = {
     "start", "help", "activity", "briefing", "status", "cancel", "responder",
     "connect", "disconnect", "call", "block", "unblock", "rule", "lesson",
-    "memory", "github", "vercel",
+    "memory", "github", "vercel", "connectors", "gmail", "calendar",
+    "drive", "whatsapp", "x", "tiktok",
 }
 
 # Chat id -> platform waiting for cookies after /connect. In-memory only:
@@ -179,6 +181,18 @@ _pending_connect: dict[str, str] = {}
 # Chat id -> service waiting for an API token after /connect github or
 # /connect vercel. Same in-memory rule as _pending_connect.
 _pending_token: dict[str, str] = {}
+
+# Chat id -> /connectors menu state: {"stage": "pick"} or
+# {"stage": "cookies", "service": "instagram"|"messenger"}.
+_pending_connectors: dict[str, dict] = {}
+
+# Chat id -> service waiting for OAuth client credentials after
+# /connect google|x|tiktok: Sir pastes "client_id client_secret".
+_pending_oauth_client: dict[str, str] = {}
+
+# Chat id -> WhatsApp connect stage: "token" (waiting for the permanent
+# token) or "phone" (waiting for the phone number id).
+_pending_whatsapp: dict[str, str] = {}
 
 # Command -> natural-language template. "{args}" is the text after the
 # command. These reuse the intent handlers below, so a slash command
@@ -291,8 +305,9 @@ async def _status_text(responder: Any) -> str:
         if info.get("last_error"):
             line += f" (last error: {str(info['last_error'])[:80]})"
         lines.append(line)
-    # Service connectors (GitHub / Vercel): live-checked, so a revoked
-    # token shows as not connected instead of stale.
+    # Service connectors (GitHub / Vercel / Google / WhatsApp / X /
+    # TikTok): live-checked, so a revoked token shows as not connected
+    # instead of stale.
     try:
         from backend.services import github_connector, vercel_connector
 
@@ -316,6 +331,43 @@ async def _status_text(responder: Any) -> str:
         )
     except (httpx.HTTPError, OSError, RuntimeError, ValueError) as e:
         log.warning("telegram_status_connectors_failed", error=str(e))
+    try:
+        from backend.services import (
+            google_connector,
+            tiktok_connector,
+            whatsapp_connector,
+            x_connector,
+        )
+
+        g = await google_connector.status()
+        lines.append(
+            "- Google: "
+            + (f"connected ({g.get('email')})" if g.get("connected") else "not connected")
+        )
+        w = await whatsapp_connector.status()
+        lines.append(
+            "- WhatsApp: " + ("connected" if w.get("connected") else "not connected")
+        )
+        x = await x_connector.status()
+        lines.append(
+            "- X: "
+            + (
+                f"connected (@{x.get('username')})"
+                if x.get("connected")
+                else "not connected"
+            )
+        )
+        t = await tiktok_connector.status()
+        lines.append(
+            "- TikTok: "
+            + (
+                f"connected ({t.get('display_name')})"
+                if t.get("connected")
+                else "not connected"
+            )
+        )
+    except (httpx.HTTPError, OSError, RuntimeError, ValueError) as e:
+        log.warning("telegram_status_connectors2_failed", error=str(e))
     return "\n".join(lines)
 
 
@@ -323,6 +375,7 @@ def _handle_cancel(
     responder: Any,
     cancelled_connect: str | None = None,
     cancelled_token: str | None = None,
+    cancelled_other: str | None = None,
 ) -> str:
     """The /cancel reply: drop a pending draft, meeting, or connect wait."""
     from backend.services import dm_auth
@@ -335,6 +388,8 @@ def _handle_cancel(
     elif cancelled_token:
         name = "GitHub" if cancelled_token == "github" else "Vercel"
         prefix = f"Cancelled the {name} connect. "
+    elif cancelled_other:
+        prefix = f"Cancelled the {cancelled_other}. "
     draft = responder.discard_pending_draft()
     if draft:
         return (
@@ -566,11 +621,70 @@ def _handle_connect_command(chat_id: str, text: str) -> str:
             "I won't show it back to you, and you can delete the message "
             "from this chat yourself afterwards."
         )
+    if arg == "google":
+        from backend.services import google_connector
+
+        if google_connector.has_client():
+            url = google_connector.get_auth_url()
+            return (
+                "Open this link and sign in with your Google account:\n"
+                f"{url}\n"
+                "Then come back here — I'll confirm once Google is connected."
+            )
+        _pending_oauth_client[chat_id] = "google"
+        return (
+            "Google needs an OAuth client first. In Google Cloud Console, "
+            "create a project, enable the Gmail + Calendar + Drive APIs, "
+            "then create OAuth credentials (Desktop app type) and paste them "
+            "here as one message:\n"
+            "<client_id> <client_secret>\n"
+            "I'll store them encrypted, then give you the sign-in link."
+        )
+    if arg == "whatsapp":
+        _pending_whatsapp[chat_id] = "token"
+        return (
+            "WhatsApp needs two things from Meta. First, paste your "
+            "permanent access token as your next message. (It comes from "
+            "your Meta app — a system user token for the WhatsApp Business "
+            "API. I'll check it works, then store it encrypted.)"
+        )
+    if arg == "x":
+        from backend.services import x_connector
+
+        if x_connector.client_id() and x_connector.client_secret():
+            return _x_auth_link(chat_id)
+        _pending_oauth_client[chat_id] = "x"
+        return (
+            "X needs an app first. In the X developer portal, create an "
+            "app, enable OAuth 2.0, and set the redirect URL to "
+            "https://jarvis-ai-6c11.onrender.com/api/oauth/x/callback — "
+            "then paste the client id and secret here as one message:\n"
+            "<client_id> <client_secret>\n"
+            "I'll store them encrypted, then give you the sign-in link. "
+            "Note: X charges per request, so this costs money."
+        )
+    if arg == "tiktok":
+        from backend.services import tiktok_connector
+
+        if tiktok_connector.client_key() and tiktok_connector.client_secret():
+            return _tiktok_auth_link()
+        _pending_oauth_client[chat_id] = "tiktok"
+        return (
+            "TikTok needs a developer app first — and it must be a Business "
+            "account (personal accounts can't use messaging). In the TikTok "
+            "developer portal, create an app, enable Login Kit + Business "
+            "Messaging, and set the redirect URL to "
+            "https://jarvis-ai-6c11.onrender.com/api/oauth/tiktok/callback — "
+            "then paste the client key and secret here as one message:\n"
+            "<client_key> <client_secret>\n"
+            "I'll store them encrypted, then give you the sign-in link."
+        )
     if arg not in dm_auth.PLATFORMS:
         return (
             "Usage: /connect instagram — /connect messenger — "
-            "/connect github — or /connect vercel. "
-            "I'll ask for the cookies or the token next."
+            "/connect github — /connect vercel — /connect google — "
+            "/connect whatsapp — /connect x — or /connect tiktok. "
+            "Or send /connectors and pick from the menu."
         )
     name = dm_auth.PLATFORMS[arg]["name"]
     _pending_connect[chat_id] = arg
@@ -579,6 +693,39 @@ def _handle_connect_command(chat_id: str, text: str) -> str:
         "I'll check they still log in, then store them encrypted. "
         "I won't show them back to you, and you can delete the message "
         "from this chat yourself afterwards."
+    )
+
+
+def _x_auth_link(chat_id: str) -> str:
+    """The X sign-in link: builds the PKCE authorize URL and keeps the
+    verifier (keyed by state) until the callback exchanges the code."""
+    from backend.routers.router_oauth import store_oauth_state
+    from backend.services import x_connector
+
+    auth = x_connector.get_auth_url(
+        "https://jarvis-ai-6c11.onrender.com/api/oauth/x/callback"
+    )
+    store_oauth_state(
+        auth["state"], "x", {"code_verifier": auth["code_verifier"]}
+    )
+    return (
+        "Open this link and sign in with your X account:\n"
+        f"{auth['url']}\n"
+        "Then come back here — I'll confirm once X is connected."
+    )
+
+
+def _tiktok_auth_link() -> str:
+    """The TikTok sign-in link."""
+    from backend.services import tiktok_connector
+
+    url = tiktok_connector.get_auth_url(
+        "https://jarvis-ai-6c11.onrender.com/api/oauth/tiktok/callback"
+    )
+    return (
+        "Open this link and sign in with your TikTok account:\n"
+        f"{url}\n"
+        "Then come back here — I'll confirm once TikTok is connected."
     )
 
 
@@ -649,10 +796,51 @@ def _handle_disconnect_command(text: str) -> str:
             "Disconnected Vercel. Jarvis can no longer read or write "
             "your projects. Reconnect any time with /connect vercel."
         )
+    if arg == "google":
+        from backend.services import google_connector
+
+        if not google_connector.delete_all():
+            return "Google isn't connected."
+        return (
+            "Disconnected Google. Jarvis can no longer read your Gmail, "
+            "Calendar or Drive. Reconnect any time with /connect google."
+        )
+    if arg == "whatsapp":
+        from backend.services import whatsapp_connector
+
+        removed = whatsapp_connector.delete_token()
+        removed = whatsapp_connector.delete_phone_number_id() or removed
+        if not removed:
+            return "WhatsApp isn't connected."
+        return (
+            "Disconnected WhatsApp. Jarvis can no longer send WhatsApp "
+            "messages. Reconnect any time with /connect whatsapp."
+        )
+    if arg == "x":
+        from backend.services import x_connector
+
+        if not x_connector.delete_all():
+            return "X isn't connected."
+        return (
+            "Disconnected X. Jarvis can no longer read or send your X DMs. "
+            "Reconnect any time with /connect x."
+        )
+    if arg == "tiktok":
+        from backend.services import tiktok_connector
+
+        removed = tiktok_connector.delete_tokens()
+        removed = tiktok_connector.delete_client_credentials() or removed
+        if not removed:
+            return "TikTok isn't connected."
+        return (
+            "Disconnected TikTok. Jarvis can no longer read or send your "
+            "TikTok messages. Reconnect any time with /connect tiktok."
+        )
     if arg not in dm_auth.PLATFORMS:
         return (
             "Usage: /disconnect instagram — /disconnect messenger — "
-            "/disconnect github — or /disconnect vercel."
+            "/disconnect github — /disconnect vercel — /disconnect google — "
+            "/disconnect whatsapp — /disconnect x — or /disconnect tiktok."
         )
     name = dm_auth.PLATFORMS[arg]["name"]
     if not dm_auth.delete_connector(arg):
@@ -817,6 +1005,420 @@ async def _handle_vercel_command(text: str) -> str:
         "Usage: /vercel projects — /vercel deployments [project] — "
         "/vercel status <project> — /vercel redeploy <deployment-id>"
     )
+
+
+# --------------------------------------------------------------------
+# /connectors menu + the Gmail / Calendar / Drive / WhatsApp / X /
+# TikTok commands
+# --------------------------------------------------------------------
+
+# The /connectors menu, in order: (key, display name, how it connects).
+_CONNECTORS_MENU: list[tuple[str, str, str]] = [
+    ("instagram", "Instagram", "cookies"),
+    ("messenger", "Messenger", "cookies"),
+    ("github", "GitHub", "token"),
+    ("vercel", "Vercel", "token"),
+    ("google", "Google (Gmail, Calendar, Drive)", "sign in with Google"),
+    ("whatsapp", "WhatsApp", "token + number"),
+    ("x", "X", "sign in with X"),
+    ("tiktok", "TikTok", "sign in with TikTok"),
+]
+
+_DASHBOARD_URL = "https://jarvis-frontend-iota.vercel.app"
+
+
+async def _connectors_menu_text() -> str:
+    """The /connectors menu: every connector with its live status."""
+    from backend.services import dm_auth
+
+    lines = ["Connectors — reply with a number to connect one:"]
+    statuses: dict[str, str] = {}
+    for platform in dm_auth.PLATFORMS:
+        info = dm_auth.connector_status(platform)
+        statuses[platform] = (
+            "connected" if info.get("connected") else "not connected"
+        )
+    try:
+        from backend.services import (
+            github_connector,
+            google_connector,
+            tiktok_connector,
+            vercel_connector,
+            whatsapp_connector,
+            x_connector,
+        )
+
+        gh = await github_connector.status()
+        statuses["github"] = (
+            f"connected ({gh.get('login')})" if gh.get("connected") else "not connected"
+        )
+        vc = await vercel_connector.status()
+        statuses["vercel"] = (
+            f"connected ({vc.get('username')})"
+            if vc.get("connected")
+            else "not connected"
+        )
+        g = await google_connector.status()
+        statuses["google"] = (
+            f"connected ({g.get('email')})" if g.get("connected") else "not connected"
+        )
+        w = await whatsapp_connector.status()
+        statuses["whatsapp"] = "connected" if w.get("connected") else "not connected"
+        x = await x_connector.status()
+        statuses["x"] = (
+            f"connected (@{x.get('username')})" if x.get("connected") else "not connected"
+        )
+        t = await tiktok_connector.status()
+        statuses["tiktok"] = (
+            f"connected ({t.get('display_name')})"
+            if t.get("connected")
+            else "not connected"
+        )
+    except (httpx.HTTPError, OSError, RuntimeError, ValueError) as e:
+        log.warning("connectors_menu_status_failed", error=str(e))
+    for i, (key, name, kind) in enumerate(_CONNECTORS_MENU, start=1):
+        lines.append(f"{i}. {name} — {statuses.get(key, 'not connected')} ({kind})")
+    lines.append("")
+    lines.append("Or connect one directly: /connect github, /connect google, ...")
+    return "\n".join(lines)
+
+
+async def _handle_connectors_choice(chat_id: str, text: str) -> str:
+    """A reply while the /connectors menu is open: a number picks a
+    connector; a 1/2 answers the browser-vs-paste question for cookies."""
+    state = _pending_connectors.get(chat_id) or {}
+    stage = state.get("stage")
+    if stage == "cookies":
+        service = state.get("service", "")
+        name = "Instagram" if service == "instagram" else "Messenger"
+        choice = (text or "").strip()
+        _pending_connectors.pop(chat_id, None)
+        if choice == "1":
+            return (
+                f"Open this link in your browser:\n{_DASHBOARD_URL}\n"
+                "Tap الموصلات (Connectors), tap "
+                f"{name}, and sign in with your email and password there. "
+                "I'll confirm here once it is connected."
+            )
+        if choice == "2":
+            _pending_connect[chat_id] = service
+            return (
+                f"Send me your {name} cookies now — paste them as your next message. "
+                "I'll check they still log in, then store them encrypted. "
+                "I won't show them back to you, and you can delete the message "
+                "from this chat yourself afterwards."
+            )
+        return "Reply 1 for the browser, or 2 to paste the cookies."
+    # Stage "pick": a number chooses a connector.
+    pick = (text or "").strip()
+    if not pick.isdigit():
+        return "Reply with a number from the menu, or /cancel to close it."
+    idx = int(pick) - 1
+    if idx < 0 or idx >= len(_CONNECTORS_MENU):
+        return "That number isn't on the menu — reply with a number from it."
+    key, name, kind = _CONNECTORS_MENU[idx]
+    if kind == "cookies":
+        _pending_connectors[chat_id] = {"stage": "cookies", "service": key}
+        return (
+            f"{name} connects with cookies. How?\n"
+            "1. Open in browser — I'll send you the link, sign in there\n"
+            "2. Paste cookies — paste them as your next message"
+        )
+    _pending_connectors.pop(chat_id, None)
+    return _handle_connect_command(chat_id, f"/connect {key}")
+
+
+async def _handle_oauth_client_message(service: str, raw: str) -> str:
+    """Save OAuth client credentials Sir pasted ("client_id client_secret")
+    and hand him the sign-in link."""
+    parts = (raw or "").strip().split()
+    if len(parts) != 2:
+        return (
+            "I need two values on one line: <client_id> <client_secret>. "
+            "Send them again, or /cancel."
+        )
+    client_id_value, secret_value = parts
+    if service == "google":
+        from backend.services import google_connector
+
+        google_connector.save_client(client_id_value, secret_value)
+        url = google_connector.get_auth_url()
+        return (
+            "Saved. Open this link and sign in with your Google account:\n"
+            f"{url}\n"
+            "Then come back here — I'll confirm once Google is connected."
+        )
+    if service == "x":
+        from backend.services import x_connector
+
+        x_connector.save_client_credentials(client_id_value, secret_value)
+        return _x_auth_link("")
+    if service == "tiktok":
+        from backend.services import tiktok_connector
+
+        tiktok_connector.save_client_credentials(client_id_value, secret_value)
+        return _tiktok_auth_link()
+    return "I don't know that service."
+
+
+async def _handle_whatsapp_message(chat_id: str, raw: str) -> str:
+    """The WhatsApp connect flow: first the permanent token, then the
+    phone number id. Both are verified before anything is stored."""
+    from backend.services import whatsapp_connector
+
+    stage = _pending_whatsapp.get(chat_id)
+    value = (raw or "").strip()
+    if stage == "token":
+        info = await whatsapp_connector.verify_token(value)
+        if info is None:
+            return (
+                "That WhatsApp token didn't work — it may be expired. "
+                "Create a fresh one and send /connect whatsapp again."
+            )
+        whatsapp_connector.save_token(value)
+        _pending_whatsapp[chat_id] = "phone"
+        return (
+            "Token saved. Now send me the phone number id — it is in your "
+            "Meta app under WhatsApp → API Setup (the number you registered "
+            "for the Cloud API)."
+        )
+    if stage == "phone":
+        whatsapp_connector.save_phone_number_id(value)
+        _pending_whatsapp.pop(chat_id, None)
+        status = await whatsapp_connector.status()
+        if not status.get("connected"):
+            return (
+                "That phone number id didn't check out. Send /connect "
+                "whatsapp again with the right one."
+            )
+        return (
+            "Connected to WhatsApp. I can now send WhatsApp messages — "
+            "try /whatsapp send +962... | hello."
+        )
+    return "Send /connect whatsapp to start."
+
+
+async def _handle_gmail_command(text: str) -> str:
+    """The /gmail command: list/search mail, or send one.
+
+    /gmail — recent mail. /gmail <words> — search. /gmail send <to> |
+    <subject> | <body> — send.
+    """
+    from backend.services import google_connector
+
+    if not google_connector.is_connected():
+        return "Google isn't connected — send /connect google first."
+    parts = (text or "").strip()
+    if parts.lower().startswith("send "):
+        rest = parts[5:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 3 or not all(fields):
+            return "Usage: /gmail send <to> | <subject> | <body>"
+        to, subject, body = fields
+        result = await google_connector.send_message(to, subject, body)
+        if not result.get("ok"):
+            return f"Gmail said no: {result.get('error', 'unknown error')}"
+        return f"Sent to {to}."
+    query = parts
+    result = await google_connector.list_messages(query, limit=10)
+    if not result.get("ok"):
+        return f"Gmail said no: {result.get('error', 'unknown error')}"
+    messages = result.get("messages") or []
+    if not messages:
+        return "No mail found."
+    lines = ["Recent mail:"]
+    for m in messages:
+        detail = await google_connector.get_message(m.get("id", ""))
+        if detail.get("ok"):
+            lines.append(
+                f"- {detail.get('subject')} — from {detail.get('from')} "
+                f"({detail.get('id')})"
+            )
+        else:
+            lines.append(f"- {m.get('id')}")
+    return "\n".join(lines)
+
+
+async def _handle_calendar_command(text: str) -> str:
+    """The /calendar command: list upcoming events, or add one.
+
+    /calendar — the next 10 events. /calendar add <summary> | <start> |
+    <end> — add one, times as "2026-11-12 10:00".
+    """
+    from backend.services import google_connector
+
+    if not google_connector.is_connected():
+        return "Google isn't connected — send /connect google first."
+    parts = (text or "").strip()
+    if parts.lower().startswith("add "):
+        rest = parts[4:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 3 or not all(fields):
+            return "Usage: /calendar add <summary> | 2026-11-12 10:00 | 2026-11-12 11:00"
+        summary, start_raw, end_raw = fields
+
+        def _to_iso(value: str) -> str | None:
+            try:
+                date_part, time_part = value.split()
+                return f"{date_part}T{time_part}:00+03:00"
+            except ValueError:
+                return None
+
+        start = _to_iso(start_raw)
+        end = _to_iso(end_raw)
+        if not start or not end:
+            return "Times must look like 2026-11-12 10:00."
+        result = await google_connector.create_event(summary, start, end)
+        if not result.get("ok"):
+            return f"Calendar said no: {result.get('error', 'unknown error')}"
+        return f"Added: {summary}."
+    result = await google_connector.list_events(limit=10)
+    if not result.get("ok"):
+        return f"Calendar said no: {result.get('error', 'unknown error')}"
+    events = result.get("events") or []
+    if not events:
+        return "Nothing on your calendar."
+    lines = ["Your calendar:"]
+    for e in events:
+        lines.append(f"- {e.get('summary')} — {e.get('start')} to {e.get('end')}")
+    return "\n".join(lines)
+
+
+async def _handle_drive_command(text: str) -> str:
+    """The /drive command: list recent Drive files, or search by name."""
+    from backend.services import google_connector
+
+    if not google_connector.is_connected():
+        return "Google isn't connected — send /connect google first."
+    query = (text or "").strip()
+    result = await google_connector.list_files(query, limit=10)
+    if not result.get("ok"):
+        return f"Drive said no: {result.get('error', 'unknown error')}"
+    files = result.get("files") or []
+    if not files:
+        return "No files found."
+    lines = ["Your Drive:"]
+    for f in files:
+        lines.append(f"- {f.get('name')} ({f.get('mimeType')})")
+    return "\n".join(lines)
+
+
+async def _handle_whatsapp_command(text: str) -> str:
+    """The /whatsapp command: send a message or a template.
+
+    /whatsapp send <to> | <message> — free-form text (only inside the
+    24-hour reply window). /whatsapp template <to> | <template name> —
+    an approved template (works any time).
+    """
+    from backend.services import whatsapp_connector
+
+    if not whatsapp_connector.is_connected():
+        return "WhatsApp isn't connected — send /connect whatsapp first."
+    parts = (text or "").strip()
+    if parts.lower().startswith("send "):
+        rest = parts[5:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 2 or not all(fields):
+            return "Usage: /whatsapp send <to> | <message>"
+        to, body = fields
+        result = await whatsapp_connector.send_message(to, body)
+        if not result.get("ok"):
+            return f"WhatsApp said no: {result.get('error', 'unknown error')}"
+        return f"Sent to {to}."
+    if parts.lower().startswith("template "):
+        rest = parts[9:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 2 or not all(fields):
+            return "Usage: /whatsapp template <to> | <template name>"
+        to, template = fields
+        result = await whatsapp_connector.send_template(to, template)
+        if not result.get("ok"):
+            return f"WhatsApp said no: {result.get('error', 'unknown error')}"
+        return f"Template sent to {to}."
+    return (
+        "Usage: /whatsapp send <to> | <message> — "
+        "/whatsapp template <to> | <template name>"
+    )
+
+
+async def _handle_x_command(text: str) -> str:
+    """The /x command: list DM conversations, read one, or send a DM.
+
+    /x — recent DM conversations. /x <conversation id> — the messages
+    in it. /x send <conversation id> | <text> — send a DM.
+    """
+    from backend.services import x_connector
+
+    if not x_connector.is_connected():
+        return "X isn't connected — send /connect x first."
+    parts = (text or "").strip()
+    if parts.lower().startswith("send "):
+        rest = parts[5:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 2 or not all(fields):
+            return "Usage: /x send <conversation id> | <text>"
+        conversation_id, body = fields
+        result = await x_connector.send_dm(conversation_id, body)
+        if not result.get("ok"):
+            return f"X said no: {result.get('error', 'unknown error')}"
+        return "DM sent."
+    if parts:
+        conversation_id = parts.split()[0]
+        result = await x_connector.list_dm_events(conversation_id, limit=10)
+        if not result.get("ok"):
+            return f"X said no: {result.get('error', 'unknown error')}"
+        events = result.get("events") or []
+        if not events:
+            return "No messages in that conversation."
+        lines = [f"Conversation {conversation_id}:"]
+        for e in events:
+            lines.append(f"- {e.get('text', '')[:200]}")
+        return "\n".join(lines)
+    result = await x_connector.list_dm_conversations(limit=10)
+    if not result.get("ok"):
+        return f"X said no: {result.get('error', 'unknown error')}"
+    conversations = result.get("conversations") or []
+    if not conversations:
+        return "No DM conversations."
+    lines = ["Your X DMs:"]
+    for c in conversations:
+        lines.append(
+            f"- {c.get('id')} — {c.get('last_message', '')[:100]}"
+        )
+    return "\n".join(lines)
+
+
+async def _handle_tiktok_command(text: str) -> str:
+    """The /tiktok command: list conversations, or send a message.
+
+    /tiktok — recent conversations. /tiktok send <conversation id> |
+    <text> — send a message.
+    """
+    from backend.services import tiktok_connector
+
+    if not tiktok_connector.is_connected():
+        return "TikTok isn't connected — send /connect tiktok first."
+    parts = (text or "").strip()
+    if parts.lower().startswith("send "):
+        rest = parts[5:].strip()
+        fields = [f.strip() for f in rest.split("|")]
+        if len(fields) != 2 or not all(fields):
+            return "Usage: /tiktok send <conversation id> | <text>"
+        conversation_id, body = fields
+        result = await tiktok_connector.send_message(conversation_id, body)
+        if not result.get("ok"):
+            return f"TikTok said no: {result.get('error', 'unknown error')}"
+        return "Message sent."
+    result = await tiktok_connector.list_conversations(limit=10)
+    if not result.get("ok"):
+        return f"TikTok said no: {result.get('error', 'unknown error')}"
+    conversations = result.get("conversations") or []
+    if not conversations:
+        return "No TikTok conversations."
+    lines = ["Your TikTok messages:"]
+    for c in conversations:
+        lines.append(f"- {c.get('conversation_id')}")
+    return "\n".join(lines)
 
 
 async def _handle_cookies_message(platform: str, raw: str) -> str:
@@ -1291,6 +1893,9 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
 
             _pending_connect.pop(chat_id, None)
             _pending_token.pop(chat_id, None)
+            _pending_connectors.pop(chat_id, None)
+            _pending_oauth_client.pop(chat_id, None)
+            _pending_whatsapp.pop(chat_id, None)
             audio = await download_telegram_file(voice["file_id"])
             transcript = (
                 await transcribe_audio_bytes(audio) if audio else None
@@ -1320,6 +1925,9 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
 
             _pending_connect.pop(chat_id, None)
             _pending_token.pop(chat_id, None)
+            _pending_connectors.pop(chat_id, None)
+            _pending_oauth_client.pop(chat_id, None)
+            _pending_whatsapp.pop(chat_id, None)
             if photo:
                 file_id = (photo[-1] or {}).get("file_id", "")
                 data = await download_telegram_file(file_id) if file_id else None
@@ -1350,9 +1958,36 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         # A slash command cancels the wait instead.
         pending_platform = None
         pending_token = None
+        pending_other = None
         if text.startswith("/"):
             pending_platform = _pending_connect.pop(chat_id, None)
             pending_token = _pending_token.pop(chat_id, None)
+            if chat_id in _pending_connectors:
+                _pending_connectors.pop(chat_id, None)
+                pending_other = "connectors menu"
+            elif chat_id in _pending_oauth_client:
+                pending_other = (
+                    f"connect {_pending_oauth_client.pop(chat_id)}"
+                )
+            elif chat_id in _pending_whatsapp:
+                _pending_whatsapp.pop(chat_id, None)
+                pending_other = "connect whatsapp"
+        elif chat_id in _pending_connectors:
+            await send_telegram_message(
+                await _handle_connectors_choice(chat_id, text)
+            )
+            return {"ok": True}
+        elif chat_id in _pending_oauth_client:
+            service = _pending_oauth_client.pop(chat_id)
+            await send_telegram_message(
+                await _handle_oauth_client_message(service, text)
+            )
+            return {"ok": True}
+        elif chat_id in _pending_whatsapp:
+            await send_telegram_message(
+                await _handle_whatsapp_message(chat_id, text)
+            )
+            return {"ok": True}
         elif chat_id in _pending_token:
             service = _pending_token.pop(chat_id)
             await send_telegram_message(
@@ -1392,6 +2027,7 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                         _handle_cancel(
                             dm_responder, pending_platform,
                             cancelled_token=pending_token,
+                            cancelled_other=pending_other,
                         )
                     )
                 elif value == "responder":
@@ -1445,6 +2081,45 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                     await send_telegram_message(
                         await _handle_vercel_command(
                             text[len("/vercel"):].strip()
+                        )
+                    )
+                elif value == "connectors":
+                    _pending_connectors[chat_id] = {"stage": "pick"}
+                    await send_telegram_message(
+                        await _connectors_menu_text()
+                    )
+                elif value == "gmail":
+                    await send_telegram_message(
+                        await _handle_gmail_command(
+                            text[len("/gmail"):].strip()
+                        )
+                    )
+                elif value == "calendar":
+                    await send_telegram_message(
+                        await _handle_calendar_command(
+                            text[len("/calendar"):].strip()
+                        )
+                    )
+                elif value == "drive":
+                    await send_telegram_message(
+                        await _handle_drive_command(
+                            text[len("/drive"):].strip()
+                        )
+                    )
+                elif value == "whatsapp":
+                    await send_telegram_message(
+                        await _handle_whatsapp_command(
+                            text[len("/whatsapp"):].strip()
+                        )
+                    )
+                elif value == "x":
+                    await send_telegram_message(
+                        await _handle_x_command(text[len("/x"):].strip())
+                    )
+                elif value == "tiktok":
+                    await send_telegram_message(
+                        await _handle_tiktok_command(
+                            text[len("/tiktok"):].strip()
                         )
                     )
                 return {"ok": True}
