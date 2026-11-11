@@ -163,6 +163,7 @@ async def test_telegram_webhook_ignores_strangers(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="hi")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="hi")
         client = _telegram_app()
         resp = client.post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 999}, "text": "hello"},
@@ -170,7 +171,7 @@ async def test_telegram_webhook_ignores_strangers(monkeypatch):
     assert resp.status_code == 200
     assert resp.json() == {"ok": True}
     mock_send.assert_not_called()
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -183,13 +184,14 @@ async def test_telegram_webhook_answers_sir(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="Of course, Sir.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="Of course, Sir.")
         client = _telegram_app()
         resp = client.post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "what did Omar ask?"},
         })
     assert resp.status_code == 200
     assert resp.json() == {"ok": True}
-    mock_llm.get_response.assert_called_once()
+    mock_llm.get_response_with_tools.assert_called_once()
     mock_send.assert_called_once_with("Of course, Sir.")
 
 
@@ -226,6 +228,7 @@ async def test_telegram_webhook_tell_sends_dm(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "tell Omar I will be there at 5"},
         })
@@ -233,7 +236,7 @@ async def test_telegram_webhook_tell_sends_dm(monkeypatch):
     fake_responder.send_dm_to_name.assert_awaited_with(
         "Omar", "I will be there at 5"
     )
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     mock_send.assert_called_once_with("Sent to Omar Haddad.")
 
 
@@ -274,6 +277,9 @@ async def test_telegram_webhook_summarize(monkeypatch):
         mock_llm.get_response = AsyncMock(
             return_value="Omar asked to meet; you have not set a time yet."
         )
+        mock_llm.get_response_with_tools = AsyncMock(
+            return_value="Omar asked to meet; you have not set a time yet."
+        )
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "summarize my conversation with Omar"},
         })
@@ -300,6 +306,7 @@ async def test_telegram_webhook_draft_approval_sends_draft(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "send"},
         })
@@ -307,7 +314,7 @@ async def test_telegram_webhook_draft_approval_sends_draft(monkeypatch):
     fake_responder.send_draft_reply.assert_awaited_once_with(
         "t1", "Let me check with Rayyan."
     )
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     mock_send.assert_called_once_with("Sent to Omar.")
 
 
@@ -355,11 +362,12 @@ async def test_telegram_webhook_includes_dm_activity_context(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="Layla said the book arrived.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="Layla said the book arrived.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "what did Layla say?"},
         })
     assert resp.status_code == 200
-    call_kwargs = mock_llm.get_response.await_args.kwargs
+    call_kwargs = mock_llm.get_response_with_tools.await_args.kwargs
     assert "Layla" in call_kwargs["user_message"]
     assert "the book arrived" in call_kwargs["user_message"]
 
@@ -681,6 +689,7 @@ def _webhook_post(text: str, monkeypatch, fake_responder):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": text},
         })
@@ -772,11 +781,11 @@ async def test_telegram_webhook_start_and_help(monkeypatch):
     assert "/status" in text
     assert "/responder on" in text
     assert "/connect instagram" in text
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     resp, mock_send, mock_llm = _webhook_post("/help", monkeypatch, fake_responder)
     assert resp.status_code == 200
     assert "/remind" in mock_send.call_args.args[0]
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -789,7 +798,7 @@ async def test_telegram_webhook_slash_send(monkeypatch):
     resp, mock_send, mock_llm = _webhook_post("/send Omar hi", monkeypatch, fake_responder)
     assert resp.status_code == 200
     fake_responder.send_dm_to_name.assert_awaited_once_with("Omar", "hi")
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     assert mock_send.call_args.args[0] == "Sent to Omar."
 
 
@@ -926,7 +935,7 @@ async def test_telegram_webhook_slash_activity(monkeypatch):
     assert resp.status_code == 200
     assert "While you were away" in mock_send.call_args.args[0]
     assert "Layla" in mock_send.call_args.args[0]
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     fake_responder.get_activity = Mock(return_value=[])
     resp, mock_send, _ = _webhook_post("/activity", monkeypatch, fake_responder)
     assert resp.status_code == 200
@@ -951,7 +960,7 @@ async def test_telegram_webhook_slash_status(monkeypatch):
     assert "DM responder: on, running" in text
     assert "instagram: not connected, 0 replies" in text
     assert "messenger: not connected, 3 replies" in text
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -963,7 +972,7 @@ async def test_telegram_webhook_slash_unknown_and_usage(monkeypatch):
     assert resp.status_code == 200
     assert "don't know /frobnicate" in mock_send.call_args.args[0]
     assert "/help" in mock_send.call_args.args[0]
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     resp, mock_send, _ = _webhook_post("/send", monkeypatch, fake_responder)
     assert resp.status_code == 200
     assert mock_send.call_args.args[0] == "Usage: /send Omar I'll be there at 5"
@@ -987,7 +996,7 @@ async def test_telegram_webhook_command_bypasses_pending_draft(monkeypatch):
     assert resp.status_code == 200
     fake_responder.send_draft_reply.assert_not_called()
     fake_responder.send_dm_to_name.assert_awaited_once_with("Omar", "hi")
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     assert mock_send.call_args.args[0] == "Sent to Omar."
 
 
@@ -1117,6 +1126,7 @@ def _responder_post(text, monkeypatch, enabled, note=""):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": text},
         })
@@ -1135,7 +1145,7 @@ async def test_telegram_webhook_slash_responder_on(monkeypatch):
     assert mock_send.call_args.args[0] == (
         "DM responder is ON — polling (instagram connected)"
     )
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -1150,7 +1160,7 @@ async def test_telegram_webhook_slash_responder_off(monkeypatch):
     assert mock_send.call_args.args[0] == (
         "DM responder is OFF — Jarvis will not auto-reply to DMs."
     )
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -1196,7 +1206,7 @@ async def test_telegram_webhook_slash_responder_usage(monkeypatch):
     assert resp.status_code == 200
     mock_apply.assert_not_called()
     assert mock_send.call_args.args[0].startswith("Usage: /responder on")
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 # --- /connect + /disconnect (cookies via Telegram, explicit only) ---
@@ -1221,7 +1231,7 @@ async def test_telegram_webhook_slash_connect_arms_wait(monkeypatch):
     assert resp.status_code == 200
     assert router_telegram._pending_connect.get("111") == "instagram"
     assert "cookies" in mock_send.call_args.args[0].lower()
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     _clear_pending_connect()
 
 
@@ -1268,6 +1278,7 @@ async def test_telegram_webhook_cookies_connect(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         client = _telegram_app()
         resp = client.post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "/connect instagram"},
@@ -1288,7 +1299,7 @@ async def test_telegram_webhook_cookies_connect(monkeypatch):
         "Connected to Instagram. Jarvis will start replying to your Instagram DMs."
     )
     assert "SECRET_COOKIE_VALUE" not in mock_send.call_args.args[0]
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     assert "111" not in router_telegram._pending_connect
     _clear_pending_connect()
 
@@ -1314,6 +1325,7 @@ async def test_telegram_webhook_cookies_bad_or_unverified(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         client = _telegram_app()
         client.post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "/connect instagram"},
@@ -1365,6 +1377,7 @@ async def test_telegram_webhook_paste_without_connect_goes_to_chat(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="What is this paste?")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="What is this paste?")
         monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
@@ -1372,7 +1385,7 @@ async def test_telegram_webhook_paste_without_connect_goes_to_chat(monkeypatch):
         })
     assert resp.status_code == 200
     mock_parse.assert_not_called()
-    mock_llm.get_response.assert_called_once()
+    mock_llm.get_response_with_tools.assert_called_once()
     assert mock_send.call_args.args[0] == "What is this paste?"
 
 
@@ -1391,6 +1404,7 @@ async def test_telegram_webhook_slash_disconnect(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="should not be used")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="should not be used")
         monkeypatch.setattr("backend.config.settings.telegram_chat_id", "111")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111}, "text": "/disconnect instagram"},
@@ -1401,7 +1415,7 @@ async def test_telegram_webhook_slash_disconnect(monkeypatch):
         "Disconnected Instagram. Jarvis will stop replying to Instagram DMs. "
         "Reconnect any time with /connect instagram."
     )
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -1611,14 +1625,15 @@ async def test_telegram_webhook_voice_note_is_heard_and_answered_with_voice(monk
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="Here is what I recommend.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="Here is what I recommend.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "voice": {"file_id": "voice123", "duration": 5}},
         })
     assert resp.status_code == 200
     mock_dl.assert_called_once_with("voice123")
-    mock_llm.get_response.assert_called_once()
-    assert "what do you recommend" in mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_llm.get_response_with_tools.assert_called_once()
+    assert "what do you recommend" in mock_llm.get_response_with_tools.call_args.kwargs["user_message"]
     mock_voice.assert_called_once_with("Here is what I recommend.")
     mock_send.assert_not_called()
 
@@ -1638,12 +1653,13 @@ async def test_telegram_webhook_voice_note_unheard_falls_back_to_text(monkeypatc
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="hi")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="hi")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "voice": {"file_id": "voice123", "duration": 5}},
         })
     assert resp.status_code == 200
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
     mock_send.assert_called_once()
     assert "could not hear" in mock_send.call_args.args[0]
 
@@ -1660,6 +1676,7 @@ async def test_telegram_webhook_voice_note_from_stranger_ignored(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="hi")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="hi")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 999},
                         "voice": {"file_id": "voice123", "duration": 5}},
@@ -1667,7 +1684,7 @@ async def test_telegram_webhook_voice_note_from_stranger_ignored(monkeypatch):
     assert resp.status_code == 200
     mock_dl.assert_not_called()
     mock_send.assert_not_called()
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -1694,6 +1711,7 @@ async def test_telegram_webhook_voice_note_cancels_pending_connect(monkeypatch):
         patch("backend.services.dm_responder.dm_responder", fake_responder),
     ):
         mock_llm.get_response = AsyncMock(return_value="Hi Sir.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="Hi Sir.")
         router_telegram._pending_connect["111"] = "instagram"
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
@@ -1701,7 +1719,7 @@ async def test_telegram_webhook_voice_note_cancels_pending_connect(monkeypatch):
         })
     assert resp.status_code == 200
     assert "111" not in router_telegram._pending_connect
-    mock_llm.get_response.assert_called_once()
+    mock_llm.get_response_with_tools.assert_called_once()
     _clear_pending_connect()
 
 
@@ -1721,6 +1739,7 @@ async def test_telegram_webhook_voice_reply_failure_falls_back_to_text(monkeypat
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="Hi Sir.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="Hi Sir.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "voice": {"file_id": "voice123", "duration": 2}},
@@ -1767,6 +1786,7 @@ async def test_telegram_webhook_photo_is_seen_and_answered(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="That is a cat on a couch.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="That is a cat on a couch.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "photo": [{"file_id": "small"}, {"file_id": "big"}]},
@@ -1774,8 +1794,8 @@ async def test_telegram_webhook_photo_is_seen_and_answered(monkeypatch):
     assert resp.status_code == 200
     # The largest photo size is downloaded (last in the list).
     mock_dl.assert_called_once_with("big")
-    mock_llm.get_response.assert_called_once()
-    user_message = mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_llm.get_response_with_tools.assert_called_once()
+    user_message = mock_llm.get_response_with_tools.call_args.kwargs["user_message"]
     assert "[Photo: A cat sitting on a couch.]" in user_message
     mock_send.assert_called_once_with("That is a cat on a couch.")
 
@@ -1795,14 +1815,15 @@ async def test_telegram_webhook_photo_with_caption_uses_caption(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="It is a cat.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="It is a cat.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "photo": [{"file_id": "big"}],
                         "caption": "what animal is this?"},
         })
     assert resp.status_code == 200
-    mock_llm.get_response.assert_called_once()
-    user_message = mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_llm.get_response_with_tools.assert_called_once()
+    user_message = mock_llm.get_response_with_tools.call_args.kwargs["user_message"]
     assert "what animal is this?" in user_message
     assert "[Photo: A cat sitting on a couch.]" in user_message
     mock_send.assert_called_once_with("It is a cat.")
@@ -1822,14 +1843,15 @@ async def test_telegram_webhook_video_is_seen_and_answered(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="That video shows a dog running.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="That video shows a dog running.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "video": {"file_id": "vid123", "duration": 10}},
         })
     assert resp.status_code == 200
     mock_dl.assert_called_once_with("vid123")
-    mock_llm.get_response.assert_called_once()
-    user_message = mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_llm.get_response_with_tools.assert_called_once()
+    user_message = mock_llm.get_response_with_tools.call_args.kwargs["user_message"]
     assert "[Video: a dog running in a park]" in user_message
     mock_send.assert_called_once_with("That video shows a dog running.")
 
@@ -1846,6 +1868,7 @@ async def test_telegram_webhook_photo_from_stranger_ignored(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="hi")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="hi")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 999},
                         "photo": [{"file_id": "big"}]},
@@ -1853,7 +1876,7 @@ async def test_telegram_webhook_photo_from_stranger_ignored(monkeypatch):
     assert resp.status_code == 200
     mock_dl.assert_not_called()
     mock_send.assert_not_called()
-    mock_llm.get_response.assert_not_called()
+    mock_llm.get_response_with_tools.assert_not_called()
 
 
 @pytest.mark.asyncio
@@ -1871,13 +1894,14 @@ async def test_telegram_webhook_photo_unseen_still_answered(monkeypatch):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="I could not see that photo.")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="I could not see that photo.")
         resp = _telegram_app().post("/api/telegram/webhook", json={
             "message": {"chat": {"id": 111},
                         "photo": [{"file_id": "big"}]},
         })
     assert resp.status_code == 200
-    mock_llm.get_response.assert_called_once()
-    user_message = mock_llm.get_response.call_args.kwargs["user_message"]
+    mock_llm.get_response_with_tools.assert_called_once()
+    user_message = mock_llm.get_response_with_tools.call_args.kwargs["user_message"]
     assert "I could not see this photo" in user_message
     mock_send.assert_called_once_with("I could not see that photo.")
 

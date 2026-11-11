@@ -108,6 +108,45 @@ def _needs_web_search(message: str) -> bool:
     return False
 
 
+def _vault_prompt_block() -> str:
+    """The vault's rules + facts + lessons as a prompt block.
+
+    Used by _build_default_system_prompt AND by get_response when a
+    custom system prompt was passed (e.g. the Telegram brain) — without
+    this, a rule Sir stated on Telegram never reached the Telegram
+    brain, because only the default prompt carried the vault.
+    """
+    block = ""
+    try:
+        from backend.services.obsidian_vault import vault as obsidian_vault
+
+        vault_rules = obsidian_vault.rules_text()
+        if vault_rules:
+            block += (
+                "\n\n=== SIR'S STANDING RULES (permanent memory — follow them) ===\n"
+                + vault_rules
+                + "\n"
+            )
+        vault_facts = obsidian_vault.facts_text()
+        if vault_facts:
+            block += (
+                "\n\n=== FACTS ABOUT SIR (permanent memory — use them, never contradict them) ===\n"
+                + vault_facts
+                + "\n"
+            )
+        vault_lessons = obsidian_vault.lessons_text()
+        if vault_lessons:
+            block += (
+                "\n\n=== LESSONS LEARNED (mistakes not to repeat) ===\n"
+                + vault_lessons
+                + "\n"
+            )
+    except (OSError, RuntimeError, ValueError) as e:
+        log.warning("obsidian_rules_inject_failed", error=str(e))
+    return block
+
+
+
 class LLMService:
     """
     Core reasoning service for JARVIS OMEGA. Interfaces with Groq Llama 3.3 70B
@@ -156,9 +195,14 @@ class LLMService:
         real-time data. Returns the assistant's string reply.
         """
         chat_history = self._trim_history(chat_history or [])
-        
+
         # 1. Compile System instructions
         sys_prompt = system_instructions or self._build_default_system_prompt()
+        if system_instructions:
+            # A custom prompt (e.g. the Telegram brain) does not carry
+            # the vault — append it so Sir's rules, facts and lessons
+            # reach this brain too.
+            sys_prompt += _vault_prompt_block()
 
         # 2. Inject user location dynamically if available
         location = None
@@ -286,6 +330,136 @@ class LLMService:
         if groq_failure is not None:
             return groq_failure
         return "Sir, I require a Groq API key to activate my full reasoning networks. Please configure my environment with GROQ_API_KEY."
+
+    async def get_response_with_tools(
+        self,
+        user_message: str,
+        tools: list[Any],
+        chat_history: list[dict[str, str]] | None = None,
+        system_instructions: str | None = None,
+        max_rounds: int = 3,
+    ) -> str:
+        """Chat with real tool use: the model may call tools, and their
+        results are fed back until it answers in words.
+
+        `tools` is a list of Tool objects (from backend.tools.registry);
+        only their OpenAI schemas are sent to the model, and only tools
+        in this list can be called. A tool that raises, returns nothing
+        useful, or is not in the list is skipped and the model is told
+        so. After `max_rounds` of tool calls the last text reply is
+        returned. Any failure falls back to the plain text brain
+        (get_response), so a tool problem never leaves Sir unanswered.
+        """
+        import json
+
+        from backend.tools.registry import Tool
+
+        tool_list = [t for t in (tools or []) if isinstance(t, Tool) and t.enabled]
+        if not tool_list:
+            return await self.get_response(
+                user_message,
+                chat_history=chat_history,
+                system_instructions=system_instructions,
+            )
+        by_name = {t.name: t for t in tool_list}
+        schemas = [t.to_openai_schema() for t in tool_list]
+
+        chat_history = self._trim_history(chat_history or [])
+        sys_prompt = system_instructions or self._build_default_system_prompt()
+        if system_instructions:
+            sys_prompt += _vault_prompt_block()
+        # Vector memory (the same recall the plain brain gets).
+        try:
+            memory_ctx = await memory_service.get_context_for_query(user_message)
+            memories_text = self._format_memory_context(memory_ctx)
+            sys_prompt += f"\n\n[RELEVANT MEMORIES FOR CURRENT CONTEXT]\n{memories_text}"
+        except (OSError, RuntimeError, ValueError) as e:
+            log.debug("tool_loop_memory_failed", error=str(e))
+        sys_prompt += (
+            "\n\nYou have tools. When Sir asks you to DO something — send "
+            "a message, set a reminder, check the calendar, look something "
+            "up, send the briefing — call the right tool instead of "
+            "describing it or asking him to do it. Use the tool's result "
+            "to answer; never invent a result. If no tool fits, just answer."
+        )
+        messages: list[dict[str, Any]] = [{"role": "system", "content": sys_prompt}]
+        for msg in chat_history:
+            messages.append({"role": msg["role"], "content": msg["content"]})
+        messages.append({"role": "user", "content": user_message})
+
+        groq_key = settings.groq_api_key
+        if not groq_key:
+            return await self.get_response(
+                user_message,
+                chat_history=chat_history,
+                system_instructions=system_instructions,
+            )
+        headers = {
+            "Authorization": f"Bearer {groq_key}",
+            "Content-Type": "application/json",
+        }
+        last_text = ""
+        for _round in range(max_rounds):
+            payload: dict[str, Any] = {
+                "model": GROQ_MODEL,
+                "messages": messages,
+                "temperature": 0.5,
+                "max_tokens": settings.llm_max_tokens,
+                "tools": schemas,
+                "tool_choice": "auto",
+            }
+            try:
+                async with httpx.AsyncClient(timeout=90.0, trust_env=False) as client:
+                    response = await client.post(GROQ_URL, headers=headers, json=payload)
+            except (httpx.HTTPError, ValueError) as e:
+                log.debug("tool_loop_request_failed", error=str(e))
+                break
+            if response.status_code != 200:
+                log.debug("tool_loop_bad_status", status=response.status_code)
+                break
+            try:
+                message = response.json()["choices"][0]["message"]
+            except (ValueError, KeyError, IndexError, AttributeError):
+                break
+            last_text = (message.get("content") or "").strip()
+            tool_calls = message.get("tool_calls") or []
+            if not tool_calls:
+                break
+            # The model asked for tools: run them, feed the results back.
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": message.get("content") or "",
+                    "tool_calls": tool_calls,
+                }
+            )
+            for call in tool_calls:
+                call_id = call.get("id", "")
+                fn = call.get("function", {}) or {}
+                name = fn.get("name", "")
+                raw_args = fn.get("arguments", "{}")
+                try:
+                    args = json.loads(raw_args) if isinstance(raw_args, str) else {}
+                except ValueError:
+                    args = {}
+                if name not in by_name or not isinstance(args, dict):
+                    result = f"Tool {name!r} is not available."
+                else:
+                    try:
+                        out = await by_name[name](**args)
+                        result = out if isinstance(out, str) else json.dumps(out, ensure_ascii=False, default=str)
+                    except (OSError, RuntimeError, ValueError, TypeError) as e:
+                        result = f"Tool {name} failed: {e}"
+                messages.append(
+                    {"role": "tool", "tool_call_id": call_id, "content": result[:4000]}
+                )
+        if last_text:
+            return last_text
+        return await self.get_response(
+            user_message,
+            chat_history=chat_history,
+            system_instructions=system_instructions,
+        )
 
     async def _post_chat(
         self,
@@ -541,25 +715,7 @@ class LLMService:
 
         # Sir's standing rules from his permanent memory (Obsidian vault):
         # a rule he stated is followed, not just noted.
-        try:
-            from backend.services.obsidian_vault import vault as obsidian_vault
-
-            vault_rules = obsidian_vault.rules_text()
-            if vault_rules:
-                base += (
-                    "\n\n=== SIR'S STANDING RULES (permanent memory — follow them) ===\n"
-                    + vault_rules
-                    + "\n"
-                )
-            vault_lessons = obsidian_vault.lessons_text()
-            if vault_lessons:
-                base += (
-                    "\n\n=== LESSONS LEARNED (mistakes not to repeat) ===\n"
-                    + vault_lessons
-                    + "\n"
-                )
-        except (OSError, RuntimeError, ValueError) as e:
-            log.warning("obsidian_rules_inject_failed", error=str(e))
+        base += _vault_prompt_block()
 
         return base
 

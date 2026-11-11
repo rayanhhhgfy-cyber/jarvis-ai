@@ -351,6 +351,27 @@ class ObsidianVault:
             return text
         return None
 
+    def list_facts(self) -> list[str]:
+        """Every durable fact, in the order it was learned."""
+        note = self.get_note(_FACTS_NOTE_ID)
+        if note is None:
+            return []
+        facts: list[str] = []
+        for line in (note.get("body") or "").splitlines():
+            line = line.strip()
+            if line.startswith("- "):
+                facts.append(line[2:].strip())
+            elif line:
+                facts.append(line)
+        return facts
+
+    def facts_text(self, max_chars: int = _MAX_RULES_CHARS) -> str:
+        """Facts as a Markdown list, ready to inject into a prompt."""
+        facts = self.list_facts()
+        if not facts:
+            return ""
+        return "\n".join(f"- {f}" for f in facts)[:max_chars]
+
     # -- lessons ---------------------------------------------------
 
     def add_lesson(self, text: str, source: str = "telegram") -> str | None:

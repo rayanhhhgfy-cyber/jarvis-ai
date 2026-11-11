@@ -2777,12 +2777,16 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
         if media_context:
             context = media_context + "\n\n" + context
         # The recent turns, so the brain knows what "it" / "that" /
-        # "today" means — without this it guessed Instagram.
-        reply = await llm_service.get_response(
+        # "today" means — without this it guessed Instagram. And real
+        # tools, so "send Omar a message" actually sends it instead of
+        # being described.
+        from backend.services.telegram_tools import telegram_tools
+
+        reply = await llm_service.get_response_with_tools(
             user_message=f"{context}Rayyan (Telegram): {text}",
+            tools=telegram_tools(),
             chat_history=_get_telegram_history(),
             system_instructions=_TELEGRAM_SYSTEM,
-            inject_memory=True,
         )
         reply = reply or "Sorry Sir, I could not answer that."
         if spoke:
@@ -2796,6 +2800,13 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
                 await send_telegram_message(reply)
         else:
             await send_telegram_message(reply)
+        # Learn from the turn: pull durable facts into the permanent
+        # memory (fire-and-forget — it must never slow the reply).
+        import asyncio
+
+        from backend.services.telegram_memory import auto_save_facts
+
+        asyncio.create_task(auto_save_facts(text, reply))
     except Exception as e:
         log.warning("telegram_webhook_failed", error=str(e))
     return {"ok": True}

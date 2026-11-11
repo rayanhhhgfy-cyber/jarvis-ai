@@ -112,6 +112,7 @@ async def test_llm_gets_conversation_history(monkeypatch, tmp_path):
         patch("backend.services.llm_service.llm_service") as mock_llm,
     ):
         mock_llm.get_response = AsyncMock(return_value="ok")
+        mock_llm.get_response_with_tools = AsyncMock(return_value="ok")
         assert _webhook_post("/briefing voice", update_id=1).status_code == 200
         # The bot's reply is in the history now.
         assert any(
@@ -121,8 +122,8 @@ async def test_llm_gets_conversation_history(monkeypatch, tmp_path):
         # His next message is free chat (no handler matches it), so it
         # reaches the LLM — with that history attached.
         assert _webhook_post("why tomorrow and not today?", update_id=2).status_code == 200
-    assert mock_llm.get_response.called
-    _, kwargs = mock_llm.get_response.call_args
+    assert mock_llm.get_response_with_tools.called
+    _, kwargs = mock_llm.get_response_with_tools.call_args
     history = kwargs.get("chat_history") or []
     assert any("voice note from tomorrow" in m["content"] for m in history)
     assert any(m["content"] == "why tomorrow and not today?" for m in history)

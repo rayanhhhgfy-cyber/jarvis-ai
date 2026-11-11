@@ -180,6 +180,11 @@ def _messages(
     rules = obsidian_vault.rules_text()
     if rules:
         prompt += f"\n\nSir's standing rules (from his permanent memory — follow them):\n{rules}"
+    # Facts Sir taught him — what he knows about Sir, his people and
+    # his projects. Without this the bot forgets what it was told.
+    facts = obsidian_vault.facts_text()
+    if facts:
+        prompt += f"\n\nFacts about Sir (from his permanent memory — use them, never contradict them):\n{facts}"
     # Lessons learned — mistakes Sir corrected, not to be repeated.
     lessons = obsidian_vault.lessons_text()
     if lessons:
