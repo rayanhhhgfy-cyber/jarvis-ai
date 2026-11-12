@@ -142,6 +142,9 @@ _TELEGRAM_SYSTEM = (
     "the time, which parts it has, voice or text, Arabic or English - "
     "with /briefing or plain words ('make my briefing at 8am', 'briefing "
     "without the weather', 'send my briefing as a voice note'). "
+    "When Rayyan asks for his briefing, in any words, Arabic or English, "
+    "serve it from the stored briefing with the send_briefing tool — never "
+    "from a web search, and never list sources for a briefing. "
     "When you reply to a voice note, your words will be spoken aloud as "
     "a voice note — so never announce that you are sending one. Do not "
     "write '[Voice note]', 'Sending you a voice note', or anything like "
@@ -1778,6 +1781,111 @@ _RESEND_BRIEFING_BLOCKERS = (
 )
 
 
+# Words that mean "the morning briefing" — English and Arabic. The bare
+# forms cover the longer phrases: "briefing" covers "morning briefing",
+# "my briefing", "today's briefing" and "the briefing"; "summary" covers
+# "today's summary" and "my summary"; the Arabic bare forms cover the
+# definite-article forms (البريفينغ contains بريفينغ, الموجز contains
+# موجز, الملخص contains ملخص, النشرة contains نشرة).
+_BRIEFING_REQUEST_WORDS_EN = ("briefing", "summary")
+_BRIEFING_REQUEST_WORDS_AR = ("بريفينغ", "بريفينج", "موجز", "ملخص", "نشرة")
+
+# "Send me the briefing" verbs — only ever WITH a briefing word, never
+# alone ("ابعتها لعمر" is a DM, not a briefing request).
+_BRIEFING_SEND_VERBS_AR = (
+    "ابعت", "ابعث", "أرسل", "ارسل", "اعطيني", "أعطيني", "جيب لي", "جيبلي",
+)
+
+
+def _is_briefing_request(text: str) -> bool:
+    """Does this message ask for the morning briefing, in any words?
+
+    One shared matcher for the whole router: the resend handler and the
+    "briefing ..." trigger both use it, so a briefing request can never
+    fall through to the LLM — which would answer with a web search and
+    read out sources instead of the stored briefing (2026-11-12: Rayyan
+    asked by voice note and got 4 voice notes of search results).
+
+    A plain news question ("what's the news in Jordan today") is NOT a
+    briefing request — "news"/"الأخبار" deliberately match nothing here.
+    A DM conversation is never the briefing either.
+    """
+    lowered = (text or "").lower().strip()
+    if not lowered:
+        return False
+    if any(word in lowered for word in _RESEND_BRIEFING_BLOCKERS):
+        return False
+    if any(p in lowered for p in _RESEND_BRIEFING_PATTERNS):
+        return True
+    if any(w in lowered for w in _BRIEFING_REQUEST_WORDS_EN):
+        return True
+    if any(w in lowered for w in _BRIEFING_REQUEST_WORDS_AR):
+        return True
+    # Send/give-me + a briefing word ("ابعت البريفينغ", "أرسل لي الملخص").
+    return any(v in lowered for v in _BRIEFING_SEND_VERBS_AR) and (
+        any(w in lowered for w in _BRIEFING_REQUEST_WORDS_EN)
+        or any(w in lowered for w in _BRIEFING_REQUEST_WORDS_AR)
+    )
+
+
+# Words that turn a "briefing ..." message into a settings change
+# instead of a request for the briefing itself — the same signals
+# _handle_briefing acts on. The resend handler must never swallow
+# these, or "make my briefing at 9am" would re-send the briefing
+# instead of moving it to 09:00.
+_BRIEFING_LANGUAGE_WORDS = (
+    "arabic", "english", "بالعربي", "بالعربية", "بالإنجليزي", "بالانجليزي",
+)
+_BRIEFING_SETTING_VOICE_WORDS = ("voice", "صوت", "text", "كتابة")
+_BRIEFING_SECTION_WORDS = (
+    "weather", "الطقس", "news", "الأخبار", "الاخبار",
+    "calendar", "التقويم", "schedule",
+    "birthday", "birthdays", "عيد ميلاد",
+    "dm", "dms", "messages", "الرسائل",
+)
+_BRIEFING_SECTION_OFF_WORDS = (
+    "off", "remove", "without", "don't", "dont", "disable", "no ",
+    "hide", "بدون", "أزل", "ازل",
+)
+_BRIEFING_SECTION_ON_WORDS = (
+    "on", "add", "include", "enable", "show", "أضف", "اضف",
+)
+
+
+def _is_briefing_settings_change(text: str) -> bool:
+    """Is this message changing the briefing, not asking for it?
+
+    Mirrors what _handle_briefing acts on: a language, a time, a
+    voice/text setting, or a section on/off. Those messages must reach
+    _handle_briefing; the resend handler declines them.
+
+    A resend phrasing ("resend it as a voice note in English") is a
+    request for the briefing itself — a language, time or section word
+    in it is incidental, not a settings change — so resend patterns win.
+    """
+    lowered = (text or "").lower().strip()
+    if not lowered:
+        return False
+    if any(p in lowered for p in _RESEND_BRIEFING_PATTERNS):
+        return False
+    if any(w in lowered for w in _BRIEFING_LANGUAGE_WORDS):
+        return True
+    from backend.services.dm_time import parse_time
+
+    if parse_time(text) is not None:
+        return True
+    # A bare voice/text setting ("briefing voice") — but "send my
+    # briefing as a voice note" is a send-now request, not a setting.
+    if any(w in lowered for w in _BRIEFING_SETTING_VOICE_WORDS) and (
+        "send" not in lowered and "now" not in lowered
+    ):
+        return True
+    return any(w in lowered for w in _BRIEFING_SECTION_WORDS) and (
+        any(w in lowered for w in _BRIEFING_SECTION_OFF_WORDS)
+        or any(w in lowered for w in _BRIEFING_SECTION_ON_WORDS)
+    )
+
+
 def _wants_voice_reply(text: str) -> bool:
     """Does Sir want THIS reply as a voice note?
 
@@ -1839,7 +1947,11 @@ async def _handle_resend_briefing(text: str) -> str | None:
     if any(word in lowered for word in _RESEND_BRIEFING_BLOCKERS):
         return None
     bare_voice = lowered.strip(" .!") in ("voice note", "voice note please", "please voice note")
-    if not bare_voice and not any(p in lowered for p in _RESEND_BRIEFING_PATTERNS):
+    if not bare_voice and not _is_briefing_request(text):
+        return None
+    # A settings change ("make my briefing at 9am") is not a resend —
+    # it must reach _handle_briefing, not re-send the stored briefing.
+    if not bare_voice and _is_briefing_settings_change(text):
         return None
     # Voice when he asks for it, or when his briefing is set to voice.
     wants_voice = (
@@ -2831,7 +2943,9 @@ async def telegram_webhook(payload: dict[str, Any]) -> dict[str, Any]:
             return {"ok": True}
 
         # --- "briefing ..." in plain chat: show or change the briefing. ---
-        if "briefing" in text.lower() or "النشرة" in text:
+        # One shared matcher with the resend handler above, so no briefing
+        # request in any words can ever reach the LLM fallback.
+        if _is_briefing_request(text):
             await send_telegram_message(await _handle_briefing(text))
             return {"ok": True}
 

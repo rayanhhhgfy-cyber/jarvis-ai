@@ -16,6 +16,7 @@ never asked to reproduce it.
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -54,11 +55,14 @@ def _prep(monkeypatch, tmp_path, briefing_text=FAKE_BRIEFING):
     monkeypatch.setattr(dm_store.briefing, "_loaded", False)
     monkeypatch.setattr(dm_store.briefing, "_data", {})
     if briefing_text is not None:
+        # Stored "now", so the 24-hour resend window always holds no
+        # matter when the suite runs (a fixed 2026-11-11 date went stale
+        # the next morning and every resend test started failing).
         dm_store.briefing.set(
             "last_sent",
             {
                 "text": briefing_text,
-                "sent_at": "2026-11-11T07:00:00+00:00",
+                "sent_at": datetime.now(UTC).isoformat(),
                 "language": "en",
             },
         )
