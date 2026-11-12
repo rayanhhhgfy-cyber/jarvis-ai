@@ -72,7 +72,10 @@ class Settings(BaseSettings):
     # (against the platforms' rules) and must be a deliberate choice.
     dm_responder_enabled: bool = False
     # How often the DM responder polls each connected account (seconds).
-    dm_poll_interval_seconds: int = 60
+    # 120s base, plus up to 60s of random jitter per cycle (see
+    # dm_responder._next_poll_delay): a fixed 60-second beat is a
+    # machine-regular pattern Instagram flags as automation.
+    dm_poll_interval_seconds: int = 120
     # ---- Turso (persistent vault backing) ----
     # When BOTH are set, the connector vault also persists to a Turso
     # (libsql) table, so credentials survive Render redeploys — Render's

@@ -61,3 +61,19 @@ def _init_security_for_tests(test_secret_key, test_encryption_key):
         encryption_key=test_encryption_key,
     )
     yield
+
+
+@pytest.fixture(autouse=True)
+def _no_dm_reply_pacing(monkeypatch):
+    """Zero the DM responder's reply pacing for every test.
+
+    The anti-automation gaps (20s global / 60s per thread) would make any
+    test that drives two replies in quick succession sleep for real
+    seconds. Tests for the pacing itself (test_dm_footprint.py) set the
+    gaps back to real values with their own monkeypatch.
+    """
+    import backend.services.dm_responder as dm_resp
+
+    monkeypatch.setattr(dm_resp, "_MIN_GLOBAL_REPLY_GAP_SECONDS", 0.0)
+    monkeypatch.setattr(dm_resp, "_MIN_THREAD_REPLY_GAP_SECONDS", 0.0)
+    monkeypatch.setattr(dm_resp, "_MAX_AUTO_REPLIES_PER_HOUR", 10_000)

@@ -412,6 +412,10 @@ class InstagramClient:
         self._settings = dict(settings or {})
         self._cl = None  # instagrapi.Client, created lazily
         self.user_id: str | None = self._session_cookies.get("ds_user_id")
+        # Last session-check failure, e.g. "LoginRequired: ..." — the
+        # responder reads it to tell a warning (challenge / rate-limit /
+        # forced re-login) from a plain network blip. Never a secret.
+        self.last_error: str | None = None
 
     def _require_client(self):
         try:
@@ -466,8 +470,10 @@ class InstagramClient:
             info = cl.account_info()
             if info and getattr(info, "pk", None):
                 self.user_id = str(info.pk)
+            self.last_error = None
             return True
         except Exception as e:
+            self.last_error = f"{type(e).__name__}: {e}"
             log.warning("instagram_validate_failed", error=str(e))
             return False
 

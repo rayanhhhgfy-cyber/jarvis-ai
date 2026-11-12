@@ -211,6 +211,13 @@ blocked_users = JsonStore("blocked_users.json")
 # Durable (Turso-backed) so a restart or redeploy never silently
 # unmutes a spammer; entries carry muted_at and expire after an hour.
 muted_threads = JsonStore("muted_threads.json")
+# Instagram warning lockout: one key, "lockout" -> {active, reason,
+# since, fingerprint}. Set when Instagram answers with a challenge,
+# rate-limit or forced re-login; while active the responder does not
+# poll Instagram at all. A reconnect (new credentials) clears it.
+# Durable (Turso-backed) so a restart or redeploy never resumes
+# polling into a warning.
+instagram_warning = JsonStore("instagram_warning.json")
 # Recent Telegram conversation with Sir (last ~20 turns), so the brain
 # can follow "it" / "that" / "today" in his next message. A list of
 # {"role": "user"|"assistant", "content": ...} under key "messages".

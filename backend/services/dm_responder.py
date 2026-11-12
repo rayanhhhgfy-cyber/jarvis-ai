@@ -22,7 +22,17 @@ Rules, by design:
   back-and-forth (no re-introduction) and answer promptly, still
   stepping aside the moment Sir replies himself.
 * At most 5 replies per platform per poll, so a flood can never turn
-  into a spam run.
+  into a spam run. Automated replies are also paced (a minimum gap
+  between sends, per thread and globally) and capped at 20 per
+  platform per hour — a paced-out message is never dropped, it stays
+  unseen and is retried on a later poll.
+* Low footprint by design (2026-11-12, after Instagram's "we suspect
+  automated behavior" warning): polls run every ~2–3 minutes on a
+  jittered schedule, one long-lived client is reused per platform
+  instead of a fresh login every poll, and the per-poll session
+  validation call is gone — list_recent speaks for the session. When
+  Instagram answers with a challenge, rate-limit or forced re-login,
+  polling stops entirely (durable lockout) until Sir reconnects.
 * Every failure is logged and surfaced in status; the loop never dies
   silently. A new DM also fires a Web Push notification so Sir knows
   Jarvis answered — that push is how Jarvis reports back to him.
@@ -33,7 +43,9 @@ Rules, by design:
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
+import random
 import re
 import time
 from datetime import UTC, datetime, timedelta
@@ -54,9 +66,25 @@ from shared.logger import get_logger
 log = get_logger("dm_responder")
 
 _MAX_REPLIES_PER_POLL = 5
+# Anti-automation footprint (2026-11-12, after Instagram's "we suspect
+# automated behavior" warning). A paced-out message is NEVER dropped —
+# it stays unseen and is retried on a later poll.
+# Poll jitter: each cycle waits the configured base plus a random
+# 0–60s, so checks never land on a rigid clock.
+_POLL_JITTER_SECONDS = 60
+# Minimum gaps between automated sends: a human never fires two DMs
+# in the same second. Global gap binds inside one poll (up to 5
+# replies back-to-back); per-thread gap binds across polls.
+_MIN_GLOBAL_REPLY_GAP_SECONDS = 20.0
+_MIN_THREAD_REPLY_GAP_SECONDS = 60.0
+# Hard cap on automated replies per platform per hour — bursts are
+# impossible even if many DMs arrive at once.
+_MAX_AUTO_REPLIES_PER_HOUR = 20
+_HOUR_SECONDS = 3600.0
 # Give Sir one minute to answer a new message himself before Jarvis
-# steps in. (Polls run every dm_poll_interval_seconds, 60s by default,
-# so the first reply lands roughly 1–2 minutes after their message.)
+# steps in. (Polls run every dm_poll_interval_seconds, 120s by default
+# plus jitter, so the first reply lands roughly 2–4 minutes after
+# their message.)
 _REPLY_DELAY_SECONDS = 60
 _SEEN_FILE = "./storage/dm_seen.json"
 _AMMAN = ZoneInfo("Asia/Amman")
@@ -616,6 +644,31 @@ def _is_abusive(text: str) -> bool:
     return any(marker in lowered for marker in _ABUSIVE_MARKERS)
 
 
+# Instagram error signals that mean "stop, do not retry": a challenge,
+# a feedback/rate-limit block, or a forced re-login. Hammering logins
+# at a flagged account is exactly what gets it suspended, so any of
+# these ends polling until Sir reconnects.
+_INSTAGRAM_WARNING_MARKERS = (
+    "challenge", "feedback", "login_required", "loginrequired",
+    "pleasewait", "please wait", "sentry", "rate limit", "ratelimit",
+    "temporarily blocked", "temporarily_blocked", "checkpoint",
+    "suspicious", "two_factor", "twofactor",
+)
+
+
+def _is_instagram_warning(error: Any) -> bool:
+    """True when an Instagram error means stop polling, not retry.
+
+    Matches instagrapi's exception class names (ChallengeRequired,
+    FeedbackRequired, LoginRequired, PleaseWaitFewMinutes, SentryBlock)
+    and the matching message text. A plain network error does not match.
+    """
+    if error is None:
+        return False
+    text = f"{type(error).__name__} {error}".lower()
+    return any(marker in text for marker in _INSTAGRAM_WARNING_MARKERS)
+
+
 def _in_quiet_hours(now: datetime | None = None) -> bool:
     """True when the current time is inside the configured quiet hours."""
     now = now or datetime.now(UTC)
@@ -684,6 +737,22 @@ class DMResponder:
         # appears in a group Jarvis already knows is a newcomer — welcome
         # them once. In-memory only; a redeploy re-learns the groups.
         self._group_members: dict[str, set[str]] = {}
+        # Anti-automation: one long-lived client per platform for the
+        # poll loop, reused across polls (a fresh login every poll is
+        # the machine-regular pattern Instagram flags), with the
+        # credential fingerprint each was built from — a reconnect
+        # rebuilds it instead of reusing a stale session.
+        self._clients: dict[str, Any] = {}
+        self._client_fingerprints: dict[str, str] = {}
+        # Reply pacing: automated sends in the last hour per platform,
+        # and the last automated send (global + per thread). A paced-out
+        # message stays unseen and is retried on a later poll.
+        self._send_times: dict[str, list[float]] = {}
+        self._last_send_at: dict[str, float] = {}
+        # Instagram warning lockout tripped during this poll cycle: no
+        # further sends are attempted until the next cycle (which skips
+        # Instagram entirely while the durable flag is set).
+        self._lockout_tripped = False
 
     # ------------------------------------------------------------------
     # Lifecycle
@@ -701,6 +770,13 @@ class DMResponder:
             "platforms": {
                 p: {
                     "connected": dm_auth.connector_status(p)["connected"],
+                    # True when Instagram polling is paused by the
+                    # warning lockout (resumes only on reconnect).
+                    "warning_lockout": (
+                        self._is_instagram_locked_out()
+                        if p == "instagram"
+                        else False
+                    ),
                     **self._state[p],
                 }
                 for p in dm_auth.PLATFORMS
@@ -1336,9 +1412,14 @@ class DMResponder:
         )
         names = " and ".join(sorted(newcomers))
         try:
-            await client.send(thread_id, template.replace("{name}", names))
+            sent = await self._paced_send(
+                client, platform, thread_id, template.replace("{name}", names)
+            )
         except Exception as e:
             log.warning("dm_welcome_failed", platform=platform, error=str(e))
+            return
+        if not sent:
+            return  # paced out: the welcome waits for a later poll
 
     @staticmethod
     def _birthday_wish_text(name: str) -> str:
@@ -1561,7 +1642,9 @@ class DMResponder:
             data = blob.get("data") or {}
             method = blob.get("method")
             try:
-                client = self._build_client(platform, method, data)
+                # Reused across polls from here on: the client built at
+                # startup is the one the loop keeps using.
+                client, _fresh = self._get_cached_client(platform, method, data)
                 if platform == "messenger":
                     valid = await client.validate()
                 else:
@@ -1589,13 +1672,20 @@ class DMResponder:
             self._task = None
         log.info("dm_responder_stopped")
 
+    def _next_poll_delay(self) -> float:
+        """Seconds until the next poll: the configured base plus a
+        random 0–60s jitter, so checks never land on a rigid clock
+        (a fixed 60-second beat is a bot tell)."""
+        base = max(15, settings.dm_poll_interval_seconds)
+        return base + random.uniform(0, _POLL_JITTER_SECONDS)
+
     async def _loop(self) -> None:
         while self._running:
             try:
                 await self.poll_once()
             except Exception as e:
                 log.error("dm_responder_poll_failed", error=str(e))
-            await asyncio.sleep(max(15, settings.dm_poll_interval_seconds))
+            await asyncio.sleep(self._next_poll_delay())
 
     # ------------------------------------------------------------------
     # One poll cycle
@@ -1603,10 +1693,28 @@ class DMResponder:
 
     async def poll_once(self) -> dict[str, Any]:
         """Poll every connected platform once. Returns per-platform counts."""
+        self._lockout_tripped = False
         results: dict[str, Any] = {}
         for platform in dm_auth.PLATFORMS:
             if not dm_auth.connector_status(platform)["connected"]:
                 results[platform] = {"skipped": True, "reason": "not connected"}
+                continue
+            if (
+                platform == "instagram"
+                and self._is_instagram_locked_out()
+                # Sir reconnected since the lockout? New credentials
+                # clear it — that is his explicit action, not a retry.
+                and not self._clear_instagram_lockout_if_reconnected()
+            ):
+                results[platform] = {
+                    "skipped": True,
+                    "reason": "instagram_warning_lockout",
+                }
+                self._state[platform]["last_error"] = (
+                    "Instagram warning — polling paused until reconnect"
+                )
+                self._state[platform]["degraded"] = True
+                self._state[platform]["last_poll"] = datetime.now(UTC).isoformat()
                 continue
             try:
                 results[platform] = await self._poll_platform(platform)
@@ -1716,15 +1824,48 @@ class DMResponder:
         data = blob.get("data") or {}
         method = blob.get("method")
 
-        client = self._build_client(platform, method, data)
-        if platform == "messenger":
-            if not await client.validate():
-                raise DMClientError("Messenger session expired — reconnect in the Connectors tab.")
-        else:
-            if not await asyncio.to_thread(client.validate):
-                raise DMClientError("Instagram session expired — reconnect in the Connectors tab.")
-
-        threads = await client.list_recent(limit=10)
+        # One long-lived client per platform, reused across polls: a
+        # fresh login on every poll is the machine-regular pattern
+        # Instagram flags. Only a freshly built client is validated;
+        # later polls skip the extra account_info() call and let
+        # list_recent speak for the session (it fails the same way a
+        # dead session would, and that failure is classified below).
+        try:
+            client, fresh = self._get_cached_client(platform, method, data)
+        except Exception as e:
+            if platform == "instagram":
+                await self._maybe_lockout_instagram(e)
+            raise
+        if fresh:
+            try:
+                if platform == "messenger":
+                    valid = await client.validate()
+                else:
+                    valid = await asyncio.to_thread(client.validate)
+            except Exception as e:
+                self._drop_cached_client(platform)
+                if platform == "instagram":
+                    await self._maybe_lockout_instagram(e)
+                raise
+            if not valid:
+                self._drop_cached_client(platform)
+                if platform == "instagram":
+                    await self._maybe_lockout_instagram(
+                        getattr(client, "last_error", "") or "session expired"
+                    )
+                    raise DMClientError(
+                        "Instagram session expired — reconnect in the Connectors tab."
+                    )
+                raise DMClientError(
+                    "Messenger session expired — reconnect in the Connectors tab."
+                )
+        try:
+            threads = await client.list_recent(limit=10)
+        except Exception as e:
+            self._drop_cached_client(platform)
+            if platform == "instagram":
+                await self._maybe_lockout_instagram(e)
+            raise
         # Morning again: reset the quiet-hours "already replied" set so
         # tonight's first late message gets its one short reply.
         if not _in_quiet_hours():
@@ -1760,10 +1901,14 @@ class DMResponder:
                 )
                 if gen.get("ok"):
                     try:
-                        await client.send(thread_id, gen["reply"])
+                        sent = await self._paced_send(
+                            client, platform, thread_id, gen["reply"]
+                        )
                     except Exception as e:
                         log.warning("dm_missed_call_send_failed", platform=platform, error=str(e))
                         continue
+                    if not sent:
+                        continue  # paced out: retry on a later poll
                     self._last_reply[f"{platform}:{thread_id}"] = gen["reply"]
                     self._mark_seen(platform, thread_id, msg["message_id"])
                     self._introduced.setdefault(platform, {})[thread_id] = True
@@ -1840,14 +1985,17 @@ class DMResponder:
             # wait silently until morning. VIPs bypass quiet hours.
             if _in_quiet_hours() and not is_vip:
                 if thread_key not in self._quiet_replied:
-                    self._quiet_replied.add(thread_key)
                     try:
-                        await client.send(
-                            thread_id,
+                        sent = await self._paced_send(
+                            client, platform, thread_id,
                             "It's late — Rayyan will get back to you in the morning.",
                         )
                     except Exception as e:
                         log.debug("dm_quiet_reply_failed", error=str(e))
+                        continue
+                    if not sent:
+                        continue  # paced out: retry on a later poll
+                    self._quiet_replied.add(thread_key)
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._persist_state()
                 continue
@@ -1856,10 +2004,14 @@ class DMResponder:
             rule_reply = _match_rule(msg.get("sender_name", ""), msg.get("text") or "")
             if rule_reply:
                 try:
-                    await client.send(thread_id, rule_reply)
+                    sent = await self._paced_send(
+                        client, platform, thread_id, rule_reply
+                    )
                 except Exception as e:
                     log.warning("dm_rule_send_failed", platform=platform, error=str(e))
                     continue
+                if not sent:
+                    continue  # paced out: retry on a later poll
                 self._last_reply[thread_key] = rule_reply
                 self._mark_seen(platform, thread_id, msg["message_id"])
                 self._introduced.setdefault(platform, {})[thread_id] = True
@@ -1930,10 +2082,14 @@ class DMResponder:
                                     f"Done — see you {chosen.strftime('%A %H:%M')}!"
                                 )
                                 try:
-                                    await client.send(thread_id, confirm)
+                                    sent = await self._paced_send(
+                                        client, platform, thread_id, confirm
+                                    )
                                 except Exception as e:
                                     log.warning("dm_meeting_confirm_failed", platform=platform, error=str(e))
                                     continue
+                                if not sent:
+                                    continue  # paced out: retry on a later poll
                                 self._mark_seen(platform, thread_id, msg["message_id"])
                                 self._introduced.setdefault(platform, {})[thread_id] = True
                                 self._clear_pending(platform, thread_id)
@@ -2038,10 +2194,14 @@ class DMResponder:
                 calendar_answer = self._calendar_answer(msg.get("text") or "")
                 if calendar_answer:
                     try:
-                        await client.send(thread_id, calendar_answer)
+                        sent = await self._paced_send(
+                            client, platform, thread_id, calendar_answer
+                        )
                     except Exception as e:
                         log.warning("dm_calendar_send_failed", platform=platform, error=str(e))
                         continue
+                    if not sent:
+                        continue  # paced out: retry on a later poll
                     self._mark_seen(platform, thread_id, msg["message_id"])
                     self._introduced.setdefault(platform, {})[thread_id] = True
                     self._clear_pending(platform, thread_id)
@@ -2105,20 +2265,34 @@ class DMResponder:
                 continue
             # Voice reply: when the sender spoke (voice note) or is a VIP,
             # Jarvis answers with a voice note. Falls back to text on any
-            # failure — a voice reply never breaks a DM reply.
+            # failure — a voice reply never breaks a DM reply. The voice
+            # send is paced like a text send (same gap + hourly cap).
             sent_as_voice = False
             if settings.dm_voice_replies and platform == "instagram" and (
                 msg.get("media_type") == "voice" or is_vip
             ):
+                if not await self._check_pace(platform, thread_key):
+                    continue  # paced out: retry on a later poll
                 from backend.services.dm_voice import send_voice_reply
 
-                sent_as_voice = await send_voice_reply(client, thread_id, gen["reply"])
+                try:
+                    sent_as_voice = await send_voice_reply(client, thread_id, gen["reply"])
+                except Exception as e:
+                    if platform == "instagram":
+                        await self._maybe_lockout_instagram(e)
+                    raise
+                if sent_as_voice:
+                    self._record_send(platform, thread_key)
             if not sent_as_voice:
                 try:
-                    await client.send(thread_id, gen["reply"])
+                    sent = await self._paced_send(
+                        client, platform, thread_id, gen["reply"]
+                    )
                 except Exception as e:
                     log.warning("dm_reply_send_failed", platform=platform, error=str(e))
                     continue
+                if not sent:
+                    continue  # paced out: retry on a later poll
             self._last_reply[thread_key] = gen["reply"]
             self._mark_seen(platform, thread_id, msg["message_id"])
             self._introduced.setdefault(platform, {})[thread_id] = True
@@ -2156,6 +2330,196 @@ class DMResponder:
         cookies = data.get("cookies") or {}
         settings = data.get("settings") or {}
         return InstagramClient(session_cookies=cookies, settings=settings)
+
+    # ------------------------------------------------------------------
+    # Anti-automation: session reuse, reply pacing, warning lockout
+    # ------------------------------------------------------------------
+
+    def _client_fingerprint(self, data: dict[str, Any]) -> str:
+        """Hash of the credential blob a client was built from.
+
+        In-memory only, never logged. A reconnect changes the blob, so
+        the cached client is rebuilt instead of reusing a stale session.
+        """
+        raw = json.dumps(data, sort_keys=True, default=str)
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+    def _get_cached_client(
+        self, platform: str, method: str | None, data: dict[str, Any]
+    ) -> tuple[Any, bool]:
+        """The poll loop's client for a platform, reused across polls.
+
+        Returns (client, fresh): fresh is True only when the client was
+        just built (or the credentials changed) — only then does the
+        poll validate the session. Reusing one long-lived client is how
+        instagrapi is meant to be used; a fresh login every poll is the
+        machine-regular pattern that trips Instagram's detection.
+        Manual sends (draft approval, /send, introductions) keep
+        building fresh clients — they are Sir-initiated and rare.
+        """
+        fingerprint = self._client_fingerprint(data)
+        cached = self._clients.get(platform)
+        if cached is not None and self._client_fingerprints.get(platform) == fingerprint:
+            return cached, False
+        client = self._build_client(platform, method, data)
+        self._clients[platform] = client
+        self._client_fingerprints[platform] = fingerprint
+        return client, True
+
+    def _drop_cached_client(self, platform: str) -> None:
+        """Forget the cached client so the next poll rebuilds it."""
+        self._clients.pop(platform, None)
+        self._client_fingerprints.pop(platform, None)
+
+    def _reply_wait_seconds(
+        self, platform: str, thread_key: str, now: float | None = None
+    ) -> float:
+        """Seconds to wait before the next automated reply.
+
+        The longer of the global gap (any two sends) and the per-thread
+        gap (two replies to the same person). 0 when no wait is needed.
+        Pure function of the recorded send times — unit-tested directly.
+        """
+        now = time.monotonic() if now is None else now
+        wait = 0.0
+        last_global = self._last_send_at.get("global")
+        if last_global is not None:
+            wait = max(wait, _MIN_GLOBAL_REPLY_GAP_SECONDS - (now - last_global))
+        last_thread = self._last_send_at.get(thread_key)
+        if last_thread is not None:
+            wait = max(wait, _MIN_THREAD_REPLY_GAP_SECONDS - (now - last_thread))
+        return max(0.0, wait)
+
+    def _auto_replies_this_hour(self, platform: str, now: float | None = None) -> int:
+        """Automated replies sent on a platform in the last hour."""
+        now = time.monotonic() if now is None else now
+        times = self._send_times.get(platform, [])
+        times[:] = [t for t in times if now - t < _HOUR_SECONDS]
+        return len(times)
+
+    def _record_send(self, platform: str, thread_key: str) -> None:
+        """Record an automated send (for the gap + hourly cap)."""
+        now = time.monotonic()
+        self._send_times.setdefault(platform, []).append(now)
+        self._last_send_at["global"] = now
+        self._last_send_at[thread_key] = now
+
+    async def _check_pace(self, platform: str, thread_key: str) -> bool:
+        """True when an automated reply may go out now.
+
+        False when the hourly cap is hit, or an Instagram lockout
+        tripped mid-poll — the caller must NOT send and must leave the
+        message unseen so it is retried on a later poll. Otherwise
+        waits out the minimum gap first (a human never fires two DMs
+        in the same second).
+        """
+        if self._lockout_tripped:
+            return False
+        if self._auto_replies_this_hour(platform) >= _MAX_AUTO_REPLIES_PER_HOUR:
+            log.info("dm_reply_cap_hit", platform=platform)
+            return False
+        wait = self._reply_wait_seconds(platform, thread_key)
+        if wait > 0:
+            await asyncio.sleep(wait)
+        return True
+
+    async def _paced_send(
+        self, client: Any, platform: str, thread_id: str, text: str
+    ) -> bool:
+        """Send one automated DM, paced. Returns True when sent.
+
+        False means paced out (hourly cap, or an Instagram lockout
+        tripped mid-poll) — the caller must leave the message unseen so
+        it is retried later. Raises on a real send failure, exactly as
+        a bare client.send would; an Instagram auth warning also
+        engages the durable lockout before raising.
+        """
+        thread_key = f"{platform}:{thread_id}"
+        if not await self._check_pace(platform, thread_key):
+            return False
+        try:
+            await client.send(thread_id, text)
+        except Exception as e:
+            if platform == "instagram":
+                await self._maybe_lockout_instagram(e)
+            raise
+        self._record_send(platform, thread_key)
+        return True
+
+    # -- Instagram warning lockout -------------------------------------
+    # When Instagram answers with a challenge / rate-limit / forced
+    # re-login, polling stops entirely (durably, so a restart or
+    # redeploy does not resume into the warning) until Sir reconnects.
+    # The reconnect itself clears the flag: new credentials mean Sir
+    # acted, so resuming is his choice, not an automated retry loop.
+
+    def _instagram_lockout(self) -> dict[str, Any] | None:
+        from backend.services.dm_store import instagram_warning as warn_store
+
+        entry = warn_store.get("lockout")
+        return entry if isinstance(entry, dict) and entry.get("active") else None
+
+    def _is_instagram_locked_out(self) -> bool:
+        return self._instagram_lockout() is not None
+
+    async def _maybe_lockout_instagram(self, error: Any) -> None:
+        """Engage the Instagram lockout for a warning-class error.
+
+        No-op for anything else (a network blip is not a warning) and
+        for an already-active lockout — Sir gets ONE Telegram alert.
+        """
+        if not _is_instagram_warning(error):
+            return
+        if self._is_instagram_locked_out():
+            self._lockout_tripped = True
+            return
+        reason = str(error)[:200]
+        from backend.services.dm_store import instagram_warning as warn_store
+
+        blob = dm_auth.load_connector("instagram") or {}
+        warn_store.set("lockout", {
+            "active": True,
+            "reason": reason,
+            "since": datetime.now(UTC).isoformat(),
+            "fingerprint": self._client_fingerprint(blob.get("data") or {}),
+        })
+        self._lockout_tripped = True
+        self._drop_cached_client("instagram")
+        log.warning("dm_instagram_lockout", reason=reason)
+        try:
+            from backend.services.telegram_notifier import send_telegram_message
+
+            await send_telegram_message(
+                "⚠️ Instagram stopped answering — the session may have "
+                "expired or Instagram flagged the account. I have STOPPED "
+                "checking Instagram DMs so nothing makes it worse.\n\n"
+                "Reconnect Instagram in the Connectors tab when you are "
+                "ready and I will resume."
+            )
+        except Exception as e:
+            log.debug("dm_lockout_notify_failed", error=str(e))
+
+    def _clear_instagram_lockout_if_reconnected(self) -> bool:
+        """Clear the lockout when Sir reconnected (new credentials).
+
+        Returns True when the flag was cleared. A reconnect is Sir's
+        explicit action, so resuming is his choice — never an automated
+        retry.
+        """
+        entry = self._instagram_lockout()
+        if not entry:
+            return False
+        blob = dm_auth.load_connector("instagram")
+        if not blob:
+            return False
+        current = self._client_fingerprint(blob.get("data") or {})
+        if entry.get("fingerprint") and entry["fingerprint"] != current:
+            from backend.services.dm_store import instagram_warning as warn_store
+
+            warn_store.delete("lockout")
+            log.info("dm_instagram_lockout_cleared")
+            return True
+        return False
 
     # ------------------------------------------------------------------
     # Seen-state + notifications
