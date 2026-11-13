@@ -1,0 +1,3831 @@
+<roblox xmlns:xmime="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Item class="ReplicatedStorage" referent="RBX2"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="ModuleScript" referent="RBX1"><Properties><string name="Name">GameConfig</string><ProtectedString name="Source">local Config = {}
+
+Config.AdminUserId = 6157267885
+
+Config.StartMoney = 50
+Config.CurrentYear = 2025
+Config.MaxDesks = 3
+Config.DeskPrices = { [2] = 150, [3] = 300 }
+Config.CoffeePrice = 5
+Config.CoffeeSanity = 30
+Config.WarmerSanity = 50
+Config.WarmerMinutes = 20
+Config.HuntSeconds = 60
+Config.MonsterSpeed = 16
+Config.DoorBreakSeconds = 10
+Config.BarricadeBonus = 5
+Config.RoomNumbers = { 101, 102, 103, 104, 105, 106 }
+Config.CleanBonusMoney = 10
+Config.CleanBonusRep = 5
+Config.OverstayChance = 0.25
+Config.AngryReturnChance = 0.35
+Config.NextGuestDelay = 5
+
+Config.AdmitHumanMoney = 20
+Config.AdmitHumanRep = 10
+Config.DenyHumanMoney = -10
+Config.DenyHumanRep = -15
+Config.DenyMonsterMoney = 10
+Config.DenyMonsterRep = 10
+
+Config.Nights = {
+	{ guests = 5, monsters = 1, newRules = 0, lieSkill = 1, flicker = false, hints = true },
+	{ guests = 6, monsters = 2, newRules = 1, lieSkill = 1, flicker = false, hints = false, cameraOnly = true },
+	{ guests = 7, monsters = 2, newRules = 2, lieSkill = 2, flicker = false, hints = false },
+	{ guests = 8, monsters = 3, newRules = 1, lieSkill = 2, flicker = true, hints = false },
+	{ guests = 10, monsters = 4, newRules = 2, lieSkill = 3, flicker = true, hints = false },
+}
+
+Config.Tells = {
+	{ id = "ExtraFinger", cat = "Hands", label = "Six fingers on one hand" },
+	{ id = "LongHands", cat = "Hands", label = "Hands are too long" },
+	{ id = "BlackEyes", cat = "Face", label = "Solid black eyes" },
+	{ id = "NoReflection", cat = "Face", label = "No reflection in the mirror" },
+	{ id = "TooManyTeeth", cat = "Face", label = "Too many teeth" },
+	{ id = "PaleSkin", cat = "Face", label = "Skin too pale" },
+	{ id = "ShadowWrong", cat = "Face", label = "Shadow the wrong shape" },
+	{ id = "WrongYear", cat = "Papers", label = "Said the wrong year" },
+	{ id = "NameMismatch", cat = "Papers", label = "Name does not match the ID" },
+	{ id = "NoCamera", cat = "Camera", label = "Does not appear on camera" },
+	{ id = "DistortedCam", cat = "Camera", label = "Looks wrong on camera" },
+}
+
+Config.Rules = {
+	"Count the fingers. A guest with six fingers on one hand is not human. (Hands)",
+	"Look at the eyes. Solid black eyes are not human. (Face)",
+	"Answers must match the ID. A guest who says the wrong year, or whose name does not match the ID card, is not human. (Papers)",
+	"Watch the cameras. Some things do not appear on camera at all. (Camera)",
+	"Look closely at the face. Too many teeth, skin too pale, or a shadow with the wrong shape is not human. (Face)",
+	"Look at the hands. Hands that are too long are not hands. (Hands)",
+	"THE 2-CATEGORY RULE: a guest is a confirmed monster only when you find tells in TWO different categories. One tell alone is only suspicion. Keep investigating.",
+	"Some guests show nothing at all. If the cameras show nobody standing at the desk, turn that guest away. (Camera)",
+	"When you are tired you cannot trust your eyes. Drink coffee, and trust the handbook instead. (Sanity)",
+}
+
+Config.Questions = {
+	{ id = "from", text = "Where are you traveling from?" },
+	{ id = "id", text = "Can I see your ID?" },
+	{ id = "year", text = "What year is it?" },
+}
+
+Config.ExtraQuestions = {
+	{ id = "job", text = "What is your job?" },
+	{ id = "stay", text = "How long are you staying?" },
+}
+
+Config.FirstNames = {
+	"Harold", "Vera", "Dale", "Ruth", "Clyde", "Mabel", "Otis", "June",
+	"Roy", "Edna", "Walt", "Ida", "Gus", "Pearl", "Hank", "Elsie",
+	"Cecil", "Opal", "Vern", "Hazel", "Amos", "Lois", "Dewey", "Fay",
+}
+
+Config.LastNames = {
+	"Carter", "Whitlock", "Mason", "Dell", "Hargrove", "Pike", "Slade", "Fenwick",
+	"Boone", "Crane", "Vance", "Holt", "Marsh", "Keller", "Doyle", "Reyes",
+}
+
+Config.Cities = {
+	"Ridgeville", "Cedar Falls", "Milton", "Ashgrove", "Fairview", "Kettle Creek",
+	"Dry Gulch", "Larkspur", "Halloway", "Stonebridge",
+}
+
+Config.Jobs = {
+	"Electrician", "Trucker", "Nurse", "Salesman", "Mechanic", "Teacher",
+	"Line cook", "Mail carrier", "Welder", "Store clerk",
+}
+
+Config.Stays = { "1 night", "2 nights", "3 nights", "the weekend", "just tonight" }
+
+Config.CreepyLines = {
+	"From where the road ends.",
+	"You would not know it.",
+	"From a long way back.",
+	"Down past the tree line.",
+	"I have always been close by.",
+	"Does it matter?",
+}
+
+Config.CreepyJobs = {
+	"I fix things.",
+	"I visit people.",
+	"Night work.",
+	"It is hard to explain.",
+	"I was asked not to say.",
+}
+
+Config.CreepyStays = {
+	"Until it is over.",
+	"Just tonight. Maybe forever.",
+	"As long as you will have me.",
+	"I will know when to leave.",
+}
+
+Config.Objectives = {
+	"Check every guest. Survive until morning.",
+	"The cameras are your only chance against the ones with no tells.",
+	"Monsters lie better now. Trust two categories, not one.",
+	"Power flickers tonight. Do not panic when the lights die.",
+	"The last night. Everything at once. Survive until dawn.",
+}
+
+return Config
+</ProtectedString></Properties></Item></Item><Item class="ServerScriptService" referent="RBX12"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="ModuleScript" referent="RBX3"><Properties><string name="Name">AdminServer</string><ProtectedString name="Source">-- AdminServer: erdl18 (UserId 6157267885) ONLY. The server re-checks the UserId
+-- on EVERY admin action. Nothing else can trigger any of this.
+local Players = game:GetService("Players")
+
+local AdminServer = {}
+local ctx, Config, Remotes, State, Map, Controls
+
+local ADMIN_ID = 6157267885
+
+local function isAdmin(player)
+	return player ~= nil and player.UserId == ADMIN_ID
+end
+
+local function sendLog(player)
+	Remotes.AdminData:FireClient(player, { kind = "log", entries = State.log })
+end
+
+local function sendPlayers(player)
+	local list = {}
+	for _, pl in ipairs(Players:GetPlayers()) do
+		table.insert(list, {
+			name = pl.Name,
+			userId = pl.UserId,
+			money = State.money,
+			rep = State.rep,
+			sanity = ctx.Sanity.Get(pl),
+			desk = Controls.playerDesks[pl],
+		})
+	end
+	Remotes.AdminData:FireClient(player, { kind = "players", list = list })
+end
+
+local function findPlayer(name)
+	for _, pl in ipairs(Players:GetPlayers()) do
+		if pl.Name:lower() == tostring(name):lower() then return pl end
+	end
+	return nil
+end
+
+local actions
+
+actions = {
+	-- GAME
+	start = function()
+		if State.phase == "Lobby" or State.phase == "GameOver" then
+			Controls.startNight(math.max(1, State.night))
+		end
+	end,
+	pause = function(data)
+		State.toggles.paused = data == true or data == "true"
+		Controls.log("Admin paused=" .. tostring(State.toggles.paused))
+	end,
+	endGame = function()
+		State.phase = "Lobby"
+		ctx.Hunt.Stop()
+		ctx.sendState()
+	end,
+	setNight = function(data)
+		local n = math.clamp(math.floor(tonumber(data) or 1), 1, 5)
+		ctx.Hunt.Stop()
+		Controls.startNight(n)
+	end,
+	nextNight = function()
+		if State.phase == "Dawn" or State.phase == "Shop" then
+			if State.night &gt;= 5 then
+				State.phase = "Win"
+				Remotes.EndScreen:FireAllClients(true, { money = State.money, stars = Controls.stars() })
+			else
+				Controls.startNight(State.night + 1)
+			end
+		end
+	end,
+	restartNight = function()
+		State.money = State.snapshotMoney
+		State.rep = State.snapshotRep
+		Controls.startNight(State.night)
+	end,
+	skipDawn = function()
+		if State.phase == "Dawn" or State.phase == "Shop" then
+			actions.nextNight()
+		end
+	end,
+	win = function()
+		State.phase = "Win"
+		Remotes.EndScreen:FireAllClients(true, { money = State.money, stars = Controls.stars() })
+	end,
+	lose = function()
+		ctx.Hunt.lose()
+	end,
+	reset = function()
+		ctx.Hunt.Stop()
+		State.phase = "Lobby"
+		State.night = 1
+		State.money = Config.StartMoney
+		State.rep = 0
+		State.desksBought = 1
+		ctx.Controls.setDeskBought(2, false)
+		ctx.Controls.setDeskBought(3, false)
+		State.rulesRevealed = 3
+		Controls.resetRooms()
+		ctx.Sanity.RefillAll()
+		ctx.sendState()
+		Controls.startNight(1)
+	end,
+
+	-- GUESTS
+	spawnGuest = function()
+		Controls.spawnGuest()
+	end,
+	forceHuman = function() State.forceNext = "human" end,
+	forceMonster = function() State.forceNext = "monster" end,
+	clearForce = function() State.forceNext = nil end,
+	setTells = function(data)
+		local guest = Controls.getGuest(data.guestId)
+		if guest then
+			guest.tells = data.tells or {}
+			Controls.log("Admin set tells on guest " .. data.guestId)
+		end
+	end,
+	removeCurrent = function()
+		for id, g in pairs(State.activeGuests) do
+			if g.model then g.model:Destroy() end
+			State.activeGuests[id] = nil
+			Remotes.GuestUpdate:FireAllClients({ desk = g.desk, id = id, present = false })
+		end
+	end,
+	clearQueue = function()
+		State.queueLeft = 0
+		Controls.removeCurrent()
+		Controls.log("Guest queue cleared")
+	end,
+	setQuotaGuests = function(data) State.quotaGuests = math.max(1, math.floor(tonumber(data) or 5)) end,
+	setQuotaMonsters = function(data) State.quotaMonsters = math.max(0, math.floor(tonumber(data) or 1)) end,
+
+	-- ECONOMY
+	setMoney = function(data)
+		State.money = math.floor(tonumber(data) or 0)
+		ctx.sendState()
+	end,
+	giveMoney = function(data)
+		State.money = State.money + math.floor(tonumber(data) or 0)
+		ctx.sendState()
+	end,
+	setRep = function(data)
+		State.rep = tonumber(data) or 0
+		ctx.sendState()
+	end,
+	setSanity = function(data)
+		local pl = findPlayer(data.player)
+		if pl then ctx.Sanity.Set(pl, tonumber(data.value) or 100) end
+	end,
+	refillSanity = function() ctx.Sanity.RefillAll() end,
+	setCoffeePrice = function(data)
+		State.coffeePrice = math.max(0, math.floor(tonumber(data) or 5))
+		ctx.sendState()
+	end,
+
+	-- DESKS
+	giveDesk = function(data)
+		local slot = math.clamp(math.floor(tonumber(data) or 2), 2, 3)
+		if slot &gt; State.desksBought then
+			State.desksBought = slot
+			Controls.setDeskBought(slot, true)
+			ctx.sendState()
+		end
+	end,
+	removeDesk = function(data)
+		local slot = math.clamp(math.floor(tonumber(data) or 3), 2, 3)
+		if slot &gt;= State.desksBought then
+			State.desksBought = slot - 1
+			Controls.setDeskBought(slot, false)
+			ctx.sendState()
+		end
+	end,
+	unlockAllDesks = function()
+		State.desksBought = 3
+		Controls.setDeskBought(2, true)
+		Controls.setDeskBought(3, true)
+		ctx.sendState()
+	end,
+	setDeskPrice = function(data)
+		local slot = tonumber(data.slot)
+		local price = math.max(0, math.floor(tonumber(data.price) or 150))
+		if slot == 2 or slot == 3 then
+			Config.DeskPrices[slot] = price
+			ctx.sendState()
+		end
+	end,
+
+	-- HUNT
+	startHunt = function()
+		local monsters = {}
+		for _, g in pairs(State.activeGuests) do
+			if g.isMonster then table.insert(monsters, g) end
+		end
+		if #monsters == 0 then
+			monsters = State.admittedMonsters
+		end
+		if #monsters == 0 then
+			Controls.log("No monsters to hunt; spawn one first")
+			return
+		end
+		task.spawn(function() ctx.Hunt.Run(ctx, monsters) end)
+	end,
+	stopHunt = function() ctx.Hunt.Stop() end,
+	spawnMonster = function()
+		State.forceNext = "monster"
+		Controls.spawnGuest()
+	end,
+	removeMonsters = function()
+		for _, g in pairs(State.activeGuests) do
+			if g.isMonster and g.model then g.model:Destroy() end
+		end
+		for _, m in ipairs(State.admittedMonsters) do
+			if m.model and m.model.Parent then m.model:Destroy() end
+		end
+		State.admittedMonsters = {}
+	end,
+	setHuntTimer = function(data) State.huntTime = math.max(5, math.floor(tonumber(data) or 60)) end,
+	setMonsterSpeed = function(data) State.monsterSpeed = math.clamp(tonumber(data) or 16, 4, 40) end,
+
+	-- MAP / WEATHER
+	rain = function(data)
+		ctx.VFX.SetRain(data.on, data.intensity)
+	end,
+	fog = function(data) ctx.VFX.SetFog(data == true or data == "on") end,
+	sign = function(data)
+		ctx.VFX.SetSign(data.on, data.color)
+	end,
+	lights = function(data) ctx.VFX.SetLights(data == true or data == "on") end,
+	flicker = function()
+		task.spawn(function() ctx.VFX.PowerFlicker(10) end)
+	end,
+	lockDoors = function()
+		for num in pairs(Map.Doors) do Controls.setDoorLock(num, true) Controls.setDoor(num, false) end
+	end,
+	unlockDoors = function()
+		for num in pairs(Map.Doors) do Controls.setDoorLock(num, false) end
+	end,
+	openDoors = function()
+		for num in pairs(Map.Doors) do Controls.setDoor(num, true) end
+	end,
+	closeDoors = function()
+		for num in pairs(Map.Doors) do Controls.setDoor(num, false) end
+	end,
+	teleport = function(data)
+		local pl = findPlayer(data.player)
+		if not pl then return end
+		local char = pl.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		if not hrp then return end
+		local where = data.where
+		if where == "lobby" then
+			hrp.CFrame = CFrame.new(0, 4, 4)
+		elseif where == "me" then
+			local me = Players:GetPlayerByUserId(ADMIN_ID)
+			local mhrp = me and me.Character and me.Character:FindFirstChild("HumanoidRootPart")
+			if mhrp then hrp.CFrame = mhrp.CFrame * CFrame.new(2, 0, 2) end
+		elseif where == "security" then
+			hrp.CFrame = CFrame.new(-26.5, 4, 12.5)
+		else
+			local num = tonumber(where)
+			if num and num &gt;= 101 and num &lt;= 106 then
+				hrp.CFrame = CFrame.new((num - 101) * 10 - 25, 4, -40)
+			end
+		end
+	end,
+
+	-- PLAYERS
+	heal = function(data)
+		local pl = findPlayer(data)
+		if pl then
+			local hum = pl.Character and pl.Character:FindFirstChildOfClass("Humanoid")
+			if hum then hum.Health = hum.MaxHealth end
+			local hrp = pl.Character and pl.Character:FindFirstChild("HumanoidRootPart")
+			if hrp then hrp.Anchored = false end
+			Remotes.Downed:FireClient(pl, false)
+			ctx.Sanity.Set(pl, 100)
+		end
+	end,
+	kick = function(data)
+		local pl = findPlayer(data)
+		if pl then pl:Kick("Removed by admin.") end
+	end,
+
+	-- TOGGLES
+	toggle = function(data)
+		local name = tostring(data)
+		if State.toggles[name] ~= nil then
+			State.toggles[name] = not State.toggles[name]
+			Controls.log("Toggle " .. name .. " = " .. tostring(State.toggles[name]))
+			ctx.sendState()
+		end
+	end,
+
+	-- LOG
+	getLog = function(player) sendLog(player) end,
+	listPlayers = function(player) sendPlayers(player) end,
+
+	-- ALIASES used by the panel buttons
+	rainOn = function() ctx.VFX.SetRain(true, 1) end,
+	rainOff = function() ctx.VFX.SetRain(false) end,
+	rainIntensity = function(data) ctx.VFX.SetRain(true, math.clamp(tonumber(data) or 1, 0.1, 3)) end,
+	fogOn = function() ctx.VFX.SetFog(true) end,
+	fogOff = function() ctx.VFX.SetFog(false) end,
+	signOn = function() ctx.VFX.SetSign(true) end,
+	signOff = function() ctx.VFX.SetSign(false) end,
+	signColor = function(data) ctx.VFX.SetSign(true, data) end,
+	lightsOn = function() ctx.VFX.SetLights(true) end,
+	lightsOff = function() ctx.VFX.SetLights(false) end,
+	teleportRoom = function(data) actions.teleport(data) end,
+}
+
+function AdminServer.Init(c)
+	ctx = c
+	Config = c.Config
+	Remotes = c.Remotes
+	State = c.State
+	Map = c.Map
+	Controls = c.Controls
+
+	Remotes.Admin.OnServerEvent:Connect(function(player, action, data)
+		if not isAdmin(player) then
+			Controls.log("REJECTED admin action from " .. player.Name .. " (UserId " .. player.UserId .. ")")
+			return
+		end
+		local fn = actions[action]
+		if not fn then return end
+		local ok, err = pcall(fn, data, player)
+		if not ok then
+			Controls.log("Admin action error (" .. tostring(action) .. "): " .. tostring(err))
+		end
+	end)
+
+	Players.PlayerAdded:Connect(function(player)
+		if isAdmin(player) then
+			player:SetAttribute("NSM_Admin", true)
+			player.Chatted:Connect(function(msg)
+				if msg == ":admin" then
+					Remotes.AdminData:FireClient(player, { kind = "open" })
+				end
+			end)
+		end
+	end)
+end
+
+function AdminServer.IsAdmin(player)
+	return isAdmin(player)
+end
+
+return AdminServer
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4"><Properties><string name="Name">ChoresServer</string><ProtectedString name="Source">-- ChoresServer: morning chores — messy rooms (eaten guests) and overstayers.
+local ChoresServer = {}
+local ctx, Config, Remotes, State, Map
+local chores = {}
+
+local ARGUMENTS = {
+	"I paid for another night!",
+	"Just five more minutes...",
+	"Do you know who I am?",
+}
+local WRONG_REPLIES = {
+	"Okay... sleep in, I guess.",
+	"Take your time, sir.",
+	"Fine, whatever you want.",
+}
+local GIVE_UP = {
+	"Ugh. FINE. I am going.",
+	"Unbelievable service here...",
+	"You have not heard the end of this.",
+}
+
+function ChoresServer.Init(c)
+	ctx = c
+	Config = c.Config
+	Remotes = c.Remotes
+	State = c.State
+	Map = c.Map
+end
+
+local function buildMess(num)
+	local x = (num - 101) * 10 - 25
+	local folder = Instance.new("Folder")
+	folder.Name = "Mess" .. num
+	folder.Parent = Map
+	local function mp(pos, size, color, rot)
+		local p = Instance.new("Part")
+		p.Anchored = true
+		p.Size = size
+		p.CFrame = CFrame.new(pos) * CFrame.Angles(0, rot or 0, 0)
+		p.Color = color
+		p.Material = Enum.Material.SmoothPlastic
+		p.Parent = folder
+		return p
+	end
+	mp(Vector3.new(x - 3, 0.6, -42), Vector3.new(1.6, 1.2, 1.2), Color3.fromRGB(120, 95, 60), 0.5)
+	mp(Vector3.new(x - 1.5, 0.4, -44), Vector3.new(1.2, 0.8, 1), Color3.fromRGB(100, 80, 55), 1.2)
+	mp(Vector3.new(x + 2.5, 0.35, -43.5), Vector3.new(1.4, 0.7, 1.4), Color3.fromRGB(110, 75, 50), 2)
+	mp(Vector3.new(x + 1, 0.5, -45.5), Vector3.new(1.6, 1, 1.2), Color3.fromRGB(120, 40, 40), 0.9)
+	mp(Vector3.new(x, 0.12, -41), Vector3.new(5, 0.05, 5), Color3.fromRGB(35, 20, 20))
+	local stain = mp(Vector3.new(x - 2.5, 0.13, -43.5), Vector3.new(3.4, 0.06, 3.4), Color3.fromRGB(30, 15, 15))
+	stain.Shape = Enum.PartType.Cylinder
+	stain.Size = Vector3.new(0.06, 3.4, 3.4)
+	stain.CFrame = CFrame.new(x - 2.5, 0.13, -43.5) * CFrame.Angles(0, 0, math.rad(90))
+	local bed = Map:FindFirstChild("Bed" .. num, true)
+	if bed then bed.CFrame = bed.CFrame * CFrame.Angles(0, 0, math.rad(8)) end
+	local promptHolder = mp(Vector3.new(x, 2, -41), Vector3.new(0.4, 0.4, 0.4), Color3.fromRGB(255, 220, 120))
+	promptHolder.Transparency = 1
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.ActionText = "Clean the room"
+	prompt.ObjectText = "Room " .. num
+	prompt.HoldDuration = 5
+	prompt.MaxActivationDistance = 12
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = promptHolder
+	prompt.Triggered:Connect(function(player)
+		folder:Destroy()
+		Map.Rooms[num].state = "clean"
+		for _, ch in ipairs(chores) do
+			if ch.room == num and ch.kind == "messy" then ch.done = true end
+		end
+		ctx.notify(nil, "Room " .. num .. " cleaned.", "good")
+		ctx.VFX.Play("water", workspace, 0.6)
+		ChoresServer.CheckAllDone()
+		ctx.sendState()
+	end)
+	return folder
+end
+
+local function buildOverstayer(guest, num)
+	local model = guest.model
+	if not model or not model.Parent then return end
+	local head = model:FindFirstChild("Head")
+	if not head then return end
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.ActionText = "Tell them to leave"
+	prompt.ObjectText = "Room " .. num
+	prompt.MaxActivationDistance = 12
+	prompt.RequiresLineOfSight = false
+	prompt.Parent = head
+	prompt.Triggered:Connect(function(player)
+		Remotes.ChoreDialog:FireClient(player, num, ARGUMENTS[math.random(#ARGUMENTS)])
+	end)
+	guest.overstayPrompt = prompt
+end
+
+function ChoresServer.HandleReply(player, num, choice)
+	local r = Map.Rooms[num]
+	if not r or r.state ~= "overstayer" or not r.occupant then return end
+	if choice == 2 then
+		local guest = r.occupant
+		ctx.GuestGen.Say(guest, GIVE_UP[math.random(#GIVE_UP)])
+		r.state = "cleaning"
+		if guest.overstayPrompt then guest.overstayPrompt:Destroy() end
+		task.spawn(function()
+			task.wait(1.5)
+			ctx.walkTo(guest.model, Vector3.new((num - 101) * 10 - 25, 3.5, -30), 15)
+			ctx.walkTo(guest.model, Vector3.new(0, 3.5, -26), 20)
+			ctx.walkTo(guest.model, Vector3.new(math.random(-8, 8), 3.5, 58), 25)
+			if guest.model.Parent then guest.model:Destroy() end
+			r.state = "clean"
+			r.occupant = nil
+			for _, ch in ipairs(chores) do
+				if ch.room == num and ch.kind == "overstayer" then ch.done = true end
+			end
+			ctx.notify(nil, "Room " .. num .. " is free again.", "good")
+			ChoresServer.CheckAllDone()
+			ctx.sendState()
+		end)
+	else
+		if r.occupant then
+			ctx.GuestGen.Say(r.occupant, WRONG_REPLIES[math.random(#WRONG_REPLIES)] .. " (" .. ARGUMENTS[math.random(#ARGUMENTS)] .. ")")
+		end
+	end
+end
+
+function ChoresServer.CheckAllDone()
+	for _, ch in ipairs(chores) do
+		if not ch.done then return end
+	end
+	if #chores &gt; 0 and not State.choresDone then
+		State.choresDone = true
+		ctx.Controls.applyMoney(Config.CleanBonusMoney)
+		ctx.Controls.applyRep(Config.CleanBonusRep)
+		ctx.notify(nil, "ALL CHORES DONE! Clean motel bonus: +$" .. Config.CleanBonusMoney .. " and +" .. Config.CleanBonusRep .. " reputation.", "good")
+		ctx.Controls.log("All morning chores completed")
+		ctx.sendState()
+	end
+end
+
+function ChoresServer.Process(c, monsters, humans)
+	chores = {}
+	State.choresDone = false
+	local eaten = {}
+	for _, monster in ipairs(monsters) do
+		local candidates = {}
+		for _, h in ipairs(humans) do
+			if not eaten[h] and h.model and h.model.Parent and h.roomNumber then
+				table.insert(candidates, h)
+			end
+		end
+		if #candidates &gt; 0 then
+			local victim = candidates[math.random(#candidates)]
+			eaten[victim] = true
+			local num = victim.roomNumber
+			if victim.model.Parent then victim.model:Destroy() end
+			Map.Rooms[num].state = "messy"
+			Map.Rooms[num].occupant = nil
+			buildMess(num)
+			table.insert(chores, { room = num, kind = "messy", done = false })
+			ctx.Controls.log("Monster from Room " .. tostring(monster.roomNumber) .. " ate the guest in Room " .. num)
+		end
+	end
+	for _, h in ipairs(humans) do
+		if not eaten[h] and h.model and h.model.Parent and h.roomNumber and Map.Rooms[h.roomNumber].state == "occupied" then
+			if math.random() &lt; Config.OverstayChance then
+				Map.Rooms[h.roomNumber].state = "overstayer"
+				buildOverstayer(h, h.roomNumber)
+				table.insert(chores, { room = h.roomNumber, kind = "overstayer", done = false })
+				ctx.Controls.log("Guest in Room " .. h.roomNumber .. " refuses to check out")
+			else
+				local num = h.roomNumber
+				Map.Rooms[num].state = "cleaning"
+				local g = h
+				task.spawn(function()
+					ctx.walkTo(g.model, Vector3.new((num - 101) * 10 - 25, 3.5, -30), 15)
+					ctx.walkTo(g.model, Vector3.new(0, 3.5, -26), 20)
+					ctx.walkTo(g.model, Vector3.new(math.random(-8, 8), 3.5, 58), 25)
+					if g.model.Parent then g.model:Destroy() end
+					if Map.Rooms[num].state == "cleaning" then Map.Rooms[num].state = "clean" end
+					Map.Rooms[num].occupant = nil
+					ctx.sendState()
+				end)
+			end
+		end
+	end
+	return chores
+end
+
+function ChoresServer.GetChoreList()
+	local list = {}
+	for _, ch in ipairs(chores) do
+		table.insert(list, { room = ch.room, kind = ch.kind, done = ch.done })
+	end
+	return list
+end
+
+return ChoresServer
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX5"><Properties><string name="Name">GuestGen</string><ProtectedString name="Source">-- GuestGen: builds guest NPCs and their hidden human/monster data.
+local GuestGen = {}
+
+local function weldTo(model, part, base)
+	local wc = Instance.new("WeldConstraint")
+	wc.Part0 = base
+	wc.Part1 = part
+	wc.Parent = model
+end
+
+local function limb(model, base, size, cf, color, material)
+	local p = Instance.new("Part")
+	p.Size = size
+	p.CFrame = cf
+	p.Color = color
+	p.Material = material or Enum.Material.SmoothPlastic
+	p.Anchored = false
+	p.CanCollide = false
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Parent = model
+	weldTo(model, p, base)
+	return p
+end
+
+local function eyes(model, base, headCF, skin, blackEyes)
+	local eyeColor = blackEyes and Color3.fromRGB(8, 8, 8) or Color3.fromRGB(245, 245, 245)
+	local eyeSize = blackEyes and Vector3.new(0.38, 0.34, 0.08) or Vector3.new(0.24, 0.22, 0.06)
+	for _, ex in ipairs({ -0.3, 0.3 }) do
+		local e = limb(model, base, eyeSize, headCF * CFrame.new(ex, 0.12, -0.68), eyeColor)
+		e.Name = "Eye"
+	end
+end
+
+local function fingers(model, base, handCF, six, skin)
+	local count = six and 6 or 5
+	for i = 1, count do
+		local off = -0.45 + (i - 1) * 0.18
+		limb(model, base, Vector3.new(0.14, 0.45, 0.14), handCF * CFrame.new(off, -0.2, 0), skin, Enum.Material.SmoothPlastic)
+	end
+end
+
+local function teeth(model, base, headCF)
+	for i = 1, 9 do
+		local t = limb(model, base, Vector3.new(0.13, 0.26, 0.05), headCF * CFrame.new(-0.5 + (i - 1) * 0.125, -0.42, -0.68), Color3.fromRGB(250, 250, 240))
+		t.Name = "Tooth"
+	end
+end
+
+-- spec = { isMonster, tells (array of tell ids), angry, cameraApp, walkSpeed }
+function GuestGen.Create(ctx, spec)
+	local Config = ctx.Config
+	local isMonster = spec.isMonster
+	local tells = spec.tells or {}
+	local has = function(id)
+		for _, t in ipairs(tells) do
+			if t == id then return true end
+		end
+		return false
+	end
+
+	local first = Config.FirstNames[math.random(#Config.FirstNames)]
+	local last = Config.LastNames[math.random(#Config.LastNames)]
+	local idName = first .. " " .. last
+	local spokenName = idName
+	if isMonster and has("NameMismatch") then
+		local other = Config.FirstNames[math.random(#Config.FirstNames)] .. " " .. Config.LastNames[math.random(#Config.LastNames)]
+		if other == idName then other = other .. "s" end
+		spokenName = other
+	end
+
+	local pale = isMonster and has("PaleSkin")
+	local skin = pale and Color3.fromRGB(216, 214, 208) or Color3.fromRGB(math.random(150, 210), math.random(120, 165), math.random(100, 140))
+	local suit = Color3.fromRGB(math.random(28, 60), math.random(28, 60), math.random(34, 70))
+
+	local model = Instance.new("Model")
+	model.Name = "Guest"
+
+	local hrp = Instance.new("Part")
+	hrp.Name = "HumanoidRootPart"
+	hrp.Size = Vector3.new(2, 2, 1)
+	hrp.Transparency = 1
+	hrp.CanCollide = true
+	hrp.CFrame = CFrame.new(spec.spawnPos or Vector3.new(0, 3.5, 55))
+	hrp.Parent = model
+
+	local torso = limb(model, hrp, Vector3.new(2, 2, 1), hrp.CFrame, suit)
+	torso.Name = "Torso"
+	local headCF = hrp.CFrame * CFrame.new(0, 1.7, 0)
+	local head = limb(model, hrp, Vector3.new(1.4, 1.4, 1.4), headCF, skin)
+	head.Name = "Head"
+
+	eyes(model, hrp, headCF, skin, isMonster and has("BlackEyes"))
+	if isMonster and has("TooManyTeeth") then
+		teeth(model, hrp, headCF)
+	end
+
+	local armLen = (isMonster and has("LongHands")) and 3.2 or 2
+	for _, side in ipairs({ -1.5, 1.5 }) do
+		local armCF = hrp.CFrame * CFrame.new(side, 1 - armLen / 2, 0)
+		local arm = limb(model, hrp, Vector3.new(0.95, armLen, 0.95), armCF, suit)
+		arm.Name = "Arm"
+		fingers(model, hrp, armCF * CFrame.new(0, -armLen / 2, 0), isMonster and has("ExtraFinger") and side &gt; 0, skin)
+	end
+	for _, side in ipairs({ -0.55, 0.55 }) do
+		local leg = limb(model, hrp, Vector3.new(0.9, 2, 0.9), hrp.CFrame * CFrame.new(side, -2, 0), Color3.fromRGB(35, 35, 40))
+		leg.Name = "Leg"
+	end
+
+	if isMonster and has("ShadowWrong") then
+		local sh = limb(model, hrp, Vector3.new(4.5, 0.06, 1.2), hrp.CFrame * CFrame.new(0.8, -2.97, 0.5) * CFrame.Angles(0, math.rad(35), 0), Color3.fromRGB(10, 10, 12))
+		sh.Name = "Shadow"
+	end
+
+	local humanoid = Instance.new("Humanoid")
+	humanoid.WalkSpeed = spec.walkSpeed or 16
+	humanoid.HipHeight = 2
+	humanoid.MaxHealth = 100
+	humanoid.Health = 100
+	humanoid.Parent = model
+
+	local cd = Instance.new("ClickDetector")
+	cd.MaxActivationDistance = 22
+	cd.Parent = head
+
+	model.PrimaryPart = hrp
+
+	local answers = {}
+	local wrongYear = isMonster and has("WrongYear")
+	local year = Config.CurrentYear
+	if wrongYear then
+		year = ({ 1974, 1953, 1888, 2024 - math.random(20, 60) })[math.random(4)]
+		if year &gt;= Config.CurrentYear then year = 1966 end
+	end
+	local fromAnswer = spec.idFrom or Config.Cities[math.random(#Config.Cities)]
+	if isMonster and math.random() &lt; 0.5 then
+		fromAnswer = Config.CreepyLines[math.random(#Config.CreepyLines)]
+	end
+	answers.from = fromAnswer
+	answers.year = tostring(year) .. "."
+	if isMonster and math.random() &lt; 0.4 then
+		answers.year = answers.year .. " Is that right?"
+	end
+	answers.job = Config.Jobs[math.random(#Config.Jobs)]
+	if isMonster and math.random() &lt; 0.5 then
+		answers.job = Config.CreepyJobs[math.random(#Config.CreepyJobs)]
+	end
+	answers.stay = Config.Stays[math.random(#Config.Stays)]
+	if isMonster and math.random() &lt; 0.4 then
+		answers.stay = Config.CreepyStays[math.random(#Config.CreepyStays)]
+	end
+
+	local guest = {
+		id = tostring(math.random(100000, 999999)) .. tostring(os.clock() * 1000),
+		desk = spec.desk,
+		isMonster = isMonster,
+		tells = tells,
+		angry = spec.angry or false,
+		cameraApp = spec.cameraApp or "normal",
+		idCard = { name = idName, from = spec.idFrom or answers.from, job = answers.job, stay = answers.stay },
+		spokenName = spokenName,
+		answers = answers,
+		walkSpeed = spec.walkSpeed or 16,
+		model = model,
+		roomNumber = nil,
+	}
+
+	model:SetAttribute("GuestId", guest.id)
+	return guest
+end
+
+function GuestGen.Say(guest, text)
+	local head = guest.model:FindFirstChild("Head")
+	if not head then return end
+	local old = head:FindFirstChild("GuestBubble")
+	if old then old:Destroy() end
+	local bb = Instance.new("BillboardGui")
+	bb.Name = "GuestBubble"
+	bb.Size = UDim2.new(0, 260, 0, 90)
+	bb.StudsOffset = Vector3.new(0, 2.4, 0)
+	bb.AlwaysOnTop = true
+	bb.MaxDistance = 60
+	bb.Parent = head
+	local tl = Instance.new("TextLabel")
+	tl.Size = UDim2.new(1, 0, 1, 0)
+	tl.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+	tl.BackgroundTransparency = 0.25
+	tl.TextColor3 = Color3.fromRGB(240, 240, 240)
+	tl.TextScaled = true
+	tl.Font = Enum.Font.Gotham
+	tl.TextWrapped = true
+	tl.Text = text
+	tl.Parent = bb
+	task.delay(6, function()
+		if bb.Parent then bb:Destroy() end
+	end)
+end
+
+return GuestGen
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX6"><Properties><string name="Name">HuntManager</string><ProtectedString name="Source">-- HuntManager: lockdown phase. Monsters chase, doors get broken, 60 seconds to dawn.
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local Debris = game:GetService("Debris")
+
+local HuntManager = {}
+local ctx, Config, Remotes, State, Map
+local running = false
+local stopRequested = false
+local downed = {}
+
+local function isDowned(player)
+	return downed[player] == true
+end
+
+function HuntManager.Init(c)
+	ctx = c
+	Config = c.Config
+	Remotes = c.Remotes
+	State = c.State
+	Map = c.Map
+end
+
+function HuntManager.lose()
+	if not running then return end
+	running = false
+	State.phase = "GameOver"
+	ctx.VFX.Lockdown(false)
+	Remotes.HuntState:FireAllClients(false, 0)
+	Remotes.EndScreen:FireAllClients(false, { night = State.night })
+	ctx.Controls.log("LOSE: all players caught on night " .. State.night)
+end
+
+local function downPlayer(player)
+	if downed[player] then return end
+	if State.toggles.god and player.UserId == Config.AdminUserId then return end
+	downed[player] = true
+	local char = player.Character
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+	local hrp = char and char:FindFirstChild("HumanoidRootPart")
+	if hrp then hrp.Anchored = true end
+	if hum then hum.WalkSpeed = 0 end
+	Remotes.Downed:FireClient(player, true)
+	ctx.VFX.Play("caught", workspace, 1)
+	ctx.notify(nil, player.Name .. " was caught!", "bad")
+	local alive = 0
+	for _, pl in ipairs(Players:GetPlayers()) do
+		if not downed[pl] then alive = alive + 1 end
+	end
+	if alive == 0 then
+		HuntManager.lose()
+	end
+end
+
+function HuntManager.Stop()
+	if running then
+		stopRequested = true
+	end
+end
+
+local function dissolve(model)
+	for _, p in ipairs(model:GetDescendants()) do
+		if p:IsA("BasePart") then
+			TweenService:Create(p, TweenInfo.new(1.5), { Transparency = 1 }):Play()
+		end
+	end
+	Debris:AddItem(model, 2)
+end
+
+function HuntManager.Run(c, monsters)
+	ctx = c
+	running = true
+	stopRequested = false
+	downed = {}
+	State.phase = "Hunt"
+	ctx.sendState()
+
+	ctx.VFX.Lockdown(true)
+	ctx.VFX.Play("rumble", workspace, 1, 0.35, false)
+	ctx.notify(nil, "LOCKDOWN — SOMETHING IS IN THE ROOMS", "bad")
+	Remotes.HuntState:FireAllClients(true, State.huntTime)
+	ctx.Controls.log("Hunt started: " .. #monsters .. " monster(s) loose")
+
+	local hunters = {}
+	for _, guest in ipairs(monsters) do
+		local model = guest.model
+		if model and model.Parent then
+			local hum = model:FindFirstChildOfClass("Humanoid")
+			local hrp = model:FindFirstChild("HumanoidRootPart")
+			if hum and hrp then
+				hum.WalkSpeed = State.monsterSpeed
+				for _, p in ipairs(model:GetDescendants()) do
+					if p:IsA("BasePart") and p.Name ~= "HumanoidRootPart" then
+						if p.Name == "Eye" then
+							p.Color = Color3.fromRGB(255, 30, 30)
+						else
+							p.Color = Color3.fromRGB(25, 22, 26)
+						end
+					end
+				end
+				local cd = model:FindFirstChildWhichIsA("ClickDetector", true)
+				if cd then cd:Destroy() end
+				hrp.CFrame = CFrame.new(guest.roomNumber and (guest.roomNumber - 101) * 10 - 25 or 0, 3.5, -30)
+				hunters[model] = { hum = hum, hrp = hrp }
+				hrp.Touched:Connect(function(hit)
+					local pl = Players:GetPlayerFromCharacter(hit.Parent)
+					if pl and not isDowned(pl) then
+						if State.toggles.god and pl.UserId == Config.AdminUserId then return end
+						downPlayer(pl)
+					end
+				end)
+			end
+		end
+	end
+
+	local endTime = os.clock() + State.huntTime
+	local lastTick = os.clock()
+
+	while running and os.clock() &lt; endTime do
+		task.wait(0.35)
+		if stopRequested then break end
+		if os.clock() - lastTick &gt;= 1 then
+			lastTick = os.clock()
+			Remotes.HuntState:FireAllClients(true, math.max(0, math.ceil(endTime - os.clock())))
+			for _, pl in ipairs(Players:GetPlayers()) do
+				ctx.Sanity.Drain(pl, 1, "hunt")
+			end
+		end
+		for model, h in pairs(hunters) do
+			if model.Parent then
+				local target, bestDist = nil, math.huge
+				for _, pl in ipairs(Players:GetPlayers()) do
+					local char = pl.Character
+					local hrp = char and char:FindFirstChild("HumanoidRootPart")
+					if hrp and not isDowned(pl) then
+						local dist = (hrp.Position - h.hrp.Position).Magnitude
+						if dist &lt; bestDist then bestDist = dist target = hrp end
+					end
+				end
+				if target then
+					local pos = target.Position
+					if pos.Z &lt; -34 then
+						local roomNum = 100 + math.clamp(math.floor((pos.X + 30) / 10) + 1, 1, 6)
+						local d = Map.Doors[roomNum]
+						if d and not d.isOpen then
+							local doorPos = d.closed.Position
+							if (h.hrp.Position - doorPos).Magnitude &gt; 5 then
+								h.hum:MoveTo(doorPos)
+							elseif not d.breaking then
+								d.breaking = true
+								local breakTime = Config.DoorBreakSeconds + (d.barricaded and Config.BarricadeBonus or 0)
+								ctx.notify(nil, "Something is breaking down the door of Room " .. roomNum .. "!", "bad")
+								ctx.VFX.Play("rumble", d.part, 1, 0.5)
+								task.spawn(function()
+									task.wait(breakTime)
+									if d.part.Parent then
+										d.isOpen = true
+										d.part.CanCollide = false
+										d.part.Transparency = 0.8
+										if d.barricaded and d.chair then
+											d.chair.Transparency = 1
+										end
+										ctx.VFX.Play("breakDoor", d.part, 1)
+										ctx.VFX.Shake(1)
+									end
+								end)
+							end
+						else
+							h.hum:MoveTo(pos)
+						end
+					else
+						local crossing = (h.hrp.Position.Z &lt; -22) ~= (pos.Z &lt; -22)
+						if crossing and math.abs(h.hrp.Position.X) &gt; 3 then
+							h.hum:MoveTo(Vector3.new(0, 3.5, h.hrp.Position.Z &lt; -22 and -18 or -26))
+						else
+							h.hum:MoveTo(pos)
+						end
+					end
+				end
+			end
+		end
+	end
+
+	running = false
+	if stopRequested then
+		ctx.VFX.Lockdown(false)
+		Remotes.HuntState:FireAllClients(false, 0)
+		for model in pairs(hunters) do
+			if model.Parent then model:Destroy() end
+		end
+		ctx.Controls.log("Hunt stopped by admin")
+		return true
+	end
+
+	if State.phase == "GameOver" then return false end
+
+	for model in pairs(hunters) do
+		if model.Parent then dissolve(model) end
+	end
+	ctx.VFX.Lockdown(false)
+	Remotes.HuntState:FireAllClients(false, 0)
+	ctx.notify(nil, "DAWN — YOU SURVIVED THE NIGHT", "good")
+	ctx.Controls.log("Hunt survived on night " .. State.night)
+	return true
+end
+
+return HuntManager
+</ProtectedString></Properties></Item><Item class="Script" referent="RBX7"><Properties><string name="Name">Main</string><ProtectedString name="Source">-- Main: game state machine, guest flow, decisions, consequences.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Debris = game:GetService("Debris")
+
+local Config = require(ReplicatedStorage:WaitForChild("GameConfig"))
+local MapBuilder = require(script.Parent:WaitForChild("MapBuilder"))
+local GuestGen = require(script.Parent:WaitForChild("GuestGen"))
+local VFXServer = require(script.Parent:WaitForChild("VFXServer"))
+local SanityServer = require(script.Parent:WaitForChild("SanityServer"))
+local HuntManager = require(script.Parent:WaitForChild("HuntManager"))
+local ChoresServer = require(script.Parent:WaitForChild("ChoresServer"))
+local ShopServer = require(script.Parent:WaitForChild("ShopServer"))
+local AdminServer = require(script.Parent:WaitForChild("AdminServer"))
+
+-- REMOTES
+local Remotes = Instance.new("Folder")
+Remotes.Name = "Remotes"
+local remoteNames = {
+	"StateUpdate", "Notify", "GuestUpdate", "Inspect", "InspectResult", "Ask", "Answer",
+	"Decide", "Sanity", "Hallucinate", "Shake", "HuntState", "Dawn", "TitleCard",
+	"ChoreDialog", "ChoreReply", "Admin", "AdminData", "QuickChat", "NextNight",
+	"Shop", "PowerFlicker", "EndScreen", "Downed",
+}
+for _, name in ipairs(remoteNames) do
+	local re = Instance.new("RemoteEvent")
+	re.Name = name
+	re.Parent = Remotes
+end
+Remotes.Parent = ReplicatedStorage
+
+-- STATE
+local State = {
+	phase = "Lobby",
+	night = 1,
+	money = Config.StartMoney,
+	rep = 0,
+	queueLeft = 0,
+	humansLeft = 0,
+	monstersLeft = 0,
+	rulesRevealed = 3,
+	desksBought = 1,
+	forceNext = nil,
+	quotaGuests = nil,
+	quotaMonsters = nil,
+	warmerReadyAt = os.clock() + Config.WarmerMinutes * 60,
+	guestsPerNight = Config.Nights[1].guests,
+	monstersPerNight = Config.Nights[1].monsters,
+	snapshotMoney = Config.StartMoney,
+	snapshotRep = 0,
+	admittedMonsters = {},
+	admittedHumans = {},
+	activeGuests = {},
+	guestsFolder = nil,
+	correctCalls = 0,
+	wrongCalls = 0,
+	monstersCaught = 0,
+	earnedTonight = 0,
+	choresDone = false,
+	toggles = { god = false, infiniteMoney = false, noSanityDrain = false, instantCoffee = false, freeze = false },
+	huntTime = Config.HuntSeconds,
+	monsterSpeed = Config.MonsterSpeed,
+	log = {},
+}
+
+local function log(text)
+	table.insert(State.log, os.date("%H:%M:%S") .. " " .. text)
+	if #State.log &gt; 200 then table.remove(State.log, 1) end
+	print("[NSM] " .. text)
+end
+
+local Map = MapBuilder.Build({ Config = Config })
+local ctx = { Config = Config, Remotes = Remotes, State = State, Map = Map, log = log }
+State.ctx = ctx
+
+local Controls = {}
+ctx.Controls = Controls
+
+VFXServer.Init(ctx)
+SanityServer.Init(ctx)
+HuntManager.Init(ctx)
+ChoresServer.Init(ctx)
+ShopServer.Init(ctx)
+AdminServer.Init(ctx)
+ctx.Sanity = SanityServer
+ctx.VFX = VFXServer
+ctx.GuestGen = GuestGen
+ctx.Hunt = HuntManager
+ctx.Chores = ChoresServer
+ctx.Shop = ShopServer
+
+local function stars()
+	if State.rep &lt;= 0 then return 1 end
+	return math.clamp(math.ceil(State.rep / 20), 1, 5)
+end
+
+local function sendState()
+	local rooms = {}
+	for _, num in ipairs(Config.RoomNumbers) do
+		table.insert(rooms, { num = num, state = Map.Rooms[num].state })
+	end
+	Remotes.StateUpdate:FireAllClients({
+		money = State.money,
+		rep = State.rep,
+		stars = stars(),
+		night = State.night,
+		phase = State.phase,
+		queueLeft = State.queueLeft,
+		rules = State.rulesRevealed,
+		ruleTexts = Config.Rules,
+		desksBought = State.desksBought,
+		deskPrices = Config.DeskPrices,
+		coffeePrice = State.ctx.Sanity.GetCoffeePrice and State.ctx.Sanity.GetCoffeePrice() or Config.CoffeePrice,
+		warmerReadyAt = State.warmerReadyAt,
+		warmerMinutes = Config.WarmerMinutes,
+		rooms = rooms,
+		objective = Config.Objectives[State.night],
+		hints = Config.Nights[State.night].hints,
+	})
+end
+ctx.sendState = sendState
+ctx.stars = stars
+
+local function notify(player, text, kind)
+	if player then
+		Remotes.Notify:FireClient(player, text, kind)
+	else
+		Remotes.Notify:FireAllClients(text, kind)
+	end
+end
+ctx.notify = notify
+
+-- WALKING HELPER
+local function walkTo(model, pos, timeout)
+	local hum = model:FindFirstChildOfClass("Humanoid")
+	local hrp = model:FindFirstChild("HumanoidRootPart")
+	if not hum or not hrp then return end
+	local t0 = os.clock()
+	hum:MoveTo(pos)
+	while os.clock() - t0 &lt; (timeout or 20) do
+		task.wait(0.2)
+		if not hrp.Parent then return end
+		if (hrp.Position - pos).Magnitude &lt; 3.5 then return end
+		hum:MoveTo(pos)
+	end
+end
+ctx.walkTo = walkTo
+
+-- DOORS
+local function setDoor(num, open)
+	local d = Map.Doors[num]
+	if not d then return end
+	d.isOpen = open
+	if open then
+		d.part.CFrame = d.openCF
+		d.prompt.ActionText = "Close"
+	else
+		d.part.CFrame = d.closed
+		d.prompt.ActionText = d.locked and "Locked" or "Open"
+	end
+end
+ctx.setDoor = setDoor
+
+local function setDoorLock(num, locked)
+	local d = Map.Doors[num]
+	if not d then return end
+	d.locked = locked
+	d.prompt.ActionText = d.isOpen and "Close" or (locked and "Locked" or "Open")
+end
+ctx.setDoorLock = setDoorLock
+
+for num, d in pairs(Map.Doors) do
+	d.prompt.Triggered:Connect(function(player)
+		if d.breaking then return end
+		if d.locked then
+			notify(player, "This door is locked.", "info")
+			return
+		end
+		setDoor(num, not d.isOpen)
+		VFXServer.Play("lock", d.part, 0.6)
+	end)
+	d.barPrompt.Triggered:Connect(function(player)
+		if State.phase ~= "Hunt" then return end
+		if d.barricaded then return end
+		d.barricaded = true
+		d.chair.CFrame = d.closed * CFrame.new(0, 0, 1.6) * CFrame.Angles(0, math.rad(90), 0) * CFrame.new(0, 0.4, 0)
+		d.chair.Anchored = true
+		notify(player, "Door barricaded. The monster will take longer to break in.", "good")
+	end)
+end
+
+Map.SecurityPrompt.Triggered:Connect(function()
+	Map.SecurityDoorOpen = not Map.SecurityDoorOpen
+	Map.SecurityDoor.CanCollide = not Map.SecurityDoorOpen
+	Map.SecurityDoor.Transparency = Map.SecurityDoorOpen and 0.7 or 0
+	VFXServer.Play("lock", Map.SecurityDoor, 0.6)
+end)
+
+-- DESKS
+local function setDeskBought(slot, bought)
+	local desk = Map.Desks[slot]
+	if not desk then return end
+	desk.bought = bought
+	for _, d in ipairs(desk.furniture:GetDescendants()) do
+		if d:IsA("BasePart") then
+			d.Transparency = bought and 0 or 1
+			if d:IsA("Seat") then d.CanCollide = bought end
+		end
+		if d:IsA("ProximityPrompt") then d.Enabled = bought end
+	end
+	desk.seat.CanCollide = bought
+end
+ctx.setDeskBought = setDeskBought
+
+local playerDesks = {}
+local function deskOccupant(slot)
+	for _, pl in ipairs(Players:GetPlayers()) do
+		if playerDesks[pl] == slot then return pl end
+	end
+	return nil
+end
+ctx.deskOccupant = deskOccupant
+
+for slot, desk in pairs(Map.Desks) do
+	desk.prompt.Triggered:Connect(function(player)
+		local char = player.Character
+		local hum = char and char:FindFirstChildOfClass("Humanoid")
+		if hum then
+			desk.seat:Sit(hum)
+		end
+	end)
+	desk.seat:GetPropertyChangedSignal("Occupant"):Connect(function()
+		local occ = desk.seat.Occupant
+		if occ then
+			local pl = Players:GetPlayerFromCharacter(occ.Parent)
+			if pl then
+				playerDesks[pl] = slot
+				notify(pl, "You are serving Desk " .. slot .. ". Wait for a guest.", "info")
+			end
+		else
+			for pl, s in pairs(playerDesks) do
+				if s == slot then playerDesks[pl] = nil end
+			end
+		end
+	end)
+end
+
+-- GUEST SPAWNING
+local function pickFreeDesk()
+	local order = { 1, 2, 3 }
+	for _, slot in ipairs(order) do
+		local desk = Map.Desks[slot]
+		if desk and desk.bought then
+			local busy = false
+			for _, g in pairs(State.activeGuests) do
+				if g.desk == slot then busy = true end
+			end
+			if not busy then return slot end
+		end
+	end
+	return nil
+end
+
+local function firstFreeRoom()
+	for _, num in ipairs(Config.RoomNumbers) do
+		if Map.Rooms[num].state == "clean" and not Map.Rooms[num].occupant then
+			return num
+		end
+	end
+	return nil
+end
+ctx.firstFreeRoom = firstFreeRoom
+
+local function anyCleanRooms()
+	for _, num in ipairs(Config.RoomNumbers) do
+		if Map.Rooms[num].state == "clean" and not Map.Rooms[num].occupant then return true end
+	end
+	return false
+end
+ctx.anyCleanRooms = anyCleanRooms
+
+local function startKnocking(num)
+	local d = Map.Doors[num]
+	if not d or d.knock then return end
+	local s = Instance.new("Sound")
+	s.SoundId = "rbxasset://sounds/snap.mp3"
+	s.Volume = 1.4
+	s.Pitch = 0.55
+	s.Parent = d.part
+	d.knock = task.spawn(function()
+		while d.part.Parent and Map.Rooms[num].state == "monsterRoom" do
+			s:Play()
+			task.wait(1.6)
+		end
+	end)
+end
+
+local function stopKnocking(num)
+	local d = Map.Doors[num]
+	if d and d.knock then
+		task.cancel(d.knock)
+		d.knock = nil
+		local s = d.part:FindFirstChildOfClass("Sound")
+		if s then s:Destroy() end
+	end
+end
+
+local function guestLeave(guest, destination)
+	State.activeGuests[guest.id] = nil
+	Remotes.GuestUpdate:FireAllClients({ desk = guest.desk, id = guest.id, present = false })
+	task.spawn(function()
+		if guest.model.Parent then
+			if destination.Z &gt; 0 then
+				walkTo(guest.model, Vector3.new(0, 3.5, 8), 20)
+			else
+				walkTo(guest.model, Vector3.new(0, 3.5, -18), 20)
+			end
+			walkTo(guest.model, destination, 25)
+			if guest.model.Parent then guest.model:Destroy() end
+		end
+	end)
+end
+ctx.guestLeave = guestLeave
+
+local function spawnGuest()
+	local slot = pickFreeDesk()
+	if not slot then return false end
+	local nightCfg = Config.Nights[State.night]
+	local isMonster
+	if State.forceNext == "human" or State.forceNext == "monster" then
+		isMonster = State.forceNext == "monster"
+		State.forceNext = nil
+	elseif State.monstersLeft &gt; 0 and (State.humansLeft &lt;= 0 or math.random() &lt; State.monstersLeft / (State.monstersLeft + State.humansLeft)) then
+		isMonster = true
+	else
+		isMonster = false
+	end
+
+	local tells = {}
+	local cameraApp = "normal"
+	if isMonster then
+		State.monstersLeft = State.monstersLeft - 1
+		local visible = {}
+		for _, t in ipairs(Config.Tells) do
+			if t.cat ~= "Camera" then table.insert(visible, t.id) end
+		end
+		local cameraOnly = nightCfg.cameraOnly and math.random() &lt; 0.3
+		if cameraOnly then
+			cameraApp = "absent"
+			tells = { "NoCamera" }
+		else
+			local count = math.random(2, 4)
+			local chosen = {}
+			local cats = {}
+			local pool = {}
+			for _, id in ipairs(visible) do table.insert(pool, id) end
+			if math.random() &lt; 0.25 then table.insert(pool, "DistortedCam") cameraApp = "distorted" end
+			local guard = 0
+			while #chosen &lt; count and guard &lt; 60 do
+				guard = guard + 1
+				local id = pool[math.random(#pool)]
+				local already = false
+				for _, c in ipairs(chosen) do if c == id then already = true end end
+				if not already then
+					local cat
+					for _, t in ipairs(Config.Tells) do if t.id == id then cat = t.cat end end
+					local catCount = 0
+					for _, c in ipairs(cats) do if c == cat then catCount = catCount + 1 end end
+					if catCount == 0 or #chosen &gt;= 2 then
+						table.insert(chosen, id)
+						if catCount == 0 then table.insert(cats, cat) end
+					end
+				end
+			end
+			-- ensure at least 2 categories
+			if #cats &lt; 2 then
+				for _, t in ipairs(Config.Tells) do
+					local found = false
+					for _, c in ipairs(cats) do if c == t.cat then found = true end end
+					if not found and t.cat ~= "Camera" then
+						table.insert(chosen, t.id)
+						table.insert(cats, t.cat)
+						break
+					end
+				end
+			end
+			tells = chosen
+		end
+	else
+		State.humansLeft = State.humansLeft - 1
+	end
+
+	local idFrom = Config.Cities[math.random(#Config.Cities)]
+	local guest = GuestGen.Create(ctx, {
+		isMonster = isMonster,
+		tells = tells,
+		cameraApp = cameraApp,
+		walkSpeed = 16,
+		desk = slot,
+		spawnPos = Vector3.new(math.random(-6, 6), 3.5, 56),
+		idFrom = idFrom,
+	})
+	guest.model.Parent = map
+	State.activeGuests[guest.id] = guest
+
+	local bell = Map.Desks[slot].bell
+	bell.Pitch = guest.angry and 1.6 or 1
+	bell:Play()
+	notify(nil, (guest.angry and "AN ANGRY GUEST" or "GUEST ARRIVED") .. " at Desk " .. slot, "guest")
+	Remotes.GuestUpdate:FireAllClients({
+		desk = slot, id = guest.id, present = true,
+		name = guest.spokenName, angry = guest.angry,
+		cameraApp = guest.cameraApp,
+		extraQ = Config.ExtraQuestions[math.random(#Config.ExtraQuestions)].id,
+	})
+
+	task.spawn(function()
+		walkTo(guest.model, Vector3.new(0, 3.5, 8), 20)
+		walkTo(guest.model, Map.Desks[slot].pos, 20)
+		GuestGen.Say(guest, "Evening. Name's " .. guest.spokenName .. ". I need a room.")
+	end)
+	return true
+end
+ctx.spawnGuest = spawnGuest
+
+-- INSPECTION / QUESTIONS / DECISIONS
+local function getGuest(guestId)
+	return State.activeGuests[guestId]
+end
+
+local function visibleTellsIn(guest, cat)
+	local labels = {}
+	for _, id in ipairs(guest.tells) do
+		for _, t in ipairs(Config.Tells) do
+			if t.id == id and t.cat == cat then table.insert(labels, t.label) end
+		end
+	end
+	return labels
+end
+ctx.visibleTellsIn = visibleTellsIn
+
+Remotes.Inspect.OnServerEvent:Connect(function(player, guestId, category)
+	local guest = getGuest(guestId)
+	if not guest then return end
+	if State.phase ~= "Night" then return end
+	if playerDesks[player] ~= guest.desk then return end
+	if category == "open" then
+		Remotes.InspectResult:FireClient(player, guest.id, "open", {}, (guest.model:FindFirstChild("Head") or guest.model.PrimaryPart).CFrame)
+	else
+		local labels = visibleTellsIn(guest, category)
+		Remotes.InspectResult:FireClient(player, guest.id, category, labels, nil)
+	end
+end)
+
+Remotes.Ask.OnServerEvent:Connect(function(player, guestId, qid)
+	local guest = getGuest(guestId)
+	if not guest then return end
+	if State.phase ~= "Night" then return end
+	if playerDesks[player] ~= guest.desk then return end
+	local text
+	if qid == "from" then
+		text = guest.answers.from
+	elseif qid == "id" then
+		text = "Sure. Here it is."
+	elseif qid == "year" then
+		text = guest.answers.year
+	elseif qid == "job" then
+		text = guest.answers.job
+	elseif qid == "stay" then
+		text = guest.answers.stay
+	else
+		return
+	end
+	GuestGen.Say(guest, text)
+	Remotes.Answer:FireClient(player, guest.id, qid, text, guest.idCard)
+end)
+
+local function applyMoney(amount)
+	if State.toggles.infiniteMoney then return end
+	State.money = State.money + amount
+	if amount &gt; 0 then State.earnedTonight = State.earnedTonight + amount end
+end
+ctx.applyMoney = applyMoney
+
+local function applyRep(amount)
+	State.rep = State.rep + amount
+end
+ctx.applyRep = applyRep
+
+Remotes.Decide.OnServerEvent:Connect(function(player, guestId, admit)
+	local guest = getGuest(guestId)
+	if not guest then return end
+	if State.phase ~= "Night" then return end
+	if playerDesks[player] ~= guest.desk then return end
+
+	if admit then
+		if not anyCleanRooms() then
+			notify(player, "No clean rooms! Clean rooms in the morning first.", "bad")
+			return
+		end
+		local num = firstFreeRoom()
+		if not num then
+			notify(player, "No clean rooms!", "bad")
+			return
+		end
+		if guest.isMonster then
+			Map.Rooms[num].state = "monsterRoom"
+			Map.Rooms[num].occupant = guest
+			guest.roomNumber = num
+			table.insert(State.admittedMonsters, guest)
+			startKnocking(num)
+			task.spawn(function()
+				task.wait(0.4)
+				for i = 1, 6 do
+					Map.RoomLights[num].Transparency = 1
+					local pl = Map.RoomLights[num]:FindFirstChildOfClass("PointLight")
+					if pl then pl.Enabled = not pl.Enabled end
+					task.wait(0.15)
+				end
+				Map.RoomLights[num].Transparency = 0
+			end)
+			VFXServer.Shake(1.2)
+			VFXServer.Play("rumble", workspace, 0.8, 0.5)
+			notify(nil, "Something feels wrong about Room " .. num .. "...", "bad")
+			SanityServer.Drain(player, 15, "admitted a monster")
+			log("Desk " .. guest.desk .. ": ADMITTED A MONSTER -&gt; Room " .. num)
+		else
+			Map.Rooms[num].state = "occupied"
+			Map.Rooms[num].occupant = guest
+			guest.roomNumber = num
+			table.insert(State.admittedHumans, guest)
+			applyMoney(Config.AdmitHumanMoney)
+			applyRep(Config.AdmitHumanRep)
+			State.correctCalls = State.correctCalls + 1
+			VFXServer.Play("bell", workspace, 0.9, 1.4)
+			notify(nil, "Correct call! +$" .. Config.AdmitHumanMoney, "good")
+			log("Desk " .. guest.desk .. ": admitted human " .. guest.spokenName .. " -&gt; Room " .. num)
+		end
+		local num2 = num
+		guestLeave(guest, Vector3.new(0, 3.5, -26))
+		task.spawn(function()
+			task.wait(2)
+			walkTo(guest.model, Vector3.new(num2 and ((num2 - 101) * 10 - 25) or 0, 3.5, -38), 25)
+			if guest.model.Parent then
+				local hum = guest.model:FindFirstChildOfClass("Humanoid")
+				if hum then hum.WalkSpeed = 0 end
+			end
+		end)
+	else
+		if guest.isMonster then
+			applyMoney(Config.DenyMonsterMoney)
+			applyRep(Config.DenyMonsterRep)
+			State.correctCalls = State.correctCalls + 1
+			State.monstersCaught = State.monstersCaught + 1
+			VFXServer.Play("bell", workspace, 0.9, 1.4)
+			notify(nil, "Correct call! Monster turned away. +$" .. Config.DenyMonsterMoney, "good")
+			log("Desk " .. guest.desk .. ": turned away a MONSTER")
+		else
+			applyMoney(Config.DenyHumanMoney)
+			applyRep(Config.DenyHumanRep)
+			State.wrongCalls = State.wrongCalls + 1
+			notify(nil, "You turned away a real human. -$10", "bad")
+			SanityServer.Drain(player, 5, "turned away a human")
+			log("Desk " .. guest.desk .. ": turned away human " .. guest.spokenName)
+			if math.random() &lt; Config.AngryReturnChance and not guest.angry then
+				task.spawn(function()
+					task.wait(math.random(20, 45))
+					if State.phase ~= "Night" then return end
+					local slot2 = pickFreeDesk()
+					if not slot2 then return end
+					local angry = GuestGen.Create(ctx, {
+						isMonster = false, tells = {}, cameraApp = "normal",
+						walkSpeed = 20, desk = slot2, angry = true,
+						spawnPos = Vector3.new(math.random(-6, 6), 3.5, 56),
+						idFrom = guest.idCard.from,
+					})
+					angry.model.Parent = map
+					State.activeGuests[angry.id] = angry
+					Map.Desks[slot2].bell.Pitch = 1.6
+					Map.Desks[slot2].bell:Play()
+					notify(nil, "The guest you turned away is BACK, and he is angry.", "bad")
+					Remotes.GuestUpdate:FireAllClients({ desk = slot2, id = angry.id, present = true, name = angry.spokenName .. " (angry)", cameraApp = "normal", extraQ = Config.ExtraQuestions[math.random(#Config.ExtraQuestions)].id })
+					task.spawn(function()
+						walkTo(angry.model, Vector3.new(0, 3.5, 8), 15)
+						walkTo(angry.model, Map.Desks[slot2].pos, 15)
+						GuestGen.Say(angry, "You turned ME away?! I demand a room. NOW.")
+					end)
+				end)
+			end
+		end
+		guestLeave(guest, Vector3.new(math.random(-8, 8), 3.5, 58))
+	end
+	sendState()
+end)
+
+-- NIGHT FLOW
+local function resetRooms()
+	for _, num in ipairs(Config.RoomNumbers) do
+		local r = Map.Rooms[num]
+		if r.occupant and r.occupant.model then r.occupant.model:Destroy() end
+		r.occupant = nil
+		r.state = "clean"
+		stopKnocking(num)
+		setDoor(num, true)
+		setDoorLock(num, false)
+		local d = Map.Doors[num]
+		d.barricaded = false
+		d.breaking = false
+		d.part.CanCollide = true
+		d.part.Transparency = 0
+		d.chair.Anchored = true
+		d.chair.CFrame = CFrame.new((num - 101) * 10 - 25 + 2, 0.9, -38)
+		d.chair.Transparency = 0
+	end
+end
+ctx.resetRooms = resetRooms
+
+local function servingDone()
+	if State.queueLeft &gt; 0 then return false end
+	for _ in pairs(State.activeGuests) do
+		return false
+	end
+	return true
+end
+
+local function startNight(n)
+	State.night = n
+	State.phase = "Night"
+	State.correctCalls = 0
+	State.wrongCalls = 0
+	State.monstersCaught = 0
+	State.earnedTonight = 0
+	State.admittedMonsters = {}
+	State.admittedHumans = {}
+	State.snapshotMoney = State.money
+	State.snapshotRep = State.rep
+	State.choresDone = false
+	local cfg = Config.Nights[n]
+	State.guestsPerNight = State.quotaGuests or cfg.guests
+	State.monstersPerNight = State.quotaMonsters or cfg.monsters
+	State.queueLeft = State.guestsPerNight
+	State.humansLeft = State.guestsPerNight - State.monstersPerNight
+	State.monstersLeft = State.monstersPerNight
+	State.rulesRevealed = 3
+	for i = 2, n do
+		State.rulesRevealed = State.rulesRevealed + (Config.Nights[i].newRules or 0)
+	end
+	State.rulesRevealed = math.min(State.rulesRevealed, #Config.Rules)
+	resetRooms()
+	VFXServer.NightLight()
+	VFXServer.SetRain(true, 1)
+	VFXServer.SetFog(true)
+	local bonus = State.rep
+	if bonus ~= 0 then
+		applyMoney(bonus)
+		log("Night " .. n .. " starting bonus from reputation: $" .. bonus)
+	end
+	local newRules = {}
+	for i = State.rulesRevealed - (cfg.newRules or 0) + 1, State.rulesRevealed do
+		if i &gt;= 1 then table.insert(newRules, Config.Rules[i]) end
+	end
+	Remotes.TitleCard:FireAllClients(n, Config.Objectives[n], newRules, cfg.hints)
+	sendState()
+	log("Night " .. n .. " started: " .. State.guestsPerNight .. " guests, " .. State.monstersPerNight .. " monsters")
+
+	task.spawn(function()
+		task.wait(6)
+		while State.phase == "Night" and State.queueLeft &gt; 0 do
+			if not State.toggles.freeze and not State.toggles.paused then
+				spawnGuest()
+			end
+			task.wait(Config.NextGuestDelay)
+		end
+		while State.phase == "Night" and not servingDone() do
+			task.wait(1)
+		end
+		if State.phase ~= "Night" then return end
+		if #State.admittedMonsters &gt; 0 then
+			local survived = HuntManager.Run(ctx, State.admittedMonsters)
+			if not survived then return end
+		else
+			notify(nil, "No monsters got in tonight. Quiet night...", "good")
+		end
+		VFXServer.DawnLight()
+		ChoresServer.Process(ctx, State.admittedMonsters, State.admittedHumans)
+		State.phase = "Dawn"
+		sendState()
+		Remotes.Dawn:FireAllClients({
+			night = State.night,
+			earned = State.earnedTonight,
+			correct = State.correctCalls,
+			wrong = State.wrongCalls,
+			caught = State.monstersCaught,
+			chores = ChoresServer.GetChoreList(),
+			isFinalNight = State.night &gt;= 5,
+		})
+		log("Dawn after night " .. State.night)
+	end)
+end
+ctx.startNight = startNight
+
+Remotes.NextNight.OnServerEvent:Connect(function(player)
+	if State.phase == "GameOver" then
+		State.money = State.snapshotMoney
+		State.rep = State.snapshotRep
+		for _, pl in ipairs(Players:GetPlayers()) do
+			local char = pl.Character
+			local hrp = char and char:FindFirstChild("HumanoidRootPart")
+			if hrp then
+				hrp.Anchored = false
+				hrp.CFrame = CFrame.new(0, 4, 50)
+			end
+			local hum = char and char:FindFirstChildOfClass("Humanoid")
+			if hum then hum.WalkSpeed = 16 end
+			Remotes.Downed:FireClient(pl, false)
+		end
+		startNight(State.night)
+		return
+	end
+	if State.phase == "Win" then
+		State.phase = "Lobby"
+		State.night = 1
+		State.money = Config.StartMoney
+		State.rep = 0
+		State.desksBought = 1
+		setDeskBought(2, false)
+		setDeskBought(3, false)
+		State.rulesRevealed = 3
+		startNight(1)
+		return
+	end
+	if State.phase ~= "Dawn" and State.phase ~= "Shop" then return end
+	if State.night &gt;= 5 then
+		State.phase = "Win"
+		sendState()
+		Remotes.EndScreen:FireAllClients(true, { money = State.money, stars = stars() })
+		log("WIN: survived all 5 nights")
+		return
+	end
+	State.phase = "Shop"
+	sendState()
+	startNight(State.night + 1)
+end)
+
+Remotes.Shop.OnServerEvent:Connect(function(player, action, data)
+	ShopServer.Handle(player, action, data)
+end)
+
+Remotes.ChoreReply.OnServerEvent:Connect(function(player, room, choice)
+	ChoresServer.HandleReply(player, room, choice)
+end)
+
+Remotes.QuickChat.OnServerEvent:Connect(function(player, text)
+	if type(text) ~= "string" or #text &gt; 60 then return end
+	local char = player.Character
+	local head = char and char:FindFirstChild("Head")
+	if head then
+		local bb = Instance.new("BillboardGui")
+		bb.Size = UDim2.new(0, 220, 0, 50)
+		bb.StudsOffset = Vector3.new(0, 2.2, 0)
+		bb.AlwaysOnTop = true
+		bb.MaxDistance = 50
+		bb.Parent = head
+		local tl = Instance.new("TextLabel")
+		tl.Size = UDim2.new(1, 0, 1, 0)
+		tl.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+		tl.BackgroundTransparency = 0.3
+		tl.TextColor3 = Color3.fromRGB(255, 240, 160)
+		tl.TextScaled = true
+		tl.Font = Enum.Font.GothamBold
+		tl.Text = text
+		tl.Parent = bb
+		Debris:AddItem(bb, 4)
+	end
+end)
+
+Players.PlayerAdded:Connect(function(player)
+	SanityServer.AddPlayer(player)
+	sendState()
+	if #Players:GetPlayers() == 1 and State.phase == "Lobby" then
+		task.delay(5, function()
+			if State.phase == "Lobby" then startNight(1) end
+		end)
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	SanityServer.RemovePlayer(player)
+	playerDesks[player] = nil
+end)
+
+-- CONTROLS (used by the admin panel)
+Controls.sendState = sendState
+Controls.log = log
+Controls.notify = notify
+Controls.setDoor = setDoor
+Controls.setDoorLock = setDoorLock
+Controls.setDeskBought = setDeskBought
+Controls.setKnocking = startKnocking
+Controls.stopKnocking = stopKnocking
+Controls.pickFreeDesk = pickFreeDesk
+Controls.getGuest = getGuest
+Controls.walkTo = walkTo
+Controls.applyMoney = applyMoney
+Controls.applyRep = applyRep
+Controls.spawnGuest = spawnGuest
+Controls.startNight = startNight
+Controls.resetRooms = resetRooms
+Controls.stars = stars
+Controls.playerDesks = playerDesks
+
+log("Night Shift Motel server loaded. Waiting for players...")
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX8"><Properties><string name="Name">MapBuilder</string><ProtectedString name="Source">-- MapBuilder: builds the entire motel from Parts at runtime.
+local MapBuilder = {}
+
+local map
+
+local function P(t)
+	local p = Instance.new(t.Class or "Part")
+	p.Anchored = true
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Size = t.Size or Vector3.new(4, 1, 2)
+	p.CFrame = t.CF or CFrame.new(t.Pos or Vector3.new()) * CFrame.Angles((t.Rot and t.Rot[1]) or 0, (t.Rot and t.Rot[2]) or 0, (t.Rot and t.Rot[3]) or 0)
+	p.Color = t.Color or Color3.fromRGB(120, 120, 120)
+	p.Material = t.Material or Enum.Material.SmoothPlastic
+	if t.Transparency then p.Transparency = t.Transparency end
+	if t.Reflectance then p.Reflectance = t.Reflectance end
+	if t.CanCollide ~= nil then p.CanCollide = t.CanCollide end
+	if t.Shape then p.Shape = t.Shape end
+	if t.Name then p.Name = t.Name end
+	p.Parent = t.Parent or map
+	return p
+end
+
+local function label(part, text, textColor, size, face)
+	local sg = Instance.new("SurfaceGui")
+	sg.Face = face or Enum.NormalId.Front
+	sg.CanvasSize = Vector2.new(400, 200)
+	sg.Parent = part
+	local tl = Instance.new("TextLabel")
+	tl.Size = UDim2.new(1, 0, 1, 0)
+	tl.BackgroundTransparency = 1
+	tl.Text = text
+	tl.TextColor3 = textColor or Color3.fromRGB(255, 60, 60)
+	tl.TextScaled = true
+	tl.Font = Enum.Font.Arcade
+	tl.Parent = sg
+	return tl
+end
+
+local function light(part, brightness, range, color)
+	local pl = Instance.new("PointLight")
+	pl.Brightness = brightness or 1.2
+	pl.Range = range or 18
+	pl.Color = color or Color3.fromRGB(255, 230, 190)
+	pl.Parent = part
+	return pl
+end
+
+local function makePrompt(parent, text, hold, maxDist)
+	local pr = Instance.new("ProximityPrompt")
+	pr.ActionText = text
+	pr.ObjectText = ""
+	pr.HoldDuration = hold or 0
+	pr.MaxActivationDistance = maxDist or 10
+	pr.RequiresLineOfSight = false
+	pr.Parent = parent
+	return pr
+end
+
+local function tree(x, z)
+	P({ Pos = Vector3.new(x, 3, z), Size = Vector3.new(1.6, 6, 1.6), Color = Color3.fromRGB(74, 54, 40), Material = Enum.Material.Wood })
+	P({ Pos = Vector3.new(x, 7, z), Size = Vector3.new(6, 3.4, 6), Color = Color3.fromRGB(34, 70, 44), Material = Enum.Material.Grass })
+	P({ Pos = Vector3.new(x, 10, z), Size = Vector3.new(4.4, 3, 4.4), Color = Color3.fromRGB(30, 62, 40), Material = Enum.Material.Grass })
+	P({ Pos = Vector3.new(x, 12.6, z), Size = Vector3.new(2.8, 2.6, 2.8), Color = Color3.fromRGB(26, 55, 36), Material = Enum.Material.Grass })
+end
+
+local Map = {}
+Map.Desks = {}
+Map.Doors = {}
+Map.RoomLights = {}
+Map.Rooms = {}
+Map.Cameras = {}
+
+function MapBuilder.Build(ctx)
+	map = Instance.new("Folder")
+	map.Name = "Map"
+	map.Parent = workspace
+
+	local asphalt = Color3.fromRGB(38, 38, 42)
+	local wood = Color3.fromRGB(96, 68, 48)
+	local wallWood = Color3.fromRGB(112, 84, 58)
+	local brick = Color3.fromRGB(96, 62, 52)
+
+	-- GROUND / LOT / ROAD
+	P({ Pos = Vector3.new(0, -0.5, 10), Size = Vector3.new(220, 1, 200), Color = asphalt, Material = Enum.Material.Asphalt, Reflectance = 0.12, Name = "Lot" })
+	P({ Pos = Vector3.new(0, 0.06, 84), Size = Vector3.new(240, 0.4, 26), Color = Color3.fromRGB(28, 28, 30), Material = Enum.Material.Asphalt, Name = "Road" })
+	for i = -5, 5 do
+		P({ Pos = Vector3.new(i * 20, 0.3, 84), Size = Vector3.new(6, 0.05, 0.8), Color = Color3.fromRGB(220, 200, 80), CanCollide = false })
+	end
+	P({ Pos = Vector3.new(0, 0.12, 26), Size = Vector3.new(70, 0.3, 10), Color = Color3.fromRGB(130, 128, 124), Material = Enum.Material.Concrete, Name = "Sidewalk" })
+	P({ Pos = Vector3.new(0, 0.14, 36), Size = Vector3.new(8, 0.3, 14), Color = Color3.fromRGB(130, 128, 124), Material = Enum.Material.Concrete, Name = "Walkway" })
+	for i = -2, 2 do
+		P({ Pos = Vector3.new(i * 12, 0.2, 44), Size = Vector3.new(0.5, 0.1, 14), Color = Color3.fromRGB(230, 230, 230), CanCollide = false })
+		P({ Pos = Vector3.new(i * 12, 0.2, 62), Size = Vector3.new(0.5, 0.1, 14), Color = Color3.fromRGB(230, 230, 230), CanCollide = false })
+	end
+
+	-- LOBBY FLOOR (checkered)
+	for ix = 0, 15 do
+		for iz = 0, 9 do
+			local dark = (ix + iz) % 2 == 0
+			P({
+				Pos = Vector3.new(-30 + ix * 4, 0.1, -20 + iz * 4),
+				Size = Vector3.new(4, 0.2, 4),
+				Color = dark and Color3.fromRGB(24, 24, 26) or Color3.fromRGB(226, 224, 218),
+				Material = Enum.Material.Marble,
+			})
+		end
+	end
+
+	-- LOBBY WALLS (interior x -32..32, z -22..18)
+	P({ Pos = Vector3.new(-17, 6, -22.5), Size = Vector3.new(30, 12, 1), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(17, 6, -22.5), Size = Vector3.new(30, 12, 1), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(0, 10, -22.5), Size = Vector3.new(6, 4, 1), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(-13.75, 6, 18.5), Size = Vector3.new(19.5, 12, 1), Color = brick, Material = Enum.Material.Brick })
+	P({ Pos = Vector3.new(13.75, 6, 18.5), Size = Vector3.new(19.5, 12, 1), Color = brick, Material = Enum.Material.Brick })
+	P({ Pos = Vector3.new(0, 10, 18.5), Size = Vector3.new(8, 4, 1), Color = brick, Material = Enum.Material.Brick })
+	P({ Pos = Vector3.new(-32.5, 6, -2), Size = Vector3.new(1, 12, 42), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(32.5, 6, -2), Size = Vector3.new(1, 12, 42), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(0, 12.5, -2), Size = Vector3.new(66, 0.5, 42), Color = Color3.fromRGB(70, 52, 38), Material = Enum.Material.WoodPlanks })
+	-- windows (glass, see rain through)
+	P({ Pos = Vector3.new(-13.75, 6, 18.1), Size = Vector3.new(17, 6, 0.2), Color = Color3.fromRGB(140, 170, 190), Material = Enum.Material.Glass, Transparency = 0.65, CanCollide = false })
+	P({ Pos = Vector3.new(13.75, 6, 18.1), Size = Vector3.new(17, 6, 0.2), Color = Color3.fromRGB(140, 170, 190), Material = Enum.Material.Glass, Transparency = 0.65, CanCollide = false })
+
+	-- CEILING LIGHTS
+	local lightSpots = { Vector3.new(-16, 11.8, -10), Vector3.new(16, 11.8, -10), Vector3.new(-16, 11.8, 8), Vector3.new(16, 11.8, 8) }
+	for i, pos in ipairs(lightSpots) do
+		local lp = P({ Pos = pos, Size = Vector3.new(6, 0.3, 2), Color = Color3.fromRGB(255, 240, 210), Material = Enum.Material.Neon, Name = "LobbyLight" .. i })
+		light(lp, 1.4, 26)
+		table.insert(Map, lp)
+	end
+	Map.LobbyLights = {}
+	for _, child in ipairs(map:GetChildren()) do
+		if child.Name:sub(1, 10) == "LobbyLight" then table.insert(Map.LobbyLights, child) end
+	end
+
+	-- FRONT COUNTER (space for 3 desks)
+	P({ Pos = Vector3.new(0, 2, -14), Size = Vector3.new(30, 4, 3), Color = wood, Material = Enum.Material.WoodPlanks, Name = "Counter" })
+	P({ Pos = Vector3.new(0, 4.2, -14), Size = Vector3.new(31, 0.4, 4.4), Color = Color3.fromRGB(70, 50, 36), Material = Enum.Material.Wood, Name = "CounterTop" })
+
+	-- DESKS 1-3 (2 and 3 hidden until bought)
+	for slot = 1, 3 do
+		local x = (slot - 2) * 10
+		local furniture = Instance.new("Folder")
+		furniture.Name = "DeskFurniture" .. slot
+		furniture.Parent = map
+		local bellBase = P({ Parent = furniture, Pos = Vector3.new(x + 1.2, 4.7, -13.2), Size = Vector3.new(0.8, 0.2, 0.8), Color = Color3.fromRGB(190, 160, 60), Material = Enum.Material.Metal })
+		local bellDome = P({ Parent = furniture, Class = "Part", Pos = Vector3.new(x + 1.2, 4.95, -13.2), Size = Vector3.new(0.55, 0.35, 0.55), Shape = Enum.PartType.Ball, Color = Color3.fromRGB(220, 190, 80), Material = Enum.Material.Metal, Name = "Bell" .. slot })
+		P({ Parent = furniture, Pos = Vector3.new(x - 1.4, 4.55, -13.4), Size = Vector3.new(1.6, 0.25, 1.1), Color = Color3.fromRGB(210, 205, 190), Name = "Register" .. slot })
+		local lampPole = P({ Parent = furniture, Pos = Vector3.new(x - 2.6, 5, -13.4), Size = Vector3.new(0.15, 1.4, 0.15), Color = Color3.fromRGB(60, 60, 60), Material = Enum.Material.Metal })
+		local lampHead = P({ Parent = furniture, Pos = Vector3.new(x - 2.6, 5.8, -13.4), Size = Vector3.new(0.9, 0.35, 0.9), Color = Color3.fromRGB(120, 200, 120), Material = Enum.Material.Neon, Name = "DeskLamp" .. slot })
+		light(lampHead, 0.8, 10)
+		local seat = Instance.new("Seat")
+		seat.Anchored = true
+		seat.Size = Vector3.new(2.4, 0.4, 2.4)
+		seat.CFrame = CFrame.new(x, 0.5, -17.5)
+		seat.Color = Color3.fromRGB(120, 40, 40)
+		seat.Material = Enum.Material.Fabric
+		seat.Name = "DeskSeat" .. slot
+		seat.Parent = furniture
+		local sitPrompt = makePrompt(seat, "Sit", 0, 8)
+		sitPrompt.ObjectText = "Desk " .. slot
+		local ding = Instance.new("Sound")
+		ding.SoundId = "rbxasset://sounds/electronicpingshort.wav"
+		ding.Volume = 1
+		ding.Parent = bellDome
+		Map.Desks[slot] = { seat = seat, prompt = sitPrompt, bell = ding, pos = Vector3.new(x, 3, -11), bought = (slot == 1), furniture = furniture }
+		if slot &gt; 1 then
+			for _, d in ipairs(furniture:GetDescendants()) do
+				if d:IsA("BasePart") then d.Transparency = 1 end
+				if d:IsA("Seat") then d.CanCollide = false end
+				if d:IsA("ProximityPrompt") then d.Enabled = false end
+			end
+			seat.CanCollide = false
+		end
+	end
+
+	-- KEY BOARD behind counter
+	local keyBoard = P({ Pos = Vector3.new(0, 7, -21.6), Size = Vector3.new(10, 4, 0.4), Color = Color3.fromRGB(80, 58, 40), Material = Enum.Material.Wood })
+	for i = 1, 6 do
+		P({ Parent = keyBoard, Pos = Vector3.new(-3.75 + (i - 1) * 1.5, 0, 0.4), Size = Vector3.new(0.6, 0.9, 0.15), Color = Color3.fromRGB(200, 180, 90), Material = Enum.Material.Metal })
+		label(P({ Parent = keyBoard, Pos = Vector3.new(-3.75 + (i - 1) * 1.5, -0.9, 0.4), Size = Vector3.new(0.9, 0.5, 0.1), Color = Color3.fromRGB(40, 30, 20), CanCollide = false }), tostring(100 + i), Color3.fromRGB(240, 230, 180), nil, Enum.NormalId.Front)
+	end
+
+	-- COFFEE CORNER
+	local coffeeCounter = P({ Pos = Vector3.new(28, 1.75, -16), Size = Vector3.new(6, 3.5, 5), Color = wood, Material = Enum.Material.WoodPlanks, Name = "CoffeeCounter" })
+	P({ Pos = Vector3.new(28, 3.7, -16), Size = Vector3.new(6.5, 0.4, 5.5), Color = Color3.fromRGB(70, 50, 36), Material = Enum.Material.Wood })
+	local coffeeMachine = P({ Pos = Vector3.new(26.6, 5, -16), Size = Vector3.new(1.8, 2.4, 1.6), Color = Color3.fromRGB(50, 50, 55), Material = Enum.Material.Metal, Name = "CoffeeMachine" })
+	label(coffeeMachine, "COFFEE\n$5", Color3.fromRGB(255, 120, 60))
+	local buyPrompt = makePrompt(coffeeMachine, "Buy coffee (+" .. ctx.Config.CoffeeSanity .. " sanity)", 0, 9)
+	buyPrompt.ObjectText = "Coffee corner"
+	local brewSound = Instance.new("Sound")
+	brewSound.SoundId = "rbxasset://sounds/swoosh.wav"
+	brewSound.Volume = 0.4
+	brewSound.Looped = true
+	brewSound.Parent = coffeeMachine
+	local warmer = P({ Pos = Vector3.new(29.4, 5, -16), Size = Vector3.new(1.8, 2.2, 1.6), Color = Color3.fromRGB(120, 70, 40), Material = Enum.Material.Metal, Name = "CoffeeWarmer" })
+	label(warmer, "FREE\nPOT", Color3.fromRGB(255, 200, 90))
+	local drinkPrompt = makePrompt(warmer, "Drink free pot (+" .. ctx.Config.WarmerSanity .. " sanity)", 0, 9)
+	drinkPrompt.ObjectText = "Coffee warmer"
+	drinkPrompt.Enabled = false
+	for i = 1, 4 do
+		P({ Pos = Vector3.new(30.6, 4 + i * 0.35, -14.4), Size = Vector3.new(0.9, 0.3, 0.9), Shape = Enum.PartType.Cylinder, Color = Color3.fromRGB(235, 235, 230) })
+	end
+	Map.CoffeeMachine = coffeeMachine
+	Map.CoffeeBuyPrompt = buyPrompt
+	Map.Warmer = warmer
+	Map.WarmerDrinkPrompt = drinkPrompt
+	Map.BrewSound = brewSound
+
+	-- LOBBY DRESSING
+	local vending = P({ Pos = Vector3.new(-29, 3, 14), Size = Vector3.new(4, 6, 2.4), Color = Color3.fromRGB(150, 30, 40), Material = Enum.Material.Metal, Name = "VendingMachine" })
+	label(vending, "DRINKS", Color3.fromRGB(120, 255, 160))
+	local ice = P({ Pos = Vector3.new(-29, 2, 8), Size = Vector3.new(3, 4, 2.2), Color = Color3.fromRGB(190, 195, 200), Material = Enum.Material.Metal, Name = "IceMachine" })
+	label(ice, "ICE", Color3.fromRGB(60, 90, 200))
+	local tv = P({ Pos = Vector3.new(0, 8.5, -21.4), Size = Vector3.new(4, 2.6, 0.5), Color = Color3.fromRGB(30, 30, 32), Name = "WallTV" })
+	label(tv, "STATIC", Color3.fromRGB(150, 150, 150))
+	local phone = P({ Pos = Vector3.new(-26, 6, -21.6), Size = Vector3.new(1.2, 1.6, 0.5), Color = Color3.fromRGB(40, 40, 44), Material = Enum.Material.Metal, Name = "WallPhone" })
+	P({ Pos = Vector3.new(-10, 1, 2), Size = Vector3.new(5, 1.2, 5), Color = Color3.fromRGB(90, 60, 44), Material = Enum.Material.Wood, Name = "LobbyTable" })
+	for _, cx in ipairs({ -12.5, -7.5 }) do
+		P({ Pos = Vector3.new(cx, 1.1, 2), Size = Vector3.new(1.6, 2.2, 1.6), Color = Color3.fromRGB(120, 40, 40), Material = Enum.Material.Fabric, Name = "LobbyChair" })
+	end
+	P({ Pos = Vector3.new(10, 0.6, 4), Size = Vector3.new(2, 1.2, 3), Color = Color3.fromRGB(120, 95, 60), Material = Enum.Material.Fabric, Name = "Suitcase" })
+	P({ Pos = Vector3.new(24, 6.5, -21.4), Size = Vector3.new(1.6, 1.6, 0.4), Color = Color3.fromRGB(60, 50, 40), Name = "WallClock" })
+	label(P({ Pos = Vector3.new(24, 6.5, -21.15), Size = Vector3.new(1.3, 1.3, 0.1), Color = Color3.fromRGB(235, 230, 220), CanCollide = false }), "12", Color3.fromRGB(30, 30, 30))
+	for _, px in ipairs({ -20, 20 }) do
+		local frame = P({ Pos = Vector3.new(px, 7, -21.6), Size = Vector3.new(2.4, 3, 0.3), Color = Color3.fromRGB(70, 52, 38), Material = Enum.Material.Wood, Name = "Portrait" })
+		label(frame, ":)", Color3.fromRGB(200, 190, 170))
+	end
+	local houseRules = P({ Pos = Vector3.new(-24, 7, -21.6), Size = Vector3.new(2.2, 3, 0.3), Color = Color3.fromRGB(226, 220, 200), Name = "HouseRules" })
+	label(houseRules, "HOUSE\nRULES", Color3.fromRGB(40, 40, 40))
+	local lantern = P({ Pos = Vector3.new(30.5, 8, 12), Size = Vector3.new(0.8, 1.2, 0.8), Color = Color3.fromRGB(255, 200, 120), Material = Enum.Material.Neon, Name = "Lantern" })
+	light(lantern, 0.7, 12)
+	local candelabra = P({ Pos = Vector3.new(18, 4.9, -13.4), Size = Vector3.new(0.9, 0.9, 0.9), Color = Color3.fromRGB(190, 160, 60), Material = Enum.Material.Metal, Name = "Candelabra" })
+	local radio = P({ Pos = Vector3.new(-18, 1.6, -20.5), Size = Vector3.new(1.8, 1.2, 1), Color = Color3.fromRGB(90, 60, 40), Material = Enum.Material.Wood, Name = "Radio" })
+	local typewriter = P({ Pos = Vector3.new(4.5, 4.6, -14), Size = Vector3.new(1.4, 0.6, 1), Color = Color3.fromRGB(40, 40, 44), Material = Enum.Material.Metal, Name = "Typewriter" })
+
+	-- SECURITY ROOM (front-left corner of lobby)
+	P({ Pos = Vector3.new(-26.5, 0.1, 12.5), Size = Vector3.new(10, 0.3, 10), Color = Color3.fromRGB(60, 60, 64), Material = Enum.Material.Concrete, Name = "SecurityFloor" })
+	P({ Pos = Vector3.new(-24.5, 5, 7.5), Size = Vector3.new(13, 10, 0.5), Color = Color3.fromRGB(70, 70, 76), Material = Enum.Material.Concrete })
+	P({ Pos = Vector3.new(-31.75, 5, 12.5), Size = Vector3.new(0.5, 10, 10), Color = Color3.fromRGB(70, 70, 76), Material = Enum.Material.Concrete })
+	P({ Pos = Vector3.new(-26.5, 10, 12.5), Size = Vector3.new(10, 0.5, 10), Color = Color3.fromRGB(50, 50, 54) })
+	P({ Pos = Vector3.new(-21.75, 5, 10), Size = Vector3.new(0.5, 10, 4), Color = Color3.fromRGB(70, 70, 76), Material = Enum.Material.Concrete })
+	P({ Pos = Vector3.new(-21.75, 8.5, 14.25), Size = Vector3.new(0.5, 3, 1.5), Color = Color3.fromRGB(70, 70, 76), Material = Enum.Material.Concrete })
+	local secDoor = P({ Pos = Vector3.new(-21.75, 3.5, 14.25), Size = Vector3.new(0.4, 7, 3), Color = Color3.fromRGB(80, 80, 88), Material = Enum.Material.Metal, Name = "SecurityDoor" })
+	local secPrompt = makePrompt(secDoor, "Open / Close", 0, 8)
+	local camNames = { "CAM 01 ENTRANCE", "CAM 02 PARKING", "CAM 03 CORRIDOR", "CAM 04 LOBBY" }
+	for i = 1, 4 do
+		local mon = P({ Parent = secDoor.Parent, Pos = Vector3.new(-29.5 + ((i - 1) % 2) * 3.4, 6.5 + math.floor((i - 1) / 2) * -3.2, 8), Size = Vector3.new(3, 2.4, 0.4), Color = Color3.fromRGB(20, 20, 24), Name = "Monitor" .. i })
+		label(mon, camNames[i], Color3.fromRGB(120, 255, 140))
+	end
+	Map.SecurityDoor = secDoor
+	Map.SecurityDoorOpen = false
+	Map.SecurityPrompt = secPrompt
+
+	-- CORRIDOR
+	P({ Pos = Vector3.new(0, 0.1, -28), Size = Vector3.new(64, 0.2, 12), Color = Color3.fromRGB(88, 62, 44), Material = Enum.Material.WoodPlanks, Name = "CorridorFloor" })
+	P({ Pos = Vector3.new(0, 5, -33.75), Size = Vector3.new(64, 10, 0.5), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	for _, wx in ipairs({ -27, -17, -7, 3, 13, 23 }) do
+		P({ Pos = Vector3.new(wx, 5, -33.75), Size = Vector3.new(4, 10, 0.5), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	end
+	P({ Pos = Vector3.new(-32.5, 5, -28), Size = Vector3.new(1, 10, 12), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(32.5, 5, -28), Size = Vector3.new(1, 10, 12), Color = wallWood, Material = Enum.Material.WoodPlanks })
+	P({ Pos = Vector3.new(0, 10.2, -28), Size = Vector3.new(64, 0.4, 12), Color = Color3.fromRGB(60, 44, 32) })
+	local corridorLight = P({ Pos = Vector3.new(0, 9.8, -28), Size = Vector3.new(40, 0.3, 1.6), Color = Color3.fromRGB(255, 240, 210), Material = Enum.Material.Neon, Name = "CorridorLight" })
+	light(corridorLight, 1.1, 30)
+	Map.CorridorLight = corridorLight
+
+	-- GUEST ROOMS 101-106
+	for i, num in ipairs(ctx.Config.RoomNumbers) do
+		local x = -25 + (i - 1) * 10
+		P({ Pos = Vector3.new(x, 0.1, -40.5), Size = Vector3.new(10, 0.2, 12), Color = Color3.fromRGB(96, 70, 50), Material = Enum.Material.WoodPlanks, Name = "RoomFloor" .. num })
+		P({ Pos = Vector3.new(x, 5, -46.75), Size = Vector3.new(10, 10, 0.5), Color = wallWood, Material = Enum.Material.WoodPlanks })
+		P({ Pos = Vector3.new(x - 5, 5, -40.5), Size = Vector3.new(0.5, 10, 12), Color = wallWood, Material = Enum.Material.WoodPlanks })
+		P({ Pos = Vector3.new(x + 5, 5, -40.5), Size = Vector3.new(0.5, 10, 12), Color = wallWood, Material = Enum.Material.WoodPlanks })
+		P({ Pos = Vector3.new(x, 10, -40.5), Size = Vector3.new(10, 0.5, 12), Color = Color3.fromRGB(60, 44, 32) })
+		-- bed
+		P({ Pos = Vector3.new(x - 2.5, 0.8, -43.5), Size = Vector3.new(4, 1, 7), Color = Color3.fromRGB(140, 40, 40), Material = Enum.Material.Fabric, Name = "Bed" .. num })
+		P({ Pos = Vector3.new(x - 2.5, 1.6, -45.5), Size = Vector3.new(2.4, 0.6, 1.6), Color = Color3.fromRGB(235, 235, 225), Name = "Pillow" .. num })
+		-- wall lamp + TV + bathroom door
+		local lamp = P({ Pos = Vector3.new(x + 3.5, 5.5, -46.2), Size = Vector3.new(0.8, 0.8, 0.5), Color = Color3.fromRGB(255, 220, 150), Material = Enum.Material.Neon, Name = "RoomLamp" .. num })
+		local rl = light(lamp, 0.9, 14)
+		P({ Pos = Vector3.new(x, 6, -46.2), Size = Vector3.new(2.4, 1.6, 0.4), Color = Color3.fromRGB(25, 25, 28), Name = "RoomTV" .. num })
+		P({ Pos = Vector3.new(x + 4.4, 3.5, -44), Size = Vector3.new(0.3, 7, 3), Color = Color3.fromRGB(90, 66, 46), Name = "BathroomDoor" .. num })
+		-- chair (barricade prop)
+		local chair = P({ Pos = Vector3.new(x + 2, 0.9, -38), Size = Vector3.new(1.4, 1.8, 1.4), Color = Color3.fromRGB(110, 75, 50), Material = Enum.Material.Wood, Name = "Chair" .. num })
+		local barPrompt = makePrompt(chair, "Barricade door (+5s)", 0, 8)
+		-- ceiling light
+		local cl = P({ Pos = Vector3.new(x, 9.7, -40.5), Size = Vector3.new(3, 0.25, 1.4), Color = Color3.fromRGB(255, 240, 210), Material = Enum.Material.Neon, Name = "RoomLight" .. num })
+		local clLight = light(cl, 1.0, 16)
+		-- door
+		local door = P({ Pos = Vector3.new(x, 3.5, -33.75), Size = Vector3.new(4, 7, 0.4), Color = Color3.fromRGB(122, 88, 58), Material = Enum.Material.Wood, Name = "Door" .. num })
+		label(door, tostring(num), Color3.fromRGB(240, 230, 190), nil, Enum.NormalId.Front)
+		P({ Parent = door, Pos = Vector3.new(1.6, 0, 0.3), Size = Vector3.new(0.2, 0.2, 0.7), Color = Color3.fromRGB(210, 180, 90), Material = Enum.Material.Metal, CanCollide = false })
+		local dPrompt = makePrompt(door, "Close", 0, 8)
+		Map.Doors[num] = {
+			part = door, prompt = dPrompt, room = num,
+			closed = door.CFrame, isOpen = true, locked = false, barricaded = false,
+			openCF = door.CFrame * CFrame.new(-2, 0, 0) * CFrame.Angles(0, math.rad(-100), 0) * CFrame.new(2, 0, 0),
+			light = cl, lightObj = clLight, lamp = lamp,
+			knock = nil, breaking = false, chair = chair, barPrompt = barPrompt,
+		}
+		door.CFrame = Map.Doors[num].openCF
+		Map.Rooms[num] = { num = num, state = "clean", occupant = nil }
+		Map.RoomLights[num] = cl
+		barPrompt.Enabled = false
+	end
+
+	-- EXTERIOR: neon MOTEL sign (built from Parts + SurfaceGui, as specified)
+	local signPole = P({ Pos = Vector3.new(-45, 9, 62), Size = Vector3.new(2.4, 18, 2.4), Color = Color3.fromRGB(60, 60, 64), Material = Enum.Material.Metal, Name = "SignPole" })
+	local signBoard = P({ Pos = Vector3.new(-45, 19, 62), Size = Vector3.new(20, 7, 1), Color = Color3.fromRGB(30, 26, 30), Name = "SignBoard" })
+	local motelText = label(signBoard, "MOTEL", Color3.fromRGB(255, 40, 40))
+	local numberBoard = P({ Pos = Vector3.new(-45, 12.5, 62), Size = Vector3.new(8, 5, 1), Color = Color3.fromRGB(30, 26, 30), Name = "NumberBoard" })
+	local numberText = label(numberBoard, "9", Color3.fromRGB(60, 255, 90))
+	P({ Pos = Vector3.new(-45, 22.8, 62), Size = Vector3.new(21, 0.5, 1.4), Color = Color3.fromRGB(255, 40, 40), Material = Enum.Material.Neon, Name = "SignNeonTop" })
+	P({ Pos = Vector3.new(-45, 15.2, 62), Size = Vector3.new(21, 0.5, 1.4), Color = Color3.fromRGB(255, 40, 40), Material = Enum.Material.Neon, Name = "SignNeonMid" })
+	local vacancy = P({ Pos = Vector3.new(-45, 16.5, 60.2), Size = Vector3.new(10, 2.6, 0.4), Color = Color3.fromRGB(20, 20, 22), Name = "VacancyBoard" })
+	local vacancyText = label(vacancy, "VACANCY", Color3.fromRGB(60, 255, 90))
+	light(signBoard, 2, 40, Color3.fromRGB(255, 60, 60))
+	Map.SignParts = { signBoard, numberBoard, vacancy }
+	Map.SignTexts = { motel = motelText, number = numberText, vacancy = vacancyText }
+	Map.SignNeons = {}
+	for _, child in ipairs(map:GetChildren()) do
+		if child.Name:sub(1, 9) == "SignNeon" then table.insert(Map.SignNeons, child) end
+	end
+
+	-- STREETLAMP
+	P({ Pos = Vector3.new(18, 7, 74), Size = Vector3.new(0.8, 14, 0.8), Color = Color3.fromRGB(50, 50, 54), Material = Enum.Material.Metal, Name = "LampPost" })
+	local lampHead2 = P({ Pos = Vector3.new(18, 14.2, 74), Size = Vector3.new(2.4, 0.6, 1.6), Color = Color3.fromRGB(255, 235, 180), Material = Enum.Material.Neon, Name = "StreetLamp" })
+	light(lampHead2, 1.6, 34)
+	Map.StreetLamp = lampHead2
+
+	-- TREES
+	local treeSpots = { { -60, 30 }, { -64, 52 }, { 58, 28 }, { 62, 50 }, { -70, 70 }, { 70, 70 }, { -52, 8 }, { 52, 6 }, { -68, 20 }, { 68, 16 } }
+	for _, t in ipairs(treeSpots) do
+		tree(t[1], t[2])
+	end
+
+	-- SECURITY CAMERAS
+	local camDefs = {
+		{ name = "CAM 01 - ENTRANCE", pos = Vector3.new(0, 11, 12), look = Vector3.new(0, 3, 18) },
+		{ name = "CAM 02 - PARKING", pos = Vector3.new(0, 14, 48), look = Vector3.new(0, 2, 38) },
+		{ name = "CAM 03 - CORRIDOR", pos = Vector3.new(0, 9.5, -24), look = Vector3.new(0, 2, -30) },
+		{ name = "CAM 04 - LOBBY", pos = Vector3.new(0, 11, -4), look = Vector3.new(0, 3, 8) },
+	}
+	for i, def in ipairs(camDefs) do
+		local cam = P({ Pos = def.pos, Size = Vector3.new(1, 1, 1), Transparency = 1, CanCollide = false, Name = "Cam" .. i })
+		cam.CFrame = CFrame.lookAt(def.pos, def.look)
+		local holder = P({ Pos = def.pos + Vector3.new(0, 0.8, 0), Size = Vector3.new(0.8, 0.8, 1.4), Color = Color3.fromRGB(40, 40, 44), Material = Enum.Material.Metal, Name = "CamBody" .. i })
+		Map.Cameras[i] = { part = cam, name = def.name }
+	end
+
+	-- RAIN + DUST EMITTER HOLDERS (emitters added by VFXServer)
+	local rainPart = P({ Pos = Vector3.new(0, 55, 30), Size = Vector3.new(90, 1, 90), Transparency = 1, CanCollide = false, Name = "RainEmitter" })
+	Map.RainPart = rainPart
+	local dustPart = P({ Pos = Vector3.new(0, 9, -2), Size = Vector3.new(20, 1, 20), Transparency = 1, CanCollide = false, Name = "DustEmitter" })
+	Map.DustPart = dustPart
+
+	-- SPAWN
+	local spawnLoc = Instance.new("SpawnLocation")
+	spawnLoc.Anchored = true
+	spawnLoc.Size = Vector3.new(10, 1, 10)
+	spawnLoc.CFrame = CFrame.new(0, 0.6, 50)
+	spawnLoc.Color = Color3.fromRGB(70, 70, 74)
+	spawnLoc.Material = Enum.Material.Concrete
+	spawnLoc.Neutral = true
+	spawnLoc.Name = "SpawnLocation"
+	spawnLoc.Parent = map
+
+	return Map
+end
+
+return MapBuilder
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX9"><Properties><string name="Name">SanityServer</string><ProtectedString name="Source">-- SanityServer: per-player sanity, coffee, warmer (20 min real-time), hallucination flag.
+local Players = game:GetService("Players")
+
+local SanityServer = {}
+local ctx, Config, Remotes, State, Map
+local values = {}
+
+function SanityServer.Init(c)
+	ctx = c
+	Config = c.Config
+	Remotes = c.Remotes
+	State = c.State
+	Map = c.Map
+
+	Map.CoffeeBuyPrompt.Triggered:Connect(function(player)
+		local price = SanityServer.GetCoffeePrice()
+		if State.money &lt; price and not State.toggles.infiniteMoney then
+			ctx.notify(player, "Not enough money for coffee ($" .. price .. ").", "bad")
+			return
+		end
+		if not State.toggles.infiniteMoney then
+			State.money = State.money - price
+		end
+		SanityServer.Recover(player, Config.CoffeeSanity)
+		ctx.notify(player, "Coffee bought: +" .. Config.CoffeeSanity .. " sanity.", "good")
+		ctx.Controls.log("Coffee purchased by " .. player.Name .. " (-$" .. price .. ")")
+		ctx.sendState()
+	end)
+
+	Map.WarmerDrinkPrompt.Triggered:Connect(function(player)
+		if not State.toggles.instantCoffee and os.clock() &lt; State.warmerReadyAt then return end
+		SanityServer.Recover(player, Config.WarmerSanity)
+		ctx.notify(player, "Fresh pot: +" .. Config.WarmerSanity .. " sanity. The warmer starts a new pot.", "good")
+		State.warmerReadyAt = os.clock() + Config.WarmerMinutes * 60
+		Map.WarmerDrinkPrompt.Enabled = false
+		ctx.sendState()
+	end)
+
+	task.spawn(function()
+		while true do
+			task.wait(1)
+			local ready = State.toggles.instantCoffee or os.clock() &gt;= State.warmerReadyAt
+			if ready and not Map.WarmerDrinkPrompt.Enabled then
+				Map.WarmerDrinkPrompt.Enabled = true
+				ctx.VFX.Play("bell", Map.Warmer, 1, 1.3)
+				ctx.notify(nil, "COFFEE READY — free pot at the warmer!", "good")
+				ctx.sendState()
+			elseif not ready and Map.WarmerDrinkPrompt.Enabled and not State.toggles.instantCoffee then
+				Map.WarmerDrinkPrompt.Enabled = false
+			end
+		end
+	end)
+end
+
+function SanityServer.GetCoffeePrice()
+	return State.coffeePrice or Config.CoffeePrice
+end
+
+function SanityServer.AddPlayer(player)
+	values[player] = 100
+	Remotes.Sanity:FireClient(player, 100)
+end
+
+function SanityServer.RemovePlayer(player)
+	values[player] = nil
+end
+
+local function push(player)
+	local v = values[player] or 100
+	Remotes.Sanity:FireClient(player, v)
+	Remotes.Hallucinate:FireClient(player, v &lt;= 0)
+end
+
+function SanityServer.Get(player)
+	return values[player] or 100
+end
+
+function SanityServer.Drain(player, amount, reason)
+	if State.toggles.noSanityDrain and amount &gt; 0 then return end
+	if not values[player] then values[player] = 100 end
+	values[player] = math.clamp(values[player] - amount, 0, 100)
+	push(player)
+end
+
+function SanityServer.Recover(player, amount)
+	if not values[player] then values[player] = 100 end
+	values[player] = math.clamp(values[player] + amount, 0, 100)
+	push(player)
+end
+
+function SanityServer.Set(player, v)
+	values[player] = math.clamp(v, 0, 100)
+	push(player)
+end
+
+function SanityServer.RefillAll()
+	for _, pl in ipairs(Players:GetPlayers()) do
+		SanityServer.Set(pl, 100)
+	end
+end
+
+function SanityServer.GetValues()
+	return values
+end
+
+return SanityServer
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX10"><Properties><string name="Name">ShopServer</string><ProtectedString name="Source">-- ShopServer: dawn shop — buy Desk 2 and Desk 3 with in-game money only.
+local Players = game:GetService("Players")
+
+local ShopServer = {}
+local ctx, Config, Remotes, State, Map
+
+function ShopServer.Init(c)
+	ctx = c
+	Config = c.Config
+	Remotes = c.Remotes
+	State = c.State
+	Map = c.Map
+end
+
+function ShopServer.Handle(player, action, data)
+	if action ~= "buyDesk" then return end
+	local slot = tonumber(data)
+	if slot ~= 2 and slot ~= 3 then return end
+	if State.phase ~= "Dawn" and State.phase ~= "Shop" then
+		ctx.notify(player, "The shop is only open at dawn.", "bad")
+		return
+	end
+	if slot &lt;= State.desksBought then
+		ctx.notify(player, "That desk is already yours.", "info")
+		return
+	end
+	if slot ~= State.desksBought + 1 then
+		ctx.notify(player, "Buy the desks in order.", "bad")
+		return
+	end
+	if #Players:GetPlayers() &lt; slot then
+		ctx.notify(player, "Needs a friend to sit here.", "bad")
+		return
+	end
+	local price = Config.DeskPrices[slot]
+	if State.money &lt; price and not State.toggles.infiniteMoney then
+		ctx.notify(player, "Not enough money ($" .. price .. " needed).", "bad")
+		return
+	end
+	if not State.toggles.infiniteMoney then
+		State.money = State.money - price
+	end
+	State.desksBought = slot
+	ctx.Controls.setDeskBought(slot, true)
+	ctx.notify(nil, "Desk " .. slot .. " installed! Sit there to serve your own guests.", "good")
+	ctx.Controls.log("Desk " .. slot .. " purchased for $" .. price)
+	ctx.sendState()
+end
+
+return ShopServer
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX11"><Properties><string name="Name">VFXServer</string><ProtectedString name="Source">-- VFXServer: every visual effect and sound in one place.
+local VFXServer = {}
+
+local builtins = {
+	bell = "rbxasset://sounds/electronicpingshort.wav",
+	click = "rbxasset://sounds/button.wav",
+	lock = "rbxasset://sounds/snap.mp3",
+	static = "rbxasset://sounds/flashbulb.wav",
+	breakDoor = "rbxasset://sounds/glassbreak.wav",
+	caught = "rbxasset://sounds/uuhhh.mp3",
+	whoosh = "rbxasset://sounds/swoosh.wav",
+	dawn = "rbxasset://sounds/victory.wav",
+	rumble = "rbxasset://sounds/collide.wav",
+	drone = "rbxasset://sounds/bass.wav",
+	water = "rbxasset://sounds/impact_water.mp3",
+}
+
+local Lighting = game:GetService("Lighting")
+local rainEmitter, dustEmitter, droneLoop
+local signBaseColor = Color3.fromRGB(255, 40, 40)
+local flickerRunning = false
+
+function VFXServer.Init(ctx)
+	VFXServer.ctx = ctx
+	local Map = ctx.Map
+
+	local rain = Instance.new("ParticleEmitter")
+	rain.Texture = "rbxassetid://241876428"
+	rain.Rate = 260
+	rain.Lifetime = NumberRange.new(1.6, 2.2)
+	rain.Speed = NumberRange.new(38, 46)
+	rain.Acceleration = Vector3.new(2, -12, 4)
+	rain.Size = NumberSequence.new(0.35)
+	rain.Transparency = NumberSequence.new(0.35)
+	rain.Rotation = NumberRange.new(0, 360)
+	rain.RotSpeed = NumberRange.new(-40, 40)
+	rain.EmissionDirection = Enum.NormalId.Bottom
+	rain.Color = ColorSequence.new(Color3.fromRGB(190, 205, 220))
+	rain.Parent = Map.RainPart
+	rainEmitter = rain
+
+	local dust = Instance.new("ParticleEmitter")
+	dust.Texture = "rbxasset://textures/particles/sparkles_main.dds"
+	dust.Rate = 6
+	dust.Lifetime = NumberRange.new(4, 8)
+	dust.Speed = NumberRange.new(0.2, 0.6)
+	dust.Size = NumberSequence.new(0.12)
+	dust.Transparency = NumberSequence.new(0.75)
+	dust.EmissionDirection = Enum.NormalId.Bottom
+	dust.Color = ColorSequence.new(Color3.fromRGB(255, 240, 210))
+	dust.Parent = Map.DustPart
+	dustEmitter = dust
+
+	droneLoop = Instance.new("Sound")
+	droneLoop.SoundId = builtins.drone
+	droneLoop.Looped = true
+	droneLoop.Volume = 0.15
+	droneLoop.Pitch = 0.45
+	droneLoop.Parent = workspace
+	droneLoop:Play()
+
+	task.spawn(function()
+		while true do
+			task.wait(math.random(25, 70))
+			VFXServer.Thunder()
+		end
+	end)
+
+	task.spawn(function()
+		while true do
+			task.wait(math.random(7, 18))
+			if not flickerRunning and ctx.State.phase == "Night" then
+				VFXServer.FlickerRandom()
+			end
+		end
+	end)
+end
+
+function VFXServer.Play(name, parent, volume, pitch, looped)
+	local s = Instance.new("Sound")
+	s.SoundId = builtins[name] or builtins.click
+	s.Volume = volume or 0.8
+	s.Pitch = pitch or 1
+	s.Looped = looped or false
+	s.Parent = parent or workspace
+	s:Play()
+	if not looped then
+		game:GetService("Debris"):AddItem(s, 6)
+	end
+	return s
+end
+
+function VFXServer.Thunder()
+	VFXServer.Play("rumble", workspace, 0.5, 0.3)
+end
+
+function VFXServer.SetRain(on, intensity)
+	if not rainEmitter then return end
+	rainEmitter.Enabled = on
+	if intensity then rainEmitter.Rate = 260 * intensity end
+end
+
+function VFXServer.SetFog(on)
+	local atmo = Lighting:FindFirstChild("Atmosphere")
+	if atmo then atmo.Density = on and 0.42 or 0.15 end
+end
+
+function VFXServer.SetSign(on, color)
+	local ctx = VFXServer.ctx
+	for _, p in ipairs(ctx.Map.SignNeons) do
+		p.Transparency = on and 0 or 1
+		if color then p.Color = color end
+	end
+	if color then
+		ctx.Map.SignTexts.motel.TextColor3 = color
+	else
+		ctx.Map.SignTexts.motel.TextColor3 = signBaseColor
+	end
+	ctx.Map.SignTexts.number.Visible = on
+	ctx.Map.SignBoard.Transparency = on and 0 or 0.4
+end
+
+local function setAllLights(on, color)
+	local Map = VFXServer.ctx.Map
+	for _, l in ipairs(Map.LobbyLights) do
+		l.Transparency = on and 0 or 1
+		local pl = l:FindFirstChildOfClass("PointLight")
+		if pl then pl.Enabled = on if color then pl.Color = color end end
+		if color then l.Color = color end
+	end
+	if Map.CorridorLight then
+		Map.CorridorLight.Transparency = on and 0 or 1
+		local pl = Map.CorridorLight:FindFirstChildOfClass("PointLight")
+		if pl then pl.Enabled = on if color then pl.Color = color end end
+		if color then Map.CorridorLight.Color = color end
+	end
+	for _, door in pairs(Map.Doors) do
+		door.light.Transparency = on and 0 or 1
+		local pl = door.lightObj
+		if pl then pl.Enabled = on if color then pl.Color = color end end
+		if color then door.light.Color = color end
+	end
+end
+
+function VFXServer.SetLights(on)
+	setAllLights(on, nil)
+end
+
+function VFXServer.FlickerRandom()
+	flickerRunning = true
+	local Map = VFXServer.ctx.Map
+	local pool = {}
+	for _, l in ipairs(Map.LobbyLights) do table.insert(pool, l) end
+	table.insert(pool, Map.CorridorLight)
+	local target = pool[math.random(#pool)]
+	for i = 1, 3 do
+		target.Transparency = 1
+		local pl = target:FindFirstChildOfClass("PointLight")
+		if pl then pl.Enabled = false end
+		task.wait(0.08)
+		target.Transparency = 0
+		if pl then pl.Enabled = true end
+		task.wait(0.12)
+	end
+	flickerRunning = false
+end
+
+function VFXServer.PowerFlicker(duration)
+	flickerRunning = true
+	setAllLights(false, nil)
+	VFXServer.ctx.Remotes.PowerFlicker:FireAllClients(duration)
+	for _, pl in ipairs(game:GetService("Players"):GetPlayers()) do
+		VFXServer.ctx.Sanity.Drain(pl, 5, "power flicker")
+	end
+	task.wait(duration or 10)
+	setAllLights(true, nil)
+	flickerRunning = false
+end
+
+function VFXServer.Lockdown(on)
+	setAllLights(on, Color3.fromRGB(255, 30, 30))
+	local atmo = Lighting:FindFirstChild("Atmosphere")
+	if atmo then
+		if on then
+			atmo.Color = Color3.fromRGB(120, 10, 10)
+			atmo.Haze = 3
+		else
+			atmo.Color = Color3.fromRGB(120, 124, 134)
+			atmo.Haze = 2
+		end
+	end
+end
+
+function VFXServer.DawnLight()
+	Lighting.OutdoorAmbient = Color3.fromRGB(190, 150, 110)
+	Lighting.Ambient = Color3.fromRGB(120, 100, 90)
+	Lighting.Brightness = 2.4
+	VFXServer.Play("dawn", workspace, 0.7)
+end
+
+function VFXServer.NightLight()
+	Lighting.OutdoorAmbient = Color3.fromRGB(18, 22, 34)
+	Lighting.Ambient = Color3.fromRGB(8, 8, 12)
+	Lighting.Brightness = 0.6
+end
+
+function VFXServer.Shake(intensity)
+	VFXServer.ctx.Remotes.Shake:FireAllClients(intensity or 1)
+end
+
+return VFXServer
+</ProtectedString></Properties></Item></Item><Item class="StarterPlayer" referent="RBX22"><Properties><string name="Name">StarterPlayer</string></Properties><Item class="StarterPlayerScripts" referent="RBX21"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="LocalScript" referent="RBX13"><Properties><string name="Name">AdminClient</string><ProtectedString name="Source">-- AdminClient: tabbed admin panel. ONLY built for UserId 6157267885 (erdl18).
+-- The server re-checks the UserId on every action; this GUI simply does not
+-- exist for anyone else.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local ADMIN_ID = 6157267885
+if player.UserId ~= ADMIN_ID then return end
+
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Admin")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Admin"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local function fire(action, data)
+	remotes.Admin:FireServer(action, data)
+end
+
+local adminBtn = mk("TextButton", { Size = UDim2.new(0, 90, 0, 36), Position = UDim2.new(1, -98, 0, 6), BackgroundColor3 = Color3.fromRGB(120, 20, 20), TextColor3 = Color3.fromRGB(255, 220, 220), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN", ZIndex = 20 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, adminBtn)
+
+local panel = mk("Frame", { Size = UDim2.new(0, 640, 0, 440), Position = UDim2.new(0.5, -320, 0.5, -220), BackgroundColor3 = Color3.fromRGB(14, 14, 18), BackgroundTransparency = 0.05, Visible = false, ZIndex = 21 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 10) }, panel)
+mk("UIStroke", { Color = Color3.fromRGB(120, 20, 20), Thickness = 2 }, panel)
+
+local tabs = { "GAME", "GUESTS", "ECONOMY", "DESKS", "HUNT", "MAP", "PLAYERS", "TOGGLES", "LOG" }
+local tabFrame = mk("Frame", { Size = UDim2.new(0, 130, 1, -10), Position = UDim2.new(0, 5, 0, 5), BackgroundTransparency = 1, ZIndex = 22 }, panel)
+mk("UIListLayout", { Padding = UDim.new(0, 4) }, tabFrame)
+local content = mk("Frame", { Size = UDim2.new(1, -150, 1, -50), Position = UDim2.new(0, 140, 0, 40), BackgroundTransparency = 1, ZIndex = 22 }, panel)
+local titleBar = mk("TextLabel", { Size = UDim2.new(1, -150, 0, 32), Position = UDim2.new(0, 140, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 90, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN PANEL", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 22 }, panel)
+local closeBtn = mk("TextButton", { Size = UDim2.new(0, 60, 0, 28), Position = UDim2.new(1, -66, 0, 4), BackgroundColor3 = Color3.fromRGB(120, 20, 20), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "X", ZIndex = 23 }, panel)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, closeBtn)
+
+local pages = {}
+local function page(name)
+	local f = mk("ScrollingFrame", { Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, AutomaticCanvasSize = Enum.AutomaticSize.Y, CanvasSize = UDim2.new(0, 0, 0, 0), ScrollBarThickness = 6, Visible = false, ZIndex = 22 }, content)
+	mk("UIListLayout", { Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder }, f)
+	pages[name] = f
+	return f
+end
+for _, name in ipairs(tabs) do
+	page(name)
+	local b = mk("TextButton", { Size = UDim2.new(1, 0, 0, 34), BackgroundColor3 = Color3.fromRGB(40, 40, 52), TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Arcade, Text = name, ZIndex = 23 }, tabFrame)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		for n, f in pairs(pages) do f.Visible = (n == name) end
+		titleBar.Text = "ADMIN — " .. name
+		if name == "LOG" then fire("getLog") end
+		if name == "PLAYERS" then fire("listPlayers") end
+	end)
+end
+
+local function row(parent, order)
+	local f = mk("Frame", { LayoutOrder = order, Size = UDim2.new(1, -8, 0, 40), BackgroundColor3 = Color3.fromRGB(24, 24, 32), ZIndex = 22 }, parent)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, f)
+	return f
+end
+
+local order = 0
+local function addBtn(parent, text, action, data)
+	order = order + 1
+	local f = row(parent, order)
+	local b = mk("TextButton", { Size = UDim2.new(1, -10, 1, -8), Position = UDim2.new(0, 5, 0, 4), BackgroundColor3 = Color3.fromRGB(70, 30, 30), TextColor3 = Color3.fromRGB(255, 220, 220), TextScaled = true, Font = Enum.Font.Arcade, Text = text, ZIndex = 23 }, f)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		fire(action, data)
+	end)
+	return b, f
+end
+
+local function addValueBtn(parent, text, action, buildData, default)
+	order = order + 1
+	local f = row(parent, order)
+	f.Size = UDim2.new(1, -8, 0, 44)
+	local box = mk("TextBox", { Size = UDim2.new(0, 110, 1, -10), Position = UDim2.new(0, 5, 0, 5), BackgroundColor3 = Color3.fromRGB(40, 40, 52), TextColor3 = Color3.fromRGB(255, 255, 255), TextScaled = true, Font = Enum.Font.Code, Text = tostring(default), ZIndex = 23 }, f)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, box)
+	local b = mk("TextButton", { Size = UDim2.new(1, -135, 1, -10), Position = UDim2.new(0, 125, 0, 5), BackgroundColor3 = Color3.fromRGB(30, 70, 110), TextColor3 = Color3.fromRGB(220, 235, 255), TextScaled = true, Font = Enum.Font.Arcade, Text = text, ZIndex = 23 }, f)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		fire(action, buildData(box.Text))
+	end)
+	return box
+end
+
+-- GAME
+local g = pages.GAME
+addBtn(g, "START GAME", "start")
+addBtn(g, "PAUSE / RESUME GUESTS", "pause", true)
+addBtn(g, "END GAME (back to lobby)", "endGame")
+addValueBtn(g, "SET NIGHT (1-5)", "setNight", function(v) return tonumber(v) end, 1)
+addBtn(g, "SKIP TO NEXT NIGHT", "nextNight")
+addBtn(g, "RESTART CURRENT NIGHT", "restartNight")
+addBtn(g, "SKIP TO DAWN", "skipDawn")
+addBtn(g, "WIN NOW", "win")
+addBtn(g, "LOSE NOW", "lose")
+addBtn(g, "RESET EVERYTHING (fresh Night 1)", "reset")
+
+-- GUESTS
+local gu = pages.GUESTS
+addBtn(gu, "SPAWN A GUEST NOW", "spawnGuest")
+addBtn(gu, "FORCE NEXT: HUMAN", "forceHuman")
+addBtn(gu, "FORCE NEXT: MONSTER", "forceMonster")
+addBtn(gu, "CLEAR FORCE", "clearForce")
+addBtn(gu, "REMOVE CURRENT GUEST(S)", "removeCurrent")
+addBtn(gu, "CLEAR WHOLE QUEUE", "clearQueue")
+addValueBtn(gu, "SET GUESTS PER NIGHT", "setQuotaGuests", function(v) return tonumber(v) end, 5)
+addValueBtn(gu, "SET MONSTERS PER NIGHT", "setQuotaMonsters", function(v) return tonumber(v) end, 1)
+
+-- ECONOMY
+local e = pages.ECONOMY
+addValueBtn(e, "SET TEAM MONEY", "setMoney", function(v) return tonumber(v) end, 100)
+addValueBtn(e, "GIVE MONEY", "giveMoney", function(v) return tonumber(v) end, 50)
+addValueBtn(e, "SET REPUTATION", "setRep", function(v) return tonumber(v) end, 0)
+addValueBtn(e, "SET MY SANITY", "setSanity", function(v) return { player = player.Name, value = tonumber(v) } end, 100)
+addBtn(e, "REFILL EVERYONE'S SANITY", "refillSanity")
+addValueBtn(e, "SET COFFEE PRICE", "setCoffeePrice", function(v) return tonumber(v) end, 5)
+
+-- DESKS
+local d = pages.DESKS
+addBtn(d, "GIVE DESK 2 FREE", "giveDesk", 2)
+addBtn(d, "GIVE DESK 3 FREE", "giveDesk", 3)
+addBtn(d, "REMOVE LAST DESK", "removeDesk", 3)
+addBtn(d, "UNLOCK ALL DESKS", "unlockAllDesks")
+addValueBtn(d, "SET DESK 2 PRICE", "setDeskPrice", function(v) return { slot = 2, price = tonumber(v) } end, 150)
+addValueBtn(d, "SET DESK 3 PRICE", "setDeskPrice", function(v) return { slot = 3, price = tonumber(v) } end, 300)
+
+-- HUNT
+local h = pages.HUNT
+addBtn(h, "START HUNT NOW", "startHunt")
+addBtn(h, "STOP HUNT", "stopHunt")
+addBtn(h, "SPAWN A MONSTER NOW", "spawnMonster")
+addBtn(h, "REMOVE ALL MONSTERS", "removeMonsters")
+addValueBtn(h, "SET HUNT TIMER (seconds)", "setHuntTimer", function(v) return tonumber(v) end, 60)
+addValueBtn(h, "SET MONSTER WALK SPEED", "setMonsterSpeed", function(v) return tonumber(v) end, 16)
+
+-- MAP / WEATHER
+local m = pages.MAP
+addBtn(m, "RAIN ON", "rainOn")
+addBtn(m, "RAIN OFF", "rainOff")
+addValueBtn(m, "RAIN INTENSITY (0.1-3)", "rainIntensity", function(v) return tonumber(v) end, 1)
+addBtn(m, "FOG ON", "fogOn")
+addBtn(m, "FOG OFF", "fogOff")
+addBtn(m, "SIGN ON", "signOn")
+addBtn(m, "SIGN OFF", "signOff")
+addValueBtn(m, "SIGN COLOR (R,G,B 0-255)", "signColor", function(v)
+	local parts = string.split(v, ",")
+	return Color3.fromRGB(tonumber(parts[1]) or 255, tonumber(parts[2]) or 40, tonumber(parts[3]) or 40)
+end, "255,40,40")
+addBtn(m, "ALL LIGHTS ON", "lightsOn")
+addBtn(m, "ALL LIGHTS OFF", "lightsOff")
+addBtn(m, "TRIGGER POWER FLICKER NOW", "flicker")
+addBtn(m, "LOCK ALL ROOM DOORS", "lockDoors")
+addBtn(m, "UNLOCK ALL ROOM DOORS", "unlockDoors")
+addBtn(m, "OPEN ALL DOORS", "openDoors")
+addBtn(m, "CLOSE ALL DOORS", "closeDoors")
+
+-- PLAYERS
+local p = pages.PLAYERS
+local playersList = mk("TextLabel", { LayoutOrder = 1, Size = UDim2.new(1, -8, 0, 120), BackgroundColor3 = Color3.fromRGB(24, 24, 32), TextColor3 = Color3.fromRGB(200, 200, 215), TextSize = 16, Font = Enum.Font.Code, Text = "Press PLAYERS tab to refresh...", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 22 }, p)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, playersList)
+mk("TextBox", { LayoutOrder = 2, Size = UDim2.new(1, -8, 0, 34), BackgroundColor3 = Color3.fromRGB(40, 40, 52), TextColor3 = Color3.fromRGB(255, 255, 255), TextScaled = true, Font = Enum.Font.Code, Text = player.Name, PlaceholderText = "player name", Name = "TargetBox", ZIndex = 22 }, p)
+local targetBox = p:FindFirstChild("TargetBox")
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, targetBox)
+addBtn(p, "TELEPORT PLAYER -&gt; LOBBY", "teleport", { where = "lobby", player = "TARGET" })
+addBtn(p, "TELEPORT PLAYER -&gt; SECURITY ROOM", "teleport", { where = "security", player = "TARGET" })
+addBtn(p, "TELEPORT PLAYER -&gt; ME", "teleport", { where = "me", player = "TARGET" })
+addValueBtn(p, "TELEPORT PLAYER -&gt; ROOM (101-106)", "teleportRoom", function(v) return { where = v, player = "TARGET" } end, "101")
+addBtn(p, "HEAL / UN-DOWN PLAYER", "heal", "TARGET")
+addBtn(p, "KICK PLAYER", "kick", "TARGET")
+
+-- TOGGLES
+local tg = pages.TOGGLES
+addBtn(tg, "GOD MODE (cannot be caught)", "toggle", "god")
+addBtn(tg, "INFINITE MONEY", "toggle", "infiniteMoney")
+addBtn(tg, "NO SANITY DRAIN", "toggle", "noSanityDrain")
+addBtn(tg, "INSTANT COFFEE WARMER", "toggle", "instantCoffee")
+addBtn(tg, "FREEZE GUESTS (stop arrivals)", "toggle", "freeze")
+
+-- LOG
+local lg = pages.LOG
+local logBox = mk("TextLabel", { LayoutOrder = 1, Size = UDim2.new(1, -8, 0, 900), BackgroundColor3 = Color3.fromRGB(10, 10, 14), TextColor3 = Color3.fromRGB(140, 255, 160), TextSize = 14, Font = Enum.Font.Code, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 22 }, lg)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, logBox)
+
+remotes.AdminData.OnClientEvent:Connect(function(payload)
+	if payload.kind == "log" then
+		local txt = ""
+		for _, line in ipairs(payload.entries) do
+			txt = txt .. line .. "\n"
+		end
+		logBox.Text = txt
+	elseif payload.kind == "players" then
+		local txt = ""
+		for _, pl in ipairs(payload.list) do
+			txt = txt .. pl.name .. "  ($" .. pl.money .. ", rep " .. pl.rep .. ", sanity " .. pl.sanity .. ")\n"
+		end
+		playersList.Text = txt
+	elseif payload.kind == "open" then
+		panel.Visible = true
+	end
+end)
+
+adminBtn.MouseButton1Click:Connect(function()
+	panel.Visible = not panel.Visible
+end)
+closeBtn.MouseButton1Click:Connect(function()
+	panel.Visible = false
+end)
+
+-- fill "TARGET" with the name typed in the PLAYERS tab
+local oldFire = fire
+fire = function(action, data)
+	if type(data) == "table" and data.player == "TARGET" then
+		data.player = targetBox.Text
+	elseif data == "TARGET" then
+		data = targetBox.Text
+	end
+	oldFire(action, data)
+end
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX14"><Properties><string name="Name">CamerasClient</string><ProtectedString name="Source">-- CamerasClient: 4 security feeds by moving the camera to camera parts,
+-- static overlay, CAM labels, monsters absent/distorted on camera.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Cams")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Cams"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local camApps = {}
+local guestModels = {}
+local viewing = nil
+local camFolder = workspace:WaitForChild("Map", 30)
+
+local openBtn = mk("TextButton", { Size = UDim2.new(0, 130, 0, 40), Position = UDim2.new(0, 8, 0.5, 30), BackgroundColor3 = Color3.fromRGB(20, 50, 30), TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Arcade, Text = "CAMERAS" }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, openBtn)
+
+local overlay = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(0, 0, 0), BackgroundTransparency = 0.55, Visible = false, ZIndex = 5 }, gui)
+local static = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(200, 200, 200), BackgroundTransparency = 0.85, Visible = true, ZIndex = 6 }, overlay)
+local camLabel = mk("TextLabel", { Size = UDim2.new(0, 260, 0, 36), Position = UDim2.new(0, 12, 0, 12), BackgroundColor3 = Color3.fromRGB(10, 10, 12), TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Code, Text = "CAM 01", ZIndex = 7 }, overlay)
+local recDot = mk("TextLabel", { Size = UDim2.new(0, 60, 0, 30), Position = UDim2.new(1, -70, 0, 12), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "REC", ZIndex = 7 }, overlay)
+
+local btnRow = mk("Frame", { Size = UDim2.new(0, 480, 0, 50), Position = UDim2.new(0.5, -240, 1, -70), BackgroundTransparency = 1, ZIndex = 7 }, overlay)
+mk("UIGridLayout", { CellSize = UDim2.new(0, 110, 1, 0), CellPadding = UDim2.new(0, 10, 0, 0) }, btnRow)
+
+local camNames = { "CAM 01", "CAM 02", "CAM 03", "CAM 04" }
+local function exitCams()
+	viewing = nil
+	overlay.Visible = false
+	local cam = workspace.CurrentCamera
+	cam.CameraType = Enum.CameraType.Custom
+	local char = player.Character
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+	if hum then cam.CameraSubject = hum end
+end
+
+for i, name in ipairs(camNames) do
+	local b = mk("TextButton", { BackgroundColor3 = Color3.fromRGB(20, 40, 26), TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Code, Text = name, ZIndex = 8 }, btnRow)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		viewing = i
+		camLabel.Text = name
+	end)
+end
+
+local exitBtn = mk("TextButton", { Size = UDim2.new(0, 120, 0, 50), Position = UDim2.new(0.5, 250, 1, -70), BackgroundColor3 = Color3.fromRGB(120, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "EXIT", ZIndex = 8 }, overlay)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, exitBtn)
+exitBtn.MouseButton1Click:Connect(exitCams)
+
+openBtn.MouseButton1Click:Connect(function()
+	overlay.Visible = not overlay.Visible
+	if not overlay.Visible then
+		exitCams()
+	else
+		viewing = viewing or 1
+	end
+end)
+
+remotes.GuestUpdate.OnClientEvent:Connect(function(data)
+	if data.present then
+		camApps[data.id] = data.cameraApp or "normal"
+	else
+		camApps[data.id] = nil
+	end
+end)
+
+if camFolder then
+	camFolder.DescendantAdded:Connect(function(d)
+		if d:IsA("Model") and d:GetAttribute("GuestId") then
+			guestModels[d:GetAttribute("GuestId")] = d
+		end
+	end)
+	for _, d in ipairs(camFolder:GetDescendants()) do
+		if d:IsA("Model") and d:GetAttribute("GuestId") then
+			guestModels[d:GetAttribute("GuestId")] = d
+		end
+	end
+end
+
+local staticUntil = 0
+remotes.PowerFlicker.OnClientEvent:Connect(function(duration)
+	staticUntil = os.clock() + (duration or 10)
+end)
+
+-- RENDER LOOP: camera position, static noise, hidden/distorted monsters
+RunService.RenderStepped:Connect(function()
+	local cam = workspace.CurrentCamera
+	if overlay.Visible and viewing and camFolder then
+		local camDef = camFolder:FindFirstChild("Cam" .. viewing)
+		if camDef then
+			cam.CameraType = Enum.CameraType.Scriptable
+			cam.CFrame = camDef.CFrame
+		end
+		-- static noise flicker
+		local powerOut = os.clock() &lt; staticUntil
+		if powerOut or math.random() &lt; 0.35 then
+			static.BackgroundColor3 = Color3.fromRGB(math.random(120, 255), math.random(120, 255), math.random(120, 255))
+			static.BackgroundTransparency = powerOut and 0.25 or math.random(80, 95) / 100
+		else
+			static.BackgroundTransparency = 1
+		end
+		-- hide / distort guests on camera
+		for id, app in pairs(camApps) do
+			local model = guestModels[id]
+			if model and model.Parent then
+				local hide = app == "absent"
+				for _, p in ipairs(model:GetDescendants()) do
+					if p:IsA("BasePart") then
+						p.LocalTransparencyModifier = hide and 1 or 0
+					end
+				end
+				if app == "distorted" then
+					for _, p in ipairs(model:GetDescendants()) do
+						if p:IsA("BasePart") then
+							p.LocalTransparencyModifier = 0.5 + 0.3 * math.abs(math.sin(os.clock() * 3))
+						end
+					end
+				end
+			end
+		end
+	else
+		static.BackgroundTransparency = 1
+		-- restore guests when not viewing
+		for id in pairs(camApps) do
+			local model = guestModels[id]
+			if model and model.Parent then
+				for _, p in ipairs(model:GetDescendants()) do
+					if p:IsA("BasePart") then
+						p.LocalTransparencyModifier = 0
+					end
+				end
+			end
+		end
+	end
+end)
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX15"><Properties><string name="Name">DawnShopClient</string><ProtectedString name="Source">-- DawnShopClient: dawn summary, chore list, the dawn shop (Desk 2/3), win/lose screens.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Dawn")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Dawn"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local desksBought = 1
+local deskPrices = {}
+
+-- DAWN SCREEN
+local dawn = mk("Frame", { Size = UDim2.new(0, 520, 0, 420), Position = UDim2.new(0.5, -260, 0.5, -210), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.05, Visible = false, ZIndex = 9 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 12) }, dawn)
+mk("TextLabel", { Size = UDim2.new(1, 0, 0, 50), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "DAWN — YOU SURVIVED THE NIGHT", ZIndex = 10 }, dawn)
+local summary = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 110), Position = UDim2.new(0, 10, 0, 56), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 20, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, dawn)
+local choresTitle = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 30), Position = UDim2.new(0, 10, 0, 170), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 120, 120), TextScaled = true, Font = Enum.Font.Arcade, Text = "MORNING CHORES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, dawn)
+local choresText = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 110), Position = UDim2.new(0, 10, 0, 202), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 18, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, dawn)
+
+-- SHOP
+local shopTitle = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 30), Position = UDim2.new(0, 10, 0, 312), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Arcade, Text = "MOTEL UPGRADES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, dawn)
+local deskRow = mk("Frame", { Size = UDim2.new(1, -20, 0, 44), Position = UDim2.new(0, 10, 0, 344), BackgroundTransparency = 1, ZIndex = 10 }, dawn)
+mk("UIGridLayout", { CellSize = UDim2.new(0.5, -6, 1, 0), CellPadding = UDim2.new(0, 6, 0, 0) }, deskRow)
+local deskButtons = {}
+for slot = 2, 3 do
+	local b = mk("TextButton", { BackgroundColor3 = Color3.fromRGB(30, 90, 140), TextColor3 = Color3.fromRGB(230, 245, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "DESK " .. slot, ZIndex = 11 }, deskRow)
+	mk("UICorner", { CornerRadius = UDim.new(0, 8) }, b)
+	b.MouseButton1Click:Connect(function()
+		remotes.Shop:FireServer("buyDesk", slot)
+	end)
+	deskButtons[slot] = b
+end
+local bottomRow = mk("Frame", { Size = UDim2.new(1, -20, 0, 44), Position = UDim2.new(0, 10, 1, -52), BackgroundTransparency = 1, ZIndex = 10 }, dawn)
+local shopBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), BackgroundColor3 = Color3.fromRGB(60, 60, 80), TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Arcade, Text = "DESK HELP", ZIndex = 11 }, bottomRow)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, shopBtn)
+local startBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), Position = UDim2.new(0.5, 6, 0, 0), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "START NEXT NIGHT", ZIndex = 11 }, bottomRow)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, startBtn)
+startBtn.MouseButton1Click:Connect(function()
+	dawn.Visible = false
+	remotes.NextNight:FireServer()
+end)
+shopBtn.MouseButton1Click:Connect(function()
+	shopTitle.Text = "Desks: one per player. Solo players cannot use extra desks."
+end)
+
+remotes.Dawn.OnClientEvent:Connect(function(payload)
+	summary.Text = "Night " .. payload.night .. " summary:\nMoney earned: $" .. payload.earned .. "\nCorrect calls: " .. payload.correct .. "\nWrong calls: " .. payload.wrong .. "\nMonsters caught: " .. payload.caught
+	local txt = ""
+	if #payload.chores == 0 then
+		txt = "All rooms are clean. Nothing to do."
+	else
+		for _, ch in ipairs(payload.chores) do
+			local what = ch.kind == "messy" and "needs cleaning" or "guest won't leave"
+			txt = txt .. "Room " .. ch.room .. " — " .. what .. "\n"
+		end
+		txt = txt .. "\nWalk to each room to fix it. All chores done: +$10 and +5 reputation."
+	end
+	choresText.Text = txt
+	dawn.Visible = true
+end)
+
+remotes.StateUpdate.OnClientEvent:Connect(function(s)
+	desksBought = s.desksBought
+	deskPrices = s.deskPrices or {}
+	for slot, b in pairs(deskButtons) do
+		if slot &lt;= desksBought then
+			b.Text = "DESK " .. slot .. " — OWNED"
+			b.BackgroundColor3 = Color3.fromRGB(40, 60, 40)
+		elseif #Players:GetPlayers() &lt; slot then
+			b.Text = "DESK " .. slot .. " — $" .. (deskPrices[slot] or 0) .. " (needs a friend)"
+			b.BackgroundColor3 = Color3.fromRGB(60, 60, 66)
+		else
+			b.Text = "DESK " .. slot .. " — $" .. (deskPrices[slot] or 0)
+			b.BackgroundColor3 = Color3.fromRGB(30, 90, 140)
+		end
+	end
+end)
+
+-- WIN / LOSE SCREENS
+local endFrame = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(0, 0, 0), BackgroundTransparency = 0.25, Visible = false, ZIndex = 12 }, gui)
+local endTitle = mk("TextLabel", { Size = UDim2.new(1, 0, 0, 90), Position = UDim2.new(0, 0, 0.3, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "", ZIndex = 13 }, endFrame)
+local endSub = mk("TextLabel", { Size = UDim2.new(0.8, 0, 0, 60), Position = UDim2.new(0.1, 0, 0.3, 100), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 13 }, endFrame)
+local againBtn = mk("TextButton", { Size = UDim2.new(0, 260, 0, 60), Position = UDim2.new(0.5, -130, 0.3, 190), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "PLAY AGAIN", ZIndex = 13 }, endFrame)
+mk("UICorner", { CornerRadius = UDim.new(0, 10) }, againBtn)
+againBtn.MouseButton1Click:Connect(function()
+	endFrame.Visible = false
+	remotes.NextNight:FireServer()
+end)
+
+remotes.EndScreen.OnClientEvent:Connect(function(win, data)
+	if win then
+		endTitle.Text = "YOU SURVIVED ALL 5 NIGHTS"
+		endSub.Text = "Final money: $" .. tostring(data.money) .. "   Reputation: " .. tostring(data.stars) .. " stars"
+		againBtn.Text = "PLAY AGAIN"
+	else
+		endTitle.Text = "GAME OVER"
+		endSub.Text = "The motel is lost on night " .. tostring(data.night) .. "."
+		againBtn.Text = "RETRY NIGHT"
+	end
+	endFrame.Visible = true
+end)
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX16"><Properties><string name="Name">DeskClient</string><ProtectedString name="Source">-- DeskClient: guest panel at your desk — questions, ID card, ADMIT / TURN AWAY,
+-- and the overstayer morning dialog.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Desk")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Desk"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local myDesk = nil
+local guests = {}
+local cleanRooms = true
+local currentId = nil
+
+local panel = mk("Frame", { Size = UDim2.new(0, 420, 0, 330), Position = UDim2.new(1, -430, 1, -340), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.15, BorderSizePixel = 0, Visible = false }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 10) }, panel)
+local nameLabel = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "GUEST", TextXAlignment = Enum.TextXAlignment.Left }, panel)
+local speech = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 54), Position = UDim2.new(0, 6, 0, 34), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "...", TextWrapped = true }, panel)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, speech)
+
+local idCard = mk("Frame", { Size = UDim2.new(1, -12, 0, 64), Position = UDim2.new(0, 6, 0, 92), BackgroundColor3 = Color3.fromRGB(210, 200, 170), Visible = false }, panel)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, idCard)
+local idText = mk("TextLabel", { Size = UDim2.new(1, -10, 1, -6), Position = UDim2.new(0, 5, 0, 3), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(35, 30, 25), TextScaled = true, Font = Enum.Font.Code, Text = "ID CARD", TextWrapped = true }, idCard)
+
+local qFrame = mk("Frame", { Size = UDim2.new(1, -12, 0, 110), Position = UDim2.new(0, 6, 0, 160), BackgroundTransparency = 1 }, panel)
+mk("UIGridLayout", { CellSize = UDim2.new(0.5, -4, 0, 34), CellPadding = UDim2.new(0, 4, 0, 4), SortOrder = Enum.SortOrder.LayoutOrder }, qFrame)
+
+local questions = {
+	{ id = "from", text = "Where are you traveling from?" },
+	{ id = "id", text = "Can I see your ID?" },
+	{ id = "year", text = "What year is it?" },
+	{ id = "job", text = "What is your job?" },
+	{ id = "stay", text = "How long are you staying?" },
+}
+
+local function makeQButton(q, order)
+	local b = mk("TextButton", { LayoutOrder = order, BackgroundColor3 = Color3.fromRGB(40, 40, 56), BackgroundTransparency = 0.2, TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.Gotham, Text = q.text }, qFrame)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		if currentId then
+			remotes.Ask:FireServer(currentId, q.id)
+		end
+	end)
+end
+for i, q in ipairs(questions) do
+	makeQButton(q, i)
+end
+
+local decisionRow = mk("Frame", { Size = UDim2.new(1, -12, 0, 48), Position = UDim2.new(0, 6, 1, -54), BackgroundTransparency = 1 }, panel)
+local admitBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "GIVE ROOM KEY" }, decisionRow)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, admitBtn)
+local denyBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), Position = UDim2.new(0.5, 6, 0, 0), BackgroundColor3 = Color3.fromRGB(150, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "TURN AWAY" }, decisionRow)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, denyBtn)
+
+admitBtn.MouseButton1Click:Connect(function()
+	if currentId then remotes.Decide:FireServer(currentId, true) end
+end)
+denyBtn.MouseButton1Click:Connect(function()
+	if currentId then remotes.Decide:FireServer(currentId, false) end
+end)
+
+-- SEAT TRACKING
+local function trackSeat()
+	local char = player.Character
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+	if hum then
+		local seat = hum.SeatPart
+		if seat and seat.Name:sub(1, 8) == "DeskSeat" then
+			myDesk = tonumber(seat.Name:sub(9))
+		else
+			myDesk = nil
+		end
+	end
+end
+
+task.spawn(function()
+	while true do
+		task.wait(0.4)
+		trackSeat()
+		local guest = myDesk and guests[myDesk]
+		panel.Visible = guest ~= nil
+		if guest then
+			currentId = guest.id
+			nameLabel.Text = (guest.angry and "[ANGRY] " or "") .. guest.name
+		else
+			currentId = nil
+		end
+		admitBtn.Text = cleanRooms and "GIVE ROOM KEY" or "NO CLEAN ROOMS"
+	end
+end)
+
+remotes.GuestUpdate.OnClientEvent:Connect(function(data)
+	if data.present then
+		guests[data.desk] = data
+		speech.Text = "..."
+		idCard.Visible = false
+	else
+		if guests[data.desk] and guests[data.desk].id == data.id then
+			guests[data.desk] = nil
+		end
+	end
+end)
+
+remotes.Answer.OnClientEvent:Connect(function(guestId, qid, text, idCardData)
+	if currentId ~= guestId then return end
+	speech.Text = text
+	if qid == "id" and idCardData then
+		idCard.Visible = true
+		idText.Text = "GUEST ID\nName: " .. idCardData.name .. "\nFrom: " .. idCardData.from .. "   Stay: " .. idCardData.stay
+	end
+end)
+
+remotes.StateUpdate.OnClientEvent:Connect(function(s)
+	cleanRooms = false
+	for _, r in ipairs(s.rooms) do
+		if r.state == "clean" then cleanRooms = true end
+	end
+end)
+
+-- MORNING CHORE DIALOG (overstayer)
+local choreFrame = mk("Frame", { Size = UDim2.new(0, 400, 0, 240), Position = UDim2.new(0.5, -200, 0.5, -120), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 10) }, choreFrame)
+local choreTitle = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "ROOM — GUEST WON'T LEAVE", ZIndex = 10 }, choreFrame)
+local choreArg = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 60), Position = UDim2.new(0, 6, 0, 38), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 10 }, choreFrame)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, choreArg)
+local choreChoices = mk("Frame", { Size = UDim2.new(1, -12, 0, 120), Position = UDim2.new(0, 6, 0, 108), BackgroundTransparency = 1, ZIndex = 10 }, choreFrame)
+mk("UIListLayout", { Padding = UDim.new(0, 6) }, choreChoices)
+local choreRoom = nil
+
+local choiceTexts = {
+	"Okay, sleep in then.",
+	"Checkout was at dawn, you have to leave now.",
+	"Take your time, sir.",
+}
+for i, txt in ipairs(choiceTexts) do
+	local b = mk("TextButton", { Size = UDim2.new(1, 0, 0, 36), BackgroundColor3 = i == 2 and Color3.fromRGB(30, 90, 140) or Color3.fromRGB(50, 50, 60), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = txt, ZIndex = 11 }, choreChoices)
+	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
+	b.MouseButton1Click:Connect(function()
+		if choreRoom then
+			remotes.ChoreReply:FireServer(choreRoom, i)
+		end
+		choreFrame.Visible = false
+	end)
+end
+
+remotes.ChoreDialog.OnClientEvent:Connect(function(room, argument)
+	choreRoom = room
+	choreTitle.Text = "ROOM " .. tostring(room) .. " — GUEST WON'T LEAVE"
+	choreArg.Text = '"' .. argument .. '"'
+	choreFrame.Visible = true
+end)
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX17"><Properties><string name="Name">HUD</string><ProtectedString name="Source">-- HUD: money, reputation, night, sanity bar, notifications, title cards, hunt overlay,
+-- quick chat, downed overlay, screen shake.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_HUD")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_HUD"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local state = { money = 0, stars = 1, night = 1, phase = "Lobby", queueLeft = 0, sanity = 100, hints = false, seated = false }
+
+-- TOP BAR
+local top = mk("Frame", { Size = UDim2.new(0, 460, 0, 84), Position = UDim2.new(0, 8, 0, 6), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.25, BorderSizePixel = 0 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, top)
+local moneyLabel = mk("TextLabel", { Size = UDim2.new(0.5, 0, 0, 26), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Arcade, Text = "$0", TextXAlignment = Enum.TextXAlignment.Left }, top)
+local repLabel = mk("TextLabel", { Size = UDim2.new(0.5, 0, 0, 26), Position = UDim2.new(0.5, 0, 0, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "REP: *", TextXAlignment = Enum.TextXAlignment.Right }, top)
+local nightLabel = mk("TextLabel", { Size = UDim2.new(0.5, 0, 0, 26), Position = UDim2.new(0, 0, 0, 28), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 90, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "NIGHT 1", TextXAlignment = Enum.TextXAlignment.Left }, top)
+local queueLabel = mk("TextLabel", { Size = UDim2.new(0.5, 0, 0, 26), Position = UDim2.new(0.5, 0, 0, 28), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(200, 200, 210), TextScaled = true, Font = Enum.Font.Arcade, Text = "Guests left: 0", TextXAlignment = Enum.TextXAlignment.Right }, top)
+local objectiveLabel = mk("TextLabel", { Size = UDim2.new(1, -8, 0, 26), Position = UDim2.new(0, 4, 0, 56), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(180, 180, 190), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true }, top)
+
+-- SANITY BAR
+local sanityBack = mk("Frame", { Size = UDim2.new(0, 320, 0, 30), Position = UDim2.new(0.5, -160, 1, -46), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.25, BorderSizePixel = 0 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, sanityBack)
+local sanityFill = mk("Frame", { Size = UDim2.new(1, -6, 1, -6), Position = UDim2.new(0, 3, 0, 3), BackgroundColor3 = Color3.fromRGB(120, 200, 255), BorderSizePixel = 0 }, sanityBack)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, sanityFill)
+local sanityNum = mk("TextLabel", { Size = UDim2.new(1, 0, 1, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 255, 255), TextScaled = true, Font = Enum.Font.Arcade, Text = "SANITY 100", ZIndex = 2 }, sanityBack)
+local lowWarn = mk("TextLabel", { Size = UDim2.new(0, 260, 0, 30), Position = UDim2.new(0.5, -130, 1, -80), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "LOW SANITY", Visible = false, ZIndex = 3 }, gui)
+
+-- COFFEE / WARMER STATUS
+local warmerLabel = mk("TextLabel", { Size = UDim2.new(0, 300, 0, 22), Position = UDim2.new(0, 8, 1, -110), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.4, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "Coffee warmer: brewing...", Visible = false }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, warmerLabel)
+
+-- NOTIFICATIONS
+local notifyArea = mk("Frame", { Size = UDim2.new(0, 420, 0, 300), Position = UDim2.new(0.5, -210, 0, 100), BackgroundTransparency = 1 }, gui)
+mk("UIListLayout", { Padding = UDim.new(0, 6), HorizontalAlignment = Enum.HorizontalAlignment.Center }, notifyArea)
+
+local function notify(text, kind)
+	local colors = { good = Color3.fromRGB(120, 255, 140), bad = Color3.fromRGB(255, 90, 90), guest = Color3.fromRGB(255, 220, 90), info = Color3.fromRGB(190, 190, 200) }
+	local label = mk("TextLabel", { Size = UDim2.new(1, 0, 0, 34), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.25, TextColor3 = colors[kind] or colors.info, TextScaled = true, Font = Enum.Font.Arcade, Text = text }, notifyArea)
+	mk("UICorner", { CornerRadius = UDim.new(0, 8) }, label)
+	task.delay(4, function()
+		if label.Parent then label:Destroy() end
+	end)
+end
+remotes.Notify.OnClientEvent:Connect(notify)
+
+-- TITLE CARD
+local titleCard = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(0, 0, 0), BackgroundTransparency = 0.35, Visible = false, ZIndex = 5 }, gui)
+local titleNight = mk("TextLabel", { Size = UDim2.new(1, 0, 0, 90), Position = UDim2.new(0, 0, 0.25, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "NIGHT 1", ZIndex = 6 }, titleCard)
+local titleObj = mk("TextLabel", { Size = UDim2.new(0.8, 0, 0, 40), Position = UDim2.new(0.1, 0, 0.25, 100), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 6 }, titleCard)
+local titleRules = mk("TextLabel", { Size = UDim2.new(0.7, 0, 0, 220), Position = UDim2.new(0.15, 0, 0.25, 150), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 6 }, titleCard)
+local hintLabel = mk("TextLabel", { Size = UDim2.new(0.8, 0, 0, 34), Position = UDim2.new(0.1, 0, 0.25, 380), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(160, 220, 255), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 6 }, titleCard)
+
+remotes.TitleCard.OnClientEvent:Connect(function(night, objective, newRules, hints)
+	titleNight.Text = "NIGHT " .. night
+	titleObj.Text = objective
+	local txt = ""
+	for _, r in ipairs(newRules or {}) do
+		txt = txt .. "NEW RULE: " .. r .. "\n\n"
+	end
+	titleRules.Text = txt
+	hintLabel.Text = hints and ("TUTORIAL: Walk to the desk and press Sit. Then use INSPECT, QUESTIONS, CAMERAS and the HANDBOOK before you ADMIT or TURN AWAY.") or ""
+	titleCard.Visible = true
+	task.delay(7, function() titleCard.Visible = false end)
+end)
+
+-- HUNT OVERLAY
+local huntOverlay = mk("TextLabel", { Size = UDim2.new(1, 0, 0, 60), Position = UDim2.new(0, 0, 0, 0), BackgroundColor3 = Color3.fromRGB(80, 0, 0), BackgroundTransparency = 0.2, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "LOCKDOWN — SOMETHING IS IN THE ROOMS", Visible = false, ZIndex = 4 }, gui)
+local huntTimerLabel = mk("TextLabel", { Size = UDim2.new(0, 200, 0, 40), Position = UDim2.new(0.5, -100, 0, 66), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.3, TextColor3 = Color3.fromRGB(255, 120, 120), TextScaled = true, Font = Enum.Font.Arcade, Text = "", Visible = false, ZIndex = 4 }, gui)
+
+remotes.HuntState.OnClientEvent:Connect(function(active, timeLeft)
+	huntOverlay.Visible = active
+	huntTimerLabel.Visible = active
+	if active then
+		huntTimerLabel.Text = "DAWN IN " .. tostring(timeLeft) .. "s"
+	end
+end)
+
+-- DOWNED OVERLAY
+local downedOverlay = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(40, 0, 0), BackgroundTransparency = 0.45, Visible = false, ZIndex = 7 }, gui)
+mk("TextLabel", { Size = UDim2.new(1, 0, 0, 80), Position = UDim2.new(0, 0, 0.4, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 80, 80), TextScaled = true, Font = Enum.Font.Arcade, Text = "YOU WERE CAUGHT", ZIndex = 8 }, downedOverlay)
+remotes.Downed.OnClientEvent:Connect(function(isDowned)
+	downedOverlay.Visible = isDowned and true or false
+end)
+
+-- QUICK CHAT
+local quickTexts = { "I think this one is fake", "Check the cameras", "Hide!", "It's safe" }
+local qcFrame = mk("Frame", { Size = UDim2.new(0, 190, 0, 150), Position = UDim2.new(0, 8, 1, -210), BackgroundTransparency = 1 }, gui)
+mk("UIListLayout", { Padding = UDim.new(0, 6) }, qcFrame)
+for _, txt in ipairs(quickTexts) do
+	local b = mk("TextButton", { Size = UDim2.new(1, 0, 0, 32), BackgroundColor3 = Color3.fromRGB(30, 30, 42), BackgroundTransparency = 0.2, TextColor3 = Color3.fromRGB(255, 240, 170), TextScaled = true, Font = Enum.Font.GothamBold, Text = txt }, qcFrame)
+	mk("UICorner", { CornerRadius = UDim.new(0, 8) }, b)
+	b.MouseButton1Click:Connect(function()
+		remotes.QuickChat:FireServer(txt)
+	end)
+end
+
+-- QUICK CHAT BILLBOARDS are created on the server for everyone to see.
+local qcRemote = remotes:WaitForChild("QuickChat")
+qcRemote.OnClientEvent:Connect(function()
+	-- nothing needed client-side
+end)
+
+-- SCREEN SHAKE
+remotes.Shake.OnClientEvent:Connect(function(intensity)
+	local char = player.Character
+	local hum = char and char:FindFirstChildOfClass("Humanoid")
+	if not hum then return end
+	local t0 = os.clock()
+	while os.clock() - t0 &lt; 0.6 do
+		hum.CameraOffset = Vector3.new(math.random(-10, 10) / 10 * intensity, math.random(-10, 10) / 10 * intensity, 0)
+		RunService.RenderStepped:Wait()
+	end
+	hum.CameraOffset = Vector3.new()
+end)
+
+-- STATE + SANITY
+local function starsText(n)
+	local s = ""
+	for i = 1, 5 do
+		s = s .. (i &lt;= n and "*" or "-")
+	end
+	return s
+end
+
+remotes.StateUpdate.OnClientEvent:Connect(function(s)
+	state.money = s.money
+	state.stars = s.stars
+	state.night = s.night
+	state.phase = s.phase
+	state.queueLeft = s.queueLeft
+	state.hints = s.hints
+	moneyLabel.Text = "$" .. tostring(s.money)
+	repLabel.Text = "REP: " .. starsText(s.stars)
+	nightLabel.Text = "NIGHT " .. tostring(s.night)
+	queueLabel.Text = "Guests left: " .. tostring(s.queueLeft)
+	objectiveLabel.Text = s.objective or ""
+end)
+
+remotes.Sanity.OnClientEvent:Connect(function(v)
+	state.sanity = v
+	sanityFill.Size = UDim2.new(math.clamp(v / 100, 0, 1), -6, 1, -6)
+	sanityFill.BackgroundColor3 = v &gt; 50 and Color3.fromRGB(120, 200, 255) or (v &gt; 25 and Color3.fromRGB(255, 200, 90) or Color3.fromRGB(255, 60, 60))
+	sanityNum.Text = "SANITY " .. tostring(math.floor(v))
+end)
+
+-- LOW SANITY FLASH + WARMER DISPLAY
+task.spawn(function()
+	local warmerReadyAt, warmerMinutes = nil, 20
+	remotes.StateUpdate.OnClientEvent:Connect(function(s)
+		warmerReadyAt = s.warmerReadyAt
+		warmerMinutes = s.warmerMinutes
+	end)
+	while true do
+		task.wait(0.5)
+		lowWarn.Visible = state.sanity &lt; 25 and (os.clock() % 1 &lt; 0.5)
+		if warmerReadyAt then
+			warmerLabel.Visible = true
+			local left = warmerReadyAt - os.clock()
+			if left &lt;= 0 then
+				warmerLabel.Text = "COFFEE READY at the warmer! (+50 sanity)"
+			else
+				warmerLabel.Text = string.format("Warmer pot: %d:%02d", math.floor(left / 60), math.floor(left % 60))
+			end
+		end
+	end
+end)
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX18"><Properties><string name="Name">HandbookClient</string><ProtectedString name="Source">-- HandbookClient: the rule book. Night 1: 3 rules, each night adds more.
+-- Rules always match real tells in the code. Scrambles during hallucinations.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Handbook")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Handbook"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local rules = {}
+local revealed = 3
+
+local openBtn = mk("TextButton", { Size = UDim2.new(0, 130, 0, 40), Position = UDim2.new(0, 8, 0.5, -20), BackgroundColor3 = Color3.fromRGB(90, 60, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "HANDBOOK" }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, openBtn)
+
+local book = mk("Frame", { Size = UDim2.new(0, 560, 0, 460), Position = UDim2.new(0.5, -280, 0.5, -230), BackgroundColor3 = Color3.fromRGB(214, 202, 168), Visible = false, ZIndex = 9 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 12) }, book)
+mk("TextLabel", { Size = UDim2.new(1, 0, 0, 44), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(70, 50, 30), TextScaled = true, Font = Enum.Font.Arcade, Text = "MOTEL HANDBOOK — NIGHT SHIFT RULES", ZIndex = 10 }, book)
+local rulesText = mk("TextLabel", { Size = UDim2.new(1, -30, 1, -90), Position = UDim2.new(0, 15, 0, 50), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(45, 35, 25), TextSize = 18, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, book)
+local closeBtn = mk("TextButton", { Size = UDim2.new(0, 110, 0, 34), Position = UDim2.new(0.5, -55, 1, -42), BackgroundColor3 = Color3.fromRGB(70, 50, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE BOOK", ZIndex = 10 }, book)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, closeBtn)
+
+local function refresh()
+	local txt = ""
+	for i = 1, math.min(revealed, #rules) do
+		txt = txt .. i .. ". " .. rules[i] .. "\n\n"
+	end
+	rulesText.Text = txt
+end
+
+openBtn.MouseButton1Click:Connect(function()
+	book.Visible = not book.Visible
+	refresh()
+end)
+closeBtn.MouseButton1Click:Connect(function()
+	book.Visible = false
+end)
+
+remotes.StateUpdate.OnClientEvent:Connect(function(s)
+	rules = s.ruleTexts or {}
+	revealed = s.rules or 3
+	if book.Visible then refresh() end
+end)
+
+-- HALLUCINATION: handbook text scrambles for 5 seconds at a time
+local glyphs = { "#", "%", "&amp;", "@", "?", "/", "\\", "~", "=", "+" }
+local function scramble(s)
+	local out = {}
+	for i = 1, #s do
+		local c = s:sub(i, i)
+		if c == "\n" or c == " " then
+			table.insert(out, c)
+		elseif math.random() &lt; 0.55 then
+			table.insert(out, glyphs[math.random(#glyphs)])
+		else
+			table.insert(out, c)
+		end
+	end
+	return table.concat(out)
+end
+
+task.spawn(function()
+	while true do
+		task.wait(math.random(20, 40))
+		if _G.NSM_Hallucinating and book.Visible then
+			local original = rulesText.Text
+			rulesText.Text = scramble(original)
+			task.wait(5)
+			refresh()
+		end
+	end
+end)
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX19"><Properties><string name="Name">InspectClient</string><ProtectedString name="Source">-- InspectClient: click a guest (or press INSPECT) to zoom to their face,
+-- then Inspect hands / Inspect face. Shows found tells.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local old = pg:FindFirstChild("NSM_Inspect")
+if old then old:Destroy() end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "NSM_Inspect"
+gui.ResetOnSpawn = false
+gui.Parent = pg
+
+local function mk(class, props, parent)
+	local o = Instance.new(class)
+	for k, v in pairs(props) do o[k] = v end
+	o.Parent = parent
+	return o
+end
+
+local inspecting = nil
+local zooming = false
+
+local frame = mk("Frame", { Size = UDim2.new(0, 360, 0, 260), Position = UDim2.new(0.5, -180, 0.5, -130), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
+mk("UICorner", { CornerRadius = UDim.new(0, 10) }, frame)
+local title = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "INSPECTION", ZIndex = 10 }, frame)
+local result = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 100), Position = UDim2.new(0, 6, 0, 38), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "Look closely...", TextWrapped = true, ZIndex = 10 }, frame)
+mk("UICorner", { CornerRadius = UDim.new(0, 6) }, result)
+
+local handsBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 40), Position = UDim2.new(0, 6, 1, -94), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT HANDS", ZIndex = 10 }, frame)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, handsBtn)
+local faceBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 40), Position = UDim2.new(0, 6, 1, -50), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT FACE", ZIndex = 10 }, frame)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, faceBtn)
+local closeBtn = mk("TextButton", { Size = UDim2.new(0, 90, 0, 30), Position = UDim2.new(1, -96, 0, 4), BackgroundColor3 = Color3.fromRGB(120, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE", ZIndex = 10 }, frame)
+mk("UICorner", { CornerRadius = UDim.new(0, 8) }, closeBtn)
+
+local function closeInspect()
+	frame.Visible = false
+	inspecting = nil
+	if zooming then
+		zooming = false
+		local cam = workspace.CurrentCamera
+		cam.CameraType = Enum.CameraType.Custom
+		local char = player.Character
+		local hum = char and char:FindFirstChildOfClass("Humanoid")
+		if hum then cam.CameraSubject = hum end
+	end
+end
+closeBtn.MouseButton1Click:Connect(closeInspect)
+
+handsBtn.MouseButton1Click:Connect(function()
+	if inspecting then remotes.Inspect:FireServer(inspecting, "Hands") end
+end)
+faceBtn.MouseButton1Click:Connect(function()
+	if inspecting then remotes.Inspect:FireServer(inspecting, "Face") end
+end)
+
+local function startInspect(guestId)
+	inspecting = guestId
+	remotes.Inspect:FireServer(guestId, "open")
+end
+
+remotes.InspectResult.OnClientEvent:Connect(function(guestId, kind, labels, headCF)
+	if guestId ~= inspecting then return end
+	if kind == "open" then
+		frame.Visible = true
+		result.Text = "Look closely..."
+		if headCF then
+			zooming = true
+			local cam = workspace.CurrentCamera
+			cam.CameraType = Enum.CameraType.Scriptable
+			local target = headCF * CFrame.new(0, 0.1, 4.2)
+			TweenService:Create(cam, TweenInfo.new(0.5), { CFrame = target }):Play()
+		end
+	else
+		local txt
+		if #labels == 0 then
+			txt = "Looks normal."
+		else
+			txt = ""
+			for _, l in ipairs(labels) do
+				txt = txt .. "!! " .. l .. "\n"
+			end
+		end
+		if _G.NSM_Hallucinating and #labels == 0 and math.random() &lt; 0.3 then
+			txt = "!! Six fingers on one hand"
+			task.delay(3, function()
+				if result.Text == txt then
+					result.Text = "Looks normal."
+				end
+			end)
+		end
+		result.Text = txt
+	end
+end)
+
+-- Click any guest to inspect (works with touch)
+local map = workspace:FindFirstChild("Map")
+if map then
+	map.DescendantAdded:Connect(function(d)
+		if d:IsA("ClickDetector") and d.Parent and d.Parent:FindFirstChild("HumanoidRootPart") then
+			d.MouseClick:Connect(function()
+				local guestId = d.Parent:GetAttribute("GuestId")
+				if guestId then startInspect(guestId) end
+			end)
+		end
+	end)
+end
+</ProtectedString></Properties></Item><Item class="LocalScript" referent="RBX20"><Properties><string name="Name">SanityClient</string><ProtectedString name="Source">-- SanityClient: hallucinations at 0 sanity. Visual and audio ONLY —
+-- they never change real guest data.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Lighting = game:GetService("Lighting")
+
+local player = Players.LocalPlayer
+local remotes = ReplicatedStorage:WaitForChild("Remotes")
+local pg = player:WaitForChild("PlayerGui")
+
+local hallucinating = false
+_G.NSM_Hallucinating = false
+
+local cc = Instance.new("ColorCorrectionEffect")
+cc.Name = "NSM_HallucinationCC"
+cc.Parent = Lighting
+
+local whisper = Instance.new("Sound")
+whisper.SoundId = "rbxasset://sounds/swoosh.wav"
+whisper.Looped = true
+whisper.Volume = 0
+whisper.Pitch = 0.4
+whisper.Parent = workspace
+
+local heartbeat = Instance.new("Sound")
+heartbeat.SoundId = "rbxasset://sounds/bass.wav"
+heartbeat.Looped = true
+heartbeat.Volume = 0
+heartbeat.Pitch = 1.6
+heartbeat.Parent = workspace
+
+remotes.Hallucinate.OnClientEvent:Connect(function(on)
+	hallucinating = on
+	_G.NSM_Hallucinating = on
+	if not on then
+		cc.TintColor = Color3.new(1, 1, 1)
+		cc.Saturation = 0
+		whisper.Volume = 0
+	end
+end)
+
+remotes.Sanity.OnClientEvent:Connect(function(v)
+	heartbeat.Volume = (v &lt; 25 or _G.NSM_Hunting) and 0.35 or 0
+end)
+remotes.HuntState.OnClientEvent:Connect(function(active)
+	_G.NSM_Hunting = active
+end)
+
+-- FAKE GUEST (client-side only, vanishes when inspected/questioned)
+local function spawnFakeGuest()
+	local map = workspace:FindFirstChild("Map")
+	local desk = map and map:FindFirstChild("DeskFurniture1")
+	if not desk then return end
+	local model = Instance.new("Model")
+	model.Name = "FakeGuest"
+	local hrp = Instance.new("Part")
+	hrp.Size = Vector3.new(2, 2, 1)
+	hrp.Transparency = 1
+	hrp.CFrame = CFrame.new(0, 3.5, -11)
+	hrp.Anchored = true
+	hrp.Parent = model
+	for _, def in ipairs({
+		{ size = Vector3.new(2, 2, 1), off = CFrame.new() },
+		{ size = Vector3.new(1.4, 1.4, 1.4), off = CFrame.new(0, 1.7, 0) },
+		{ size = Vector3.new(0.95, 2, 0.95), off = CFrame.new(-1.5, 0, 0) },
+		{ size = Vector3.new(0.95, 2, 0.95), off = CFrame.new(1.5, 0, 0) },
+		{ size = Vector3.new(0.9, 2, 0.9), off = CFrame.new(-0.55, -2, 0) },
+		{ size = Vector3.new(0.9, 2, 0.9), off = CFrame.new(0.55, -2, 0) },
+	}) do
+		local p = Instance.new("Part")
+		p.Size = def.size
+		p.CFrame = hrp.CFrame * def.off
+		p.Anchored = true
+		p.CanCollide = false
+		p.Color = Color3.fromRGB(30, 30, 34)
+		p.Transparency = 0.35
+		p.Parent = model
+	end
+	local head = model:GetChildren()[2]
+	local cd = Instance.new("ClickDetector")
+	cd.MaxActivationDistance = 20
+	cd.Parent = head
+	model.Parent = map
+	local vanished = false
+	local function vanish()
+		if vanished then return end
+		vanished = true
+		for _, p in ipairs(model:GetDescendants()) do
+			if p:IsA("BasePart") then p.Transparency = 1 end
+		end
+		local burst = Instance.new("Sound")
+		burst.SoundId = "rbxasset://sounds/flashbulb.wav"
+		burst.Volume = 1
+		burst.Parent = head
+		burst:Play()
+		game:GetService("Debris"):AddItem(model, 1)
+		remotes.Notify:FireServer("it was never there")
+	end
+	cd.MouseClick:Connect(vanish)
+	task.delay(math.random(8, 16), vanish)
+end
+
+-- HALLUCINATION LOOP
+task.spawn(function()
+	local t0 = os.clock()
+	while true do
+		RunService.RenderStepped:Wait()
+		if hallucinating then
+			local t = os.clock() - t0
+			cc.TintColor = Color3.fromRGB(255, 200 + math.sin(t * 2) * 40, 200 + math.cos(t * 3) * 40)
+			cc.Saturation = math.sin(t * 1.5) * 0.4
+			whisper.Volume = 0.25 + math.abs(math.sin(t)) * 0.2
+			local cam = workspace.CurrentCamera
+			if cam and cam.CameraType == Enum.CameraType.Custom then
+				cam.FieldOfView = 70 + math.sin(t * 1.2) * 6
+			end
+			if math.random() &lt; 0.002 then
+				spawnFakeGuest()
+			end
+			if math.random() &lt; 0.001 then
+				local map = workspace:FindFirstChild("Map")
+				local num = math.random(1, 6)
+				if map then
+					local ghost = Instance.new("Part")
+					ghost.Size = Vector3.new(2, 5, 1)
+					ghost.CFrame = CFrame.new((num - 101) * 10 - 25, 3, -40)
+					ghost.Anchored = true
+					ghost.CanCollide = false
+					ghost.Color = Color3.fromRGB(10, 10, 12)
+					ghost.Transparency = 0.4
+					ghost.Name = "Hallucination"
+					ghost.Parent = map
+					task.delay(6, function() ghost:Destroy() end)
+				end
+			end
+		else
+			whisper.Volume = 0
+			local cam = workspace.CurrentCamera
+			if cam and cam.FieldOfView ~= 70 then
+				cam.FieldOfView = 70
+			end
+		end
+	end
+end)
+</ProtectedString></Properties></Item></Item></Item><Item class="StarterGui" referent="RBX23"><Properties><string name="Name">StarterGui</string><bool name="ResetPlayerGuiOnSpawn">false</bool></Properties></Item><Item class="SoundService" referent="RBX24"><Properties><string name="Name">SoundService</string><token name="AmbientReverb">0</token></Properties></Item><Item class="Lighting" referent="RBX25"><Properties><string name="Name">Lighting</string><Color3 name="Ambient"><R>0.03</R><G>0.03</G><B>0.05</B></Color3><Color3 name="OutdoorAmbient"><R>0.07</R><G>0.09</G><B>0.13</B></Color3><float name="Brightness">0.6</float><float name="ClockTime">0</float><bool name="GlobalShadows">true</bool><float name="ExposureCompensation">0.1</float><Color3 name="FogColor"><R>0.05</R><G>0.06</G><B>0.09</B></Color3><float name="FogStart">40</float><float name="FogEnd">320</float></Properties><Item class="Atmosphere" referent="RBX26"><Properties><string name="Name">Atmosphere</string><float name="Density">0.42</float><float name="Offset">0.25</float><float name="Haze">2</float><float name="Glare">0</float><Color3 name="Color"><R>0.47</R><G>0.49</G><B>0.53</B></Color3><Color3 name="Decay"><R>0.2</R><G>0.2</G><B>0.25</B></Color3></Properties></Item></Item><Item class="Workspace" referent="RBX27"><Properties><string name="Name">Workspace</string></Properties></Item></roblox>
