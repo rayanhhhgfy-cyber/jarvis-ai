@@ -28,10 +28,10 @@ function SanityServer.Init(c)
 	end)
 
 	Map.WarmerDrinkPrompt.Triggered:Connect(function(player)
-		if not State.toggles.instantCoffee and os.clock() < State.warmerReadyAt then return end
+		if not State.toggles.instantCoffee and workspace:GetServerTimeNow() < State.warmerReadyAt then return end
 		SanityServer.Recover(player, Config.WarmerSanity)
 		ctx.notify(player, "Fresh pot: +" .. Config.WarmerSanity .. " sanity. The warmer starts a new pot.", "good")
-		State.warmerReadyAt = os.clock() + Config.WarmerMinutes * 60
+		State.warmerReadyAt = workspace:GetServerTimeNow() + Config.WarmerMinutes * 60
 		Map.WarmerDrinkPrompt.Enabled = false
 		ctx.sendState()
 	end)
@@ -39,7 +39,7 @@ function SanityServer.Init(c)
 	task.spawn(function()
 		while true do
 			task.wait(1)
-			local ready = State.toggles.instantCoffee or os.clock() >= State.warmerReadyAt
+			local ready = State.toggles.instantCoffee or workspace:GetServerTimeNow() >= State.warmerReadyAt
 			if ready and not Map.WarmerDrinkPrompt.Enabled then
 				Map.WarmerDrinkPrompt.Enabled = true
 				ctx.VFX.Play("bell", Map.Warmer, 1, 1.3)

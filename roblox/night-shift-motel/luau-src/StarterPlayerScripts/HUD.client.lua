@@ -44,7 +44,7 @@ local sanityNum = mk("TextLabel", { Size = UDim2.new(1, 0, 1, 0), BackgroundTran
 local lowWarn = mk("TextLabel", { Size = UDim2.new(0, 260, 0, 30), Position = UDim2.new(0.5, -130, 1, -80), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "LOW SANITY", Visible = false, ZIndex = 3 }, gui)
 
 -- COFFEE / WARMER STATUS
-local warmerLabel = mk("TextLabel", { Size = UDim2.new(0, 300, 0, 22), Position = UDim2.new(0, 8, 1, -110), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.4, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "Coffee warmer: brewing...", Visible = false }, gui)
+local warmerLabel = mk("TextLabel", { Size = UDim2.new(0, 300, 0, 22), Position = UDim2.new(0, 210, 1, -110), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.4, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "Coffee warmer: brewing...", Visible = false }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, warmerLabel)
 
 -- NOTIFICATIONS
@@ -173,7 +173,7 @@ task.spawn(function()
 		lowWarn.Visible = state.sanity < 25 and (os.clock() % 1 < 0.5)
 		if warmerReadyAt then
 			warmerLabel.Visible = true
-			local left = warmerReadyAt - os.clock()
+			local left = warmerReadyAt - workspace:GetServerTimeNow()
 			if left <= 0 then
 				warmerLabel.Text = "COFFEE READY at the warmer! (+50 sanity)"
 			else

@@ -177,8 +177,8 @@ actions = {
 			Controls.startNight(math.max(1, State.night))
 		end
 	end,
-	pause = function(data)
-		State.toggles.paused = data == true or data == "true"
+	pause = function()
+		State.toggles.paused = not State.toggles.paused
 		Controls.log("Admin paused=" .. tostring(State.toggles.paused))
 	end,
 	endGame = function()
@@ -1128,7 +1128,7 @@ local State = {
 	forceNext = nil,
 	quotaGuests = nil,
 	quotaMonsters = nil,
-	warmerReadyAt = os.clock() + Config.WarmerMinutes * 60,
+	warmerReadyAt = workspace:GetServerTimeNow() + Config.WarmerMinutes * 60,
 	guestsPerNight = Config.Nights[1].guests,
 	monstersPerNight = Config.Nights[1].monsters,
 	snapshotMoney = Config.StartMoney,
@@ -1682,20 +1682,23 @@ end)
 local function resetRooms()
 	for _, num in ipairs(Config.RoomNumbers) do
 		local r = Map.Rooms[num]
-		if r.occupant and r.occupant.model then r.occupant.model:Destroy() end
-		r.occupant = nil
-		r.state = "clean"
-		stopKnocking(num)
-		setDoor(num, true)
-		setDoorLock(num, false)
-		local d = Map.Doors[num]
-		d.barricaded = false
-		d.breaking = false
-		d.part.CanCollide = true
-		d.part.Transparency = 0
-		d.chair.Anchored = true
-		d.chair.CFrame = CFrame.new((num - 101) * 10 - 25 + 2, 0.9, -38)
-		d.chair.Transparency = 0
+		if r.state ~= "messy" and r.state ~= "overstayer" then
+			-- unfinished morning chores (messy/overstayer) stay blocked into the next night
+			if r.occupant and r.occupant.model then r.occupant.model:Destroy() end
+			r.occupant = nil
+			r.state = "clean"
+			stopKnocking(num)
+			setDoor(num, true)
+			setDoorLock(num, false)
+			local d = Map.Doors[num]
+			d.barricaded = false
+			d.breaking = false
+			d.part.CanCollide = true
+			d.part.Transparency = 0
+			d.chair.Anchored = true
+			d.chair.CFrame = CFrame.new((num - 101) * 10 - 25 + 2, 0.9, -38)
+			d.chair.Transparency = 0
+		end
 	end
 end
 ctx.resetRooms = resetRooms
@@ -2297,10 +2300,10 @@ function SanityServer.Init(c)
 	end)
 
 	Map.WarmerDrinkPrompt.Triggered:Connect(function(player)
-		if not State.toggles.instantCoffee and os.clock() &lt; State.warmerReadyAt then return end
+		if not State.toggles.instantCoffee and workspace:GetServerTimeNow() &lt; State.warmerReadyAt then return end
 		SanityServer.Recover(player, Config.WarmerSanity)
 		ctx.notify(player, "Fresh pot: +" .. Config.WarmerSanity .. " sanity. The warmer starts a new pot.", "good")
-		State.warmerReadyAt = os.clock() + Config.WarmerMinutes * 60
+		State.warmerReadyAt = workspace:GetServerTimeNow() + Config.WarmerMinutes * 60
 		Map.WarmerDrinkPrompt.Enabled = false
 		ctx.sendState()
 	end)
@@ -2308,7 +2311,7 @@ function SanityServer.Init(c)
 	task.spawn(function()
 		while true do
 			task.wait(1)
-			local ready = State.toggles.instantCoffee or os.clock() &gt;= State.warmerReadyAt
+			local ready = State.toggles.instantCoffee or workspace:GetServerTimeNow() &gt;= State.warmerReadyAt
 			if ready and not Map.WarmerDrinkPrompt.Enabled then
 				Map.WarmerDrinkPrompt.Enabled = true
 				ctx.VFX.Play("bell", Map.Warmer, 1, 1.3)
@@ -3345,7 +3348,7 @@ local sanityNum = mk("TextLabel", { Size = UDim2.new(1, 0, 1, 0), BackgroundTran
 local lowWarn = mk("TextLabel", { Size = UDim2.new(0, 260, 0, 30), Position = UDim2.new(0.5, -130, 1, -80), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 60, 60), TextScaled = true, Font = Enum.Font.Arcade, Text = "LOW SANITY", Visible = false, ZIndex = 3 }, gui)
 
 -- COFFEE / WARMER STATUS
-local warmerLabel = mk("TextLabel", { Size = UDim2.new(0, 300, 0, 22), Position = UDim2.new(0, 8, 1, -110), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.4, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "Coffee warmer: brewing...", Visible = false }, gui)
+local warmerLabel = mk("TextLabel", { Size = UDim2.new(0, 300, 0, 22), Position = UDim2.new(0, 210, 1, -110), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.4, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "Coffee warmer: brewing...", Visible = false }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, warmerLabel)
 
 -- NOTIFICATIONS
@@ -3474,7 +3477,7 @@ task.spawn(function()
 		lowWarn.Visible = state.sanity &lt; 25 and (os.clock() % 1 &lt; 0.5)
 		if warmerReadyAt then
 			warmerLabel.Visible = true
-			local left = warmerReadyAt - os.clock()
+			local left = warmerReadyAt - workspace:GetServerTimeNow()
 			if left &lt;= 0 then
 				warmerLabel.Text = "COFFEE READY at the warmer! (+50 sanity)"
 			else

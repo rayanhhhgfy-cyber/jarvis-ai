@@ -46,8 +46,8 @@ actions = {
 			Controls.startNight(math.max(1, State.night))
 		end
 	end,
-	pause = function(data)
-		State.toggles.paused = data == true or data == "true"
+	pause = function()
+		State.toggles.paused = not State.toggles.paused
 		Controls.log("Admin paused=" .. tostring(State.toggles.paused))
 	end,
 	endGame = function()

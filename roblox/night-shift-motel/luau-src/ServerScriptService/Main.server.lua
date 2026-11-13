@@ -43,7 +43,7 @@ local State = {
 	forceNext = nil,
 	quotaGuests = nil,
 	quotaMonsters = nil,
-	warmerReadyAt = os.clock() + Config.WarmerMinutes * 60,
+	warmerReadyAt = workspace:GetServerTimeNow() + Config.WarmerMinutes * 60,
 	guestsPerNight = Config.Nights[1].guests,
 	monstersPerNight = Config.Nights[1].monsters,
 	snapshotMoney = Config.StartMoney,
@@ -597,20 +597,23 @@ end)
 local function resetRooms()
 	for _, num in ipairs(Config.RoomNumbers) do
 		local r = Map.Rooms[num]
-		if r.occupant and r.occupant.model then r.occupant.model:Destroy() end
-		r.occupant = nil
-		r.state = "clean"
-		stopKnocking(num)
-		setDoor(num, true)
-		setDoorLock(num, false)
-		local d = Map.Doors[num]
-		d.barricaded = false
-		d.breaking = false
-		d.part.CanCollide = true
-		d.part.Transparency = 0
-		d.chair.Anchored = true
-		d.chair.CFrame = CFrame.new((num - 101) * 10 - 25 + 2, 0.9, -38)
-		d.chair.Transparency = 0
+		if r.state ~= "messy" and r.state ~= "overstayer" then
+			-- unfinished morning chores (messy/overstayer) stay blocked into the next night
+			if r.occupant and r.occupant.model then r.occupant.model:Destroy() end
+			r.occupant = nil
+			r.state = "clean"
+			stopKnocking(num)
+			setDoor(num, true)
+			setDoorLock(num, false)
+			local d = Map.Doors[num]
+			d.barricaded = false
+			d.breaking = false
+			d.part.CanCollide = true
+			d.part.Transparency = 0
+			d.chair.Anchored = true
+			d.chair.CFrame = CFrame.new((num - 101) * 10 - 25 + 2, 0.9, -38)
+			d.chair.Transparency = 0
+		end
 	end
 end
 ctx.resetRooms = resetRooms
