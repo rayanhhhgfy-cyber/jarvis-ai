@@ -30,18 +30,18 @@ local function fire(action, data)
 	remotes.Admin:FireServer(action, data)
 end
 
-local adminBtn = mk("TextButton", { Size = UDim2.new(0, 90, 0, 36), Position = UDim2.new(1, -98, 0, 6), BackgroundColor3 = Color3.fromRGB(120, 20, 20), TextColor3 = Color3.fromRGB(255, 220, 220), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN", ZIndex = 20 }, gui)
+local adminBtn = mk("TextButton", { Size = UDim2.new(0, 110, 0, 42), Position = UDim2.new(1, -118, 0, 6), BackgroundColor3 = Color3.fromRGB(120, 20, 20), TextColor3 = Color3.fromRGB(255, 220, 220), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN", ZIndex = 20 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, adminBtn)
 
-local panel = mk("Frame", { Size = UDim2.new(0, 640, 0, 440), Position = UDim2.new(0.5, -320, 0.5, -220), BackgroundColor3 = Color3.fromRGB(14, 14, 18), BackgroundTransparency = 0.05, Visible = false, ZIndex = 21 }, gui)
+local panel = mk("Frame", { Size = UDim2.new(0.94, 0, 0.85, 0), Position = UDim2.new(0.03, 0, 0.075, 0), BackgroundColor3 = Color3.fromRGB(14, 14, 18), BackgroundTransparency = 0.05, Visible = false, ZIndex = 21 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 10) }, panel)
 mk("UIStroke", { Color = Color3.fromRGB(120, 20, 20), Thickness = 2 }, panel)
 
 local tabs = { "GAME", "GUESTS", "ECONOMY", "DESKS", "HUNT", "MAP", "PLAYERS", "TOGGLES", "LOG" }
-local tabFrame = mk("Frame", { Size = UDim2.new(0, 130, 1, -10), Position = UDim2.new(0, 5, 0, 5), BackgroundTransparency = 1, ZIndex = 22 }, panel)
+local tabFrame = mk("Frame", { Size = UDim2.new(0, 110, 1, -10), Position = UDim2.new(0, 5, 0, 5), BackgroundTransparency = 1, ZIndex = 22 }, panel)
 mk("UIListLayout", { Padding = UDim.new(0, 4) }, tabFrame)
-local content = mk("Frame", { Size = UDim2.new(1, -150, 1, -50), Position = UDim2.new(0, 140, 0, 40), BackgroundTransparency = 1, ZIndex = 22 }, panel)
-local titleBar = mk("TextLabel", { Size = UDim2.new(1, -150, 0, 32), Position = UDim2.new(0, 140, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 90, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN PANEL", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 22 }, panel)
+local content = mk("Frame", { Size = UDim2.new(1, -130, 1, -50), Position = UDim2.new(0, 120, 0, 40), BackgroundTransparency = 1, ZIndex = 22 }, panel)
+local titleBar = mk("TextLabel", { Size = UDim2.new(1, -130, 0, 32), Position = UDim2.new(0, 120, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 90, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "ADMIN PANEL", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 22 }, panel)
 local closeBtn = mk("TextButton", { Size = UDim2.new(0, 60, 0, 28), Position = UDim2.new(1, -66, 0, 4), BackgroundColor3 = Color3.fromRGB(120, 20, 20), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "X", ZIndex = 23 }, panel)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, closeBtn)
 

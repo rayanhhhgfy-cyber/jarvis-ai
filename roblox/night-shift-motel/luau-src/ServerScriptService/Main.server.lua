@@ -99,6 +99,13 @@ local function sendState()
 	for _, num in ipairs(Config.RoomNumbers) do
 		table.insert(rooms, { num = num, state = Map.Rooms[num].state })
 	end
+	if Map.SignTexts and Map.SignTexts.vacancy then
+		local hasClean = false
+		for _, num2 in ipairs(Config.RoomNumbers) do
+			if Map.Rooms[num2].state == "clean" and not Map.Rooms[num2].occupant then hasClean = true end
+		end
+		Map.SignTexts.vacancy.Text = hasClean and "VACANCY" or "NO VACANCY"
+	end
 	Remotes.StateUpdate:FireAllClients({
 		money = State.money,
 		rep = State.rep,
@@ -130,21 +137,84 @@ local function notify(player, text, kind)
 end
 ctx.notify = notify
 
--- WALKING HELPER
+-- WALKING HELPERS (PathfindingService: guests route through doorways instead of walls)
+local PathfindingService = game:GetService("PathfindingService")
+
+local function makePath()
+	return PathfindingService:CreatePath({ AgentRadius = 2, AgentHeight = 5, AgentCanJump = false, WaypointSpacing = 4 })
+end
+
+local function arrived(hrp, pos)
+	return (hrp.Position - pos).Magnitude < 3.5
+end
+
+local function moveToWait(hum, position, seconds)
+	local done = false
+	local conn = hum.MoveToFinished:Connect(function()
+		done = true
+	end)
+	hum:MoveTo(position)
+	local t0 = os.clock()
+	while not done and os.clock() - t0 < (seconds or 2.5) do
+		task.wait(0.1)
+	end
+	conn:Disconnect()
+end
+
 local function walkTo(model, pos, timeout)
 	local hum = model:FindFirstChildOfClass("Humanoid")
 	local hrp = model:FindFirstChild("HumanoidRootPart")
 	if not hum or not hrp then return end
-	local t0 = os.clock()
-	hum:MoveTo(pos)
-	while os.clock() - t0 < (timeout or 20) do
-		task.wait(0.2)
-		if not hrp.Parent then return end
-		if (hrp.Position - pos).Magnitude < 3.5 then return end
+	local deadline = os.clock() + (timeout or 25)
+	local path = makePath()
+	local ok = pcall(function()
+		path:ComputeAsync(hrp.Position, pos)
+	end)
+	if ok and path.Status == Enum.PathStatus.Success then
+		for _, wp in ipairs(path:GetWaypoints()) do
+			if not hrp.Parent or os.clock() > deadline then return end
+			if arrived(hrp, pos) then return end
+			moveToWait(hum, wp.Position, 2.5)
+		end
+	else
 		hum:MoveTo(pos)
+	end
+	while hrp.Parent and os.clock() < deadline do
+		if arrived(hrp, pos) then return end
+		hum:MoveTo(pos)
+		task.wait(0.25)
 	end
 end
 ctx.walkTo = walkTo
+
+local walkTokens = {}
+local function walkPathAsync(model, pos)
+	local hum = model:FindFirstChildOfClass("Humanoid")
+	local hrp = model:FindFirstChild("HumanoidRootPart")
+	if not hum or not hrp then return end
+	if not model.Parent then
+		walkTokens[model] = nil
+		return
+	end
+	local token = (walkTokens[model] or 0) + 1
+	walkTokens[model] = token
+	task.spawn(function()
+		local path = makePath()
+		local ok = pcall(function()
+			path:ComputeAsync(hrp.Position, pos)
+		end)
+		if walkTokens[model] ~= token or not model.Parent then return end
+		if ok and path.Status == Enum.PathStatus.Success then
+			for _, wp in ipairs(path:GetWaypoints()) do
+				if walkTokens[model] ~= token or not model.Parent then return end
+				moveToWait(hum, wp.Position, 2.5)
+			end
+		else
+			hum:MoveTo(pos)
+		end
+	end)
+end
+ctx.walkPathAsync = walkPathAsync
 
 -- DOORS
 local function setDoor(num, open)
@@ -305,18 +375,21 @@ local function stopKnocking(num)
 	end
 end
 
-local function guestLeave(guest, destination)
+local function guestLeave(guest, destination, via, stopAtEnd)
 	State.activeGuests[guest.id] = nil
 	Remotes.GuestUpdate:FireAllClients({ desk = guest.desk, id = guest.id, present = false })
 	task.spawn(function()
-		if guest.model.Parent then
-			if destination.Z > 0 then
-				walkTo(guest.model, Vector3.new(0, 3.5, 8), 20)
-			else
-				walkTo(guest.model, Vector3.new(0, 3.5, -18), 20)
-			end
-			walkTo(guest.model, destination, 25)
-			if guest.model.Parent then guest.model:Destroy() end
+		for _, wp in ipairs(via or {}) do
+			if not guest.model.Parent then return end
+			walkTo(guest.model, wp, 20)
+		end
+		if guest.model.Parent then walkTo(guest.model, destination, 25) end
+		if not guest.model.Parent then return end
+		if stopAtEnd then
+			local hum = guest.model:FindFirstChildOfClass("Humanoid")
+			if hum then hum.WalkSpeed = 0 end
+		else
+			guest.model:Destroy()
 		end
 	end)
 end
@@ -536,16 +609,9 @@ Remotes.Decide.OnServerEvent:Connect(function(player, guestId, admit)
 			notify(nil, "Correct call! +$" .. Config.AdmitHumanMoney, "good")
 			log("Desk " .. guest.desk .. ": admitted human " .. guest.spokenName .. " -> Room " .. num)
 		end
-		local num2 = num
-		guestLeave(guest, Vector3.new(0, 3.5, -26))
-		task.spawn(function()
-			task.wait(2)
-			walkTo(guest.model, Vector3.new(num2 and ((num2 - 101) * 10 - 25) or 0, 3.5, -38), 25)
-			if guest.model.Parent then
-				local hum = guest.model:FindFirstChildOfClass("Humanoid")
-				if hum then hum.WalkSpeed = 0 end
-			end
-		end)
+		local roomX = (num - 101) * 10 - 25
+		setDoor(num, true)
+		guestLeave(guest, Vector3.new(roomX, 3.5, -38), { Vector3.new(0, 3.5, -18) }, true)
 	else
 		if guest.isMonster then
 			applyMoney(Config.DenyMonsterMoney)

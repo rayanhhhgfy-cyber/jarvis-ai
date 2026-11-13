@@ -1,5 +1,5 @@
--- DeskClient: guest panel at your desk — questions, ID card, ADMIT / TURN AWAY,
--- and the overstayer morning dialog.
+-- DeskClient v2: mobile-first bottom dock. Full width, horizontal scrolling
+-- question buttons, big decision buttons, ID card, overstayer morning dialog.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -27,18 +27,21 @@ local guests = {}
 local cleanRooms = true
 local currentId = nil
 
-local panel = mk("Frame", { Size = UDim2.new(0, 420, 0, 330), Position = UDim2.new(1, -430, 1, -340), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.15, BorderSizePixel = 0, Visible = false }, gui)
+-- BOTTOM DOCK: full width so nothing is cut off on phones
+local panel = mk("Frame", { Size = UDim2.new(1, -12, 0, 248), Position = UDim2.new(0, 6, 1, -254), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.12, BorderSizePixel = 0, Visible = false }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 10) }, panel)
-local nameLabel = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "GUEST", TextXAlignment = Enum.TextXAlignment.Left }, panel)
-local speech = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 54), Position = UDim2.new(0, 6, 0, 34), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "...", TextWrapped = true }, panel)
+
+local nameLabel = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 28), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "GUEST", TextXAlignment = Enum.TextXAlignment.Left }, panel)
+local speech = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 42), Position = UDim2.new(0, 6, 0, 34), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "...", TextWrapped = true }, panel)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, speech)
 
-local idCard = mk("Frame", { Size = UDim2.new(1, -12, 0, 64), Position = UDim2.new(0, 6, 0, 92), BackgroundColor3 = Color3.fromRGB(210, 200, 170), Visible = false }, panel)
+local idCard = mk("Frame", { Size = UDim2.new(1, -12, 0, 52), Position = UDim2.new(0, 6, 0, 80), BackgroundColor3 = Color3.fromRGB(210, 200, 170), Visible = false }, panel)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, idCard)
 local idText = mk("TextLabel", { Size = UDim2.new(1, -10, 1, -6), Position = UDim2.new(0, 5, 0, 3), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(35, 30, 25), TextScaled = true, Font = Enum.Font.Code, Text = "ID CARD", TextWrapped = true }, idCard)
 
-local qFrame = mk("Frame", { Size = UDim2.new(1, -12, 0, 110), Position = UDim2.new(0, 6, 0, 160), BackgroundTransparency = 1 }, panel)
-mk("UIGridLayout", { CellSize = UDim2.new(0.5, -4, 0, 34), CellPadding = UDim2.new(0, 4, 0, 4), SortOrder = Enum.SortOrder.LayoutOrder }, qFrame)
+-- QUESTION BUTTONS: horizontally scrollable row (never squeezed on small screens)
+local qScroll = mk("ScrollingFrame", { Size = UDim2.new(1, -12, 0, 48), Position = UDim2.new(0, 6, 0, 138), BackgroundTransparency = 1, ScrollBarThickness = 4, ScrollingDirection = Enum.ScrollingDirection.X, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.X, ElasticBehavior = Enum.ElasticBehavior.WhenScrollable }, panel)
+mk("UIListLayout", { Padding = UDim.new(0, 8), FillDirection = Enum.FillDirection.Horizontal, SortOrder = Enum.SortOrder.LayoutOrder }, qScroll)
 
 local questions = {
 	{ id = "from", text = "Where are you traveling from?" },
@@ -49,7 +52,7 @@ local questions = {
 }
 
 local function makeQButton(q, order)
-	local b = mk("TextButton", { LayoutOrder = order, BackgroundColor3 = Color3.fromRGB(40, 40, 56), BackgroundTransparency = 0.2, TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.Gotham, Text = q.text }, qFrame)
+	local b = mk("TextButton", { LayoutOrder = order, Size = UDim2.new(0, 170, 1, 0), BackgroundColor3 = Color3.fromRGB(40, 40, 56), BackgroundTransparency = 0.2, TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.Gotham, Text = q.text }, qScroll)
 	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
 	b.MouseButton1Click:Connect(function()
 		if currentId then
@@ -61,7 +64,8 @@ for i, q in ipairs(questions) do
 	makeQButton(q, i)
 end
 
-local decisionRow = mk("Frame", { Size = UDim2.new(1, -12, 0, 48), Position = UDim2.new(0, 6, 1, -54), BackgroundTransparency = 1 }, panel)
+-- DECISION BUTTONS: big, side by side, full width
+local decisionRow = mk("Frame", { Size = UDim2.new(1, -12, 0, 54), Position = UDim2.new(0, 6, 1, -60), BackgroundTransparency = 1 }, panel)
 local admitBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "GIVE ROOM KEY" }, decisionRow)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, admitBtn)
 local denyBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), Position = UDim2.new(0.5, 6, 0, 0), BackgroundColor3 = Color3.fromRGB(150, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "TURN AWAY" }, decisionRow)
@@ -132,13 +136,13 @@ remotes.StateUpdate.OnClientEvent:Connect(function(s)
 	end
 end)
 
--- MORNING CHORE DIALOG (overstayer)
-local choreFrame = mk("Frame", { Size = UDim2.new(0, 400, 0, 240), Position = UDim2.new(0.5, -200, 0.5, -120), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
+-- MORNING CHORE DIALOG (overstayer): centered, scale-sized
+local choreFrame = mk("Frame", { Size = UDim2.new(0.92, 0, 0.46, 0), Position = UDim2.new(0.04, 0, 0.27, 0), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 10) }, choreFrame)
 local choreTitle = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "ROOM — GUEST WON'T LEAVE", ZIndex = 10 }, choreFrame)
-local choreArg = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 60), Position = UDim2.new(0, 6, 0, 38), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 10 }, choreFrame)
+local choreArg = mk("TextLabel", { Size = UDim2.new(1, -12, 0.3, 0), Position = UDim2.new(0, 6, 0, 40), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 10 }, choreFrame)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, choreArg)
-local choreChoices = mk("Frame", { Size = UDim2.new(1, -12, 0, 120), Position = UDim2.new(0, 6, 0, 108), BackgroundTransparency = 1, ZIndex = 10 }, choreFrame)
+local choreChoices = mk("Frame", { Size = UDim2.new(1, -12, 0.42, 0), Position = UDim2.new(0, 6, 0.52, 0), BackgroundTransparency = 1, ZIndex = 10 }, choreFrame)
 mk("UIListLayout", { Padding = UDim.new(0, 6) }, choreChoices)
 local choreRoom = nil
 
@@ -148,7 +152,7 @@ local choiceTexts = {
 	"Take your time, sir.",
 }
 for i, txt in ipairs(choiceTexts) do
-	local b = mk("TextButton", { Size = UDim2.new(1, 0, 0, 36), BackgroundColor3 = i == 2 and Color3.fromRGB(30, 90, 140) or Color3.fromRGB(50, 50, 60), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = txt, ZIndex = 11 }, choreChoices)
+	local b = mk("TextButton", { Size = UDim2.new(1, 0, 0, 44), BackgroundColor3 = i == 2 and Color3.fromRGB(30, 90, 140) or Color3.fromRGB(50, 50, 60), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = txt, ZIndex = 11 }, choreChoices)
 	mk("UICorner", { CornerRadius = UDim.new(0, 6) }, b)
 	b.MouseButton1Click:Connect(function()
 		if choreRoom then

@@ -1,4 +1,5 @@
--- DawnShopClient: dawn summary, chore list, the dawn shop (Desk 2/3), win/lose screens.
+-- DawnShopClient v2: dawn summary, chore list, the dawn shop (Desk 2/3),
+-- win/lose screens. Scale-based, scrollable, works on phones.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -24,18 +25,25 @@ end
 local desksBought = 1
 local deskPrices = {}
 
--- DAWN SCREEN
-local dawn = mk("Frame", { Size = UDim2.new(0, 520, 0, 420), Position = UDim2.new(0.5, -260, 0.5, -210), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.05, Visible = false, ZIndex = 9 }, gui)
+-- DAWN SCREEN: near full-screen with a scrollable middle
+local dawn = mk("Frame", { Size = UDim2.new(0.94, 0, 0.9, 0), Position = UDim2.new(0.03, 0, 0.05, 0), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.05, Visible = false, ZIndex = 9 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 12) }, dawn)
-mk("TextLabel", { Size = UDim2.new(1, 0, 0, 50), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "DAWN — YOU SURVIVED THE NIGHT", ZIndex = 10 }, dawn)
-local summary = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 110), Position = UDim2.new(0, 10, 0, 56), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 20, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, dawn)
-local choresTitle = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 30), Position = UDim2.new(0, 10, 0, 170), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 120, 120), TextScaled = true, Font = Enum.Font.Arcade, Text = "MORNING CHORES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, dawn)
-local choresText = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 110), Position = UDim2.new(0, 10, 0, 202), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 18, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, dawn)
+mk("TextLabel", { Size = UDim2.new(1, 0, 0, 44), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 200, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "DAWN — YOU SURVIVED THE NIGHT", ZIndex = 10 }, dawn)
 
--- SHOP
-local shopTitle = mk("TextLabel", { Size = UDim2.new(1, -20, 0, 30), Position = UDim2.new(0, 10, 0, 312), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Arcade, Text = "MOTEL UPGRADES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, dawn)
-local deskRow = mk("Frame", { Size = UDim2.new(1, -20, 0, 44), Position = UDim2.new(0, 10, 0, 344), BackgroundTransparency = 1, ZIndex = 10 }, dawn)
+local scroll = mk("ScrollingFrame", { Size = UDim2.new(1, -16, 1, -110), Position = UDim2.new(0, 8, 0, 48), BackgroundTransparency = 1, ScrollBarThickness = 8, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.Y, ZIndex = 10 }, dawn)
+mk("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder }, scroll)
+
+local function block(height, order)
+	return mk("Frame", { LayoutOrder = order, Size = UDim2.new(1, -12, 0, height), BackgroundTransparency = 1, ZIndex = 10 }, scroll)
+end
+
+local summary = mk("TextLabel", { Size = UDim2.new(1, -8, 1, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 20, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, block(120, 1))
+local choresTitle = mk("TextLabel", { Size = UDim2.new(1, -8, 1, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 120, 120), TextScaled = true, Font = Enum.Font.Arcade, Text = "MORNING CHORES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, block(28, 2))
+local choresText = mk("TextLabel", { Size = UDim2.new(1, -8, 1, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(220, 220, 230), TextSize = 18, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, block(130, 3))
+local shopTitle = mk("TextLabel", { Size = UDim2.new(1, -8, 1, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(120, 255, 140), TextScaled = true, Font = Enum.Font.Arcade, Text = "MOTEL UPGRADES", TextXAlignment = Enum.TextXAlignment.Left, ZIndex = 10 }, block(28, 4))
+local deskRow = block(50, 5)
 mk("UIGridLayout", { CellSize = UDim2.new(0.5, -6, 1, 0), CellPadding = UDim2.new(0, 6, 0, 0) }, deskRow)
+
 local deskButtons = {}
 for slot = 2, 3 do
 	local b = mk("TextButton", { BackgroundColor3 = Color3.fromRGB(30, 90, 140), TextColor3 = Color3.fromRGB(230, 245, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "DESK " .. slot, ZIndex = 11 }, deskRow)
@@ -45,7 +53,8 @@ for slot = 2, 3 do
 	end)
 	deskButtons[slot] = b
 end
-local bottomRow = mk("Frame", { Size = UDim2.new(1, -20, 0, 44), Position = UDim2.new(0, 10, 1, -52), BackgroundTransparency = 1, ZIndex = 10 }, dawn)
+
+local bottomRow = mk("Frame", { Size = UDim2.new(1, -16, 0, 50), Position = UDim2.new(0, 8, 1, -58), BackgroundTransparency = 1, ZIndex = 10 }, dawn)
 local shopBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), BackgroundColor3 = Color3.fromRGB(60, 60, 80), TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Arcade, Text = "DESK HELP", ZIndex = 11 }, bottomRow)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, shopBtn)
 local startBtn = mk("TextButton", { Size = UDim2.new(0.5, -6, 1, 0), Position = UDim2.new(0.5, 6, 0, 0), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "START NEXT NIGHT", ZIndex = 11 }, bottomRow)
@@ -93,9 +102,9 @@ end)
 
 -- WIN / LOSE SCREENS
 local endFrame = mk("Frame", { Size = UDim2.new(1, 0, 1, 0), BackgroundColor3 = Color3.fromRGB(0, 0, 0), BackgroundTransparency = 0.25, Visible = false, ZIndex = 12 }, gui)
-local endTitle = mk("TextLabel", { Size = UDim2.new(1, 0, 0, 90), Position = UDim2.new(0, 0, 0.3, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "", ZIndex = 13 }, endFrame)
-local endSub = mk("TextLabel", { Size = UDim2.new(0.8, 0, 0, 60), Position = UDim2.new(0.1, 0, 0.3, 100), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 13 }, endFrame)
-local againBtn = mk("TextButton", { Size = UDim2.new(0, 260, 0, 60), Position = UDim2.new(0.5, -130, 0.3, 190), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "PLAY AGAIN", ZIndex = 13 }, endFrame)
+local endTitle = mk("TextLabel", { Size = UDim2.new(1, 0, 0.12, 0), Position = UDim2.new(0, 0, 0.26, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "", ZIndex = 13 }, endFrame)
+local endSub = mk("TextLabel", { Size = UDim2.new(0.84, 0, 0.07, 0), Position = UDim2.new(0.08, 0, 0.4, 0), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(230, 230, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, ZIndex = 13 }, endFrame)
+local againBtn = mk("TextButton", { Size = UDim2.new(0.5, 0, 0.09, 0), Position = UDim2.new(0.25, 0, 0.52, 0), BackgroundColor3 = Color3.fromRGB(30, 120, 50), TextColor3 = Color3.fromRGB(230, 255, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "PLAY AGAIN", ZIndex = 13 }, endFrame)
 mk("UICorner", { CornerRadius = UDim.new(0, 10) }, againBtn)
 againBtn.MouseButton1Click:Connect(function()
 	endFrame.Visible = false

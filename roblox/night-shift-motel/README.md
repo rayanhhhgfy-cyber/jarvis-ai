@@ -26,19 +26,22 @@ A complete co-op Roblox horror game (1–3 players): night shift at a roadside m
 
 | Zone | Size / position (studs) | Contents |
 |---|---|---|
-| Parking lot | asphalt 220×200 plate, y=0, wet look (Reflectance 0.12) | 5 marked spots, sidewalk, walkway |
-| Road | 240×26 at z=84 | center stripes, streetlamp (neon head + PointLight) |
-| Lobby | 64×42 interior, x −32..32, z −22..18 | black/white checkered floor (4×4 tiles), wood walls, glass windows, 4 flickering ceiling lights |
-| Front counter | 30×4×3 at z=−14 | space for **3 desks** at x = −10, 0, +10: bell, guest register, green lamp, Seat + Sit prompt each; key board with 6 keys on the wall behind |
-| Coffee corner | x 25..31, z −18..−13 | coffee machine (Buy prompt, $5), free-pot warmer (Drink prompt, HUD countdown), cups |
-| Dressing | around lobby | vending machine, ice machine, wall TV, wall phone, table + chairs, suitcase, wall clock, portraits, house-rules frame, lantern, candelabra, radio, typewriter |
-| Security room | 10×10 front-left corner of lobby | 4 CCTV monitors, open/close metal door |
-| Corridor | 64×12 at z −22..−34 | neon strip light |
-| Guest rooms | 6 rooms 10×12 (z −34..−46), doors at x = −25…+25 | bed + pillow, wall lamp, TV, bathroom door, chair (barricade prop), ceiling light, numbered door with Open/Close + Lock prompts |
-| MOTEL sign | pole at (−45, z 62) | red neon MOTEL board, green number board, neon accent bars, VACANCY board (flips to NO VACANCY) — **built from Parts, not the paid kit** |
-| Trees | 10 pines around the lot | trunk + 3 stacked canopy blocks |
-| Cameras | 4 invisible parts | CAM 01 Entrance, CAM 02 Parking, CAM 03 Corridor, CAM 04 Lobby |
-| Spawn | SpawnLocation at (0, 50) | players arrive in the lot |
+| Ground + lot | grass 260×220; asphalt lot 180×120 (Reflectance 0.14, wet look) | curbs, 6 marked parking spots, dumpster, crates, power box, bench |
+| Road | at z=92 with dashes | crosswalk stripes at z=80.5, 2 streetlamps (x = ±18, z 74) |
+| Building shell | x −34..34, z −48..20 | concrete slab, brick walls, interior wood panels + wainscot, lobby roof y=14.2 + rooms roof y=10.2, parapet trim, 3 AC units |
+| Entrance | 10-wide door gap at z=20.5 | 2 framed glass windows, tilted awning on support poles, "OFFICE ->" sign, door mat |
+| Lobby | x −34..34, z −20..20 | black/white checkered marble floor (4×4 tiles), 4 ceiling light fixtures, framed pictures, wall clock, house-rules frame |
+| Front counter | 32×4×2.6 at z=−12, paneled front + brass edge | space for **3 desks** at x = −10, 0, +10: bell, register, lamp, Seat + Sit prompt each; key board (12×4.5) with 6 keys on the wall behind |
+| Coffee corner | x 24..31 | coffee machine (Buy prompt, $5), free-pot warmer (Drink prompt, HUD countdown), cup stack, MENU board |
+| Dressing | around lobby | vending machine + neon strip, ice machine, wall TV + bracket, payphone, rug + coffee table + sofa + 2 armchairs, 3 framed pictures, candelabra, lantern, radio, typewriter, suitcases, 3 plant pots |
+| Security room | x −33.5..−20, z 7..18 | 4 CCTV monitors, desk, door with "SECURITY" label + open/close prompt |
+| Corridor | z −32..−20, back-wall gap x −4..4 | carpet, 6 room-number labels, framed pictures, 2 wall lamps |
+| Guest rooms | 6 rooms (z −46..−32), room centers x = −25…+25, **5-stud door gaps** | headboard + bed + blanket + pillow, nightstand + lamp, dresser, TV, bathroom door, window + curtains, rug, chair (barricade prop), ceiling light, framed art, numbered 5×7 door with Open/Close + Lock prompts |
+| Parking dressing | lot edges | 3 part-built cars (body, glass cabin, cylinder wheels, neon headlights/taillights) |
+| MOTEL sign | 2 poles, board 26×9 at y=20 | red neon MOTEL board + neon tube border, green number board (y=12.5), VACANCY board at z=64.6 (auto-flips to NO VACANCY when no clean rooms) — **built from Parts, not the paid kit** |
+| Trees | 12 pines + 6 bushes around the lot | trunk + stacked canopy blocks |
+| Cameras | 4 invisible parts | CAM 01 Entrance (0, 2.5, 22), CAM 02 Parking (0, 1.5, 36), CAM 03 Corridor (−30, 2, −26), CAM 04 Lobby (12, 2.5, −2) |
+| Spawn | SpawnLocation at (0, 52) | players arrive in the lot |
 
 Atmosphere fog, night lighting and rain are set by `VFXServer` (rain uses the verified free decal `rbxassetid://241876428`).
 

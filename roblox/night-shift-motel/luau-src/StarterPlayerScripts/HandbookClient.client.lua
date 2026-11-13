@@ -1,5 +1,5 @@
--- HandbookClient: the rule book. Night 1: 3 rules, each night adds more.
--- Rules always match real tells in the code. Scrambles during hallucinations.
+-- HandbookClient v2: the rule book as a full-screen scrollable page.
+-- Night 1: 3 rules, each night adds more. Scrambles during hallucinations.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -25,14 +25,16 @@ end
 local rules = {}
 local revealed = 3
 
-local openBtn = mk("TextButton", { Size = UDim2.new(0, 130, 0, 40), Position = UDim2.new(0, 8, 0.5, -20), BackgroundColor3 = Color3.fromRGB(90, 60, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "HANDBOOK" }, gui)
+local openBtn = mk("TextButton", { Size = UDim2.new(0, 140, 0, 44), Position = UDim2.new(0, 8, 0.5, -52), BackgroundColor3 = Color3.fromRGB(90, 60, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "HANDBOOK" }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, openBtn)
 
-local book = mk("Frame", { Size = UDim2.new(0, 560, 0, 460), Position = UDim2.new(0.5, -280, 0.5, -230), BackgroundColor3 = Color3.fromRGB(214, 202, 168), Visible = false, ZIndex = 9 }, gui)
+local book = mk("Frame", { Size = UDim2.new(0.94, 0, 0.84, 0), Position = UDim2.new(0.03, 0, 0.08, 0), BackgroundColor3 = Color3.fromRGB(214, 202, 168), Visible = false, ZIndex = 9 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 12) }, book)
 mk("TextLabel", { Size = UDim2.new(1, 0, 0, 44), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(70, 50, 30), TextScaled = true, Font = Enum.Font.Arcade, Text = "MOTEL HANDBOOK — NIGHT SHIFT RULES", ZIndex = 10 }, book)
-local rulesText = mk("TextLabel", { Size = UDim2.new(1, -30, 1, -90), Position = UDim2.new(0, 15, 0, 50), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(45, 35, 25), TextSize = 18, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, book)
-local closeBtn = mk("TextButton", { Size = UDim2.new(0, 110, 0, 34), Position = UDim2.new(0.5, -55, 1, -42), BackgroundColor3 = Color3.fromRGB(70, 50, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE BOOK", ZIndex = 10 }, book)
+
+local scroll = mk("ScrollingFrame", { Size = UDim2.new(1, -24, 1, -110), Position = UDim2.new(0, 12, 0, 50), BackgroundTransparency = 1, ScrollBarThickness = 8, CanvasSize = UDim2.new(0, 0, 0, 0), AutomaticCanvasSize = Enum.AutomaticSize.Y, ZIndex = 10 }, book)
+local rulesText = mk("TextLabel", { Size = UDim2.new(1, -8, 0, 0), AutomaticSize = Enum.AutomaticSize.Y, BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(45, 35, 25), TextSize = 20, Font = Enum.Font.Gotham, Text = "", TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Left, TextYAlignment = Enum.TextYAlignment.Top, ZIndex = 10 }, scroll)
+local closeBtn = mk("TextButton", { Size = UDim2.new(0, 170, 0, 46), Position = UDim2.new(0.5, -85, 1, -54), BackgroundColor3 = Color3.fromRGB(70, 50, 30), TextColor3 = Color3.fromRGB(255, 230, 170), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE BOOK", ZIndex = 10 }, book)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, closeBtn)
 
 local function refresh()

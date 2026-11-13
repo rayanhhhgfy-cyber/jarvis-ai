@@ -26,17 +26,18 @@ end
 local inspecting = nil
 local zooming = false
 
-local frame = mk("Frame", { Size = UDim2.new(0, 360, 0, 260), Position = UDim2.new(0.5, -180, 0.5, -130), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
+local frame = mk("Frame", { Size = UDim2.new(0.9, 0, 0.42, 0), Position = UDim2.new(0.05, 0, 0.29, 0), BackgroundColor3 = Color3.fromRGB(16, 16, 22), BackgroundTransparency = 0.1, Visible = false, ZIndex = 9 }, gui)
 mk("UICorner", { CornerRadius = UDim.new(0, 10) }, frame)
+mk("UISizeConstraint", { MaxSize = Vector2.new(460, 340) }, frame)
 local title = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 30), Position = UDim2.new(0, 6, 0, 4), BackgroundTransparency = 1, TextColor3 = Color3.fromRGB(255, 220, 90), TextScaled = true, Font = Enum.Font.Arcade, Text = "INSPECTION", ZIndex = 10 }, frame)
-local result = mk("TextLabel", { Size = UDim2.new(1, -12, 0, 100), Position = UDim2.new(0, 6, 0, 38), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "Look closely...", TextWrapped = true, ZIndex = 10 }, frame)
+local result = mk("TextLabel", { Size = UDim2.new(1, -12, 0.38, 0), Position = UDim2.new(0, 6, 0, 38), BackgroundColor3 = Color3.fromRGB(28, 28, 36), TextColor3 = Color3.fromRGB(240, 240, 240), TextScaled = true, Font = Enum.Font.Gotham, Text = "Look closely...", TextWrapped = true, ZIndex = 10 }, frame)
 mk("UICorner", { CornerRadius = UDim.new(0, 6) }, result)
 
-local handsBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 40), Position = UDim2.new(0, 6, 1, -94), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT HANDS", ZIndex = 10 }, frame)
+local handsBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 44), Position = UDim2.new(0, 6, 1, -98), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT HANDS", ZIndex = 10 }, frame)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, handsBtn)
-local faceBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 40), Position = UDim2.new(0, 6, 1, -50), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT FACE", ZIndex = 10 }, frame)
+local faceBtn = mk("TextButton", { Size = UDim2.new(1, -12, 0, 44), Position = UDim2.new(0, 6, 1, -50), BackgroundColor3 = Color3.fromRGB(40, 40, 56), TextColor3 = Color3.fromRGB(200, 220, 255), TextScaled = true, Font = Enum.Font.GothamBold, Text = "INSPECT FACE", ZIndex = 10 }, frame)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, faceBtn)
-local closeBtn = mk("TextButton", { Size = UDim2.new(0, 90, 0, 30), Position = UDim2.new(1, -96, 0, 4), BackgroundColor3 = Color3.fromRGB(120, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE", ZIndex = 10 }, frame)
+local closeBtn = mk("TextButton", { Size = UDim2.new(0, 100, 0, 32), Position = UDim2.new(1, -106, 0, 4), BackgroundColor3 = Color3.fromRGB(120, 40, 40), TextColor3 = Color3.fromRGB(255, 230, 230), TextScaled = true, Font = Enum.Font.Arcade, Text = "CLOSE", ZIndex = 10 }, frame)
 mk("UICorner", { CornerRadius = UDim.new(0, 8) }, closeBtn)
 
 local function closeInspect()

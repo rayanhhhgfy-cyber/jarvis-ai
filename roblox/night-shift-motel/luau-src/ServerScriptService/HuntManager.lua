@@ -101,7 +101,7 @@ function HuntManager.Run(c, monsters)
 				local cd = model:FindFirstChildWhichIsA("ClickDetector", true)
 				if cd then cd:Destroy() end
 				hrp.CFrame = CFrame.new(guest.roomNumber and (guest.roomNumber - 101) * 10 - 25 or 0, 3.5, -30)
-				hunters[model] = { hum = hum, hrp = hrp }
+				hunters[model] = { hum = hum, hrp = hrp, lastPath = 0 }
 				hrp.Touched:Connect(function(hit)
 					local pl = Players:GetPlayerFromCharacter(hit.Parent)
 					if pl and not isDowned(pl) then
@@ -166,15 +166,14 @@ function HuntManager.Run(c, monsters)
 								end)
 							end
 						else
-							h.hum:MoveTo(pos)
+							if os.clock() - h.lastPath > 1 then
+								h.lastPath = os.clock()
+								ctx.walkPathAsync(model, pos)
+							end
 						end
-					else
-						local crossing = (h.hrp.Position.Z < -22) ~= (pos.Z < -22)
-						if crossing and math.abs(h.hrp.Position.X) > 3 then
-							h.hum:MoveTo(Vector3.new(0, 3.5, h.hrp.Position.Z < -22 and -18 or -26))
-						else
-							h.hum:MoveTo(pos)
-						end
+					elseif os.clock() - h.lastPath > 1 then
+						h.lastPath = os.clock()
+						ctx.walkPathAsync(model, pos)
 					end
 				end
 			end
