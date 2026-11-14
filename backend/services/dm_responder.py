@@ -47,10 +47,12 @@ import hashlib
 import json
 import random
 import re
+import textwrap
 import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 from backend.config import settings
@@ -269,15 +271,38 @@ _BRIEFING_NEWS_QUERIES = {
 }
 
 
+# Hosts that are never news, even when a search matches them. "Jordan
+# news today" used to return the Wikipedia article and Nike's Jordan
+# Brand page — the word "Jordan", not the country's news.
+_BRIEFING_NEWS_BAD_HOSTS = ("wikipedia.org", "nike.com")
+
+
+def _is_briefing_news_junk(url: str) -> bool:
+    """True when a briefing news result is not a news article at all."""
+    try:
+        host = urlsplit(url).netloc.lower()
+    except Exception:
+        return True
+    host = host.removeprefix("www.")
+    return any(host == bad or host.endswith("." + bad) for bad in _BRIEFING_NEWS_BAD_HOSTS)
+
+
 async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
-    """Top news for the morning briefing, from a live web search.
+    """Top news for the morning briefing, from a live news search.
 
     One query per group (world, Jordan, tech, sports), run together.
-    A group that comes back empty or fails is retried once — the
-    search backends are flaky, and a single transient failure should
-    not cost Sir that group's headlines. Returns [{group, title,
-    snippet}] — at most two headlines per group. Empty when the search
-    fails twice (the briefing still goes out).
+    Each group tries the news endpoint first — it returns real
+    articles (headline + source + date) — and falls back to a plain
+    web search when the news endpoint comes back empty or fails. A
+    plain text search for a broad query returns section homepages and
+    brand pages instead of stories (Reuters' World section page,
+    Wikipedia's Jordan article, Nike's Jordan Brand), so results from
+    hosts that are never news are dropped. A group that comes back
+    empty or fails is retried once — the search backends are flaky,
+    and a single transient failure should not cost Sir that group's
+    headlines. Returns [{group, title, snippet}] — at most two
+    headlines per group. Empty when the search fails twice (the
+    briefing still goes out).
     """
     import asyncio
 
@@ -287,17 +312,31 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
     service = WebSearchService()
 
     async def _search_one(query: str) -> list[dict[str, str]]:
-        """One group query, retried once on failure or empty result."""
+        """One group query: news first, plain search as fallback, junk dropped."""
         for attempt in (1, 2):
             try:
-                result = await service.search(query, max_results=2)
-                if result:
-                    return result
+                result = await service.news(query, max_results=2)
             except Exception as e:
                 log.debug(
                     "dm_briefing_news_attempt_failed",
                     query=query, attempt=attempt, error=str(e),
                 )
+                result = []
+            if not result:
+                try:
+                    result = await service.search(query, max_results=2)
+                except Exception as e:
+                    log.debug(
+                        "dm_briefing_news_fallback_failed",
+                        query=query, attempt=attempt, error=str(e),
+                    )
+                    result = []
+            result = [
+                row for row in result
+                if not _is_briefing_news_junk(row.get("url") or "")
+            ]
+            if result:
+                return result
             if attempt == 1:
                 await asyncio.sleep(1.0)
         return []
@@ -970,7 +1009,10 @@ class DMResponder:
                         last_group = item["group"]
                     text = item["title"]
                     if item.get("snippet"):
-                        text += f" — {item['snippet'][:120]}"
+                        # Word-boundary cut, never mid-word: the old
+                        # [:120] slice ended headlines with "trust",
+                        # "stori", "Jor".
+                        text += f" — {textwrap.shorten(item['snippet'], width=120, placeholder='…')}"
                     lines.append(f"• {text}")
 
         # Today's calendar.

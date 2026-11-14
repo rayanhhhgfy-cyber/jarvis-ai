@@ -56,6 +56,45 @@ def _search_ddgs_sync(query: str, max_results: int) -> List[Dict[str, str]]:
     return []
 
 
+def _search_ddgs_news_sync(query: str, max_results: int) -> List[Dict[str, str]]:
+    """Blocking ddgs.news call (runs in a thread via asyncio.to_thread).
+
+    The news endpoint returns real articles — headline, body, source,
+    date — instead of the generic web results ddgs.text returns for
+    broad queries (section homepages, Wikipedia, brand pages). That
+    is what the morning briefing needs. Raises if every backend fails.
+    """
+    from ddgs import DDGS
+
+    last_error: Exception | None = None
+    for backend in ("duckduckgo", "bing", "brave", "google"):
+        try:
+            with DDGS(timeout=15) as ddgs:
+                rows = list(ddgs.news(query, max_results=max_results, backend=backend))
+            results: List[Dict[str, str]] = []
+            for row in rows:
+                title = (row.get("title") or "").strip()
+                url = (row.get("url") or "").strip()
+                snippet = (row.get("body") or "").strip()
+                if title and url:
+                    results.append({
+                        "title": title,
+                        "snippet": snippet,
+                        "url": url,
+                        "source": (row.get("source") or "").strip(),
+                        "date": (row.get("date") or "").strip(),
+                    })
+            if results:
+                return results
+        except Exception as e:  # noqa: BLE001 - try the next backend
+            last_error = e
+            log.warning("web_search_ddgs_news_backend_failed", backend=backend, error=str(e))
+            continue
+    if last_error is not None:
+        raise last_error
+    return []
+
+
 def _fetch_scrapling_sync(url: str, max_chars: int) -> Dict[str, object]:
     """Blocking Scrapling fetch (runs in a thread via asyncio.to_thread).
 
@@ -130,6 +169,24 @@ class WebSearchService:
             log.warning(f"Failed to fetch IP location from ip-api.com: {e}")
             
         return None
+
+    async def news(self, query: str, max_results: int = 5) -> List[Dict[str, str]]:
+        """
+        Real news articles for a query, via ddgs.news.
+
+        Returns [{"title", "snippet", "url", "source", "date"}] — actual
+        headlines, not the section homepages a plain text search
+        returns for broad queries. Empty (never raises) when the news
+        endpoint fails, so the caller can fall back to a plain search.
+        """
+        try:
+            results = await asyncio.to_thread(_search_ddgs_news_sync, query, max_results)
+            if results:
+                log.info("web_search_news_results", count=len(results))
+                return results
+        except Exception as e:
+            log.warning("web_search_news_failed", error=str(e))
+        return []
 
     async def search(self, query: str, max_results: int = 5) -> List[Dict[str, str]]:
         """
