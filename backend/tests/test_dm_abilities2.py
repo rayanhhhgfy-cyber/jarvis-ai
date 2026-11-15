@@ -572,18 +572,29 @@ def test_busy_now_and_text(tmp_path, monkeypatch):
 
 
 def test_calendar_answer_with_reason(tmp_path, monkeypatch):
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+
     from backend.services import dm_store
     from backend.services.dm_responder import DMResponder
 
+    # "Friday" always resolves to the next Friday (never today), so the
+    # busy entry must track the calendar, not a hardcoded date — the old
+    # 2026-11-13 entry stopped matching once that Friday passed and
+    # turned CI red on every push after it.
+    today = datetime.now(ZoneInfo("Asia/Amman")).date()
+    days_ahead = (4 - today.weekday()) % 7 or 7
+    friday = today + timedelta(days=days_ahead)
+    day = friday.isoformat()
     monkeypatch.setattr(dm_store.calendar, "_path", tmp_path / "calendar.json")
     monkeypatch.setattr(dm_store.calendar, "_loaded", False)
     monkeypatch.setattr(dm_store.calendar, "_data", {})
-    dm_store.calendar.set("2026-11-13", {
-        "date": "2026-11-13",
+    dm_store.calendar.set(day, {
+        "date": day,
         "status": "busy",
         "detail": "football practice",
-        "from": "2026-11-13T17:00:00+03:00",
-        "to": "2026-11-13T20:00:00+03:00",
+        "from": f"{day}T17:00:00+03:00",
+        "to": f"{day}T20:00:00+03:00",
     })
     responder = DMResponder(seen_path=str(tmp_path / "dm_seen.json"))
     answer = responder._calendar_answer("are you free Friday?")
