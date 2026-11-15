@@ -276,6 +276,11 @@ _BRIEFING_NEWS_QUERIES = {
 # Brand page — the word "Jordan", not the country's news.
 _BRIEFING_NEWS_BAD_HOSTS = ("wikipedia.org", "nike.com")
 
+# News older than this never leads the briefing. ddgs.news returns a
+# date per article; without a cutoff a five-day-old story (e.g. 10 Nov
+# on a 15 Nov briefing) can sit next to today's headlines.
+_BRIEFING_NEWS_MAX_AGE_HOURS = 48
+
 
 def _is_briefing_news_junk(url: str) -> bool:
     """True when a briefing news result is not a news article at all."""
@@ -297,46 +302,93 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
     plain text search for a broad query returns section homepages and
     brand pages instead of stories (Reuters' World section page,
     Wikipedia's Jordan article, Nike's Jordan Brand), so results from
-    hosts that are never news are dropped. A group that comes back
-    empty or fails is retried once — the search backends are flaky,
-    and a single transient failure should not cost Sir that group's
-    headlines. Returns [{group, title, snippet}] — at most two
-    headlines per group. Empty when the search fails twice (the
-    briefing still goes out).
+    hosts that are never news are dropped. News results are filtered
+    to the last 48 hours and sorted newest-first, so a five-day-old
+    story never leads the briefing and the freshest headlines win. A
+    group that comes back empty or fails is retried once — the search
+    backends are flaky, and a single transient failure should not
+    cost Sir that group's headlines. Returns [{group, title,
+    snippet}] — at most two headlines per group. Empty when the
+    search fails twice (the briefing still goes out).
     """
     import asyncio
+    from datetime import datetime, timedelta, timezone
 
     from backend.services.web_search_service import WebSearchService
 
     queries = _BRIEFING_NEWS_QUERIES.get(language) or _BRIEFING_NEWS_QUERIES["en"]
     service = WebSearchService()
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=_BRIEFING_NEWS_MAX_AGE_HOURS)
+
+    def _news_date(row: dict[str, str]) -> datetime | None:
+        """Parse a news result's date, or None when it has none / won't parse."""
+        raw = (row.get("date") or "").strip()
+        if not raw:
+            return None
+        try:
+            parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed
+
+    def _clean_snippet(snippet: str) -> str:
+        """Drop the search engine's own truncation marker ('...').
+
+        DuckDuckGo cuts result bodies mid-sentence and appends '...'.
+        Keeping it makes every briefing line end in a dangling '...'.
+        The formatter still shortens long snippets at a word boundary.
+        """
+        text = snippet.strip()
+        while len(text) > 10 and (text.endswith("...") or text.endswith("…")):
+            if text.endswith("..."):
+                text = text[:-3].rstrip()
+            else:
+                text = text[:-1].rstrip()
+        return text
 
     async def _search_one(query: str) -> list[dict[str, str]]:
         """One group query: news first, plain search as fallback, junk dropped."""
         for attempt in (1, 2):
+            news_rows: list[dict[str, str]] = []
             try:
-                result = await service.news(query, max_results=2)
+                news_rows = await service.news(query, max_results=4)
             except Exception as e:
                 log.debug(
                     "dm_briefing_news_attempt_failed",
                     query=query, attempt=attempt, error=str(e),
                 )
-                result = []
-            if not result:
-                try:
-                    result = await service.search(query, max_results=2)
-                except Exception as e:
-                    log.debug(
-                        "dm_briefing_news_fallback_failed",
-                        query=query, attempt=attempt, error=str(e),
-                    )
-                    result = []
-            result = [
-                row for row in result
+            if news_rows:
+                fresh: list[tuple[datetime, dict[str, str]]] = []
+                undated: list[dict[str, str]] = []
+                for row in news_rows:
+                    if _is_briefing_news_junk(row.get("url") or ""):
+                        continue
+                    when = _news_date(row)
+                    if when is None:
+                        undated.append(row)
+                    elif when >= cutoff:
+                        fresh.append((when, row))
+                fresh.sort(key=lambda pair: pair[0], reverse=True)
+                ordered = [row for _, row in fresh] + undated
+                if ordered:
+                    return ordered[:2]
+            # News came back empty, all stale, or all junk: plain search.
+            try:
+                plain_rows = await service.search(query, max_results=2)
+            except Exception as e:
+                log.debug(
+                    "dm_briefing_news_fallback_failed",
+                    query=query, attempt=attempt, error=str(e),
+                )
+                plain_rows = []
+            plain_rows = [
+                row for row in plain_rows
                 if not _is_briefing_news_junk(row.get("url") or "")
             ]
-            if result:
-                return result
+            if plain_rows:
+                return plain_rows[:2]
             if attempt == 1:
                 await asyncio.sleep(1.0)
         return []
@@ -356,7 +408,7 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
             continue
         for row in result[:2]:
             title = (row.get("title") or "").strip()
-            snippet = (row.get("snippet") or "").strip()
+            snippet = _clean_snippet(row.get("snippet") or "")
             if title:
                 headlines.append({"group": group, "title": title, "snippet": snippet})
     return headlines
