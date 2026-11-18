@@ -201,6 +201,72 @@ def test_web_search_tool_registered():
     assert "query" in tool.parameters["properties"]
 
 
+RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>Top stories</title>
+<item><title>Iran Attacks Kuwait and Bahrain, Further Escalating Fight Over Strait - WSJ</title>
+<link>https://news.google.com/rss/articles/CBMiTest1</link>
+<source url="https://www.wsj.com">WSJ</source>
+<pubDate>Wed, 18 Nov 2026 04:36:00 GMT</pubDate>
+<description><ol><li><a href="https://news.google.com/rss/articles/CBMiTest1">Iran Attacks Kuwait and Bahrain</a></li></ol></description></item>
+<item><title>Plain headline without a source suffix</title>
+<link>https://news.google.com/rss/articles/CBMiTest2</link>
+<pubDate>Wed, 18 Nov 2026 03:00:00 GMT</pubDate></item>
+<item><title>Undated headline - BBC</title>
+<link>https://news.google.com/rss/articles/CBMiTest3</link>
+<source url="https://www.bbc.com">BBC</source></item>
+</channel></rss>"""
+
+
+class _FakeRssClient:
+    """httpx.AsyncClient stand-in returning fixture RSS XML."""
+
+    def __init__(self, *args, **kwargs):
+        self.status_code = kwargs.pop("status_code", 200)
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *args):
+        return False
+
+    async def get(self, url, headers=None):
+        resp = _FakeResp(RSS_XML, status_code=self.status_code)
+        resp.content = RSS_XML.encode("utf-8")
+        return resp
+
+
+@pytest.mark.asyncio
+async def test_rss_parses_google_news_feed(service, monkeypatch):
+    """RSS rows match the news() shape: clean title, source, ISO date."""
+    monkeypatch.setattr(
+        "backend.services.web_search_service.httpx.AsyncClient", _FakeRssClient
+    )
+    rows = await service.rss("https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en")
+    assert len(rows) == 3
+    first, second, third = rows
+    assert first["title"] == "Iran Attacks Kuwait and Bahrain, Further Escalating Fight Over Strait"
+    assert first["source"] == "WSJ"
+    assert first["snippet"] == "WSJ"
+    assert first["date"] == "2026-11-18T04:36:00+00:00"
+    assert first["url"] == "https://news.google.com/rss/articles/CBMiTest1"
+    assert second["title"] == "Plain headline without a source suffix"
+    assert second["source"] == ""
+    assert second["date"] == "2026-11-18T03:00:00+00:00"
+    assert third["title"] == "Undated headline"
+    assert third["source"] == "BBC"
+    assert third["date"] == ""
+
+
+@pytest.mark.asyncio
+async def test_rss_returns_empty_on_http_error(service, monkeypatch):
+    """A failed feed fetch never raises — the caller falls back."""
+    monkeypatch.setattr(
+        "backend.services.web_search_service.httpx.AsyncClient",
+        lambda *args, **kwargs: _FakeRssClient(status_code=500),
+    )
+    assert await service.rss("https://news.google.com/rss") == []
+
+
 @pytest.mark.asyncio
 async def test_web_search_tool_calls_service(monkeypatch):
     import plugins.web.plugin as web_plugin

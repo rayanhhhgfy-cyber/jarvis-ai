@@ -271,13 +271,37 @@ _BRIEFING_NEWS_QUERIES = {
 }
 
 
+# Google News RSS feeds for the briefing (world, Jordan, tech, sports).
+# RSS is the primary source now: a search backend ranks by query match
+# and can miss the day's biggest stories (the 18 Nov briefing missed
+# the Gulf escalation, the Trump-Xi-Putin trilateral and the Jordan
+# Telegram block), while the top-stories feed is the newsroom's own
+# front page. "Jordan Amman" (not bare "Jordan") keeps the Jordan
+# group about the country — a bare Jordan search is mostly Nike's
+# Jordan Brand, Michael Jordan and people named Jordan.
+_BRIEFING_NEWS_FEEDS = {
+    "en": [
+        ("World", "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"),
+        ("Jordan", "https://news.google.com/rss/search?q=Jordan%20Amman&hl=en-US&gl=US&ceid=US:en"),
+        ("Tech", "https://news.google.com/rss/search?q=technology&hl=en-US&gl=US&ceid=US:en"),
+        ("Sports", "https://news.google.com/rss/search?q=sports&hl=en-US&gl=US&ceid=US:en"),
+    ],
+    "ar": [
+        ("العالم", "https://news.google.com/rss?hl=ar&gl=JO&ceid=JO:ar"),
+        ("الأردن", "https://news.google.com/rss/search?q=%D8%A7%D9%84%D8%A3%D8%B1%D8%AF%D9%86&hl=ar&gl=JO&ceid=JO:ar"),
+        ("التكنولوجيا", "https://news.google.com/rss/search?q=%D8%A7%D9%84%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7&hl=ar&gl=JO&ceid=JO:ar"),
+        ("الرياضة", "https://news.google.com/rss/search?q=%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%A9&hl=ar&gl=JO&ceid=JO:ar"),
+    ],
+}
+
+
 # Hosts that are never news, even when a search matches them. "Jordan
 # news today" used to return the Wikipedia article and Nike's Jordan
 # Brand page — the word "Jordan", not the country's news.
 _BRIEFING_NEWS_BAD_HOSTS = ("wikipedia.org", "nike.com")
 
-# News older than this never leads the briefing. ddgs.news returns a
-# date per article; without a cutoff a five-day-old story (e.g. 10 Nov
+# News older than this never leads the briefing. RSS and ddgs.news return
+# a date per article; without a cutoff a five-day-old story (e.g. 10 Nov
 # on a 15 Nov briefing) can sit next to today's headlines.
 _BRIEFING_NEWS_MAX_AGE_HOURS = 48
 
@@ -293,23 +317,24 @@ def _is_briefing_news_junk(url: str) -> bool:
 
 
 async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
-    """Top news for the morning briefing, from a live news search.
+    """Top news for the morning briefing, from Google News RSS.
 
-    One query per group (world, Jordan, tech, sports), run together.
-    Each group tries the news endpoint first — it returns real
-    articles (headline + source + date) — and falls back to a plain
-    web search when the news endpoint comes back empty or fails. A
-    plain text search for a broad query returns section homepages and
-    brand pages instead of stories (Reuters' World section page,
-    Wikipedia's Jordan article, Nike's Jordan Brand), so results from
-    hosts that are never news are dropped. News results are filtered
-    to the last 48 hours and sorted newest-first, so a five-day-old
-    story never leads the briefing and the freshest headlines win. A
-    group that comes back empty or fails is retried once — the search
-    backends are flaky, and a single transient failure should not
-    cost Sir that group's headlines. Returns [{group, title,
-    snippet}] — at most two headlines per group. Empty when the
-    search fails twice (the briefing still goes out).
+    One feed per group (world, Jordan, tech, sports), run together.
+    Each group tries its RSS feed first — it returns real articles
+    (headline + source + date) — and falls back to the news endpoint,
+    then to a plain web search, when the feed comes back empty, stale,
+    all junk, or unreachable. A plain text search for a broad query
+    returns section homepages and brand pages instead of stories
+    (Reuters' World section page, Wikipedia's Jordan article, Nike's
+    Jordan Brand), so results from hosts that are never news are
+    dropped. Feed results are filtered to the last 48 hours and sorted
+    newest-first, so a five-day-old story never leads the briefing and
+    the freshest headlines win. A group that comes back empty or fails
+    is retried once — the feed and the search backends are flaky, and
+    a single transient failure should not cost Sir that group's
+    headlines. Returns [{group, title, snippet}] — at most two
+    headlines per group. Empty when every source fails twice (the
+    briefing still goes out).
     """
     import asyncio
     from datetime import datetime, timedelta, timezone
@@ -317,6 +342,7 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
     from backend.services.web_search_service import WebSearchService
 
     queries = _BRIEFING_NEWS_QUERIES.get(language) or _BRIEFING_NEWS_QUERIES["en"]
+    feeds = dict(_BRIEFING_NEWS_FEEDS.get(language) or _BRIEFING_NEWS_FEEDS["en"])
     service = WebSearchService()
     cutoff = datetime.now(timezone.utc) - timedelta(hours=_BRIEFING_NEWS_MAX_AGE_HOURS)
 
@@ -348,10 +374,43 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
                 text = text[:-1].rstrip()
         return text
 
-    async def _search_one(query: str) -> list[dict[str, str]]:
-        """One group query: news first, plain search as fallback, junk dropped."""
+    async def _fetch_one(group: str, query: str, feed_url: str) -> list[dict[str, str]]:
+        """One group: Google News RSS first, then news, then plain search.
+
+        RSS is the primary source — the top-stories / topic feeds are
+        the newsroom's front page, so the day's biggest stories are in
+        it. The search backends stay as the fallback when a feed is
+        empty, stale, all junk, or unreachable. The 48h cutoff and
+        newest-first sort apply to RSS rows the same way they did to
+        search rows, and junk hosts are dropped from every source.
+        """
+
+        def _ordered(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+            fresh: list[tuple[datetime, dict[str, str]]] = []
+            undated: list[dict[str, str]] = []
+            for row in rows:
+                if _is_briefing_news_junk(row.get("url") or ""):
+                    continue
+                when = _news_date(row)
+                if when is None:
+                    undated.append(row)
+                elif when >= cutoff:
+                    fresh.append((when, row))
+            fresh.sort(key=lambda pair: pair[0], reverse=True)
+            return [row for _, row in fresh] + undated
+
         for attempt in (1, 2):
-            news_rows: list[dict[str, str]] = []
+            try:
+                rss_rows = await service.rss(feed_url, max_results=6)
+            except Exception as e:
+                log.debug(
+                    "dm_briefing_news_rss_failed",
+                    group=group, attempt=attempt, error=str(e),
+                )
+                rss_rows = []
+            ordered = _ordered(rss_rows)
+            if ordered:
+                return ordered[:2]
             try:
                 news_rows = await service.news(query, max_results=4)
             except Exception as e:
@@ -359,21 +418,10 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
                     "dm_briefing_news_attempt_failed",
                     query=query, attempt=attempt, error=str(e),
                 )
-            if news_rows:
-                fresh: list[tuple[datetime, dict[str, str]]] = []
-                undated: list[dict[str, str]] = []
-                for row in news_rows:
-                    if _is_briefing_news_junk(row.get("url") or ""):
-                        continue
-                    when = _news_date(row)
-                    if when is None:
-                        undated.append(row)
-                    elif when >= cutoff:
-                        fresh.append((when, row))
-                fresh.sort(key=lambda pair: pair[0], reverse=True)
-                ordered = [row for _, row in fresh] + undated
-                if ordered:
-                    return ordered[:2]
+                news_rows = []
+            ordered = _ordered(news_rows)
+            if ordered:
+                return ordered[:2]
             # News came back empty, all stale, or all junk: plain search.
             try:
                 plain_rows = await service.search(query, max_results=2)
@@ -395,7 +443,10 @@ async def _fetch_briefing_news(language: str = "en") -> list[dict[str, str]]:
 
     try:
         results = await asyncio.gather(
-            *(_search_one(query) for _, query in queries),
+            *(
+                _fetch_one(group, query, feeds.get(group, ""))
+                for group, query in queries
+            ),
             return_exceptions=True,
         )
     except Exception as e:

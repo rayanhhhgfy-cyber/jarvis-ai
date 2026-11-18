@@ -1658,11 +1658,40 @@ async def test_fetch_briefing_news(monkeypatch):
             ]
         return [{"title": f"{query} headline", "snippet": "Snippet.", "url": "https://x.example/9"}]
 
+    async def _fake_rss_empty(self, url, max_results=5):
+        return []  # no feed: exercise the search fallback path
+
+    monkeypatch.setattr(WebSearchService, "rss", _fake_rss_empty)
     monkeypatch.setattr(WebSearchService, "search", _fake_search)
     headlines = await _fetch_briefing_news("en")
     world = [h for h in headlines if h["group"] == "World"]
     assert len(world) == 2  # capped at two per group
     assert world[0]["title"] == "World headline one"
+    assert len({h["group"] for h in headlines}) == 4
+
+
+@pytest.mark.asyncio
+async def test_fetch_briefing_news_uses_google_news_rss(monkeypatch):
+    """RSS feeds are the primary source: fresh rows win, stale rows drop."""
+    from backend.services.dm_responder import _fetch_briefing_news
+    from backend.services.web_search_service import WebSearchService
+
+    async def _fake_rss(self, url, max_results=5):
+        now = datetime.now(UTC)
+        return [
+            {"title": "Fresh world story", "snippet": "Reuters", "url": "https://news.google.com/rss/articles/1", "source": "Reuters", "date": now.isoformat()},
+            {"title": "Older world story", "snippet": "AP", "url": "https://news.google.com/rss/articles/2", "source": "AP", "date": (now - timedelta(hours=5)).isoformat()},
+            {"title": "Stale world story", "snippet": "Old", "url": "https://news.google.com/rss/articles/3", "source": "Old", "date": (now - timedelta(days=5)).isoformat()},
+        ]
+
+    async def _failing_search(self, query, max_results=5):
+        raise AssertionError("search backend must not run when RSS has fresh rows")
+
+    monkeypatch.setattr(WebSearchService, "rss", _fake_rss)
+    monkeypatch.setattr(WebSearchService, "search", _failing_search)
+    headlines = await _fetch_briefing_news("en")
+    world = [h for h in headlines if h["group"] == "World"]
+    assert [h["title"] for h in world] == ["Fresh world story", "Older world story"]
     assert len({h["group"] for h in headlines}) == 4
 
 

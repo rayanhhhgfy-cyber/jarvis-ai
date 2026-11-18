@@ -13,7 +13,9 @@ Returns structured results with titles, snippets, and URLs.
 from __future__ import annotations
 
 import asyncio
+import calendar
 import re
+from datetime import datetime, timezone
 from typing import List, Dict, Optional
 
 import httpx
@@ -129,7 +131,8 @@ def _fetch_scrapling_sync(url: str, max_chars: int) -> Dict[str, object]:
 class WebSearchService:
     """
     Searches the web via ddgs (DuckDuckGo, keyless) with a DuckDuckGo
-    Lite HTML fallback. No API key required. Returns structured results
+    Lite HTML fallback, and reads RSS/Atom feeds (Google News) via
+    httpx + feedparser. No API key required. Returns structured results
     with titles, snippets, and URLs.
     """
 
@@ -187,6 +190,71 @@ class WebSearchService:
         except Exception as e:
             log.warning("web_search_news_failed", error=str(e))
         return []
+
+    async def rss(self, url: str, max_results: int = 5) -> List[Dict[str, str]]:
+        """
+        Headlines from an RSS/Atom feed (e.g. Google News RSS).
+
+        Returns [{"title", "snippet", "url", "source", "date"}] — the
+        same shape as news(), with "date" as an ISO-8601 UTC string, so
+        callers can filter and sort it the same way. Google News titles
+        carry the outlet as a " - Source" suffix, and the item
+        description is HTML links rather than a summary, so the title
+        is cleaned to the headline and the outlet becomes the snippet
+        (the briefing renders it as "Title — Source"). Empty (never
+        raises) when the fetch or parse fails, so the caller can fall
+        back to the search backends.
+        """
+        try:
+            import feedparser
+        except ImportError as e:
+            log.warning("web_search_rss_feedparser_missing", error=str(e))
+            return []
+        try:
+            async with httpx.AsyncClient(
+                timeout=15.0, follow_redirects=True
+            ) as client:
+                resp = await client.get(url, headers=self._headers)
+            if resp.status_code != 200:
+                log.warning(
+                    "web_search_rss_http_error", url=url, status=resp.status_code
+                )
+                return []
+            feed = await asyncio.to_thread(feedparser.parse, resp.content)
+        except Exception as e:
+            log.warning("web_search_rss_failed", url=url, error=str(e))
+            return []
+        results: List[Dict[str, str]] = []
+        for entry in feed.entries[:max_results]:
+            title = (getattr(entry, "title", "") or "").strip()
+            if not title:
+                continue
+            source = ""
+            src = getattr(entry, "source", None)
+            if src:
+                source = (src.get("title") or "").strip()
+            if source and title.endswith(" - " + source):
+                title = title[: -len(source) - 3].rstrip()
+            when = ""
+            parsed = getattr(entry, "published_parsed", None) or getattr(
+                entry, "updated_parsed", None
+            )
+            if parsed:
+                when = datetime.fromtimestamp(
+                    calendar.timegm(parsed), tz=timezone.utc
+                ).isoformat()
+            results.append(
+                {
+                    "title": title,
+                    "snippet": source,
+                    "url": (getattr(entry, "link", "") or "").strip(),
+                    "source": source,
+                    "date": when,
+                }
+            )
+        if results:
+            log.info("web_search_rss_results", url=url, count=len(results))
+        return results
 
     async def search(self, query: str, max_results: int = 5) -> List[Dict[str, str]]:
         """

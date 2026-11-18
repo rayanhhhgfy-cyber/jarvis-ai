@@ -534,6 +534,10 @@ async def test_briefing_news_retries_failed_group(monkeypatch):
             {"title": f"Second for {query}", "snippet": "s", "url": "https://example.com/2"},
         ]
 
+    async def fake_rss_empty(self, url, max_results=5):
+        return []  # no feed: exercise the search fallback path
+
+    monkeypatch.setattr(search_mod.WebSearchService, "rss", fake_rss_empty)
     monkeypatch.setattr(search_mod.WebSearchService, "search", fake_search)
     headlines = await _fetch_briefing_news("en")
     # 4 groups x 2 headlines, all recovered on the retry.
